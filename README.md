@@ -1,7 +1,7 @@
 # biblatex-gb7714_2015
 A biblatex implementation of the GBT7714-2015 bibliography style
 
-The `biblatex-gb7714-2015` package provides an implementation of
+The `biblatex-gb7714_2015` package provides an implementation of
 the bibliography style of the GBT7714-2015 bibliography style. This
 implementation follows GBT7714-2015 standard, and can
 be used simply by loading `biblatex` with the appropriate option
