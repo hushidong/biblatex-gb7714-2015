@@ -1,0 +1,48 @@
+\ProvidesFile{gb7714_2015.cbx}[2016/05/20 v1.0 biblatex citation style]
+
+\RequireCitationStyle{numeric-comp}
+%\RequireCitationStyle{numeric}
+
+\ExecuteBibliographyOptions{
+  autocite  = superscript ,
+  autopunct = true       ,
+  sorting   = none        ,
+}
+
+%\DeclareCiteCommand{\cite}[\mkbibparens]{⟨precode⟩}{⟨loopcode⟩}{⟨sepcode⟩}{⟨postcode⟩}
+%
+\DeclareCiteCommand{\cite}[\mkbibsuperscript]
+  {[\usebibmacro{cite:init}%直接添加方括号
+   \usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:comp}}
+  {}
+  {\usebibmacro{cite:dump}%
+   \usebibmacro{postnote}]}
+
+\DeclareCiteCommand{\parencite}[\mkbibsuperscript]%\mkbibbrackets,仍然用上标
+  {[\usebibmacro{cite:init}%
+   \usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:comp}}
+  {}
+  {\usebibmacro{cite:dump}%
+   \usebibmacro{postnote}]}
+
+\newbibmacro*{postpages}{%
+  \iffieldundef{postnote}
+    {\printfield{pages}}
+    {\printfield{postnote}}}
+
+%修改括号外带页码的引用格式
+\DeclareFieldFormat{postnote}{#1}
+
+\DeclareCiteCommand{\pagescite}[\mkbibsuperscript]%\mkbibbrackets,仍然用上标
+  {[\usebibmacro{cite:init}%
+   \usebibmacro{prenote}%
+   }
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:comp}}
+  {}
+  {\usebibmacro{cite:dump}]%
+   \usebibmacro{postpages}}
