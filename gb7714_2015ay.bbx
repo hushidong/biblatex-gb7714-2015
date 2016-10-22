@@ -1,4 +1,4 @@
-%bbx for gbt 7714-2015 by huzhenzhen 20160530
+%bbx for gbt 7714-2015 by huzhenzhen 20160530 email:hzzmail@163.com
 \ProvidesFile{gb7714_2015ay.bbx}[2016/05/20 v1.0 biblatex bibliography style]
 
 %to be done
@@ -17,18 +17,25 @@
 %\togglefalse{iftexlivesix}
 %\fi
 
-\providetoggle{iftexlivesix}
-\def\versionstr{3.4}
-\def\versionstra{3.6}
-\ifx\abx@version\versionstr
-\toggletrue{iftexlivesix}
-\else
-\ifx\abx@version\versionstra
-\toggletrue{iftexlivesix}
-\else
-\togglefalse{iftexlivesix}
-\fi
-\fi
+%\providetoggle{iftexlivesix}
+%\def\versionstr{3.4}
+%\def\versionstra{3.6}
+%\ifx\abx@version\versionstr
+%\toggletrue{iftexlivesix}
+%\else
+%\ifx\abx@version\versionstra
+%\toggletrue{iftexlivesix}
+%\else
+%\togglefalse{iftexlivesix}
+%\fi
+%\fi
+%改变版本判断机制，根据biblatex更新历史可知，版本3.3开始使用新的姓名机制
+%所以当版本大于3.2开始，就用设置\toggletrue{iftexlivesix}
+\def\numparserta#1.#2\relax{#1}%注意relax的重要性
+\def\numparsertb#1.#2\relax{#2}
+\def\numinteger{\expandafter\numparserta\abx@version\relax}
+\def\numdigital{\expandafter\numparsertb\abx@version\relax}
+\ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftexlivesix}}{\togglefalse{iftexlivesix}}
 
 \iftoggle{iftexlivesix}{
 %设置一些全局选项

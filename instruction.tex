@@ -20,7 +20,7 @@ pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
 \usepackage[backend=biber,bibstyle=gb7714_2015,%nature,%
 citestyle=gb7714_2015, %gb，gbt7714_2005_n，
 ]{biblatex}%biber，caspervector
-\renewcommand{\bibfont}{\zihao{-5}\ttfamily\songti}
+%\renewcommand{\bibfont}{\zihao{-5}\songti}
 \setlength{\bibitemsep}{2pt}
 \defbibheading{bibliography}[\bibname]{%
 \phantomsection%解决链接指引出错的问题，相当于加入了一个引导点
@@ -866,6 +866,34 @@ DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现
 
 
 \section{更新历史}
+============================
+
+2016-10-22
+
+修改版本判断机制，版本3.3以后的版本设置判断标签iftexlivesix为真，采用新的姓名处理机制。
+修改如下:
+\begin{texlist}
+\providetoggle{iftexlivesix}
+%\def\versionstr{3.4}
+%\def\versionstra{3.6}
+%\ifx\abx@version\versionstr
+%\toggletrue{iftexlivesix}
+%\else
+%\ifx\abx@version\versionstra
+%\toggletrue{iftexlivesix}
+%\else
+%\togglefalse{iftexlivesix}
+%\fi
+%\fi
+%改变版本判断机制，根据biblatex更新历史可知，版本3.3开始使用新的姓名处理机制
+%所以当版本大于3.2开始，就用设置\toggletrue{iftexlivesix}
+\def\numparserta#1.#2\relax{#1}%注意relax的重要性
+\def\numparsertb#1.#2\relax{#2}
+\def\numinteger{\expandafter\numparserta\abx@version\relax}
+\def\numdigital{\expandafter\numparsertb\abx@version\relax}
+\ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftexlivesix}}{\togglefalse{iftexlivesix}}
+\end{texlist}
+
 
 ============================
 
