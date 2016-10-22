@@ -285,7 +285,7 @@ colback=green!50!yellow!15!white,terminator sign={\ }}{rfeg}
 4. 针对GB7714-2015中关于引用标注的特殊要求，增加了一些方便实现要求的命令比如pagescite等。
 
 样式文件由如下文件构成:
-顺序编码制的gb7714\_2015.bbx，gb7714\_2015.cbx文件和作者年制的gb7714\_2015ay.bbx，gb7714\_2015ay.cbx文件。
+顺序编码制的gb7714-2015.bbx，gb7714-2015.cbx文件和作者年制的gb7714-2015ay.bbx，gb7714-2015ay.cbx文件。
 
 在继续介绍之前需要特别说明，在作者真正完成这个样式文件之前，一直都是在使用基于李志奇编写的样式文件修改的参考文献样式
 \footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}}，
@@ -296,12 +296,12 @@ colback=green!50!yellow!15!white,terminator sign={\ }}{rfeg}
 \subsection{样式加载使用方式}
 样式加载方式为:
 
-\begin{codetex}{gb7714\_2015顺序编码制加载方式}{eg:gb7714numeric}
-\usepackage[backend=biber,style=gb7714_2015]{biblatex}
+\begin{codetex}{gb7714-2015顺序编码制加载方式}{eg:gb7714numeric}
+\usepackage[backend=biber,style=gb7714-2015]{biblatex}
 \end{codetex}
 
-\begin{codetex}{gb7714\_2015作者年制加载方式}{eg:gb7714authoryear}
-\usepackage[backend=biber,style=gb7714_2015ay]{biblatex}
+\begin{codetex}{gb7714-2015作者年制加载方式}{eg:gb7714authoryear}
+\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}
 \end{codetex}
 
 本文档给出了两种样式文件的使用说明，并根据GB7714-2015提供的参考文献表著录格式示例做了测试和验证，详见第\ref{sec:eg:gb77142015}节。测试系统环境为:
@@ -363,7 +363,7 @@ GB/T 7714-2015规定采用作者年制组织时，各篇文献首先按文种组
 \section{顺序编码制bbx样式文件的使用说明}
 
 \subsection{参考文献在biblatex中对应的条目和域}\label{sec:numeric:data}
-gb7714\_2015.bbx是按照GB/T 7714-2015要求实现的biblatex参考文献样式文件。
+gb7714-2015.bbx是按照GB/T 7714-2015要求实现的biblatex参考文献样式文件。
 
 根据GB/T 7714-2015要求并结合biblatex的条目类型和数据域，对各类参考文献做如下考虑:
 \begin{refentry}{}{}
@@ -623,7 +623,7 @@ entryset = {易仕和2013--,Yi2013--},
 
 \section{顺序编码制cbx样式文件的使用说明}
 
-顺序编码制的引用样式文件为gb7714\_2015.cbx。该样式大体使用标准引用样式numeric-comp的内容。仅对cite，parencite进行了修改，将其原来在行中的位置改到上标中。为满足GB/T 7714-2015第10.1.3节的要求，增加了pagescite命令。
+顺序编码制的引用样式文件为gb7714-2015.cbx。该样式大体使用标准引用样式numeric-comp的内容。仅对cite，parencite进行了修改，将其原来在行中的位置改到上标中。为满足GB/T 7714-2015第10.1.3节的要求，增加了pagescite命令。
 
 这些命令使用方式如下:
 
@@ -645,7 +645,7 @@ entryset = {易仕和2013--,Yi2013--},
 
 \section{作者年制cbx样式文件的使用说明}
 
-作者年制的引用样式文件为gb7714\_2015ay.cbx。该样式大体使用标准引用样式authoryear的内容。仅对cite，parencite进行了修改，将引用标签用括号括起来。为满足GB/T 7714-2015第10.2.4节的要求，增加了pagescite命令。
+作者年制的引用样式文件为gb7714-2015ay.cbx。该样式大体使用标准引用样式authoryear的内容。仅对cite，parencite进行了修改，将引用标签用括号括起来。为满足GB/T 7714-2015第10.2.4节的要求，增加了pagescite命令。
 
 这些命令使用方式如下:
 
@@ -906,7 +906,7 @@ DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现
 2016-10-11
 
 1.真的是需求推动事物发展，秋平同学提出需要把顺序编码制的参考文献序号标签设为左对齐。
-于是可以做如下修改。需要用的可以把下面这段加进gb7714\_2015.bbx中，不需要的就不用任何处理，
+于是可以做如下修改。需要用的可以把下面这段加进gb7714-2015.bbx中，不需要的就不用任何处理，
 左对齐还是右对齐其实还是看个人喜好，我其实觉得右对齐挺好的。
 \begin{texlist}
     %修改序号标签格式为左对齐,注意各参考文献内容还是对齐的，
@@ -940,11 +940,11 @@ DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现
     \textcolor{red}{\HandRight \heiti 【Most Important】【注意】：texlive2015中的biblatex版本是3.0，texlive2016中biblatex的版本是3.4，两者对于名字域打印格式的输入参数有略微的差异，所以相应的样式文件也需要修改。为此增加两个宏包选项，一个texlive2016，一个是texlive2015。当使用texlive2016时，请使用texlive2016选项，其它情况下请带上选项texlive2015。比如:}
 
     \begin{codetex}{使用2016版texlive时带选项texlive2016}{eg:optional:2016}
-    \usepackage[backend=biber,texlive2016,style=gb7714_2015]{biblatex}
+    \usepackage[backend=biber,texlive2016,style=gb7714-2015]{biblatex}
     \end{codetex}
 
     \begin{codetex}{使用非2016版texlive时带选项texlive2015}{eg:optional:2015}
-    \usepackage[backend=biber,texlive2015,style=gb7714_2015]{biblatex}
+    \usepackage[backend=biber,texlive2015,style=gb7714-2015]{biblatex}
     \end{codetex}
 \end{texlist}
 
