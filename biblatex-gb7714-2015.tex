@@ -843,7 +843,7 @@ DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现
 
 11. 因为采用xelatex编译，所以样式文件直接采用UTF-8编码，没有考虑GBK编码。
 
-12. 目前符合GB/T7714 2005或GB/T7714 2015参考文献录入要求的biblatex样式有好几个实现，除了这里作者提供的之外，还有李志奇(icetea)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}} 和沈周(szsdk)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152561&extra=page\%3D1}} 分别提供的样式文件,效果是类似的，也感谢两位作者的分享!。
+12. 目前符合GB/T7714-2005或GB/T7714-2015参考文献录入要求的biblatex样式有好几个实现，除了这里作者提供的之外，还有李志奇(icetea)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}} 和沈周(szsdk)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152561&extra=page\%3D1}} 分别提供的样式文件,效果是类似的，也感谢两位作者的分享!。
 
 13. 需要注意：当bibtex键是含有中文的时候，texlive2015中的biblatex3.0版的对参考文献条目的超链接会出现问题，而texlive2016中的biblatex3.4版则没有问题。
 
@@ -959,7 +959,7 @@ DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现
 
 2016-07-01
 
-1. 增加了pagescite命令，实现GB/T7714 2015对于引用标注中输出页码的特殊格式要求。
+1. 增加了pagescite命令，实现GB/T7714-2015对于引用标注中输出页码的特殊格式要求。
 
 2. 测试了texlive2015，texlive2016，发现其中关于名字域格式的差异，并作出修改。增加了两个宏包选项，一个是texlive2016，另一个是texlive2015。使用texlive2016版本时，带选项texlive2016即可，其它情况带选项texlive2015
 
@@ -969,7 +969,7 @@ DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现
 
 1.利用判断CJK字符的函数，判断条目中著者，译者域是否是CJK字符，做相应的处理。
 
-2.利用范围解析函数，可对卷期等进行解析，并按GB/T7714 2015要求输出。
+2.利用范围解析函数，可对卷期等进行解析，并按GB/T7714-2015要求输出。
 
 
 ============================
@@ -978,7 +978,7 @@ DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现
 
 基本完成样式文件，实现的功能包括:
 
-1.实现GB/T7714 2015要求的参考文献著录格式。
+1.实现GB/T7714-2015要求的参考文献著录格式。
 
 2.利用map功能使录入参考文献数据时不需要文献类别标识符。
 

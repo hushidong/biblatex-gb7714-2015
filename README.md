@@ -1,3 +1,5 @@
+Date of last change:2016-10-23
+
 # biblatex-gb7714-2015: a biblatex style  package
 ---------------------------------------------------------
 
@@ -23,3 +25,16 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 A demonstration database is provided to show how to format input for the style. The biblatex-gb7714-2015 style works with texlive2014, texlive2015, texlive2016 and so on.
 
 please see the file 'biblatex-gb7714-2015.pdf' for more information!
+
+---------------------------------------------------------
+
+update history:
+
+date of change: 2016-10-23
+
+* Changes to pkg code:
+- "*.bbx","*.cbx": add some information like version information.
+
+* Changes to documentation:
+- biblatex-gb7714-2015.tex: correct a few flaws .
+- paperone.bib: refine some entries.
