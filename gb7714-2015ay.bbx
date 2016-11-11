@@ -6,41 +6,18 @@
 %% history:
 %% 2016/05/20 v1.0
 %% 2016/10/23 v1.0a
+%% 2016/11/11 v1.0b
 %% E-mail: hzzmail@163.com
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\ProvidesFile{gb7714-2015ay.bbx}[2016/10/23 v1.0a biblatex bibliography style]
-
-%to be done
-%著者年制，没有作者，用佚名，英文怎么办？
-%没有年怎么办？
+\ProvidesFile{gb7714-2015ay.bbx}[2016/11/11 v1.0b biblatex bibliography style]
 
 % Load the standard style to avoid copy-pasting unnecessary material
 \RequireBibliographyStyle{authoryear} %加载标准样式
-%\RequireBibliographyStyle{standard}
 
 \providetoggle{iftexlivesix}
-%\def\versionstr{3.4}
-%\ifx\abx@version\versionstr
-%\toggletrue{iftexlivesix}
-%\else
-%\togglefalse{iftexlivesix}
-%\fi
-
-%\providetoggle{iftexlivesix}
-%\def\versionstr{3.4}
-%\def\versionstra{3.6}
-%\ifx\abx@version\versionstr
-%\toggletrue{iftexlivesix}
-%\else
-%\ifx\abx@version\versionstra
-%\toggletrue{iftexlivesix}
-%\else
-%\togglefalse{iftexlivesix}
-%\fi
-%\fi
-%改变版本判断机制，根据biblatex更新历史可知，版本3.3开始使用新的姓名机制
+%版本判断，根据biblatex更新历史可知，版本3.3开始使用新的姓名机制
 %所以当版本大于3.2开始，就用设置\toggletrue{iftexlivesix}
 \def\numparserta#1.#2\relax{#1}%注意relax的重要性
 \def\numparsertb#1.#2\relax{#2}
@@ -48,16 +25,21 @@
 \def\numdigital{\expandafter\numparsertb\abx@version\relax}
 \ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftexlivesix}}{\togglefalse{iftexlivesix}}
 
-\iftoggle{iftexlivesix}{
 %设置一些全局选项
 % Alter settings that carry through from biblatex
+\iftoggle{iftexlivesix}{
+%biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
 \ExecuteBibliographyOptions{
   useprefix = true,  %名字的信息包括前缀
   %firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
   giveninits = true,
   date   = year,  %日期仅写到年
-  maxnames     = 1 ,    %设置名字最大数量
-  minnames     = 1       %设置缩减后的名字最小数量
+  %maxnames     = 3 , %设置名字最大数量
+  %minnames     = 3,  %设置缩减后的名字最小数量
+  maxbibnames=3, %将文献列表和引用中最大名字数量区分开
+  minbibnames=3,
+  maxcitenames=1,
+  mincitenames=1
   %uniquename   = init
 }
 
@@ -115,14 +97,17 @@
 
 }
 {
-%设置一些全局选项
-% Alter settings that carry through from biblatex
+%biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
 \ExecuteBibliographyOptions{
   useprefix = true,  %名字的信息包括前缀
   firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
   date   = year,  %日期仅写到年
-  maxnames     = 1 ,    %设置名字最大数量
-  minnames     = 1       %设置缩减后的名字最小数量
+  %maxnames     = 3 , %设置名字最大数量
+  %minnames     = 3,  %设置缩减后的名字最小数量
+  maxbibnames=3, %将文献列表和引用中最大名字数量区分开
+  minbibnames=3,
+  maxcitenames=1,
+  mincitenames=1
   %uniquename   = init
 }
 \DeclareNameFormat{first-last}{%修改作者的姓和名的顺序，源来自于biblatex.def文件
@@ -131,6 +116,7 @@
     {\usebibmacro{name:last-first}{#1}{#3}{#5}{#7}}%
     \usebibmacro{name:andothers}}
 
+%作者名字的处理，参考文档4.2.3节，3.12.4 Name Parts and Name Spacing
 \newbibmacro*{name:last-first}[4]{%
   \ifuseprefix
     {\usebibmacro{name:delim}{#3#1}%
@@ -165,9 +151,9 @@
 %定义判断中文字符的函数，用于判断作者等信息是否由中文字符构成
 \providetoggle{ifCJKforgbt}
 \def\testCJKfirstchar#1#2&{%
-\ifnumgreater{`#1}{"2E7F}{\toggletrue{ifCJKforgbt}}{\togglefalse{ifCJKforgbt}}}
+\ifnumgreater{`#1}{"2E7F}{\toggletrue{ifCJKforgbt}}{\togglefalse{ifCJKforgbt}}}%
 \def\testCJKfirst#1{%
-\edef\tempa{#1}
+\edef\tempa{#1}%
 \expandafter\testCJKfirstchar\tempa&}
 
 %判断是否是标准
@@ -198,6 +184,8 @@
 %具体可以修改哪些需要的参考english.lbx文件
 %当然也可以增加比如上面定义的andotherscn
 \DefineBibliographyStrings{english}{
+bibliography     = {参考文献},
+references       = {参考文献},
 bytranslator= {\addcomma\ 译\adddot}, %将trans. by 改成 译
 and         = {\addcomma},%将第2和3人名见的and符号改成 逗号，用\finalnamedelim命令也可以定义，参见3.9.1节
 %andothers   = {et al.},        %将超过3个人名的省略，et al.改成为 等
@@ -259,7 +247,7 @@ nopublisher = {[s.n.]}
     \fi}
 
 
-%作者修改判断，是否中文，若中文输入等字符，而不是etcl
+%修改输入的源文件数据，用于中文判断等
 %首先把作者和译者信息准确的记录到userf，usere中，用于判断是否是cjk字符。
 %注意\DeclareSourcemap命令只能出现一次
 \DeclareSourcemap{
@@ -338,28 +326,12 @@ nopublisher = {[s.n.]}
             \step[fieldset=usere, origfieldval]
             \step[fieldsource=year]
             \step[fieldset=date, origfieldval]
+            \step[fieldsource=note]%将note域信息复制给keywords，用于输出时容易区分标准和报纸
+            \step[fieldset=keywords, origfieldval]
             %\step[fieldset=userb, fieldvalue={en}]
             }
 }
 }
-
-%\DeclareStyleSourcemap{
-%{\testCJKfirst{\thefield{title}}}%
-%\iftoggle{ifCJKforgbt}%
-%{\map{\step[fieldset=userb, fieldvalue={en}]}}
-%{\map{\step[fieldset=userb, fieldvalue={cn}]}}
-%}
-
-%这个用style改变数据的方式，其中的cjk判断不起作用，所以也就失效了。
-%\DeclareStyleSourcemap{
-%\maps[datatype=bibtex]{
-%\map{
-%\step[fieldsource=title]%
-%\testCJKfirst{origfieldval}%
-%\iftoggle{ifCJKforgbt}{\step[fieldset=userb, fieldvalue={cn}]}{}
-%}
-%}
-%}
 
 
 %排序用降序或userb域
@@ -527,50 +499,6 @@ nopublisher = {[s.n.]}
   %\newunit %这里的标点去掉
   }
 
-%作者名字的处理，参考文档4.2.3节，3.12.4 Name Parts and Name Spacing
-%\DeclareNameFormat{author}{%
-%\ifthenelse{\value{listcount}=1}
-%{#1%
-%\ifblank{#3}{}{\addcomma\space #3}}
-%{\ifblank{#3}{}{#3\space}%
-%#1}%
-%\ifthenelse{\value{listcount}<\value{liststop}}
-%{\addcomma\space}
-%{}}
-
-
-%\DeclareNameFormat{first-last}{%修改作者的姓和名的顺序，源来自于biblatex.def文件
-%\iftoggle{iftexlivesix}%
-%{\iffirstinits%
-%{\usebibmacro{name:last-first}{\namepartfamily}{\namepartgiveni}{\namepartprefix}{\namepartsuffix}}%
-%{\usebibmacro{name:last-first}{\namepartfamily}{\namepartgiven}{\namepartprefix}}%
-%}%
-%{\iffirstinits%%
-%{\usebibmacro{name:last-first}{#1}{#4}{#5}{#7}}
-%{\usebibmacro{name:last-first}{#1}{#3}{#5}{#7}}
-%}
-%\usebibmacro{name:andothers}}
-%for biblatex version 3.0
-%#1 The last names.
-%#2 The last names, given as initials.
-%#3 The first names.
-%#4 The first names, given as initials.
-%#5 The name prefixes,
-%#6 The name prefixes, given as initials.
-%#7 The name affixes,
-%#8 The name affixes, given as initials.
-%for biblatex version 3.4
-%\namepartfamily
-%\namepartfamilyi
-%\namepartgiven
-%\namepartgiveni
-%\namepartprefix
-%\namepartprefixi
-%\namepartsuffix
-%\namepartsuffixi
-
-
-
 %对版本信息做出修改，源来自biblatex.DEF
 \DeclareFieldFormat{edition}{%
 %\testCJKfirst{\thefield{title}}%
@@ -580,6 +508,14 @@ nopublisher = {[s.n.]}
   \ifinteger{#1}%
     {\iftoggle{ifCJKforgbt}{\printtext{#1版}}%
     {\mkbibordedition{#1}~\bibstring{edition}}}%
+    {#1\isdot}}
+
+%对version的版本信息做出修改，源来自biblatex.DEF
+\DeclareFieldFormat{version}{%
+\iffieldundef{title}{}{\testCJKfirst{\thefield{title}}}%
+  \ifinteger{#1}%
+    {\iftoggle{ifCJKforgbt}{\printtext{#1版}}%
+    {\mkbibordedition{#1}~\bibstring{version}}}%
     {#1\isdot}}
 
 \renewbibmacro*{author}{%
@@ -631,7 +567,7 @@ nopublisher = {[s.n.]}
      \newunit}%
   \usebibmacro{withothers}}
 
-%判断作者或译者是否中文，若中文用字符等，否则用etcl。
+%判断作者或译者是否中文，若中文用字符等，否则用etal。
 \newbibmacro*{name:andothers}{%
   \ifboolexpr{
     test {\ifnumequal{\value{listcount}}{\value{liststop}}}
@@ -668,6 +604,7 @@ nopublisher = {[s.n.]}
 %\usebibmacro{date}%
 %\newunit %去掉这个标点
 }
+
 %修改book的驱动，源来自standard.BBX
 \DeclareBibliographyDriver{book}{%
   \usebibmacro{bibindex}%
@@ -1324,6 +1261,7 @@ nopublisher = {[s.n.]}
   %\newunit
   }
 
+%2016-11-11增加了译者信息
 \DeclareBibliographyDriver{report}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
@@ -1334,6 +1272,8 @@ nopublisher = {[s.n.]}
   \printlist{language}%
   \newunit\newblock
   \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}%增加的译者信息
   \newunit\newblock
   \printfield{type}%
   \setunit*{\addspace}%
@@ -1366,7 +1306,7 @@ nopublisher = {[s.n.]}
     {}%
   \usebibmacro{finentry}}
 
-%直接利用report做manual
+%直接利用report做manual,2016-11-11增加了译者信息
 %\DeclareBibliographyDriver{report}{%
 \DeclareBibliographyDriver{manual}{%
   \usebibmacro{bibindex}%
@@ -1378,6 +1318,8 @@ nopublisher = {[s.n.]}
   \printlist{language}%
   \newunit\newblock
   \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}%
   \newunit\newblock
   \printfield{type}%
   \setunit*{\addspace}%

@@ -1,268 +1,16 @@
-\documentclass[11pt]{article} %draft %用draft选项找到badbox的位置
-\usepackage{bbding}
-
-\usepackage{expl3,etoolbox,ifthen,xstring}
-\usepackage{ctex}
-\usepackage{xeCJKfntef}
-\usepackage[paperwidth=210mm,paperheight=290mm,left=20mm,right=20mm,top=25mm, bottom=15mm]{geometry}            %定义版面
-
-\usepackage[colorlinks=true,%
-pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}  %书签功能，选项去掉链接红色方框
-\usepackage{titleref} %标题引用
-%linkcolor=black,linkcolor=green,blue,red,cyan, magenta,
-%yellow, black, gray,white, darkgray, lightgray, brown,
-%lime, olive, orange, red,purple, teal, violet.
-%CJKbookmarks,bookmarksnumbered=true,
-
-%%%========================参考文献===============================
-%\usepackage[backend=bibtex8,sorting=none,citestyle=authoryear,bibstyle=alphabetic]{biblatex}
-%采用分章的参考文献的快捷方法
-\usepackage[backend=biber,bibstyle=gb7714-2015,%nature,%
-citestyle=gb7714-2015, %gb，gbt7714_2005_n，
-]{biblatex}%biber，caspervector
-%\renewcommand{\bibfont}{\zihao{-5}\songti}
-\setlength{\bibitemsep}{2pt}
-\defbibheading{bibliography}[\bibname]{%
-\phantomsection%解决链接指引出错的问题，相当于加入了一个引导点
-\addcontentsline{toc}{subsubsection}{#1}
-	\centering\subsubsection*{#1}}%
-
-\addbibresource[location=local]{paperone.bib}
-%参考文献的bib文件
-%	\markboth{#1}{#1}}
-%注意在实际使用中用titsec宏包的页眉页脚也有点问题，一旦给出markboth就会出现问题
-%这里因为bibliography给出了markboth所以出错。因此重定义bibliography以消除问题
-%重定义命令中去掉了markboth那一句命令。
-%常用样式
-%style=trad-plain
-%style=trad-unsrt
-%style=trad-alpha
-%style=trad-abbrv
-%style=musuos
-%style=nature
-%style=nejm  %New England Journal of Medicine
-%style=phys  %follows the guidelines of the aip and aps
-%bibstyle=publist
-%style=science  %follows the guidelines of the journal Science
-
-%style=ieee % follows the guidelines of the ieee.
-%style=ieee-alphabetic
-%bibstyle=manuscripts,otheroption
-%style=chem-acs %American Chemistry Society journals.
-%style=chem-angew %Angewandte Chemie Chemistry – A European Journal.
-%style=chem-biochem %Biochemistry and a small number of other American Chemistry Society journals.
-%style=chem-rsc  %Royal Society of Chemistry journals.
-%style=authortitle-dw
-%style=footnote-dw
-%%%=================================================================
-
-%自定义下划红线和背景颜色
-\usepackage{ulem}
-\newcommand\yellowback{\bgroup\markoverwith
-{\textcolor{yellow}{\rule[-0.5ex]{2pt}{2.5ex}}}\ULon}
-\newcommand\reduline{\bgroup\markoverwith
-{\textcolor{red}{\rule[-0.5ex]{2pt}{0.4pt}}}\ULon}
-
-\usepackage{subfigure}
-\usepackage[subfigure]{tocloft} %注意其与titletoc共用时分页会有问题
-\usepackage{ccaption}
-\captiondelim{. } %图序图题中间的间隔符号
-\captionnamefont{\zihao{-5}\heiti} %图序样式
-\captiontitlefont{\zihao{-5}} %图题样式
-\captionwidth{0.8\linewidth} %标题宽度
-\changecaptionwidth
-%\captionstyle{<style>} can be used to alter this. Sensible values for
-%style are: \centering, \raggedleft or \raggedright
-\captionstyle{\centering}
-%\precaption{\rule{\linewidth}{0.4pt}\par}
-%\postcaption{\rule[0.5\baselineskip]{\linewidth}{0.4pt}}
-\setlength{\belowcaptionskip}{0.2cm} %设置caption上下间距
-\setlength{\abovecaptionskip}{0.2cm}
-\setlength{\abovelegendskip}{0.2cm}  %设置legend上下间距
-\setlength{\belowlegendskip}{0.2cm}
-%新的浮动体设置
-%\newfloatlist[within]{fenv}{ext}{listname}{capname}
-%\newfloatlist{X}{Z}{flist}{fcap}
-%within，可以设为chapter表示以章节为单位
-%fenv，环境名
-%ext，写入条目的文件的扩展名
-%listname，新环境目录的标题
-%capname，新环境标题的图序
-\newcommand{\listegcodename}{示~~ 例}
-\newcommand{\egcodename}{示例}
-\newfloatlist{egcode}{loc}{\listegcodename}{\egcodename}
-\newfixedcaption{\codecaption}{egcode}
-
-%环境名：
-%\begin{source}\end{source}
-%\begin{source*}\end{source*}
-%目录命令
-%可以设置\cftbeforeZtitleskip，\cftafterZtitleskip长度，比如：
-\setlength{\cftbeforeloctitleskip}{\baselineskip}
-\setlength{\cftafterloctitleskip}{0.5\baselineskip}
-%可以设置\cftZtitlefont字体样式比如
-\renewcommand{\cftloctitlefont}{\hfill\Large\heiti}
-\renewcommand{\cftafterloctitle}{\hfill}
-\renewcommand{\cftegcodepresnum}{例}
-\renewcommand{\cftegcodeaftersnum}{.}
-\renewcommand{\cftegcodeaftersnumb}{~}
-\cftsetindents{egcode}{0em}{3em}
-\setlength{\cftbeforeegcodeskip}{2mm}
-\renewcommand{\cftegcodepagefont}{\bfseries}
-
-\setlength{\cftbeforetoctitleskip}{\baselineskip}
-\setlength{\cftaftertoctitleskip}{0.5\baselineskip}
-%\renewcommand\contentsname{\hfill 目~~ 录 \hfill \hspace{1cm}}
-%用这一句也是一样的。
-\renewcommand{\cfttoctitlefont}{\hfill\Large\heiti}
-\renewcommand{\cftaftertoctitle}{\hfill\hspace{0.1cm}}
-\renewcommand\contentsname{目~~ 录}
-\renewcommand{\cftsecleader}{\leaders\hbox to 1em{\hss.\hss}\hfill}
-\setlength{\cftbeforesecskip}{2mm}
-\renewcommand{\cftsecfont}{\songti}
-
-\usepackage{listings}
-\usepackage{color,xcolor}
-\colorlet{examplefill}{yellow!80!black}
-\definecolor{graphicbackground}{rgb}{0.96,0.96,0.8}
-\definecolor{codebackground}{rgb}{0.9,0.9,1}
-
-\newlength{\outleftdis}
-\newcommand{\codetopline}[1]{\settowidth{\outleftdis}{\footnotesize{#1}~~~}%
-\ifodd\thepage%判断奇数页，画一条有左标签的线
-{\noindent\hspace*{-\outleftdis}\colorbox{yellow}{\color{blue}\footnotesize{#1}~}\color{green!50!black}\rule[0.1\baselineskip]{\linewidth}{0.4pt}}%
-\else%否则为偶数页，画一条有右标签的线
-{%\noindent\makebox{\color{green!50!black}\rule[0.1\baselineskip]{\linewidth}{0.4pt}\colorbox{yellow}{\color{blue}~\footnotesize{#1}}}
-\noindent\color{green!50!black}\rule[0.1\baselineskip]{\linewidth}{0.4pt}\colorbox{yellow}{\color{blue}~\footnotesize{#1}}%
-}%
-\fi%
-}
-\newcommand{\codebottomline}
-{\noindent\makebox{\color{green!50!black}\rule[1pt]{\linewidth}{0.4pt}}}
-
-\lstnewenvironment{codetex}[2]%
-{\begin{center}\end{center}\centering\setlength{\abovecaptionskip}{1mm}\setlength{\belowcaptionskip}{1mm}%
-\vspace{-2.0\baselineskip}
-\codecaption{#1}\label{#2}%\nopagebreak
-%\vspace{-1.0\baselineskip}
-\codetopline{代码}%
-\vspace{-0.5\baselineskip}
-\lstset{% general command to set parameter(s)
-%name=#1,
-%label=#2,
-%caption=\lstname,
-linewidth=\linewidth,
-breaklines=true,
-%showspaces=true,
-extendedchars=false,
-columns=fullflexible,%flexible,
-%frame=tb,
-frame=none,
-fontadjust=true,
-language=[LaTeX]TeX,
-%backgroundcolor=\color{yellow}, %背景颜色
-backgroundcolor=\color{codebackground},
-numbers=left,
-numberstyle=\tiny\color{red},
-basicstyle=\small, % print whole listing small，footnotesize
-keywordstyle=\color{blue}\bfseries,%\underbar,
-% underlined bold black keywords
-identifierstyle=, % nothing happens
-commentstyle=\color{green!50!black}, % white comments
-stringstyle=\ttfamily, % typewriter type for strings
-showstringspaces=false}% no special string spaces
-}
-{\nopagebreak\vspace*{-\baselineskip}\codebottomline\\}
-
-\lstnewenvironment{texlist}%
-{\lstset{% general command to set parameter(s)
-%name=#1,
-%label=#2,
-%caption=\lstname,
-linewidth=\linewidth,
-breaklines=true,
-%showspaces=true,
-extendedchars=false,
-columns=fullflexible,%flexible,
-%frame=tb,
-fontadjust=true,
-language=[LaTeX]TeX,
-%backgroundcolor=\color{yellow}, %背景颜色
-numbers=left,
-numberstyle=\tiny\color{red},
-basicstyle=\small, % print whole listing small
-keywordstyle=\color{blue}\bfseries,%\underbar,
-% underlined bold black keywords
-identifierstyle=, % nothing happens
-commentstyle=\color{green!50!black}, % white comments
-stringstyle=\ttfamily, % typewriter type for strings
-showstringspaces=false}% no special string spaces
-}
-{}
-
-\usepackage[listings,theorems]{tcolorbox}
-
-\newcounter{myprop}\def\themyprop{\arabic{myprop}}
-%序号如果带章节的话可以改为比如:\thesection.\arabic{myprop}
-\tcbmaketheorem{property}{注意点}{theorem style=plain,fonttitle=\bfseries\upshape, %
-fontupper=\slshape,boxrule=0mm,arc=0mm, %
-coltitle=black,colback=green!25,colframe=blue!50,%
-separator sign={\ $\blacktriangleright$},
-description delimiters={}{},
-terminator sign={\ }}{myprop}{pp}
-%最后一个必须参数是prefix用来做label比如这里是pp:加上给出的标签名
-
-\newtcbtheorem[]{refentry}{条目类型}
-{separator sign={\ $\blacktriangleright$},theorem style=plain,fonttitle=\bfseries,
-fontupper=\normalsize,boxrule=0mm,arc=0mm,
-coltitle=green!35!black,colbacktitle=green!15!white,
-colback=green!50!yellow!15!white,terminator sign={\ }}{rfeg}
-%最后一个必须参数是prefix用来做label比如这里是eg:加上给出的标签名
-
-\newcommand{\titleformanual}[1]{\def\biaotiudf{#1}}
-\newcommand{\authorformanual}[1]{\def\zuozheudf{#1}}
-\newcommand{\dateformanual}[1]{\def\riqiudf{#1}}
-%\ifthenelse{\equal{\youwuudf}{\temp}}{true}{false}
-\def\temp{}
-\newcommand{\titleandauthor}{
-\begin{center}
-{\setlength{\baselineskip}{30pt}\heiti{\zihao{-2}{\biaotiudf}}\par}
-%注意这里\par要放在花括号内才有效
-\vspace*{0.3cm}
-{\kaishu{\zihao{4}{\zuozheudf}}\par}
-\vspace*{0.2cm}
-{\songti{\zihao{-4}{\riqiudf}}\par}
-\end{center}
-}
-\usepackage{enumitem} %重设list环境
-
-%\usepackage{fancyvrb}%fancyvrb宏包
-%\DefineVerbatimEnvironment%  %定义环境-myverbatim
-%{myverbatim}{Verbatim}
-%{gobble=0,numbers=left,numbersep=2mm,framerule=0.2mm,fontsize=\footnotesize,
-%firstnumber=auto,%frame=lines,
-%rulecolor=\color{red!25},fillcolor=\color{red!25},showspaces=true,xleftmargin=0mm}
-
-\newcommand{\pz}[1]{%定义pz为旁注命令
-\marginpar[\flushright\youyuan\color{red}\footnotesize #1]{\youyuan\color{red}\small #1}}
-\newcommand{\PZ}[1]{%定义pz为旁注命令
-\marginpar[\flushright\youyuan\color{red}\footnotesize  #1]{\youyuan\color{red}\small #1}}
-\newcommand{\qd}[1]{%定义qd为强调命令
-{\fangsong\color{blue}#1}}
-\newcommand{\QD}[1]{%定义qd为强调命令
-{\fangsong\color{blue}#1}}
-\newcommand{\bc}[1]{%定义补充信息
-{\small\kaiti\color{violet}#1}} %orange，brown，purple，teal，violet，olive，cyan
-\newcommand{\BC}[1]{%定义补充信息
-{\small\kaiti\color{violet}#1}}
+\documentclass[11pt]{article} %用draft选项找到badbox的位置
+\input{biblatex-gb7714-2015-preamble} %宏包和一些格式设置
 
 \begin{document}
-
+%------------------------------------------------------------
+\def\versionnumber{v1.0b}    %版本和修改时间信息
+\def\versiondate{2016-11-11}
+%------------------------------------------------------------
+%-----------------标题和目录---------------------------------
 \titleformanual{符合GB7714-2015标准的biblatex参考\\
-文献样式文件}
-\authorformanual{胡振震\footnote{hzzmail@163.com}}
+文献样式文件\footnote{The files (gb7714-2015*.*) have version number \versionnumber, last revised \versiondate.}}
+\authorformanual{胡振震\setcounter{footnote}{0}\footnote{hzzmail@163.com}}
 \dateformanual{2016-07-01}
-
 \titleandauthor
 \phantomsection
 \addcontentsline{toc}{section}{目录}
@@ -271,6 +19,8 @@ colback=green!50!yellow!15!white,terminator sign={\ }}{rfeg}
 \phantomsection
 \addcontentsline{toc}{section}{示例}
 \listofegcode
+%------------------------------------------------------------
+
 \section{概述}
 提供了符合GB7714-2015~信息与文献~参考文献著录规则要求的biblatex参考文献样式。分为两种编制方式:一、顺序编码制；二、作者年制。
 
@@ -304,7 +54,7 @@ colback=green!50!yellow!15!white,terminator sign={\ }}{rfeg}
 \usepackage[backend=biber,style=gb7714-2015ay]{biblatex}
 \end{codetex}
 
-本文档给出了两种样式文件的使用说明，并根据GB7714-2015提供的参考文献表著录格式示例做了测试和验证，详见第\ref{sec:eg:gb77142015}节。测试系统环境为:
+本文档给出了两种样式文件的使用说明，并根据GB/T 7714-2015提供的参考文献表著录格式示例做了测试和验证，详见第\ref{sec:eg:gb77142015}节。测试系统环境为:
 
 windows7x86+texlive 2014，采用xelatex编译;
 
@@ -312,9 +62,9 @@ windows7x64+texlive 2015，采用xelatex编译;
 
 虚拟机xp+texlive 2016，采用xelatex编译。
 
-\textcolor{red}{\HandRight \heiti 【Most Important】【注意】：texlive2015中的biblatex版本是3.0，texlive2016中biblatex的版本是3.4，新版本对于名字域打印有了较大变化，所以需做相应的修改，为此在biblatex中首先进行版本判断，然后根据版本不同进行不同的处理。}
+\textcolor{red}{\HandRight \heiti 【Most Important】【注意】：texlive2015中的biblatex版本是3.0，texlive2016中biblatex的版本是3.4，新版本对于名字域打印有了较大变化，所以需做相应的修改，为此在biblatex中首先进行版本判断，然后根据版本不同分别进行设置。}
 
-作者自己从学习latex开始就开始使用xelatex，对于参考文献生成开始用的thebibliography，后来对于格式化参考文献有更多的需求后，开始寻求利用参考文献样式。因为对于bibtex语言不熟悉，所以从一开始就使用biblatex。从实践来看，使用biblatex生成参考文献有几个优点是值得肯定的:
+作者自己从学习latex开始就使用xelatex，对于参考文献生成开始用的thebibliography环境，后来对于格式化参考文献有更多的需求后，开始寻求利用参考文献宏包。因为对于bibtex语言不熟悉，所以就开始使用biblatex宏包。从实践来看，使用biblatex宏包生成参考文献有几个优点是值得肯定的:
 
 1. 使用够方便，只需要三步编译，第一遍xelatex，第二遍biber，第三遍xelatex。
 
@@ -326,13 +76,13 @@ windows7x64+texlive 2015，采用xelatex编译;
 
 5. 定制很简便，biblatex提供了很多不同的参考文献样式，学习参考都很方便，因此定制起需要的参考文献格式来非常简便。
 
-上述的这些优点也是驱使作者编写符合gb7714-2015的参考文献样式文件的原因之一。
+上述这些优点也是作者编写符合GB/T 7714-2015标准的参考文献样式文件的驱动原因之一。
 
 \subsection{顺序编码制}
 
-GB/T 7714-2015规定采用顺序编码制组织时，各篇文献应按正文部分标注的序号依次列出。具体参考GB/T 7714-2015第9.1节。
+GB/T 7714-2015规定采用顺序编码制组织参考文献时，各篇文献应按正文部分标注的序号依次列出。具体参考GB/T 7714-2015第9.1节。
 
-标注则根据在正文中的引用的先后顺序连续编码，将序号置于方括号内。同一处引用多篇文献，各篇序号见用逗号隔开，遇连续序号，起讫序号用短横线连接。多次引用同一著者的同一文献时，可在序号的方括号外著录该文献引文页码，这一要求与引用样式无关，需要作者在写文档时使用相应的引用命令并在需要时输入页码信息。针对这一要求，在cite等常用命令外，重定义了一个标注命令pagescite，其使用方式如下:
+标注则根据在正文中引用的先后顺序连续编码，将序号置于方括号内。同一处引用多篇文献，各篇序号间用逗号隔开，遇连续序号，起讫序号用短横线连接。多次引用同一著者的同一文献时，可在序号的方括号外著录该文献引文页码，这一要求与引用样式无关，需要作者在写文档时使用相应的引用命令并在需要时输入页码信息。针对这一要求，在cite等常用命令基础上，新定义了一个标注命令pagescite，其使用方式如下:
 
 \begin{codetex}{带页码的引用标注方式}{eg:pagescite}
 5. 专著，带前后缀的作者名\cite{Peebles2001-100-100}
@@ -341,31 +91,34 @@ GB/T 7714-2015规定采用顺序编码制组织时，各篇文献应按正文部
 \pagescite{Peebles2001-100-100}\pagescite[][201-301]{Peebles2001-100-100}
 \end{codetex}
 
-其中当不指定页码时，该命令默认调用参考文献的页码数据进行输出，如果需要指定页码，那么需要在第二个[]中输入页码内容，\qd{还要注意:对于多个文献一起的压缩形式，指定页码只会应用最后一个参考文献的页码，这是不对的，当然其实这种情况是不应该存在，指定页码目的就是具体化某一文献的，因此使用时尽可能使用pagescite\{key1\}pagescite\{key2\}这种形式而不是pagescite\{key1,key2\}}。该命令的产生的标注效果见第\ref{sec:test:book}节。标注样式更详细要求参考GB/T 7714-2015 第10.1节。
+其中当不指定页码时，该命令默认调用参考文献的页码数据进行输出，如果需要指定页码，那么需要在第二个[]内输入页码内容，\qd{还要注意:对于多个文献一起的压缩形式，指定页码只会应用最后一个参考文献的页码，这是不对的，当然其实这种情况是不应该存在的，指定页码的目的就是具体化某一文献的，因此使用时尽可能使用pagescite\{key1\}pagescite\{key2\}这种形式而不是pagescite\{key1,key2\}}。该命令的产生的标注效果见第\ref{sec:test:book}节。标注样式更详细要求参考GB/T 7714-2015 第10.1节。
 
-如果顺序编码指采用脚注方式，则序号由计算机自动生成圈码。多次引用同一著者的同一文献时，若采用脚注方式应重复著录参考文献(这里可以理解为，采用该方式，同一文献的不同页码的引文就相当于一篇新的引文)，只是在参考文献列表中可以简化(当然不简化重复录入对于latex的参考文献处理其实更方便)。事实上对于顺序编码用脚注方式，GB/T 7714-2015似乎并没有详细说明脚注方式到底是什么？从举例看只是序号用类似于脚注的标签，那么对于参考文献样式来说，与非脚注方式的差别仅在于引用和参考文献条目的序号标签的差别，如此是容易通过修改样式文件得到的，但实际使用中除非特殊要求，否则意义不大，因此本样式没有实现该功能。
+如果顺序编码指采用脚注方式，则序号由计算机自动生成圈码。多次引用同一著者的同一文献时，若采用脚注方式应重复著录参考文献(这里可以理解为，采用该方式，同一文献的不同页码的引文就相当于一篇新的引文)，只是在参考文献列表中可以简化(当然不进行简化，简单复制后录入对于latex的参考文献处理其实更方便)。事实上对于顺序编码用脚注方式，GB/T 7714-2015并没有详细说明脚注方式到底是什么？从举例看只是序号用类似于脚注的标签，那么对于参考文献样式来说，与非脚注方式的差别仅在于引用和参考文献条目的序号标签的差别，如此是容易通过修改样式文件得到的，但实际使用中除非有特殊要求，否则使用意义不大，因此本样式没有实现该功能。
 
 \subsection{作者年制}
 
-GB/T 7714-2015规定采用作者年制组织时，各篇文献首先按文种组织，可分为中文，日文，西文，俄文和其他文种5部分；然后按照著者字顺和出版年排列。中文文献按著者汉语拼音字顺排序，也可按笔画顺序排列。具体参考GB/T 7714-2015第9.2节。
+GB/T 7714-2015规定采用作者年制组织时，各篇文献首先按文种组织，可分为中文，日文，西文，俄文和其他文种等部分；然后按照著者字顺和出版年排列。中文文献可以按著者汉语拼音字顺排序，也可按笔画顺序排列。具体参考GB/T 7714-2015第9.2节。
 
-(因为需要根据语言进行划分，所以语言(language)域对于录入文献来说可能是必要的，因为作者的测试仅涉及中英文两种语言，没有遇到需要language域的情况。)
+%(因为需要根据语言进行划分，所以语言(language)域对于录入文献来说可能是必要的，因为作者的测试仅涉及中英文两种语言，没有遇到需要language域的情况。)
 
-各篇文献的标注内容有著者姓(lastname)和出版年构成，并置于()内。对于使用汉字的语言来说，整个姓名都是lastname所以标注的是全名。机构团体名也整体标注。若正文中已有著者姓名，则()内只标注出版年，这一点样式文件无法判断，只能是文档作者自身把握，当然样式文件可以提供标签只有年份和附加年份信息的命令，文档作者可以使用。
+各篇文献的标注内容由著者姓(lastname)和出版年构成，并置于()内。对于使用汉字的语言来说，整个姓名都是lastname所以标注的是全名。机构团体名也整体标注。若正文中已有著者姓名，则()内只标注出版年，这一点样式文件无法判断，只能是文档作者自身把握，当然样式文件可以提供标签只有年份和附加年份信息的命令，可以方便文档写作者使用。
 
-引用多个著者文献时，对西文只需标注第一著者的姓，其后附“et al.”，对于中文著者，标注第一著者的姓名，其后附“等”。姓名与“et al.”“等”间留适当空隙。
+引用多个著者的文献时，对西文只需标注第一著者的姓(而在参考文献列表中的作者按最大数量三个处理，这与顺序编码制一致，参考GB/T 7714-2015第8.1.2节)，其后附“et al.”，对于中文著者，标注第一著者的姓名，其后附“等”。姓名与“et al.”“等”间留适当空隙。
 
-同一著者同一年出版的多篇文献时，出版年后应采用小写字符a,b,c等区别。
+引用同一著者同一年出版的多篇文献时，出版年后应采用小写字符a,b,c等区别。
 
 多次引用同一著者的同一文献，在正常标注外，需在()外以角标形式著录引文页码，这一问题样式文件无法判断，只能提供可以形成该格式的引用命令，供文档作者使用，这里也提供pagescite命令，使用方法与示例\ref{eg:pagescite}相同。标注要求具体参考GB/T 7714-2015第10.2节
+
+需要注意的是:当文献不存在作者的时候，作者年制就没有作者可以用，因此用文献题名来实现标签来，因此参考文献列表中文献题名后的文献类型标识/文献载体标识就不存在了。
 
 
 \section{顺序编码制bbx样式文件的使用说明}
 
-\subsection{参考文献在biblatex中对应的条目和域}\label{sec:numeric:data}
+\subsection{各类文献在biblatex中对应的条目和域}\label{sec:numeric:data}
 gb7714-2015.bbx是按照GB/T 7714-2015要求实现的biblatex参考文献样式文件。
 
 根据GB/T 7714-2015要求并结合biblatex的条目类型和数据域，对各类参考文献做如下考虑:
+\subsubsection{专著/book}
 \begin{refentry}{}{}
 专著对应的biblatex的entrytype为:book，文献类型标识用M表示。
 
@@ -374,14 +127,15 @@ gb7714-2015.bbx是按照GB/T 7714-2015要求实现的biblatex参考文献样式�
 \end{refentry}
 
 其对应的biblatex数据域为:
-\begin{codetex}{专著的book条目和域格式}{eg:bookfieldfmt}
+\begin{codetex}{专著/book条目的域格式}{eg:bookfieldfmt}
 author.title:subtitle或titleaddon[usera].translator.edition.address或location:publisher,date或year:pages[urldate].url.doi
 \end{codetex}
 
-使用时，首先建立参考文献数据文件即bib文件，将对应的引文信息录入到相应条目的相应数据域中即可。特别注意:其中usera域不用录入，该域由bbx样式文件根据条目类型处理得到。
+使用时，首先建立参考文献数据文件即bib文件，将对应的文献信息录入到相应条目的相应数据域中。特别注意:usera域不用录入，该域内容由bbx样式文件根据条目类型处理得到。
 
-还需要注意:由于biblatex不支持standard条目类型，所以标准条目类型用book或inbook替代，但使用note域等于standard作为一个区分，当note域数据存在且内容等于standard时，就将其作为标准文献进行处理，其文献类型标识用S表示。这里为什么使用note域而不是type域，是因为考虑到biblatex标准样式中book和article条目类型都没有把type域作为支持域，而note域一般情况没有什么特殊意义。
+还需要注意:由于biblatex不支持standard条目类型，所以标准条目类型用book或inbook替代，但使用note域等于standard作为一个区分，当note域数据存在且内容等于standard时，就将其作为标准文献进行处理，其文献类型标识用S表示。这里为什么使用note域而不是type域和keywords域，是因为考虑到note域一般情况没有什么特殊意义，使用它不会导致冲突，而type域在biblatex标准样式中没有被book和article条目类型当作支持的域，支持的条目比如thesis，typer域又有特殊的意义，是用来区分master和doctor的，而keywords域倒可以使用，只是该域一般很少在jabref之类软件的默认域中，需要进一步设置，而且可能带来不通用的问题。
 
+\subsubsection{域/field}
 各域的数据录入格式符合bib文件规范即可，这里再详细说明一下，后面的其它条目涉及到的域也在这里一并介绍:
 \begin{description}[topsep=5pt,partopsep=0pt,parsep=0pt,%
 itemsep=0pt,leftmargin=2.2cm,rightmargin=0.5cm,labelwidth=2cm]
@@ -433,11 +187,12 @@ itemsep=0pt,leftmargin=2.2cm,rightmargin=0.5cm,labelwidth=2cm]
   \item[bookauthor] 用于析出文献时，作为析出文献来源文献的作者，其输入方式与author 相同。
   \item[booktitle] 用于析出文献时，作为析出文献来源文献的题名，其输入方式与title 相同。booktitleaddon域输入方式也相同。
   \item[volume] 连续出版物的卷，格式化输入用整数，当有范围时中间用短横线连接，比如:1-4。当无法解析时，输入内容被认为是需要完整打印的内容。
-  \item[number] 连续出版物的期，输入与volume类似。或者是专利等的号时，直接输入需要打印的内容。
+  \item[number] 连续出版物的期或报纸的版次，输入与volume类似。或者是专利等的号时，直接输入需要打印的内容。
   \item[journal] 用于连续出版物析出文献，表示连续出版物的题名，直接输入需要打印的内容。journaltitle，journalsubtitle域类似处理。
    \item[version] 用于report和manual的版本信息，直接输入需要打印的内容。
 \end{description}
 
+\subsubsection{专著中的析出文献/inbook}
 \begin{refentry}{}{}
 专著中的析出文献对应的biblatex的entrytype为:inbook。文献类型标识用M表示。
 
@@ -446,10 +201,11 @@ itemsep=0pt,leftmargin=2.2cm,rightmargin=0.5cm,labelwidth=2cm]
 \end{refentry}
 
 其对应的biblatex数据域为:
-\begin{codetex}{专著析出文献的inbook条目和域格式}{eg:inbookfieldfmt}
+\begin{codetex}{专著析出文献/inbook条目的域格式}{eg:inbookfieldfmt}
 author.title[usera]//bookauthor.booktitle:booktitleaddon.edition.address 或location:publisher,date或year:pages[urldate].url.doi
 \end{codetex}
 
+\subsubsection{连续出版物/periodical}
 \begin{refentry}{}{}
 连续出版物对应的biblatex的entrytype为:periodical。文献类型标识用J表示。
 
@@ -458,12 +214,13 @@ author.title[usera]//bookauthor.booktitle:booktitleaddon.edition.address 或loca
 \end{refentry}
 
 其对应的biblatex数据域为:
-\begin{codetex}{连续出版物的periodical条目和域格式}{eg:periodicalfieldfmt}
+\begin{codetex}{连续出版物/periodical条目的域格式}{eg:periodicalfieldfmt}
 author.title:subtitle或titleaddon[usera].year或date,volume(number)-endyear, endvolume(endnumber).address或location:publisher,date或year[urldate].url.doi
 \end{codetex}
 
 需要注意: 因为连续出版物可能用到两个日期，两个卷，两个期，所以录入数据时需要特别处理。不需要录入endyear等信息，只需要在到year或date域录入日期，由biber自动解析，两个日期之间用/分隔。而卷和期由于可能有合订模式，合订卷期之间用/分隔，参考GB/T 7714-2015第8.8.3节，需要解析范围的卷和期，录入到volume和number域时，两个不同的值用-分隔。\emph{这里对于卷和期的解析所采用的函数利用了李志齐所编写的样式文件中的函数，特此说明，表示感谢!}
 
+\subsubsection{连续出版物的析出文献/article}
 \begin{refentry}{}{}
 连续出版物的析出文献对应的biblatex的entrytype为:article。文献类型标识用J表示。
 
@@ -472,12 +229,13 @@ author.title:subtitle或titleaddon[usera].year或date,volume(number)-endyear, en
 \end{refentry}
 
 其对应的biblatex数据域为:
-\begin{codetex}{连续出版物析出文献的article条目和域格式}{eg:articlefieldfmt}
+\begin{codetex}{连续出版物析出文献/article条目的域格式}{eg:articlefieldfmt}
 author.title[usera].journaltitle或journal:journalsubtitle,year,volume(number):pages[urldate].url.doi
 \end{codetex}
 
-需要注意:由于biblatex不支持newspaper article条目类型，所以条目类型报纸析出的文献用article表示，但使用note域等于news作为一个区分，当note域数据存在且内容等于news时，就将其作为报纸的析出文献进行处理。报纸文献类型标识用N表示。
+需要注意:由于biblatex不支持newspaper article条目类型，所以条目类型报纸析出的文献用article表示，但使用note域等于news作为一个区分，当note域数据存在且内容等于news时，就将其作为报纸的析出文献进行处理。报纸文献类型标识用N表示，报纸的版次用number域描述。
 
+\subsubsection{专利/patent}
 \begin{refentry}{}{}
 专利文献对应的biblatex的entrytype为:patent。文献类型标识用P表示。
 
@@ -486,10 +244,11 @@ author.title[usera].journaltitle或journal:journalsubtitle,year,volume(number):p
 \end{refentry}
 
 其对应的biblatex数据域为:
-\begin{codetex}{专利文献的patent条目和域格式}{eg:patentfieldfmt}
+\begin{codetex}{专利文献/patent条目的域格式}{eg:patentfieldfmt}
 author.title:number[usera].date或year[urldate].url.doi
 \end{codetex}
 
+\subsubsection{电子资源/online}
 \begin{refentry}{}{}
 电子资源对应的biblatex的entrytype为:online或electronic。文献类型标识用EB表示。
 
@@ -498,55 +257,72 @@ author.title:number[usera].date或year[urldate].url.doi
 \end{refentry}
 
 其对应的biblatex数据域为:
-\begin{codetex}{电子资源的online条目和域格式}{eg:onlinefieldfmt}
+\begin{codetex}{电子资源/online条目的域格式}{eg:onlinefieldfmt}
 author.title:subtitle或titleaddon[usera].address或location:publisher,date或year:pages(endyear)[urldate].url.doi
 \end{codetex}
 
 以上是GB/T 7714-2015直接给出的条目类型，但还有一些类型并没有给出著录格式，但在例子中也有所体现，本bbx文件根据这些例子，给出了著录格式。
+
+\subsubsection{汇编或论文集/collection}
+
 \begin{refentry}{}{}
 汇编文献对应的biblatex的entrytype为:collection。文献类型标识用G表示。
 
 其著录格式，采用与book一致的格式。
 \end{refentry}
 
+\subsubsection{汇编或论文集析出中的文献/incollection}
 \begin{refentry}{}{}
 汇编中的析出文献对应的biblatex的entrytype为:incollection。文献类型标识用G表示。
 
 其著录格式，采用与inbook一致的格式。
 \end{refentry}
 
+\subsubsection{学位论文/thesis}
 \begin{refentry}{}{}
 学位论文对应的biblatex的entrytype为:thesis。文献类型标识用D表示。
 
 其著录格式，由biblatex的标准thesis格式修改得到。
 \end{refentry}
 
+\subsubsection{报告/report}
 \begin{refentry}{}{}
 报告对应的biblatex的entrytype为:report。文献类型标识用R表示。
 
-其著录格式，由biblatex的标准report格式修改得到。
+其著录格式由biblatex的标准report格式修改得到。格式为:
+
+主要责任者.题名:其他题名信息[文献类型标识/文献载体标识].其他责任者.版本项.出版地:出版者,出版年:引文页码[引用日期].获取和访问路径.数字对象唯一标识符.
 \end{refentry}
 
+其对应的biblatex数据域为:
+\begin{codetex}{报告/report条目的域格式}{eg:reportfieldfmt}
+author.title:subtitle或titleaddon[usera].translator.version.address或location:publisher,date或year:pages[urldate].url.doi
+\end{codetex}
+
+\subsubsection{手册或档案/manual}
 \begin{refentry}{}{}
 手册和档案采用一种格式，对应的biblatex的entrytype为:manual。文献类型标识用A表示。
 
-其著录格式为，直接采用report格式，而不是标准样式中的manual格式，这种方式下，当没有出版地和出版者时，完全省略，因为GB/T 7714-2015并没有明确这种情况怎么处理。
+其著录格式为，直接采用report的格式，而不是标准样式中的manual格式，这种方式下，当没有出版地和出版者时，完全省略，因为GB/T 7714-2015并没有明确这种情况怎么处理。
 \end{refentry}
 
 需要注意: report和manual的版本信息放在version域中，而不是book等条目的edition域中。report的机构采用的是institution域，而manual默认是organization域，为了直接使用report的样式，可以把organization域转成institution域。而档案就直接用手册表示。
 
+\subsubsection{未出版物/unpublished}
 \begin{refentry}{}{}
 未出版物，对应的biblatex的entrytype为:unpublished。文献类型标识用Z表示。
 
 其著录格式为，也直接采用report格式处理。
 \end{refentry}
 
+\subsubsection{会议录或会议文集/proceedings}
 \begin{refentry}{}{}
 会议文集的biblatex的entrytype为:proceedings。文献类型标识用C表示。
 
 其著录格式，采用与book类似的格式。
 \end{refentry}
 
+\subsubsection{会议文集中析出的文献/inproceedings}
 \begin{refentry}{}{}
 会议文集中析出的文献对应的biblatex的entrytype为:inproceedings。文献类型标识用C表示。
 
@@ -621,6 +397,10 @@ entryset = {易仕和2013--,Yi2013--},
 获取和访问路径，数字对象唯一标识符格式实现了符合GB/T 7714-2015第8.6,8.7节要求的设置。访问路径录入到url域中，数字对象唯一标识符格式录入到doi域中即可。
 \end{property}
 
+\begin{property}{}{}
+实现了GB/T 7714-2015第8.8节要求的析出文献相关格式。卷、期、年的信息填写方式如\ref{sec:numeric:data}节中所说，合期的期号用/间隔，比如9/10，填入number域，报纸的版次也填入number域，起讫页码用-分隔，比如81-86填入pages域中。
+\end{property}
+
 \section{顺序编码制cbx样式文件的使用说明}
 
 顺序编码制的引用样式文件为gb7714-2015.cbx。该样式大体使用标准引用样式numeric-comp的内容。仅对cite，parencite进行了修改，将其原来在行中的位置改到上标中。为满足GB/T 7714-2015第10.1.3节的要求，增加了pagescite命令。
@@ -636,12 +416,11 @@ entryset = {易仕和2013--,Yi2013--},
 
 \section{作者年制bbx样式文件的使用说明}
 
-作者年制的参考文献样式文件使用了基于标准authoryear样式的标签生成，修改了参考文献表的格式。而参考文献条目的与顺序编码值的样式文件基本相同，除了把年份提到了作者后面作为标签。
+作者年制的参考文献样式文件使用了基于标准authoryear样式的标签生成，修改了参考文献表的格式。而参考文献条目著录格式与顺序编码值的样式文件基本相同，除了把年份提到了作者后面作为标签。生成作者年制参考文献列表的参考文献数据源bib文件所要求的数据输入方式与顺序编码制完全一致，详见\ref{sec:numeric:data}节。
 
 \qd{根据文种文献集中的要求，修改了nyt排序格式，增加了userb作为name前的排序域，当有需求进行多文种分集且有特殊顺序时，在bib文件中给相应文种的文献设置适合排序的字符串。比如中文文献设置为cn，英文文献设置为en，法文文献设置为fr，那么排序中，相应的中文文献排在最前面，英文文献在中间，法文文献最后，因为升序情况下字母顺序是c然后e然后f。}
 
-作者年制的参考文献样式文件所要求的数据输入与顺序格式完全一致，详见
-\ref{sec:numeric:data}节。
+
 
 \section{作者年制cbx样式文件的使用说明}
 
@@ -829,7 +608,7 @@ for biblatex version 3.4
 
 9. \textcolor{red}{\HandRight \heiti 【Most Important】【注意】：当在顺序编码和作者年制的切换使用时，如果出错，可先清理一下辅助文件，清理完后，重新编译即可。}
 
-10. {\heiti biber中的拼音排序，这个问题可以参考Casper Ti. Vector在biblatex 参考文献和引用样式： caspervector v0.2.6中的方法。对于排序机制我并不是太懂，所以直接引用Casper Ti. Vector的方法，特此说明，表示感谢!}
+10. {\heiti biber中的拼音排序，这个问题可以参考Casper Ti. Vector在biblatex 参考文献和引用样式： caspervector v0.2.6中的方法。其排序机制并没有深入了解，所以直接引用Casper Ti. Vector的方法，特此说明，表示感谢!}
 
 \begin{codetex}{中文文献排序时采用biber命令}{eg:sort:bibercmd}
 %按拼音排序，biber命令
@@ -845,20 +624,20 @@ DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现
 
 12. 目前符合GB/T7714-2005或GB/T7714-2015参考文献录入要求的biblatex样式有好几个实现，除了这里作者提供的之外，还有李志奇(icetea)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}} 和沈周(szsdk)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152561&extra=page\%3D1}} 分别提供的样式文件,效果是类似的，也感谢两位作者的分享!。
 
-13. 需要注意：当bibtex键是含有中文的时候，texlive2015中的biblatex3.0版的对参考文献条目的超链接会出现问题，而texlive2016中的biblatex3.4版则没有问题。
+13. 需要注意：当bibtex键中含有中文的时候，texlive2015中的biblatex3.0版的对参考文献条目的超链接会出现问题，而texlive2016中的biblatex3.4版则没有问题。
 
-14. 关于出版地和出版者同时缺省的情况，GB/T 7714-2015中没有给出明确的说明，但英文给出了一个例子(见附录A.3)而中文没有，英文的样式是[S.l. : s.n.]，这种形式本样式文件中没有给出，而直接用两者分开的形式，[S.l.] : [s.n.]，事实上这里作者认为没有必要把s.l.和s.n.合起来，不仅与缺省两者之一的情况不统一，样式处理起来也增加不必要的麻烦。
+14. 关于出版地和出版者同时缺省的情况，GB/T 7714-2015中没有给出明确的说明，但英文给出了一个例子(见GB/T 7714-2015 附录A.3)而中文没有，英文的样式是[S.l. : s.n.]，这种形式本样式文件中没有给出，而直接用两者分开的形式，[S.l.] : [s.n.]，事实上这里作者认为没有必要把s.l.和s.n.合起来，不仅与缺省两者之一的情况不统一，样式处理起来也增加不必要的麻烦。
 
 \section{样式文件中还存在的问题和下一步工作}
 \subsection{存在的问题}
 
-1. 当作者多于3个需要添加等或et al.时，如果作者的姓名是用\{\}包起来的，可能判断会出错
+1. 当作者多于3个需要添加等或et al.时，如果作者的姓名是用\{\}包起来的，可能判断会出错。
 
-2. 顺序年制中当不存在著者信息时，如果用佚名或者no author，本样式文件中没有实现。怎么在数据进来后，给一些域添加信息？在biber处理过程中根据一些判断添加信息？
+2. 顺序年制中当不存在著者信息时，如果用佚名或者no author，本样式文件中没有实现。怎么在数据进来后，给一些域添加信息？在biber处理过程中根据一些判断添加信息？(著者年制，没有作者，用佚名，英文怎么办？没有年怎么办？)
 
-3. 顺序年制引用标签时，文中已经存在作者名的，标签只需要写年份，这个需要定义一个新的yearcite命令，是容易实现的，但这里没有实现。
+3. 作者年制引用标签时，文中已经存在作者名的，标签只需要写年份，这个需要定义一个新的yearcite命令，是容易实现的，但这里没有实现。
 
-4. shorthand的问题没有遇到，但可能会有一些花样在里面。
+4. shorthand的问题没有遇到，但可能会有一些东西在里面。
 
 5. backref的格式也可以修改一下。
 
@@ -872,6 +651,94 @@ DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现
 
 
 \section{更新历史}
+============================
+
+2016-11-11
+
+1. 说明文档增加了版本和修改时间信息，修正了一些错误和不妥的说法，增加了一些说明比如报纸版次，报告条目域格式等，去掉一些不必要的注释，简化各样式文件内容。
+
+2. 由Harry Chen提议，将english本地化文件中的参考文献标题信息改为中文的，因为本样式多在中文环境下使用，修改为中文后，printbibliography命令中不提供title信息的情况下，参考文献列表标题默认为参考文献。感谢Harry Chen在github上的commit!
+修改如下:
+\begin{texlist}
+\DefineBibliographyStrings{english}{
+bibliography     = {参考文献},
+references       = {参考文献},
+%bytranslator= {\addcomma\ 译\adddot}, %将trans. by 改成 译
+bytranslator= {\addcomma\ 译},%\addperiod
+and         = {\addcomma},%将第2和3人名见的and符号改成 逗号，用\finalnamedelim命令也可以定义，参见3.9.1节
+%andothers   = {et al.},        %将超过3个人名的省略，et al.改成为 等
+andotherscn   = {等},        %将超过3个人名的省略，et al.改成为 等
+noaddress = {[S.l.]},
+nopublisher = {[s.n.]}
+}
+\end{texlist}
+
+
+3. 当作者名只有一个，但又有and others表示多个作者的时候，标准样式中作者名和et al.之间是空格而不是逗号链接，但gb7714-2015要求在等之前用逗号，所以做出修改如下。
+
+\begin{texlist}
+%判断作者或译者是否中文，若中文用字符等，否则用etcl。
+\newbibmacro*{name:andothers}{%
+  \ifboolexpr{%
+    test {\ifnumequal{\value{listcount}}{\value{liststop}}}
+    and
+    test \ifmorenames
+  }%
+    {%这里做一个判断是在处理author还是translator用于两者是不同语言的情况
+    \ifcurrentname{translator}{\testCJKfirst{\thefield{usere}}}{\testCJKfirst{\thefield{userf}}}%
+    %这句判断如果放到\andothersdelim后面会在等或etc.前增加一个空格，所以放前面
+    \ifnumgreater{\value{liststop}}{1}%
+       {\finalandcomma}%
+       {\finalandcomma}%biblatex作者要区别单作者加等的情况，这里为符合gbt7714-2015第7.2节的要求加上了逗号。
+\andothersdelim\iftoggle{ifCJKforgbt}{\bibstring{andotherscn}}{\bibstring{andothers}}%
+%\andothersdelim\bibstring{andotherscn}
+}%
+{}}
+\end{texlist}
+
+4. 给report和manual驱动添加了译者域，这在实际中是用的到的，同时打印version域的格式也做了处理，并且修改中文判断函数，增加了注释符以避免带入空格，这个问题在之前体现为版本域前多了一个空格。
+\begin{texlist}
+%对version的版本信息做出修改，源来自biblatex.DEF
+\DeclareFieldFormat{version}{%
+\testCJKfirst{\thefield{title}}%
+\ifinteger{#1}%
+{\iftoggle{ifCJKforgbt}{\printtext{#1版}}%
+{\mkbibordedition{#1}~\bibstring{version}}}%
+{#1\isdot}}
+\end{texlist}
+
+5. 把作者年制的参考文献列表和引用中的作者名数量做区分。列表中最大为3个，引用中最大为1个。
+\begin{texlist}
+%biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
+\ExecuteBibliographyOptions{
+  useprefix = true,  %名字的信息包括前缀
+  %firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
+  giveninits = true,
+  date   = year,  %日期仅写到年
+  %maxnames     = 3 , %设置名字最大数量
+  %minnames     = 3,  %设置缩减后的名字最小数量
+  maxbibnames=3, %将文献列表和引用中最大名字数量区分开
+  minbibnames=3,
+  maxcitenames=1,
+  mincitenames=1
+  %uniquename   = init
+}
+
+%biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
+\ExecuteBibliographyOptions{
+  useprefix = true,  %名字的信息包括前缀
+  firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
+  date   = year,  %日期仅写到年
+  %maxnames     = 3 , %设置名字最大数量
+  %minnames     = 3,  %设置缩减后的名字最小数量
+  maxbibnames=3, %将文献列表和引用中最大名字数量区分开
+  minbibnames=3,
+  maxcitenames=1,
+  mincitenames=1
+  %uniquename   = init
+}
+\end{texlist}
+
 ============================
 
 2016-10-22
@@ -989,7 +856,7 @@ DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现
 
 \section{参考文献表著录格式示例}\label{sec:eg:gb77142015}
 \begin{refsection}
-普通图书
+普通图书(book)
 \cite{张伯伟2002--}
 \cite{2009-155-155}
 \cite{胡承正2010-112-112}
@@ -1007,37 +874,37 @@ DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现
 \cite{Kinchy2012-50-50}
 \cite{Praetzellis2011-13-13}
 
-论文集、会议录
+论文集(collection)、会议录(proceedings)
 \cite{中国职工教育研究会1985--}
 \cite{中国社会科学院台湾史研究中心2012--}
 \cite{雷光春2012--}
 \cite{陈志勇2011--}
 \cite{Babu2014--}
 
-报告
+报告(report)
 \cite{中华人民共和国国务院新闻办公室2013-04-16--}
 \cite{汤万金2013-09-30--}
 \cite{Calkin2011-8-9}
 \cite{DTFHA1990--}
 \cite{WHO1970--}
 
-学位论文
+学位论文(thesis)
 \cite{马欢2011-27-27}
 \cite{吴云芳2003--}
 \cite{CALMS1965--}
 
-专利文献
+专利文献(patent)
 \cite{张凯军2012-04-05--}
 \cite{河北绿洲生态环境科技有限公司2001--}
 \cite{KOSEKI2002--}
 
-标准文献
+标准文献(book,inbook,note=standard)
 \cite{全国信息文献标准化技术委员会2010-3-3}
 \cite{全国广播电视标准化技术委员会2007-1-1}
 \cite{国家环境保护局科技标准司1996-2-3}
 \cite{standardinfoiso158}
 
-专著中析出的文献
+专著中析出的文献(inbook)
 \cite{1988-590-590}
 \cite{白书农1998-146-163}
 \cite{汪学军2002-22-25}
@@ -1047,7 +914,7 @@ DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现
 \cite{BUSECK1980-117-211}
 \cite{FOURNEY1971-17-38}
 
-期刊中析出的文献
+期刊中析出的文献(article)
 \cite{杨洪升2013-56-75}
 \cite{李炳穆2000-5-8}
 \cite{于潇2012-1518-1523}
@@ -1058,19 +925,39 @@ DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现
 \cite{Franz2013-1053-1062}
 \cite{Park2010-696-715}
 
-报纸中析出的文献
+报纸中析出的文献(article,note=news)
 \cite{丁文祥2000--}
 \cite{张田勤2000--}
 \cite{傅刚2000--}
 \cite{刘裕国2013-01-12--}
 
-电子资源
+电子资源(online)
 \cite{萧钰2001--}
 \cite{李强2012-05-03--}
 \cite{Commonwealth--}
 \cite{Dublin2012-06-14--}
 
-\printbibliography[heading=bibliography,title=【参考文献表著录格式示例】]
+
+\printbibliography[type=book,notkeyword=standard,title=【普通图书-著录格式示例】]
+\defbibfilter{collections}{%
+type=collection
+or type=proceedings
+or type=incollection
+or type=inproceedings
+}
+\printbibliography[filter=collections,title=【论文集、会议录-著录格式示例】]
+\printbibliography[type=report,title=【报告-著录格式示例】]
+\printbibliography[type=thesis,title=【学位论文-著录格式示例】]
+\printbibliography[type=patent,title=【专利-著录格式示例】]
+\defbibfilter{standard}{%
+( type=book or type=inbook )
+and keyword=standard
+}
+\printbibliography[filter=standard,title=【标准文献-著录格式示例】]
+\printbibliography[type=inbook,notkeyword=standard,title=【专著中析出的文献-著录格式示例】]
+\printbibliography[type=article,notkeyword=news,title=【期刊中析出的文献-著录格式示例】]
+\printbibliography[type=article,keyword=news,title=【报纸析出的文献-著录格式示例】]
+\printbibliography[type=online,title=【电子资源-著录格式示例】]
 \end{refsection}
 
 \end{document}

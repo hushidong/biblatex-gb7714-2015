@@ -1,4 +1,4 @@
-Date of last change:2016-10-23
+Date of last change:2016-11-11 to version v1.0b
 
 # biblatex-gb7714-2015: a biblatex style  package
 ---------------------------------------------------------
@@ -30,7 +30,18 @@ please see the file 'biblatex-gb7714-2015.pdf' for more information!
 
 update history:
 
-date of change: 2016-10-23
+date of change: 2016-11-11 to version v1.0b
+
+* Changes to pkg code:to match the GBT7714-2015 standard
+- "*.bbx",: change a few local strings from english.blx such as bibliography,references
+- "*.bbx",: set new maxnamenumber for authoryear style
+- "*.bbx",: add translator field and modify version format for report and manual driver 
+- "*.bbx",: remove the space before edition/version field, which was brought in with testCJKfirst function
+
+* Changes to documentation:
+- biblatex-gb7714-2015.tex: correct a few flaws and add more instructions.
+
+date of change: 2016-10-23 to version v1.0a
 
 * Changes to pkg code:
 - "*.bbx","*.cbx": add some information like version information.

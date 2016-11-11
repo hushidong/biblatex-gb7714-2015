@@ -1,0 +1,259 @@
+\usepackage{bbding}
+
+\usepackage{expl3,etoolbox,ifthen,xstring}
+\usepackage{ctex}
+\usepackage{xeCJKfntef}
+\usepackage[paperwidth=210mm,paperheight=290mm,left=20mm,right=20mm,top=25mm, bottom=15mm]{geometry}            %定义版面
+
+\usepackage[colorlinks=true,%
+pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}  %书签功能，选项去掉链接红色方框
+\usepackage{titleref} %标题引用
+%linkcolor=black,linkcolor=green,blue,red,cyan, magenta,
+%yellow, black, gray,white, darkgray, lightgray, brown,
+%lime, olive, orange, red,purple, teal, violet.
+%CJKbookmarks,bookmarksnumbered=true,
+
+%%%========================参考文献===============================
+%\usepackage[backend=bibtex8,sorting=none,citestyle=authoryear,bibstyle=alphabetic]{biblatex}
+%采用分章的参考文献的快捷方法
+\usepackage[backend=biber,bibstyle=gb7714-2015,%nature,%
+citestyle=gb7714-2015,backref=true%gb，gbt7714_2005_n，
+]{biblatex}%biber，caspervector
+%\renewcommand{\bibfont}{\zihao{-5}\songti}
+\setlength{\bibitemsep}{2pt}
+\defbibheading{bibliography}[\bibname]{%
+\phantomsection%解决链接指引出错的问题，相当于加入了一个引导点
+\addcontentsline{toc}{subsection}{#1}
+	\centering\subsubsection*{#1}}%
+
+\addbibresource[location=local]{paperone.bib}
+%参考文献的bib文件
+%	\markboth{#1}{#1}}
+%注意在实际使用中用titsec宏包的页眉页脚也有点问题，一旦给出markboth就会出现问题
+%这里因为bibliography给出了markboth所以出错。因此重定义bibliography以消除问题
+%重定义命令中去掉了markboth那一句命令。
+%常用样式
+%style=trad-plain
+%style=trad-unsrt
+%style=trad-alpha
+%style=trad-abbrv
+%style=musuos
+%style=nature
+%style=nejm  %New England Journal of Medicine
+%style=phys  %follows the guidelines of the aip and aps
+%bibstyle=publist
+%style=science  %follows the guidelines of the journal Science
+
+%style=ieee % follows the guidelines of the ieee.
+%style=ieee-alphabetic
+%bibstyle=manuscripts,otheroption
+%style=chem-acs %American Chemistry Society journals.
+%style=chem-angew %Angewandte Chemie Chemistry – A European Journal.
+%style=chem-biochem %Biochemistry and a small number of other American Chemistry Society journals.
+%style=chem-rsc  %Royal Society of Chemistry journals.
+%style=authortitle-dw
+%style=footnote-dw
+%%%=================================================================
+
+%自定义下划红线和背景颜色
+\usepackage{ulem}
+\newcommand\yellowback{\bgroup\markoverwith
+{\textcolor{yellow}{\rule[-0.5ex]{2pt}{2.5ex}}}\ULon}
+\newcommand\reduline{\bgroup\markoverwith
+{\textcolor{red}{\rule[-0.5ex]{2pt}{0.4pt}}}\ULon}
+
+\usepackage{subfigure}
+\usepackage[subfigure]{tocloft} %注意其与titletoc共用时分页会有问题
+\usepackage{ccaption}
+\captiondelim{. } %图序图题中间的间隔符号
+\captionnamefont{\zihao{-5}\heiti} %图序样式
+\captiontitlefont{\zihao{-5}} %图题样式
+\captionwidth{0.8\linewidth} %标题宽度
+\changecaptionwidth
+%\captionstyle{<style>} can be used to alter this. Sensible values for
+%style are: \centering, \raggedleft or \raggedright
+\captionstyle{\centering}
+%\precaption{\rule{\linewidth}{0.4pt}\par}
+%\postcaption{\rule[0.5\baselineskip]{\linewidth}{0.4pt}}
+\setlength{\belowcaptionskip}{0.2cm} %设置caption上下间距
+\setlength{\abovecaptionskip}{0.2cm}
+\setlength{\abovelegendskip}{0.2cm}  %设置legend上下间距
+\setlength{\belowlegendskip}{0.2cm}
+%新的浮动体设置
+%\newfloatlist[within]{fenv}{ext}{listname}{capname}
+%\newfloatlist{X}{Z}{flist}{fcap}
+%within，可以设为chapter表示以章节为单位
+%fenv，环境名
+%ext，写入条目的文件的扩展名
+%listname，新环境目录的标题
+%capname，新环境标题的图序
+\newcommand{\listegcodename}{示~~ 例}
+\newcommand{\egcodename}{示例}
+\newfloatlist{egcode}{loc}{\listegcodename}{\egcodename}
+\newfixedcaption{\codecaption}{egcode}
+
+%环境名：
+%\begin{source}\end{source}
+%\begin{source*}\end{source*}
+%目录命令
+%可以设置\cftbeforeZtitleskip，\cftafterZtitleskip长度，比如：
+\setlength{\cftbeforeloctitleskip}{\baselineskip}
+\setlength{\cftafterloctitleskip}{0.5\baselineskip}
+%可以设置\cftZtitlefont字体样式比如
+\renewcommand{\cftloctitlefont}{\hfill\Large\heiti}
+\renewcommand{\cftafterloctitle}{\hfill}
+\renewcommand{\cftegcodepresnum}{例}
+\renewcommand{\cftegcodeaftersnum}{.}
+\renewcommand{\cftegcodeaftersnumb}{~}
+\cftsetindents{egcode}{0em}{3em}
+\setlength{\cftbeforeegcodeskip}{2mm}
+\renewcommand{\cftegcodepagefont}{\bfseries}
+
+\setlength{\cftbeforetoctitleskip}{\baselineskip}
+\setlength{\cftaftertoctitleskip}{0.5\baselineskip}
+%\renewcommand\contentsname{\hfill 目~~ 录 \hfill \hspace{1cm}}
+%用这一句也是一样的。
+\renewcommand{\cfttoctitlefont}{\hfill\Large\heiti}
+\renewcommand{\cftaftertoctitle}{\hfill\hspace{0.1cm}}
+\renewcommand\contentsname{目~~ 录}
+\renewcommand{\cftsecleader}{\leaders\hbox to 1em{\hss.\hss}\hfill}
+\setlength{\cftbeforesecskip}{2mm}
+\renewcommand{\cftsecfont}{\songti}
+
+\usepackage{listings}
+\usepackage{color,xcolor}
+\colorlet{examplefill}{yellow!80!black}
+\definecolor{graphicbackground}{rgb}{0.96,0.96,0.8}
+\definecolor{codebackground}{rgb}{0.9,0.9,1}
+
+\newlength{\outleftdis}
+\newcommand{\codetopline}[1]{\settowidth{\outleftdis}{\footnotesize{#1}~~~}%
+\ifodd\thepage%判断奇数页，画一条有左标签的线
+{\noindent\hspace*{-\outleftdis}\colorbox{yellow}{\color{blue}\footnotesize{#1}~}\color{green!50!black}\rule[0.1\baselineskip]{\linewidth}{0.4pt}}%
+\else%否则为偶数页，画一条有右标签的线
+{%\noindent\makebox{\color{green!50!black}\rule[0.1\baselineskip]{\linewidth}{0.4pt}\colorbox{yellow}{\color{blue}~\footnotesize{#1}}}
+\noindent\color{green!50!black}\rule[0.1\baselineskip]{\linewidth}{0.4pt}\colorbox{yellow}{\color{blue}~\footnotesize{#1}}%
+}%
+\fi%
+}
+\newcommand{\codebottomline}
+{\noindent\makebox{\color{green!50!black}\rule[1pt]{\linewidth}{0.4pt}}}
+
+\lstnewenvironment{codetex}[2]%
+{\begin{center}\end{center}\centering\setlength{\abovecaptionskip}{1mm}\setlength{\belowcaptionskip}{1mm}%
+\vspace{-2.0\baselineskip}
+\codecaption{#1}\label{#2}%\nopagebreak
+%\vspace{-1.0\baselineskip}
+\codetopline{代码}%
+\vspace{-0.5\baselineskip}
+\lstset{% general command to set parameter(s)
+%name=#1,
+%label=#2,
+%caption=\lstname,
+linewidth=\linewidth,
+breaklines=true,
+%showspaces=true,
+extendedchars=false,
+columns=fullflexible,%flexible,
+%frame=tb,
+frame=none,
+fontadjust=true,
+language=[LaTeX]TeX,
+%backgroundcolor=\color{yellow}, %背景颜色
+backgroundcolor=\color{codebackground},
+numbers=left,
+numberstyle=\tiny\color{red},
+basicstyle=\small, % print whole listing small，footnotesize
+keywordstyle=\color{blue}\bfseries,%\underbar,
+% underlined bold black keywords
+identifierstyle=, % nothing happens
+commentstyle=\color{green!50!black}, % white comments
+stringstyle=\ttfamily, % typewriter type for strings
+showstringspaces=false}% no special string spaces
+}
+{\nopagebreak\vspace*{-\baselineskip}\codebottomline\\}
+
+\lstnewenvironment{texlist}%
+{\lstset{% general command to set parameter(s)
+%name=#1,
+%label=#2,
+%caption=\lstname,
+linewidth=\linewidth,
+breaklines=true,
+%showspaces=true,
+extendedchars=false,
+columns=fullflexible,%flexible,
+%frame=tb,
+fontadjust=true,
+language=[LaTeX]TeX,
+%backgroundcolor=\color{yellow}, %背景颜色
+numbers=left,
+numberstyle=\tiny\color{red},
+basicstyle=\footnotesize, % print whole listing small
+keywordstyle=\color{blue}\bfseries,%\underbar,
+% underlined bold black keywords
+identifierstyle=, % nothing happens
+commentstyle=\color{green!50!black}, % white comments
+stringstyle=\ttfamily, % typewriter type for strings
+showstringspaces=false}% no special string spaces
+}
+{}
+
+\usepackage[listings,theorems]{tcolorbox}
+
+\newcounter{myprop}\def\themyprop{\arabic{myprop}}
+%序号如果带章节的话可以改为比如:\thesection.\arabic{myprop}
+\tcbmaketheorem{property}{注意点}{theorem style=plain,fonttitle=\bfseries\upshape, %
+fontupper=\slshape,boxrule=0mm,arc=0mm, %
+coltitle=black,colback=green!25,colframe=blue!50,%
+separator sign={\ $\blacktriangleright$},
+description delimiters={}{},
+terminator sign={\ }}{myprop}{pp}
+%最后一个必须参数是prefix用来做label比如这里是pp:加上给出的标签名
+
+\newtcbtheorem[]{refentry}{条目类型}
+{separator sign={\ $\blacktriangleright$},theorem style=plain,fonttitle=\bfseries,
+fontupper=\normalsize,boxrule=0mm,arc=0mm,
+coltitle=green!35!black,colbacktitle=green!15!white,
+colback=green!50!yellow!15!white,terminator sign={\ }}{rfeg}
+%最后一个必须参数是prefix用来做label比如这里是eg:加上给出的标签名
+
+\newcommand{\titleformanual}[1]{\def\biaotiudf{#1}}
+\newcommand{\authorformanual}[1]{\def\zuozheudf{#1}}
+\newcommand{\dateformanual}[1]{\def\riqiudf{#1}}
+%\ifthenelse{\equal{\youwuudf}{\temp}}{true}{false}
+\def\temp{}
+\newcommand{\titleandauthor}{
+\begin{center}
+{\renewcommand{\thefootnote}{\fnsymbol{footnote}}\setlength{\baselineskip}{30pt}\heiti{\zihao{-2}{\biaotiudf}}\par}
+%注意这里\par要放在花括号内才有效
+\vspace*{0.3cm}
+{\renewcommand{\thefootnote}{\arabic{footnote}}\kaishu{\zihao{4}{\zuozheudf}}\par}
+\vspace*{0.2cm}
+{\songti{\zihao{-4}{\riqiudf}}\par}
+\end{center}
+}
+\usepackage{enumitem} %重设list环境
+
+%\usepackage{fancyvrb}%fancyvrb宏包
+%\DefineVerbatimEnvironment%  %定义环境-myverbatim
+%{myverbatim}{Verbatim}
+%{gobble=0,numbers=left,numbersep=2mm,framerule=0.2mm,fontsize=\footnotesize,
+%firstnumber=auto,%frame=lines,
+%rulecolor=\color{red!25},fillcolor=\color{red!25},showspaces=true,xleftmargin=0mm}
+
+\newcommand{\pz}[1]{%定义pz为旁注命令
+\marginpar[\flushright\youyuan\color{red}\footnotesize #1]{\youyuan\color{red}\small #1}}
+\newcommand{\PZ}[1]{%定义pz为旁注命令
+\marginpar[\flushright\youyuan\color{red}\footnotesize  #1]{\youyuan\color{red}\small #1}}
+\newcommand{\qd}[1]{%定义qd为强调命令
+{\fangsong\color{blue}#1}}
+\newcommand{\QD}[1]{%定义qd为强调命令
+{\fangsong\color{blue}#1}}
+\newcommand{\bc}[1]{%定义补充信息
+{\small\kaiti\color{violet}#1}} %orange，brown，purple，teal，violet，olive，cyan
+\newcommand{\BC}[1]{%定义补充信息
+{\small\kaiti\color{violet}#1}}
+
+
+
