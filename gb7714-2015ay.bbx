@@ -7,11 +7,12 @@
 %% 2016/05/20 v1.0
 %% 2016/10/23 v1.0a
 %% 2016/11/11 v1.0b
+%% 2016/11/14 v1.0c
 %% E-mail: hzzmail@163.com
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\ProvidesFile{gb7714-2015ay.bbx}[2016/11/11 v1.0b biblatex bibliography style]
+\ProvidesFile{gb7714-2015ay.bbx}[2016/11/14 v1.0c biblatex bibliography style]
 
 % Load the standard style to avoid copy-pasting unnecessary material
 \RequireBibliographyStyle{authoryear} %加载标准样式
@@ -38,9 +39,6 @@
   %minnames     = 3,  %设置缩减后的名字最小数量
   maxbibnames=3, %将文献列表和引用中最大名字数量区分开
   minbibnames=3,
-  maxcitenames=1,
-  mincitenames=1
-  %uniquename   = init
 }
 
 \newbibmacro*{name:given-family}[4]{%利用family-given定义given-family
@@ -106,18 +104,40 @@
   %minnames     = 3,  %设置缩减后的名字最小数量
   maxbibnames=3, %将文献列表和引用中最大名字数量区分开
   minbibnames=3,
-  maxcitenames=1,
-  mincitenames=1
-  %uniquename   = init
 }
-\DeclareNameFormat{first-last}{%修改作者的姓和名的顺序，源来自于biblatex.def文件
-  \iffirstinits%
-    {\usebibmacro{name:last-first}{#1}{#4}{#5}{#7}}
-    {\usebibmacro{name:last-first}{#1}{#3}{#5}{#7}}%
-    \usebibmacro{name:andothers}}
 
 %作者名字的处理，参考文档4.2.3节，3.12.4 Name Parts and Name Spacing
 \newbibmacro*{name:last-first}[4]{%
+  \ifuseprefix
+    {\usebibmacro{name:delim}{#3#1}%
+     \usebibmacro{name:hook}{#3#1}%
+     \ifblank{#3}{}{%
+       \ifcapital
+         {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
+         {\mkbibnameprefix{#3}\isdot}%
+       \ifpunctmark{'}{}{\bibnamedelimc}}%
+     %\mkbibnamelast{#1}\isdot
+     \ifblank{#2}{\MakeCapital#1}{\mkbibnamelast{\MakeUppercase{#1}}}\isdot%\MakeUppercase %\mkbibnamelast{\MakeUppercase{#1}} %\MakeSentenceCase
+     %注意上一句\MakeCapital后面如果再跟一个{}包含#1，则没有效果，可能是包在里面少了一层展开
+     %因为机构名通常包括在{}内，所以要多展开一次才行，所以这里去掉#1外面的{}
+     %\mkbibnamelast{\MakeUppercase{#1}}\isdot
+     %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
+     \ifblank{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamefirst{\MakeUppercase{#2}}\isdot}%
+     \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}}
+    {\usebibmacro{name:delim}{#1}%
+     \usebibmacro{name:hook}{#1}%
+     %\mkbibnamelast{#1}\isdot  %3.9.1 Generic Commands and Hooks，对姓重新处理，如下句: %\mkbibnamelast{\MakeUppercase{#1}}
+     \ifblank{#2}{\MakeCapital#1}{\mkbibnamelast{\MakeUppercase{#1}}}\isdot  %大写，参考4.6.4 Miscellaneous Commands，\MakeUppercase %\MakeSentenceCase
+     %\mkbibnamelast{\MakeUppercase{#1}}\isdot
+     %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
+     \ifblank{#2#3}{}{\revsdnamepunct}%
+     \ifblank{#2}{}{\bibnamedelimd\mkbibnamefirst{\MakeUppercase{#2}}\isdot}%
+     \ifblank{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}%
+     \addcomma\addspace%
+     \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}%
+     }}
+
+\newbibmacro*{name:first-last}[4]{%
   \ifuseprefix
     {\usebibmacro{name:delim}{#3#1}%
      \usebibmacro{name:hook}{#3#1}%
@@ -191,7 +211,9 @@ and         = {\addcomma},%将第2和3人名见的and符号改成 逗号，用\f
 %andothers   = {et al.},        %将超过3个人名的省略，et al.改成为 等
 andotherscn   = {等},        %将超过3个人名的省略，et al.改成为 等
 noaddress = {[S.l.]},
-nopublisher = {[s.n.]}
+nopublisher = {[s.n.]},
+backrefpage      = {引用页:},
+backrefpages     = {引用页:},
 }
 
 %关于双语言或多语言的参考文献，可以参考3.11.5 Entry Sets，4.11.1 Entry Sets
@@ -252,8 +274,19 @@ nopublisher = {[s.n.]}
 %注意\DeclareSourcemap命令只能出现一次
 \DeclareSourcemap{
 \maps[datatype=bibtex]{
-\map{ %增加文献标识符如[M],[J]等，下面首先生成这一信息
-%使用下面biber动态修改bbl文件的方法是正确的
+        \map{%因为要做佚名处理，所以这里先对有些只有编者而没有作者的情况进行处理
+            \step[fieldsource=editor]
+            \step[fieldset=author,origfieldval]
+            }
+        \map{%默认情况下将空缺作者设置为佚名
+            \step[fieldset=author, fieldvalue={佚名}]
+            }
+        \map[overwrite]{%当标题带有英文字符，且作者为佚名的情况，设置作者为noauthor，
+        %也有一些特殊情况可能处理不到，比如标题中英混合，作者又却是
+            \step[fieldsource=title,match=\regexp{[a-zA-Z]},final]
+            \step[fieldsource=author,match=\regexp{佚名}, replace={NOAUTHOR}]
+            }
+        \map{ %增加文献标识符如[M],[J]等，下面首先生成这一信息
             %\perdatasource{examples.bib}
             \pertype{article}
             \pertype{periodical}
@@ -324,11 +357,23 @@ nopublisher = {[s.n.]}
             \step[fieldset=userf, origfieldval]
             \step[fieldsource=translator]
             \step[fieldset=usere, origfieldval]
-            \step[fieldsource=year]
+            \step[fieldsource=year]%处理一些用year表示date的情况
             \step[fieldset=date, origfieldval]
-            \step[fieldsource=note]%将note域信息复制给keywords，用于输出时容易区分标准和报纸
+            }
+        \map{%将entrykey放入keywords中用于后期的使用
+            \step[fieldsource=entrykey]
             \step[fieldset=keywords, origfieldval]
-            %\step[fieldset=userb, fieldvalue={en}]
+            \step[fieldsource=note,final]%将note域信息复制给keywords，用于输出时容易区分标准和报纸
+            \step[fieldset=keywords, fieldvalue={,},append]
+            \step[fieldset=keywords, origfieldval,append]
+            }
+        \map{%因为无法进行cjk字符判断，所以用反的思路，判断没有英文字符，没有空格，没有逗号等字符情况下
+             %认为是中文的，将文献userb设置成cn，用于排序
+            \step[fieldsource=author,match=\regexp{[^a-zA-Z\s\.\,\'\{\}]},final]
+            \step[fieldset=userb,fieldvalue={cn}]
+            }
+        \map{%将没有设置的userb设置成en，即认为不是中文的就是英文的。
+            \step[fieldset=userb,fieldvalue={en}]
             }
 }
 }
@@ -598,7 +643,10 @@ nopublisher = {[s.n.]}
 %\addcolon\addspace%
 \iflistundef{publisher}{%
 \iftoggle{ifnoteeqstandard}{}{%
-\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}\setunit*{\addcolon\addspace}}{\printtext{[s.n.\adddot]}\setunit*{\addcolon\addspace}}}}% \bibstring{nopublisher}
+\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}\setunit{\adddot\addspace}\setunit*{\addcolon\addspace}}
+%\mkbibbrackets
+%{\printtext{[s.n.\adddot]}\setunit{\adddot\addspace}\setunit*{\addcolon\addspace}}}}%\bibstring{nopublisher}
+{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcolon\addspace}}}}
 {\printlist{publisher}\setunit*{\addcolon\addspace}}%
 %\addcomma\addspace%
 %\usebibmacro{date}%

@@ -7,11 +7,12 @@
 %% 2016/05/20 v1.0
 %% 2016/10/23 v1.0a
 %% 2016/11/11 v1.0b
+%% 2016/11/14 v1.0c
 %% E-mail: hzzmail@163.com
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\ProvidesFile{gb7714-2015.bbx}[2016/11/11 v1.0b biblatex bibliography style]
+\ProvidesFile{gb7714-2015.bbx}[2016/11/14 v1.0c biblatex bibliography style]
 
 % Load the standard style to avoid copy-pasting unnecessary material
 \RequireBibliographyStyle{numeric-comp} %加载标准样式
@@ -79,11 +80,35 @@
   minnames     = 3       %设置缩减后的名字最小数量
   %uniquename   = init
 }
-\DeclareNameFormat{first-last}{%修改作者的姓和名的顺序，源来自于biblatex.def文件
-  \iffirstinits%
-    {\usebibmacro{name:last-first}{#1}{#4}{#5}{#7}}
-    {\usebibmacro{name:last-first}{#1}{#3}{#5}{#7}}%
-    \usebibmacro{name:andothers}}
+\newbibmacro*{name:first-last}[4]{%
+  \ifuseprefix
+    {\usebibmacro{name:delim}{#3#1}%
+     \usebibmacro{name:hook}{#3#1}%
+     \ifblank{#3}{}{%
+       \ifcapital
+         {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
+         {\mkbibnameprefix{#3}\isdot}%
+       \ifpunctmark{'}{}{\bibnamedelimc}}%
+     %\mkbibnamelast{#1}\isdot
+     \ifblank{#2}{\MakeCapital#1}{\mkbibnamelast{\MakeUppercase{#1}}}\isdot%\MakeUppercase %\mkbibnamelast{\MakeUppercase{#1}} %\MakeSentenceCase
+     %注意上一句\MakeCapital后面如果再跟一个{}包含#1，则没有效果，可能是包在里面少了一层展开
+     %因为机构名通常包括在{}内，所以要多展开一次才行，所以这里去掉#1外面的{}
+     %\mkbibnamelast{\MakeUppercase{#1}}\isdot
+     %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
+     \ifblank{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamefirst{\MakeUppercase{#2}}\isdot}%
+     \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}}
+    {\usebibmacro{name:delim}{#1}%
+     \usebibmacro{name:hook}{#1}%
+     %\mkbibnamelast{#1}\isdot  %3.9.1 Generic Commands and Hooks，对姓重新处理，如下句: %\mkbibnamelast{\MakeUppercase{#1}}
+     \ifblank{#2}{\MakeCapital#1}{\mkbibnamelast{\MakeUppercase{#1}}}\isdot  %大写，参考4.6.4 Miscellaneous Commands，\MakeUppercase %\MakeSentenceCase
+     %\mkbibnamelast{\MakeUppercase{#1}}\isdot
+     %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
+     \ifblank{#2#3}{}{\revsdnamepunct}%
+     \ifblank{#2}{}{\bibnamedelimd\mkbibnamefirst{\MakeUppercase{#2}}\isdot}%
+     \ifblank{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}%
+     \addcomma\addspace%
+     \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}%
+     }}
 
 \newbibmacro*{name:last-first}[4]{%
   \ifuseprefix
@@ -185,7 +210,9 @@ and         = {\addcomma},%将第2和3人名见的and符号改成 逗号，用\f
 %andothers   = {et al.},        %将超过3个人名的省略，et al.改成为 等
 andotherscn   = {等},        %将超过3个人名的省略，et al.改成为 等
 noaddress = {[S.l.]},
-nopublisher = {[s.n.]}
+nopublisher = {[s.n.]},
+backrefpage      = {引用页:},
+backrefpages     = {引用页:},
 }
 
 %关于双语言或多语言的参考文献，可以参考3.11.5 Entry Sets，4.11.1 Entry Sets
@@ -350,15 +377,20 @@ nopublisher = {[s.n.]}
             \step[fieldset=usera, fieldvalue={Z}]
             }
         \map{
-        \step[fieldsource=author]
-        \step[fieldset=userf, origfieldval]
-        \step[fieldsource=translator]
-        \step[fieldset=usere, origfieldval]
-        \step[fieldsource=year]
-        \step[fieldset=date, origfieldval]
-        \step[fieldsource=note]%将note域信息复制给keywords，用于输出时容易区分标准和报纸
-        \step[fieldset=keywords, origfieldval]
-        }
+            \step[fieldsource=author]
+            \step[fieldset=userf, origfieldval]
+            \step[fieldsource=translator]
+            \step[fieldset=usere, origfieldval]
+            \step[fieldsource=year]
+            \step[fieldset=date, origfieldval]
+            }
+        \map{%将entrykey放入keywords中用于后期的使用
+            \step[fieldsource=entrykey]
+            \step[fieldset=keywords, origfieldval]
+            \step[fieldsource=note,final]%将note域信息复制给keywords，用于输出时容易区分标准和报纸
+            \step[fieldset=keywords, fieldvalue={,},append]
+            \step[fieldset=keywords, origfieldval,append]
+            }
 }
 }
 
@@ -526,13 +558,13 @@ nopublisher = {[s.n.]}
 %\addcolon\addspace%
 \iflistundef{publisher}{%
 \iftoggle{ifnoteeqstandard}{}{%
-\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}\addcomma\addspace}{\printtext{[s.n.\adddot]}\addcomma\addspace}}}% \bibstring{nopublisher}
+\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}
+{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}}}
 {\printlist{publisher}\addcomma\addspace}%
 %\addcomma\addspace%
 \usebibmacro{date}%
   %\newunit %去掉这个标点
 }
-
 
 %对版本信息做出修改，源来自biblatex.DEF
 \DeclareFieldFormat{edition}{%

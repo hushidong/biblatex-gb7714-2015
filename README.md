@@ -1,4 +1,4 @@
-Date of last change:2016-11-11 to version v1.0b
+Date of last change:2016-11-14 to version v1.0c
 
 # biblatex-gb7714-2015: a biblatex style  package
 ---------------------------------------------------------
@@ -30,6 +30,19 @@ please see the file 'biblatex-gb7714-2015.pdf' for more information!
 
 update history:
 
+date of change: 2016-11-14 to version v1.0c
+
+* Changes to pkg code:to fix a few bugs
+- "*ay.bbx",: add noauthor or "佚名" for the authoryear style
+- "*ay.bbx",: add some map cmds to automatically fill the userb field for sorting of the authoryear style
+- "*ay.bbx",: add a command yearpagescite for the authoryear style
+- "*.bbx",: add a dot after the null publisher with nothing followed
+- "*.bbx",: modify the english local string backrefpage to chinese "引用页:"
+- "*ay.bbx",: add some options such as uniquelist,labeldate,uniquename for the authoryear style
+
+* Changes to documentation:
+- biblatex-gb7714-2015.tex: revise this document.
+
 date of change: 2016-11-11 to version v1.0b
 
 * Changes to pkg code:to match the GBT7714-2015 standard
@@ -40,6 +53,7 @@ date of change: 2016-11-11 to version v1.0b
 
 * Changes to documentation:
 - biblatex-gb7714-2015.tex: correct a few flaws and add more instructions.
+
 
 date of change: 2016-10-23 to version v1.0a
 

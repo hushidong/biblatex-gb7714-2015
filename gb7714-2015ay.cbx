@@ -7,11 +7,12 @@
 %% 2016/05/20 v1.0
 %% 2016/10/23 v1.0a
 %% 2016/11/11 v1.0b
+%% 2016/11/14 v1.0c
 %% E-mail: hzzmail@163.com
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\ProvidesFile{gb7714-2015ay.cbx}[2016/11/11 v1.0b biblatex citation style]
+\ProvidesFile{gb7714-2015ay.cbx}[2016/11/14 v1.0c biblatex citation style]
 
 \RequireCitationStyle{authoryear}
 %\RequireCitationStyle{numeric}
@@ -20,6 +21,11 @@
   %autocite  = superscript ,
   %autopunct = true       ,
   %sorting   = none        ,
+  maxcitenames=1,
+  mincitenames=1,
+  uniquename=init,%因为使用了名字缩写选项，所以需要设置uniquename=init而不是full避免冲突
+  labeldate=true,
+  uniquelist=minyear,
 }
 
 %\DeclareCiteCommand{\cite}[\mkbibparens]{⟨precode⟩}{⟨loopcode⟩}{⟨sepcode⟩}{⟨postcode⟩}
@@ -50,5 +56,13 @@
   {\printtext{(}\usebibmacro{prenote}}
   {\usebibmacro{citeindex}%
    \usebibmacro{cite}}
+  {\multicitedelim}
+  {\printtext{)}\textsuperscript{\usebibmacro{postpages}}}
+
+%增加一个命令yearpagescite用于当文中作者已经存在，需要页码和年份的情况。
+%参考来源，biblatex.DEF,其中\DeclareCiteCommand*{\citeyear}命令
+\DeclareCiteCommand{\yearpagescite}
+  {\printtext{(}\usebibmacro{prenote}}
+  {\printfield{year}\printfield{extrayear}}
   {\multicitedelim}
   {\printtext{)}\textsuperscript{\usebibmacro{postpages}}}

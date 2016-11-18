@@ -16,8 +16,8 @@ pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
 %%%========================参考文献===============================
 %\usepackage[backend=bibtex8,sorting=none,citestyle=authoryear,bibstyle=alphabetic]{biblatex}
 %采用分章的参考文献的快捷方法
-\usepackage[backend=biber,bibstyle=gb7714-2015,%nature,%
-citestyle=gb7714-2015,backref=true%gb，gbt7714_2005_n，
+\usepackage[backend=biber,bibstyle=gb7714-2015ay,%nature,%
+citestyle=gb7714-2015ay %,backref=true%gb，gbt7714_2005_n，
 ]{biblatex}%biber，caspervector
 %\renewcommand{\bibfont}{\zihao{-5}\songti}
 \setlength{\bibitemsep}{2pt}
@@ -203,7 +203,7 @@ showstringspaces=false}% no special string spaces
 
 \newcounter{myprop}\def\themyprop{\arabic{myprop}}
 %序号如果带章节的话可以改为比如:\thesection.\arabic{myprop}
-\tcbmaketheorem{property}{注意点}{theorem style=plain,fonttitle=\bfseries\upshape, %
+\tcbmaketheorem{property}{方法}{theorem style=plain,fonttitle=\bfseries\upshape, %
 fontupper=\slshape,boxrule=0mm,arc=0mm, %
 coltitle=black,colback=green!25,colframe=blue!50,%
 separator sign={\ $\blacktriangleright$},
