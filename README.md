@@ -1,4 +1,4 @@
-Date of last change:2016-11-14 to version v1.0c
+﻿Date of last change:2016-11-24 to version v1.0d
 
 # biblatex-gb7714-2015: a biblatex style  package
 ---------------------------------------------------------
@@ -30,15 +30,25 @@ please see the file 'biblatex-gb7714-2015.pdf' for more information!
 
 update history:
 
+date of change: 2016-11-24 to version v1.0d
+
+* Changes to pkg code:to fix a few bugs to work with beamer class correctly
+- "*.bbx": redefine the DeclareFieldFormat for title to eleminate the redundant dot after title in beamer class
+- "*.bbx": add some comment in drivers to eleminate the needless space
+
+* Changes to documentation:
+- biblatex-gb7714-2015.tex: revise this document and add some explication
+
+
 date of change: 2016-11-14 to version v1.0c
 
 * Changes to pkg code:to fix a few bugs
-- "*ay.bbx",: add noauthor or "佚名" for the authoryear style
-- "*ay.bbx",: add some map cmds to automatically fill the userb field for sorting of the authoryear style
-- "*ay.bbx",: add a command yearpagescite for the authoryear style
-- "*.bbx",: add a dot after the null publisher with nothing followed
-- "*.bbx",: modify the english local string backrefpage to chinese "引用页:"
-- "*ay.bbx",: add some options such as uniquelist,labeldate,uniquename for the authoryear style
+- "*ay.bbx": add noauthor or "佚名" for the authoryear style
+- "*ay.bbx": add some map cmds to automatically fill the userb field for sorting of the authoryear style
+- "*ay.bbx": add a command yearpagescite for the authoryear style
+- "*.bbx": add a dot after the null publisher with nothing followed
+- "*.bbx": modify the english local string backrefpage to chinese "引用页:"
+- "*ay.bbx": add some options such as uniquelist,labeldate,uniquename for the authoryear style
 
 * Changes to documentation:
 - biblatex-gb7714-2015.tex: revise this document.
@@ -46,13 +56,14 @@ date of change: 2016-11-14 to version v1.0c
 date of change: 2016-11-11 to version v1.0b
 
 * Changes to pkg code:to match the GBT7714-2015 standard
-- "*.bbx",: change a few local strings from english.blx such as bibliography,references
-- "*.bbx",: set new maxnamenumber for authoryear style
-- "*.bbx",: add translator field and modify version format for report and manual driver 
-- "*.bbx",: remove the space before edition/version field, which was brought in with testCJKfirst function
+- "*.bbx": change a few local strings from english.blx such as bibliography,references
+- "*.bbx": set new maxnamenumber for authoryear style
+- "*.bbx": add translator field and modify version format for report and manual driver 
+- "*.bbx": remove the space before edition/version field, which was brought in with testCJKfirst function
 
 * Changes to documentation:
 - biblatex-gb7714-2015.tex: correct a few flaws and add more instructions.
+- "*.bib":: refine some entries
 
 
 date of change: 2016-10-23 to version v1.0a

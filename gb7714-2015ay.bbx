@@ -8,11 +8,12 @@
 %% 2016/10/23 v1.0a
 %% 2016/11/11 v1.0b
 %% 2016/11/14 v1.0c
+%% 2016/11/24 v1.0d
 %% E-mail: hzzmail@163.com
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\ProvidesFile{gb7714-2015ay.bbx}[2016/11/14 v1.0c biblatex bibliography style]
+\ProvidesFile{gb7714-2015ay.bbx}[2016/11/24 v1.0d biblatex bibliography style]
 
 % Load the standard style to avoid copy-pasting unnecessary material
 \RequireBibliographyStyle{authoryear} %加载标准样式
@@ -51,7 +52,7 @@
          {\mkbibnameprefix{#3}\isdot}%
        \ifprefchar{}{\bibnamedelimc}}%
      \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeUppercase{#1}}}\isdot
-     \ifdefvoid{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{\MakeCapital{#2}}\isdot}
+     \ifdefvoid{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{\MakeUppercase{#2}}\isdot}%\MakeCapital{#2}
      \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}
     {\usebibmacro{name:delim}{#1}%
      \usebibmacro{name:hook}{#1}%
@@ -63,7 +64,7 @@
        test {\ifdefvoid{#3}}}
        {}
        {\revsdnamepunct}%
-     \ifdefvoid{#2}{}{\bibnamedelimd\mkbibnamegiven{\MakeCapital{#2}}\isdot}%
+     \ifdefvoid{#2}{}{\bibnamedelimd\mkbibnamegiven{\MakeUppercase{#2}}\isdot}%\MakeCapital{#2}
      \ifdefvoid{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}
      \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}}
 
@@ -77,7 +78,7 @@
          {\mkbibnameprefix{#3}\isdot}%
        \ifprefchar{}{\bibnamedelimc}}%
      \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeUppercase{#1}}}\isdot
-     \ifdefvoid{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{\MakeCapital{#2}}\isdot}
+     \ifdefvoid{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{\MakeUppercase{#2}}\isdot}%\MakeCapital{#2}
      \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}
     {\usebibmacro{name:delim}{#1}%
      \usebibmacro{name:hook}{#1}%
@@ -89,7 +90,7 @@
        test {\ifdefvoid{#3}}}
        {}
        {\revsdnamepunct}%
-     \ifdefvoid{#2}{}{\bibnamedelimd\mkbibnamegiven{\MakeCapital{#2}}\isdot}%
+     \ifdefvoid{#2}{}{\bibnamedelimd\mkbibnamegiven{\MakeUppercase{#2}}\isdot}%%\MakeCapital{#2}
      \ifdefvoid{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}
      \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}}
 
@@ -104,6 +105,7 @@
   %minnames     = 3,  %设置缩减后的名字最小数量
   maxbibnames=3, %将文献列表和引用中最大名字数量区分开
   minbibnames=3,
+  %uniquename=init,
 }
 
 %作者名字的处理，参考文档4.2.3节，3.12.4 Name Parts and Name Spacing
@@ -436,16 +438,19 @@ backrefpages     = {引用页:},
 %\DeclareFieldFormat{maintitle}{\mkbibemph{#1}}
 %\DeclareFieldFormat{title}{\mkbibemph{#1}}
 %\DeclareFieldFormat{booktitle}{\mkbibemph{#1}}
-\DeclareFieldFormat{title}{#1}
-\DeclareFieldFormat{journaltitle}{#1}
+\DeclareFieldFormat{title}{#1\adddot\addthinspace}
+\DeclareFieldFormat{journaltitle}{#1\isdot}%添加\isdot，用于缩写名带点情况，将其转换为缩写点，便于标点的追踪
 \DeclareFieldFormat{issuetitle}{#1}
 \DeclareFieldFormat{maintitle}{#1}
 \DeclareFieldFormat{booktitle}{#1}
 %\DeclareFieldFormat[article,inbook,incollection,inproceedings,patent,thesis,unpublished]
 %  {title}{\mkbibquote{#1\isdot}}
 \DeclareFieldFormat%将期刊等文献的标题中原来带的引号去掉
-  [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
-  {title}{#1}
+  [article,patent,thesis,unpublished]
+  {title}{#1\adddot\addthinspace}
+\DeclareFieldFormat%将期刊等文献的标题中原来带的引号去掉
+  [inbook,incollection,inproceedings]
+  {title}{#1\nopunct\unspace}
 
 %重设标题格式，将其修改为首字母大写
 %\DeclareFieldFormat{titlecase}{#1}
@@ -463,7 +468,7 @@ backrefpages     = {引用页:},
        \printfield[titlecase]{title}%
        \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
        {}{\setunit{\subtitlepunct}%
-       \printfield[titlecase]{subtitle}}}%
+       \printfield[titlecase]{subtitle}}%
        \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
         {\setunit{\subtitlepunct}\printfield{titleaddon}}%
          \iffieldundef{note}{\printfield[gbtypeflag]{usera}}%在标题后直接给出文献标识字母，判断一下，是否是报纸和标准
@@ -475,11 +480,12 @@ backrefpages     = {引用页:},
             \printfield[gbtypeflags]{usera}%
             \else%
             \printfield[gbtypeflag]{usera}%
-            \fi
+            \fi%
         \fi%
         }%
      \iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
      %\newunit
+     }%
 }%
 }
 
@@ -738,7 +744,7 @@ backrefpages     = {引用页:},
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\labelnamepunct}\newblock%
   \usebibmacro{title}%
 %  \newunit
 %  \printlist{language}%
@@ -751,7 +757,7 @@ backrefpages     = {引用页:},
   \ifnameundef{bookauthor}{}{\newunit\newblock}%替换下一句
   %\newunit\newblock
   \usebibmacro{maintitle+booktitle}%
-  \newunit\newblock
+  \newunit\newblock%
   \usebibmacro{byeditor+others}%
   \newunit\newblock
   \printfield{edition}%
@@ -1039,10 +1045,10 @@ backrefpages     = {引用页:},
        \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
        {}{\setunit{\subtitlepunct}
        \printfield[titlecase]{subtitle}}%
-       }%
+       %}%把编组结束移到后面去
        \iffieldundef{usera}{}{%在标题后直接给出文献标识字母
         \printfield[gbtypeflag]{usera}}
-       }
+       }}
        }
 
 %期刊的标题做修改，源来自standard.BBX
@@ -1101,10 +1107,8 @@ backrefpages     = {引用页:},
 %新增一个样式用于输出连续出版物的地址，单位，时间
 %类似与上面的\newbibmacro*{publisher+location+date}
 \newbibmacro*{location+institution+date}{%
-\iflistundef{location}{
 \testCJKfirst{\thefield{title}}
-\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}}{\printtext{[S.l.\adddot]}}
-}%
+\iflistundef{location}{\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}}{\printtext{[S.l.\adddot]}}}%
   {\printlist{location}}%
 %  \iflistundef{institution}
 %    {\setunit*{\addcomma\space}}
@@ -1113,14 +1117,17 @@ backrefpages     = {引用页:},
 %  \setunit*{\addcomma\space}%
 \addcolon\addspace%
 \iflistundef{institution}{%
-\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}}{\printtext{[s.n.\adddot]}}}% \bibstring{nopublisher}
+%注意这里\printtext{\mkbibbrackets{s.n.}}和\printtext{[s.n.\adddot]}是不同的，这里的]不影响标点追踪，
+%这里要理解的是newunit插入的是period，看def中的命令:\newcommand*{\newunitpunct}{\addperiod\space}，\newcommand*{\finentrypunct}{\addperiod}
+\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}}{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}}}% \bibstring{nopublisher}
 {\printlist{institution}}%
 \setunit{\addcomma\addspace}%
   %\usebibmacro{date}%
 %  \printfield{year}%
 %  \bibrangedash%
 %  \iffieldundef{endyear}{}{\printfield{endyear}}%
-  \newunit}
+  \newunit%
+}
 
 
 %修改连续出版物的驱动，源来自standard.BBX
@@ -1168,13 +1175,14 @@ backrefpages     = {引用页:},
        \printfield[titlecase]{title}%
        \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
        {}{\setunit{\subtitlepunct}%
-       \printfield[titlecase]{subtitle}}}%
+       \printfield[titlecase]{subtitle}}%
        \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
         {\setunit{\subtitlepunct}\printfield{titleaddon}}%
         \setunit{\subtitlepunct}\printfield{number}%写专利号
          \printfield[gbtypeflag]{usera}%
      \iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
      %\newunit
+     }%
 }%
 }
 

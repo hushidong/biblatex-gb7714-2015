@@ -8,11 +8,12 @@
 %% 2016/10/23 v1.0a
 %% 2016/11/11 v1.0b
 %% 2016/11/14 v1.0c
+%% 2016/11/24 v1.0d
 %% E-mail: hzzmail@163.com
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\ProvidesFile{gb7714-2015.bbx}[2016/11/14 v1.0c biblatex bibliography style]
+\ProvidesFile{gb7714-2015.bbx}[2016/11/24 v1.0d biblatex bibliography style]
 
 % Load the standard style to avoid copy-pasting unnecessary material
 \RequireBibliographyStyle{numeric-comp} %加载标准样式
@@ -52,7 +53,7 @@
          {\mkbibnameprefix{#3}\isdot}%
        \ifprefchar{}{\bibnamedelimc}}%
      \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeUppercase{#1}}}\isdot
-     \ifdefvoid{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{\MakeCapital{#2}}\isdot}
+     \ifdefvoid{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{\MakeUppercase{#2}}\isdot}%\MakeCapital
      \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}
     {\usebibmacro{name:delim}{#1}%
      \usebibmacro{name:hook}{#1}%
@@ -64,7 +65,7 @@
        test {\ifdefvoid{#3}}}
        {}
        {\revsdnamepunct}%
-     \ifdefvoid{#2}{}{\bibnamedelimd\mkbibnamegiven{\MakeCapital{#2}}\isdot}%
+     \ifdefvoid{#2}{}{\bibnamedelimd\mkbibnamegiven{\MakeUppercase{#2}}\isdot}%\MakeCapital
      \ifdefvoid{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}
      \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}}
 
@@ -191,7 +192,7 @@
 %\newcommand*{\revsdnamepunct}{\addcomma}  %来源biblatex.def
 \renewcommand*{\revsdnamepunct}{}
 %\newcommand*{\subtitlepunct}{\newunitpunct} %修改标题和其它标题信息间的标点
-\renewcommand*{\subtitlepunct}{\addcolon\space} %来源biblatex.def
+\renewcommand*{\subtitlepunct}{\addcolon\space} %来源biblatex.def，
 
 %新建一个当地化字符串，用来记录“等”字符
 \NewBibliographyString{andotherscn}
@@ -277,7 +278,7 @@ backrefpages     = {引用页:},
      \printnames[bytranslator]{translator}%
      \clearname{translator}%
      \usebibmacro{bytranslator+othersstrg}%“译”的位置换到下面来，即放到译者后面。
-     \setunit*{\addspace}
+     \setunit*{\addspace}%
      \newunit}%
   \usebibmacro{withothers}}
 
@@ -416,9 +417,24 @@ backrefpages     = {引用页:},
 %\DeclareFieldFormat{gbtypeflag}{\nobreak\mkbibbrackets{\nobreak#1}\nobreak}
 \DeclareFieldFormat{gbtypeflag}{%
 \iffieldundef{url}%当存在url时，增加一个OL标识符
-{\nobreak\printtext{[}\nobreak#1\printtext{]}\nobreak}%
-{\nobreak\printtext{[}\nobreak#1\printtext{\texttt{/}OL]}\nobreak}%
+{\nobreak\printtext{[}\nobreak#1\nobreak\printtext{]}}%
+{\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\texttt{/}OL]}}%
 }
+%\DeclareFieldFormat{gbtypeflag}{%
+%\iffieldundef{url}%当存在url时，增加一个OL标识符
+%{\printtext{\nobreak[\nobreak}#1\printtext{]\nobreak}}%
+%{\printtext{\nobreak[\nobreak}#1\printtext{\texttt{/}OL]\nobreak}}%
+%}
+%\DeclareFieldFormat{gbtypeflag}{%
+%\iffieldundef{url}%当存在url时，增加一个OL标识符
+%{\nobreak[\nobreak#1]\nobreak}%
+%{\nobreak[\nobreak#1\texttt{/}OL]\nobreak}%
+%}
+%\DeclareFieldFormat{gbtypeflag}{%
+%\iffieldundef{url}%当存在url时，增加一个OL标识符
+%{\printtext{\mkbibbrackets{#1}}}%\nopunct
+%{\printtext{\mkbibbrackets{#1\texttt{/}OL}}}%
+%}
 \DeclareFieldFormat{gbtypeflagn}{%用于报纸newspaper
 \iffieldundef{url}%当存在url时，增加一个OL标识符
 {\nobreak\printtext{[}\nobreak N\printtext{]}\nobreak}%
@@ -436,16 +452,19 @@ backrefpages     = {引用页:},
 %\DeclareFieldFormat{maintitle}{\mkbibemph{#1}}
 %\DeclareFieldFormat{title}{\mkbibemph{#1}}
 %\DeclareFieldFormat{booktitle}{\mkbibemph{#1}}
-\DeclareFieldFormat{title}{#1}
-\DeclareFieldFormat{journaltitle}{#1}
+\DeclareFieldFormat{title}{#1\adddot\addthinspace}%
+\DeclareFieldFormat{journaltitle}{#1\isdot}
 \DeclareFieldFormat{issuetitle}{#1}
 \DeclareFieldFormat{maintitle}{#1}
 \DeclareFieldFormat{booktitle}{#1}
 %\DeclareFieldFormat[article,inbook,incollection,inproceedings,patent,thesis,unpublished]
 %  {title}{\mkbibquote{#1\isdot}}
 \DeclareFieldFormat%将期刊等文献的标题中原来带的引号去掉
-  [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
-  {title}{#1}
+  [article,patent,thesis,unpublished]
+  {title}{#1\adddot\addthinspace}%
+\DeclareFieldFormat%将期刊等文献的标题中原来带的引号去掉
+  [inbook,incollection,inproceedings]
+  {title}{#1\nopunct\unspace}%
 
 %重设标题格式，将其修改为首字母大写
 %\DeclareFieldFormat{titlecase}{#1}
@@ -463,7 +482,7 @@ backrefpages     = {引用页:},
        \printfield[titlecase]{title}%
        \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
        {}{\setunit{\subtitlepunct}%
-       \printfield[titlecase]{subtitle}}}%
+       \printfield[titlecase]{subtitle}}%
        \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
         {\setunit{\subtitlepunct}\printfield{titleaddon}}%
          \iffieldundef{note}{\printfield[gbtypeflag]{usera}}%在标题后直接给出文献标识字母，判断一下，是否是报纸和标准
@@ -475,11 +494,12 @@ backrefpages     = {引用页:},
             \printfield[gbtypeflags]{usera}%
             \else%
             \printfield[gbtypeflag]{usera}%
-            \fi
+            \fi%
         \fi%
         }%
-     \iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
+     %\iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
      %\newunit
+     }%
 }%
 }
 
@@ -498,7 +518,9 @@ backrefpages     = {引用页:},
 
 \newbibmacro*{url}{\printfield{url}}
 %\newbibmacro*{urldate}{\printurldate} %引用时间修改如下一行，即带方括号
-\newbibmacro*{urldate}{\addspace\printtext{[}\printfield{urlyear}\bibrangedash\printfield{urlmonth}\bibrangedash\printfield{urlday}\printtext{]}}
+\newbibmacro*{urldate}{%
+%\iffieldundef{year}{}{\nopunct}%%这里增加了这一句是为了把year后直接跟urlyear中间的点去掉。这已经没有必要了在driver中去掉点了。
+\addspace\printtext{[}\printfield{urlyear}\bibrangedash\printfield{urlmonth}\bibrangedash\printfield{urlday}\printtext{]}}
 \newbibmacro*{newsdate}{%%新增加一个新闻日期
 \iffieldundef{year}{}{\printfield{year}%
 \iffieldundef{month}{}{\bibrangedash\printtext{\thefield{month}}%
@@ -543,7 +565,7 @@ backrefpages     = {引用页:},
   \setunit{\bibpagespunct}%
   \printfield{pages}}%
   %\newunit %这里的标点去掉
-  }
+}
 
 %出版社和地址的处理，当没有出版社地址时
 %直接判断title的信息是否是中文，若为中文，则写出版地不详，否则用英文的字符表示。
@@ -558,8 +580,8 @@ backrefpages     = {引用页:},
 %\addcolon\addspace%
 \iflistundef{publisher}{%
 \iftoggle{ifnoteeqstandard}{}{%
-\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}
-{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}}}
+\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
+{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}}}%
 {\printlist{publisher}\addcomma\addspace}%
 %\addcomma\addspace%
 \usebibmacro{date}%
@@ -585,6 +607,8 @@ backrefpages     = {引用页:},
 {\mkbibordedition{#1}~\bibstring{version}}}%
 {#1\isdot}}
 
+
+
 %book条目类的驱动，源来自standard.bbx文件
   \DeclareBibliographyDriver{book}{%
   \usebibmacro{bibindex}%
@@ -597,34 +621,34 @@ backrefpages     = {引用页:},
 {\setunit{\labelnamepunct}\newblock}}%
 {\setunit{\labelnamepunct}\newblock}%这个注释去除标题前空格
 \usebibmacro{maintitle+title}%
-  \newunit
-  \printlist{language}%
-  \newunit\newblock
-  \usebibmacro{byauthor}%
-  \newunit\newblock
-  \usebibmacro{byeditor+others}%
-  \newunit\newblock
-  \printfield{edition}%
-  \newunit
-  \iffieldundef{maintitle}
-    {\printfield{volume}%
-     \printfield{part}}
-    {}%
-  \newunit
-  \printfield{volumes}%
-  \newunit\newblock
-  \usebibmacro{series+number}%
-  \newunit\newblock
-  %\printfield{note}%
-  %\newunit\newblock
-  \usebibmacro{publisher+location+date}%
-  %\newunit\newblock %这里标点去掉
-  \usebibmacro{chapter+pages}%
-  \usebibmacro{doi+eprint+url}%从下面移动到上面来，因为gbt2015的url需直接放在页码后面。
-  \newunit\newblock
+\newunit
+\printlist{language}%
+\newunit\newblock%
+\usebibmacro{byauthor}%
+\newunit\newblock%
+\usebibmacro{byeditor+others}%
+\newunit\newblock%
+\printfield{edition}%
+\newunit%
+\iffieldundef{maintitle}%
+{\printfield{volume}%
+\printfield{part}}%
+{}%
+\newunit%
+\printfield{volumes}%
+\newunit\newblock%
+\usebibmacro{series+number}%
+\newunit\newblock%
+%\printfield{note}%
+%\newunit\newblock%
+\usebibmacro{publisher+location+date}%
+%\newunit\newblock %这里标点去掉
+\usebibmacro{chapter+pages}%
+\usebibmacro{doi+eprint+url}%从下面移动到上面来，因为gbt2015的url需直接放在页码后面。
+  \newunit\newblock%
   %\newunit
   \printfield{pagetotal}%
-  \newunit\newblock
+  \newunit\newblock%
   \iftoggle{bbx:isbn}
     {\printfield{isbn}}
     {}%
@@ -780,12 +804,13 @@ backrefpages     = {引用页:},
 {\setunit{\labelnamepunct}\newblock}%
 %\setunit{\labelnamepunct}\newblock
 \usebibmacro{title}%
-\printtext{\texttt{//}}
+%\nopunct
+\printtext{\texttt{//}}%
 %\texttt{//}
 \usebibmacro{bybookauthor}%
 \ifnameundef{bookauthor}{\newblock}{\newunit\newblock}%替换下一句
-  %\newunit\newblock
-  \usebibmacro{maintitle+booktitle}%
+%\newunit\newblock
+\usebibmacro{maintitle+booktitle}%
   \newunit\newblock
   \usebibmacro{byeditor+others}%
   \newunit\newblock
@@ -803,7 +828,7 @@ backrefpages     = {引用页:},
   %\printfield{note}%
   %\newunit\newblock
   \usebibmacro{publisher+location+date}%
-  %\newunit\newblock
+%\newunit\newblock
   \usebibmacro{chapter+pages}%
   \usebibmacro{doi+eprint+url}%移到上面来
   \newunit\newblock
@@ -871,10 +896,11 @@ backrefpages     = {引用页:},
        \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
        {}{\setunit{\subtitlepunct}
        \printfield[titlecase]{subtitle}}%
-       }%
+       %
        \iffieldundef{usera}{}{%在标题后直接给出文献标识字母
         \printfield[gbtypeflag]{usera}}
-       }
+       }%把编组结束移到这里
+       }%
        }
 
 %期刊的标题做修改，源来自standard.BBX
@@ -933,10 +959,8 @@ backrefpages     = {引用页:},
 %新增一个样式用于输出连续出版物的地址，单位，时间
 %类似与上面的\newbibmacro*{publisher+location+date}
 \newbibmacro*{location+institution+date}{%
-\iflistundef{location}{
 \testCJKfirst{\thefield{title}}
-\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}}{\printtext{[S.l.\adddot]}}
-}%
+\iflistundef{location}{\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}}{\printtext{[S.l.\adddot]}}}%
   {\printlist{location}}%
 %  \iflistundef{institution}
 %    {\setunit*{\addcomma\space}}
@@ -945,7 +969,7 @@ backrefpages     = {引用页:},
 %  \setunit*{\addcomma\space}%
 \addcolon\addspace%
 \iflistundef{institution}{%
-\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}}{\printtext{[s.n.\adddot]}}}% \bibstring{nopublisher}
+\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}}{\printtext{\mkbibbrackets{s.n.}}}}% \bibstring{nopublisher}%[s.n.\adddot]
 {\printlist{institution}}%
 \setunit{\addcomma\addspace}%
   %\usebibmacro{date}%
@@ -1000,13 +1024,14 @@ backrefpages     = {引用页:},
        \printfield[titlecase]{title}%
        \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
        {}{\setunit{\subtitlepunct}%
-       \printfield[titlecase]{subtitle}}}%
+       \printfield[titlecase]{subtitle}}%
        \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
         {\setunit{\subtitlepunct}\printfield{titleaddon}}%
         \setunit{\subtitlepunct}\printfield{number}%写专利号
          \printfield[gbtypeflag]{usera}%
-     \iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
+     %\iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
      %\newunit
+     }%
 }%
 }
 
