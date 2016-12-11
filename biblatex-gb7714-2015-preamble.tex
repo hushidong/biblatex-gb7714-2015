@@ -23,7 +23,7 @@ pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
 \addcontentsline{toc}{subsection}{#1}
 	\centering\subsubsection*{#1}}%
 
-\addbibresource[location=local]{paperone.bib}
+\addbibresource[location=local]{example.bib}
 %参考文献的bib文件
 %	\markboth{#1}{#1}}
 %注意在实际使用中用titsec宏包的页眉页脚也有点问题，一旦给出markboth就会出现问题
@@ -167,6 +167,7 @@ identifierstyle=, % nothing happens
 commentstyle=\color{green!50!black}, % white comments
 stringstyle=\ttfamily, % typewriter type for strings
 showstringspaces=false}% no special string spaces
+%\renewcommand{\baselinestretch}{0.9} %加这句的话需要进行垂直空间位置调整
 }
 {\nopagebreak\vspace*{-\baselineskip}\codebottomline\\}
 

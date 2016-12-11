@@ -1,6 +1,6 @@
 %------------------------------------------------------------
-\def\versionnumber{v1.0d}    %版本和修改时间信息
-\def\versiondate{2016-11-24}
+\def\versionnumber{v1.0e}    %版本和修改时间信息
+\def\versiondate{2016-12-07}
 %------------------------------------------------------------
 %-----------------标题和目录---------------------------------
 \titleformanual{符合GB7714-2015标准的biblatex参考\\
@@ -20,7 +20,24 @@
 \section{概述}
 提供了符合GB/T 7714-2015~信息与文献~参考文献著录规则要求的biblatex参考文献样式。分为两种编制方式:一、顺序编码制；二、作者年制。
 
-为了修改和使用方便，样式文件直接在标准样式基础上修改而成。读者若查看样式文件内容可以看到作者对各目标要求所做的修改及其注释。读者也可以根据自己的需要修改需要的样式。作者的修改思路如下:
+样式文件的主要特点包括:
+\begin{enumerate}
+  \item 实现了GB/T 7714-2015标准的完整功能，不仅包括两种编制方式下的各类型参考文献著录格式和标注格式等基本功能，还包括:双语文献格式，带页码的标注格式，作者年制下文献的自动排序和仅有年的标注格式，两种编码制方式下责任者缺省不同处理，其他信息缺省时的自动处理，一些信息如页码卷期等自动解析等特殊功能。
+  \item 实现了用户文献数据录入优化，用户在录入参考文献数据的时候，只需要录入文献的实际信息即可，不需要录入文献标识符和载体标识符，不需要录入language或者其它域信息用来区分中英文文献，完全实现自动中英文判断并处理。仅需要针对报纸文章和标准文章在note域输入news和standard用以区分。
+  \item 实现了对biblatex不同版本的兼容，能够应用于biblatex3.2以前的老版本，也能用于3.3以后姓名处理方式改变后的版本。即可以与texlive2014/2015/2016配合使用，无需升级biblatex情况下安装biblatex-gb7714-2015宏包即可使用。
+  \item 使用文档详细介绍了各种条目类型的著录格式及其在biblatex中对应域的构成，说明了域信息的录入方法和一些注意点，说明了样式文件的使用方法和注意事项，并严格按照GB/T 7714-2015标准测试了各种类型的文献。
+\end{enumerate}
+
+样式文件由如下文件构成:
+顺序编码制的gb7714-2015.bbx，gb7714-2015.cbx文件和作者年制的gb7714-2015ay.bbx，gb7714-2015ay.cbx文件。
+
+说明文档源文件包括:
+biblatex-gb7714-2015.tex，biblatex-gb7714-2015ay.tex，biblatex-gb7714-2015-beamer.tex，biblatex-gb7714-2015ay-beamer.tex分别是一般文档类和beamer类下顺序编码制和作者年制的说明和测试文档。
+
+脚本文件包括:
+*.bat和*.sh分别是windows下和linux下的编译脚本。
+
+为修改和使用方便，样式文件在标准样式基础上修改而成。读者若查看样式文件内容可以看到作者对各目标要求所做的修改及其注释。读者也可以根据自己的需要修改需要的样式。作者的修改思路如下:
 
 1. 考虑到我国引用参考文献通常是中英文混合的情况，修改过程没有考虑针对中文的本地化处理，而是在英文本地化的基础(英文的本地化字符串设置文档是english.lbx)上添加一些中文要求的本地化字符串来使用。而为了区分使用中英文的字符串，对参考文献各条目内容进行中英文判断，若中文则使用中文字符串，若英文则使用英文字符串。
 
@@ -29,9 +46,6 @@
 3. 修改符合GB/T 7714-2015要求的参考文献样式，主要修改驱动driver，输出宏newbibmacro*，域打印样式DeclareFieldFormat和标点符号设置比如:renewrobustcmd*\{\textbackslash bibinitperiod\}\{\}和renewcommand*\{\textbackslash revsdnamepunct\}\{\} 等。driver中主要修改一些顺序，略去一些输出和标点。输出宏主要修改需要的输出内容。域打印样式主要修改一些斜体，强调样式。
 
 4. 针对GB7714-2015中关于引用标注的特殊要求，增加了一些方便实现要求的命令比如pagescite、yearpagescite等。
-
-样式文件由如下文件构成:
-顺序编码制的gb7714-2015.bbx，gb7714-2015.cbx文件和作者年制的gb7714-2015ay.bbx，gb7714-2015ay.cbx文件。
 
 在继续介绍之前需要特别说明，在作者真正完成这个样式文件之前，一直都是在使用基于李志奇编写的样式文件修改的参考文献样式
 \footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}}，
@@ -56,8 +70,7 @@ windows7x86+texlive 2014，采用xelatex编译;
 
 windows7x64+texlive 2015，采用xelatex编译;
 
-虚拟机xp+texlive 2016，采用xelatex编译;
-
+虚拟机xp+texlive 2016，采用xelatex编译。
 Deepin linux-x64v15.3+texlive 2016，采用xelatex编译。
 
 \textcolor{red}{\HandRight \heiti 【Most Important】【注意】：texlive2015中的biblatex版本是3.0，texlive2016中biblatex的版本是3.4，新版本对于名字域打印有了较大变化，所以需做相应的修改，为此在biblatex中首先进行版本判断，然后根据版本不同分别进行设置。}
@@ -659,7 +672,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
     \item final作用，当不成立map终止。
     \item append的作用，给域添加信息
     \item origfieldvalue来源
-    \item overwite选项有无的作用，无overwite时，只要域原有信息，那么就不在map，有overwite时，则进行重写
+    \item overwite选项有无的作用，无overwite时，只要域原有信息，那么就不在map，有overwite时，则进行重写。\emph{注意:使用append的时候也需要overwite选项}。
   \end{itemize}
 
   \item 引用标签的生成机制，即责任者截短时的歧义消除问题，见4.11.4 Name Disambiguation节。
@@ -775,6 +788,51 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 
 
 \section{更新历史}
+============================
+
+2016-11-25 to version 1.0e
+
+1. map中当有append选项时也需要overwrite选项，这不知道是不是texlive 2016中biber升级后的原因。之前使用texlive2015的时候没有问题。所以修改为:
+\begin{texlist}
+%*.bbx
+        \map{%将entrykey放入keywords中用于后期的使用
+            \step[fieldsource=entrykey]
+            \step[fieldset=keywords, origfieldval]
+            }
+        \map[overwrite]{%这里还必须有overwrite，怎么之前会觉得没有问题呢，可能是之前版本拷错了，还是之前是texlive2015变16后biber有了变化(2016-1207修改正确)
+            \step[fieldsource=note, final]%将note域信息复制给keywords，用于输出时容易区分标准和报纸
+            \step[fieldset=keywords, fieldvalue={,}, append]
+            \step[fieldset=keywords, origfieldval, append]
+            }
+\end{texlist}
+
+2. 顺序制中，出版项后没有日期的情况下，出现逗号这是有问题的，所以修改为:
+\begin{texlist}
+%gb7714-2015.bbx
+%出版社和地址的处理，当没有出版社地址时
+%直接判断title的信息是否是中文，若为中文，则写出版地不详，否则用英文的字符表示。
+%事实上title对于每个文献来说是必须的，所以用它判断是最快的，而且一般标题和出版社的语言是一样的。
+\newbibmacro*{publisher+location+date}{%
+\testCJKfirst{\thefield{title}}%
+\testifnoteeqstd%
+\iflistundef{location}{%\adddot
+\iftoggle{ifnoteeqstandard}{}{%
+\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}\addcolon\addspace}{\printtext{[S.l.\adddot]}\addcolon\addspace}}}%  \bibstring{noaddress}
+{\printlist{location}\addcolon\addspace}%
+%\addcolon\addspace%
+\iflistundef{publisher}{%
+\iftoggle{ifnoteeqstandard}{}{%
+\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
+{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}}}%
+{\printlist{publisher}\setunit*{\addcomma\addspace}}%在这里修改使用了setunit命令，与ay.bbx统一。
+%\addcomma\addspace%
+\usebibmacro{date}%
+  %\newunit %去掉这个标点
+}
+\end{texlist}
+
+3. 增加了文档内容，总结了本样式宏包的特点。
+
 ============================
 
 2016-11-24 to version 1.0d

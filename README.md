@@ -1,4 +1,4 @@
-﻿Date of last change:2016-11-24 to version v1.0d
+﻿Date of last change:2016-12-07 to version v1.0e
 
 # biblatex-gb7714-2015: a biblatex style  package
 ---------------------------------------------------------
@@ -29,6 +29,17 @@ please see the file 'biblatex-gb7714-2015.pdf' for more information!
 ---------------------------------------------------------
 
 update history:
+
+date of change: 2016-12-07 to version v1.0e
+
+* Changes to pkg code:to fix a few bugs
+- "*.bbx": add overwite option when map keywords field with note field
+- "*.bbx": modify the punction after publisher in gb7714-2015.bbx
+
+* Changes to documentation:
+- biblatex-gb7714-2015.tex: add a summary of the features of the package
+- *.sh/bad: add the autoexec files for windows/linux OS 
+- *.bib: refine the bib database
 
 date of change: 2016-11-24 to version v1.0d
 

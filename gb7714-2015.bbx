@@ -9,11 +9,12 @@
 %% 2016/11/11 v1.0b
 %% 2016/11/14 v1.0c
 %% 2016/11/24 v1.0d
+%% 2016/12/07 v1.0e
 %% E-mail: hzzmail@163.com
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\ProvidesFile{gb7714-2015.bbx}[2016/11/24 v1.0d biblatex bibliography style]
+\ProvidesFile{gb7714-2015.bbx}[2016/12/07 v1.0e biblatex bibliography style]
 
 % Load the standard style to avoid copy-pasting unnecessary material
 \RequireBibliographyStyle{numeric-comp} %加载标准样式
@@ -388,9 +389,11 @@ backrefpages     = {引用页:},
         \map{%将entrykey放入keywords中用于后期的使用
             \step[fieldsource=entrykey]
             \step[fieldset=keywords, origfieldval]
-            \step[fieldsource=note,final]%将note域信息复制给keywords，用于输出时容易区分标准和报纸
-            \step[fieldset=keywords, fieldvalue={,},append]
-            \step[fieldset=keywords, origfieldval,append]
+            }
+        \map[overwrite]{%这里还必须有overwrite，怎么之前会觉得没有问题呢，可能是之前版本拷错了，还是之前是texlive2015变16后biber有了变化(2016-1207修改正确)
+            \step[fieldsource=note, final]%将note域信息复制给keywords，用于输出时容易区分标准和报纸
+            \step[fieldset=keywords, fieldvalue={,}, append]
+            \step[fieldset=keywords, origfieldval, append]
             }
 }
 }
@@ -582,7 +585,7 @@ backrefpages     = {引用页:},
 \iftoggle{ifnoteeqstandard}{}{%
 \iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
 {\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}}}%
-{\printlist{publisher}\addcomma\addspace}%
+{\printlist{publisher}\setunit*{\addcomma\addspace}}%
 %\addcomma\addspace%
 \usebibmacro{date}%
   %\newunit %去掉这个标点
