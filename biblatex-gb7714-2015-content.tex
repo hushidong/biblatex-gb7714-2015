@@ -70,22 +70,30 @@ windows7x86+texlive 2014，采用xelatex编译;
 
 windows7x64+texlive 2015，采用xelatex编译;
 
-虚拟机xp+texlive 2016，采用xelatex编译。
+虚拟机xp+texlive 2016，采用xelatex编译;
+
 Deepin linux-x64v15.3+texlive 2016，采用xelatex编译。
 
 \textcolor{red}{\HandRight \heiti 【Most Important】【注意】：texlive2015中的biblatex版本是3.0，texlive2016中biblatex的版本是3.4，新版本对于名字域打印有了较大变化，所以需做相应的修改，为此在biblatex中首先进行版本判断，然后根据版本不同分别进行设置。}
 
 作者自己从学习latex开始就使用xelatex，对于参考文献生成，开始用的thebibliography环境，后来对于格式化参考文献有更多的需求后，开始寻求利用参考文献宏包。因为对于bibtex语言不熟悉，所以就开始使用biblatex宏包。从实践来看，使用biblatex宏包生成参考文献有些优点是值得肯定的:
 
-1. 使用够方便，只需要三步编译，第一遍xelatex，第二遍biber，第三遍xelatex。
+1. 使用够方便，样式随宏包加载，参考文献源bib文件利用addbibresource加载，打印文献表利用printbibliography命令可以在文档任意位置打印。参考文献只需三步编译，第一遍xelatex，第二遍biber，第三遍xelatex，当然如果需要存在反向超链接，还需要第四遍xelatex。例\ref{eg:compile:cmd}给出编译命令，其中命令xelatex也可以用mklatex -xelatex代替。关于更多的参考文献相关使用方法详见\footnote{\LaTeX 文档中文参考文献的biblatex解决方案，地址:\url{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}}。
+
+\begin{codetex}{使用biblatex宏包的文档编译命令}{eg:compile:cmd}
+xelatex --synctex=-1 jobname.tex
+biber jobname
+xelatex --synctex=-1 jobname.tex
+xelatex --synctex=-1 jobname.tex
+\end{codetex}
 
 2. 学习无障碍，因为biblatex宏包用的是tex语言，所以查看代码，学习都很方便，自然也便于生成需要的参考文献样式。
 
-3. 划分很自由，利用biblatex宏包可以在一个文档中生成任意多个需要的参考文献，而不需要用include把分档划分成不同的文件，因此分章参考文献就不需要用chapterbib宏包了。利用refsection和 refsegment可以很方便构建参考文献表，甚至还可以嵌套使用。
+3. 划分很自由，利用biblatex宏包可以在一个文档中生成任意多个需要的参考文献，而不需要用include把分档划分成不同的文件，因此分章参考文献无需使用chapterbib宏包。利用refsection和refsegment可以很方便构建参考文献表，甚至还可以嵌套使用。
 
-4. 处理能力强，biber处理数量很大的参考文献条目没有任何压力，不用担心bibtex可能存在的内存不足问题。
+4. 处理无限制，biber处理数量很大的参考文献条目没有任何压力，不用担心bibtex可能存在的内存不足等局限。
 
-5. 定制很简便，biblatex提供了很多不同的参考文献样式，学习参考都很方便，因此定制起需要的参考文献格式来非常简便。
+5. 定制很容易，biblatex提供了很多不同的参考文献样式，学习参考都很方便，因此定制起需要的参考文献格式来非常容易。
 
 上述这些优点也是作者编写符合GB/T 7714-2015标准的参考文献样式文件的驱动原因之一。
 
@@ -401,7 +409,7 @@ entryset = {易仕和2013--,Yi2013--},
 \end{property}
 
 \begin{property}{}{}
-用户在给bib源文件录入引文题名信息时，不需要给出文献类型标识/文献载体标识。同一责任者的合订题名，应用户根据GB/T 7714-2015第8.2.1节的要求，在多个题名间用英文分号分隔，并整体录入到title数据域中。而分卷号，卷次，册次等信息时，除了专利号用number域录入外，其它可以直接在title数据域或者subtitle/titleaddon等数据域中给出。
+用户在给bib源文件录入引文题名信息时，不需要给出文献类型标识/文献载体标识。同一责任者的合订题名，应用户根据GB/T 7714-2015 第8.2.1节的要求，在多个题名间用英文分号分隔，并整体录入到title数据域中。而分卷号，卷次，册次等信息时，除了专利号用number域录入外，其它可以直接在title数据域或者subtitle/titleaddon等数据域中给出。
 
 本样式文件实现了符合GB/T 7714-2015第8.2节要求的格式，能根据条目类型直接给出文献类型标识/文献载体标识并设置给自定义域usera，并在biblatex的参考文献条目驱动中直接使用，各不同类型文献的文献类型标识/文献载体标识，参考GB/T 7714-2015表B.1和B.2。
 \end{property}
@@ -790,7 +798,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 \section{更新历史}
 ============================
 
-2016-11-25 to version 1.0e
+2016-12-07 to version 1.0e
 
 1. map中当有append选项时也需要overwrite选项，这不知道是不是texlive 2016中biber升级后的原因。之前使用texlive2015的时候没有问题。所以修改为:
 \begin{texlist}

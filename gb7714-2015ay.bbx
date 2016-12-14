@@ -16,9 +16,12 @@
 %%
 \ProvidesFile{gb7714-2015ay.bbx}[2016/12/07 v1.0e biblatex bibliography style]
 
-% Load the standard style to avoid copy-pasting unnecessary material
-\RequireBibliographyStyle{authoryear} %加载标准样式
+%=====================================================================
+%加载标准样式
+\RequireBibliographyStyle{authoryear} % Load the standard style to avoid copy-pasting unnecessary material
 
+%=====================================================================
+%增加一些功能函数
 \providetoggle{iftexlivesix}
 %版本判断，根据biblatex更新历史可知，版本3.3开始使用新的姓名机制
 %所以当版本大于3.2开始，就用设置\toggletrue{iftexlivesix}
@@ -27,149 +30,6 @@
 \def\numinteger{\expandafter\numparserta\abx@version\relax}
 \def\numdigital{\expandafter\numparsertb\abx@version\relax}
 \ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftexlivesix}}{\togglefalse{iftexlivesix}}
-
-%设置一些全局选项
-% Alter settings that carry through from biblatex
-\iftoggle{iftexlivesix}{
-%biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
-\ExecuteBibliographyOptions{
-  useprefix = true,  %名字的信息包括前缀
-  %firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
-  giveninits = true,
-  date   = year,  %日期仅写到年
-  %maxnames     = 3 , %设置名字最大数量
-  %minnames     = 3,  %设置缩减后的名字最小数量
-  maxbibnames=3, %将文献列表和引用中最大名字数量区分开
-  minbibnames=3,
-}
-
-\newbibmacro*{name:given-family}[4]{%利用family-given定义given-family
-  \ifuseprefix
-    {\usebibmacro{name:delim}{#3#1}%
-     \usebibmacro{name:hook}{#3#1}%
-     \ifdefvoid{#3}{}{%
-       \ifcapital
-         {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
-         {\mkbibnameprefix{#3}\isdot}%
-       \ifprefchar{}{\bibnamedelimc}}%
-     \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeUppercase{#1}}}\isdot
-     \ifdefvoid{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{\MakeUppercase{#2}}\isdot}%\MakeCapital{#2}
-     \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}
-    {\usebibmacro{name:delim}{#1}%
-     \usebibmacro{name:hook}{#1}%
-     \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeUppercase{#1}}}\isdot
-     %
-     \ifboolexpe{%
-       test {\ifdefvoid{#2}}
-       and
-       test {\ifdefvoid{#3}}}
-       {}
-       {\revsdnamepunct}%
-     \ifdefvoid{#2}{}{\bibnamedelimd\mkbibnamegiven{\MakeUppercase{#2}}\isdot}%\MakeCapital{#2}
-     \ifdefvoid{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}
-     \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}}
-
-\newbibmacro*{name:family-given}[4]{%利用family-given定义given-family
-  \ifuseprefix
-    {\usebibmacro{name:delim}{#3#1}%
-     \usebibmacro{name:hook}{#3#1}%
-     \ifdefvoid{#3}{}{%
-       \ifcapital
-         {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
-         {\mkbibnameprefix{#3}\isdot}%
-       \ifprefchar{}{\bibnamedelimc}}%
-     \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeUppercase{#1}}}\isdot
-     \ifdefvoid{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{\MakeUppercase{#2}}\isdot}%\MakeCapital{#2}
-     \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}
-    {\usebibmacro{name:delim}{#1}%
-     \usebibmacro{name:hook}{#1}%
-     \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeUppercase{#1}}}\isdot
-     %
-     \ifboolexpe{%
-       test {\ifdefvoid{#2}}
-       and
-       test {\ifdefvoid{#3}}}
-       {}
-       {\revsdnamepunct}%
-     \ifdefvoid{#2}{}{\bibnamedelimd\mkbibnamegiven{\MakeUppercase{#2}}\isdot}%%\MakeCapital{#2}
-     \ifdefvoid{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}
-     \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}}
-
-}
-{
-%biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
-\ExecuteBibliographyOptions{
-  useprefix = true,  %名字的信息包括前缀
-  firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
-  date   = year,  %日期仅写到年
-  %maxnames     = 3 , %设置名字最大数量
-  %minnames     = 3,  %设置缩减后的名字最小数量
-  maxbibnames=3, %将文献列表和引用中最大名字数量区分开
-  minbibnames=3,
-  %uniquename=init,
-}
-
-%作者名字的处理，参考文档4.2.3节，3.12.4 Name Parts and Name Spacing
-\newbibmacro*{name:last-first}[4]{%
-  \ifuseprefix
-    {\usebibmacro{name:delim}{#3#1}%
-     \usebibmacro{name:hook}{#3#1}%
-     \ifblank{#3}{}{%
-       \ifcapital
-         {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
-         {\mkbibnameprefix{#3}\isdot}%
-       \ifpunctmark{'}{}{\bibnamedelimc}}%
-     %\mkbibnamelast{#1}\isdot
-     \ifblank{#2}{\MakeCapital#1}{\mkbibnamelast{\MakeUppercase{#1}}}\isdot%\MakeUppercase %\mkbibnamelast{\MakeUppercase{#1}} %\MakeSentenceCase
-     %注意上一句\MakeCapital后面如果再跟一个{}包含#1，则没有效果，可能是包在里面少了一层展开
-     %因为机构名通常包括在{}内，所以要多展开一次才行，所以这里去掉#1外面的{}
-     %\mkbibnamelast{\MakeUppercase{#1}}\isdot
-     %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
-     \ifblank{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamefirst{\MakeUppercase{#2}}\isdot}%
-     \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}}
-    {\usebibmacro{name:delim}{#1}%
-     \usebibmacro{name:hook}{#1}%
-     %\mkbibnamelast{#1}\isdot  %3.9.1 Generic Commands and Hooks，对姓重新处理，如下句: %\mkbibnamelast{\MakeUppercase{#1}}
-     \ifblank{#2}{\MakeCapital#1}{\mkbibnamelast{\MakeUppercase{#1}}}\isdot  %大写，参考4.6.4 Miscellaneous Commands，\MakeUppercase %\MakeSentenceCase
-     %\mkbibnamelast{\MakeUppercase{#1}}\isdot
-     %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
-     \ifblank{#2#3}{}{\revsdnamepunct}%
-     \ifblank{#2}{}{\bibnamedelimd\mkbibnamefirst{\MakeUppercase{#2}}\isdot}%
-     \ifblank{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}%
-     \addcomma\addspace%
-     \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}%
-     }}
-
-\newbibmacro*{name:first-last}[4]{%
-  \ifuseprefix
-    {\usebibmacro{name:delim}{#3#1}%
-     \usebibmacro{name:hook}{#3#1}%
-     \ifblank{#3}{}{%
-       \ifcapital
-         {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
-         {\mkbibnameprefix{#3}\isdot}%
-       \ifpunctmark{'}{}{\bibnamedelimc}}%
-     %\mkbibnamelast{#1}\isdot
-     \ifblank{#2}{\MakeCapital#1}{\mkbibnamelast{\MakeUppercase{#1}}}\isdot%\MakeUppercase %\mkbibnamelast{\MakeUppercase{#1}} %\MakeSentenceCase
-     %注意上一句\MakeCapital后面如果再跟一个{}包含#1，则没有效果，可能是包在里面少了一层展开
-     %因为机构名通常包括在{}内，所以要多展开一次才行，所以这里去掉#1外面的{}
-     %\mkbibnamelast{\MakeUppercase{#1}}\isdot
-     %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
-     \ifblank{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamefirst{\MakeUppercase{#2}}\isdot}%
-     \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}}
-    {\usebibmacro{name:delim}{#1}%
-     \usebibmacro{name:hook}{#1}%
-     %\mkbibnamelast{#1}\isdot  %3.9.1 Generic Commands and Hooks，对姓重新处理，如下句: %\mkbibnamelast{\MakeUppercase{#1}}
-     \ifblank{#2}{\MakeCapital#1}{\mkbibnamelast{\MakeUppercase{#1}}}\isdot  %大写，参考4.6.4 Miscellaneous Commands，\MakeUppercase %\MakeSentenceCase
-     %\mkbibnamelast{\MakeUppercase{#1}}\isdot
-     %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
-     \ifblank{#2#3}{}{\revsdnamepunct}%
-     \ifblank{#2}{}{\bibnamedelimd\mkbibnamefirst{\MakeUppercase{#2}}\isdot}%
-     \ifblank{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}%
-     \addcomma\addspace%
-     \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}%
-     }}
-}
 
 %定义判断中文字符的函数，用于判断作者等信息是否由中文字符构成
 \providetoggle{ifCJKforgbt}
@@ -189,41 +49,6 @@
         \else%
         \togglefalse{ifnoteeqstandard}%
         \fi}}
-
-%将名字简写后的点去掉
-%\renewrobustcmd*{\bibinitperiod}{\adddot} %来源biblatex2.STY
-\renewrobustcmd*{\bibinitperiod}{}
-%\newcommand*{\revsdnamepunct}{\addcomma}  %来源biblatex.def
-\renewcommand*{\revsdnamepunct}{}
-%\newcommand*{\subtitlepunct}{\newunitpunct} %修改标题和其它标题信息间的标点
-\renewcommand*{\subtitlepunct}{\addcolon\space} %来源biblatex.def
-
-%新建一个当地化字符串，用来记录“等”字符
-\NewBibliographyString{andotherscn}
-\NewBibliographyString{noaddress}
-\NewBibliographyString{nopublisher}
-
-%直接利用当地化格式english进行修改一些中文的格式，
-%具体可以修改哪些需要的参考english.lbx文件
-%当然也可以增加比如上面定义的andotherscn
-\DefineBibliographyStrings{english}{
-bibliography     = {参考文献},
-references       = {参考文献},
-bytranslator= {\addcomma\ 译\adddot}, %将trans. by 改成 译
-and         = {\addcomma},%将第2和3人名见的and符号改成 逗号，用\finalnamedelim命令也可以定义，参见3.9.1节
-%andothers   = {et al.},        %将超过3个人名的省略，et al.改成为 等
-andotherscn   = {等},        %将超过3个人名的省略，et al.改成为 等
-noaddress = {[S.l.]},
-nopublisher = {[s.n.]},
-backrefpage      = {引用页:},
-backrefpages     = {引用页:},
-}
-
-%关于双语言或多语言的参考文献，可以参考3.11.5 Entry Sets，4.11.1 Entry Sets
-%这里调整一下两种语言参考文献的间隔
-%\renewcommand*{\entrysetpunct}{\addsemicolon\space}%源来自biblatex.def
-\renewcommand*{\entrysetpunct}{\adddot\par\nobreak}
-
 
 %用于解析连续出版物，2个卷期的情况
 \def\multivolumeparsetoparts#1/#2{\def\multivolumefirst{#1}\def\multivolumesecond{#2}}
@@ -271,8 +96,57 @@ backrefpages     = {引用页:},
         \multinumberparsetopartsb#2\@empty%
     \fi}
 
+%=====================================================================
+%设置宏包选项
+\iftoggle{iftexlivesix}{% Alter settings that carry through from biblatex
+%biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
+\ExecuteBibliographyOptions{
+  useprefix = true,  %名字的信息包括前缀
+  %firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
+  giveninits = true,
+  date   = year,  %日期仅写到年
+  %maxnames     = 3 , %设置名字最大数量
+  %minnames     = 3,  %设置缩减后的名字最小数量
+  maxbibnames=3, %将文献列表和引用中最大名字数量区分开
+  minbibnames=3,
+}}
+{%biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
+\ExecuteBibliographyOptions{
+  useprefix = true,  %名字的信息包括前缀
+  firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
+  date   = year,  %日期仅写到年
+  %maxnames     = 3 , %设置名字最大数量
+  %minnames     = 3,  %设置缩减后的名字最小数量
+  maxbibnames=3, %将文献列表和引用中最大名字数量区分开
+  minbibnames=3,
+  %uniquename=init,
+}}
 
-%修改输入的源文件数据，用于中文判断等
+%=====================================================================
+%设置本地化字符串
+%新建一个当地化字符串，用来记录“等”字符
+\NewBibliographyString{andotherscn}
+\NewBibliographyString{noaddress}
+\NewBibliographyString{nopublisher}
+
+%直接利用当地化格式english进行修改一些中文的格式，
+%具体可以修改哪些需要的参考english.lbx文件
+%当然也可以增加比如上面定义的andotherscn
+\DefineBibliographyStrings{english}{
+bibliography     = {参考文献},
+references       = {参考文献},
+bytranslator= {\addcomma\ 译\adddot}, %将trans. by 改成 译
+and         = {\addcomma},%将第2和3人名见的and符号改成 逗号，用\finalnamedelim命令也可以定义，参见3.9.1节
+%andothers   = {et al.},        %将超过3个人名的省略，et al.改成为 等
+andotherscn   = {等},        %将超过3个人名的省略，et al.改成为 等
+noaddress = {[S.l.]},
+nopublisher = {[s.n.]},
+backrefpage      = {引用页:},
+backrefpages     = {引用页:},
+}
+
+%=====================================================================
+%动态数据修改，修改输入的源文件数据，用于中文判断等
 %首先把作者和译者信息准确的记录到userf，usere中，用于判断是否是cjk字符。
 %注意\DeclareSourcemap命令只能出现一次
 \DeclareSourcemap{
@@ -383,7 +257,8 @@ backrefpages     = {引用页:},
 }
 }
 
-
+%=====================================================================
+%设置排序格式
 %排序用降序或userb域
 \DeclareSortingScheme{nyt}{
   \sort{
@@ -417,6 +292,42 @@ backrefpages     = {引用页:},
   }
 }
 
+%=====================================================================
+%参考文献列表环境
+  \defbibenvironment{bibliography}%修改参考文献列表环境，不要缩进
+  {\list
+     {}
+     {%\setlength{\leftmargin}{\bibhang}%
+      %\setlength{\itemindent}{-\leftmargin}%
+      \setlength{\leftmargin}{0pt}%
+      \setlength{\itemindent}{0pt}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}}}
+  {\endlist}
+  {\item}
+
+%=====================================================================
+%设置单元或块等的标点
+%将名字简写后的点去掉
+%\renewrobustcmd*{\bibinitperiod}{\adddot} %来源biblatex2.STY
+\renewrobustcmd*{\bibinitperiod}{}
+%\newcommand*{\revsdnamepunct}{\addcomma}  %来源biblatex.def
+\renewcommand*{\revsdnamepunct}{}
+%\newcommand*{\subtitlepunct}{\newunitpunct} %修改标题和其它标题信息间的标点
+\renewcommand*{\subtitlepunct}{\addcolon\space} %来源biblatex.def
+
+%关于双语言或多语言的参考文献，可以参考3.11.5 Entry Sets，4.11.1 Entry Sets
+%这里调整一下两种语言参考文献的间隔
+%\renewcommand*{\entrysetpunct}{\addsemicolon\space}%源来自biblatex.def
+\renewcommand*{\entrysetpunct}{\adddot\par\nobreak}
+
+%页码引用格式的修改
+%\newcommand*{\bibpagespunct}{\addcomma\space}
+\renewcommand*{\bibpagespunct}{\addcolon\space}%修改为用冒号
+
+
+%=====================================================================
+%修改域的格式
 %新增文献类型标识符的格式
 %\DeclareFieldFormat{gbtypeflag}{\nobreak\mkbibbrackets{\nobreak#1}\nobreak}
 \DeclareFieldFormat{gbtypeflag}{%
@@ -459,8 +370,126 @@ backrefpages     = {引用页:},
 %\DeclareFieldFormat{titlecase}{#1}
 \DeclareFieldFormat{titlecase}{\MakeCapital#1}
 
+\iftoggle{iftexlivesix}{
+%biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
+\renewbibmacro*{name:given-family}[4]{%利用family-given定义given-family
+  \ifuseprefix
+    {\usebibmacro{name:delim}{#3#1}%
+     \usebibmacro{name:hook}{#3#1}%
+     \ifdefvoid{#3}{}{%
+       \ifcapital
+         {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
+         {\mkbibnameprefix{#3}\isdot}%
+       \ifprefchar{}{\bibnamedelimc}}%
+     \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeUppercase{#1}}}\isdot
+     \ifdefvoid{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{\MakeUppercase{#2}}\isdot}%\MakeCapital{#2}
+     \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}
+    {\usebibmacro{name:delim}{#1}%
+     \usebibmacro{name:hook}{#1}%
+     \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeUppercase{#1}}}\isdot
+     %
+     \ifboolexpe{%
+       test {\ifdefvoid{#2}}
+       and
+       test {\ifdefvoid{#3}}}
+       {}
+       {\revsdnamepunct}%
+     \ifdefvoid{#2}{}{\bibnamedelimd\mkbibnamegiven{\MakeUppercase{#2}}\isdot}%\MakeCapital{#2}
+     \ifdefvoid{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}
+     \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}}
+
+\renewbibmacro*{name:family-given}[4]{%利用family-given定义given-family
+  \ifuseprefix
+    {\usebibmacro{name:delim}{#3#1}%
+     \usebibmacro{name:hook}{#3#1}%
+     \ifdefvoid{#3}{}{%
+       \ifcapital
+         {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
+         {\mkbibnameprefix{#3}\isdot}%
+       \ifprefchar{}{\bibnamedelimc}}%
+     \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeUppercase{#1}}}\isdot
+     \ifdefvoid{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{\MakeUppercase{#2}}\isdot}%\MakeCapital{#2}
+     \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}
+    {\usebibmacro{name:delim}{#1}%
+     \usebibmacro{name:hook}{#1}%
+     \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeUppercase{#1}}}\isdot
+     %
+     \ifboolexpe{%
+       test {\ifdefvoid{#2}}
+       and
+       test {\ifdefvoid{#3}}}
+       {}
+       {\revsdnamepunct}%
+     \ifdefvoid{#2}{}{\bibnamedelimd\mkbibnamegiven{\MakeUppercase{#2}}\isdot}%%\MakeCapital{#2}
+     \ifdefvoid{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}
+     \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}}
+
+}
+{%biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
+%作者名字的处理，参考文档4.2.3节，3.12.4 Name Parts and Name Spacing
+\renewbibmacro*{name:last-first}[4]{%
+  \ifuseprefix
+    {\usebibmacro{name:delim}{#3#1}%
+     \usebibmacro{name:hook}{#3#1}%
+     \ifblank{#3}{}{%
+       \ifcapital
+         {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
+         {\mkbibnameprefix{#3}\isdot}%
+       \ifpunctmark{'}{}{\bibnamedelimc}}%
+     %\mkbibnamelast{#1}\isdot
+     \ifblank{#2}{\MakeCapital#1}{\mkbibnamelast{\MakeUppercase{#1}}}\isdot%\MakeUppercase %\mkbibnamelast{\MakeUppercase{#1}} %\MakeSentenceCase
+     %注意上一句\MakeCapital后面如果再跟一个{}包含#1，则没有效果，可能是包在里面少了一层展开
+     %因为机构名通常包括在{}内，所以要多展开一次才行，所以这里去掉#1外面的{}
+     %\mkbibnamelast{\MakeUppercase{#1}}\isdot
+     %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
+     \ifblank{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamefirst{\MakeUppercase{#2}}\isdot}%
+     \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}}
+    {\usebibmacro{name:delim}{#1}%
+     \usebibmacro{name:hook}{#1}%
+     %\mkbibnamelast{#1}\isdot  %3.9.1 Generic Commands and Hooks，对姓重新处理，如下句: %\mkbibnamelast{\MakeUppercase{#1}}
+     \ifblank{#2}{\MakeCapital#1}{\mkbibnamelast{\MakeUppercase{#1}}}\isdot  %大写，参考4.6.4 Miscellaneous Commands，\MakeUppercase %\MakeSentenceCase
+     %\mkbibnamelast{\MakeUppercase{#1}}\isdot
+     %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
+     \ifblank{#2#3}{}{\revsdnamepunct}%
+     \ifblank{#2}{}{\bibnamedelimd\mkbibnamefirst{\MakeUppercase{#2}}\isdot}%
+     \ifblank{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}%
+     \addcomma\addspace%
+     \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}%
+     }}
+
+\renewbibmacro*{name:first-last}[4]{%
+  \ifuseprefix
+    {\usebibmacro{name:delim}{#3#1}%
+     \usebibmacro{name:hook}{#3#1}%
+     \ifblank{#3}{}{%
+       \ifcapital
+         {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
+         {\mkbibnameprefix{#3}\isdot}%
+       \ifpunctmark{'}{}{\bibnamedelimc}}%
+     %\mkbibnamelast{#1}\isdot
+     \ifblank{#2}{\MakeCapital#1}{\mkbibnamelast{\MakeUppercase{#1}}}\isdot%\MakeUppercase %\mkbibnamelast{\MakeUppercase{#1}} %\MakeSentenceCase
+     %注意上一句\MakeCapital后面如果再跟一个{}包含#1，则没有效果，可能是包在里面少了一层展开
+     %因为机构名通常包括在{}内，所以要多展开一次才行，所以这里去掉#1外面的{}
+     %\mkbibnamelast{\MakeUppercase{#1}}\isdot
+     %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
+     \ifblank{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamefirst{\MakeUppercase{#2}}\isdot}%
+     \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}}
+    {\usebibmacro{name:delim}{#1}%
+     \usebibmacro{name:hook}{#1}%
+     %\mkbibnamelast{#1}\isdot  %3.9.1 Generic Commands and Hooks，对姓重新处理，如下句: %\mkbibnamelast{\MakeUppercase{#1}}
+     \ifblank{#2}{\MakeCapital#1}{\mkbibnamelast{\MakeUppercase{#1}}}\isdot  %大写，参考4.6.4 Miscellaneous Commands，\MakeUppercase %\MakeSentenceCase
+     %\mkbibnamelast{\MakeUppercase{#1}}\isdot
+     %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
+     \ifblank{#2#3}{}{\revsdnamepunct}%
+     \ifblank{#2}{}{\bibnamedelimd\mkbibnamefirst{\MakeUppercase{#2}}\isdot}%
+     \ifblank{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}%
+     \addcomma\addspace%
+     \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}%
+     }}
+}
+
 %重设title的输出，将文献类型标识符输出出去，原输出来自biblatex.def文件
-\newbibmacro*{title}{%
+\renewbibmacro*{title}{%
   \ifboolexpr{%
     test{\iffieldundef{title}}%
     and%
@@ -497,7 +526,7 @@ backrefpages     = {引用页:},
 \DeclareFieldFormat{url}{\url{#1}} %url域修改如本行
 %\DeclareFieldFormat{urldate}{\mkbibparens{\bibstring{urlseen}\space#1}}
 
-\newbibmacro*{url+urldate}{%
+\renewbibmacro*{url+urldate}{%
   %\usebibmacro{url}%%更换url的位置，放到下面
   \iffieldundef{urlyear}%
     {}{%\setunit*{\addspace}%
@@ -505,9 +534,9 @@ backrefpages     = {引用页:},
      \setunit{\addperiod\addspace}%
      \usebibmacro{url}}
 
-\newbibmacro*{url}{\printfield{url}}
+\renewbibmacro*{url}{\printfield{url}}
 %\newbibmacro*{urldate}{\printurldate} %引用时间修改如下一行
-\newbibmacro*{urldate}{\addspace\printtext{[}\printfield{urlyear}\bibrangedash\printfield{urlmonth}\bibrangedash\printfield{urlday}\printtext{]}}
+\renewbibmacro*{urldate}{\addspace\printtext{[}\printfield{urlyear}\bibrangedash\printfield{urlmonth}\bibrangedash\printfield{urlday}\printtext{]}}
 \newbibmacro*{newsdate}{%%新增加一个新闻日期
 \iffieldundef{year}{}{\printfield{year}%
 \iffieldundef{month}{}{\bibrangedash\printtext{\thefield{month}}%
@@ -520,15 +549,12 @@ backrefpages     = {引用页:},
 \iffieldundef{day}{}{\bibrangedash\printfield{day}}}}%
 }}%
 
-%页码引用格式的修改
-%\newcommand*{\bibpagespunct}{\addcomma\space}
-\renewcommand*{\bibpagespunct}{\addcolon\space}%修改为用冒号
-%\DeclareFieldFormat{pages}{\mkpageprefix[bookpagination]{#1}}
+%\DeclareFieldFormat{pages}{\mkpageprefix[bookpagination]{#1}}%页码引用格式的修改
 \DeclareFieldFormat{pages}{#1}%去掉前面引导页码的pp.等字符
 
 %调整doi+eprint+url格式，源来自standard.bbx
 %因为页码后面直接跟引用日期，没有标点所以去掉其中的标点。
-\newbibmacro*{doi+eprint+url}{%
+\renewbibmacro*{doi+eprint+url}{%
 %  \iftoggle{bbx:doi}%把doi的位置放到url后面
 %    {\printfield{doi}}
 %    {}%
@@ -545,7 +571,7 @@ backrefpages     = {引用页:},
     {\printfield{doi}}
     {}}
 
-\newbibmacro*{chapter+pages}{%
+\renewbibmacro*{chapter+pages}{%
   \printfield{chapter}%
   \iffieldundef{pages}{}{%这里增加一个判断，当没有页码时就不输出
   \setunit{\bibpagespunct}%
@@ -609,7 +635,7 @@ backrefpages     = {引用页:},
             \printfield{extrayear}}}}}%
 
 %修改译者位置格式，bytranslator+others原格式来自biblatex.def文件
-\newbibmacro*{bytranslator+others}{%
+\renewbibmacro*{bytranslator+others}{%
   \ifnameundef{translator}
     {}
     {%\usebibmacro{bytranslator+othersstrg}
@@ -622,7 +648,7 @@ backrefpages     = {引用页:},
   \usebibmacro{withothers}}
 
 %判断作者或译者是否中文，若中文用字符等，否则用etal。
-\newbibmacro*{name:andothers}{%
+\renewbibmacro*{name:andothers}{%
   \ifboolexpr{
     test {\ifnumequal{\value{listcount}}{\value{liststop}}}
     and
@@ -642,7 +668,7 @@ backrefpages     = {引用页:},
 %出版社和地址的处理，当没有出版社地址时
 %直接判断title的信息是否是中文，若为中文，则写出版地不详，否则用英文的字符表示。
 %事实上title对于每个文献来说是必须的，所以用它判断是最快的，而且一般标题和出版社的语言是一样的。
-\newbibmacro*{publisher+location+date}{%
+\renewbibmacro*{publisher+location+date}{%
 \iffieldundef{title}{}{\testCJKfirst{\thefield{title}}}%
 \testifnoteeqstd%
 \iflistundef{location}{%\adddot
@@ -661,6 +687,248 @@ backrefpages     = {引用页:},
 %\usebibmacro{date}%
 %\newunit %去掉这个标点
 }
+
+%修改析出文献的文集的标题与附加标题间的符号
+\renewbibmacro*{booktitle}{%
+  \ifboolexpr{
+    test {\iffieldundef{booktitle}}
+    and
+    test {\iffieldundef{booksubtitle}}
+  }
+    {}
+    {\printtext[booktitle]{%
+       \printfield[titlecase]{booktitle}%
+       \setunit{\subtitlepunct}%
+       \printfield[titlecase]{booksubtitle}}%
+     \newunit%标点换成下一句
+     \setunit{\subtitlepunct}}%
+  \printfield{booktitleaddon}}
+
+%调整期刊名的格式，源来自standard.bbx
+\renewbibmacro*{journal+issuetitle}{%
+  \usebibmacro{journal}%
+  %\setunit*{\addspace}%
+  \setunit*{\addcomma\addspace}%修改为增加一个逗号
+  \iffieldundef{series}
+    {}
+    {\newunit
+     \printfield{series}%
+     \setunit{\addspace}}%
+  %\usebibmacro{volume+number+eid}%
+  %\setunit{\addspace}%
+  \usebibmacro{issue+date}%
+  %\setunit{\addcolon\space}%
+  \iffieldundef{volume}{}{\setunit{\addcomma\space}}%
+  %换成逗号和空格
+  \usebibmacro{issue}%
+  \usebibmacro{volume+number+eid}%把卷期放到年份后面
+  %\newunit
+  }
+
+%调整期刊年份的格式，去掉括号
+\renewbibmacro*{issue+date}{%
+  \printtext{%去掉了[parens]
+    \iffieldundef{issue}
+      {%\usebibmacro{date}
+        \iffieldundef{note}{\usebibmacro{date}}%判断一下，是否是报纸和标准
+        {\def\comparetmp{news}\edef\comparetmpb{\thefield{note}}%
+        \ifx\comparetmp\comparetmpb%
+        \usebibmacro{newsdate}%
+        \else%
+        \usebibmacro{date}%
+        \fi}%
+      }
+      {\printfield{issue}%
+       \setunit*{\addspace}%
+       %\usebibmacro{date}
+         \iffieldundef{note}{\usebibmacro{date}}%判断一下，是否是报纸和标准
+        {\def\comparetmp{news}\edef\comparetmpb{\thefield{note}}%
+        \ifx\comparetmp\comparetmpb%
+        \usebibmacro{newsdate}%
+        \else%
+        \usebibmacro{date}%
+        \fi}%
+       }%
+       }%
+  %\newunit
+  }
+
+%调整期刊卷和期的格式，源来自standard.bbx
+\renewbibmacro*{volume+number+eid}{%
+  \printfield{volume}%
+  %\setunit*{\adddot}%去掉点号
+  %\printfield{number}%
+  \iffieldundef{number}{}{\printtext{\mkbibparens{\printfield{number}}}}%增加一个圆括号
+  \iffieldundef{eid}{}{%
+  \setunit{\addcomma\space}%
+  \printfield{eid}}}
+
+%调整页码前的标点和去掉期刊文章等页码后面的标点，源来自standard.bbx
+\renewbibmacro*{note+pages}{%
+  %\printfield{note}%不要note，note用来判断是否是报纸newspaper
+  \iffieldundef{pages}{}{
+  \setunit{\bibpagespunct}%
+  \printfield{pages}}%
+  %\newunit
+  }
+
+%编者类型做一修改，源来自biblatex.DEF
+\renewbibmacro*{editorstrg}{%
+  \printtext[editortype]{%
+    \iffieldundef{editortype}
+      {
+%      \ifboolexpr{ %这一段去掉，未定义编者类型情况下不处理
+%         test {\ifnumgreater{\value{editor}}{1}}
+%         or
+%         test {\ifandothers{editor}}
+%       }
+%         {\bibstring{editors}}
+%         {\bibstring{editor}}
+         }
+      {\ifbibxstring{\thefield{editortype}} %定义编者类型情况下处理，以后根据需要修改
+         {\ifboolexpr{
+            test {\ifnumgreater{\value{editor}}{1}}
+            or
+            test {\ifandothers{editor}}
+          }
+            {\bibstring{\thefield{editortype}s}}
+            {\bibstring{\thefield{editortype}}}}
+         {\thefield{editortype}}}
+         }}
+
+%修改期刊的标题，源来自biblatex.DEF
+\renewbibmacro*{periodical}{%
+  \iffieldundef{title}
+    {}
+    {\printtext[title]{%
+       \printfield[titlecase]{title}%
+       %\setunit{\subtitlepunct}%
+       \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
+       {}{\setunit{\subtitlepunct}
+       \printfield[titlecase]{subtitle}}%
+       %}%把编组结束移到后面去
+       \iffieldundef{usera}{}{%在标题后直接给出文献标识字母
+        \printfield[gbtypeflag]{usera}}
+       }}
+       }
+
+%期刊的标题做修改，源来自standard.BBX
+\renewbibmacro*{title+issuetitle}{%
+  \usebibmacro{periodical}%
+  %\setunit*{\addspace}%
+  \setunit*{\adddot\addspace}%标点修改为句点
+  \iffieldundef{series}
+    {}
+    {\newunit
+     \printfield{series}%
+     \setunit{\addspace}}%
+  \usebibmacro{periodical+issue}%将issue调整到上面来，并修改
+\iffieldundef{number}{}{%%进一步处理有范围的数字
+  \multinumberparser{\thefield{number}}}%
+  \iffieldundef{volume}%
+  {\printfield{year}%
+  \printtext{\mkbibparens{\multinumberfirst}}%
+  \bibrangedash%
+  \iffieldundef{endyear}{}{\printfield{endyear}\printtext{\mkbibparens{\multinumbersecond}}}%
+  }%
+  {\gbt@parse@range{\thefield{volume}}%
+  \printfield{year}%
+  \setunit{\addcomma\space}%将冒号修改为逗号
+  \printtext{\gbt@range@first}%
+  \printtext{\mkbibparens{\multinumberfirst}}%
+  \bibrangedash%
+  \iffieldundef{endyear}{}{%
+  \printfield{endyear}%
+  \setunit{\addcomma\space}%将冒号修改为逗号
+  \printtext{\gbt@range@second}%
+  \printtext{\mkbibparens{\multinumbersecond}}}%
+  }%
+  \setunit{\addcomma\space}%
+  \printfield{eid}%
+  \setunit{\addspace}%
+  %\usebibmacro{issue+date}%
+  %\setunit{\addcolon\space}%
+  \usebibmacro{issue}%
+  \newunit}
+
+%新增一个样式用于调整期刊年份的格式，只打印年份
+\newbibmacro*{periodical+issue}{%
+  \printtext{%去掉了[parens]
+    \iffieldundef{issue}
+      {%\usebibmacro{date}%修改为下一句
+      }%
+      {\printfield{issue}%
+       \setunit*{\addspace}%
+       %\usebibmacro{date}%修改为下一句
+       }%
+       }%
+  %\newunit
+}
+
+%新增一个样式用于输出连续出版物的地址，单位，时间
+%类似与上面的\newbibmacro*{publisher+location+date}
+\newbibmacro*{location+institution+date}{%
+\testCJKfirst{\thefield{title}}
+\iflistundef{location}{\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}}{\printtext{[S.l.\adddot]}}}%
+  {\printlist{location}}%
+%  \iflistundef{institution}
+%    {\setunit*{\addcomma\space}}
+%    {\setunit*{\addcolon\space}}%
+%  \printlist{institution}%
+%  \setunit*{\addcomma\space}%
+\addcolon\addspace%
+\iflistundef{institution}{%
+%注意这里\printtext{\mkbibbrackets{s.n.}}和\printtext{[s.n.\adddot]}是不同的，这里的]不影响标点追踪，
+%这里要理解的是newunit插入的是period，看def中的命令:\newcommand*{\newunitpunct}{\addperiod\space}，\newcommand*{\finentrypunct}{\addperiod}
+\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}}{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}}}% \bibstring{nopublisher}
+{\printlist{institution}}%
+\setunit{\addcomma\addspace}%
+  %\usebibmacro{date}%
+%  \printfield{year}%
+%  \bibrangedash%
+%  \iffieldundef{endyear}{}{\printfield{endyear}}%
+  \newunit%
+}
+
+%重设专利title的输出，将文献类型标识符输出出去，原输出来自biblatex.def文件
+\newbibmacro*{patenttitle}{%
+  \ifboolexpr{%
+    test{\iffieldundef{title}}%
+    and%
+    test{\iffieldundef{subtitle}}%
+  }%
+    {}%
+    {\printtext[title]{%
+       \printfield[titlecase]{title}%
+       \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
+       {}{\setunit{\subtitlepunct}%
+       \printfield[titlecase]{subtitle}}%
+       \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
+        {\setunit{\subtitlepunct}\printfield{titleaddon}}%
+        \setunit{\subtitlepunct}\printfield{number}%写专利号
+         \printfield[gbtypeflag]{usera}%
+     \iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
+     %\newunit
+     }%
+}%
+}
+
+%修改了一个institution+location+date用于report等的，当没有institution时不处理。
+\renewbibmacro*{institution+location+date}{%
+  \printlist{location}%
+  \iflistundef{institution}
+    {\setunit*{\addcomma\space}}
+    {\setunit*{\addcolon\space}}%
+  \printlist{institution}%
+  \setunit*{\addcomma\space}%
+  \usebibmacro{date}%
+  %\usebibmacro{modifydate}%
+  %\newunit
+  }
+
+
+%=====================================================================
+%设置驱动格式
 
 %修改book的驱动，源来自standard.BBX
 \DeclareBibliographyDriver{book}{%
@@ -712,35 +980,6 @@ backrefpages     = {引用页:},
      \usebibmacro{related}}
     {}%
   \usebibmacro{finentry}}
-
-%修改参考文献列表环境，不要缩进
-  \defbibenvironment{bibliography}
-  {\list
-     {}
-     {%\setlength{\leftmargin}{\bibhang}%
-      %\setlength{\itemindent}{-\leftmargin}%
-      \setlength{\leftmargin}{0pt}%
-      \setlength{\itemindent}{0pt}%
-      \setlength{\itemsep}{\bibitemsep}%
-      \setlength{\parsep}{\bibparsep}}}
-  {\endlist}
-  {\item}
-
-%修改析出文献的文集的标题与附加标题间的符号
-\newbibmacro*{booktitle}{%
-  \ifboolexpr{
-    test {\iffieldundef{booktitle}}
-    and
-    test {\iffieldundef{booksubtitle}}
-  }
-    {}
-    {\printtext[booktitle]{%
-       \printfield[titlecase]{booktitle}%
-       \setunit{\subtitlepunct}%
-       \printfield[titlecase]{booksubtitle}}%
-     \newunit%标点换成下一句
-     \setunit{\subtitlepunct}}%
-  \printfield{booktitleaddon}}
 
 %修改inbook的驱动，源来自standard.BBX
 \DeclareBibliographyDriver{inbook}{%
@@ -905,75 +1144,6 @@ backrefpages     = {引用页:},
     {}%
   \usebibmacro{finentry}}
 
-%调整期刊名的格式，源来自standard.bbx
-\newbibmacro*{journal+issuetitle}{%
-  \usebibmacro{journal}%
-  %\setunit*{\addspace}%
-  \setunit*{\addcomma\addspace}%修改为增加一个逗号
-  \iffieldundef{series}
-    {}
-    {\newunit
-     \printfield{series}%
-     \setunit{\addspace}}%
-  %\usebibmacro{volume+number+eid}%
-  %\setunit{\addspace}%
-  \usebibmacro{issue+date}%
-  %\setunit{\addcolon\space}%
-  \iffieldundef{volume}{}{\setunit{\addcomma\space}}%
-  %换成逗号和空格
-  \usebibmacro{issue}%
-  \usebibmacro{volume+number+eid}%把卷期放到年份后面
-  %\newunit
-  }
-
-%调整期刊年份的格式，去掉括号
-\newbibmacro*{issue+date}{%
-  \printtext{%去掉了[parens]
-    \iffieldundef{issue}
-      {%\usebibmacro{date}
-        \iffieldundef{note}{\usebibmacro{date}}%判断一下，是否是报纸和标准
-        {\def\comparetmp{news}\edef\comparetmpb{\thefield{note}}%
-        \ifx\comparetmp\comparetmpb%
-        \usebibmacro{newsdate}%
-        \else%
-        \usebibmacro{date}%
-        \fi}%
-      }
-      {\printfield{issue}%
-       \setunit*{\addspace}%
-       %\usebibmacro{date}
-         \iffieldundef{note}{\usebibmacro{date}}%判断一下，是否是报纸和标准
-        {\def\comparetmp{news}\edef\comparetmpb{\thefield{note}}%
-        \ifx\comparetmp\comparetmpb%
-        \usebibmacro{newsdate}%
-        \else%
-        \usebibmacro{date}%
-        \fi}%
-       }%
-       }%
-  %\newunit
-  }
-
-%调整期刊卷和期的格式，源来自standard.bbx
-\newbibmacro*{volume+number+eid}{%
-  \printfield{volume}%
-  %\setunit*{\adddot}%去掉点号
-  %\printfield{number}%
-  \iffieldundef{number}{}{\printtext{\mkbibparens{\printfield{number}}}}%增加一个圆括号
-  \iffieldundef{eid}{}{%
-  \setunit{\addcomma\space}%
-  \printfield{eid}}}
-
-%调整页码前的标点和去掉期刊文章等页码后面的标点，源来自standard.bbx
-\newbibmacro*{note+pages}{%
-  %\printfield{note}%不要note，note用来判断是否是报纸newspaper
-  \iffieldundef{pages}{}{
-  \setunit{\bibpagespunct}%
-  \printfield{pages}}%
-  %\newunit
-  }
-
-
 %期刊文章，连续出版物中的析出文献的格式
   \DeclareBibliographyDriver{article}{%
   \usebibmacro{bibindex}%
@@ -1014,125 +1184,6 @@ backrefpages     = {引用页:},
     {}%
   \usebibmacro{finentry}}
 
-%编者类型做一修改，源来自biblatex.DEF
-\newbibmacro*{editorstrg}{%
-  \printtext[editortype]{%
-    \iffieldundef{editortype}
-      {
-%      \ifboolexpr{ %这一段去掉，未定义编者类型情况下不处理
-%         test {\ifnumgreater{\value{editor}}{1}}
-%         or
-%         test {\ifandothers{editor}}
-%       }
-%         {\bibstring{editors}}
-%         {\bibstring{editor}}
-         }
-      {\ifbibxstring{\thefield{editortype}} %定义编者类型情况下处理，以后根据需要修改
-         {\ifboolexpr{
-            test {\ifnumgreater{\value{editor}}{1}}
-            or
-            test {\ifandothers{editor}}
-          }
-            {\bibstring{\thefield{editortype}s}}
-            {\bibstring{\thefield{editortype}}}}
-         {\thefield{editortype}}}
-         }}
-
-%修改期刊的标题，源来自biblatex.DEF
-\newbibmacro*{periodical}{%
-  \iffieldundef{title}
-    {}
-    {\printtext[title]{%
-       \printfield[titlecase]{title}%
-       %\setunit{\subtitlepunct}%
-       \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
-       {}{\setunit{\subtitlepunct}
-       \printfield[titlecase]{subtitle}}%
-       %}%把编组结束移到后面去
-       \iffieldundef{usera}{}{%在标题后直接给出文献标识字母
-        \printfield[gbtypeflag]{usera}}
-       }}
-       }
-
-%期刊的标题做修改，源来自standard.BBX
-\newbibmacro*{title+issuetitle}{%
-  \usebibmacro{periodical}%
-  %\setunit*{\addspace}%
-  \setunit*{\adddot\addspace}%标点修改为句点
-  \iffieldundef{series}
-    {}
-    {\newunit
-     \printfield{series}%
-     \setunit{\addspace}}%
-  \usebibmacro{periodical+issue}%将issue调整到上面来，并修改
-\iffieldundef{number}{}{%%进一步处理有范围的数字
-  \multinumberparser{\thefield{number}}}%
-  \iffieldundef{volume}%
-  {\printfield{year}%
-  \printtext{\mkbibparens{\multinumberfirst}}%
-  \bibrangedash%
-  \iffieldundef{endyear}{}{\printfield{endyear}\printtext{\mkbibparens{\multinumbersecond}}}%
-  }%
-  {\gbt@parse@range{\thefield{volume}}%
-  \printfield{year}%
-  \setunit{\addcomma\space}%将冒号修改为逗号
-  \printtext{\gbt@range@first}%
-  \printtext{\mkbibparens{\multinumberfirst}}%
-  \bibrangedash%
-  \iffieldundef{endyear}{}{%
-  \printfield{endyear}%
-  \setunit{\addcomma\space}%将冒号修改为逗号
-  \printtext{\gbt@range@second}%
-  \printtext{\mkbibparens{\multinumbersecond}}}%
-  }%
-  \setunit{\addcomma\space}%
-  \printfield{eid}%
-  \setunit{\addspace}%
-  %\usebibmacro{issue+date}%
-  %\setunit{\addcolon\space}%
-  \usebibmacro{issue}%
-  \newunit}
-
-%新增一个样式用于调整期刊年份的格式，只打印年份
-\newbibmacro*{periodical+issue}{%
-  \printtext{%去掉了[parens]
-    \iffieldundef{issue}
-      {%\usebibmacro{date}%修改为下一句
-      }%
-      {\printfield{issue}%
-       \setunit*{\addspace}%
-       %\usebibmacro{date}%修改为下一句
-       }%
-       }%
-  %\newunit
-}
-
-%新增一个样式用于输出连续出版物的地址，单位，时间
-%类似与上面的\newbibmacro*{publisher+location+date}
-\newbibmacro*{location+institution+date}{%
-\testCJKfirst{\thefield{title}}
-\iflistundef{location}{\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}}{\printtext{[S.l.\adddot]}}}%
-  {\printlist{location}}%
-%  \iflistundef{institution}
-%    {\setunit*{\addcomma\space}}
-%    {\setunit*{\addcolon\space}}%
-%  \printlist{institution}%
-%  \setunit*{\addcomma\space}%
-\addcolon\addspace%
-\iflistundef{institution}{%
-%注意这里\printtext{\mkbibbrackets{s.n.}}和\printtext{[s.n.\adddot]}是不同的，这里的]不影响标点追踪，
-%这里要理解的是newunit插入的是period，看def中的命令:\newcommand*{\newunitpunct}{\addperiod\space}，\newcommand*{\finentrypunct}{\addperiod}
-\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}}{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}}}% \bibstring{nopublisher}
-{\printlist{institution}}%
-\setunit{\addcomma\addspace}%
-  %\usebibmacro{date}%
-%  \printfield{year}%
-%  \bibrangedash%
-%  \iffieldundef{endyear}{}{\printfield{endyear}}%
-  \newunit%
-}
-
-
 %修改连续出版物的驱动，源来自standard.BBX
   \DeclareBibliographyDriver{periodical}{%
   \usebibmacro{bibindex}%
@@ -1165,29 +1216,6 @@ backrefpages     = {引用页:},
      \usebibmacro{related}}
     {}%
   \usebibmacro{finentry}}
-
-%重设专利title的输出，将文献类型标识符输出出去，原输出来自biblatex.def文件
-\newbibmacro*{patenttitle}{%
-  \ifboolexpr{%
-    test{\iffieldundef{title}}%
-    and%
-    test{\iffieldundef{subtitle}}%
-  }%
-    {}%
-    {\printtext[title]{%
-       \printfield[titlecase]{title}%
-       \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
-       {}{\setunit{\subtitlepunct}%
-       \printfield[titlecase]{subtitle}}%
-       \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
-        {\setunit{\subtitlepunct}\printfield{titleaddon}}%
-        \setunit{\subtitlepunct}\printfield{number}%写专利号
-         \printfield[gbtypeflag]{usera}%
-     \iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
-     %\newunit
-     }%
-}%
-}
 
 %处理专利文献，源来自standard.BBX
   \DeclareBibliographyDriver{patent}{%
@@ -1308,17 +1336,6 @@ backrefpages     = {引用页:},
     {}%
   \usebibmacro{finentry}}
 
-\newbibmacro*{institution+location+date}{%
-  \printlist{location}%
-  \iflistundef{institution}
-    {\setunit*{\addcomma\space}}
-    {\setunit*{\addcolon\space}}%
-  \printlist{institution}%
-  \setunit*{\addcomma\space}%
-  \usebibmacro{date}%
-  %\usebibmacro{modifydate}%
-  %\newunit
-  }
 
 %2016-11-11增加了译者信息
 \DeclareBibliographyDriver{report}{%

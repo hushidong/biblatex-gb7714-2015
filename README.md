@@ -35,9 +35,10 @@ date of change: 2016-12-07 to version v1.0e
 * Changes to pkg code:to fix a few bugs
 - "*.bbx": add overwite option when map keywords field with note field
 - "*.bbx": modify the punction after publisher in gb7714-2015.bbx
+- "*.bbx": modify some newbibmacro* to renewbibmacro* to eleminate warnings
 
 * Changes to documentation:
-- biblatex-gb7714-2015.tex: add a summary of the features of the package
+- biblatex-gb7714-2015.tex: add a summary of the features of the package and a compile guide
 - *.sh/bad: add the autoexec files for windows/linux OS 
 - *.bib: refine the bib database
 
