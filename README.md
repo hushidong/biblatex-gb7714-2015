@@ -36,10 +36,12 @@ date of change: 2016-12-07 to version v1.0e
 - "*.bbx": add overwite option when map keywords field with note field
 - "*.bbx": modify the punction after publisher in gb7714-2015.bbx
 - "*.bbx": modify some newbibmacro* to renewbibmacro* to eleminate warnings
+- "*.bbx": add a package option align=right,left,gb7714-2015 for users to choose numeric label align style
+- "*.cbx": restore the origin parencite definition for users to use superscript citecmd(cite) and inline citecmd(parencite) in one document
 
 * Changes to documentation:
 - biblatex-gb7714-2015.tex: add a summary of the features of the package and a compile guide
-- *.sh/bad: add the autoexec files for windows/linux OS 
+- *.sh/bat: add the autoexec files for windows/linux OS 
 - *.bib: refine the bib database
 
 date of change: 2016-11-24 to version v1.0d

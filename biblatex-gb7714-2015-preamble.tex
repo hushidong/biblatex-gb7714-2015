@@ -19,8 +19,8 @@ pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
 %\renewcommand{\bibfont}{\zihao{-5}\songti}
 \setlength{\bibitemsep}{2pt}
 \defbibheading{bibliography}[\bibname]{%
-\phantomsection%解决链接指引出错的问题，相当于加入了一个引导点
-\addcontentsline{toc}{subsection}{#1}
+%\phantomsection%解决链接指引出错的问题，相当于加入了一个引导点
+%\addcontentsline{toc}{subsection}{#1}
 	\centering\subsubsection*{#1}}%
 
 \addbibresource[location=local]{example.bib}
@@ -124,12 +124,12 @@ pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
 \definecolor{codebackground}{rgb}{0.9,0.9,1}
 
 \newlength{\outleftdis}
-\newcommand{\codetopline}[1]{\settowidth{\outleftdis}{\footnotesize{#1}~~~}%
+\newcommand{\codetopline}[1]{\settowidth{\outleftdis}{\footnotesize{\kaishu{#1}}~~~}%
 \ifodd\thepage%判断奇数页，画一条有左标签的线
-{\noindent\hspace*{-\outleftdis}\colorbox{yellow}{\color{blue}\footnotesize{#1}~}\color{green!50!black}\rule[0.1\baselineskip]{\linewidth}{0.4pt}}%
+{\noindent\hspace*{-\outleftdis}\colorbox{yellow!50}{\color{blue}\footnotesize{\kaishu{#1}}~}\color{green!50!black}\rule[0.1\baselineskip]{\linewidth}{0.4pt}}%
 \else%否则为偶数页，画一条有右标签的线
 {%\noindent\makebox{\color{green!50!black}\rule[0.1\baselineskip]{\linewidth}{0.4pt}\colorbox{yellow}{\color{blue}~\footnotesize{#1}}}
-\noindent\color{green!50!black}\rule[0.1\baselineskip]{\linewidth}{0.4pt}\colorbox{yellow}{\color{blue}~\footnotesize{#1}}%
+\noindent\color{green!50!black}\rule[0.1\baselineskip]{\linewidth}{0.4pt}\colorbox{yellow!50}{\color{blue}~\footnotesize{\kaishu{#1}}}%
 }%
 \fi%
 }
@@ -231,7 +231,15 @@ colback=green!50!yellow!15!white,terminator sign={\ }}{rfeg}
 {\songti{\zihao{-4}{\riqiudf}}\par}
 \end{center}
 }
-\usepackage{enumitem} %重设list环境
+
+%--------------列表环境---------------------------------------------
+\usepackage[inline]{enumitem} %重设list环境
+\setlist[enumerate]{label=\bfseries\textcolor{violet}{\arabic*.},topsep=2pt,partopsep=0pt,parsep=0pt,%
+align=left,leftmargin=0em,itemsep=0.5em,labelwidth=0.1em,itemindent=2.6em}%label=$\triangleright$,itemindent=1em
+\setlist[itemize]{topsep=2pt,partopsep=0pt,parsep=0pt,%
+leftmargin=4.5em,itemindent=0em}
+\setlist[description]{font=\bfseries\textcolor{violet},align=right,topsep=5pt,partopsep=0pt,parsep=0pt,%
+itemsep=0pt,leftmargin=2em,itemindent=0em}%注意，font或format中的最后一个命令自动提取标签为其参数
 
 %\usepackage{fancyvrb}%fancyvrb宏包
 %\DefineVerbatimEnvironment%  %定义环境-myverbatim
@@ -256,4 +264,25 @@ colback=green!50!yellow!15!white,terminator sign={\ }}{rfeg}
 
 \usepackage{amssymb}
 \newcommand{\HandRight}{$\bigstar$}
+\newcommand{\zhongdian}[1]{\textcolor{red}{\HandRight\heiti#1}}
+
+\newenvironment*{marglist}
+{\list{}{\setlength{\topsep}{0pt}
+\setlength{\partopsep}{0pt}
+\setlength{\itemsep}{0pt}
+\setlength{\parsep}{0pt}
+\setlength{\leftmargin}{0pt}%
+\setlength{\itemindent}{0pt}%
+\renewcommand*{\makelabel}[1]{\hss\llap{\footnotesize\color{orange}\bfseries##1}}}}
+{\endlist}
+
+\makeatletter
+\newcommand{\updateinfo}[2][\@empty]{%
+\par\small\addvspace{2ex plus 1ex}%
+\noindent{\color{orange}\rule{\linewidth}{2pt}}
+\vskip -\parskip
+\ifx\@empty#1 \begin{marglist} \item #2\end{marglist}
+\else \begin{marglist} \item[#1] #2\end{marglist} \fi}
+\makeatother
+
 

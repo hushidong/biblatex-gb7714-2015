@@ -34,9 +34,13 @@
 %定义判断中文字符的函数，用于判断作者等信息是否由中文字符构成
 \providetoggle{ifCJKforgbt}
 \def\testCJKfirstchar#1#2&{%
-\ifnumgreater{`#1}{"2E7F}{\toggletrue{ifCJKforgbt}}{\togglefalse{ifCJKforgbt}}}%
+\ifnumgreater{`#1}{"2E7F}{\toggletrue{ifCJKforgbt}}{\togglefalse{ifCJKforgbt}}%
+}%
+
 \def\testCJKfirst#1{%
-\edef\tempa{#1}%
+%\edef\tempa{#1}%
+\exploregroups%
+\StrChar{#1}{1}[\tempa]%
 \expandafter\testCJKfirstchar\tempa&}
 
 %判断是否是标准
@@ -98,6 +102,10 @@
 
 %=====================================================================
 %设置宏包选项
+%增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
+%因为在作者年制中，不需要使用，这里也增加，为了与顺序年制的兼容性考虑。
+\DeclareBibliographyOption[string]{align}[right]{}%
+
 \iftoggle{iftexlivesix}{% Alter settings that carry through from biblatex
 %biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
 \ExecuteBibliographyOptions{
@@ -248,7 +256,7 @@ backrefpages     = {引用页:},
             }
         \map{%因为无法进行cjk字符判断，所以用反的思路，判断没有英文字符，没有空格，没有逗号等字符情况下
              %认为是中文的，将文献userb设置成cn，用于排序
-            \step[fieldsource=author,match=\regexp{[^a-zA-Z\s\.\,\'\{\}]},final]
+            \step[fieldsource=author,match=\regexp{[^a-zA-Z\s\.\,\'\{\}\-]},final]
             \step[fieldset=userb,fieldvalue={cn}]
             }
         \map{%将没有设置的userb设置成en，即认为不是中文的就是英文的。
@@ -536,7 +544,10 @@ backrefpages     = {引用页:},
 
 \renewbibmacro*{url}{\printfield{url}}
 %\newbibmacro*{urldate}{\printurldate} %引用时间修改如下一行
-\renewbibmacro*{urldate}{\addspace\printtext{[}\printfield{urlyear}\bibrangedash\printfield{urlmonth}\bibrangedash\printfield{urlday}\printtext{]}}
+\renewbibmacro*{urldate}{%
+\addspace\printtext{[}\printfield{urlyear}%
+\iffieldundef{urlmonth}{}{\bibrangedash\printfield{urlmonth}}%
+\iffieldundef{urlday}{}{\bibrangedash\printfield{urlday}}\printtext{]}}
 \newbibmacro*{newsdate}{%%新增加一个新闻日期
 \iffieldundef{year}{}{\printfield{year}%
 \iffieldundef{month}{}{\bibrangedash\printtext{\thefield{month}}%

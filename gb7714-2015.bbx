@@ -34,9 +34,13 @@
 
 \providetoggle{ifCJKforgbt}%定义判断中文字符的函数，用于判断作者等信息是否由中文字符构成
 \def\testCJKfirstchar#1#2&{%
-\ifnumgreater{`#1}{"2E7F}{\toggletrue{ifCJKforgbt}}{\togglefalse{ifCJKforgbt}}}%
+\ifnumgreater{`#1}{"2E7F}{\toggletrue{ifCJKforgbt}}{\togglefalse{ifCJKforgbt}}%
+}%
+
 \def\testCJKfirst#1{%
-\edef\tempa{#1}%
+%\edef\tempa{#1}%
+\exploregroups%
+\StrChar{#1}{1}[\tempa]%
 \expandafter\testCJKfirstchar\tempa&}
 
 \providetoggle{ifnoteeqstandard}%判断是否是标准
@@ -98,6 +102,12 @@
 
 %=====================================================================
 %设置宏包选项
+%增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
+\DeclareBibliographyOption[string]{align}[right]{%
+\ifstrequal{#1}{left}{\setalignleft}{}
+\ifstrequal{#1}{gb7714-2015}{\setaligngbstyle}{}
+}
+
 % Alter settings that carry through from biblatex
 \iftoggle{iftexlivesix}
 {%biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
@@ -244,6 +254,70 @@ backrefpages     = {引用页:},
 }
 
 %=====================================================================
+%参考文献表环境
+
+%默认的参考文献列表格式，放这里作为参考
+%\defbibenvironment{bibliography}
+
+%修改序号标签格式为左对齐,注意各参考文献内容还是对齐的，
+%这样就会使得序号标签与参考文献内容的间隔增大，这个问题是没有办法解决的
+%因为采用list做具有一定宽度的序号标签，\labelwidth只能设置一个，且是最宽的标签的宽度
+%但总的来说参考文献内容对齐是合理和漂亮的，
+%而标签则只能对齐一个方向，要么左对齐要么右对齐，看个人选择了。
+%\DeclareFieldFormat{shorthandwidth}{\mkbibbrackets{#1}} %源来自numeric.BBX
+%\DeclareFieldFormat{labelnumberwidth}{\ttfamily\mkbibbrackets{#1}\hfill}
+%\iftoggle{alignleft}{\DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{#1}\hfill}}{}
+%修改序号标签格式为左对齐
+\def\setalignleft{\DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{##1}\hfill}}
+%修改序号标签格式为以各条参文献为基础进行对齐的方式
+\def\setaligngbstyle{%
+\def\blx@bibitem##1{%
+  \blx@ifdata{##1}
+    {\begingroup
+     \blx@getdata{##1}%
+     \blx@bibcheck
+     \iftoggle{blx@skipentry}{}{%
+       \blx@setdefaultrefcontext{##1}%
+       \global\let\blx@noitem\@empty
+       \blx@setoptions@type\abx@field@entrytype
+       \blx@setoptions@entry
+       \blx@thelabelnumber
+       \addtocounter{instcount}\@ne
+       \blx@initsep
+       \blx@namesep
+       \csuse{blx@item@\blx@theenv}\relax
+%       \blx@initsep   %移动到上面去，恢复bibnamesep等的作用机制
+%       \blx@namesep
+       \csuse{blx@hook@bibitem}%
+       \blx@execute
+       \blx@initunit
+       \blx@anchor
+       \blx@beglangbib
+       \bibsentence
+       \blx@pagetracker
+       \blx@driver\abx@field@entrytype
+       \blx@postpunct
+       \blx@endlangbib}%
+     \par\endgroup}%这里增加了一个\par
+    {}}
+\newcommand{\itemcmd}{%
+\settowidth{\lengthid}{[\printfield{labelnumber}]}
+\addtolength{\lengthid}{\biblabelsep}
+\setlength{\lengthlw}{\textwidth}
+\addtolength{\lengthlw}{-\lengthid}
+\addvspace{\bibitemsep}%恢复\bibitemsep的作用
+%\parshape 2 0em \textwidth \lengthid \lengthlw
+\hangindent\lengthid
+[\printfield{labelnumber}]\hspace{\biblabelsep}}
+\newlength{\lengthid}
+\newlength{\lengthlw}
+\defbibenvironment{bibliography}
+{\begingroup\setlength{\parindent}{0em}}
+{\endgroup}
+{\itemcmd}}
+
+
+%=====================================================================
 %设置单元或块等的标点
 %\renewrobustcmd*{\bibinitperiod}{\adddot} %来源biblatex2.STY
 \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉
@@ -326,18 +400,6 @@ backrefpages     = {引用页:},
 
 %\DeclareFieldFormat{pages}{\mkpageprefix[bookpagination]{#1}}
 \DeclareFieldFormat{pages}{#1}%去掉前面引导页码的pp.等字符
-
-%修改序号标签格式为左对齐,注意各参考文献内容还是对齐的，
-%这样就会使得序号标签与参考文献内容的间隔增大，这个问题是没有办法解决的
-%因为采用list做具有一定宽度的序号标签，\labelwidth只能设置一个，且是最宽的标签的宽度
-%但总的来说参考文献内容对齐是合理和漂亮的，
-%而标签则只能对齐一个方向，要么左对齐要么右对齐，看个人选择了。
-%\DeclareFieldFormat{shorthandwidth}{\mkbibbrackets{#1}} %源来自numeric.BBX
-%\DeclareFieldFormat{labelnumberwidth}{\ttfamily\mkbibbrackets{#1}\hfill}
-\DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{#1}\hfill}
-
-%默认的参考文献列表格式，放这里作为参考
-%\defbibenvironment{bibliography}
 
 %修改译者位置格式，bytranslator+others原格式来自biblatex.def文件
 \renewbibmacro*{bytranslator+others}{%
@@ -508,8 +570,9 @@ backrefpages     = {引用页:},
 \renewbibmacro*{url}{\printfield{url}}
 %\newbibmacro*{urldate}{\printurldate} %引用时间修改如下一行，即带方括号
 \renewbibmacro*{urldate}{%
-%\iffieldundef{year}{}{\nopunct}%%这里增加了这一句是为了把year后直接跟urlyear中间的点去掉。这已经没有必要了在driver中去掉点了。
-\addspace\printtext{[}\printfield{urlyear}\bibrangedash\printfield{urlmonth}\bibrangedash\printfield{urlday}\printtext{]}}
+\addspace\printtext{[}\printfield{urlyear}%
+\iffieldundef{urlmonth}{}{\bibrangedash\printfield{urlmonth}}%
+\iffieldundef{urlday}{}{\bibrangedash\printfield{urlday}}\printtext{]}}
 \newbibmacro*{newsdate}{%%新增加一个新闻日期
 \iffieldundef{year}{}{\printfield{year}%
 \iffieldundef{month}{}{\bibrangedash\printtext{\thefield{month}}%
@@ -640,6 +703,7 @@ backrefpages     = {引用页:},
 
 %调整期刊卷和期的格式，源来自standard.bbx
 \renewbibmacro*{volume+number+eid}{%
+%\ifnumerals{\thefield{volume}}{htruei}{hfalsei}
   \printfield{volume}%
   %\setunit*{\adddot}%去掉点号
   %\printfield{number}%
