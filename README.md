@@ -16,11 +16,15 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
 %for numerical sequence
 
-`\usepackage[backend=biber,style=gb7714-2015]{biblatex}`
+	`\usepackage[backend=biber,style=gb7714-2015]{biblatex}`
+
+	%add a option "align" for the numerical label, option value maybe "right" or "left" or "gb7714-2015"
+
+	`\usepackage[backend=biber,style=gb7714-2015,align=gb7714-2015]{biblatex}`
 
 %for author year sequence
 
-`\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}`
+	`\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}`
 
 A demonstration database is provided to show how to format input for the style. The biblatex-gb7714-2015 style works with texlive2014, texlive2015, texlive2016 and so on.
 
@@ -33,70 +37,70 @@ update history:
 date of change: 2016-12-31 to version v1.0f
 
 * Changes to pkg code:
-- "*.bbx": use function iffieldequalstr instead of customized function for testing the value of note field eqs standard/news
-- "*.bbx": deal the compatibility problem for texlive2015, include:
-	1. DeclareBibliographyOption of biblatex 3.0 in texlive2015 cmd has no type argument
-	2. pkg xstring is not loaded with biblatex 3.0 in texlive2015
-	3. new defined bibliography environment with gb7714-2015 label align sytle is not work
+	- "*.bbx": use function iffieldequalstr instead of customized function for testing the value of note field eqs standard/news
+	- "*.bbx": deal the compatibility problem for texlive2015, include:
+		1. DeclareBibliographyOption of biblatex 3.0 in texlive2015 cmd has no type argument
+		2. pkg xstring is not loaded with biblatex 3.0 in texlive2015
+		3. new defined bibliography environment with gb7714-2015 label align sytle is not work
 * Changes to documentation:
-- biblatex-gb7714-2015.tex: add an explaination for the author field input format
+	- biblatex-gb7714-2015.tex: add an explaination for the author field input format
 
 
 date of change: 2016-12-07 to version v1.0e
 
 * Changes to pkg code:to fix a few bugs
-- "*.bbx": add overwite option when map keywords field with note field
-- "*.bbx": modify the punction after publisher in gb7714-2015.bbx
-- "*.bbx": modify some newbibmacro* to renewbibmacro* to eleminate warnings
-- "*.bbx": add a package option align=right,left,gb7714-2015 for users to choose numeric label align style
-- "*.cbx": restore the origin parencite definition for users to use superscript citecmd(cite) and inline citecmd(parencite) in one document
+	- "*.bbx": add overwite option when map keywords field with note field
+	- "*.bbx": modify the punction after publisher in gb7714-2015.bbx
+	- "*.bbx": modify some newbibmacro* to renewbibmacro* to eleminate warnings
+	- "*.bbx": add a package option align=right,left,gb7714-2015 for users to choose numeric label align style
+	- "*.cbx": restore the origin parencite definition for users to use superscript citecmd(cite) and inline citecmd(parencite) in one document
 
 * Changes to documentation:
-- biblatex-gb7714-2015.tex: add a summary of the features of the package and a compile guide
-- *.sh/bat: add the autoexec files for windows/linux OS 
-- *.bib: refine the bib database
+	- biblatex-gb7714-2015.tex: add a summary of the features of the package and a compile guide
+	- *.sh/bat: add the autoexec files for windows/linux OS 
+	- *.bib: refine the bib database
 
 date of change: 2016-11-24 to version v1.0d
 
 * Changes to pkg code:to fix a few bugs to work with beamer class correctly
-- "*.bbx": redefine the DeclareFieldFormat for title to eleminate the redundant dot after title in beamer class
-- "*.bbx": add some comment in drivers to eleminate the needless space
+	- "*.bbx": redefine the DeclareFieldFormat for title to eleminate the redundant dot after title in beamer class
+	- "*.bbx": add some comment in drivers to eleminate the needless space
 
 * Changes to documentation:
-- biblatex-gb7714-2015.tex: revise this document and add some explication
+	- biblatex-gb7714-2015.tex: revise this document and add some explication
 
 
 date of change: 2016-11-14 to version v1.0c
 
 * Changes to pkg code:to fix a few bugs
-- "*ay.bbx": add noauthor or "佚名" for the authoryear style
-- "*ay.bbx": add some map cmds to automatically fill the userb field for sorting of the authoryear style
-- "*ay.bbx": add a command yearpagescite for the authoryear style
-- "*.bbx": add a dot after the null publisher with nothing followed
-- "*.bbx": modify the english local string backrefpage to chinese "引用页:"
-- "*ay.bbx": add some options such as uniquelist,labeldate,uniquename for the authoryear style
+	- "*ay.bbx": add noauthor or "佚名" for the authoryear style
+	- "*ay.bbx": add some map cmds to automatically fill the userb field for sorting of the authoryear style
+	- "*ay.bbx": add a command yearpagescite for the authoryear style
+	- "*.bbx": add a dot after the null publisher with nothing followed
+	- "*.bbx": modify the english local string backrefpage to chinese "引用页:"
+	- "*ay.bbx": add some options such as uniquelist,labeldate,uniquename for the authoryear style
 
 * Changes to documentation:
-- biblatex-gb7714-2015.tex: revise this document.
+	- biblatex-gb7714-2015.tex: revise this document.
 
 date of change: 2016-11-11 to version v1.0b
 
 * Changes to pkg code:to match the GBT7714-2015 standard
-- "*.bbx": change a few local strings from english.blx such as bibliography,references
-- "*.bbx": set new maxnamenumber for authoryear style
-- "*.bbx": add translator field and modify version format for report and manual driver 
-- "*.bbx": remove the space before edition/version field, which was brought in with testCJKfirst function
+	- "*.bbx": change a few local strings from english.blx such as bibliography,references
+	- "*.bbx": set new maxnamenumber for authoryear style
+	- "*.bbx": add translator field and modify version format for report and manual driver 
+	- "*.bbx": remove the space before edition/version field, which was brought in with testCJKfirst function
 
 * Changes to documentation:
-- biblatex-gb7714-2015.tex: correct a few flaws and add more instructions.
-- "*.bib":: refine some entries
+	- biblatex-gb7714-2015.tex: correct a few flaws and add more instructions.
+	- "*.bib":: refine some entries
 
 
 date of change: 2016-10-23 to version v1.0a
 
 * Changes to pkg code:
-- "*.bbx","*.cbx": add some information like version information.
+	- "*.bbx","*.cbx": add some information like version information.
 
 * Changes to documentation:
-- biblatex-gb7714-2015.tex: correct a few flaws .
-- paperone.bib: refine some entries.
+	- biblatex-gb7714-2015.tex: correct a few flaws .
+	- paperone.bib: refine some entries.
