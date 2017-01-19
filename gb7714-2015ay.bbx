@@ -10,15 +10,17 @@
 %% 2016/11/14 v1.0c
 %% 2016/11/24 v1.0d
 %% 2016/12/07 v1.0e
+%% 2016/12/31 v1.0f
 %% E-mail: hzzmail@163.com
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\ProvidesFile{gb7714-2015ay.bbx}[2016/12/07 v1.0e biblatex bibliography style]
+\ProvidesFile{gb7714-2015ay.bbx}[2016/12/31 v1.0f biblatex bibliography style]
 
 %=====================================================================
 %加载标准样式
 \RequireBibliographyStyle{authoryear} % Load the standard style to avoid copy-pasting unnecessary material
+\RequirePackage{xstring}%为兼容texlive2015的biblatex3.0不加载xstring包的问题
 
 %=====================================================================
 %增加一些功能函数
@@ -44,15 +46,16 @@
 \expandafter\testCJKfirstchar\tempa&}
 
 %判断是否是标准
-\providetoggle{ifnoteeqstandard}
-\def\testifnoteeqstd{%
-\iffieldundef{note}{\togglefalse{ifnoteeqstandard}}%判断一下，是否是报纸和标准
-        {\def\comparetmp{standard}\edef\comparetmpb{\thefield{note}}%
-        \ifx\comparetmp\comparetmpb%
-        \toggletrue{ifnoteeqstandard}%
-        \else%
-        \togglefalse{ifnoteeqstandard}%
-        \fi}}
+%\providetoggle{ifnoteeqstandard}
+%\def\testifnoteeqstd{%
+%\iffieldundef{note}{\togglefalse{ifnoteeqstandard}}%判断一下，是否是报纸和标准
+%        {\def\comparetmp{standard}\edef\comparetmpb{\thefield{note}}%
+%        \ifx\comparetmp\comparetmpb%
+%        \toggletrue{ifnoteeqstandard}%
+%        \else%
+%        \togglefalse{ifnoteeqstandard}%
+%        \fi}}
+%\iffieldequalstr{note}{standard}{true}{false} %可以利用这一函数代替
 
 %用于解析连续出版物，2个卷期的情况
 \def\multivolumeparsetoparts#1/#2{\def\multivolumefirst{#1}\def\multivolumesecond{#2}}
@@ -102,12 +105,11 @@
 
 %=====================================================================
 %设置宏包选项
+\iftoggle{iftexlivesix}{% Alter settings that carry through from biblatex
+%biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
 %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
 %因为在作者年制中，不需要使用，这里也增加，为了与顺序年制的兼容性考虑。
 \DeclareBibliographyOption[string]{align}[right]{}%
-
-\iftoggle{iftexlivesix}{% Alter settings that carry through from biblatex
-%biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
 \ExecuteBibliographyOptions{
   useprefix = true,  %名字的信息包括前缀
   %firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
@@ -119,6 +121,9 @@
   minbibnames=3,
 }}
 {%biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
+%增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
+%因为在作者年制中，不需要使用，这里也增加，为了与顺序年制的兼容性考虑。
+\DeclareBibliographyOption{align}[right]{}%
 \ExecuteBibliographyOptions{
   useprefix = true,  %名字的信息包括前缀
   firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
@@ -348,7 +353,7 @@ backrefpages     = {引用页:},
 {\nobreak\printtext{[}\nobreak N\printtext{]}\nobreak}%
 {\nobreak\printtext{[}\nobreak N\printtext{\texttt{/}OL]}\nobreak}%
 }
-\DeclareFieldFormat{gbtypeflags}{%用于报纸newspaper
+\DeclareFieldFormat{gbtypeflags}{%%用于标准standard
 \iffieldundef{url}%当存在url时，增加一个OL标识符
 {\nobreak\printtext{[}\nobreak S\printtext{]}\nobreak}%
 {\nobreak\printtext{[}\nobreak S\printtext{\texttt{/}OL]}\nobreak}%
@@ -512,16 +517,19 @@ backrefpages     = {引用页:},
        \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
         {\setunit{\subtitlepunct}\printfield{titleaddon}}%
          \iffieldundef{note}{\printfield[gbtypeflag]{usera}}%在标题后直接给出文献标识字母，判断一下，是否是报纸和标准
-        {\def\comparetmp{news}\def\comparetmpa{standard}\edef\comparetmpb{\thefield{note}}%
-        \ifx\comparetmp\comparetmpb%判断是否为报纸
-        \printfield[gbtypeflagn]{usera}%
-        \else%
-            \ifx\comparetmpa\comparetmpb%判断是否为标准
-            \printfield[gbtypeflags]{usera}%
-            \else%
-            \printfield[gbtypeflag]{usera}%
-            \fi%
-        \fi%
+        {\iffieldequalstr{note}{standard}{\printfield[gbtypeflags]{usera}}%判断是否为标准
+                                         {\iffieldequalstr{note}{news}{\printfield[gbtypeflagn]{usera}}%判断是否为报纸
+                                                                      {\printfield[gbtypeflag]{usera}}}%其它
+%        \def\comparetmp{news}\def\comparetmpa{standard}\edef\comparetmpb{\thefield{note}}%
+%        \ifx\comparetmp\comparetmpb%判断是否为报纸
+%        \printfield[gbtypeflagn]{usera}%
+%        \else%
+%            \ifx\comparetmpa\comparetmpb%判断是否为标准
+%            \printfield[gbtypeflags]{usera}%
+%            \else%
+%            \printfield[gbtypeflag]{usera}%
+%            \fi%
+%        \fi%
         }%
      \iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
      %\newunit
@@ -681,17 +689,19 @@ backrefpages     = {引用页:},
 %事实上title对于每个文献来说是必须的，所以用它判断是最快的，而且一般标题和出版社的语言是一样的。
 \renewbibmacro*{publisher+location+date}{%
 \iffieldundef{title}{}{\testCJKfirst{\thefield{title}}}%
-\testifnoteeqstd%
+%\testifnoteeqstd%
 \iflistundef{location}{%\adddot
-\iftoggle{ifnoteeqstandard}{}{%
+\iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准低19页看到，标准存在出版项时输出，没有时完全省略。
+%\iftoggle{ifnoteeqstandard}{}{%%}替换为上一句，尽可能用biblatex提供的函数
 \iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}\setunit*{\addcolon\addspace}}{\printtext{[S.l.\adddot]}\setunit*{\addcolon\addspace}}}}%  \bibstring{noaddress}
 {\printlist{location}\setunit*{\addcolon\addspace}}%
 %\addcolon\addspace%
 \iflistundef{publisher}{%
-\iftoggle{ifnoteeqstandard}{}{%
+\iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准低19页看到，标准存在出版项时输出，没有时完全省略。
+%\iftoggle{ifnoteeqstandard}{}{%%}替换为上一句，尽可能用biblatex提供的函数
 \iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}\setunit{\adddot\addspace}\setunit*{\addcolon\addspace}}
 %\mkbibbrackets
-%{\printtext{[s.n.\adddot]}\setunit{\adddot\addspace}\setunit*{\addcolon\addspace}}}}%\bibstring{nopublisher}
+%{{%{\printtext{[s.n.\adddot]}\setunit{\adddot\addspace}\setunit*{\addcolon\addspace}}}}%\bibstring{nopublisher}
 {\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcolon\addspace}}}}
 {\printlist{publisher}\setunit*{\addcolon\addspace}}%
 %\addcomma\addspace%
@@ -742,25 +752,28 @@ backrefpages     = {引用页:},
     \iffieldundef{issue}
       {%\usebibmacro{date}
         \iffieldundef{note}{\usebibmacro{date}}%判断一下，是否是报纸和标准
-        {\def\comparetmp{news}\edef\comparetmpb{\thefield{note}}%
-        \ifx\comparetmp\comparetmpb%
-        \usebibmacro{newsdate}%
-        \else%
-        \usebibmacro{date}%
-        \fi}%
-      }
+        {\iffieldequalstr{note}{news}{\usebibmacro{newsdate}}%判断是否为报纸
+                                     {\usebibmacro{date}}%
+%        \def\comparetmp{news}\edef\comparetmpb{\thefield{note}}%
+%        \ifx\comparetmp\comparetmpb%
+%        \usebibmacro{newsdate}%
+%        \else%
+%        \usebibmacro{date}%
+%        \fi
+        }}%
       {\printfield{issue}%
        \setunit*{\addspace}%
        %\usebibmacro{date}
          \iffieldundef{note}{\usebibmacro{date}}%判断一下，是否是报纸和标准
-        {\def\comparetmp{news}\edef\comparetmpb{\thefield{note}}%
-        \ifx\comparetmp\comparetmpb%
-        \usebibmacro{newsdate}%
-        \else%
-        \usebibmacro{date}%
-        \fi}%
-       }%
-       }%
+        {\iffieldequalstr{note}{news}{\usebibmacro{newsdate}}%判断是否为报纸
+                                     {\usebibmacro{date}}%
+%        \def\comparetmp{news}\edef\comparetmpb{\thefield{note}}%
+%        \ifx\comparetmp\comparetmpb%
+%        \usebibmacro{newsdate}%
+%        \else%
+%        \usebibmacro{date}%
+%        \fi
+        }}}%
   %\newunit
   }
 

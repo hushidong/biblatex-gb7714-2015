@@ -1,6 +1,6 @@
 %------------------------------------------------------------
-\def\versionnumber{v1.0e}    %版本和修改时间信息
-\def\versiondate{2016-12-07}
+\def\versionnumber{v1.0f}    %版本和修改时间信息
+\def\versiondate{2016-12-31}
 %------------------------------------------------------------
 %-----------------标题和目录---------------------------------
 \titleformanual{符合GB7714-2015标准的biblatex参考\\
@@ -170,12 +170,14 @@ author.title:subtitle或titleaddon[usera].translator.edition.address或location:
 
       \textcircled{1}prefix lastname, suffix, firstname middlename
 
-      \textcircled{2}firstname middlename lastname
+      \textcircled{2}firstname middlename lastname or firstname prefix lastname
 
       对于需要输入前后缀的姓名只能采用第一种方式，比如:
       DES MARAIS, Jr., D J and H STRAUSS and SUMMONS, R. E. and others
 
       这里的第一个姓名输入为前缀，姓，后缀，名，中间名。第二个姓名输入为名，姓。第三个姓名输入为姓，名，中间名。
+
+      \emph{还要注意:对于第二种输入方式非首字母大写，姓名各个组成部分最好首字母是大写的，可能导致解析出错，比如姓名只有两个组成部分firstname和lastname，如果firstname小写的话，有可能会解析为prefix lastname。对于第一种输入方式，则至少lastname需要首字母大写，否则有可能将lastname解析成prefix。其中lastname也称familyname，firstname middlename 两者共称givenname}
 
       对于机构作者，不需要解析，直接输入机构名，英文的各个机构名用\{\}包起来，比如:
 
@@ -755,21 +757,21 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
     \item command的作用:一些设置和命令
     \item sty中的代码
   \end{itemize}
-  
+
   \item biblatex的宏包选项增加
   \begin{itemize}
     \item 需要重点注意的是:宏包选项设置命令DeclareBibliographyOption中，如果设置string选项，并用ifstrequal判断出选项的参数，然后设置toggletrue或false，然后再后面根据toggle的true或false来展开内容，是不行的。因为后面的toggle判断先于设置toggletrue或false展开。这样，如果在文档正文中看，toggle设置为true没有问题，但就是没有bbx 文件中对应设置为true的展开。所以不能采用这样的方式。而应该采用直接在选项设置命令展开，不用在多一道toggle判断了。尝试代码可以见\pageref{up:161207}页中更新说明中的注释代码。
     \item 注意:ExecuteBibliographyOptions命令是用来执行选项的，如果不给出设置选项的值，那么使用默认的参数。比如设置了一个gb7714选项，并用ExecuteBibliographyOptions\{gb7714\}进行设置，那么相当于设置为gb7714=true
     \item 摒弃了上述说明的方式后，采用在选项执行代码中直接调用命令的方式，详见bbx文件。
   \end{itemize}
-  
+
   \item biblatex的宏包参考文献表的打印
   \begin{itemize}
   \item 根据biblatex.sty文件中的\verb|\blx@bibliography|命令可以知道，定义的参考文献表的环境的开始代码在命令中\verb|\blx@bibliography|中，结束代码在\verb|\blx@endbibliography|中，循环项代码在\verb|\blx@bibitem|中的\verb|blx@item@\blx@theenv}|命令中。参考文献循环打印依靠\verb|\blx@listloop|命令实现。
   \item 从\verb|\blx@listloop|可以知道，各条参考文献表的指引信息是混合在一起的并且以|字符为分隔。将混合的参考文献指引信息解析成单独的指引信息，并交给\verb|\blx@bibitem|命令处理。
-  \item \verb|\blx@bibitem|首先开始一个编组，然后根据单独一条参考文献的指引信息，获取数据，执行判断，利用参考文献表环境定义的循环项代码对参考文献内容设置段落格式，最后结束编组。在定义align=gb7714-2015样式的段落格式时，采用了parshape或者hangindent命令来实现，所以其中增加了一个par命令以使其生效。  
+  \item \verb|\blx@bibitem|首先开始一个编组，然后根据单独一条参考文献的指引信息，获取数据，执行判断，利用参考文献表环境定义的循环项代码对参考文献内容设置段落格式，最后结束编组。在定义align=gb7714-2015样式的段落格式时，采用了parshape或者hangindent命令来实现，所以其中增加了一个par命令以使其生效。
   \end{itemize}
-  
+
 \end{enumerate}
 
 \section{样式文件一些需要说明的问题}
@@ -782,7 +784,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 
   \item 需要注意：当bibtex键中含有中文的时候，texlive2015中的biblatex3.0版的对参考文献条目的超链接会出现问题，而texlive2016 中的biblatex3.4版则没有问题。
 
-  \item 目前符合GB/T7714-2005或GB/T7714-2015参考文献录入要求的biblatex样式有好几个实现，除了这里作者提供的之外，还有李志奇(icetea)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}} 和沈周(szsdk)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152561&extra=page\%3D1}} 分别提供的样式文件,效果是类似的，也感谢两位作者的分享!。
+  \item 目前符合GB/T7714-2005或GB/T7714-2015参考文献著录规则的biblatex样式有好几个实现，除了这里作者提供的之外，还有李志奇(icetea)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}} 和沈周(szsdk)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152561&extra=page\%3D1}} 分别提供的样式文件，效果是类似的，也感谢两位作者的分享!
 
   \item {\heiti 中文文献的拼音排序，可以利用biber进行处理，这个问题可以参考Casper Ti. Vector在biblatex 参考文献样式caspervector v0.2.6中的方法
       \footnote{\url{https://gitlab.com/CasperVector/biblatex-caspervector}}，特此说明，表示感谢!}
@@ -879,10 +881,99 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 
 \section{更新历史}
 %============================
+\updateinfo[2016-12-31]{update to version 1.0f}\label{up:161231}
+\begin{enumerate}
+\item 利用biblatex提供的iffieldequalstr函数替换用于判断note域值等于new或standard的函数，比如:
+\begin{texlist}
+%case 1:
+%\providetoggle{ifnoteeqstandard}%判断是否是标准
+%\def\testifnoteeqstd{%
+%\iffieldundef{note}{\togglefalse{ifnoteeqstandard}}%判断一下，是否是标准
+%        {\def\comparetmp{standard}\edef\comparetmpb{\thefield{note}}%
+%        \ifx\comparetmp\comparetmpb%
+%        \toggletrue{ifnoteeqstandard}%
+%        \else%
+%        \togglefalse{ifnoteeqstandard}%
+%        \fi}}
+%\iffieldequalstr{note}{standard}{true}{false} %可以利用这一函数代替
+
+%case 2:
+\iffieldequalstr{note}{standard}{\printfield[gbtypeflags]{usera}}%判断是否为标准
+                                         {\iffieldequalstr{note}{news}{\printfield[gbtypeflagn]{usera}}%判断是否为报纸
+                                                                      {\printfield[gbtypeflag]{usera}}}%其它
+%        \def\comparetmp{news}\def\comparetmpa{standard}\edef\comparetmpb{\thefield{note}}%
+%        \ifx\comparetmp\comparetmpb%判断是否为报纸
+%        \printfield[gbtypeflagn]{usera}%
+%        \else%
+%            \ifx\comparetmpa\comparetmpb%判断是否为标准
+%            \printfield[gbtypeflags]{usera}%
+%            \else%
+%            \printfield[gbtypeflag]{usera}%
+%            \fi%
+%        \fi%
+
+%case 3:
+\iffieldequalstr{note}{news}{\usebibmacro{newsdate}}%判断是否为报纸
+                                     {\usebibmacro{date}}%
+%        \def\comparetmp{news}\edef\comparetmpb{\thefield{note}}%
+%        \ifx\comparetmp\comparetmpb%
+%        \usebibmacro{newsdate}%
+%        \else%
+%        \usebibmacro{date}%
+%        \fi
+
+%case 4:
+\renewbibmacro*{publisher+location+date}{%
+\testCJKfirst{\thefield{title}}%
+%\testifnoteeqstd%
+\iflistundef{location}{%\adddot
+\iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准低19页看到，标准存在出版项时输出，没有时完全省略。
+%\iftoggle{ifnoteeqstandard}{}{%}替换为上一句，尽可能用biblatex提供的函数
+\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}\addcolon\addspace}{\printtext{[S.l.\adddot]}\addcolon\addspace}}}%  \bibstring{noaddress}
+{\printlist{location}\addcolon\addspace}%
+%\addcolon\addspace%
+\iflistundef{publisher}{%
+\iffieldequalstr{note}{standard}{}{%
+%\iftoggle{ifnoteeqstandard}{}{%}替换为上一句，尽可能用biblatex提供的函数
+\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
+{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}}}%
+{\printlist{publisher}\setunit*{\addcomma\addspace}}%
+%\addcomma\addspace%
+\usebibmacro{date}%
+  %\newunit %去掉这个标点
+}
+\end{texlist}
+
+\item 之前1.0e版增加align选项的时候，没有测试对texlive2015的兼容性，所以导致一些错误。因为texlive2015的biblatex3.0版本的DeclareBibliographyOption命令定义选项时不像texlive2016的biblatex3.4版的是带类型说明的。所以做出一定的处理，把该命令分两个版本进行设置。同时需要注意新定义的参考文献表环境在texlive2015中的biblatex3.0中无效且出错，所以直接去掉，因此文献表的标签的项对齐效果在texlive2015中的biblatex3.0版中无法实现。
+\begin{texlist}
+%biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
+%增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
+\DeclareBibliographyOption[string]{align}[right]{%
+\ifstrequal{#1}{left}{\setalignleft}{}
+\ifstrequal{#1}{gb7714-2015}{\setaligngbstyle}{}
+}
+
+%biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
+%增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015无效，仍然为右对齐模式，因为舍弃了list类环境后出错。
+\DeclareBibliographyOption{align}[right]{%texlive2015中的3.0版中的DeclareBibliographyOption选项没有类型说明
+\ifstrequal{#1}{right}{}{}
+\ifstrequal{#1}{left}{\setalignleft}{}
+\ifstrequal{#1}{gb7714-2015}{}{}
+}
+\end{texlist}
+
+\item 之前1.0e版解决编组符号包围的责任者的中英文判断问题的时候，没有测试对texlive2015的兼容性，所以导致一些错误。因为使用了xstring宏包的功能，但texlive2015的biblatex3.0版本不默认加载xstring宏包，所以在修改样式文件，在其中加载一下该宏包。
+\begin{texlist}
+\RequirePackage{xstring}%为兼容texlive2015的biblatex3.0不加载xstring包的问题
+\end{texlist}
+
+\end{enumerate}
+
+%============================
 \updateinfo[2016-12-07]{update to version 1.0e}\label{up:161207}
 \begin{enumerate}
 \item 应海阔天空和xmtangjun等朋友的要求，在同一文献中可以使用上标或非上标的标注方式，修改顺序编码制的标注样式文件，去掉parencite命令的上标模式，恢复非上标方式。这样可以在同一文章中使用cite命令标注上标，而parencite命令标注非上标。而作者年制没有这一问题，不做修改。具体的效果见第\ref{sec:cite:cmd:test}节的内容。
-    
+
 \item 给宏包增加了一个选项align，用于控制顺序编码制的参考文献表的标签对齐方式，默认是right即右对齐，可以设置left即左对齐，也可以设置gb7714-2015，即以各条参考文献自身为基准对齐实现对齐。效果见第\ref{sec:align:test}节的内容。增加一个选项，真正实现起来并不复杂，但在未明白其运行机制之前尝试了好长时间，显得很麻烦，具体的机制见第\ref{sec:biblatex:mech}节。
     修改代码如下:
 \begin{texlist}
@@ -952,7 +1043,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 {\endgroup}
 {\itemcmd}}
 \end{texlist}
-    
+
 
 \item map中当有append选项时也需要overwrite选项，这不知道是不是texlive 2016中biber升级后的原因。之前使用texlive2015的时候没有问题。所以修改为:
 \begin{texlist}

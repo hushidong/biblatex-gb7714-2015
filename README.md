@@ -1,4 +1,4 @@
-﻿Date of last change:2016-12-07 to version v1.0e
+﻿Date of last change:2016-12-31 to version v1.0f
 
 # biblatex-gb7714-2015: a biblatex style  package
 ---------------------------------------------------------
@@ -29,6 +29,18 @@ please see the file 'biblatex-gb7714-2015.pdf' for more information!
 ---------------------------------------------------------
 
 update history:
+
+date of change: 2016-12-31 to version v1.0f
+
+* Changes to pkg code:
+- "*.bbx": use function iffieldequalstr instead of customized function for testing the value of note field eqs standard/news
+- "*.bbx": deal the compatibility problem for texlive2015, include:
+		1. DeclareBibliographyOption of biblatex 3.0 in texlive2015 cmd has no type argument
+		2. pkg xstring is not loaded with biblatex 3.0 in texlive2015
+		3. new defined bibliography environment with gb7714-2015 label align sytle is not work
+* Changes to documentation:
+- biblatex-gb7714-2015.tex: add an explaination for the author field input format
+
 
 date of change: 2016-12-07 to version v1.0e
 
