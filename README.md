@@ -1,7 +1,9 @@
-﻿Date of last change:2016-12-31 to version v1.0f
+<b>Date of last change:2016-12-31 to version v1.0f<\b>
 
 # biblatex-gb7714-2015: a biblatex style  package
 ---------------------------------------------------------
+
+## introduction
 
 Maintainer: huzhenzhen <hzzmail@163.com>
 
