@@ -14,6 +14,7 @@ A biblatex implementation of the GBT7714-2015 bibliography style for Chinese use
 
 The biblatex-gb7714-2015 package provides an implementation of the bibliography style of the GBT7714-2015 bibliography style. This implementation follows GBT7714-2015 standard, and can be used simply by loading biblatex with the appropriate option
 
+## usage
 %for numerical sequence
 
 	`\usepackage[backend=biber,style=gb7714-2015]{biblatex}`
@@ -32,9 +33,9 @@ please see the file 'biblatex-gb7714-2015.pdf' for more information!
 
 ---------------------------------------------------------
 
-update history:
+## update history:
 
-date of change: 2016-12-31 to version v1.0f
+### date of change: 2016-12-31 to version v1.0f
 
 * Changes to pkg code:
 	- "*.bbx": use function iffieldequalstr instead of customized function for testing the value of note field eqs standard/news
@@ -46,7 +47,7 @@ date of change: 2016-12-31 to version v1.0f
 	- biblatex-gb7714-2015.tex: add an explaination for the author field input format
 
 
-date of change: 2016-12-07 to version v1.0e
+### date of change: 2016-12-07 to version v1.0e
 
 * Changes to pkg code:to fix a few bugs
 	- "*.bbx": add overwite option when map keywords field with note field
@@ -60,7 +61,7 @@ date of change: 2016-12-07 to version v1.0e
 	- *.sh/bat: add the autoexec files for windows/linux OS 
 	- *.bib: refine the bib database
 
-date of change: 2016-11-24 to version v1.0d
+### date of change: 2016-11-24 to version v1.0d
 
 * Changes to pkg code:to fix a few bugs to work with beamer class correctly
 	- "*.bbx": redefine the DeclareFieldFormat for title to eleminate the redundant dot after title in beamer class
@@ -70,7 +71,7 @@ date of change: 2016-11-24 to version v1.0d
 	- biblatex-gb7714-2015.tex: revise this document and add some explication
 
 
-date of change: 2016-11-14 to version v1.0c
+### date of change: 2016-11-14 to version v1.0c
 
 * Changes to pkg code:to fix a few bugs
 	- "*ay.bbx": add noauthor or "佚名" for the authoryear style
@@ -83,7 +84,7 @@ date of change: 2016-11-14 to version v1.0c
 * Changes to documentation:
 	- biblatex-gb7714-2015.tex: revise this document.
 
-date of change: 2016-11-11 to version v1.0b
+### date of change: 2016-11-11 to version v1.0b
 
 * Changes to pkg code:to match the GBT7714-2015 standard
 	- "*.bbx": change a few local strings from english.blx such as bibliography,references
@@ -96,7 +97,7 @@ date of change: 2016-11-11 to version v1.0b
 	- "*.bib":: refine some entries
 
 
-date of change: 2016-10-23 to version v1.0a
+### date of change: 2016-10-23 to version v1.0a
 
 * Changes to pkg code:
 	- "*.bbx","*.cbx": add some information like version information.
