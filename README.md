@@ -44,7 +44,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for more information!
 	- "*.bbx": deal the compatibility problem for texlive2015, include:
 		1. DeclareBibliographyOption of biblatex 3.0 in texlive2015 cmd has no type argument
 		2. pkg xstring is not loaded with biblatex 3.0 in texlive2015
-		3. new defined bibliography environment with gb7714-2015 label align sytle is not work
+		3. new defined bibliography environment with gb7714-2015 label align sytle not works
 * Changes to documentation:
 	- biblatex-gb7714-2015.tex: add an explaination for the author field input format
 
