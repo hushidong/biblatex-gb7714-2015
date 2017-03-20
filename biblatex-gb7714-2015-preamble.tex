@@ -23,7 +23,6 @@ pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
 %\addcontentsline{toc}{subsection}{#1}
 	\centering\subsubsection*{#1}}%
 
-\addbibresource[location=local]{example.bib}
 %参考文献的bib文件
 %	\markboth{#1}{#1}}
 %注意在实际使用中用titsec宏包的页眉页脚也有点问题，一旦给出markboth就会出现问题
@@ -284,5 +283,16 @@ itemsep=0pt,leftmargin=2em,itemindent=0em}%注意，font或format中的最后一
 \ifx\@empty#1 \begin{marglist} \item #2\end{marglist}
 \else \begin{marglist} \item[#1] #2\end{marglist} \fi}
 \makeatother
+
+\usepackage{filecontents}
+\begin{filecontents}{egspecialchar.bib}
+@Inproceedings{ref-replace-char,
+  Title                    = {Cognitive Radio and Cooperative Strategies for Power Saving in Multi-Standard Wireless Devices},
+  Address                  = { Florence, Italy},
+  Author                   = {Rodriguez, J. and P. Marques and A. Radwan and K. Moessner and R. Tafazolli and others},
+  Booktitle                = {Future % Network & Mobile # Summit 2010},
+  Date                     = {June 2010}
+}
+\end{filecontents}
 
 

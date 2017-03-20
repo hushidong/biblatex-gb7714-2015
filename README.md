@@ -1,4 +1,5 @@
-<b>Date of last change:2016-12-31 to version v1.0f</b>
+<b>Date of last change:2017-02-26 to version v1.0g</b>
+
 
 # biblatex-gb7714-2015: a biblatex style  package
 ---------------------------------------------------------
@@ -17,7 +18,7 @@ A biblatex implementation of the GBT7714-2015 bibliography style for Chinese use
 The biblatex-gb7714-2015 package provides an implementation of the bibliography style of the GBT7714-2015 bibliography style. This implementation follows GBT7714-2015 standard, and can be used simply by loading biblatex with the appropriate option
 
 ## usage
-%for numerical sequence
+%for numerical sequence style
 
 	`\usepackage[backend=biber,style=gb7714-2015]{biblatex}`
 
@@ -25,9 +26,13 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
 	`\usepackage[backend=biber,style=gb7714-2015,align=gb7714-2015]{biblatex}`
 
-%for author year sequence
+%for author year style
 
 	`\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}`
+	
+%for perl script transformation tool(only for the numerical style)
+
+	`perl gb7714texttobib.pl in=textfilename out=bibfilename`
 
 A demonstration database is provided to show how to format input for the style. The biblatex-gb7714-2015 style works with texlive2014, texlive2015, texlive2016 and so on.
 
@@ -36,6 +41,20 @@ please see the file 'biblatex-gb7714-2015.pdf' for more information!
 ---------------------------------------------------------
 
 ## update history:
+
+### date of change: 2017-02-26 to version v1.0g, the last version support texlive2015
+* Changes to pkg code:
+	- "*.bbx": deal the compatibility problem for some entrytypes: mastersthesis,phdthesis,www,electronic,standard,techreport,conference, and newspaper. these entrytypes can be used in the source bib file.
+	- "*.bbx": for online type, the revised/changed date is denoted by date/enddate/eventdate
+	- "*.bbx": modify the usera field's format, taking into account the standard style's package option url
+	- "*.bbx": add a no breakthinspace after the entrytype identifier (like [M]//) to make the next word break correctly
+    - "*.bbx": add a feature for automatically dealing with special character(like &/%/#)，compatibility with texlive2015 is done
+* Changes to documentation:
+	- biblatex-gb7714-2015.tex: revise this document and add some explication
+	- *.bib: refine the bib source file
+* Changes to tool code:
+	- "*.pl": realize the feature of transformation from gb7714-2015 style bibography text to bib file using perl script gb7714texttobib.pl
+
 
 ### date of change: 2016-12-31 to version v1.0f
 
@@ -57,11 +76,11 @@ please see the file 'biblatex-gb7714-2015.pdf' for more information!
 	- "*.bbx": modify some newbibmacro* to renewbibmacro* to eleminate warnings
 	- "*.bbx": add a package option align=right,left,gb7714-2015 for users to choose numeric label align style
 	- "*.cbx": restore the origin parencite definition for users to use superscript citecmd(cite) and inline citecmd(parencite) in one document
-
 * Changes to documentation:
 	- biblatex-gb7714-2015.tex: add a summary of the features of the package and a compile guide
-	- *.sh/bat: add the autoexec files for windows/linux OS 
 	- *.bib: refine the bib database
+* Changes to tool code:
+	- *.sh/bat: add the autoexec files for windows/linux OS 
 
 ### date of change: 2016-11-24 to version v1.0d
 

@@ -21,7 +21,7 @@ xelatex --synctex=-1 ./biblatex-gb7714-2015-beamer.tex
 
 # clear aux files
 
-./gbtclear.sh
+./makeclear.sh
 
 # compile the tex file
 
@@ -40,4 +40,4 @@ xelatex --synctex=-1 biblatex-gb7714-2015ay-beamer.tex
 
 # clear aux files
 
-./gbtclear.sh
+./makeclear.sh
