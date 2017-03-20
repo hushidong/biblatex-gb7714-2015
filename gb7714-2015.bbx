@@ -1,4 +1,4 @@
-%%
+﻿%%
 %% ---------------------------------------------------------------
 %% biblatex-gb7714-2015 --- A biblatex implementation of the
 %% GBT7714-2015  bibliography style,numerical sequence
@@ -11,11 +11,12 @@
 %% 2016/11/24 v1.0d
 %% 2016/12/07 v1.0e
 %% 2016/12/31 v1.0f
+%% 2017/02/26 v1.0g
 %% E-mail: hzzmail@163.com
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\ProvidesFile{gb7714-2015.bbx}[2016/12/31 v1.0f biblatex bibliography style]
+\ProvidesFile{gb7714-2015.bbx}[2017/02/26 v1.0g biblatex bibliography style]
 
 %=====================================================================
 %加载标准样式
@@ -176,18 +177,34 @@ backrefpages     = {引用页:},
 %首先把作者和译者信息准确的记录到userf，usere中，用于判断是否是cjk字符。
 %注意\DeclareSourcemap命令只能出现一次
 \DeclareSourcemap{
-\maps[datatype=bibtex]{
-\map{ %增加文献标识符如[M],[J]等，下面首先生成这一信息
-%使用下面biber动态修改bbl文件的方法是正确的
+\maps[datatype=bibtex]{%增加文献标识符如[M],[J]等，下面首先生成这一信息
+        \map{%使用下面biber动态修改bbl文件的方法是正确的
             %\perdatasource{examples.bib}
             \pertype{article}
+            \step[fieldset=usera, fieldvalue={J}]
+            }
+        \map{ %使用下面biber动态修改bbl文件的方法是正确的
             \pertype{periodical}
             \step[fieldset=usera, fieldvalue={J}]
+            \step[fieldsource=author] %有时会把version和edition混淆，这里处理后就没有这个问题，可以直接用version
+            \step[fieldset=editor, origfieldval]
+            }
+        \map{
+            \pertype{newspaper}%增加一个新闻报纸的类型newspaper
+            \step[fieldset=usera, fieldvalue={N}]%因为没有专门的驱动，这句的目的是定义一个usera域，方便映射为article后判断
+            \step[fieldset=note, fieldvalue=news]
             }
         \map{
             \pertype{book}
             \pertype{inbook}
             \step[fieldset=usera, fieldvalue={M}]
+            \step[fieldsource=version] %有时会把version和edition混淆，这里处理后就没有这个问题，可以直接用version
+            \step[fieldset=edition, origfieldval]
+            }
+        \map{
+            \pertype{standard}%兼容老的standard类型
+            \step[fieldset=usera, fieldvalue={M}]%因为没有专门的驱动，这句的目的是定义一个usera域，方便映射为book和inbook后判断
+            \step[fieldset=note, fieldvalue=standard]
             }
         \map{
             \pertype{patent}
@@ -195,7 +212,7 @@ backrefpages     = {引用页:},
             }
         \map{
             \pertype{inproceedings}
-            \pertype{conference}
+            \pertype{conference}%兼容老的conference类型
             \step[fieldset=usera, fieldvalue={C}]
             \step[fieldsource=institution] %有时会把version和edition混淆，这里处理后就没有这个问题，可以直接用version
             \step[fieldset=publisher, origfieldval]
@@ -205,21 +222,28 @@ backrefpages     = {引用页:},
         \map{
             \pertype{proceedings}
             \step[fieldset=usera, fieldvalue={C}]
-            \step[fieldsource=institution] %有时会把version和edition混淆，这里处理后就没有这个问题，可以直接用version
+            \step[fieldsource=institution] %
             \step[fieldset=publisher, origfieldval]
             \step[fieldsource=editor] %有的时候可能只填写了编者，没有author，把它复制一下
             \step[fieldset=author, origfieldval]
             }
         \map{
             \pertype{report}
+            \pertype{techreport}%兼容老的techreport类型
             \step[fieldset=usera, fieldvalue={R}]
+            \step[fieldsource=publisher] %有时会把publisher和institution混淆，这里处理后就没有这个问题，可以直接用version
+            \step[fieldset=institution, origfieldval]
             }
         \map{
             \pertype{thesis}
+            \pertype{mastersthesis}%兼容老的mastersthesis和phdthesis类型
+            \pertype{phdthesis}
             \step[fieldset=usera, fieldvalue={D}]
             }
         \map{
             \pertype{online}
+            \pertype{electronic}%兼容老的electronic类型
+            \pertype{www}%兼容老的www类型
             \step[fieldset=usera, fieldvalue={EB}]
             }
         \map{
@@ -263,6 +287,106 @@ backrefpages     = {引用页:},
             }
 }
 }
+
+\iftoggle{iftexlivesix}{
+    \DeclareStyleSourcemap{
+        \maps[datatype=bibtex]{
+    %        \map{%尝试未定义数据模型的newspaper类型映射为article，newspaper完全是针对gb7714的新类型，在biblatex中完全没有定义
+    %             %但从实践看，并没有什么影响，映射过来就可以了。
+    %        \step[typesource=newspaper, typetarget=article, final]
+    %        }
+            \map{%尝试未定义数据模型的standard类型映射为book，standard类型在blx-dm中有出现，但仅定义了类型，域和约束等都没有定义
+            \step[fieldsource=booktitle,final]%当存在booktitle域是映射为inbook
+            \step[typesource=standard, typetarget=inbook, final]
+            }
+            \map{%尝试未定义数据模型的standard类型映射为book，standard类型在blx-dm中有出现，但仅定义了类型，域和约束等都没有定义
+            \step[typesource=standard, typetarget=book, final]%当不存在booktitle域是映射为book
+            }
+            \map{%先于标准样式的driver层映射，将其先映射过来，并取消type设置
+            \step[typesource=mastersthesis, typetarget=thesis, final]
+            %\step[fieldset=type, fieldvalue=mathesis]
+            }
+            \map{%先于标准样式的driver层映射，将其先映射过来，并取消type设置
+            \step[typesource=phdthesis, typetarget=thesis, final]
+            %\step[fieldset=type, fieldvalue=phdthesis]
+            }
+            \map{%先于标准样式的driver层映射，将其先映射过来，并取消type设置
+            \step[typesource=techreport, typetarget=report, final]
+            %\step[fieldset=type, fieldvalue=techreport]
+            }
+            \map[overwrite, foreach={title,booktitle,journaltitle,journal,publisher,address,location,institution,organization}]{
+                \step[fieldsource=\regexp{$MAPLOOP}, match=\regexp{([^\\])\#}, replace=\regexp{$1\\\#}]
+            }
+            \map[overwrite, foreach={title,booktitle,journaltitle,journal,publisher,address,location,institution,organization}]{
+                \step[fieldsource=\regexp{$MAPLOOP}, match=\regexp{([^\\])\%}, replace=\regexp{$1\\\%}]
+            }
+            \map[overwrite, foreach={title,booktitle,journaltitle,journal,publisher,%
+            address,location,institution,organization}]{
+                \step[fieldsource=\regexp{$MAPLOOP}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+            }
+        }
+    }
+}{
+    \DeclareStyleSourcemap{
+        \maps[datatype=bibtex]{
+    %        \map{%尝试未定义数据模型的newspaper类型映射为article，newspaper完全是针对gb7714的新类型，在biblatex中完全没有定义
+    %             %但从实践看，并没有什么影响，映射过来就可以了。
+    %        \step[typesource=newspaper, typetarget=article, final]
+    %        }
+            \map{%尝试未定义数据模型的standard类型映射为book，standard类型在blx-dm中有出现，但仅定义了类型，域和约束等都没有定义
+            \step[fieldsource=booktitle,final]%当存在booktitle域是映射为inbook
+            \step[typesource=standard, typetarget=inbook, final]
+            }
+            \map{%尝试未定义数据模型的standard类型映射为book，standard类型在blx-dm中有出现，但仅定义了类型，域和约束等都没有定义
+            \step[typesource=standard, typetarget=book, final]%当不存在booktitle域是映射为book
+            }
+            \map{%先于标准样式的driver层映射，将其先映射过来，并取消type设置
+            \step[typesource=mastersthesis, typetarget=thesis, final]
+            %\step[fieldset=type, fieldvalue=mathesis]
+            }
+            \map{%先于标准样式的driver层映射，将其先映射过来，并取消type设置
+            \step[typesource=phdthesis, typetarget=thesis, final]
+            %\step[fieldset=type, fieldvalue=phdthesis]
+            }
+            \map{%先于标准样式的driver层映射，将其先映射过来，并取消type设置
+            \step[typesource=techreport, typetarget=report, final]
+            %\step[fieldset=type, fieldvalue=techreport]
+            }
+            \map[overwrite]{%title,booktitle,journaltitle,journal,publisher,address,location,institution,organization
+            \step[fieldsource={title}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+            }
+            \map[overwrite]{
+            \step[fieldsource={booktitle}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+            }
+            \map[overwrite]{
+            \step[fieldsource={journaltitle}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+            }
+            \map[overwrite]{
+            \step[fieldsource={journal}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+            }
+            \map[overwrite]{
+            \step[fieldsource={publisher}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+            }
+            \map[overwrite]{
+            \step[fieldsource={address}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+            }
+            \map[overwrite]{
+            \step[fieldsource={location}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+            }
+            \map[overwrite]{
+            \step[fieldsource={institution}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+            }
+            \map[overwrite]{
+            \step[fieldsource={booktitle}, match=\regexp{([^\\])\#}, replace=\regexp{$1\\\#}]
+            }
+            \map[overwrite]{
+            \step[fieldsource={booktitle}, match=\regexp{([^\\])\%}, replace=\regexp{$1\\\%}]
+            }
+        }
+    }
+}
+
+\DeclareBibliographyAlias{newspaper}{article}%定义驱动别名，尝试以替代驱动层映射，实践表明是可行的。
 
 %=====================================================================
 %参考文献表环境
@@ -351,10 +475,11 @@ backrefpages     = {引用页:},
 %新增文献类型标识符的格式
 %\DeclareFieldFormat{gbtypeflag}{\nobreak\mkbibbrackets{\nobreak#1}\nobreak}
 \DeclareFieldFormat{gbtypeflag}{%
-\iffieldundef{url}%当存在url时，增加一个OL标识符
+\iftoggle{bbx:url}{\iffieldundef{url}%当存在url时，增加一个OL标识符
 {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{]}}%
 {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\texttt{/}OL]}}%
-}
+}{\nobreak\printtext{[}\nobreak#1\nobreak\printtext{]}}}
+
 %\DeclareFieldFormat{gbtypeflag}{%
 %\iffieldundef{url}%当存在url时，增加一个OL标识符
 %{\printtext{\nobreak[\nobreak}#1\printtext{]\nobreak}}%
@@ -371,15 +496,16 @@ backrefpages     = {引用页:},
 %{\printtext{\mkbibbrackets{#1\texttt{/}OL}}}%
 %}
 \DeclareFieldFormat{gbtypeflagn}{%用于报纸newspaper
-\iffieldundef{url}%当存在url时，增加一个OL标识符
+\iftoggle{bbx:url}{\iffieldundef{url}%当存在url时，增加一个OL标识符
 {\nobreak\printtext{[}\nobreak N\printtext{]}\nobreak}%
 {\nobreak\printtext{[}\nobreak N\printtext{\texttt{/}OL]}\nobreak}%
-}
+}{\nobreak\printtext{[}\nobreak N\printtext{]}\nobreak}}
+
 \DeclareFieldFormat{gbtypeflags}{%用于标准standard
-\iffieldundef{url}%当存在url时，增加一个OL标识符
+\iftoggle{bbx:url}{\iffieldundef{url}%当存在url时，增加一个OL标识符
 {\nobreak\printtext{[}\nobreak S\printtext{]}\nobreak}%
 {\nobreak\printtext{[}\nobreak S\printtext{\texttt{/}OL]}\nobreak}%
-}
+}{\nobreak\printtext{[}\nobreak S\printtext{]}\nobreak}}
 
 %重设title的输出格式，不加emph，原格式来自biblatex.def文件
 %\DeclareFieldFormat{journaltitle}{\mkbibemph{#1}}
@@ -594,11 +720,26 @@ backrefpages     = {引用页:},
 \iffieldundef{day}{}{\bibrangedash\printfield{day}}}}%
 }
 \newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示表示电子资源的更新和修改日期，而公告日期安按日期格式
+\iffieldundef{date}{%
+\iffieldundef{enddate}{%
+\printtext{%
+\iffieldundef{eventyear}{}{\mkbibparens{\printtext{\printfield{eventyear}}%
+\iffieldundef{eventmonth}{}{\bibrangedash\thefield{eventmonth}}%
+\iffieldundef{eventday}{}{\bibrangedash\printfield{eventday}}}}%
+}%
+}{%
+\printtext{%
+\iffieldundef{endyear}{}{\mkbibparens{\printtext{\printfield{endyear}}%
+\iffieldundef{endmonth}{}{\bibrangedash\thefield{endmonth}}%
+\iffieldundef{endday}{}{\bibrangedash\printfield{endday}}}}%
+}%
+}}{%
 \printtext{%
 \iffieldundef{year}{}{\mkbibparens{\printtext{\printfield{year}}%
 \iffieldundef{month}{}{\bibrangedash\thefield{month}}%
 \iffieldundef{day}{}{\bibrangedash\printfield{day}}}}%
 }}%
+}%
 
 %调整doi+eprint+url格式，源来自standard.bbx
 %因为页码后面直接跟引用日期，没有标点所以去掉其中的标点。
@@ -1035,12 +1176,12 @@ backrefpages     = {引用页:},
 %\setunit{\labelnamepunct}\newblock
 \usebibmacro{title}%
 %\nopunct
-\printtext{\texttt{//}}%
-%\texttt{//}
+%\iffieldundef{booktitle}{\adddot\addspace}{%兼容standard时，如果standard没有booktitle的应转换为book类，因为都转成inbook类，所以这里做如下处理
+\printtext{\texttt{//}\addnbthinspace}%%\texttt{//}
 \usebibmacro{bybookauthor}%
 \ifnameundef{bookauthor}{\newblock}{\newunit\newblock}%替换下一句
 %\newunit\newblock
-\usebibmacro{maintitle+booktitle}%
+\usebibmacro{maintitle+booktitle}%}%
   \newunit\newblock
   \usebibmacro{byeditor+others}%
   \newunit\newblock
@@ -1440,7 +1581,7 @@ backrefpages     = {引用页:},
 {\setunit{\labelnamepunct}\newblock}%
 %\setunit{\labelnamepunct}\newblock
 \usebibmacro{title}%
-\printtext{\texttt{//}}%似乎顶格加百分号可以避免一些不必要的空格加入，特别是这种直接处理的语句前后
+\printtext{\texttt{//}\addnbthinspace}%似乎顶格加百分号可以避免一些不必要的空格加入，特别是这种直接处理的语句前后
 \usebibmacro{bybookauthor}%
 \ifnameundef{bookauthor}{\newblock}{\newunit\newblock}%替换下一句
   %\newunit\newblock
@@ -1494,7 +1635,7 @@ backrefpages     = {引用页:},
 %  \usebibmacro{byauthor}%
 %  \newunit\newblock
   %\usebibmacro{in:}%
-  \printtext{\texttt{//}}%似乎顶格加百分号可以避免一些不必要的空格加入，特别是这种直接处理的语句前后
+  \printtext{\texttt{//}\addnbthinspace}%似乎顶格加百分号可以避免一些不必要的空格加入，特别是这种直接处理的语句前后
   \usebibmacro{bybookauthor}%用类似inbook的方式处理
  \ifnameundef{bookauthor}{\newblock}{\newunit\newblock}%替换下一句
   %\newunit\newblock
