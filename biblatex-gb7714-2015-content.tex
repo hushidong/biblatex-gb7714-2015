@@ -1,6 +1,6 @@
 %------------------------------------------------------------
-\def\versionnumber{v1.0g}    %版本和修改时间信息
-\def\versiondate{2017/02/26}
+\def\versionnumber{v1.0h}    %版本和修改时间信息
+\def\versiondate{2017/04/11}
 %------------------------------------------------------------
 %-----------------标题和目录---------------------------------
 \titleformanual{符合GB7714-2015标准的biblatex参考\\
@@ -836,8 +836,9 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 不带页码的引用(顺序编码制非上标，方括号包围；作者年制行内，括号包围。):文献\parencite{Miroslav2004--}中。
 
 带页码的引用\\
-标准命令，默认样式:\cite[见][49页]{蔡敏2006--}\parencite[见][49页]{Miroslav2004--}
-增加命令，GB/T 7714-2015样式:\pagescite{Peebles2001-100-100}\pagescite[][201-301]{Peebles2001-100-100}
+标准命令，默认样式:\cite[见][49页]{蔡敏2006--}\parencite[见][49页]{Miroslav2004--}\\
+增加命令，GB/T 7714-2015样式:\pagescite{Peebles2001-100-100}
+\pagescite[][201-301]{Peebles2001-100-100}
 
 已有作者只需要年份和页码的情况(使用命令yearpagescite)\\
 作者年制中(上标)，顺序编码制中(与pagescite作用相同)，比如:见赵耀东\yearpagescite[][205]{赵耀东1998--}和Simon\yearpagescite[][15]{Simon2001--}的文献。
@@ -861,7 +862,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 \begin{figure}[!htb]
   \centering
   \fbox{\includegraphics[width=0.9\textwidth,page=2]{egbibenv-left.pdf}}
-  \caption{顺序编码制序号标签右对齐}\label{bib:env:left}
+  \caption{顺序编码制序号标签左对齐}\label{bib:env:left}
 \end{figure}
 
 顺序编码制序号标签-项对齐
@@ -870,7 +871,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 \begin{figure}[!htb]
   \centering
   \fbox{\includegraphics[width=0.9\textwidth,page=2]{egbibenv-gb7714-2015.pdf}}
-  \caption{顺序编码制序号标签右对齐}\label{bib:env:gb}
+  \caption{顺序编码制序号标签项对齐}\label{bib:env:gb}
 \end{figure}
 
 \subsection{测试:phdthsis等条目类型的兼容性}\label{sec:entrytype:compatibility}
@@ -896,6 +897,15 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 \printbibliography[heading=bibliography,title=【处理参考文献信息中\&等特殊字符】]
 \end{refsection}
 
+\subsection{测试:处理作者年制article中卷信息缺省的标点}\label{sec:article:novol}
+\begin{refsection}
+文献\cite{刘彻东1998-38-39}\cite{亚洲地质图编目组1978-194-208}
+\cite{高光明1998-60-65}
+
+\printbibliography[heading=bibliography,title=【author-year style:article without volume】]
+\end{refsection}
+
+
 \section{样式文件设计思路及相关的biblatex高级功能}\label{sec:biblatex:mech}
 使用biblatex总的感受，biblatex相当完善和强大，笔者制作的样式文件实现的功能和格式只是biblatex功能的很小一部分，biblatex提供的更多功能其实都没有用到。可以说，biblatex作为参考文献问题的一个完整解决方案是名副其实的。biblatex宏包的一些功能，以及笔者在设计样式文件时应用这些功能的思路和方法介绍如下:
 
@@ -916,12 +926,21 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
     \item 利用titlesec等宏包进行修改标题样式，利用其局部性可以调整生成多种样式。注意: 利用titlesec后，直接在defbibheading\{bibliography\}[\textbackslash bibname]\{\} 中放置居中命令centering无效。
   \end{itemize}
 
-  \item 标点的特点和机制
+  \item 标点和空格的特点和机制
   \begin{itemize}
     \item 标点符号设置比如:renewrobustcmd*\{\textbackslash bibinitperiod\}\{\}和renewcommand*\{\textbackslash revsdnamepunct\}\{\}等用于全局修改标点。
     \item 如isdot/adddot，adddot将原样(逐字，如实)句点转换为缩写点在有利用printtext输入原样字符的时候很重要比如[s.n.] 中，比如title末尾。
     \item 利用newunit输出的标点，需要后面遇到printfield等命令有内容才输出标点，这是标点的异步处理机制。
     \item setunit*的作用是前面printtext等没有输出时候就不输出，见4.11.7.3节的应用以及出版项缺省时的代码处理。
+    \item 标点和空格的调试方法:有时引入多余的空格和标点后很难快速处理，那么需要调试，调试的第一步是注释掉多余的代码，实现无多余空格或标点情况(一种快速方法是直接在一个printtext输出各相关域)，然后一步步恢复原来的代码，直到找到多余空格或标点产生的原因，最后根据原因作出修改。
+    \item 多余空格的引入，可能来自于如下方面(下面是已经遇到的，可能还有更多)
+    \begin{itemize}
+    \item 行末空格引入，解决方法:把相关的代码行结尾用\%符号注释。
+    \item mkbibparens等命令引入，解决方法:利用printtext\{(\}，printtext\{)\}来代替
+    \item nopunct等命令引入，这种引入的空格使用unspace命令还消除不了，解决方法:避免使用nopunct命令，而在标点设置时多做判断，只有有内容时才设置标点，而不是过分依赖biblatex提供的标点异步处理机制。
+    \end{itemize}
+
+
   \end{itemize}
 
   \item biber动态数据处理，详见4.5.3 Dynamic Modification of Data和bbx文件中DeclareSourcemap的内容。利用biber在处理数据源时，动态的处理一些数据，比如设置一些域的值，可以用于进一步的判断和使用。
@@ -1009,7 +1028,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 
 \begin{enumerate}
   \item 因为采用xelatex编译，所以样式文件直接采用UTF-8编码，没有考虑GBK编码。
-  
+
   \item \zhongdian{【Most Important】【注意】：texlive2015中的biblatex版本是3.0，texlive2016中biblatex的版本是3.4，新版本对于名字域打印有了较大变化(即不同版本的biblatex对于DeclareNameFormat的输入参数处理有所不同，如例\ref{eg:name:variables}所示)，所以需做相应的修改，为此在biblatex中首先进行版本判断，然后根据版本不同分别进行设置。}
 
     \begin{codetex}{texlive2016中biblatex3.4版Name域格式输入参数的修改}{eg:name:variables}
@@ -1069,8 +1088,6 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 
   \item 范围解析函数，详见bbx文件内容。
 
-  \item 消除可能多出来的空格方法，把相关的代码行结尾用\%符号注释。
-
   \item 目前符合GB/T7714-2005或GB/T7714-2015参考文献著录规则的biblatex样式有好几个实现，除了这里作者提供的之外，还有李志奇(icetea)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}} 和沈周(szsdk)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152561&extra=page\%3D1}} 分别提供的样式文件，效果是类似的，也感谢两位作者的分享!
 
 \end{enumerate}
@@ -1099,7 +1116,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 
   \item 当专著同时存在作者和编者的时候，GB/T 7714-2015没有明确的规定，所以目前样式文件中以biblatex标准样式的方式处理，这种处理因为与本地化相关，直接应用可能不好看的，也许需要修改。
 
-  \item 因为GB/T 7714-2015中给出的了一些著录格式，如果把这些著录格式作为一个严格标准，那么条目中只能出现其中规定的域，而往往在bib文件中可能存在一些另外的信息比如chapter等，而且从标准样式修改的驱动中也仍然带有这些域的处理，如果为了标准化规范化考虑，可以去掉国标中没有提到的域的信息，可能使得内容更为标准，这可以通过修改增加数据模型，数据源动态修改，驱动修改(驱动中目前存在较多的似乎用不到的域，而且意义不是非常明确，这个等到biblatex文档中文版完成后再结合它全面的进行梳理)三条路子做到，需要的可以在下一步实现(2017-0226)。
+  \item 因为GB/T 7714-2015中给出的了一些著录格式，如果把这些著录格式作为一个严格标准，那么条目中只能出现其中规定的域，而往往在bib文件中可能存在一些另外的信息比如chapter等，而且从标准样式修改的驱动中也仍然带有这些域的处理，如果为了标准化规范化考虑，可以去掉国标中没有提到的域的信息，可能使得内容更为标准，这可以通过修改增加数据模型，数据源动态修改，驱动修改(驱动中目前存在较多的似乎用不到的域，而且意义不是非常明确，这个等到biblatex文档中文版完成后再结合它全面的进行梳理)三条路子做到，需要的话，可以在下一步实现(2017-0226)。
 \end{enumerate}
 
 \subsection{下一步工作}
@@ -1107,8 +1124,8 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 \begin{enumerate}
   \item 到1.0e版为止，功能需求已经完全实现，剩下的问题可能是一些文献具有特殊信息或者特殊情况时带来的适应性问题，这需要经过大量的测试来发现问题。各位朋友如果发现什么问题，请邮件联系，作者会非常感谢!
 
-  \item 到1.0g版为止，进一步完善了样式宏包，该版本将是最后支持texlive2015的版本，以后版本的功能实现将基于最新texlive中biblatex版本，而不再考虑texlive2015中3.0版的biblatex。1.0f版完善了align 选项(用于实现GB7714 风格的著录文献表标签，texlive2016 有效)，带花括号的责任者的中英文判断等功能对texlive2015 的兼容性。1.0g版增加对mastersthesis，phdthesis，www，electronic，standard，techreport，conference，newspaper等条目类型的兼容，增加了对标准样式standard.bbx中url包选项的兼容性，增加了析出文献标识符//后面的短空格以支持著录表的断行机制，增加了特殊字符处理功能并实现对texlive2015 的兼容，给出了gb7714风格参考文献著录表文本转换为bib文件的perl脚本，与gb7714-2015 样式形成闭环。
-      
+  \item 到1.0h版为止，进一步完善了样式宏包，该版本将是最后支持texlive2015的版本，以后版本的功能实现将基于最新texlive中biblatex版本，而不再考虑texlive2015中3.0版的biblatex。1.0f版完善了align 选项(用于实现GB7714 风格的著录文献表标签，texlive2016 有效)，带花括号的责任者的中英文判断等功能对texlive2015 的兼容性。1.0g版增加对mastersthesis，phdthesis，www，electronic，standard，techreport，conference，newspaper等条目类型的兼容，增加了对标准样式standard.bbx中url包选项的兼容性，增加了析出文献标识符//后面的短空格以支持著录表的断行机制，增加了特殊字符处理功能并实现对texlive2015 的兼容，给出了gb7714风格参考文献著录表文本转换为bib文件的perl脚本，与gb7714-2015 样式形成闭环。
+
   \item 打算翻译biblatex宏包的说明文档和biber的说明文档，这个已经在进行中，完成了一部分，但因为只是业余时间做，可能最终完成的时间会比较长。如果有朋友觉得这个事情有意义，愿意一起来完成这个事情，非常欢迎，请email联系。
 
 %\item 进一步完善上一节提到的问题。
@@ -1116,6 +1133,74 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 \end{enumerate}
 
 \section{更新历史}
+%============================
+\updateinfo[2017-04-11]{update to version 1.0h}\label{up:170411}
+\begin{enumerate}
+\item 修改多语言参考文献间的分割符号，即将par改为newline，避免采用gb7714-2015的项对齐方式时，不同语言的参考文献间的分段导致没有缩进。(测试结果见:\ref{sec:align:test}节的项对齐方式，如图\ref{bib:env:gb}所示)
+
+    \begin{texlist}
+    %\renewcommand*{\entrysetpunct}{\adddot\par\nobreak}
+    \renewcommand*{\entrysetpunct}{\adddot\newline\nobreak}
+    \end{texlist}
+
+\item Zeping Lee兄发现了一个小问题，感谢，一直没有注意到这个问题。这里做出修改:主要是作者年制中，期刊析出的文献中，当卷信息不存在时，期刊名和期是连在一起的，而不是中间有个逗号，例如GB/T 7714-2015 中第10.2.4 节中的刘彻东条目。主要修改如下(结果测试见:\ref{sec:article:novol}节):
+
+    \begin{texlist}
+    %调整期刊名的格式，源来自standard.bbx
+    \renewbibmacro*{journal+issuetitle}{%
+      \usebibmacro{journal}%
+      %\setunit*{\addspace}%
+      %\setunit*{\addcomma\addspace}%修改为增加一个逗号
+      \iffieldundef{series}%
+        {}%
+        {\newunit%
+         \printfield{series}%
+         \setunit{\addspace}}%
+      %\usebibmacro{volume+number+eid}%
+      %\setunit{\addspace}%
+      \usebibmacro{issue+date}%
+      %\setunit{\addcolon\space}%
+      %换成逗号和空格
+      \usebibmacro{issue}%
+      \iffieldundef{volume}{}{\setunit{\addcomma\space}}%
+      \usebibmacro{volume+number+eid}%把卷期放到年份后面
+      %\newunit
+      }
+
+    %调整journal，首先判断子标题，然后在设置标点。避免直接设置标点后，当volume不存在是需要使用\nopuct去标点进而引入不必要的空格
+    \renewbibmacro*{journal}{%
+      \iffieldundef{journaltitle}%
+        {}%
+        {\printtext[journaltitle]{%
+           \printfield[titlecase]{journaltitle}%
+           \iffieldundef{journalsubtitle}{}{\setunit{\subtitlepunct}%
+           \printfield[titlecase]{journalsubtitle}}}}}
+
+    %调整issue+date，原在authoryear.BBX中\bbx@opt@mergedate@compact中定义
+    %当issue存在时，才设置newunit。避免直接设置标点后，当volume不存在是需要使用\nopuct 去标点进而引入不必要的空格
+      \renewbibmacro*{issue+date}{%
+        \iffieldundef{issue}%
+          {}%
+          {\printtext[parens]{\printfield{issue}}\newunit}}
+
+    %增加一个number带括号的格式，避免使用mkbibparens而引入一个不必要的空格
+    \DeclareFieldFormat{addnumflag}{%
+    \nobreak\printtext{(}\nobreak #1\nobreak\printtext{)}}
+
+    %调整期刊卷和期的格式，源来自standard.bbx
+    \renewbibmacro*{volume+number+eid}{%
+      \printfield{volume}%
+      %\setunit*{\adddot}%去掉点号
+      %\printfield{number}%
+      \iffieldundef{number}{}{\printfield[addnumflag]{number}}%
+      %\iffieldundef{number}{}{\printtext{\mkbibparens{\printfield{number}}}}%增加一个圆括号
+      \iffieldundef{eid}{}{%
+      \setunit{\addcomma\space}%
+      \printfield{eid}}}
+    \end{texlist}
+
+\end{enumerate}
+
 %============================
 \updateinfo[2017-02-26]{update to version 1.0g}\label{up:170226}
 \begin{enumerate}
@@ -1223,7 +1308,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 
 \item 为方便bib文件生成，构建可以从gb7714-2015格式的参考文献表文本转bib文件的perl程序，利用它可以批量解析参考文献信息并转换为bib数据源文件。详见:\href{run:./gb7714texttobib.pl}{gb7714texttobib.pl}，测试文件见:\href{run:./gb7714texteg.dat}{gb7714texteg.dat}。
 
-\item 在输出标识符的usera域格式中考虑标准样式的url选项，以便实现对是否打印url和urldate的控制。
+\item 在输出标识符的usera域格式中考虑标准样式的url选项，以便实现对是否打印url和urldate的控制。这个需求是Wenbo Sheng兄提出的，这里做出修改。
     \begin{texlist}
     \DeclareFieldFormat{gbtypeflag}{%
     \iftoggle{bbx:url}{\iffieldundef{url}%当存在url时，增加一个OL标识符
@@ -1253,7 +1338,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
     \usebibmacro{bybookauthor}%
     \end{texlist}
 
-\item 对参考文献的一些域中存在的一些特殊字符比如\&，\%，\#等进行处理，方法是利用动态数据修改。同时因为texlive2015/texlive2016中biblatex版本的不同分别进行处理。
+\item 对参考文献的一些域中存在的一些特殊字符比如\&，\%，\#等进行处理，方法是利用动态数据修改。同时因为texlive2015/texlive2016中biblatex版本的不同分别进行处理。这个需求是湘厦人提出的，这里做出修改。
     \begin{texlist}
     \iftoggle{iftexlivesix}{
     \DeclareStyleSourcemap{

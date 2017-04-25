@@ -1,4 +1,4 @@
-<b>Date of last change:2017-02-26 to version v1.0g</b>
+<b>Date of last change:2017-04-11 to version v1.0h</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -42,11 +42,20 @@ please see the file 'biblatex-gb7714-2015.pdf' for more information!
 
 ## update history:
 
-### date of change: 2017-02-26 to version v1.0g, the last version support texlive2015
+### date of change: 2017-04-11 to version v1.0h, the last version support texlive2015
+* Changes to pkg code:
+    - "*.bbx": change the seperator between multi-language reference text form cmd par to cmd newline for the gb7714-2015 align style
+	- "*.bbx": fix a flaw reported by Lee Zeping. remove the comma between journaltitle and (number) when the volume is undefined.
+* Changes to documentation:
+	- biblatex-gb7714-2015.tex: revise this document 
+	- *.bib: correct a warning which is caused by long multi-line url info.
+    
+    
+### date of change: 2017-02-26 to version v1.0g
 * Changes to pkg code:
 	- "*.bbx": deal the compatibility problem for some entrytypes: mastersthesis,phdthesis,www,electronic,standard,techreport,conference, and newspaper. these entrytypes can be used in the source bib file.
 	- "*.bbx": for online type, the revised/changed date is denoted by date/enddate/eventdate
-	- "*.bbx": modify the usera field's format, taking into account the standard style's package option url
+	- "*.bbx": modify the usera field's format, taking into account the standard style's package option url.
 	- "*.bbx": add a no breakthinspace after the entrytype identifier (like [M]//) to make the next word break correctly
     - "*.bbx": add a feature for automatically dealing with special character(like &/%/#)，compatibility with texlive2015 is done
 * Changes to documentation:
