@@ -869,60 +869,50 @@ backrefpages     = {引用页:},
 \renewbibmacro*{journal+issuetitle}{%
   \usebibmacro{journal}%
   %\setunit*{\addspace}%
-  \setunit*{\addcomma\addspace}%修改为增加一个逗号
-  \iffieldundef{series}
-    {}
-    {\newunit
+  %\setunit*{\addcomma\addspace}%修改为增加一个逗号
+  \iffieldundef{series}%
+    {}%
+    {\newunit%
      \printfield{series}%
      \setunit{\addspace}}%
   %\usebibmacro{volume+number+eid}%
   %\setunit{\addspace}%
   \usebibmacro{issue+date}%
   %\setunit{\addcolon\space}%
-  \iffieldundef{volume}{}{\setunit{\addcomma\space}}%
   %换成逗号和空格
   \usebibmacro{issue}%
+  \iffieldundef{volume}{}{\setunit{\addcomma\space}}%
   \usebibmacro{volume+number+eid}%把卷期放到年份后面
   %\newunit
   }
 
-%调整期刊年份的格式，去掉括号
-\renewbibmacro*{issue+date}{%
-  \printtext{%去掉了[parens]
-    \iffieldundef{issue}
-      {%\usebibmacro{date}
-        \iffieldundef{note}{\usebibmacro{date}}%判断一下，是否是报纸和标准
-        {\iffieldequalstr{note}{news}{\usebibmacro{newsdate}}%判断是否为报纸
-                                     {\usebibmacro{date}}%
-%        \def\comparetmp{news}\edef\comparetmpb{\thefield{note}}%
-%        \ifx\comparetmp\comparetmpb%
-%        \usebibmacro{newsdate}%
-%        \else%
-%        \usebibmacro{date}%
-%        \fi
-        }}%
-      {\printfield{issue}%
-       \setunit*{\addspace}%
-       %\usebibmacro{date}
-         \iffieldundef{note}{\usebibmacro{date}}%判断一下，是否是报纸和标准
-        {\iffieldequalstr{note}{news}{\usebibmacro{newsdate}}%判断是否为报纸
-                                     {\usebibmacro{date}}%
-%        \def\comparetmp{news}\edef\comparetmpb{\thefield{note}}%
-%        \ifx\comparetmp\comparetmpb%
-%        \usebibmacro{newsdate}%
-%        \else%
-%        \usebibmacro{date}%
-%        \fi
-        }}}%
-  %\newunit
-  }
+%调整journal，首先判断子标题，然后在设置标点。避免直接设置标点后，当volume不存在是需要使用\nopuct去标点进而引入不必要的空格
+\renewbibmacro*{journal}{%
+  \iffieldundef{journaltitle}%
+    {}%
+    {\printtext[journaltitle]{%
+       \printfield[titlecase]{journaltitle}%
+       \iffieldundef{journalsubtitle}{}{\setunit{\subtitlepunct}%
+       \printfield[titlecase]{journalsubtitle}}}}}
+
+%调整issue+date，原在authoryear.BBX中\bbx@opt@mergedate@compact中定义
+%当issue存在时，才设置newunit。避免直接设置标点后，当volume不存在是需要使用\nopuct去标点进而引入不必要的空格
+  \renewbibmacro*{issue+date}{%
+    \iffieldundef{issue}%
+      {}%
+      {\printtext[parens]{\printfield{issue}}\newunit}}
+
+%增加一个number带括号的格式，避免使用mkbibparens而引入一个不必要的空格
+\DeclareFieldFormat{addnumflag}{%
+\nobreak\printtext{(}\nobreak #1\nobreak\printtext{)}}
 
 %调整期刊卷和期的格式，源来自standard.bbx
 \renewbibmacro*{volume+number+eid}{%
   \printfield{volume}%
   %\setunit*{\adddot}%去掉点号
   %\printfield{number}%
-  \iffieldundef{number}{}{\printtext{\mkbibparens{\printfield{number}}}}%增加一个圆括号
+  \iffieldundef{number}{}{\printfield[addnumflag]{number}}%
+  %\iffieldundef{number}{}{\printtext{\mkbibparens{\printfield{number}}}}%增加一个圆括号
   \iffieldundef{eid}{}{%
   \setunit{\addcomma\space}%
   \printfield{eid}}}

@@ -12,11 +12,12 @@
 %% 2016/12/07 v1.0e
 %% 2016/12/31 v1.0f
 %% 2017/02/26 v1.0g
+%% 2017/04/11 v1.0h
 %% E-mail: hzzmail@163.com
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\ProvidesFile{gb7714-2015.bbx}[2017/02/26 v1.0g biblatex bibliography style]
+\ProvidesFile{gb7714-2015.bbx}[2017/04/11 v1.0h biblatex bibliography style]
 
 %=====================================================================
 %加载标准样式
@@ -436,6 +437,8 @@ backrefpages     = {引用页:},
        \blx@endlangbib}%
      \par\endgroup}%这里增加了一个\par
     {}}
+\newlength{\lengthid}
+\newlength{\lengthlw}
 \newcommand{\itemcmd}{%
 \settowidth{\lengthid}{[\printfield{labelnumber}]}
 \addtolength{\lengthid}{\biblabelsep}
@@ -445,8 +448,6 @@ backrefpages     = {引用页:},
 %\parshape 2 0em \textwidth \lengthid \lengthlw
 \hangindent\lengthid
 [\printfield{labelnumber}]\hspace{\biblabelsep}}
-\newlength{\lengthid}
-\newlength{\lengthlw}
 \defbibenvironment{bibliography}
 {\begingroup\setlength{\parindent}{0em}}
 {\endgroup}
@@ -464,7 +465,7 @@ backrefpages     = {引用页:},
 %关于双语言或多语言的参考文献，可以参考3.11.5 Entry Sets，4.11.1 Entry Sets
 %这里调整一下两种语言参考文献的间隔
 %\renewcommand*{\entrysetpunct}{\addsemicolon\space}%源来自biblatex.def
-\renewcommand*{\entrysetpunct}{\adddot\par\nobreak}
+\renewcommand*{\entrysetpunct}{\adddot\newline\nobreak}%%双语之间用newline替换par(20170411 v1.0h)，避免采用gb7714-2015的项对齐方式第二语言间分段导致没有缩进
 %页码引用格式的修改
 %\newcommand*{\bibpagespunct}{\addcomma\space}
 \renewcommand*{\bibpagespunct}{\addcolon\space}%修改为用冒号
