@@ -19,16 +19,22 @@
 %%
 \ProvidesFile{gb7714-2015.bbx}[2017/04/11 v1.0h biblatex bibliography style]
 
+
+%=====================================================================
 %=====================================================================
 %加载标准样式
+%=====================================================================
 \RequireBibliographyStyle{numeric-comp}%Load the standard style to avoid copy-pasting unnecessary material
 \RequireBibliographyStyle{standard}
 \RequirePackage{xstring}%为兼容texlive2015的biblatex3.0不加载xstring包的问题
 
+
+%=====================================================================
 %=====================================================================
 %增加一些功能函数
-\providetoggle{iftexlivesix}
+%=====================================================================
 %版本判断，根据biblatex更新历史可知，版本3.3开始使用新的姓名机制
+\providetoggle{iftexlivesix}
 %所以当版本大于3.2开始，就用设置\toggletrue{iftexlivesix}
 \def\numparserta#1.#2\relax{#1}%注意relax的重要性
 \def\numparsertb#1.#2\relax{#2}
@@ -106,7 +112,18 @@
 
 
 %=====================================================================
+%=====================================================================
 %设置宏包选项
+%=====================================================================
+%\newtoggle{bbx:gbpub}
+%\DeclareBibliographyOption[boolean]{gbpub}[true]{%
+%  \settoggle{bbx:gbpub}{#1}}
+%这种机制的标识判断，能用于usemacro使用，域格式定义中，但无法用来定义macro
+%定义宏和使用宏是两个不同的展开层级
+%\ExecuteBibliographyOptions{gbpub}
+%但是使用这句默认设置可以用来定义macro
+\DeclareBibliographyOption[bool]{gbpub}[true]{%应使用这种直接的机制
+\ifstrequal{#1}{true}{\pubaddmacroredefine}{}}
 
 % Alter settings that carry through from biblatex
 \iftoggle{iftexlivesix}
@@ -149,7 +166,9 @@
 }
 
 %=====================================================================
+%=====================================================================
 %设置本地化字符串
+%=====================================================================
 %新建一个当地化字符串，用来记录“等”字符
 \NewBibliographyString{andotherscn}
 \NewBibliographyString{noaddress}
@@ -172,8 +191,11 @@ backrefpage      = {引用页:},
 backrefpages     = {引用页:},
 }
 
+
+%=====================================================================
 %=====================================================================
 %动态数据修改，修改输入的源文件数据，用于中文判断等
+%=====================================================================
 %修改输入的源文件数据，用于中文判断等
 %首先把作者和译者信息准确的记录到userf，usere中，用于判断是否是cjk字符。
 %注意\DeclareSourcemap命令只能出现一次
@@ -389,9 +411,11 @@ backrefpages     = {引用页:},
 
 \DeclareBibliographyAlias{newspaper}{article}%定义驱动别名，尝试以替代驱动层映射，实践表明是可行的。
 
+
+%=====================================================================
 %=====================================================================
 %参考文献表环境
-
+%=====================================================================
 %默认的参考文献列表格式，放这里作为参考
 %\defbibenvironment{bibliography}
 
@@ -455,7 +479,9 @@ backrefpages     = {引用页:},
 
 
 %=====================================================================
+%=====================================================================
 %设置单元或块等的标点
+%=====================================================================
 %\renewrobustcmd*{\bibinitperiod}{\adddot} %来源biblatex2.STY
 \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉
 %\newcommand*{\revsdnamepunct}{\addcomma}  %来源biblatex.def
@@ -470,9 +496,11 @@ backrefpages     = {引用页:},
 %\newcommand*{\bibpagespunct}{\addcomma\space}
 \renewcommand*{\bibpagespunct}{\addcolon\space}%修改为用冒号
 
-%=====================================================================
-%修改域的格式
 
+%=====================================================================
+%=====================================================================
+%修改域的格式，重定义域的输出宏
+%=====================================================================
 %新增文献类型标识符的格式
 %\DeclareFieldFormat{gbtypeflag}{\nobreak\mkbibbrackets{\nobreak#1}\nobreak}
 \DeclareFieldFormat{gbtypeflag}{%
@@ -769,27 +797,63 @@ backrefpages     = {引用页:},
   %\newunit %这里的标点去掉
 }
 
-%出版社和地址的处理，当没有出版社地址时
-%直接判断title的信息是否是中文，若为中文，则写出版地不详，否则用英文的字符表示。
+%出版社和地址的处理
+%新增一个样式用于输出连续出版物的地址，单位，时间
+%类似\newbibmacro*{publisher+location+date}
+\newbibmacro*{location+institution+date}{%
+  \printlist{location}%
+  \iflistundef{institution}
+    {\setunit*{\addcomma\space}}
+    {\setunit*{\addcolon\space}}%
+  \printlist{institution}%
+  \setunit*{\addcomma\space}%
+  \usebibmacro{date}%
+  \newunit}
+%当没有出版社地址时，直接判断title的信息是否是中文，若为中文，则写出版地不详，否则用英文的字符表示。
 %事实上title对于每个文献来说是必须的，所以用它判断是最快的，而且一般标题和出版社的语言是一样的。
+\def\pubaddmacroredefine{%
 \renewbibmacro*{publisher+location+date}{%
 \testCJKfirst{\thefield{title}}%
 %\testifnoteeqstd%
 \iflistundef{location}{%\adddot
 \iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准低19页看到，标准存在出版项时输出，没有时完全省略。
 %\iftoggle{ifnoteeqstandard}{}{%}替换为上一句，尽可能用biblatex提供的函数
-\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}\addcolon\addspace}{\printtext{[S.l.\adddot]}\addcolon\addspace}}}%  \bibstring{noaddress}
+\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}\addcolon\addspace}{\printtext{[S.l.\adddot]}\addcolon\addspace}%
+}}%  \bibstring{noaddress}
 {\printlist{location}\addcolon\addspace}%
 %\addcolon\addspace%
 \iflistundef{publisher}{%
 \iffieldequalstr{note}{standard}{}{%
 %\iftoggle{ifnoteeqstandard}{}{%}替换为上一句，尽可能用biblatex提供的函数
 \iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
-{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}}}%
+{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
+}}%
 {\printlist{publisher}\setunit*{\addcomma\addspace}}%
 %\addcomma\addspace%
 \usebibmacro{date}%
   %\newunit %去掉这个标点
+}
+%新增一个样式用于输出连续出版物的地址，单位，时间
+%类似与上面的\newbibmacro*{publisher+location+date}
+\newbibmacro*{location+institution+date}{%
+\testCJKfirst{\thefield{title}}
+\iflistundef{location}{\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}}{\printtext{[S.l.\adddot]}}}%
+  {\printlist{location}}%
+%  \iflistundef{institution}
+%    {\setunit*{\addcomma\space}}
+%    {\setunit*{\addcolon\space}}%
+%  \printlist{institution}%
+%  \setunit*{\addcomma\space}%
+\addcolon\addspace%
+\iflistundef{institution}{%
+\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}}{\printtext{\mkbibbrackets{s.n.}}}}% \bibstring{nopublisher}%[s.n.\adddot]
+{\printlist{institution}}%
+\setunit{\addcomma\addspace}%
+  %\usebibmacro{date}%
+  \printfield{year}%
+  \bibrangedash%
+  \iffieldundef{endyear}{}{\printfield{endyear}}%
+  \newunit}
 }
 
 %对版本信息做出修改，源来自biblatex.DEF
@@ -1007,28 +1071,6 @@ backrefpages     = {引用页:},
   %\newunit
 }
 
-%新增一个样式用于输出连续出版物的地址，单位，时间
-%类似与上面的\newbibmacro*{publisher+location+date}
-\newbibmacro*{location+institution+date}{%
-\testCJKfirst{\thefield{title}}
-\iflistundef{location}{\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}}{\printtext{[S.l.\adddot]}}}%
-  {\printlist{location}}%
-%  \iflistundef{institution}
-%    {\setunit*{\addcomma\space}}
-%    {\setunit*{\addcolon\space}}%
-%  \printlist{institution}%
-%  \setunit*{\addcomma\space}%
-\addcolon\addspace%
-\iflistundef{institution}{%
-\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}}{\printtext{\mkbibbrackets{s.n.}}}}% \bibstring{nopublisher}%[s.n.\adddot]
-{\printlist{institution}}%
-\setunit{\addcomma\addspace}%
-  %\usebibmacro{date}%
-  \printfield{year}%
-  \bibrangedash%
-  \iffieldundef{endyear}{}{\printfield{endyear}}%
-  \newunit}
-
 %重设专利title的输出，将文献类型标识符输出出去，原输出来自biblatex.def文件
 \newbibmacro*{patenttitle}{%
   \ifboolexpr{%
@@ -1065,8 +1107,11 @@ backrefpages     = {引用页:},
   %\newunit
   }
 
+
+%=====================================================================
 %=====================================================================
 %设置驱动格式
+%=====================================================================
 %book条目类的驱动，源来自standard.bbx文件
   \DeclareBibliographyDriver{book}{%
   \usebibmacro{bibindex}%
