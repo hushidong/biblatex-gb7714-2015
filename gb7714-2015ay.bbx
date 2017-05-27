@@ -116,8 +116,11 @@
 %设置宏包选项
 %=====================================================================
 %增加一个出版项自动处理控制选项
-\DeclareBibliographyOption[bool]{gbpub}[true]{%应使用这种直接的机制
-\ifstrequal{#1}{true}{\pubaddmacroredefine}{}}
+\newtoggle{bbx:gbpub}
+\DeclareBibliographyOption{gbpub}[true]{%
+%\settoggle{bbx:gbpub}{#1} %或采用下面这一句
+  \ifstrequal{#1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
+\ExecuteBibliographyOptions{gbpub}
 
 \iftoggle{iftexlivesix}{% Alter settings that carry through from biblatex
 %biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
@@ -711,14 +714,16 @@ backrefpages     = {引用页:},
 \addspace\printtext{[}\printfield{urlyear}%
 \iffieldundef{urlmonth}{}{\bibrangedash\printfield{urlmonth}}%
 \iffieldundef{urlday}{}{\bibrangedash\printfield{urlday}}\printtext{]}}
+
 \newbibmacro*{newsdate}{%%新增加一个新闻日期
 \iffieldundef{year}{}{\printfield{year}%
 \iffieldundef{month}{}{\bibrangedash\printtext{\thefield{month}}%
 \iffieldundef{day}{}{\bibrangedash\printfield{day}}}}
 }%
+
 \newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示表示电子资源的更新和修改日期，而公告日期安按日期格式
-\iffieldundef{date}{%
-\iffieldundef{enddate}{%
+\iffieldundef{year}{%
+\iffieldundef{endyear}{%
 \printtext{%
 \iffieldundef{eventyear}{}{\mkbibparens{\printtext{\printfield{eventyear}}%
 \iffieldundef{eventmonth}{}{\bibrangedash\thefield{eventmonth}}%
@@ -854,46 +859,11 @@ backrefpages     = {引用页:},
 }
 {}}
 
+
 %出版社和地址的处理
-%新增一个样式用于输出连续出版物的地址，单位，时间
-%类似\newbibmacro*{publisher+location+date}
 \newbibmacro*{location+institution+date}{%
-  \printlist{location}%
-  \iflistundef{institution}
-    {\setunit*{\addcomma\space}}
-    {\setunit*{\addcolon\space}}%
-  \printlist{institution}%
-  \setunit*{\addcomma\space}%
-  \usebibmacro{date}%
-  \newunit}
-%当没有出版社地址时，直接判断title的信息是否是中文，若为中文，则写出版地不详，否则用英文的字符表示。
-%事实上title对于每个文献来说是必须的，所以用它判断是最快的，而且一般标题和出版社的语言是一样的。
-\def\pubaddmacroredefine{%
-\renewbibmacro*{publisher+location+date}{%
-\iffieldundef{title}{}{\testCJKfirst{\thefield{title}}}%
-%\testifnoteeqstd%
-\iflistundef{location}{%\adddot
-\iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准低19页看到，标准存在出版项时输出，没有时完全省略。
-%\iftoggle{ifnoteeqstandard}{}{%%}替换为上一句，尽可能用biblatex提供的函数
-\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}\setunit*{\addcolon\addspace}}{\printtext{[S.l.\adddot]}\setunit*{\addcolon\addspace}}}}%  \bibstring{noaddress}
-{\printlist{location}\setunit*{\addcolon\addspace}}%
-%\addcolon\addspace%
-\iflistundef{publisher}{%
-\iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准低19页看到，标准存在出版项时输出，没有时完全省略。
-%\iftoggle{ifnoteeqstandard}{}{%%}替换为上一句，尽可能用biblatex提供的函数
-\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}\setunit{\adddot\addspace}\setunit*{\addcolon\addspace}}
-%\mkbibbrackets
-%{{%{\printtext{[s.n.\adddot]}\setunit{\adddot\addspace}\setunit*{\addcolon\addspace}}}}%\bibstring{nopublisher}
-{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcolon\addspace}}}}
-{\printlist{publisher}\setunit*{\addcolon\addspace}}%
-%\addcomma\addspace%
-%\usebibmacro{date}%
-%\newunit %去掉这个标点
-}
-%新增一个样式用于输出连续出版物的地址，单位，时间
-%类似与上面的\newbibmacro*{publisher+location+date}
-\newbibmacro*{location+institution+date}{%
-\testCJKfirst{\thefield{title}}
+\iftoggle{bbx:gbpub}%
+{\testCJKfirst{\thefield{title}}
 \iflistundef{location}{\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}}{\printtext{[S.l.\adddot]}}}%
   {\printlist{location}}%
 %  \iflistundef{institution}
@@ -903,18 +873,128 @@ backrefpages     = {引用页:},
 %  \setunit*{\addcomma\space}%
 \addcolon\addspace%
 \iflistundef{institution}{%
-%注意这里\printtext{\mkbibbrackets{s.n.}}和\printtext{[s.n.\adddot]}是不同的，这里的]不影响标点追踪，
-%这里要理解的是newunit插入的是period，看def中的命令:\newcommand*{\newunitpunct}{\addperiod\space}，\newcommand*{\finentrypunct}{\addperiod}
-\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}}{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}}}% \bibstring{nopublisher}
+\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}}{\printtext{\mkbibbrackets{s.n.}}}}% \bibstring{nopublisher}%[s.n.\adddot]
 {\printlist{institution}}%
 \setunit{\addcomma\addspace}%
   %\usebibmacro{date}%
-%  \printfield{year}%
-%  \bibrangedash%
-%  \iffieldundef{endyear}{}{\printfield{endyear}}%
-  \newunit%
+  \printfield{year}%
+  \bibrangedash%
+  \iffieldundef{endyear}{}{\printfield{endyear}}%
+  \newunit}%
+{  \printlist{location}%
+  \iflistundef{institution}%
+    {\setunit*{\addcomma\space}}
+    {\setunit*{\addcolon\space}}%
+  \printlist{institution}%
+  \setunit*{\addcomma\space}%
+  \usebibmacro{date}%
+  \newunit}%
 }
+
+\renewbibmacro*{publisher+location+date}{%
+\iftoggle{bbx:gbpub}%
+{\testCJKfirst{\thefield{title}}%
+%\testifnoteeqstd%
+\iflistundef{location}{%\adddot
+\iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准低19页看到，标准存在出版项时输出，没有时完全省略。
+%\iftoggle{ifnoteeqstandard}{}{%}替换为上一句，尽可能用biblatex提供的函数
+\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}\addcolon\addspace}{\printtext{[S.l.\adddot]}\addcolon\addspace}%
+}}%  \bibstring{noaddress}
+{\printlist{location}\addcolon\addspace}%
+%\addcolon\addspace%
+\iflistundef{publisher}{%
+\iffieldequalstr{note}{standard}{}{%
+%\iftoggle{ifnoteeqstandard}{}{%}替换为上一句，尽可能用biblatex提供的函数
+\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
+{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
+}}%
+{\printlist{publisher}\setunit*{\addcomma\addspace}}%
+%\addcomma\addspace%
+\usebibmacro{date}%
+%\newunit %去掉这个标点
+}%
+{\printlist{location}%
+  \iflistundef{publisher}
+    {\setunit*{\addcomma\space}}
+    {\setunit*{\addcolon\space}}%
+  \printlist{publisher}%
+  \setunit*{\addcomma\space}%
+  \usebibmacro{date}%
+  %\newunit
+  }%
 }
+
+%\def\pubaddmacronewdefine{
+%%新增一个样式用于输出连续出版物的地址，单位，时间，%类似\newbibmacro*{publisher+location+date}
+%\newbibmacro*{location+institution+date}{%
+%  \printlist{location}%
+%  \iflistundef{institution}%
+%    {\setunit*{\addcomma\space}}
+%    {\setunit*{\addcolon\space}}%
+%  \printlist{institution}%
+%  \setunit*{\addcomma\space}%
+%  \usebibmacro{date}%
+%  \newunit}%
+%\renewbibmacro*{publisher+location+date}{%
+%  \printlist{location}%
+%  \iflistundef{publisher}
+%    {\setunit*{\addcomma\space}}
+%    {\setunit*{\addcolon\space}}%
+%  \printlist{publisher}%
+%  \setunit*{\addcomma\space}%
+%  \usebibmacro{date}%
+%  %\newunit
+%  }
+%}
+%%当没有出版社地址时，直接判断title的信息是否是中文，若为中文，则写出版地不详，否则用英文的字符表示。
+%%事实上title对于每个文献来说是必须的，所以用它判断是最快的，而且一般标题和出版社的语言是一样的。
+%\def\pubaddmacroredefine{%
+%\renewbibmacro*{publisher+location+date}{%
+%\iffieldundef{title}{}{\testCJKfirst{\thefield{title}}}%
+%%\testifnoteeqstd%
+%\iflistundef{location}{%\adddot
+%\iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准低19页看到，标准存在出版项时输出，没有时完全省略。
+%%\iftoggle{ifnoteeqstandard}{}{%%}替换为上一句，尽可能用biblatex提供的函数
+%\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}\setunit*{\addcolon\addspace}}{\printtext{[S.l.\adddot]}\setunit*{\addcolon\addspace}}}}%  \bibstring{noaddress}
+%{\printlist{location}\setunit*{\addcolon\addspace}}%
+%%\addcolon\addspace%
+%\iflistundef{publisher}{%
+%\iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准低19页看到，标准存在出版项时输出，没有时完全省略。
+%%\iftoggle{ifnoteeqstandard}{}{%%}替换为上一句，尽可能用biblatex提供的函数
+%\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}\setunit{\adddot\addspace}\setunit*{\addcolon\addspace}}
+%%\mkbibbrackets
+%%{{%{\printtext{[s.n.\adddot]}\setunit{\adddot\addspace}\setunit*{\addcolon\addspace}}}}%\bibstring{nopublisher}
+%{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcolon\addspace}}}}
+%{\printlist{publisher}\setunit*{\addcolon\addspace}}%
+%%\addcomma\addspace%
+%%\usebibmacro{date}%
+%%\newunit %去掉这个标点
+%}
+%%新增一个样式用于输出连续出版物的地址，单位，时间
+%%类似与上面的\newbibmacro*{publisher+location+date}
+%\newbibmacro*{location+institution+date}{%
+%\testCJKfirst{\thefield{title}}
+%\iflistundef{location}{\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}}{\printtext{[S.l.\adddot]}}}%
+%  {\printlist{location}}%
+%%  \iflistundef{institution}
+%%    {\setunit*{\addcomma\space}}
+%%    {\setunit*{\addcolon\space}}%
+%%  \printlist{institution}%
+%%  \setunit*{\addcomma\space}%
+%\addcolon\addspace%
+%\iflistundef{institution}{%
+%%注意这里\printtext{\mkbibbrackets{s.n.}}和\printtext{[s.n.\adddot]}是不同的，这里的]不影响标点追踪，
+%%这里要理解的是newunit插入的是period，看def中的命令:\newcommand*{\newunitpunct}{\addperiod\space}，\newcommand*{\finentrypunct}{\addperiod}
+%\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}}{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}}}% \bibstring{nopublisher}
+%{\printlist{institution}}%
+%\setunit{\addcomma\addspace}%
+%  %\usebibmacro{date}%
+%%  \printfield{year}%
+%%  \bibrangedash%
+%%  \iffieldundef{endyear}{}{\printfield{endyear}}%
+%  \newunit%
+%}
+%}
 
 %修改析出文献的文集的标题与附加标题间的符号
 \renewbibmacro*{booktitle}{%

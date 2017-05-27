@@ -22,13 +22,17 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
 	`\usepackage[backend=biber,style=gb7714-2015]{biblatex}`
 
-	%add a option "align" for the numerical label, option value maybe "right" or "left" or "gb7714-2015"
+	%add an option "align" for the numerical label, option value maybe "right" or "left" or "gb7714-2015"
 
 	`\usepackage[backend=biber,style=gb7714-2015,align=gb7714-2015]{biblatex}`
 
+	%add an option "gbpub" for dealing publishing items, option value = "true" for gb7714 style or "false" for standard style. 
+
+	`\usepackage[backend=biber,style=gb7714-2015,gbpub=true]{biblatex}`
+
 %for author year style
 
-	`\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}`
+	`\usepackage[backend=biber,style=gb7714-2015ay,gbpub=true]{biblatex}`
 	
 %for perl script transformation tool(only for the numerical style)
 

@@ -12,7 +12,7 @@ if exist *.pdf (
     del *.pdf /Q
 )
 
-pause
+::pause
 
 call makeclear
 
