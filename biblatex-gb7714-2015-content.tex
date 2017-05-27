@@ -41,10 +41,10 @@ biblatex-gb7714-2015.tex，biblatex-gb7714-2015ay.tex，biblatex-gb7714-2015-bea
 \textbf{*.bat}和\textbf{*.sh}分别是windows下和linux下的编译脚本。\textbf{*.pl}是用来将gb7714格式的著录文献文本转换为bib文件的perl脚本，\textbf{*.dat}是用于转换的测试文本文件。
 
 \subsection{biblatex宏包的参考文献生成方法}
-biblatex生成参考文献有其优越性。从笔者自身一路走来的实践经历(从开始学习latex使用xelatex编译文件时，利用thebibliography环境生成参考文献，到后来对格式化参考文献有更多需求后开始寻求利用参考文献宏包，再到最后选择了使用biblatex宏包(也由于对bibtex语言不熟悉，偷懒不想学[ \^ \_ \^ ]))，笔者总结了利用biblatex宏包生成参考文献的优点如下:
+biblatex生成参考文献有其优越性。笔者从最初开始学习latex时利用thebibliography环境生成参考文献，到后来对格式化参考文献有更多需求，开始寻求利用参考文献宏包，再到最后选择了使用biblatex宏包[也由于对bibtex语言不熟悉，偷懒不想学$( \hat{} \bot \hat{} )$]，经过了大量的实践，从结果看利用biblatex宏包生成参考文献具有如下优点:
 
 \begin{enumerate}
-\item 使用够方便，样式随宏包加载，参考文献源bib文件利用addbibresource加载，打印文献表利用printbibliography命令可以在文档任意位置打印。参考文献只需三步编译，第一遍xelatex，第二遍biber，第三遍xelatex，当然如果需要存在反向超链接，还需要第四遍xelatex。例\ref{eg:compile:cmd} 给出编译命令，其中xelatex命令也可以用mklatex -xelatex代替。
+\item 使用方便。样式随宏包加载，参考文献源bib文件利用addbibresource加载，打印文献表利用printbibliography命令可以在文档任意位置打印。参考文献只需三步编译，第一遍xelatex，第二遍biber，第三遍xelatex，当然如果需要存在反向超链接，还需要第四遍xelatex。例\ref{eg:compile:cmd} 给出编译命令，其中xelatex命令也可以用mklatex -xelatex代替。
 
     \begin{codetex}{使用biblatex宏包的文档编译命令}{eg:compile:cmd}
     xelatex --synctex=-1 jobname.tex
@@ -52,21 +52,23 @@ biblatex生成参考文献有其优越性。从笔者自身一路走来的实践
     xelatex --synctex=-1 jobname.tex
     xelatex --synctex=-1 jobname.tex
     \end{codetex}
+%使用够方便
 
-\item 划分无限制，利用biblatex宏包可以在一个文档中生成任意数量的参考文献表，而不需要用include把分档划分成不同的文件来生成分章参考文献。利用refsection和refsegment 可以很方便划分参考文献节，甚至还可以嵌套使用。
-%划分很自由
+\item 划分自由。利用biblatex宏包可以在一个文档中生成任意数量的参考文献表，而不需要用include把分档划分成不同的文件来生成分章参考文献。利用refsection和refsegment可以很方便地划分参考文献节，甚至还可以嵌套使用。
+%划分很自由，划分无限制
 
-\item 支持更全面，biber处理大数据量的参考文献条目毫无压力，不用担心bibtex可能存在的内存不足等局限，字符编码也支持utf-8，完全支持中文的bibtex键。
-%处理无限制
+\item 支持全面。biber处理大数据量参考文献毫无压力，不用担心bibtex可能存在的内存不足等局限，字符编码也支持utf-8，完全支持中文的bibtex键。
+%处理无限制，支持更全面
 
-\item 定制很容易，biblatex宏包实现参考文献著录格式使用的是tex语言，相比传统的bibtex语言更为容易。biblatex 提供了很多不同类型的参考文献标准样式，查看、参考和引用都很方便，因此定制起需要的参考文献格式来非常简便。
+\item 定制容易。biblatex宏包实现参考文献著录格式使用的是tex语言，相比传统的bibtex语言学习更为容易。biblatex 提供了很多不同类型的参考文献标准样式，查看、参考和引用都很方便，因此定制起需要的参考文献格式也很便捷。
+%定制很容易
 %\item 学习无障碍，因为biblatex宏包用的是tex语言，所以查看代码，学习都很方便，自然也便于生成需要的参考文献样式。
 %\item 定制很容易，biblatex提供了很多不同的参考文献标准样式，学习参考都很方便，因此定制起需要的参考文献格式来非常容易。
 \end{enumerate}
 
 上述这些优点也是笔者决定编写符合GB/T 7714-2015标准的参考文献样式文件的原因之一。
 
-下面简单介绍biblatex宏包生成参考文献的使用方法，直接给出最小工作示例，事实上biblatex生成参考文献万变不离其宗。示例中给出了详细的注释，要进一步了解biblatex参考文献生成可以参考biblatex宏包手册或者LaTeX 文档中文参考文献的biblatex解决方案\footnote{地址:\url{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}}。
+下面简单介绍biblatex宏包生成参考文献的方法，直接给出最小工作示例。事实上biblatex生成参考文献万变不离其宗。示例中给出了详细的注释，要进一步了解biblatex参考文献生成可以参考biblatex宏包手册或者LaTeX 文档中文参考文献的biblatex解决方案\footnote{地址:\url{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}}。
 
 \begin{codetex}{biblatex参考文献生成最小工作示例}{code:doc:structrue}
 \documentclass{article}%文档类
@@ -98,19 +100,19 @@ citestyle=gb7714-2015%,backref=true%
 \end{codetex}
 
 
-\subsection{gb7714-2015样式加载和选项说明}
+\subsection{gb7714-2015样式加载方式和选项说明}
 \subsubsection{样式加载方式}
-最小示例(\ref{code:doc:structrue})中给出了宏包和样式的基本加载方式，对于gb7714-2015样式也是类似的，当然著录样式bibstyle和标注样式citestyle相同的话可以合并为一个样式style。比如:
+最小示例(\ref{code:doc:structrue})中给出了宏包和样式的基本加载方式，对于gb7714-2015样式也是类似的，当然著录样式bibstyle和标注样式citestyle相同的话可以合并为一个选项style。比如:
 
 
 \begin{codetex}{gb7714-2015顺序编码制加载方式}{eg:gb7714numeric}
 \usepackage[backend=biber,style=gb7714-2015]{biblatex}
-%如果要设置参考文献表序号标签对齐方式的话，请设置align选项，比如:
-\usepackage[backend=biber,style=gb7714-2015,align=left]{biblatex}
+%如果要设置参考文献表序号标签对齐方式的话请设置align选项，如果要取消缺省出版项自动填补的话设置gbpub=false，比如:
+\usepackage[backend=biber,style=gb7714-2015,align=left,gbpub=true]{biblatex}
 \end{codetex}
 
 \begin{codetex}{gb7714-2015作者年制加载方式}{eg:gb7714authoryear}
-\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}
+\usepackage[backend=biber,style=gb7714-2015ay,gbpub=true]{biblatex}
 \end{codetex}
 
 \begin{codetex}{参考文献文本转换为bib文件perl脚本使用方式}{eg:transtobib}
@@ -118,52 +120,52 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 \end{codetex}
 
 \subsubsection{增加的选项}
-本小节主要介绍为方便使用，在gb7714-2015样式增加的选项，选项的使用方式域包选项使用方式相同:
+本小节主要介绍gb7714-2015样式增加的选项，选项的使用方式与包选项完全相同:
 \begin{description}
   \item[align]=right，left，gb7714-2015. \hfill default is right
-  
+
   为顺序编码制增加的标签对齐选项，选择参考文献表序号标签的对齐方式，align=right是默认的右对齐，align=left是左对齐，align=gb7714-2015是项对齐方式。对于作者年制该选项无效。测试结果见第\ref{sec:align:test}节
-  
+
   \item[gbpub]=true，false. \hfill default is true
-  
-  为出版信息存在缺失时自动处理的控制选项，默认选择gbpub=true，自动利用:[出版地不详]，[出版者不详]，[S.l.]，[s.n.]等填补缺省信息，设置gbpub=false时，则取消自动处理，使用标准样式的方式直接取消相应项的输出。
+
+  为出版信息存在缺失时自动处理增加的控制选项，默认选择gbpub=true，自动利用:[出版地不详]，[出版者不详]，[S.l.]，[s.n.]等填补缺省信息，设置gbpub=false时，则取消自动处理，使用标准样式的方式取消相应项的输出。
 \end{description}
 
 
 \subsubsection{与标准选项的兼容性}
-本小节介绍biblatex标准样式给出的选项在gb7714-2015样式中的兼容性。需要说明的是:使用gb7714-2015样式时(即style=gb7714-2015)，backend选择应指定为biber，还有一些其它选项也已经在样式设计时固定，不能修改设置。比如sorting，maxnames，minnames，date，useprefix，giveninits已经固定。
+本小节介绍biblatex标准样式选项在gb7714-2015样式中的兼容性。需要说明的是:使用gb7714-2015样式时(即style=gb7714-2015)，backend选择应指定为biber，还有一些选项已经在样式设计中固定，不能修改设置。比如sorting，maxnames，minnames，date，useprefix，giveninits等。
 
 \begin{description}
-  \item[url] true, false. \hfill default: true
-  
+  \item[url]=true, false. \hfill default: true
+
   该选项控制是否打印 url 域并获取日期。该选项只影响 url 信息是可选的那些条目类型。而 @online 条目的 url 域总是打印出来的。它是导言区选项，与样式相关，gb7714-2015样式做了特别支持，所以可以使用。
 
   \item[hyperref]=true, false, auto. \hfill default: auto
-  
+
   是否将引用和向后引用转化为可点击的超链接。这是宏包的载入时选项，与样式无关，自然可以使用。
 
   \item[backref]=true, false. \hfill default: false
-  
+
   是否在文献中打印出反向引用。这是宏包的载入时选项，与样式无关，自然可以使用。
 
 
   \item[refsection]=none, part, chapter, section, subsection. \hfill default: none
-  
+
   该选项自动在文档分段处（例如一章或一节）开始一个新的参考文献分节。是宏包的载入时选项，与样式无关，自然可以使用。
 
   \item[refsegment]=none, part, chapter, section, subsection. \hfill default: none
-  
-  类似于refsection选项，但是开始一个新的参考文献片段。
+
+  类似于refsection选项，但开始的是一个新的参考文献片段。
 
   \item[citereset]=none, part, chapter, section, subsection. \hfill default: none
-  
+
   该选项在文档分段处（例如一章或一节）自动执行介绍的citereset 命令。
 
   \item[labeldate]=year, short, long, terse, comp, ymd, edtf. \hfill default: year
-  
-  类似于 date 选项但是控制由DeclareLabeldate 选择的日期域的格式。
 
-  \item[其它]=下面还有很多选项，有些是宏包载入时选项，与样式无关，一般可以使用，但笔者没有做测试，使用者可以测试使用。选项的作用可以参考biblatex使用手册，以及笔者和Sheng Wenbo翻译的中文版。
+  类似于 date 选项，但控制的是由DeclareLabeldate 选择的日期域的格式。
+
+  \item[其它]=下面还有很多选项，有些是宏包载入时选项，与样式无关，一般可以使用，但笔者没有做测试，各位朋友可以测试使用。选项的作用可以参考biblatex使用手册，以及笔者和Sheng Wenbo兄翻译的中文版。
       \begin{itemize}
           \item related=true, false. default: true
           \item defernumbers=true, false default: false
@@ -195,24 +197,22 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 \end{description}
 
 
-\subsection{样式文件的进一步说明和使用方式}
+\subsection{样式文件的进一步说明}
 
 \subsubsection{顺序编码/作者年制bbx样式文件的使用说明}
 顺序编码制的参考文献样式文件基于标准numeric-comp样式修改得到。著录格式中序号格式见
-\ref{sec:bib:serialno}节，各类型文献条目的著录格式见\ref{sec:numeric:data}节，参考文献条目信息中各个域及其录入方式见\ref{sec:field}节。
+\ref{sec:bib:serialno}节，各类型文献条目的著录格式见\ref{sec:numeric:data}节，参考文献条目中各信息域及其录入方式见\ref{sec:field}节。
 
-作者年制的参考文献样式文件使用了标准authoryear样式的标签生成，修改了参考文献表的格式。其参考文献条目著录格式与顺序编码制基本相同(除了把年份提到了作者后面作为标签)。引文数据源bib文件所要求的条目各个域信息录入与顺序编码制完全一致，详见\ref{sec:numeric:data}节。
+作者年制的参考文献样式文件使用了标准authoryear样式的标签生成，修改了参考文献表的格式。其参考文献条目著录格式与顺序编码制基本相同(除了把年份提到了作者后面作为标签)。引文数据源bib文件所要求的条目信息域录入与顺序编码制完全一致，详见\ref{sec:numeric:data}节。
 
-\qd{因为作者年制有文种文献集中的要求，所以修改了nyt排序格式，增加了userb作为name前的排序域，默认情况下，本样式文件将作者为中文的文献的userb域设置成cn，英文的设置成en。这一设置过程，在处理样式的时候由biber自动处理，当出现问题或者有更多文种分集且有特殊顺序时，可以在bib文件中给相应文种文献的userb域设置适合排序的字符串。比如中文文献设置为cn，英文文献设置为en，法文文献设置为fr，那么排序中，相应的中文文献排在最前面，英文文献在中间，法文文献最后，因为升序情况下字母顺序是c然后e然后f。}
+\qd{注意:因为作者年制有文种文献集中的要求，所以修改了nyt排序格式，增加了userb作为name前的排序域，默认情况下，本样式文件将作者为中文的文献的userb域设置成cn，英文的设置成en。这一设置过程，在处理样式时由biber自动处理，当出现问题或者有更多文种分集且有特殊顺序时，可以在bib文件中给相应文种文献的userb域设置适合排序的字符串。比如中文文献设置为cn，英文文献设置为en，法文文献设置为fr，那么排序中，相应的中文文献排在最前面，英文文献在中间，法文文献最后，因为升序情况下字母顺序是c然后e然后f。}
 
 %上一段2016-1114更新，下面是以前的说法。
 %\qd{根据文种文献集中的要求，修改了nyt排序格式，增加了userb作为name前的排序域，当有需求进行多文种分集且有特殊顺序时，在bib文件中给相应文种的文献设置适合排序的字符串。比如中文文献设置为cn，英文文献设置为en，法文文献设置为fr，那么排序中，相应的中文文献排在最前面，英文文献在中间，法文文献最后，因为升序情况下字母顺序是c然后e然后f。}
 
 \subsubsection{顺序编码/作者年制cbx样式文件的使用说明}\label{sec:cbx:usage}
 
-顺序编码制的引用样式文件大体使用标准引用样式numeric-comp的内容。仅对cite，parencite进行了修改，将其原来在行中的位置改到上标中。为满足GB/T 7714-2015第10.1.3节的要求，增加了pagescite命令。为方便在同一文章中同时使用上标和非上标的标准方式，仅将cite命令修改为上标模式，而parencite保留标准样式提供的非上标模式。
-
-这些命令使用方式如下:
+顺序编码制的引用样式文件大体使用标准引用样式numeric-comp的内容，仅对cite等命令进行了修改。为满足GB/T 7714-2015第10.1.3节的要求，增加了pagescite命令。为方便在同一文章中同时使用上标和非上标的标注方式，仅将cite命令修改为上标模式，而parencite保留标准样式提供的非上标模式。这些命令使用方式如下:
 
 \begin{codetex}{顺序编码制cbx样式命令使用说明}{eg:citefornumeric}
 不带页码的引用(上标，方括号包围)\cite{Peebles2001-100-100}
@@ -229,10 +229,10 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 
 其中，当不指定页码时，pagescite命令默认调用参考文献的页码数据进行输出，如果需要指定页码，那么需要在第二个[]内输入页码内容。
 
-\qd{还要注意:对于多个文献一起的压缩形式，指定页码只会应用最后一个参考文献的页码，这是不对的，当然其实这种情况是不应该存在的，指定页码的目的就是具体化某一文献的，因此使用时尽可能使用pagescite\{key1\}pagescite\{key2\}这种形式而不是pagescite\{key1,key2\}}。
+\qd{注意:对于多个文献一起的压缩形式，指定页码只会应用最后一个参考文献的页码，这是不对的，当然其实这种情况是不应该存在的，指定页码本来就应该具体化指某一文献的，因此使用时尽可能使用pagescite\{key1\}pagescite\{key2\}这种形式而不是pagescite\{key1,key2\}。}
 
 
-作者年制的引用样式文件大体使用标准引用样式authoryear的内容。也是对cite，parencite进行了修改，将引用标签用括号括起来。为满足GB/T 7714-2015第10.2.4节的要求，增加了pagescite命令。为满足GB/T 7714-2015第10.2.1节的要求，增加了yearpagescite命令用于处理作者年制文中已有作者只需要年份和页码的情况。
+作者年制的引用样式文件大体使用标准引用样式authoryear的内容。也是对cite，parencite进行了修改，将引用标签用括号括起来。为满足GB/T 7714-2015第10.2.4节的要求，增加了pagescite命令。为满足GB/T 7714-2015第10.2.1节的要求，增加了yearpagescite命令用于处理文中已有作者信息只需要年份和页码信息的情况。
 
 这些命令使用方式如下:
 
@@ -288,7 +288,7 @@ GB/T 7714-2015规定采用作者年制组织时，各篇文献首先按文种组
 
 标注要求具体参考GB/T 7714-2015第10.2节。
 
-\emph{需要注意的是:一般情况下，当文献作者缺省时，作者年制就没有作者可以用，因此文献题名用来生成标签，这样会导致参考文献表中文献题名后的文献类型标识/文献载体标识消失。但是可以用佚名替代缺省作者的方式避免这个问题，本样式文件默认情况下采用佚名方式，如果不需要使用佚名，那么需要在样式文件中注释掉一段代码，这段代码在本文档末尾2016-11-14的更新历史中有说明，见\pageref{up:20161114}页。}
+\qd{注意:一般情况下，当文献作者缺省时，作者年制就没有作者可以用，因此文献题名用来生成标签，这样会导致参考文献表中文献题名后的文献类型标识/文献载体标识消失。但是可以用佚名替代缺省作者的方式避免这个问题，本样式文件默认情况下采用佚名方式，如果不需要使用佚名，那么需要在样式文件中注释掉一段代码，这段代码在本文档末尾2016-11-14的更新历史中有说明，见\pageref{up:20161114}页。}
 
 \subsection{各类文献在biblatex中对应的条目和域}\label{sec:numeric:data}
 gb7714-2015.bbx是按照GB/T 7714-2015要求实现的biblatex参考文献样式文件。
@@ -307,9 +307,9 @@ gb7714-2015.bbx是按照GB/T 7714-2015要求实现的biblatex参考文献样式�
 author.title:subtitle或titleaddon[usera].translator.edition.address或location:publisher,date或year:pages[urldate].url.doi
 \end{codetex}
 
-使用时，首先建立参考文献数据文件即bib文件，将对应的文献信息录入到相应条目的相应数据域中。\qd{特别注意:usera域不用录入，该域内容由bbx样式文件根据条目类型处理得到。}
+使用时，首先建立参考文献数据文件即bib文件，将对应的文献信息录入到相应条目的相应数据域中。\bc{特别强调:usera域不用录入，该域内容由bbx样式文件根据条目类型自动处理得到。}
 
-\qd{还需要注意:由于biblatex不支持standard条目类型，所以“标准”类型可以用book或inbook替代，但使用note域等于standard作为一个区分，当note域数据存在且内容等于standard时，就将其作为“标准”文献进行处理，其文献类型标识用S表示。这里为什么使用note域而不是type域和keywords域，是因为考虑到note域一般情况没有什么特殊意义，使用它不会导致冲突，而type域在biblatex标准样式中没有被book和article条目类型当作支持的域，对于支持该域的条目比如thesis，type域又有特殊的意义，是用来区分master和doctor的，而keywords域倒可以使用，只是该域一般很少在jabref之类软件的默认域中，需要进一步设置，而且可能带来不通用的问题。}
+\qd{注意:由于biblatex不支持standard条目类型，所以“标准”类型可以用book或inbook替代，但使用note域等于standard作为一个区分，当note域数据存在且内容等于standard时，就将其作为“标准”文献进行处理，其文献类型标识用S表示。这里为什么使用note域而不是type域和keywords域，是因为考虑到note域一般情况没有什么特殊意义，使用它不会导致冲突，而type域在biblatex标准样式中没有被book和article条目类型当作支持的域，对于支持该域的条目比如thesis，type域又有特殊的意义，是用来区分master和doctor的，而keywords域倒可以使用，只是该域一般很少在jabref之类软件的默认域中，需要进一步设置，而且可能带来不通用的问题。}
 
 \subsubsection{标准/standard}\label{sec:standard}
 “标准”(standard)作为一种文献条目类型biblatex并不支持，因此可以如上一小节所述，直接利用book或inbook类型加note域代替。
@@ -331,7 +331,7 @@ author.title[usera](//bookauthor.booktitle:booktitleaddon).edition.address 或lo
 
 
 \subsubsection{域/field}\label{sec:field}
-各域的数据录入格式符合bib文件规范即可，这里再详细说明一下，后面的其它条目涉及到的域也在这里一并介绍:
+参考文献条目各个信息域的数据录入格式符合bib文件规范即可，这里再详细说明一下，后面其它条目涉及到的域也在这里一并介绍:
 \begin{description}
   \item[author] 在biblatex中author域属于name数据类型，输入数据时，各姓名间用and 连接，当姓名过多省略时，用others代替。
 
@@ -348,7 +348,7 @@ author.title[usera](//bookauthor.booktitle:booktitleaddon).edition.address 或lo
 
       这里的第一个姓名输入为前缀，姓，后缀，名，中间名。第二个姓名输入为名，姓。第三个姓名输入为姓，名，中间名。
 
-      \emph{还要注意:对于第二种输入方式非首字母大写，姓名各个组成部分最好首字母是大写的，可能导致解析出错，比如姓名只有两个组成部分firstname和lastname，如果firstname小写的话，有可能会解析为prefix lastname。对于第一种输入方式，则至少lastname需要首字母大写，否则有可能将lastname解析成prefix。其中lastname也称familyname，firstname middlename 两者共称givenname}
+      \bc{需要强调:对于第二种输入方式非首字母大写，姓名各个组成部分最好首字母是大写的，可能导致解析出错，比如姓名只有两个组成部分firstname和lastname，如果firstname小写的话，有可能会解析为prefix lastname。对于第一种输入方式，则至少lastname需要首字母大写，否则有可能将lastname解析成prefix。其中lastname也称familyname，firstname middlename 两者共称givenname}
 
       对于机构作者，不需要解析，直接输入机构名，英文的各个机构名用\{\}包起来，比如:
 
@@ -362,18 +362,20 @@ author.title[usera](//bookauthor.booktitle:booktitleaddon).edition.address 或lo
   \item[edition] 直接输入整数，或者需要打印的内容
   \item[address] 直接输入需要打印的地址内容，location域类似。
   \item[publisher] 直接输入需要打印的出版者内容，institution，organization域类似
-  \item[date] 日期可以格式化输入或者直接输入需要打印的内容，格式化输入biblatex 会自动解析。格式化的输入方式是:
+  \item[date] 日期可以格式化输入，格式化输入biblatex 会自动解析，如果无法解析会忽略该域。格式化的输入方式是:
 
       年-月-日/年-月-日
 
       比如:2001-05-06/2001-08-01
 
       其中第一个年-月-日会解析并存储到year，month，day域中，第二个会解析并存储到endyear，endmonth，endday域中。更多细节参考biblatex手册的Table 8: Date Interface。
-
-      如果无法解析，输入内容被认为是需要完整打印的内容，比如:
+  
+  \item[year] year域的输入与date域类似，为了兼容一些老的bib文件，把year直接用map转换成date，所以在本样式的使用中输入year域与date域相同。
+      
+      但year与date存在一定的差异，即year可以处理仅有年的信息或者需要原样打印的内容。比如:
       1881(清光绪七年)。
-
-      year域的输入与date域类似，为了兼容一些老的bib文件，把year直接用map转换成date，所以在本样式的使用中输入时year域与date域相同，但处理过程中year域的信息仅有年或者需要完整打印的内容。
+      
+      这一信息如果放在date中会被自动忽略，但放到year域中，本样式会先将其拷贝到date中进行解析，无法解析的话，date域忽略，但year信息仍然存在，并原样打印。
 
   \item[pages] 可以格式化输入或输入需要打印的内容。格式化输入时，页码用整数，当有范围时，用短横线隔开。比如:59-60。 当无法解析时，输入内容被认为是需要完整打印的内容。
   \item[urldate] urldate域与date域类似，只是解析时，存储到urlday，urlmonth，urlyear，urlendday，urlendmonth，urlendyear域中。
@@ -414,7 +416,7 @@ author.title[usera]//bookauthor.booktitle:booktitleaddon.edition.address 或loca
 author/editor.title:subtitle或titleaddon[usera].year或date,volume(number)-endyear, endvolume(endnumber).address或location:publisher,date或year[urldate].url.doi
 \end{codetex}
 
-需要注意: 因为连续出版物可能用到两个日期，两个卷，两个期，所以录入数据时需要特别处理。不需要录入endyear等信息，只需要在到year或date域录入日期，由biber自动解析，两个日期之间用/分隔。而卷和期由于可能有合订模式，合订卷期之间用/分隔，参考GB/T 7714-2015第8.8.3节，需要解析范围的卷和期，录入到volume和number域时，两个不同的值用-分隔。\emph{这里对于卷和期的解析所采用的函数利用了李志齐所编写的样式文件中的函数，特此说明，表示感谢!}
+需要注意: 因为连续出版物可能用到两个日期，两个卷，两个期，所以录入数据时需要特别处理。不需要录入endyear等信息，只需要在到year或date域录入日期，由biber自动解析，两个日期之间用/分隔。而卷和期由于可能有合订模式，合订卷期之间用/分隔，参考GB/T 7714-2015第8.8.3节，需要解析范围的卷和期，录入到volume和number域时，两个不同的值用-分隔。\bc{这里对于卷和期的解析所采用的函数利用了李志齐所编写的样式文件中的函数，特此说明，表示感谢!}
 
 \subsubsection{连续出版物的析出文献/article}
 \begin{refentry}{}{}
@@ -789,6 +791,7 @@ and keyword=standard
 \cite{Parsons2000a--,Parsons2000b--,Parsons2000--,Parsons2000nodate--,
 Parsons2000noloc--,Parsons2000nopub--,Parsons2000nopubnoyear--,
 Parsons2000nopubpages--,Parsons2000noauthor--}
+  \item 年份信息有额外说明的文献比较测试\cite{汪昂1912--,汪昂1881--,王夫之1845--}
   \item 页脚中引用和打印文献表\footnote{参考文献在脚注中引用\footcite{赵学功2001--}}
   \footfullcite{赵学功2001--}
   \item 专著的双语文献引用测试\cite{bilangyi2013}
@@ -798,10 +801,10 @@ Parsons2000nopubpages--,Parsons2000noauthor--}
 \parencite[见][49页]{Miroslav2004--}\cite[见][49页]{蔡敏2006--}
   \item 作者年制文中已有作者只需要年份和页码的情况，使用命令yearpagescite，而顺序制的情况下该命令与pagescite命令作用相同。比如: 见赵耀东\yearpagescite[][205]{赵耀东1998--}和Simon\yearpagescite[][15]{Simon2001--}的文献。
   \item 专著更多测试
-\cite{GPS1988--}\cite{顾炎武1982--}\cite{PIGGOT1990--}\cite{PEEBLES2001--}\cite{王夫之1845--}
+\cite{GPS1988--}\cite{顾炎武1982--}\cite{PIGGOT1990--}\cite{PEEBLES2001--}
 \cite{Poisel2013--}\cite{张伯伟2002--}\cite{2009-155-155}
 \cite{GPS1988--,CRANE1972--,CRAWFPRD1995--,Gradshteyn2000--,IFLAI1977--,Kinchy2012-50-50,Lin2004--,Miroslav2004--,Mittelbach2004--,OBRIEN1994--}
-\cite{PEEBLES2001--,Peebles2001-100-100,PIGGOT1990--,Poisel2013--,Praetzellis2011-13-13,Proakis2007--,Reed2005--,ROOD2001--,Ross2010--,Simon2004--,Simon2001--,Stueber2001--,Yi2013--,YUFIN2000--, 埃伯哈德$ullet$蔡德勒等2012--,蔡敏2006--,陈希孺2009--,陈志杰2006--,樊昌信2005--,顾炎武1982--,广西壮族自治区林业厅1993--,郭文彬2006--,候文顺2010-119-119,胡承正2010-112-112,胡广书2012--,胡伟2011--,蒋有绪1998--,库恩2012--,李云霞2009--,廖平2012--,刘海洋2013--,罗斯基2009--,美国妇产科医师学会2010-38-39,鸟哥--,孙玉文2000--,唐绪军1999-117-121,同济大学数学系2014--,汪昂1912--,汪昂1881--,王夫之1845--,王雪松2010--,辛希孟1994--,阎毅2013--,杨林2015--}
+\cite{PEEBLES2001--,Peebles2001-100-100,PIGGOT1990--,Poisel2013--,Praetzellis2011-13-13,Proakis2007--,Reed2005--,ROOD2001--,Ross2010--,Simon2004--,Simon2001--,Stueber2001--,Yi2013--,YUFIN2000--, 埃伯哈德$ullet$蔡德勒等2012--,蔡敏2006--,陈希孺2009--,陈志杰2006--,樊昌信2005--,顾炎武1982--,广西壮族自治区林业厅1993--,郭文彬2006--,候文顺2010-119-119,胡承正2010-112-112,胡广书2012--,胡伟2011--,蒋有绪1998--,库恩2012--,李云霞2009--,廖平2012--,刘海洋2013--,罗斯基2009--,美国妇产科医师学会2010-38-39,鸟哥--,孙玉文2000--,唐绪军1999-117-121,同济大学数学系2014--,王雪松2010--,辛希孟1994--,阎毅2013--,杨林2015--}
 \cite{张伯伟2002--,赵凯华1995--,赵学功2001--,赵耀东1998--,中国企业投资协会2013--,中国社会科学院语言研究所词典编辑室1996--,庄钊文2007--,1962-50-50,2009-155-155,booknoauthor,Parsons2000noauthor--}
 
 \end{enumerate}
@@ -876,7 +879,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
   \item 专利引用\cite{KOSEKI2002--,TACHIBANA2002--,河北绿洲生态环境科技有限公司2001--,姜锡洲1989--,刘加林1993--,西安电子科技大学2002--,张凯军2012-04-05--}
 \end{enumerate}
 
-注意:文献\cite{刘加林1993--}的location定义了中国，GB/T 7714-2015中其实并不需要该域，但这里并没有去掉，先放着也许以后标准修改后可能用的着。如果要去掉，那么将bib文件中该条目的location去掉就行了。
+\qd{注意:文献\cite{刘加林1993--}的location定义了中国，GB/T 7714-2015中其实并不需要该域，但这里并没有去掉，先放着也许以后标准修改后可能用的着。如果要去掉，那么将bib文件中该条目的location去掉就行了。}
 
 \printbibliography[heading=bibliography,title=【专利】]
 \end{refsection}
@@ -1019,9 +1022,20 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 \printbibliography[heading=bibliography,title=【author-year style:article without volume】]
 \end{refsection}
 
+\subsection{测试:增加的选项导致的问题}\label{sec:option:deal}
+\begin{refsection}
+文献\cite{AAAS1883--}
+\cite{陈志勇2011--}
+\cite{萧钰2001--}
+\cite{北京交通大学研究生公众号2016--}
+\cite{赵学功2001--}
 
-\section{样式文件设计思路及相关的biblatex高级功能}\label{sec:biblatex:mech}
-使用biblatex总的感受，biblatex相当完善和强大，笔者制作的样式文件实现的功能和格式只是biblatex功能的很小一部分，biblatex提供的更多功能其实都没有用到。可以说，biblatex作为参考文献问题的一个完整解决方案是名副其实的。biblatex宏包的一些功能，以及笔者在设计样式文件时应用这些功能的思路和方法介绍如下:
+\printbibliography[heading=bibliography,title=【added option test】]
+\end{refsection}
+
+
+\section{样式文件设计思路与实现}\label{sec:biblatex:mech}
+使用biblatex总的感受，biblatex相当完善和强大，笔者制作的样式文件实现的功能和格式只是biblatex功能的很小一部分，biblatex提供的更多功能其实都没有用到。可以说，biblatex作为参考文献问题的一个完整解决方案是名副其实的。笔者在设计样式文件时应用biblatex宏包功能的思路和实现总结如下:
 
 \begin{enumerate}
   \item 考虑到我国引用参考文献通常是中英文混合的情况，修改过程没有考虑针对中文的本地化处理，而是在英文本地化的基础(英文的本地化字符串设置文档是english.lbx)上添加一些中文要求的本地化字符串来使用。而为了区分使用中英文的字符串，对参考文献各条目内容进行中英文判断，若中文则使用中文字符串，若英文则使用英文字符串。
@@ -1063,9 +1077,10 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
     \item final作用，当不成立map终止。
     \item append的作用，给域添加信息
     \item origfieldvalue来源
-    \item overwite选项有无的作用，无overwite时，只要域原有信息，那么就不在map，有overwite时，则进行重写。\emph{注意:使用append的时候也需要overwite选项}。
+    \item overwite选项有无的作用，无overwite时，只要域原有信息，那么就不在map，有overwite时，则进行重写。\bc{注意:使用append的时候也需要overwite选项}。
     \item 动态数据处理中利用正则表达式可以用来处理特殊字符，处理\%，\#直接在regexp中写字符都没有问题，但是对于\&字符就存在问题，所以对于该字符使用十六进制表示方法\verb|\x26|。
     \item 3.4版的biblatex可以使用foreach选项，而3.0版的biblatex只能一个域一个域的处理，意味着每一个域处理都要写一个map步。
+    \item date域仅作为解析用，不出现在bbl文件中，所以在bbx内部进行日期判断的时候要注意不用date 进行判断而要用其解析处理的year等进行判断，而且当date域的内容不符合解析格式要求时，自动忽略掉，那么信息就丢失了，因此当有不符合解析格式的日期信息时应放到year域中。
   \end{itemize}
 
   \item biblatex数据模型与动态数据处理的关系。biblatex提供了数据模型定义功能，这在真正需要定义一些新的条目类型和域时是用的到的。但实际上，从本样式实践的经验看，为了biblatex的兼容性考虑，没有必要使用数据模型定义功能去费力的定义新的条目类型，而是直接利用动态数据处理来将bib 中的一些类型转换成biblatex支持的类型来的方便，如果一定要区分可以利用一些域的信息进行区分，比如note域等于news或standard。
@@ -1123,9 +1138,47 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 
   \item biblatex的宏包选项增加
   \begin{itemize}
-    \item 需要重点注意的是:宏包选项设置命令DeclareBibliographyOption中，如果设置string选项，并用ifstrequal判断出选项的参数，然后设置toggletrue或false，然后再后面根据toggle的true 或false来展开内容，是不行的。因为后面的toggle判断先于设置toggletrue或false展开。这样，如果在文档正文中看，toggle设置为true没有问题，但就是没有bbx 文件中对应设置为true 的展开。所以不能采用这样的方式。而应该采用直接在选项设置命令展开，不用在多一道toggle 判断了。尝试代码可以见\pageref{up:161207}页中更新说明中的注释代码。
+    \item 在gb7714-2015.bbx文件中有四种判断的方式包括:版本的判断，参考环境选项的判断，出版项处理控制选项的判断，一般的域的是否定义或与字符串比较是否相同的判断。
+        
+        第一种判断，是直接根据已有的信息进行处理，给出toggle:iftexlivesix的设置，然后根据这一信息做任何的定义。
+        
+        第二种判断，是通过宏包选项align给出的，这一选项是string类型。在选项的执行代码中直接给出命令，这种情况下，特别要注意DeclareBibliographyOption选项定义命令中给出的默认值是在加载该选项但不给出值时的默认值，而不是将选项默认设置为该默认值。因此当加载时不给出align选项时，不执行任何的语句，即不执行setalignleft，也不执行setaligngbstyle，也就是参考文献环境命令使用标准样式给出的定义而没有在setalignleft或setaligngbstyle中重定义。
+        如果给出选项align，相当于align=默认值，如果给出选项align=指定值，那么值就是指定值，然后并执行DeclareBibliographyOption的定义代码，根据值进行判断。
+        
+        第三种判断，通过gbpub选项给出，这一选项类似于standard.bbx中定义的url等选项。给出选项定义后:
+        \begin{texlist}
+        \newtoggle{bbx:gbpub}
+        \DeclareBibliographyOption[boolean]{gbpub}[true]{%
+        %\settoggle{bbx:gbpub}{#1} %或采用下面这一句
+          \ifstrequal{#1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
+        \end{texlist}
+        默认可以利用toggle:bbx:gbpub进行任何的定义，但这时默认值是newtoggle命令给出的默认值false。
+        
+        要使用选项给出的默认值，还需要使用命令:
+        \begin{texlist}
+        \ExecuteBibliographyOptions{gbpub}
+        \end{texlist}
+        这时bbx:gbpub的值设置为true。这一命令用来执行选项的，如果不给出这一命令，且宏包加载选择中没有给出选项设置，那么toggle只有新建toggle时的默认定义。如果给出了命令
+        \begin{texlist}
+        \ExecuteBibliographyOptions{gbpub}
+        \ExecuteBibliographyOptions{gbpub=true}
+        \ExecuteBibliographyOptions{gbpub=false}
+        \end{texlist}
+        等价于在宏包加载时给出选项。但是宏包加载选择可以覆盖这个命令的设置。
+                
+        如果在宏包加载时给出选项gbpub=false，那么bbx:gbpub的值设置为false。
+        如果在宏包加载时给出选项gbpub，gbpub=true，那么bbx:gbpub的值设置为true。
+        
+        第四种判断，利用iffieldundef和iffieldequalstr进行判断即可。
+    
+    \item 要注意使用toggle时，如果先根据toggle判断然后定义，这种情况下在bbx加载时就已经根据当前的值展开了，所有DeclareBibliographyOption中的任何toggle设置都是无效的。比如:上述第二种宏包选项设置中，命令DeclareBibliographyOption是设置string选项，如果用ifstrequal 判断出选项的参数，然后设置toggletrue或false，然后再后面根据toggle的true或false来展开内容，是不行的。因为后面的toggle判断后的内容先于设置toggletrue或false展开了。
+    
+        如果在文档正文中看，toggle设置为true没有问题，但就是没有bbx 文件中对应设置为true 的展开。需要根据选项宏包设置而进行不同的展开那么就不能采用这样的方式，而应该采用直接在选项设置命令展开，不能用toggle判断然后展开。尝试代码可以见\pageref{up:161207}页中更新说明中的注释代码。
+        
+        但是在宏的定义中使用toggle就没有问题，因为只是使用toggle来定义，在使用展开前，只要toggle变化，都可以影响最终的展开。
+        
     \item 注意:ExecuteBibliographyOptions命令是用来执行选项的，如果不给出设置选项的值，那么使用默认的参数。比如设置了一个gb7714选项，并用ExecuteBibliographyOptions\{gb7714\}进行设置，那么相当于设置为gb7714=true
-    \item 摒弃了上述说明的方式后，采用在选项执行代码中直接调用命令的方式，详见bbx文件。
+
   \end{itemize}
 
   \item biblatex的宏包参考文献表的打印
@@ -1203,7 +1256,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
   \item 范围解析函数，详见bbx文件内容。
 
   \item 目前符合GB/T7714-2005或GB/T7714-2015参考文献著录规则的biblatex样式有好几个实现，除了这里作者提供的之外，还有李志奇(icetea)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}} 和沈周(szsdk)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152561&extra=page\%3D1}} 分别提供的样式文件，效果是类似的，也感谢两位作者的分享!
-      
+
   \item 本文档根据GB/T 7714-2015提供的参考文献表著录格式示例做了测试和验证，详见第\ref{sec:eg:gb77142015}节。测试系统环境为:
     \begin{enumerate}
     \item windows7x86+texlive 2014，采用xelatex编译;
@@ -1260,7 +1313,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 
 \begin{enumerate}
   \item 到1.0h版为止，进一步完善了样式宏包，该版本将是最后支持texlive2015的版本，以后版本的功能实现将基于最新texlive中biblatex版本，而不再考虑texlive2015中3.0版的biblatex。1.0f版完善了align 选项(用于实现GB7714 风格的著录文献表标签，texlive2016 有效)，带花括号的责任者的中英文判断等功能对texlive2015 的兼容性。1.0g版增加对mastersthesis，phdthesis，www，electronic，standard，techreport，conference，newspaper等条目类型的兼容，增加了对标准样式standard.bbx中url包选项的兼容性，增加了析出文献标识符//后面的短空格以支持著录表的断行机制，增加了特殊字符处理功能并实现对texlive2015 的兼容，给出了gb7714风格参考文献著录表文本转换为bib文件的perl脚本，与gb7714-2015 样式形成闭环。
-      
+
   \item 到1.0e版为止，功能需求已经完全实现，剩下的问题可能是一些文献具有特殊信息或者特殊情况时带来的适应性问题，这需要经过大量的测试来发现问题。各位朋友如果发现什么问题，请邮件联系，作者会非常感谢!
 
   \item 打算翻译biblatex宏包的说明文档和biber的说明文档，这个已经在进行中，完成了一部分，但因为只是业余时间做，可能最终完成的时间会比较长。如果有朋友觉得这个事情有意义，愿意一起来完成这个事情，非常欢迎，请email联系。
@@ -1335,8 +1388,85 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
       \setunit{\addcomma\space}%
       \printfield{eid}}}
     \end{texlist}
-    
+
 \item wayne508同学提出了一个需求，就是不希望使用出版项缺省时的默认处理，即不使用[出版地不详]，[出版者不详]，[S.l.]，[s.n.]等填充，因此增加了一个宏包选项gbpub，当等于false时，去掉自动处理，使用biblatex的标准处理方式。
+    
+    \begin{texlist}
+    \newtoggle{bbx:gbpub}
+    \DeclareBibliographyOption[boolean]{gbpub}[true]{%
+    %\settoggle{bbx:gbpub}{#1} %或采用下面这一句
+      \ifstrequal{#1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
+    \ExecuteBibliographyOptions{gbpub}
+    
+    %出版社和地址的处理
+    \newbibmacro*{location+institution+date}{%
+    \iftoggle{bbx:gbpub}%
+    {\testCJKfirst{\thefield{title}}
+    \iflistundef{location}{\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}}{\printtext{[S.l.\adddot]}}}%
+      {\printlist{location}}%
+    %  \iflistundef{institution}
+    %    {\setunit*{\addcomma\space}}
+    %    {\setunit*{\addcolon\space}}%
+    %  \printlist{institution}%
+    %  \setunit*{\addcomma\space}%
+    \addcolon\addspace%
+    \iflistundef{institution}{%
+    \iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}}{\printtext{\mkbibbrackets{s.n.}}}}% \bibstring{nopublisher}%[s.n.\adddot]
+    {\printlist{institution}}%
+    \setunit{\addcomma\addspace}%
+      %\usebibmacro{date}%
+      \printfield{year}%
+      \bibrangedash%
+      \iffieldundef{endyear}{}{\printfield{endyear}}%
+      \newunit}%
+    {  \printlist{location}%
+      \iflistundef{institution}%
+        {\setunit*{\addcomma\space}}
+        {\setunit*{\addcolon\space}}%
+      \printlist{institution}%
+      \setunit*{\addcomma\space}%
+      \usebibmacro{date}%
+      \newunit}%
+    }
+
+    \renewbibmacro*{publisher+location+date}{%
+    \iftoggle{bbx:gbpub}%
+    {\testCJKfirst{\thefield{title}}%
+    %\testifnoteeqstd%
+    \iflistundef{location}{%\adddot
+    \iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准低19页看到，标准存在出版项时输出，没有时完全省略。
+    %\iftoggle{ifnoteeqstandard}{}{%}替换为上一句，尽可能用biblatex提供的函数
+    \iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}\addcolon\addspace}{\printtext{[S.l.\adddot]}\addcolon\addspace}%
+    }}%  \bibstring{noaddress}
+    {\printlist{location}\addcolon\addspace}%
+    %\addcolon\addspace%
+    \iflistundef{publisher}{%
+    \iffieldequalstr{note}{standard}{}{%
+    %\iftoggle{ifnoteeqstandard}{}{%}替换为上一句，尽可能用biblatex提供的函数
+    \iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
+    {\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
+    }}%
+    {\printlist{publisher}\setunit*{\addcomma\addspace}}%
+    %\addcomma\addspace%
+    \usebibmacro{date}%
+    %\newunit %去掉这个标点
+    }%
+    {\printlist{location}%
+      \iflistundef{publisher}
+        {\setunit*{\addcomma\space}}
+        {\setunit*{\addcolon\space}}%
+      \printlist{publisher}%
+      \setunit*{\addcomma\space}%
+      \usebibmacro{date}%
+      %\newunit
+      }%
+    }
+    
+    \end{texlist}
+    
+    
+    
+    下面这种处理方式是有问题的，即默认处理情况不是希望的true的情况，但如果给出宏包加载选项时没有问题的。因此采用上一种方式。
     \begin{texlist}
     %\newtoggle{bbx:gbpub}
     %\DeclareBibliographyOption[boolean]{gbpub}[true]{%
@@ -1347,7 +1477,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
     %但是使用这句默认设置可以用来定义macro
     \DeclareBibliographyOption[bool]{gbpub}[true]{%应使用这种直接的机制
     \ifstrequal{#1}{true}{\pubaddmacroredefine}{}}
-        
+
     %出版社和地址的处理
     %新增一个样式用于输出连续出版物的地址，单位，时间
     %类似\newbibmacro*{publisher+location+date}
@@ -1407,7 +1537,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
       \newunit}
     }
 
-    
+
     \end{texlist}
 
 \end{enumerate}
