@@ -115,29 +115,6 @@
 %=====================================================================
 %设置宏包选项
 %=====================================================================
-%\newtoggle{bbx:gbpub}
-%\DeclareBibliographyOption[boolean]{gbpub}[true]{%
-%  \settoggle{bbx:gbpub}{#1}}
-%这种机制的标识判断，能用于usemacro使用，域格式定义中，但无法用来判断后定义macro
-%定义宏和使用宏是两个不同的展开层级，而可以在定义macro中进行判断
-%\ExecuteBibliographyOptions{gbpub}
-
-%但是使用这句默认设置可以用来定义macro
-%\DeclareBibliographyOption{gbpub}[true]{%应使用这种直接的机制
-%\ifstrequal{#1}{false}{\pubaddmacronewdefine}{\pubaddmacroredefine}}
-%特别注意DeclareBibliographyOption，而给出的默认值是在加载时没有选项没有给出值时的默认值。
-%当加载时不给出gbpub选项时，不执行ifstrequal判断语句，无任何加载。
-%如果给出选项gb，或者gb=true，那么ifstrequal判断仍然是假，执行的默认的加载\pubaddmacroredefine
-%如果给出选项false，那么ifstrequal判断是真，执行的就是非默认的加载\pubaddmacronewdefine
-%\ExecuteBibliographyOptions{gbpub}%这句报错是因为\pubaddmacroredefine没有定义，如果把定义放到前面那么应该是可以的。
-%还是采用另一种方式可以较好的进行默认选项的处理
-
-\newtoggle{bbx:gbpub}
-\DeclareBibliographyOption{gbpub}[true]{%
-%\settoggle{bbx:gbpub}{#1} %或采用下面这一句
-  \ifstrequal{#1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
-\ExecuteBibliographyOptions{gbpub}
-
 % Alter settings that carry through from biblatex
 \iftoggle{iftexlivesix}
 {%biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
@@ -146,6 +123,17 @@
 \ifstrequal{#1}{left}{\setalignleft}{}
 \ifstrequal{#1}{gb7714-2015}{\setaligngbstyle}{}
 }
+
+%增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
+\newtoggle{bbx:gbpub}
+\DeclareBibliographyOption[boolean]{gbpub}[true]{%
+%\settoggle{bbx:gbpub}{#1} %或采用下面这一句
+  \ifstrequal{#1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
+\ExecuteBibliographyOptions{gbpub}
+
+%增加一个处理佚名或noauthor的控制选项
+%因为在顺序编码制中，不需要使用，这里也增加，为了与作者年制的兼容性考虑。
+\DeclareBibliographyOption[boolean]{gbnoauthor}[true]{}%
 
 \ExecuteBibliographyOptions{
   sorting=none,
@@ -165,6 +153,17 @@
 \ifstrequal{#1}{left}{\setalignleft}{}
 \ifstrequal{#1}{gb7714-2015}{}{}
 }
+
+%增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
+\newtoggle{bbx:gbpub}
+\DeclareBibliographyOption{gbpub}[true]{%
+%\settoggle{bbx:gbpub}{#1} %或采用下面这一句
+  \ifstrequal{#1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
+\ExecuteBibliographyOptions{gbpub}
+
+%增加一个处理佚名或noauthor的控制选项
+%因为在顺序编码制中，不需要使用，这里也增加，为了与作者年制的兼容性考虑。
+\DeclareBibliographyOption{gbnoauthor}[true]{}%
 
 \ExecuteBibliographyOptions{
   sorting=none,
@@ -763,23 +762,20 @@ backrefpages     = {引用页:},
 \iffieldundef{day}{}{\bibrangedash\printfield{day}}}}%
 }
 
-\newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示表示电子资源的更新和修改日期，而公告日期安按日期格式
+\newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示电子资源的更新和修改日期，而公告日期则按日期格式
 \iffieldundef{year}{%
 \iffieldundef{endyear}{%
-\printtext{%
-\iffieldundef{eventyear}{}{\mkbibparens{\printtext{\printfield{eventyear}}%
+\iffieldundef{eventyear}{}{\printtext{\mkbibparens{\printtext{\printfield{eventyear}}%
 \iffieldundef{eventmonth}{}{\bibrangedash\thefield{eventmonth}}%
 \iffieldundef{eventday}{}{\bibrangedash\printfield{eventday}}}}%
 }%
 }{%
-\printtext{%
-\iffieldundef{endyear}{}{\mkbibparens{\printtext{\printfield{endyear}}%
+\iffieldundef{endyear}{}{\printtext{\mkbibparens{\printtext{\printfield{endyear}}%
 \iffieldundef{endmonth}{}{\bibrangedash\thefield{endmonth}}%
 \iffieldundef{endday}{}{\bibrangedash\printfield{endday}}}}%
 }%
 }}{%
-\printtext{%
-\iffieldundef{year}{}{\mkbibparens{\printtext{\printfield{year}}%
+\iffieldundef{year}{}{\printtext{\mkbibparens{\printtext{\printfield{year}}%
 \iffieldundef{month}{}{\bibrangedash\thefield{month}}%
 \iffieldundef{day}{}{\bibrangedash\printfield{day}}}}%
 }}%
