@@ -9,7 +9,7 @@
 \dateformanual{2016-07-01}
 \titleandauthor
 \phantomsection
-\addcontentsline{toc}{section}{目录}
+%\addcontentsline{toc}{section}{目录}
 \tableofcontents
 %\renewcommand{\numberline}[1]{#1~}
 \phantomsection
@@ -104,7 +104,6 @@ citestyle=gb7714-2015%,backref=true%
 \subsubsection{样式加载方式}
 最小示例(\ref{code:doc:structrue})中给出了宏包和样式的基本加载方式，对于gb7714-2015样式也是类似的，当然著录样式bibstyle和标注样式citestyle相同的话可以合并为一个选项style。比如:
 
-
 \begin{codetex}{gb7714-2015顺序编码制加载方式}{eg:gb7714numeric}
 \usepackage[backend=biber,style=gb7714-2015]{biblatex}
 %如果要设置参考文献表序号标签对齐方式的话请设置align选项，如果要取消缺省出版项自动填补的话设置gbpub=false，比如:
@@ -112,7 +111,9 @@ citestyle=gb7714-2015%,backref=true%
 \end{codetex}
 
 \begin{codetex}{gb7714-2015作者年制加载方式}{eg:gb7714authoryear}
-\usepackage[backend=biber,style=gb7714-2015ay,gbpub=true]{biblatex}
+\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}
+%如果要取消缺省出版项自动填补的话设置gbpub=false，如果要使用佚名或NOAUTHOR代替补充缺失的author信息可以设置gbnoauthor=true，比如:
+\usepackage[backend=biber,style=gb7714-2015ay,gbpub=true,gbnoauthor=true]{biblatex}
 \end{codetex}
 
 \begin{codetex}{参考文献文本转换为bib文件perl脚本使用方式}{eg:transtobib}
@@ -129,6 +130,10 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   \item[gbpub]=true，false. \hfill default is true
 
   为出版信息存在缺失时自动处理增加的控制选项，默认选择gbpub=true，自动利用:[出版地不详]，[出版者不详]，[S.l.]，[s.n.]等填补缺省信息，设置gbpub=false时，则取消自动处理，使用标准样式的方式取消相应项的输出。
+
+  \item[gbnoauthor]=true，false. \hfill default is false
+
+  为作者信息存在缺失时自动处理增加的控制选项，默认选择gbnoauthor=false，当作者信息缺失时不做处理，使用标准样式的处理方式，设置gbnoauthor=true 时，则根据gb7714-2015的要求进行处理，中文文献使用佚名来代替author，英文文献用NOAUTHOR来代替author。
 \end{description}
 
 
@@ -369,12 +374,12 @@ author.title[usera](//bookauthor.booktitle:booktitleaddon).edition.address 或lo
       比如:2001-05-06/2001-08-01
 
       其中第一个年-月-日会解析并存储到year，month，day域中，第二个会解析并存储到endyear，endmonth，endday域中。更多细节参考biblatex手册的Table 8: Date Interface。
-  
+
   \item[year] year域的输入与date域类似，为了兼容一些老的bib文件，把year直接用map转换成date，所以在本样式的使用中输入year域与date域相同。
-      
+
       但year与date存在一定的差异，即year可以处理仅有年的信息或者需要原样打印的内容。比如:
       1881(清光绪七年)。
-      
+
       这一信息如果放在date中会被自动忽略，但放到year域中，本样式会先将其拷贝到date中进行解析，无法解析的话，date域忽略，但year信息仍然存在，并原样打印。
 
   \item[pages] 可以格式化输入或输入需要打印的内容。格式化输入时，页码用整数，当有范围时，用短横线隔开。比如:59-60。 当无法解析时，输入内容被认为是需要完整打印的内容。
@@ -757,26 +762,26 @@ entryset = {易仕和2013--,Yi2013--},
 \cite{Dublin2012-06-14--}
 
 
-\printbibliography[heading=subbibintoc,type=book,notkeyword=standard,title=【普通图书-著录格式示例】]
+\printbibliography[heading=subbibliography,type=book,notkeyword=standard,title=【普通图书-著录格式示例】]%subbibintoc
 \defbibfilter{collections}{%
 type=collection
 or type=proceedings
 or type=incollection
 or type=inproceedings
 }
-\printbibliography[heading=subbibintoc,filter=collections,title=【论文集、会议录-著录格式示例】]
-\printbibliography[heading=subbibintoc,type=report,title=【报告-著录格式示例】]
-\printbibliography[heading=subbibintoc,type=thesis,title=【学位论文-著录格式示例】]
-\printbibliography[heading=subbibintoc,type=patent,title=【专利-著录格式示例】]
+\printbibliography[heading=subbibliography,filter=collections,title=【论文集、会议录-著录格式示例】]
+\printbibliography[heading=subbibliography,type=report,title=【报告-著录格式示例】]
+\printbibliography[heading=subbibliography,type=thesis,title=【学位论文-著录格式示例】]
+\printbibliography[heading=subbibliography,type=patent,title=【专利-著录格式示例】]
 \defbibfilter{standard}{%
 ( type=book or type=inbook )
 and keyword=standard
 }
-\printbibliography[heading=subbibintoc,filter=standard,title=【标准文献-著录格式示例】]
-\printbibliography[heading=subbibintoc,type=inbook,notkeyword=standard,title=【专著中析出的文献-著录格式示例】]
-\printbibliography[heading=subbibintoc,type=article,notkeyword=news,title=【期刊中析出的文献-著录格式示例】]
-\printbibliography[heading=subbibintoc,type=article,keyword=news,title=【报纸析出的文献-著录格式示例】]
-\printbibliography[heading=subbibintoc,type=online,title=【电子资源-著录格式示例】]
+\printbibliography[heading=subbibliography,filter=standard,title=【标准文献-著录格式示例】]
+\printbibliography[heading=subbibliography,type=inbook,notkeyword=standard,title=【专著中析出的文献-著录格式示例】]
+\printbibliography[heading=subbibliography,type=article,notkeyword=news,title=【期刊中析出的文献-著录格式示例】]
+\printbibliography[heading=subbibliography,type=article,keyword=news,title=【报纸析出的文献-著录格式示例】]
+\printbibliography[heading=subbibliography,type=online,title=【电子资源-著录格式示例】]
 \end{refsection}
 
 \subsection{测试:专著book和专著中的析出文献inbook}\label{sec:test:book}
@@ -1022,7 +1027,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 \printbibliography[heading=bibliography,title=【author-year style:article without volume】]
 \end{refsection}
 
-\subsection{测试:增加的选项导致的问题}\label{sec:option:deal}
+\subsection{测试: gbpub选项导致的问题}\label{sec:option:deal}
 \begin{refsection}
 文献\cite{AAAS1883--}
 \cite{陈志勇2011--}
@@ -1033,29 +1038,47 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 \printbibliography[heading=bibliography,title=【added option test】]
 \end{refsection}
 
+\subsection{测试: online条目信息严重缺失和gbnoauthor选项导致的问题}\label{sec:opt:noauthor}
+\begin{refsection}
+文献\cite{olnoauthorcn}
+\cite{olnoauthoren}
+\cite{Allianceurlonly}
 
-\section{样式文件设计思路与实现}\label{sec:biblatex:mech}
+\printbibliography[heading=bibliography,title=【online entry with url info only】]
+\end{refsection}
+
+
+\section{样式文件设计、实现、应用}\label{sec:biblatex:mech}
 使用biblatex总的感受，biblatex相当完善和强大，笔者制作的样式文件实现的功能和格式只是biblatex功能的很小一部分，biblatex提供的更多功能其实都没有用到。可以说，biblatex作为参考文献问题的一个完整解决方案是名副其实的。笔者在设计样式文件时应用biblatex宏包功能的思路和实现总结如下:
 
-\begin{enumerate}
-  \item 考虑到我国引用参考文献通常是中英文混合的情况，修改过程没有考虑针对中文的本地化处理，而是在英文本地化的基础(英文的本地化字符串设置文档是english.lbx)上添加一些中文要求的本地化字符串来使用。而为了区分使用中英文的字符串，对参考文献各条目内容进行中英文判断，若中文则使用中文字符串，若英文则使用英文字符串。
+\subsection{基本思路}
 
-  \item 标注命令自定义，在脚注中引用文献，或者把引文放在脚注中或者旁注中
-  \begin{itemize}
+考虑到我国引用参考文献通常是中英文混合的情况，修改过程没有考虑针对中文的本地化处理，而是在英文本地化的基础(英文的本地化字符串设置文档是english.lbx)上添加一些中文要求的本地化字符串来使用。而为了区分使用中英文的字符串，对参考文献各条目内容进行中英文判断，若中文则使用中文字符串，若英文则使用英文字符串。
+
+这里的中英文判断主要是在tex中的判断，利用对域中的信息进行检测，当信息的第一个字符是CJK字符时，判断该域的信息是中文的，否则是英文的。
+
+在作者年制中不同语种文献分集时也有一个中英文判断，主要是利用动态数据修改的方法。利用perl正则表达式判断作者和标题域中是否有中文信息(可以用排除法即匹配不是英文数字标点的字符通常是中文字符，当然最直接的是用unicode的中文字符范围匹配)，有的话设置cn，否则为en。事实上这种判断可以进一步扩展，利用强大的perl正则表达式，对所有的关键域进行判断，并在一些域中设置标识，用于tex输出时进行判断，而避免直接使用上述CJK字符判断函数。当然目前还是采用判断CJK字符的方法。
+
+
+\subsection{脚注或旁注文献}
+  标注命令自定义，在脚注中引用文献，或者把引文放在脚注中或者旁注中
+  \begin{enumerate}
     \item 标注命令定义可以使用DeclareCiteCommand命令，设置上标，包围符号，标注前后内容等。针对GB/T7714-2015中关于引用标注的特殊要求，增加了一些方便实现要求的命令比如pagescite、yearpagescite等。
     \item 在footnote的脚注文本中使用footcite命令
     \item 在正文中使用footfullcite命令，见4.11.6 Mixing Programming Interfaces
-  \end{itemize}
+  \end{enumerate}
 
-  \item 参考文献标题修改并将标题加入目录中
-  \begin{itemize}
+\subsection{参考文献标题}
+  参考文献标题修改并将标题加入目录中
+  \begin{enumerate}
     \item 利用defbibheading\{bibliography\}[\textbackslash bibname]\{\}重定义标题
     \item 使用bibliography外的其它标题样式比如bibintoc等
     \item 利用titlesec等宏包进行修改标题样式，利用其局部性可以调整生成多种样式。注意: 利用titlesec后，直接在defbibheading\{bibliography\}[\textbackslash bibname]\{\} 中放置居中命令centering无效。
-  \end{itemize}
+  \end{enumerate}
 
-  \item 标点和空格的特点和机制
-  \begin{itemize}
+
+\subsection{标点和空格的特点和机制}
+  \begin{enumerate}
     \item 标点符号设置比如:renewrobustcmd*\{\textbackslash bibinitperiod\}\{\}和renewcommand*\{\textbackslash revsdnamepunct\}\{\}等用于全局修改标点。
     \item 如isdot/adddot，adddot将原样(逐字，如实)句点转换为缩写点在有利用printtext输入原样字符的时候很重要比如[s.n.] 中，比如title末尾。
     \item 利用newunit输出的标点，需要后面遇到printfield等命令有内容才输出标点，这是标点的异步处理机制。
@@ -1067,25 +1090,25 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
     \item mkbibparens等命令引入，解决方法:利用printtext\{(\}，printtext\{)\}来代替
     \item nopunct等命令引入，这种引入的空格使用unspace命令还消除不了，解决方法:避免使用nopunct命令，而在标点设置时多做判断，只有有内容时才设置标点，而不是过分依赖biblatex提供的标点异步处理机制。
     \end{itemize}
+  \end{enumerate}
 
 
-  \end{itemize}
-
-  \item biber动态数据处理，详见4.5.3 Dynamic Modification of Data和bbx文件中DeclareSourcemap的内容。利用biber在处理数据源时，动态的处理一些数据，比如设置一些域的值，可以用于进一步的判断和使用。
-  \begin{itemize}
+\subsection{动态数据修改}
+biber动态数据处理，详见4.5.3 Dynamic Modification of Data和bbx文件中DeclareSourcemap的内容。利用biber在处理数据源时，动态的处理一些数据，比如设置一些域的值，可以用于进一步的判断和使用。
+  \begin{enumerate}
     \item map的作用，对条目逐条进行处理
     \item final作用，当不成立map终止。
     \item append的作用，给域添加信息
     \item origfieldvalue来源
-    \item overwite选项有无的作用，无overwite时，只要域原有信息，那么就不在map，有overwite时，则进行重写。\bc{注意:使用append的时候也需要overwite选项}。
+    \item overwite选项有无的作用，无overwite时，只要域原有信息，那么就不再map，有overwite时，则进行覆盖。\bc{注意:使用append的时候也需要overwite选项}。
     \item 动态数据处理中利用正则表达式可以用来处理特殊字符，处理\%，\#直接在regexp中写字符都没有问题，但是对于\&字符就存在问题，所以对于该字符使用十六进制表示方法\verb|\x26|。
     \item 3.4版的biblatex可以使用foreach选项，而3.0版的biblatex只能一个域一个域的处理，意味着每一个域处理都要写一个map步。
     \item date域仅作为解析用，不出现在bbl文件中，所以在bbx内部进行日期判断的时候要注意不用date 进行判断而要用其解析处理的year等进行判断，而且当date域的内容不符合解析格式要求时，自动忽略掉，那么信息就丢失了，因此当有不符合解析格式的日期信息时应放到year域中。
-  \end{itemize}
+  \end{enumerate}
 
-  \item biblatex数据模型与动态数据处理的关系。biblatex提供了数据模型定义功能，这在真正需要定义一些新的条目类型和域时是用的到的。但实际上，从本样式实践的经验看，为了biblatex的兼容性考虑，没有必要使用数据模型定义功能去费力的定义新的条目类型，而是直接利用动态数据处理来将bib 中的一些类型转换成biblatex支持的类型来的方便，如果一定要区分可以利用一些域的信息进行区分，比如note域等于news或standard。
-      \begin{itemize}
-      \item biblatex做的别名处理是用DeclareDriverSourcemap做的，这是驱动层的映射。在本样式中，因为usera域是在用户层的映射中做的，所以biblatex做的默认别名处理还不够，还需要在用户层首先处理usera域。而因为DeclareDriverSourcemap 中会增加一些不需要的信息，这可以利用DeclareSourcemap，DeclarestyleSourcemap先进行映射，这样就避开了DeclareDriverSourcemap。或者在增加DeclareDriverSourcemap，将标准样式中的默认DeclareDriverSourcemap增加的信息去掉。
+  biblatex数据模型与动态数据处理的关系。biblatex提供了数据模型定义功能，这在真正需要定义一些新的条目类型和域时是用的到的。但实际上，从本样式实践的经验看，为了biblatex的兼容性考虑，没有必要使用数据模型定义功能去费力的定义新的条目类型，而是直接利用动态数据处理来将bib 中的一些类型转换成biblatex支持的类型来的方便，如果一定要区分可以利用一些域的信息进行区分，比如note域等于news或standard。
+  \begin{enumerate}
+      \item biblatex做的别名处理是用DeclareDriverSourcemap做的，这是驱动层的映射。在本样式中，因为usera域是在用户层的映射中做的，所以biblatex做的默认别名处理还不够，还需要在用户层首先处理usera域。而因为DeclareDriverSourcemap 中会增加一些不需要的信息，这可以利用DeclareSourcemap，DeclarestyleSourcemap(\bc{注意texlive2016的biblatex3.4仅支持1个styleSourcemap，而biblatex3.7则已经支持多个styleSourcemap})先进行映射，这样就避开了DeclareDriverSourcemap。 或者在增加DeclareDriverSourcemap，将标准样式中的默认DeclareDriverSourcemap增加的信息去掉。
       \item 数据模型在blx-dm.DEF中，可以看到standard有条目类型定义，但域和约束没有定义，而biblatex标准样式默认做的别名处理中的其它一些条目比如electronic等时有域和约束定义的。
       \item 标准样式standard.BBX中的DeclareBibliographyAlias\{*\}\{misc\}将一些数据模型中没有定义的条目直接用misc条目的驱动处理，这不是驱动层的数据源映射，只是利用其驱动进行输出。由一个问题是DeclareBibliographyAlias\{newspaper\}\{article\}是否可以实现？还是要定义数据模型？从实践结果看是不需要定义数据模型的，而且驱动的别名处理可以实现类似驱动层映射的效果。比如:
           做了用户层映射后:
@@ -1119,32 +1142,36 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
             \end{texlist}
 
       \item 从实践看，数据模型中完全没有定义的条目类型newspaper也可以进行数据源映射。
-      \end{itemize}
+  \end{enumerate}
 
-  \item 引用标签的生成机制，即责任者截短时的歧义消除问题，见4.11.4 Name Disambiguation 节。
-  \begin{itemize}
+\subsection{标注(引用)标签}
+引用标签的生成机制，即责任者截短时的歧义消除问题，见4.11.4 Name Disambiguation 节。
+  \begin{enumerate}
     \item uniquename的作用
     \item uniquelist的作用
-  \end{itemize}
+  \end{enumerate}
 
-  \item biblatex的核心-参考文献样式文件的设计
-  \begin{itemize}
+\subsection{样式文件简单设计方法}
+  biblatex的核心-参考文献样式文件的设计
+  \begin{enumerate}
     \item driver的作用:条目驱动，修改一些顺序，略去一些输出和标点
     \item format的作用:域打印格式，修改一些斜体，强调样式等。
     \item micro的作用:输出宏，修改需要的输出内容
     \item command的作用:一些设置和命令
     \item sty中的代码
-  \end{itemize}
+  \end{enumerate}
 
-  \item biblatex的宏包选项增加
-  \begin{itemize}
+\subsection{宏包选项增加}
+
+biblatex的宏包选项增加
+  \begin{enumerate}
     \item 在gb7714-2015.bbx文件中有四种判断的方式包括:版本的判断，参考环境选项的判断，出版项处理控制选项的判断，一般的域的是否定义或与字符串比较是否相同的判断。
-        
+
         第一种判断，是直接根据已有的信息进行处理，给出toggle:iftexlivesix的设置，然后根据这一信息做任何的定义。
-        
+
         第二种判断，是通过宏包选项align给出的，这一选项是string类型。在选项的执行代码中直接给出命令，这种情况下，特别要注意DeclareBibliographyOption选项定义命令中给出的默认值是在加载该选项但不给出值时的默认值，而不是将选项默认设置为该默认值。因此当加载时不给出align选项时，不执行任何的语句，即不执行setalignleft，也不执行setaligngbstyle，也就是参考文献环境命令使用标准样式给出的定义而没有在setalignleft或setaligngbstyle中重定义。
         如果给出选项align，相当于align=默认值，如果给出选项align=指定值，那么值就是指定值，然后并执行DeclareBibliographyOption的定义代码，根据值进行判断。
-        
+
         第三种判断，通过gbpub选项给出，这一选项类似于standard.bbx中定义的url等选项。给出选项定义后:
         \begin{texlist}
         \newtoggle{bbx:gbpub}
@@ -1153,7 +1180,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
           \ifstrequal{#1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
         \end{texlist}
         默认可以利用toggle:bbx:gbpub进行任何的定义，但这时默认值是newtoggle命令给出的默认值false。
-        
+
         要使用选项给出的默认值，还需要使用命令:
         \begin{texlist}
         \ExecuteBibliographyOptions{gbpub}
@@ -1165,32 +1192,60 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
         \ExecuteBibliographyOptions{gbpub=false}
         \end{texlist}
         等价于在宏包加载时给出选项。但是宏包加载选择可以覆盖这个命令的设置。
-                
+
         如果在宏包加载时给出选项gbpub=false，那么bbx:gbpub的值设置为false。
         如果在宏包加载时给出选项gbpub，gbpub=true，那么bbx:gbpub的值设置为true。
-        
+
         第四种判断，利用iffieldundef和iffieldequalstr进行判断即可。
-    
+
     \item 要注意使用toggle时，如果先根据toggle判断然后定义，这种情况下在bbx加载时就已经根据当前的值展开了，所有DeclareBibliographyOption中的任何toggle设置都是无效的。比如:上述第二种宏包选项设置中，命令DeclareBibliographyOption是设置string选项，如果用ifstrequal 判断出选项的参数，然后设置toggletrue或false，然后再后面根据toggle的true或false来展开内容，是不行的。因为后面的toggle判断后的内容先于设置toggletrue或false展开了。
-    
+
         如果在文档正文中看，toggle设置为true没有问题，但就是没有bbx 文件中对应设置为true 的展开。需要根据选项宏包设置而进行不同的展开那么就不能采用这样的方式，而应该采用直接在选项设置命令展开，不能用toggle判断然后展开。尝试代码可以见\pageref{up:161207}页中更新说明中的注释代码。
-        
+
         但是在宏的定义中使用toggle就没有问题，因为只是使用toggle来定义，在使用展开前，只要toggle变化，都可以影响最终的展开。
-        
+
+        \begin{texlist}
+    %\newtoggle{bbx:gbpub}
+    %\DeclareBibliographyOption[boolean]{gbpub}[true]{%
+    %  \settoggle{bbx:gbpub}{#1}}
+    %这种机制的标识判断，能用于usemacro使用，域格式定义中，但无法用来判断后定义macro
+    %定义宏和使用宏是两个不同的展开层级，而可以在定义macro中进行判断
+    %\ExecuteBibliographyOptions{gbpub}
+    %但是使用这句默认设置可以用来定义macro
+
+    %\DeclareBibliographyOption{gbpub}[true]{%应使用这种直接的机制
+    %\ifstrequal{#1}{false}{\pubaddmacronewdefine}{\pubaddmacroredefine}}
+
+    %特别注意DeclareBibliographyOption，而给出的默认值是在加载时没有选项没有给出值时的默认值。
+    %当加载时不给出gbpub选项时，不执行ifstrequal判断语句，无任何加载。
+    %如果给出选项gb，或者gb=true，那么ifstrequal判断仍然是假，执行的默认的加载\pubaddmacroredefine
+    %如果给出选项false，那么ifstrequal判断是真，执行的就是非默认的加载\pubaddmacronewdefine
+    %\ExecuteBibliographyOptions{gbpub}%这句报错是因为\pubaddmacroredefine没有定义，如果把定义放到前面那么应该是可以的。
+
+    %还是采用另一种方式可以较好的进行默认选项的处理
+    \newtoggle{bbx:gbpub}
+    \DeclareBibliographyOption[boolean]{gbpub}[true]{%
+    %\settoggle{bbx:gbpub}{#1} %或采用下面这一句
+      \ifstrequal{#1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
+    \ExecuteBibliographyOptions{gbpub}
+
+        \end{texlist}
+
     \item 注意:ExecuteBibliographyOptions命令是用来执行选项的，如果不给出设置选项的值，那么使用默认的参数。比如设置了一个gb7714选项，并用ExecuteBibliographyOptions\{gb7714\}进行设置，那么相当于设置为gb7714=true
 
-  \end{itemize}
+  \end{enumerate}
 
-  \item biblatex的宏包参考文献表的打印
-  \begin{itemize}
+
+\subsection{文献表环境和打印输出}
+  biblatex的宏包参考文献表的打印
+  \begin{enumerate}
   \item 根据biblatex.sty文件中的\verb|\blx@bibliography|命令可以知道，定义的参考文献表的环境的开始代码在命令中\verb|\blx@bibliography|中，结束代码在\verb|\blx@endbibliography|中，循环项代码在\verb|\blx@bibitem|中的\verb|blx@item@\blx@theenv}|命令中。参考文献循环打印依靠\verb|\blx@listloop|命令实现。
   \item 从\verb|\blx@listloop|可以知道，各条参考文献表的指引信息是混合在一起的并且以|字符为分隔。将混合的参考文献指引信息解析成单独的指引信息，并交给\verb|\blx@bibitem|命令处理。
   \item \verb|\blx@bibitem|首先开始一个编组，然后根据单独一条参考文献的指引信息，获取数据，执行判断，利用参考文献表环境定义的循环项代码对参考文献内容设置段落格式，最后结束编组。在定义align=gb7714-2015样式的段落格式时，采用了parshape或者hangindent命令来实现，所以其中增加了一个par命令以使其生效。
-  \end{itemize}
+  \end{enumerate}
 
-\end{enumerate}
 
-\section{样式文件一些需要说明的问题}
+\subsection{其它需要说明的问题}
 下面的问题想到哪写到哪，没有特别的顺序:
 
 \begin{enumerate}
@@ -1258,7 +1313,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
   \item 目前符合GB/T7714-2005或GB/T7714-2015参考文献著录规则的biblatex样式有好几个实现，除了这里作者提供的之外，还有李志奇(icetea)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}} 和沈周(szsdk)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152561&extra=page\%3D1}} 分别提供的样式文件，效果是类似的，也感谢两位作者的分享!
 
   \item 本文档根据GB/T 7714-2015提供的参考文献表著录格式示例做了测试和验证，详见第\ref{sec:eg:gb77142015}节。测试系统环境为:
-    \begin{enumerate}
+    \begin{itemize}
     \item windows7x86+texlive 2014，采用xelatex编译;
 
     \item windows7x64+texlive 2015，采用xelatex编译;
@@ -1266,18 +1321,18 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
     \item 虚拟机xp+texlive 2016，采用xelatex编译;
 
     \item Deepin linux-x64v15.3+texlive 2016，采用xelatex编译。
-    \end{enumerate}
+    \end{itemize}
 
 \end{enumerate}
 
 
 \section{总结}
 
-样式文件在标准样式基础上修改设计而成，读者若查看样式文件内容可以看到作者对各目标要求所做的修改及其注释，读者也可以根据自己的需要修改需要的样式，作者设计样式文件的思路以及在设计过程中用到的一些biblatex宏包功能说明，详见第\ref{sec:biblatex:mech}节和\footnote{\makebox{LaTeX文档中文参考文献的biblatex解决方案，地址:\url{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}}}的第2.7节。
+样式文件在标准样式基础上修改设计而成，读者若查看样式文件内容可以看到作者对各目标要求所做的修改及其注释，读者也可以根据自己的需求进行修改，作者设计样式文件的思路以及在设计过程中用到的一些biblatex宏包功能说明，详见第\ref{sec:biblatex:mech}节和\footnote{\makebox{LaTeX文档中文参考文献的biblatex解决方案，地址:\url{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}}}的第2.7节。
 
 需要特别说明的是，在作者设计完成这个样式之前，一直都是在使用基于李志奇编写的样式文件修改的参考文献样式
 \footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}}，
-其中关于usera域的使用思路和解析卷期范围的函数对于作者设计gb7714-2015样式很有启发价值，当然还有平时写文档时的大量应用，非常感谢。在完成样式设计过程中，因为希望通过判断条目的内容来判断中英文，特别需要一个好用的判断CJK字符的函数，因此在知乎、CTEX论坛和微博提问，得到了包括秀文工作组、刘海洋、leipility、qingkuan等人的回答，多有受益，特别是刘海洋(LeoLiu)给出的回答非常完美
+其中关于usera域的使用思路和解析卷期范围的函数对于作者设计gb7714-2015样式很有启发，非常感谢。在完成样式设计过程中，因为希望通过判断条目的内容来判断中英文，特别需要一个好用的判断CJK字符的函数，因此在知乎、CTEX论坛和微博提问，得到了包括秀文工作组、刘海洋、leipility、qingkuan等人的回答，多有受益，特别是刘海洋(LeoLiu)给出的回答非常完美
 \footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152663&extra=page\%3D3}}
 ，其中代码直接用于本参考文献样式，深表感谢。当然还有更多这里没有提到姓名的师长和朋友们的热心帮忙，在此一并表示感谢!
 
@@ -1306,7 +1361,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 
   \item 当专著同时存在作者和编者的时候，GB/T 7714-2015没有明确的规定，所以目前样式文件中以biblatex标准样式的方式处理，这种处理因为与本地化相关，直接应用可能不好看的，也许需要修改。
 
-  \item 因为GB/T 7714-2015中给出的了一些著录格式，如果把这些著录格式作为一个严格标准，那么条目中只能出现其中规定的域，而往往在bib文件中可能存在一些另外的信息比如chapter等，而且从标准样式修改的驱动中也仍然带有这些域的处理，如果为了标准化规范化考虑，可以去掉国标中没有提到的域的信息，可能使得内容更为标准，这可以通过修改增加数据模型，数据源动态修改，驱动修改(驱动中目前存在较多的似乎用不到的域，而且意义不是非常明确，这个等到biblatex文档中文版完成后再结合它全面的进行梳理)三条路子做到，需要的话，可以在下一步实现(2017-0226)。
+  \item 因为GB/T 7714-2015中给出的了一些著录格式，如果把这些著录格式作为一个严格标准，那么条目中只能出现其中规定的域，而往往在bib文件中可能存在一些另外的信息比如chapter等，而且从标准样式修改的驱动中也仍然带有这些域的处理，如果为了标准化规范化考虑，可以去掉国标中没有提到的域的信息，可能使得内容更为标准，这可以通过修改增加数据模型，数据源动态修改，驱动修改(驱动中目前存在较多的似乎用不到的域，而且意义不是非常明确，这个等到biblatex说明文档中文版完成后再结合它全面的进行梳理)三条路子做到，需要的话，可以在下一步实现(2017-0226)。
 \end{enumerate}
 
 \subsection{下一步工作}
@@ -1326,6 +1381,89 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 %============================
 \updateinfo[2017-04-11]{update to version 1.0h}\label{up:170411}
 \begin{enumerate}
+\item 根据同学(zjsdut@163.com)发现的问题，修改一个bug，感谢。当online类型仅有url信息时，url前面多了一个点。这是modifydate宏设计中printtext位置导致标点异步处理机制失效所产生现象。因此作出修改如下:
+    \begin{texlist}
+    \newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示表示电子资源的更新和修改日期，而公告日期安按日期格式
+    \iffieldundef{year}{%
+    \iffieldundef{endyear}{%
+    \iffieldundef{eventyear}{}{\printtext{\mkbibparens{\printtext{\printfield{eventyear}}%
+    \iffieldundef{eventmonth}{}{\bibrangedash\thefield{eventmonth}}%
+    \iffieldundef{eventday}{}{\bibrangedash\printfield{eventday}}}}%
+    }%
+    }{%
+    \iffieldundef{endyear}{}{\printtext{\mkbibparens{\printtext{\printfield{endyear}}%
+    \iffieldundef{endmonth}{}{\bibrangedash\thefield{endmonth}}%
+    \iffieldundef{endday}{}{\bibrangedash\printfield{endday}}}}%
+    }%
+    }}{%
+    \iffieldundef{year}{}{\printtext{\mkbibparens{\printtext{\printfield{year}}%
+    \iffieldundef{month}{}{\bibrangedash\thefield{month}}%
+    \iffieldundef{day}{}{\bibrangedash\printfield{day}}}}%
+    }}%
+    }%
+    \end{texlist}
+
+\item 增加一个选项gbnoauthor。当给出选项gbnoauthor=true时，作者年制中当作者缺省时，使用佚名或noauthor代替，即将佚名或noauthor作为作者处理。默认情况下gbnoauthor=true不处理，即当无作者进行处理。同时也修改了中英文排序判断和佚名代替的机制。
+    \begin{texlist}
+    %增加一个处理佚名或noauthor的控制选项
+    \DeclareBibliographyOption[boolean]{gbnoauthor}[true]{%
+      \ifstrequal{#1}{false}{}{\dealnoathor}}
+    %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能用宏包加载时给出的选项。
+    \end{texlist}
+
+    \begin{texlist}
+        \map{%因为无法进行cjk字符判断，所以用反的思路，判断没有英文字符，没有空格，没有逗号等字符情况下
+             %认为是中文的，将文献userb设置成cn，用于排序
+            \step[fieldsource=author,match=\regexp{[^a-zA-Z\s\.\,\'\{\}\-\:0-9]},final]
+            \step[fieldset=userb,fieldvalue={cn}]
+            }
+        \map{%因为无法进行cjk字符判断，所以用反的思路，判断没有英文字符，没有空格，没有逗号等字符情况下
+             %认为是中文的，将文献userb设置成cn，用于排序
+            \step[fieldsource=title,match=\regexp{[^a-zA-Z\s\.\,\'\{\}\-\:0-9]},final]
+            \step[fieldset=userb,fieldvalue={cn}]
+            }%如果没有作者和标题，那么剩下的最可能有意义的只有网址了，而网址通常是英文的，因此不用再进一步对其它域进行判断了。
+        \map{%将没有设置的userb设置成en，即认为不是中文的就是英文的。
+            \step[fieldset=userb,fieldvalue={en}]
+            }
+    \end{texlist}
+
+    \begin{texlist}
+    \def\dealnoathor{
+    \DeclareStyleSourcemap{
+    \maps[datatype=bibtex]{
+            \map{%默认情况下将空缺作者设置为佚名
+                \step[fieldsource=userb,match={cn},final]
+                \step[fieldset=author, fieldvalue={佚名}]
+                }
+            \map{%默认情况下将空缺作者设置为佚名
+                \step[fieldsource=userb,match={en},final]
+                \step[fieldset=author, fieldvalue={NOAUTHOR}]
+                }
+        }
+    }}
+    \end{texlist}
+
+    下面是已经取消的以前的处理方式:
+    \begin{texlist}
+        \map{%默认情况下将空缺作者设置为佚名
+            \step[fieldset=author, fieldvalue={佚名}]
+            }
+        \map[overwrite]{%当标题带有英文字符，且作者为佚名的情况，设置作者为noauthor，
+        %也有一些特殊情况可能处理不到，比如标题中英混合，作者又却是
+            \step[fieldsource=title,match=\regexp{[a-zA-Z]},final]
+            \step[fieldsource=author,match=\regexp{佚名}, replace={NOAUTHOR}]
+            }
+        \map{%因为无法进行cjk字符判断，所以用反的思路，判断没有英文字符，没有空格，没有逗号等字符情况下
+             %认为是中文的，将文献userb设置成cn，用于排序
+            \step[fieldsource=author,match=\regexp{[^a-zA-Z\s\.\,\'\{\}\-]},final]
+            \step[fieldset=userb,fieldvalue={cn}]
+            }
+        \map{%将没有设置的userb设置成en，即认为不是中文的就是英文的。
+            \step[fieldset=userb,fieldvalue={en}]
+            }
+    \end{texlist}
+
+
 \item 修改多语言参考文献间的分割符号，即将par改为newline，避免采用gb7714-2015的项对齐方式时，不同语言的参考文献间的分段导致没有缩进。(测试结果见:\ref{sec:align:test}节的项对齐方式，如图\ref{bib:env:gb}所示)
 
     \begin{texlist}
@@ -1390,14 +1528,14 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
     \end{texlist}
 
 \item wayne508同学提出了一个需求，就是不希望使用出版项缺省时的默认处理，即不使用[出版地不详]，[出版者不详]，[S.l.]，[s.n.]等填充，因此增加了一个宏包选项gbpub，当等于false时，去掉自动处理，使用biblatex的标准处理方式。
-    
+
     \begin{texlist}
     \newtoggle{bbx:gbpub}
     \DeclareBibliographyOption[boolean]{gbpub}[true]{%
     %\settoggle{bbx:gbpub}{#1} %或采用下面这一句
       \ifstrequal{#1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
     \ExecuteBibliographyOptions{gbpub}
-    
+
     %出版社和地址的处理
     \newbibmacro*{location+institution+date}{%
     \iftoggle{bbx:gbpub}%
@@ -1461,11 +1599,11 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
       %\newunit
       }%
     }
-    
+
     \end{texlist}
-    
-    
-    
+
+
+
     下面这种处理方式是有问题的，即默认处理情况不是希望的true的情况，但如果给出宏包加载选项时没有问题的。因此采用上一种方式。
     \begin{texlist}
     %\newtoggle{bbx:gbpub}

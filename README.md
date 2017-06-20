@@ -33,6 +33,10 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 %for author year style
 
 	`\usepackage[backend=biber,style=gb7714-2015ay,gbpub=true]{biblatex}`
+
+    %add an option "gbnoauthor" for dealing undefined author, option value = "true" for gb7714 style or "false" for standard style. 
+
+	`\usepackage[backend=biber,style=gb7714-2015ay,gbnoauthor=true]{biblatex}`
 	
 %for perl script transformation tool(only for the numerical style)
 
@@ -51,6 +55,8 @@ please see the file 'biblatex-gb7714-2015.pdf' for more information!
     - "*.bbx": change the seperator between multi-language reference text form cmd par to cmd newline for the gb7714-2015 align style
 	- "*.bbx": fix a flaw reported by Lee Zeping. remove the comma between journaltitle and (number) when the volume is undefined.
     - "*.bbx": add an option gbpub to control the publishing info. if gbpub=false, publishing info's format is the biblatex standard style, otherwise is gb7714-2015 style. The origin idea comes from Wayne08.
+    - "*.bbx": fix a flaw reported by zjsdut@163.com. remove the dot before url when url is the only info available。
+    - "*.bbx": add an option gbnoauthor for author-year style. when author is undefined, set option gbnoauthor=true then author with "佚名"or"NOAUTHOR" will be defined. note that with biblatex version 3.7 or higher for multiple DeclareStyleSourcemap support, code can be simplifed, because the realization code now with texlive2016(biblatex 3.4) is subjected to the one DeclareStyleSourcemap constraint.
 * Changes to documentation:
 	- biblatex-gb7714-2015.tex: revise this document 
 	- *.bib: correct a warning which is caused by long multi-line url info.
