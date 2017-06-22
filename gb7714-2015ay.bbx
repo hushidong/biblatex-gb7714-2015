@@ -40,10 +40,6 @@
 \ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftexlivesix}}{\togglefalse{iftexlivesix}}
 
 %定义判断中文字符的函数，用于判断作者等信息是否由中文字符构成
-\providetoggle{ifCJKforgbt}
-\def\testCJKfirstchar#1#2&{%
-\ifnumgreater{`#1}{"2E7F}{\toggletrue{ifCJKforgbt}}{\togglefalse{ifCJKforgbt}}%
-}%
 %2E00-2E7F 追加标点
 %2E80-2EFF cjk部首补充
 %2FF0-2FFF 表意文字描述符
@@ -52,7 +48,13 @@
 %3400-4DBF cjk统一表意符号扩展
 %4E00-9FBF cjk统一表意符号
 %中文范围4E00-9FA5
+\providetoggle{ifCJKforgbt}
+\def\testCJKfirstchar#1#2&{%
+\ifnumgreater{`#1}{"2E7F}{\toggletrue{ifCJKforgbt}}{\togglefalse{ifCJKforgbt}}%
+}%
 
+%利用edef展开或xstring抽取第一个字符判断
+%现在采用xstring方法，避免抽取的是编组符号
 \def\testCJKfirst#1{%
 %\edef\tempa{#1}%
 \exploregroups%
@@ -97,7 +99,7 @@
         \gbt@parse@rangeii#2\@empty%
     \fi}
 
-%这里写的number的解析函数，与上面的是类似的。
+%这里写的number的解析函数，与上面的卷解析函数是类似的。
 \def\multinumberparser#1{%
     \edef\gbnumbertmp{#1}%
     \expandafter\multinumberparsetoparts\gbnumbertmp-\@empty}
@@ -123,11 +125,11 @@
 %=====================================================================
 %设置宏包选项
 %=====================================================================
-\iftoggle{iftexlivesix}{% Alter settings that carry through from biblatex
+\iftoggle{iftexlivesix}{%Alter settings that carry through from biblatex
 %biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
 
 %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
-%因为在作者年制中，不需要使用，这里也增加，为了与顺序年制的兼容性考虑。
+%因为在作者年制中，不需要使用，这里也增加，为了与顺序编码制的兼容性考虑。
 \DeclareBibliographyOption[string]{align}[right]{}%
 
 %增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
@@ -140,7 +142,7 @@
 %增加一个处理佚名或noauthor的控制选项
 \DeclareBibliographyOption[boolean]{gbnoauthor}[true]{%
   \ifstrequal{#1}{false}{\dealnoathorfalse}{\dealnoathor}}
-%\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能用宏包加载时给出的选项。
+%\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能利用宏包加载时给出选项达到目的。
 
 \ExecuteBibliographyOptions{
   useprefix = true,  %名字的信息包括前缀
@@ -191,8 +193,9 @@
 \NewBibliographyString{nopublisher}
 
 %直接利用当地化格式english进行修改一些中文的格式，
-%具体可以修改哪些需要的参考english.lbx文件
+%具体可以修改哪些，参考english.lbx文件
 %当然也可以增加比如上面定义的andotherscn
+%注意:在lbx文件和bbx文件中定义本地字符串的不同语法，两个参数和一个参数的区别
 \DefineBibliographyStrings{english}{
 bibliography     = {参考文献},
 references       = {参考文献},
@@ -211,7 +214,7 @@ backrefpages     = {引用页:},
 %=====================================================================
 %动态数据修改，修改输入的源文件数据，用于中文判断等
 %=====================================================================
-%首先把作者和译者信息准确的记录到userf，usere中，用于判断是否是cjk字符。
+%首先把作者和译者信息准确的记录到userf，usere中，用于后面判断是否是cjk字符。
 %注意\DeclareSourcemap命令只能出现一次
 \DeclareSourcemap{
 \maps[datatype=bibtex]{
@@ -222,7 +225,7 @@ backrefpages     = {引用页:},
         \map{
             \pertype{periodical}
             \step[fieldset=usera, fieldvalue={J}]
-            \step[fieldsource=author] %有时会把version和edition混淆，这里处理后就没有这个问题，可以直接用version
+            \step[fieldsource=author] %有时会把author和editor混淆，这里处理后就没有这个问题
             \step[fieldset=editor, origfieldval]
             }
         \map{
@@ -250,7 +253,7 @@ backrefpages     = {引用页:},
             \pertype{inproceedings}
             \pertype{conference}%兼容老的conference类型
             \step[fieldset=usera, fieldvalue={C}]
-            \step[fieldsource=institution] %有时会把version和edition混淆，这里处理后就没有这个问题，可以直接用version
+            \step[fieldsource=institution] %有时会把publisher和institution混淆，这里处理后就没有这个问题
             \step[fieldset=publisher, origfieldval]
             \step[fieldsource=editor] %
             \step[fieldset=bookauthor, origfieldval]
@@ -258,7 +261,7 @@ backrefpages     = {引用页:},
         \map{
             \pertype{proceedings}
             \step[fieldset=usera, fieldvalue={C}]
-            \step[fieldsource=institution] %有时会把version和edition混淆，这里处理后就没有这个问题，可以直接用version
+            \step[fieldsource=institution] %有时会把publisher和institution混淆，这里处理后就没有这个问题
             \step[fieldset=publisher, origfieldval]
             \step[fieldsource=editor] %%有的时候可能只填写了编者，没有author，把它复制一下
             \step[fieldset=author, origfieldval]
@@ -267,7 +270,7 @@ backrefpages     = {引用页:},
             \pertype{report}
             \pertype{techreport}%兼容老的techreport类型
             \step[fieldset=usera, fieldvalue={R}]
-            \step[fieldsource=publisher] %有时会把publisher和institution混淆，这里处理后就没有这个问题，可以直接用version
+            \step[fieldsource=publisher] %有时会把publisher和institution混淆，这里处理后就没有这个问题
             \step[fieldset=institution, origfieldval]
             }
         \map{
@@ -847,7 +850,7 @@ backrefpages     = {引用页:},
   %\newunit %这里的标点去掉
   }
 
-%对版本信息做出修改，源来自biblatex.DEF
+%对edition版本信息做出修改，源来自biblatex.DEF
 \DeclareFieldFormat{edition}{%
 %\testCJKfirst{\thefield{title}}%
 \iffieldundef{title}{}{\testCJKfirst{\thefield{title}}}%
@@ -935,6 +938,9 @@ backrefpages     = {引用页:},
 
 
 %出版社和地址的处理
+%当没有出版社地址时，直接判断title的信息是否是中文，若为中文，则写出版地不详，否则用英文的字符表示。
+%事实上title对于每个文献来说是必须的，所以用它判断是最快的，而且一般标题和出版社的语言是一样的。
+%新增一个样式用于输出连续出版物的地址，单位，时间，%类似\newbibmacro*{publisher+location+date}
 \newbibmacro*{location+institution+date}{%
 \iftoggle{bbx:gbpub}%
 {\testCJKfirst{\thefield{title}}
@@ -970,7 +976,7 @@ backrefpages     = {引用页:},
 {\testCJKfirst{\thefield{title}}%
 %\testifnoteeqstd%
 \iflistundef{location}{%\adddot
-\iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准低19页看到，标准存在出版项时输出，没有时完全省略。
+\iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准第19页看到，标准存在出版项时输出，没有时完全省略。
 %\iftoggle{ifnoteeqstandard}{}{%}替换为上一句，尽可能用biblatex提供的函数
 \iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}\addcolon\addspace}{\printtext{[S.l.\adddot]}\addcolon\addspace}%
 }}%  \bibstring{noaddress}
@@ -998,77 +1004,6 @@ backrefpages     = {引用页:},
   }%
 }
 
-%\def\pubaddmacronewdefine{
-%%新增一个样式用于输出连续出版物的地址，单位，时间，%类似\newbibmacro*{publisher+location+date}
-%\newbibmacro*{location+institution+date}{%
-%  \printlist{location}%
-%  \iflistundef{institution}%
-%    {\setunit*{\addcomma\space}}
-%    {\setunit*{\addcolon\space}}%
-%  \printlist{institution}%
-%  \setunit*{\addcomma\space}%
-%  \usebibmacro{date}%
-%  \newunit}%
-%\renewbibmacro*{publisher+location+date}{%
-%  \printlist{location}%
-%  \iflistundef{publisher}
-%    {\setunit*{\addcomma\space}}
-%    {\setunit*{\addcolon\space}}%
-%  \printlist{publisher}%
-%  \setunit*{\addcomma\space}%
-%  \usebibmacro{date}%
-%  %\newunit
-%  }
-%}
-%%当没有出版社地址时，直接判断title的信息是否是中文，若为中文，则写出版地不详，否则用英文的字符表示。
-%%事实上title对于每个文献来说是必须的，所以用它判断是最快的，而且一般标题和出版社的语言是一样的。
-%\def\pubaddmacroredefine{%
-%\renewbibmacro*{publisher+location+date}{%
-%\iffieldundef{title}{}{\testCJKfirst{\thefield{title}}}%
-%%\testifnoteeqstd%
-%\iflistundef{location}{%\adddot
-%\iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准低19页看到，标准存在出版项时输出，没有时完全省略。
-%%\iftoggle{ifnoteeqstandard}{}{%%}替换为上一句，尽可能用biblatex提供的函数
-%\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}\setunit*{\addcolon\addspace}}{\printtext{[S.l.\adddot]}\setunit*{\addcolon\addspace}}}}%  \bibstring{noaddress}
-%{\printlist{location}\setunit*{\addcolon\addspace}}%
-%%\addcolon\addspace%
-%\iflistundef{publisher}{%
-%\iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准低19页看到，标准存在出版项时输出，没有时完全省略。
-%%\iftoggle{ifnoteeqstandard}{}{%%}替换为上一句，尽可能用biblatex提供的函数
-%\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}\setunit{\adddot\addspace}\setunit*{\addcolon\addspace}}
-%%\mkbibbrackets
-%%{{%{\printtext{[s.n.\adddot]}\setunit{\adddot\addspace}\setunit*{\addcolon\addspace}}}}%\bibstring{nopublisher}
-%{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcolon\addspace}}}}
-%{\printlist{publisher}\setunit*{\addcolon\addspace}}%
-%%\addcomma\addspace%
-%%\usebibmacro{date}%
-%%\newunit %去掉这个标点
-%}
-%%新增一个样式用于输出连续出版物的地址，单位，时间
-%%类似与上面的\newbibmacro*{publisher+location+date}
-%\newbibmacro*{location+institution+date}{%
-%\testCJKfirst{\thefield{title}}
-%\iflistundef{location}{\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}}{\printtext{[S.l.\adddot]}}}%
-%  {\printlist{location}}%
-%%  \iflistundef{institution}
-%%    {\setunit*{\addcomma\space}}
-%%    {\setunit*{\addcolon\space}}%
-%%  \printlist{institution}%
-%%  \setunit*{\addcomma\space}%
-%\addcolon\addspace%
-%\iflistundef{institution}{%
-%%注意这里\printtext{\mkbibbrackets{s.n.}}和\printtext{[s.n.\adddot]}是不同的，这里的]不影响标点追踪，
-%%这里要理解的是newunit插入的是period，看def中的命令:\newcommand*{\newunitpunct}{\addperiod\space}，\newcommand*{\finentrypunct}{\addperiod}
-%\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}}{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}}}% \bibstring{nopublisher}
-%{\printlist{institution}}%
-%\setunit{\addcomma\addspace}%
-%  %\usebibmacro{date}%
-%%  \printfield{year}%
-%%  \bibrangedash%
-%%  \iffieldundef{endyear}{}{\printfield{endyear}}%
-%  \newunit%
-%}
-%}
 
 %修改析出文献的文集的标题与附加标题间的符号
 \renewbibmacro*{booktitle}{%
