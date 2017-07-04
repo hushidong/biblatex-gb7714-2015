@@ -52,6 +52,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for more information!
 
 ### date of change: 2017-04-11 to version v1.0h, the last version support texlive2015
 * Changes to pkg code:
+    - "*.bbx": deal compatibility problem of author style for texlive2017, because the old cmd printdateextralabel with biblatex3.4 has been replaced by printlabeldateextra with biblatex3.7 in texlive2017.
     - "*.bbx": change the seperator between multi-language reference text form cmd par to cmd newline for the gb7714-2015 align style
 	- "*.bbx": fix a flaw reported by Lee Zeping. remove the comma between journaltitle and (number) when the volume is undefined.
     - "*.bbx": add an option gbpub to control the publishing info. if gbpub=false, publishing info's format is the biblatex standard style, otherwise is gb7714-2015 style. The origin idea comes from Wayne08.

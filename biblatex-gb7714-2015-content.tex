@@ -254,6 +254,7 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   \footfullcite{赵学功2001--}
 \end{codetex}
 
+各引用命令的效果见\ref{sec:test:book}节。
 
 \section{标准说明与实现}
 
@@ -293,7 +294,9 @@ GB/T 7714-2015规定采用作者年制组织时，各篇文献首先按文种组
 
 标注要求具体参考GB/T 7714-2015第10.2节。
 
-\qd{注意:一般情况下，当文献作者缺省时，作者年制就没有作者可以用，因此文献题名用来生成标签，这样会导致参考文献表中文献题名后的文献类型标识/文献载体标识消失。但是可以用佚名替代缺省作者的方式避免这个问题，本样式文件默认情况下采用佚名方式，如果不需要使用佚名，那么需要在样式文件中注释掉一段代码，这段代码在本文档末尾2016-11-14的更新历史中有说明，见\pageref{up:20161114}页。}
+\qd{注意:一般情况下，当文献作者缺省时，作者年制就没有作者可以用，因此文献题名用来生成标签，这样会导致参考文献表中文献题名后的文献类型标识/文献载体标识消失。但是可以用佚名替代缺省作者的方式避免这个问题，即可以使用样式文件选项gbnoauthor=true，一旦设置该选项为true，则缺省的作者会根据文献语种填充为佚名或NOAUTHOR。默认情况下，不进行这种处理，即相当于设置选项gbnoauthor=false。}
+
+%本样式文件默认情况下采用佚名方式，如果不需要使用佚名，那么需要在样式文件中注释掉一段代码，这段代码在本文档末尾2016-11-14的更新历史中有说明，见\pageref{up:20161114}页。}
 
 \subsection{各类文献在biblatex中对应的条目和域}\label{sec:numeric:data}
 gb7714-2015.bbx是按照GB/T 7714-2015要求实现的biblatex参考文献样式文件。
@@ -1381,6 +1384,40 @@ biblatex的宏包选项增加
 %============================
 \updateinfo[2017-04-11]{update to version 1.0h}\label{up:170411}
 \begin{enumerate}
+\item texlive2017中biblatex3.7对于authoryear样式中的date+extrayear宏有一定的修改，从原来texlive2016中的命令printdateextralabel转换到了printlabeldateextra。因此做一个修改。
+    \begin{texlist}
+    %设置因为mergedate默认为true时的情况，来自\bbx@opt@mergedate@compact
+%去掉作者后面包围年份的圆括号
+%这里因为biblatex版本的不同，做不同的处理，texlive2017版的在iftexliveseven=true中设置
+%2016等低版本的在iftexliveseven=false中设置
+%重设date+extrayear格式，源来自authoryear.BBX
+\iftoggle{iftexliveseven}{%
+  \renewbibmacro*{date+extrayear}{%
+    \iffieldundef{labelyear}
+      {}
+      {\printtext{%[parens]%这里把括号去掉
+         \iffieldsequal{year}{labelyear}
+           {\printlabeldateextra}%
+           {\printfield{labelyear}%
+            \printfield{extrayear}}}}}%
+}{%
+\renewbibmacro*{date+extrayear}{%
+    \iffieldundef{\thefield{datelabelsource}year}
+      {}
+      {\printtext{%[parens]%这里把括号去掉
+         \iffieldsequal{year}{\thefield{datelabelsource}year}
+           {\printdateextralabel}%
+           {\printfield{labelyear}%
+            \printfield{extrayear}}}}}%
+}
+    \end{texlist}
+    
+    当然其实这还有更简单的解决方法就是:
+    \begin{texlist}
+    \let\printdateextralabel=\printlabeldateextra
+    \end{texlist}
+    只是这里为了清楚区分才用判断的方式。
+
 \item 根据同学(zjsdut@163.com)发现的问题，修改一个bug，感谢。当online类型仅有url信息时，url前面多了一个点。这是modifydate宏设计中printtext位置导致标点异步处理机制失效所产生现象。因此作出修改如下:
     \begin{texlist}
     \newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示表示电子资源的更新和修改日期，而公告日期安按日期格式

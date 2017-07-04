@@ -31,6 +31,7 @@
 %增加一些功能函数
 %=====================================================================
 \providetoggle{iftexlivesix}
+\providetoggle{iftexliveseven}
 %版本判断，根据biblatex更新历史可知，版本3.3开始使用新的姓名机制
 %所以当版本大于3.2开始，就用设置\toggletrue{iftexlivesix}
 \def\numparserta#1.#2\relax{#1}%注意relax的重要性
@@ -38,6 +39,7 @@
 \def\numinteger{\expandafter\numparserta\abx@version\relax}
 \def\numdigital{\expandafter\numparsertb\abx@version\relax}
 \ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftexlivesix}}{\togglefalse{iftexlivesix}}
+\ifnumcomp{\numdigital}{>}{6}{\toggletrue{iftexliveseven}}{\togglefalse{iftexliveseven}}
 
 %定义判断中文字符的函数，用于判断作者等信息是否由中文字符构成
 %2E00-2E7F 追加标点
@@ -895,7 +897,25 @@ backrefpages     = {引用页:},
   \usebibmacro{date+extrayear}
   }
 
+
+%设置因为mergedate默认为true时的情况，来自\bbx@opt@mergedate@compact
+%去掉作者后面包围年份的圆括号
+%这里因为biblatex版本的不同，做不同的处理，texlive2017版的在iftexliveseven=true中设置
+%2016等低版本的在iftexliveseven=false中设置
+%当然其实这还有更简单的解决方法就是:
+%    \let\printdateextralabel=\printlabeldateextra
+%只是这里为了清楚区分才用判断的方式。
 %重设date+extrayear格式，源来自authoryear.BBX
+\iftoggle{iftexliveseven}{%
+  \renewbibmacro*{date+extrayear}{%
+    \iffieldundef{labelyear}
+      {}
+      {\printtext{%[parens]%这里把括号去掉
+         \iffieldsequal{year}{labelyear}
+           {\printlabeldateextra}%
+           {\printfield{labelyear}%
+            \printfield{extrayear}}}}}%
+}{%
 \renewbibmacro*{date+extrayear}{%
     \iffieldundef{\thefield{datelabelsource}year}
       {}
@@ -904,6 +924,7 @@ backrefpages     = {引用页:},
            {\printdateextralabel}%
            {\printfield{labelyear}%
             \printfield{extrayear}}}}}%
+}
 
 %修改译者位置格式，bytranslator+others原格式来自biblatex.def文件
 \renewbibmacro*{bytranslator+others}{%
