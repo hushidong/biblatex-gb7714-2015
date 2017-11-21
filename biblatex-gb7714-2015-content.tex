@@ -1,6 +1,6 @@
 %------------------------------------------------------------
-\def\versionnumber{v1.0h}    %版本和修改时间信息
-\def\versiondate{2017/04/11}
+\def\versionnumber{v1.0i}    %版本和修改时间信息
+\def\versiondate{2017/11/21}
 %------------------------------------------------------------
 %-----------------标题和目录---------------------------------
 \titleformanual{符合GB/T 7714-2015标准的biblatex参考\\
@@ -23,8 +23,8 @@
 样式文件的主要特点包括:
 \begin{enumerate}
   \item 实现了GB/T 7714-2015标准的完整功能，不仅包括两种编制方式下的各类型参考文献著录格式和标注格式等基本内容，还包括:双语文献格式，带页码的标注格式，作者年制下仅有年的标注格式和文献按语言集中并自动排序，两种编码制方式下责任者缺省不同处理，一些信息如页码卷期等自动解析，出版信息缺省时的自动处理并增加控制选项(gbpub)来控制是否应用这种自动处理等功能，而且增加了一个顺序编码制的标签对齐选项(align)，提供右对齐、左对齐和项对齐三种方式。
-  \item 实现了用户文献数据录入优化，用户在录入参考文献数据时，只需要录入文献的实际信息即可，不需要录入文献标识符和载体标识符，不需要录入language或者其它域信息用来区分中英文文献，完全实现自动中英文判断并处理。支持一些特殊的条目类型比如standard，newspaper，mastersthesis，phdthesis等。
-  \item 实现了对biblatex不同版本的兼容，能够应用于biblatex3.2以前的老版本，也能用于3.3以后姓名处理方式改变后的版本。即可以与texlive2014/2015/2016配合使用，无需升级biblatex情况下安装biblatex-gb7714-2015宏包即可使用。
+  \item 实现了用户文献数据录入优化，用户在录入参考文献数据时，只需要录入文献的实际信息即可，不需要录入文献标识符和载体标识符，不需要录入language或者其它域信息用来区分中英文文献，实现自动中英文判断并处理。支持一些特殊或老的条目类型比如standard，newspaper，www，mastersthesis，phdthesis等。
+  \item 实现了对biblatex不同版本的兼容，能够应用于biblatex3.2以前的老版本，也能用于3.3以后姓名处理方式改变后的版本。即可以与texlive2014/2015/2016/2017配合使用，无需升级biblatex情况下安装biblatex-gb7714-2015宏包即可使用。
   \item 测试了样式文件在文档类book/report/article以及beamer类下的适用性，结果表明均能满足要求。文档详细介绍了各条目类型的著录格式及其在biblatex 中对应信息域的构成，以及域信息的录入方法和一些注意点，说明了样式文件的使用方法和注意事项，并严格按照GB/T 7714-2015 标准测试了各种类型的文献。
 \end{enumerate}
 
@@ -102,7 +102,7 @@ citestyle=gb7714-2015%,backref=true%
 
 \subsection{gb7714-2015样式加载方式和选项说明}
 \subsubsection{样式加载方式}
-最小示例(\ref{code:doc:structrue})中给出了宏包和样式的基本加载方式，对于gb7714-2015样式也是类似的，当然著录样式bibstyle和标注样式citestyle相同的话可以合并为一个选项style。比如:
+最小示例\ref{code:doc:structrue}中给出了宏包和样式的基本加载方式，对于gb7714-2015样式也是类似的，当然著录样式bibstyle和标注样式citestyle相同的话可以合并为一个选项style。比如:
 
 \begin{codetex}{gb7714-2015顺序编码制加载方式}{eg:gb7714numeric}
 \usepackage[backend=biber,style=gb7714-2015]{biblatex}
@@ -234,7 +234,7 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 
 其中，当不指定页码时，pagescite命令默认调用参考文献的页码数据进行输出，如果需要指定页码，那么需要在第二个[]内输入页码内容。
 
-\qd{注意:对于多个文献一起的压缩形式，指定页码只会应用最后一个参考文献的页码，这是不对的，当然其实这种情况是不应该存在的，指定页码本来就应该具体化指某一文献的，因此使用时尽可能使用pagescite\{key1\}pagescite\{key2\}这种形式而不是pagescite\{key1,key2\}。}
+\qd{注意:对于多个文献一起的压缩形式，指定页码只会应用最后一个参考文献的页码，这是不对的，当然其实这种情况本不应该存在，指定页码本来就需要具体化指某一文献的，因此使用时尽可能使用pagescite\{key1\}pagescite\{key2\}这种形式而不是pagescite\{key1,key2\}。}
 
 
 作者年制的引用样式文件大体使用标准引用样式authoryear的内容。也是对cite，parencite进行了修改，将引用标签用括号括起来。为满足GB/T 7714-2015第10.2.4节的要求，增加了pagescite命令。为满足GB/T 7714-2015第10.2.1节的要求，增加了yearpagescite命令用于处理文中已有作者信息只需要年份和页码信息的情况。
@@ -424,7 +424,7 @@ author.title[usera]//bookauthor.booktitle:booktitleaddon.edition.address 或loca
 author/editor.title:subtitle或titleaddon[usera].year或date,volume(number)-endyear, endvolume(endnumber).address或location:publisher,date或year[urldate].url.doi
 \end{codetex}
 
-需要注意: 因为连续出版物可能用到两个日期，两个卷，两个期，所以录入数据时需要特别处理。不需要录入endyear等信息，只需要在到year或date域录入日期，由biber自动解析，两个日期之间用/分隔。而卷和期由于可能有合订模式，合订卷期之间用/分隔，参考GB/T 7714-2015第8.8.3节，需要解析范围的卷和期，录入到volume和number域时，两个不同的值用-分隔。\bc{这里对于卷和期的解析所采用的函数利用了李志齐所编写的样式文件中的函数，特此说明，表示感谢!}
+需要注意: 因为连续出版物可能用到两个日期，两个卷，两个期，所以录入数据时需要特别处理。不需要录入endyear等信息，只需要在到year或date域录入日期，由biber自动解析，两个日期之间用/分隔。而卷和期由于可能有合订模式，合订卷期之间用/分隔，参考GB/T 7714-2015第8.8.3节，而需要解析起止范围的卷和期，录入到volume和number域时，两个不同的值用-分隔。\bc{这里对于卷和期的解析所采用的函数利用了李志齐所编写的样式文件中的函数，特此说明，表示感谢! 详见bbx文件。}
 
 \subsubsection{连续出版物的析出文献/article}
 \begin{refentry}{}{}
@@ -1248,13 +1248,15 @@ biblatex的宏包选项增加
   \end{enumerate}
 
 
-\subsection{其它需要说明的问题}
-下面的问题想到哪写到哪，没有特别的顺序:
+\subsection{biblatex版本以及样式的兼容性}\label{sec:blx:compatibility}
+样式首先根据biblatex版本信息进行版本判断，然后做针对性的兼容处理。
+biblatex在texlive中的版本对应关系是:
+texlive2015对应biblatex3.0;
+texlive2016对应biblatex3.4，从3.2版开始修改了姓名机制;
+texlive2017对应biblatex3.7;
+2017年底又除了biblatex3.8a版。
 
-\begin{enumerate}
-  \item 因为采用xelatex编译，所以样式文件直接采用UTF-8编码，没有考虑GBK编码。
-
-  \item \zhongdian{【Most Important】【注意】：texlive2015中的biblatex版本是3.0，texlive2016中biblatex的版本是3.4，新版本对于名字域打印有了较大变化(即不同版本的biblatex对于DeclareNameFormat的输入参数处理有所不同，如例\ref{eg:name:variables}所示)，所以需做相应的修改，为此在biblatex中首先进行版本判断，然后根据版本不同分别进行设置。}
+\zhongdian{【注意】：texlive2015中的biblatex版本是3.0，texlive2016中biblatex的版本是3.4，新版本对于名字域打印有了较大变化(即不同版本的biblatex对于DeclareNameFormat的输入参数处理有所不同，如例\ref{eg:name:variables}所示)，所以需做相应的修改，为此在biblatex中首先进行版本判断，然后根据版本不同分别进行设置。}
 
     \begin{codetex}{texlive2016中biblatex3.4版Name域格式输入参数的修改}{eg:name:variables}
     for biblatex version 3.0
@@ -1276,7 +1278,57 @@ biblatex的宏包选项增加
     \namepartsuffix
     \namepartsuffixi
     \end{codetex}
-    相应的样式文件也需要修改，详见bbx文件内容。
+    相应的样式文件也需要修改，详见bbx文件。
+
+  \begin{enumerate}
+  \item biblatex版本判断
+
+  原来是使用一个简单的字符流处理来解析版本信息，但容易出现问题。于是换成利用xstring宏包的命令来提取版本中的数字进行判断:
+  \begin{texlist}
+    %版本判断
+    \providetoggle{iftexlivesix}%用于处理biblatex3.3开始改变的新的姓名机制
+    \providetoggle{iftexliveseven}%用于处理biblatex3.7的兼容性
+    \providetoggle{iftexliveeight}%用于处理biblatex3.8a的兼容性
+    %\def\numparserta#1.#2a\relax{#1}%注意relax的重要性
+    %\def\numparsertb#1.#2a\relax{#2}
+    %\def\numinteger{\expandafter\numparserta\abx@version\relax}
+    %\def\numdigital{\expandafter\numparsertb\abx@version\relax}
+    \StrChar{\abx@version}{3}[\numdigital]
+    %根据biblatex更新历史，当版本大于3.2开始，就用设置\toggletrue{iftexlivesix}
+    \ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftexlivesix}}{\togglefalse{iftexlivesix}}
+    \ifnumcomp{\numdigital}{>}{6}{\toggletrue{iftexliveseven}}{\togglefalse{iftexliveseven}}
+    \ifnumcomp{\numdigital}{>}{7}{\toggletrue{iftexliveeight}}{\togglefalse{iftexliveseight}}
+  \end{texlist}
+
+
+  \item biblatex版本的一些兼容性处理
+
+  宏包选项:
+  \begin{texlist}
+  firstinits=true,%for texlive2014,2015;biblatex <=3.2
+  giveninits=true,%for texlive2016,2017;biblatex >=3.3
+  labeldate=true,%for texlive2014,2015,2016,2017;biblatex <3.8
+  labeldateparts=true,%for biblatex >=3.8a
+  \end{texlist}
+
+  命令:
+  \begin{texlist}
+  \printdateextralabel,%for texlive2014,2015,2016;biblatex <=3.4
+  \printlabeldateextra,%for texlive2017;biblatex >=3.7
+  \DeclareSortingScheme %for texlive2014,2015,2016,2017;biblatex <3.8
+  \DeclareSortingTemplate %for biblatex >=3.8a
+  \end{texlist}
+
+  \end{enumerate}
+
+
+
+
+\subsection{其它需要说明的问题}
+下面的问题想到哪写到哪，没有特别的顺序:
+
+\begin{enumerate}
+  \item 因为采用xelatex编译，所以样式文件直接采用UTF-8编码，没有考虑GBK编码。
 
   \item \zhongdian{【Most Important】【注意】：当在顺序编码和作者年制的切换使用时，如果出错，可先清理一下辅助文件，清理完后，重新编译即可。}
 
@@ -1309,10 +1361,6 @@ biblatex的宏包选项增加
 
   \item 关于出版地和出版者同时缺省的情况，GB/T 7714-2015中没有给出明确的说明，但英文给出了一个例子(见GB/T 7714-2015 附录A.3)而中文没有，英文的样式是[S.l. : s.n.]，这种形式本样式文件中没有给出，而直接用两者分开的形式，[S.l.] : [s.n.]，事实上这里作者认为没有必要把s.l.和s.n. 合起来，不仅与缺省两者之一的情况不统一，样式处理起来也增加不必要的麻烦。
 
-  \item cjk判断函数，详见bbx文件内容。
-
-  \item 范围解析函数，详见bbx文件内容。
-
   \item 目前符合GB/T7714-2005或GB/T7714-2015参考文献著录规则的biblatex样式有好几个实现，除了这里作者提供的之外，还有李志奇(icetea)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}} 和沈周(szsdk)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152561&extra=page\%3D1}} 分别提供的样式文件，效果是类似的，也感谢两位作者的分享!
 
   \item 本文档根据GB/T 7714-2015提供的参考文献表著录格式示例做了测试和验证，详见第\ref{sec:eg:gb77142015}节。测试系统环境为:
@@ -1324,6 +1372,8 @@ biblatex的宏包选项增加
     \item 虚拟机xp+texlive 2016，采用xelatex编译;
 
     \item Deepin linux-x64v15.3+texlive 2016，采用xelatex编译。
+
+    \item windows7x64+texlive 2017，采用xelatex编译;
     \end{itemize}
 
 \end{enumerate}
@@ -1370,11 +1420,15 @@ biblatex的宏包选项增加
 \subsection{下一步工作}
 
 \begin{enumerate}
-  \item 到1.0h版为止，进一步完善了样式宏包，该版本将是最后支持texlive2015的版本，以后版本的功能实现将基于最新texlive中biblatex版本，而不再考虑texlive2015中3.0版的biblatex。1.0f版完善了align 选项(用于实现GB7714 风格的著录文献表标签，texlive2016 有效)，带花括号的责任者的中英文判断等功能对texlive2015 的兼容性。1.0g版增加对mastersthesis，phdthesis，www，electronic，standard，techreport，conference，newspaper等条目类型的兼容，增加了对标准样式standard.bbx中url包选项的兼容性，增加了析出文献标识符//后面的短空格以支持著录表的断行机制，增加了特殊字符处理功能并实现对texlive2015 的兼容，给出了gb7714风格参考文献著录表文本转换为bib文件的perl脚本，与gb7714-2015 样式形成闭环。
+  \item 到1.0h版为止，进一步完善了样式宏包，该版本将是最后支持texlive2015的版本，以后版本的功能实现将基于最新texlive中biblatex版本，而不再考虑texlive2015中3.0版的biblatex。1.0f版完善了align 选项(用于实现GB7714 风格的著录文献表标签，texlive2016 有效)，带花括号的责任者的中英文判断等功能对texlive2015 的兼容性。
+
+  \item 1.0g版增加对mastersthesis，phdthesis，www，electronic，standard，techreport，conference，newspaper等条目类型的兼容，增加了对标准样式standard.bbx中url包选项的兼容性，增加了析出文献标识符//后面的短空格以支持著录表的断行机制，增加了特殊字符处理功能并实现对texlive2015 的兼容，给出了gb7714风格参考文献著录表文本转换为bib文件的perl脚本，与gb7714-2015 样式形成闭环。
 
   \item 到1.0e版为止，功能需求已经完全实现，剩下的问题可能是一些文献具有特殊信息或者特殊情况时带来的适应性问题，这需要经过大量的测试来发现问题。各位朋友如果发现什么问题，请邮件联系，作者会非常感谢!
 
-  \item 打算翻译biblatex宏包的说明文档和biber的说明文档，这个已经在进行中，完成了一部分，但因为只是业余时间做，可能最终完成的时间会比较长。如果有朋友觉得这个事情有意义，愿意一起来完成这个事情，非常欢迎，请email联系。
+  \item biblatex宏包的说明文档中文版，已经由Shen wenbo和我基本完成，下一步是完善，校对，以及增加新版的内容。如果有朋友觉得这个事情有意义，愿意一起来完成这个事情，非常欢迎，请email联系。
+
+  %\item 打算翻译biblatex宏包的说明文档和biber的说明文档，这个已经在进行中，完成了一部分，但因为只是业余时间做，可能最终完成的时间会比较长。如果有朋友觉得这个事情有意义，愿意一起来完成这个事情，非常欢迎，请email联系。
 
 %\item 进一步完善上一节提到的问题。
 %到1.0e版功能问题已经完全解决。
@@ -1382,6 +1436,12 @@ biblatex的宏包选项增加
 
 \section{更新历史}
 %============================
+\updateinfo[2017-11-21]{update to version 1.0i}\label{up:171121}
+\begin{enumerate}
+\item 针对biblatex3.8a的更新做了兼容性处理，主要是修改版本判断机制，替换新的宏包选项，替换新的排序格式命令。详见第\ref{sec:blx:compatibility}节
+
+\end{enumerate}
+
 \updateinfo[2017-04-11]{update to version 1.0h}\label{up:170411}
 \begin{enumerate}
 \item texlive2017中biblatex3.7对于authoryear样式中的date+extrayear宏有一定的修改，从原来texlive2016中的命令printdateextralabel转换到了printlabeldateextra。因此做一个修改。
@@ -1411,7 +1471,7 @@ biblatex的宏包选项增加
             \printfield{extrayear}}}}}%
 }
     \end{texlist}
-    
+
     当然其实这还有更简单的解决方法就是:
     \begin{texlist}
     \let\printdateextralabel=\printlabeldateextra

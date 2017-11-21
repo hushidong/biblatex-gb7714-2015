@@ -16,13 +16,13 @@ if exist *.pdf (
 
 call makeclear
 
-call makefileeg
+call makefileegenv
 
 call makefile
 
 call makefilebeamer
 
-call makeclear
+::call makeclear
 
 if exist *.userbak (
     del *.userbak /Q

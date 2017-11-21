@@ -4,23 +4,31 @@
 %% GBT7714-2015 citation style,author year sequence
 %% Maintained by huzhenzhen
 %% history:
-%% 2016/05/20 v1.0
-%% 2016/10/23 v1.0a
-%% 2016/11/11 v1.0b
-%% 2016/11/14 v1.0c
-%% 2016/11/24 v1.0d
-%% 2016/12/07 v1.0e
-%% 2017/02/26 v1.0g
-%% 2017/04/11 v1.0h
+%% 2016/05/20 v1.0  2016/10/23 v1.0a 2016/11/11 v1.0b
+%% 2016/11/14 v1.0c 2016/11/24 v1.0d 2016/12/07 v1.0e
+%% 2017/02/26 v1.0g 2017/04/11 v1.0h
+%% 2017/11/21 v1.0i
 %% E-mail: hzzmail@163.com
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\ProvidesFile{gb7714-2015ay.cbx}[2017/04/11 v1.0h biblatex citation style]
+\ProvidesFile{gb7714-2015ay.cbx}[2017/11/21 v1.0i biblatex citation style]
 
 \RequireCitationStyle{authoryear}
 %\RequireCitationStyle{numeric}
 
+\iftoggle{iftexliveeight}{%
+\ExecuteBibliographyOptions{
+  %autocite  = superscript ,
+  %autopunct = true       ,
+  %sorting   = none        ,
+  maxcitenames=1,
+  mincitenames=1,
+  uniquename=init,%因为使用了名字缩写选项，所以需要设置uniquename=init而不是full避免冲突
+  labeldateparts=true,
+  %labeldate=true,
+  uniquelist=minyear,
+}}{%
 \ExecuteBibliographyOptions{
   %autocite  = superscript ,
   %autopunct = true       ,
@@ -30,7 +38,7 @@
   uniquename=init,%因为使用了名字缩写选项，所以需要设置uniquename=init而不是full避免冲突
   labeldate=true,
   uniquelist=minyear,
-}
+}}
 
 %\DeclareCiteCommand{\cite}[\mkbibparens]{⟨precode⟩}{⟨loopcode⟩}{⟨sepcode⟩}{⟨postcode⟩}
 %

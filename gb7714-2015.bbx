@@ -4,20 +4,15 @@
 %% GBT7714-2015  bibliography style,numerical sequence
 %% Maintained by huzhenzhen
 %% history:
-%% 2016/05/20 v1.0
-%% 2016/10/23 v1.0a
-%% 2016/11/11 v1.0b
-%% 2016/11/14 v1.0c
-%% 2016/11/24 v1.0d
-%% 2016/12/07 v1.0e
-%% 2016/12/31 v1.0f
-%% 2017/02/26 v1.0g
-%% 2017/04/11 v1.0h
+%% 2016/05/20 v1.0  2016/10/23 v1.0a 2016/11/11 v1.0b
+%% 2016/11/14 v1.0c 2016/11/24 v1.0d 2016/12/07 v1.0e
+%% 2017/02/26 v1.0g 2017/04/11 v1.0h
+%% 2017/11/21 v1.0i
 %% E-mail: hzzmail@163.com
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\ProvidesFile{gb7714-2015.bbx}[2017/04/11 v1.0h biblatex bibliography style]
+\ProvidesFile{gb7714-2015.bbx}[2017/11/21 v1.0i biblatex bibliography style]
 
 
 %=====================================================================
@@ -33,14 +28,19 @@
 %=====================================================================
 %增加一些功能函数
 %=====================================================================
-%版本判断，根据biblatex更新历史可知，版本3.3开始使用新的姓名机制
-\providetoggle{iftexlivesix}
-%所以当版本大于3.2开始，就用设置\toggletrue{iftexlivesix}
-\def\numparserta#1.#2\relax{#1}%注意relax的重要性
-\def\numparsertb#1.#2\relax{#2}
-\def\numinteger{\expandafter\numparserta\abx@version\relax}
-\def\numdigital{\expandafter\numparsertb\abx@version\relax}
-\ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftexlivesix}}{\togglefalse{iftexlivesix}}
+    %版本判断
+    \providetoggle{iftexlivesix}%用于处理biblatex3.3开始改变的新的姓名机制
+    \providetoggle{iftexliveseven}%用于处理biblatex3.7的兼容性
+    \providetoggle{iftexliveeight}%用于处理biblatex3.8a的兼容性
+    %\def\numparserta#1.#2a\relax{#1}%注意relax的重要性
+    %\def\numparsertb#1.#2a\relax{#2}
+    %\def\numinteger{\expandafter\numparserta\abx@version\relax}
+    %\def\numdigital{\expandafter\numparsertb\abx@version\relax}
+    \StrChar{\abx@version}{3}[\numdigital]
+    %根据biblatex更新历史，当版本大于3.2开始，就用设置\toggletrue{iftexlivesix}
+    \ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftexlivesix}}{\togglefalse{iftexlivesix}}
+    \ifnumcomp{\numdigital}{>}{6}{\toggletrue{iftexliveseven}}{\togglefalse{iftexliveseven}}
+    \ifnumcomp{\numdigital}{>}{7}{\toggletrue{iftexliveeight}}{\togglefalse{iftexliveeight}}
 
 %定义判断中文字符的函数，用于判断作者等信息是否由中文字符构成
 %2E00-2E7F 追加标点
@@ -778,23 +778,27 @@ backrefpages     = {引用页:},
 \iffieldundef{day}{}{\bibrangedash\printfield{day}}}}%
 }
 
+
 \newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示电子资源的更新和修改日期，而公告日期则按日期格式
-\iffieldundef{year}{%
-\iffieldundef{endyear}{%
-\iffieldundef{eventyear}{}{\printtext{\mkbibparens{\printtext{\printfield{eventyear}}%
-\iffieldundef{eventmonth}{}{\bibrangedash\thefield{eventmonth}}%
-\iffieldundef{eventday}{}{\bibrangedash\printfield{eventday}}}}%
-}%
-}{%
-\iffieldundef{endyear}{}{\printtext{\mkbibparens{\printtext{\printfield{endyear}}%
-\iffieldundef{endmonth}{}{\bibrangedash\thefield{endmonth}}%
-\iffieldundef{endday}{}{\bibrangedash\printfield{endday}}}}%
-}%
-}}{%
-\iffieldundef{year}{}{\printtext{\mkbibparens{\printtext{\printfield{year}}%
-\iffieldundef{month}{}{\bibrangedash\thefield{month}}%
-\iffieldundef{day}{}{\bibrangedash\printfield{day}}}}%
-}}%
+    \iffieldequalstr{year}{}{%替换\iffieldundef{year}，因为year总是存在，但为空
+        \iffieldundef{endyear}{%
+            \iffieldundef{eventyear}{}{\printtext{\mkbibparens{\printtext{\printfield{eventyear}}%
+            \iffieldundef{eventmonth}{}{\bibrangedash\thefield{eventmonth}}%
+            \iffieldundef{eventday}{}{\bibrangedash\printfield{eventday}}}}%
+            }%
+        }{%
+            \iffieldundef{endyear}{}{\printtext{\mkbibparens{\printtext{\printfield{endyear}}%
+            \iffieldundef{endmonth}{}{\bibrangedash\thefield{endmonth}}%
+            \iffieldundef{endday}{}{\bibrangedash\printfield{endday}}}}%
+            }%
+        }%
+    }%
+    {%
+        \iffieldundef{year}{}{\printtext{\mkbibparens{\printtext{\printfield{year}}%
+        \iffieldundef{month}{}{\bibrangedash\thefield{month}}%
+        \iffieldundef{day}{}{\bibrangedash\printfield{day}}}}%
+        }%
+    }%
 }%
 
 %调整doi+eprint+url格式，源来自standard.bbx
