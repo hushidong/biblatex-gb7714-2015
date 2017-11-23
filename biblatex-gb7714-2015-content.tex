@@ -424,7 +424,7 @@ author.title[usera]//bookauthor.booktitle:booktitleaddon.edition.address 或loca
 author/editor.title:subtitle或titleaddon[usera].year或date,volume(number)-endyear, endvolume(endnumber).address或location:publisher,date或year[urldate].url.doi
 \end{codetex}
 
-需要注意: 因为连续出版物可能用到两个日期，两个卷，两个期，所以录入数据时需要特别处理。不需要录入endyear等信息，只需要在到year或date域录入日期，由biber自动解析，两个日期之间用/分隔。而卷和期由于可能有合订模式，合订卷期之间用/分隔，参考GB/T 7714-2015第8.8.3节，而需要解析起止范围的卷和期，录入到volume和number域时，两个不同的值用-分隔。\bc{这里对于卷和期的解析所采用的函数利用了李志齐所编写的样式文件中的函数，特此说明，表示感谢! 详见bbx文件。}
+需要注意: 因为连续出版物可能用到两个日期，两个卷，两个期，所以录入数据时需要特别处理。不需要录入endyear等信息，只需要在到year或date域录入日期，由biber自动解析，两个日期之间用/分隔。而卷和期由于可能有合订模式，合订卷期之间用/分隔，参考GB/T 7714-2015第8.8.3节，而需要解析起止范围的卷和期，录入到volume和number域时，两个不同的值用-分隔。
 
 \subsubsection{连续出版物的析出文献/article}
 \begin{refentry}{}{}
@@ -783,7 +783,7 @@ and keyword=standard
 \printbibliography[heading=subbibliography,filter=standard,title=【标准文献-著录格式示例】]
 \printbibliography[heading=subbibliography,type=inbook,notkeyword=standard,title=【专著中析出的文献-著录格式示例】]
 \printbibliography[heading=subbibliography,type=article,notkeyword=news,title=【期刊中析出的文献-著录格式示例】]
-\printbibliography[heading=subbibliography,type=article,keyword=news,title=【报纸析出的文献-著录格式示例】]
+\printbibliography[heading=subbibliography,keyword=news,title=【报纸析出的文献-著录格式示例】]%type=article,有时type是newspaper所以不指定type为article
 \printbibliography[heading=subbibliography,type=online,title=【电子资源-著录格式示例】]
 \end{refsection}
 
@@ -1062,6 +1062,96 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 
 在作者年制中不同语种文献分集时也有一个中英文判断，主要是利用动态数据修改的方法。利用perl正则表达式判断作者和标题域中是否有中文信息(可以用排除法即匹配不是英文数字标点的字符通常是中文字符，当然最直接的是用unicode的中文字符范围匹配)，有的话设置cn，否则为en。事实上这种判断可以进一步扩展，利用强大的perl正则表达式，对所有的关键域进行判断，并在一些域中设置标识，用于tex输出时进行判断，而避免直接使用上述CJK字符判断函数。当然目前还是采用判断CJK字符的方法。
 
+\subsection{利用字符流解析或者xstring宏包新增函数}\label{sec:cjkjudge}
+\begin{enumerate}
+\item cjk字符判断
+\begin{texlist}
+%定义判断中文字符的函数，用于判断作者等信息是否由中文字符构成
+%2E00-2E7F 追加标点
+%2E80-2EFF cjk部首补充
+%2FF0-2FFF 表意文字描述符
+%3000-303F cjk符号和标点
+%3300-33FF cjk兼容
+%3400-4DBF cjk统一表意符号扩展
+%4E00-9FBF cjk统一表意符号
+%中文范围4E00-9FA5
+\providetoggle{ifCJKforgbt}
+\def\testCJKfirstchar#1#2&{%
+\ifnumgreater{`#1}{"2E7F}{\toggletrue{ifCJKforgbt}}{\togglefalse{ifCJKforgbt}}%
+}%
+
+%利用edef展开或xstring抽取第一个字符判断
+%现在采用xstring方法，避免抽取的是编组符号
+\def\testCJKfirst#1{%
+%\edef\tempa{#1}%可以替换下面两句，但失去忽略多余编组功能
+\exploregroups%
+\StrChar{#1}{1}[\tempa]%
+\expandafter\testCJKfirstchar\tempa&}
+\end{texlist}
+
+\item 卷期范围解析
+\begin{texlist}
+%用于解析连续出版物，2个卷期的情况
+%\def\multivolumeparsetoparts#1/#2{\def\multivolumefirst{#1}\def\multivolumesecond{#2}}
+%\def\multinumberparsetoparts#1/#2{\def\multinumberfirst{#1}\def\multinumbersecond{#2}}
+%范围起止间隔符号还是用-，而不是与date相同的/，因为有合期期刊的问题，需要用到/符号
+\newcommand{\multivolparser}[1]{%
+    \IfSubStr{#1}{-}%
+        {\StrBefore{#1}{-}[\multivolfirst]\StrBehind{#1}{-}[\multivolsecond]}%
+        {\def\multivolfirst{#1}\def\multivolsecond{}}%
+}
+
+\newcommand{\multinumberparser}[1]{%
+    \IfSubStr{#1}{-}%
+        {\StrBefore{#1}{-}[\multinumberfirst]\StrBehind{#1}{-}[\multinumbersecond]}%
+        {\def\multinumberfirst{#1}\def\multinumbersecond{}}%
+}
+
+%这里利用李志奇的范围数据解析函数，修改后用来处理卷volume的范围。
+%他的这个函数是通用的，只能在使用数据前使用，如果多次使用前一次得到的数据就会被冲掉
+%这里的范围起止判断符号还是用-，而不是与date相同的/，因为有合期期刊的问题，需要用到/符号
+%\def\gbt@parse@range#1{%
+%    \edef\gbt@tmpa{#1}%
+%    \expandafter\gbt@parse@rangei\gbt@tmpa-\@empty}
+%\def\gbt@parse@rangei#1-#2\@empty{%
+%    \global\def\gbt@range@first{#1}%
+%    \def\gbt@tmpa{#2}%
+%    \ifx\gbt@tmpa\@empty%
+%        \global\def\gbt@range@second{}%
+%    \else%
+%        \gbt@parse@rangeii#2\@empty%
+%    \fi}
+%\def\gbt@parse@rangeii#1-#2\@empty{%
+%    \def\gbt@tmpa{#2}%
+%    \ifx\gbt@tmpa\@empty%
+%        \global\def\gbt@range@second{#1}%
+%    \else%
+%        \gbt@parse@rangeii#2\@empty%
+%    \fi}
+
+%这里写的number的解析函数，与上面的卷解析函数是类似的。
+%\def\multinumberparser#1{%
+%    \edef\gbnumbertmp{#1}%
+%    \expandafter\multinumberparsetoparts\gbnumbertmp-\@empty}
+%\def\multinumberparsetoparts#1-#2\@empty{%
+%    \def\multinumberfirst{#1}%
+%    \def\gbnumbertmp{#2}%
+%    \ifx\gbnumbertmp\@empty%
+%        \def\multinumbersecond{}%
+%    \else%
+%        \multinumberparsetopartsb#2\@empty%
+%    \fi}
+%\def\multinumberparsetopartsb#1-#2\@empty{%
+%    \def\gbnumbertmp{#2}%
+%    \ifx\gbnumbertmp\@empty%
+%        \def\multinumbersecond{#1}%
+%    \else%
+%        \multinumberparsetopartsb#2\@empty%
+%    \fi}
+\end{texlist}
+
+\end{enumerate}
+
 
 \subsection{脚注或旁注文献}
   标注命令自定义，在脚注中引用文献，或者把引文放在脚注中或者旁注中
@@ -1153,6 +1243,73 @@ biber动态数据处理，详见4.5.3 Dynamic Modification of Data和bbx文件�
     \item uniquename的作用
     \item uniquelist的作用
   \end{enumerate}
+  
+\subsection{日期格式控制}\label{sec:date:fmt}
+随着biblatex的更新，日期格式控制更趋完善。加上biblatex3.8a中biber解析出日期中月份和天数都不带引导的0，比如6月直接解析为6，而不像以前那样解析为06，所以需要特别的注意。因此对于新版本，有些日期比如online的发布日期，访问日期等，采用专门的格式edtf控制，而老版本则仍然使用原来的自定义的输出宏。
+
+\begin{texlist}
+\defversion{3.7}{date}{
+    \DeclareFieldFormat{urldate}{##1}
+    \renewbibmacro*{urldate}{%
+    \addspace\printtext{[}\printurldate\printtext{]}}%能用高层命令+选项尽量用命令(比如这里的\printurldate)，而不用\blx@edtfdate这种更底层的命令
+
+    \newbibmacro*{newsdate}{%%新增加一个新闻日期
+    \blx@edtfdate{}{}%
+    }
+
+    \newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示电子资源的更新和修改日期，而公告日期则按日期格式
+        \iffieldundef{year}{%
+                \iffieldundef{endyear}{\iffieldundef{eventyear}{}{\printtext{(}\printeventdate\printtext{)}}}%
+                {\printtext{(}\printenddate\printtext{)}}%
+        }{\iffieldequalstr{year}{}{%因为year存在，但为空
+            }{\printtext{(}\blx@edtfdate{}{}\printtext{)}}%
+         }%
+    }%
+}
+
+\defversion{3.4}{date}{
+    \renewbibmacro*{urldate}{%
+    \addspace\printtext{[}\printfield{urlyear}%
+    \iffieldundef{urlmonth}{}{\bibrangedash\printfield{urlmonth}}%
+    \iffieldundef{urlday}{}{\bibrangedash\printfield{urlday}}\printtext{]}}
+
+    \newbibmacro*{newsdate}{%%新增加一个新闻日期
+    \iffieldundef{year}{}{\printfield{year}%
+    \iffieldundef{month}{}{\bibrangedash\printtext{\thefield{month}}%
+    \iffieldundef{day}{}{\bibrangedash\printfield{day}}}}%
+    }
+
+    \newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示电子资源的更新和修改日期，而公告日期则按日期格式
+        \iffieldequalstr{year}{}{%替换\iffieldundef{year}，因为year总是存在，但为空
+            \iffieldundef{endyear}{%
+                \iffieldundef{eventyear}{}{\printtext{\mkbibparens{\printtext{\printfield{eventyear}}%
+                \iffieldundef{eventmonth}{}{\bibrangedash\thefield{eventmonth}}%
+                \iffieldundef{eventday}{}{\bibrangedash\printfield{eventday}}}}%
+                }%
+            }{%
+                \iffieldundef{endyear}{}{\printtext{\mkbibparens{\printtext{\printfield{endyear}}%
+                \iffieldundef{endmonth}{}{\bibrangedash\thefield{endmonth}}%
+                \iffieldundef{endday}{}{\bibrangedash\printfield{endday}}}}%
+                }%
+            }%
+        }%
+        {%
+            \iffieldundef{year}{}{\printtext{\mkbibparens{\printtext{\printfield{year}}%
+            \iffieldundef{month}{}{\bibrangedash\thefield{month}}%
+            \iffieldundef{day}{}{\bibrangedash\printfield{day}}}}%
+            }%
+        }%
+    }%
+}
+
+\iftoggle{iftlfive}%%根据texlive/biblatex版本选择
+    {\switchversion{3.4}{date}}%
+    {\iftoggle{iftlsix}%
+        {\switchversion{3.4}{date}}%
+        {\switchversion{3.7}{date}}%
+    }
+\end{texlist}
+
 
 \subsection{样式文件简单设计方法}
   biblatex的核心-参考文献样式文件的设计
@@ -1318,6 +1475,133 @@ texlive2017对应biblatex3.7;
   \DeclareSortingScheme %for texlive2014,2015,2016,2017;biblatex <3.8
   \DeclareSortingTemplate %for biblatex >=3.8a
   \end{texlist}
+  
+  \item 版本与兼容性的最终处理方法
+  
+  经过设计，最终设计了另一种版本兼容处理方式，便于以后的扩展。
+  \begin{texlist}
+  %版本判断
+    \providetoggle{iftlfive}%用于处理biblatex3.2之前的版本,即texlive2015以下版本中的biblatex
+    \providetoggle{iftlsix}%用于处理biblatex3.3开始改变的新的姓名机制后版本，包括
+    \providetoggle{iftlseven}%用于处理biblatex3.7的兼容性
+    \providetoggle{iftleight}%用于处理biblatex3.8a的兼容性
+    \StrChar{\abx@version}{1}[\numinteger]
+    \StrChar{\abx@version}{3}[\numdigital]
+    \ifnumcomp{\numinteger}{=}{2}{\toggletrue{iftlfive}}{\togglefalse{iftlfive}}
+    \ifnumcomp{\numinteger}{=}{3}{
+        \ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftlsix}\togglefalse{iftlfive}}{\togglefalse{iftlsix}\toggletrue{iftlfive}}
+        \ifnumcomp{\numdigital}{>}{6}{\toggletrue{iftlseven}\togglefalse{iftlsix}}{\togglefalse{iftlseven}}
+        \ifnumcomp{\numdigital}{>}{7}{\toggletrue{iftleight}\togglefalse{iftlseven}}{\togglefalse{iftleight}}
+    }{\blx@warning@noline{%
+       biblatex version undefined in biblatex-gb7714-2015.\MessageBreak
+       Please contact pkg author.}}
+    \newcommand\defversion[2]{\csdef{codeversion#1#2}}%定义不同版本的命令
+    \newcommand\switchversion[2]{\csuse{codeversion#1#2}}%使用不同版本的命令
+    
+    \defversion{3.0}{opt}{
+    %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
+    %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015无效，仍然为右对齐模式，因为舍弃了list类环境后出错。
+    \DeclareBibliographyOption{align}[right]{%texlive2015中的3.0版中的DeclareBibliographyOption选项没有类型说明
+        \ifstrequal{##1}{right}{}{}
+        \ifstrequal{##1}{left}{\setalignleft}{}
+        \ifstrequal{##1}{gb7714-2015}{}{}
+    }
+
+    %增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
+    \newtoggle{bbx:gbpub}
+    \DeclareBibliographyOption{gbpub}[true]{%
+        %\settoggle{bbx:gbpub}{#1} %或采用下面这一句
+        \ifstrequal{##1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
+    \ExecuteBibliographyOptions{gbpub}
+
+    %增加一个处理佚名或noauthor的控制选项
+    %因为在顺序编码制中，不需要使用，这里也增加，为了与作者年制的兼容性考虑。
+    \DeclareBibliographyOption{gbnoauthor}[true]{}%
+
+    \ExecuteBibliographyOptions{
+      sorting=none,
+      useprefix=true,  %名字的信息包括前缀
+      firstinits=true,    %名字有缩写，参考3.1.2.3 Internal
+      %giveninits=true,
+      date    = year,  %日期仅写到年
+      maxnames     = 3 ,    %设置名字最大数量
+      minnames     = 3       %设置缩减后的名字最小数量
+      %uniquename   = init
+    }
+}
+
+\defversion{3.4}{opt}{
+    % Alter settings that carry through from biblatex
+    %biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
+    %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
+    \DeclareBibliographyOption[string]{align}[right]{%
+        \ifstrequal{##1}{left}{\setalignleft}{}
+        \ifstrequal{##1}{gb7714-2015}{\setaligngbstyle}{}
+    }
+
+    %增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
+    \newtoggle{bbx:gbpub}
+    \DeclareBibliographyOption[boolean]{gbpub}[true]{%
+        %\settoggle{bbx:gbpub}{#1} %或采用下面这一句
+        \ifstrequal{##1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
+    \ExecuteBibliographyOptions{gbpub}
+
+    %增加一个处理佚名或noauthor的控制选项
+    %因为在顺序编码制中，不需要使用，这里也增加，为了与作者年制的兼容性考虑。
+    \DeclareBibliographyOption[boolean]{gbnoauthor}[true]{}%
+
+    \ExecuteBibliographyOptions{
+      sorting=none,
+      useprefix=true,  %名字的信息包括前缀
+      %firstinits=true,    %名字有缩写，参考3.1.2.3 Internal
+      giveninits=true,
+      date         = year,  %日期仅写到年
+      maxnames     = 3 ,    %设置名字最大数量
+      minnames     = 3       %设置缩减后的名字最小数量
+      %uniquename   = init
+    }
+}
+
+\defversion{3.7}{opt}{
+    %biblatex3.7版后(比如texlive2017中的3.7版)的使用方式
+    %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
+    \DeclareBibliographyOption[string]{align}[right]{%
+        \ifstrequal{##1}{left}{\setalignleft}{}
+        \ifstrequal{##1}{gb7714-2015}{\setaligngbstyle}{}
+    }
+
+    %增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
+    \newtoggle{bbx:gbpub}
+    \DeclareBibliographyOption[boolean]{gbpub}[true]{%
+        %\settoggle{bbx:gbpub}{#1} %或采用下面这一句
+        \ifstrequal{##1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
+    \ExecuteBibliographyOptions{gbpub}
+
+    %增加一个处理佚名或noauthor的控制选项
+    %因为在顺序编码制中，不需要使用，这里也增加，为了与作者年制的兼容性考虑。
+    \DeclareBibliographyOption[boolean]{gbnoauthor}[true]{}%
+
+    \ExecuteBibliographyOptions{
+      sorting=none,
+      useprefix=true,  %名字的信息包括前缀
+      %firstinits=true,    %名字有缩写，参考3.1.2.3 Internal
+      giveninits=true,
+      date         = year,  %日期仅写到年
+      urldate =edtf, %iso8601
+      eventdate =edtf,
+      maxnames     = 3 ,    %设置名字最大数量
+      minnames     = 3       %设置缩减后的名字最小数量
+      %uniquename   = init
+    }
+}
+
+\iftoggle{iftlfive}
+    {\switchversion{3.0}{opt}}%%当采用texlive2015以下版本时
+    {\iftoggle{iftlsix}%
+        {\switchversion{3.4}{opt}}%%当采用texlive2016版本时
+        {\switchversion{3.7}{opt}}%%当采用texlive2017以上版本时
+    }  
+  \end{texlist}
 
   \end{enumerate}
 
@@ -1330,7 +1614,7 @@ texlive2017对应biblatex3.7;
 \begin{enumerate}
   \item 因为采用xelatex编译，所以样式文件直接采用UTF-8编码，没有考虑GBK编码。
 
-  \item \zhongdian{【Most Important】【注意】：当在顺序编码和作者年制的切换使用时，如果出错，可先清理一下辅助文件，清理完后，重新编译即可。}
+  \item \zhongdian{【Most Important】【注意】：当在顺序编码和作者年制的切换，或者biblatex版本切换时，如果使用出错，可先清理一下辅助文件，清理完后，重新编译即可。}
 
   \item 需要注意：当bibtex键中含有中文的时候，texlive2015中的biblatex3.0版的对参考文献条目的超链接会出现问题，而texlive2016 中的biblatex3.4版则没有问题。
 
@@ -1438,7 +1722,9 @@ texlive2017对应biblatex3.7;
 %============================
 \updateinfo[2017-11-21]{update to version 1.0i}\label{up:171121}
 \begin{enumerate}
-\item 针对biblatex3.8a的更新做了兼容性处理，主要是修改版本判断机制，替换新的宏包选项，替换新的排序格式命令。详见第\ref{sec:blx:compatibility}节
+\item 针对biblatex3.8a的更新做了兼容性处理，主要是修改版本判断和处理机制，替换新的宏包选项，替换新的排序格式命令。详见第\ref{sec:blx:compatibility}节
+    
+\item 重写了范围解析函数，详见\ref{sec:cjkjudge}节
 
 \end{enumerate}
 
@@ -2184,32 +2470,7 @@ texlive2017对应biblatex3.7;
 \iffieldundef{urlday}{}{\bibrangedash\printfield{urlday}}\printtext{]}}
 \end{texlist}
 
-\item 当责任者等需要判断中英文的信息是用编组符号包含的时候，原来的CJK判断函数会出现问题，所以利用xstring宏包做一定的修改，修改完成后可以应对信息中存在编组的情况。
-    原来的判断函数为:
-\begin{texlist}
-\providetoggle{ifCJKforgbt}%定义判断中文字符的函数，用于判断作者等信息是否由中文字符构成
-\def\testCJKfirstchar#1#2&{%
-\ifnumgreater{`#1}{"2E7F}{\toggletrue{ifCJKforgbt}}{\togglefalse{ifCJKforgbt}}}%
-\def\testCJKfirst#1{%
-\edef\tempa{#1}%
-\expandafter\testCJKfirstchar\tempa&}
-\end{texlist}
-
-    修改为:
-\begin{texlist}
-\providetoggle{ifCJKforgbt}%定义判断中文字符的函数，用于判断作者等信息是否由中文字符构成
-\def\testCJKfirstchar#1#2&{%
-\ifnumgreater{`#1}{"2E7F}{\toggletrue{ifCJKforgbt}}{\togglefalse{ifCJKforgbt}}%
-}%
-
-\def\testCJKfirst#1{%
-%\edef\tempa{#1}%
-\exploregroups%
-\StrChar{#1}{1}[\tempa]%
-\expandafter\testCJKfirstchar\tempa&}
-\end{texlist}
-
-\item 增加了文档内容，总结了本样式宏包的特点。
+\item 当责任者等需要判断中英文的信息是用编组符号包含的时候，原来的CJK判断函数会出现问题，所以利用xstring宏包做一定的修改，修改完成后可以应对信息中存在编组的情况，详见\ref{sec:cjkjudge}节。
 \end{enumerate}
 
 %============================

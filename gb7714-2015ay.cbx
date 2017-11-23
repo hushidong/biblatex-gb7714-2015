@@ -17,31 +17,44 @@
 \RequireCitationStyle{authoryear}
 %\RequireCitationStyle{numeric}
 
-\iftoggle{iftexliveeight}{%
-\ExecuteBibliographyOptions{
-  %autocite  = superscript ,
-  %autopunct = true       ,
-  %sorting   = none        ,
-  maxcitenames=1,
-  mincitenames=1,
-  uniquename=init,%因为使用了名字缩写选项，所以需要设置uniquename=init而不是full避免冲突
-  labeldateparts=true,
-  %labeldate=true,
-  uniquelist=minyear,
-}}{%
-\ExecuteBibliographyOptions{
-  %autocite  = superscript ,
-  %autopunct = true       ,
-  %sorting   = none        ,
-  maxcitenames=1,
-  mincitenames=1,
-  uniquename=init,%因为使用了名字缩写选项，所以需要设置uniquename=init而不是full避免冲突
-  labeldate=true,
-  uniquelist=minyear,
-}}
+\defversion{3.7}{cbxopt}{
+    \ExecuteBibliographyOptions{
+      %autocite  = superscript ,
+      %autopunct = true       ,
+      %sorting   = none        ,
+      maxcitenames=1,
+      mincitenames=1,
+      uniquename=init,%因为使用了名字缩写选项，所以需要设置uniquename=init而不是full避免冲突
+      labeldate=true,
+      uniquelist=minyear,
+    }
+}
+
+\defversion{3.8}{cbxopt}{
+    \ExecuteBibliographyOptions{
+      %autocite  = superscript ,
+      %autopunct = true       ,
+      %sorting   = none        ,
+      maxcitenames=1,
+      mincitenames=1,
+      uniquename=init,%因为使用了名字缩写选项，所以需要设置uniquename=init而不是full避免冲突
+      labeldateparts=true,
+      %labeldate=true,
+      uniquelist=minyear,
+    }
+}
+
+\iftoggle{iftlfive}
+    {\switchversion{3.7}{sort}}%%当采用texlive2015以下版本时
+    {\iftoggle{iftlsix}%
+        {\switchversion{3.7}{sort}}%%当采用texlive2016版本时
+        {\iftoggle{iftlseven}%
+            {\switchversion{3.7}{sort}}%%当采用texlive2017版本时
+            {\switchversion{3.8}{sort}}%%当采用biblatex3.8a版本时
+        }%
+    }
 
 %\DeclareCiteCommand{\cite}[\mkbibparens]{⟨precode⟩}{⟨loopcode⟩}{⟨sepcode⟩}{⟨postcode⟩}
-%
 \DeclareCiteCommand{\cite}[\mkbibparens]
   {\usebibmacro{prenote}}
   {\usebibmacro{citeindex}%

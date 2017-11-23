@@ -27,18 +27,22 @@
 %增加一些功能函数
 %=====================================================================
     %版本判断
-    \providetoggle{iftexlivesix}%用于处理biblatex3.3开始改变的新的姓名机制
-    \providetoggle{iftexliveseven}%用于处理biblatex3.7的兼容性
-    \providetoggle{iftexliveeight}%用于处理biblatex3.8a的兼容性
-    %\def\numparserta#1.#2a\relax{#1}%注意relax的重要性
-    %\def\numparsertb#1.#2a\relax{#2}
-    %\def\numinteger{\expandafter\numparserta\abx@version\relax}
-    %\def\numdigital{\expandafter\numparsertb\abx@version\relax}
+    \providetoggle{iftlfive}%用于处理biblatex3.2之前的版本,即texlive2015以下版本中的biblatex
+    \providetoggle{iftlsix}%用于处理biblatex3.3开始改变的新的姓名机制后版本，包括
+    \providetoggle{iftlseven}%用于处理biblatex3.7的兼容性
+    \providetoggle{iftleight}%用于处理biblatex3.8a的兼容性
+    \StrChar{\abx@version}{1}[\numinteger]
     \StrChar{\abx@version}{3}[\numdigital]
-    %根据biblatex更新历史，当版本大于3.2开始，就用设置\toggletrue{iftexlivesix}
-    \ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftexlivesix}}{\togglefalse{iftexlivesix}}
-    \ifnumcomp{\numdigital}{>}{6}{\toggletrue{iftexliveseven}}{\togglefalse{iftexliveseven}}
-    \ifnumcomp{\numdigital}{>}{7}{\toggletrue{iftexliveeight}}{\togglefalse{iftexliveeight}}
+    \ifnumcomp{\numinteger}{=}{2}{\toggletrue{iftlfive}}{\togglefalse{iftlfive}}
+    \ifnumcomp{\numinteger}{=}{3}{
+        \ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftlsix}\togglefalse{iftlfive}}{\togglefalse{iftlsix}\toggletrue{iftlfive}}
+        \ifnumcomp{\numdigital}{>}{6}{\toggletrue{iftlseven}\togglefalse{iftlsix}}{\togglefalse{iftlseven}}
+        \ifnumcomp{\numdigital}{>}{7}{\toggletrue{iftleight}\togglefalse{iftlseven}}{\togglefalse{iftleight}}
+    }{\blx@warning@noline{%
+       biblatex version undefined in biblatex-gb7714-2015.\MessageBreak
+       Please contact pkg author.}}
+    \newcommand\defversion[2]{\csdef{codeversion#1#2}}%定义不同版本的命令
+    \newcommand\switchversion[2]{\csuse{codeversion#1#2}}%使用不同版本的命令
 
 %定义判断中文字符的函数，用于判断作者等信息是否由中文字符构成
 %2E00-2E7F 追加标点
@@ -62,139 +66,139 @@
 \StrChar{#1}{1}[\tempa]%
 \expandafter\testCJKfirstchar\tempa&}
 
-%判断是否是标准
-%\providetoggle{ifnoteeqstandard}
-%\def\testifnoteeqstd{%
-%\iffieldundef{note}{\togglefalse{ifnoteeqstandard}}%判断一下，是否是报纸和标准
-%        {\def\comparetmp{standard}\edef\comparetmpb{\thefield{note}}%
-%        \ifx\comparetmp\comparetmpb%
-%        \toggletrue{ifnoteeqstandard}%
-%        \else%
-%        \togglefalse{ifnoteeqstandard}%
-%        \fi}}
-%\iffieldequalstr{note}{standard}{true}{false} %可以利用这一函数代替
-
 %用于解析连续出版物，2个卷期的情况
-\def\multivolumeparsetoparts#1/#2{\def\multivolumefirst{#1}\def\multivolumesecond{#2}}
-%\def\multinumberparsetoparts#1/#2{\def\multinumberfirst{#1}\def\multinumbersecond{#2}}
-
-%这里利用李志奇的范围数据解析函数，修改后用来处理卷volume的范围。
-%他的这个函数是通用的，只能在使用数据前使用，如果多次使用前一次得到的数据就会被冲掉
-%这里的范围起止判断符号还是用-，而不是与date相同的/，因为有合期期刊的问题，需要用到/符号
-\def\gbt@parse@range#1{%
-    \edef\gbt@tmpa{#1}%
-    \expandafter\gbt@parse@rangei\gbt@tmpa-\@empty}
-\def\gbt@parse@rangei#1-#2\@empty{%
-    \global\def\gbt@range@first{#1}%
-    \def\gbt@tmpa{#2}%
-    \ifx\gbt@tmpa\@empty%
-        \global\def\gbt@range@second{}%
-    \else%
-        \gbt@parse@rangeii#2\@empty%
-    \fi}
-\def\gbt@parse@rangeii#1-#2\@empty{%
-    \def\gbt@tmpa{#2}%
-    \ifx\gbt@tmpa\@empty%
-        \global\def\gbt@range@second{#1}%
-    \else%
-        \gbt@parse@rangeii#2\@empty%
-    \fi}
-
-%这里写的number的解析函数，与上面的卷解析函数是类似的。
-\def\multinumberparser#1{%
-    \edef\gbnumbertmp{#1}%
-    \expandafter\multinumberparsetoparts\gbnumbertmp-\@empty}
-\def\multinumberparsetoparts#1-#2\@empty{%
-    \def\multinumberfirst{#1}%
-    \def\gbnumbertmp{#2}%
-    \ifx\gbnumbertmp\@empty%
-        \def\multinumbersecond{}%
-    \else%
-        \multinumberparsetopartsb#2\@empty%
-    \fi}
-\def\multinumberparsetopartsb#1-#2\@empty{%
-    \def\gbnumbertmp{#2}%
-    \ifx\gbnumbertmp\@empty%
-        \def\multinumbersecond{#1}%
-    \else%
-        \multinumberparsetopartsb#2\@empty%
-    \fi}
-
-
+%范围起止间隔符号还是用-，而不是与date相同的/，因为有合期期刊的问题，需要用到/符号
+\newcommand{\multivolparser}[1]{%
+    \IfSubStr{#1}{-}%
+        {\StrBefore{#1}{-}[\multivolfirst]\StrBehind{#1}{-}[\multivolsecond]}%
+        {\def\multivolfirst{#1}\def\multivolsecond{}}%
+}
+\newcommand{\multinumberparser}[1]{%
+    \IfSubStr{#1}{-}%
+        {\StrBefore{#1}{-}[\multinumberfirst]\StrBehind{#1}{-}[\multinumbersecond]}%
+        {\def\multinumberfirst{#1}\def\multinumbersecond{}}%
+}
 
 %=====================================================================
 %=====================================================================
 %设置宏包选项
 %=====================================================================
-\iftoggle{iftexlivesix}{%Alter settings that carry through from biblatex
-%biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
+\defversion{3.0}{opt}{
+    %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
+    %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
+    %因为在作者年制中，不需要使用，这里也增加，为了与顺序年制的兼容性考虑。
+    \DeclareBibliographyOption{align}[right]{}%
 
-%增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
-%因为在作者年制中，不需要使用，这里也增加，为了与顺序编码制的兼容性考虑。
-\DeclareBibliographyOption[string]{align}[right]{}%
+    %增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
+    \newtoggle{bbx:gbpub}
+    \DeclareBibliographyOption{gbpub}[true]{%
+    %\settoggle{bbx:gbpub}{#1} %或采用下面这一句
+      \ifstrequal{##1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
+    \ExecuteBibliographyOptions{gbpub}
 
-%增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
-\newtoggle{bbx:gbpub}
-\DeclareBibliographyOption[boolean]{gbpub}[true]{%
-%\settoggle{bbx:gbpub}{#1} %或采用下面这一句
-  \ifstrequal{#1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
-\ExecuteBibliographyOptions{gbpub}
+    %增加一个处理佚名或noauthor的控制选项
+    \DeclareBibliographyOption{gbnoauthor}[true]{%
+      \ifstrequal{##1}{false}{\dealnoathorfalse}{\dealnoathor}}
+    %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能用宏包加载时给出的选项。
 
-%增加一个处理佚名或noauthor的控制选项
-\DeclareBibliographyOption[boolean]{gbnoauthor}[true]{%
-  \ifstrequal{#1}{false}{\dealnoathorfalse}{\dealnoathor}}
-%\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能利用宏包加载时给出选项达到目的。
+    \ExecuteBibliographyOptions{
+      useprefix = true,  %名字的信息包括前缀
+      firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
+      date   = year,  %日期仅写到年
+      %maxnames     = 3 , %设置名字最大数量
+      %minnames     = 3,  %设置缩减后的名字最小数量
+      maxbibnames=3, %将文献列表和引用中最大名字数量区分开
+      minbibnames=3,
+      %uniquename=init,
+    }
+}
 
-\ExecuteBibliographyOptions{
-  useprefix = true,  %名字的信息包括前缀
-  %firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
-  giveninits = true,
-  date   = year,  %日期仅写到年
-  %maxnames     = 3 , %设置名字最大数量
-  %minnames     = 3,  %设置缩减后的名字最小数量
-  maxbibnames=3, %将文献列表和引用中最大名字数量区分开
-  minbibnames=3,
-}}
-{%biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
-%增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
-%因为在作者年制中，不需要使用，这里也增加，为了与顺序年制的兼容性考虑。
-\DeclareBibliographyOption{align}[right]{}%
+\defversion{3.4}{opt}{
+    %Alter settings that carry through from biblatex
+    %biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
 
-%增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
-\newtoggle{bbx:gbpub}
-\DeclareBibliographyOption{gbpub}[true]{%
-%\settoggle{bbx:gbpub}{#1} %或采用下面这一句
-  \ifstrequal{#1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
-\ExecuteBibliographyOptions{gbpub}
+    %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
+    %因为在作者年制中，不需要使用，这里也增加，为了与顺序编码制的兼容性考虑。
+    \DeclareBibliographyOption[string]{align}[right]{}%
 
-%增加一个处理佚名或noauthor的控制选项
-\DeclareBibliographyOption{gbnoauthor}[true]{%
-  \ifstrequal{#1}{false}{\dealnoathorfalse}{\dealnoathor}}
-%\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能用宏包加载时给出的选项。
+    %增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
+    \newtoggle{bbx:gbpub}
+    \DeclareBibliographyOption[boolean]{gbpub}[true]{%
+    %\settoggle{bbx:gbpub}{#1} %或采用下面这一句
+      \ifstrequal{##1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
+    \ExecuteBibliographyOptions{gbpub}
 
-\ExecuteBibliographyOptions{
-  useprefix = true,  %名字的信息包括前缀
-  firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
-  date   = year,  %日期仅写到年
-  %maxnames     = 3 , %设置名字最大数量
-  %minnames     = 3,  %设置缩减后的名字最小数量
-  maxbibnames=3, %将文献列表和引用中最大名字数量区分开
-  minbibnames=3,
-  %uniquename=init,
-}}
+    %增加一个处理佚名或noauthor的控制选项
+    \DeclareBibliographyOption[boolean]{gbnoauthor}[true]{%
+      \ifstrequal{##1}{false}{\dealnoathorfalse}{\dealnoathor}}
+    %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能利用宏包加载时给出选项达到目的。
+
+    \ExecuteBibliographyOptions{
+      useprefix = true,  %名字的信息包括前缀
+      %firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
+      giveninits = true,
+      date   = year,  %日期仅写到年
+      %maxnames     = 3 , %设置名字最大数量
+      %minnames     = 3,  %设置缩减后的名字最小数量
+      maxbibnames=3, %将文献列表和引用中最大名字数量区分开
+      minbibnames=3,
+      %datezeros=true,
+    }
+}
+
+\defversion{3.7}{opt}{
+    %Alter settings that carry through from biblatex
+    %biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
+
+    %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
+    %因为在作者年制中，不需要使用，这里也增加，为了与顺序编码制的兼容性考虑。
+    \DeclareBibliographyOption[string]{align}[right]{}%
+
+    %增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
+    \newtoggle{bbx:gbpub}
+    \DeclareBibliographyOption[boolean]{gbpub}[true]{%
+    %\settoggle{bbx:gbpub}{#1} %或采用下面这一句
+      \ifstrequal{##1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
+    \ExecuteBibliographyOptions{gbpub}
+
+    %增加一个处理佚名或noauthor的控制选项
+    \DeclareBibliographyOption[boolean]{gbnoauthor}[true]{%
+      \ifstrequal{##1}{false}{\dealnoathorfalse}{\dealnoathor}}
+    %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能利用宏包加载时给出选项达到目的。
+
+    \ExecuteBibliographyOptions{
+      useprefix = true,  %名字的信息包括前缀
+      %firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
+      giveninits = true,
+      date   = year,  %日期仅写到年
+      urldate =edtf,
+      eventdate =edtf,
+      %maxnames     = 3 , %设置名字最大数量
+      %minnames     = 3,  %设置缩减后的名字最小数量
+      maxbibnames=3, %将文献列表和引用中最大名字数量区分开
+      minbibnames=3,
+      %datezeros=true,
+    }
+}
+
+\iftoggle{iftlfive}
+    {\switchversion{3.0}{opt}}%%当采用texlive2015以下版本时
+    {\iftoggle{iftlsix}%
+        {\switchversion{3.4}{opt}}%%当采用texlive2016版本时
+        {\switchversion{3.7}{opt}}%%当采用texlive2017以上版本时
+    }
 
 
 %=====================================================================
 %=====================================================================
 %设置本地化字符串
 %=====================================================================
-%新建一个当地化字符串，用来记录“等”字符
-\NewBibliographyString{andotherscn}
-\NewBibliographyString{noaddress}
-\NewBibliographyString{nopublisher}
+    %新建一个当地化字符串，用来记录“等”字符
+    \NewBibliographyString{andotherscn}
+    \NewBibliographyString{noaddress}
+    \NewBibliographyString{nopublisher}
 
-%直接利用当地化格式english进行修改一些中文的格式，
-%具体可以修改哪些，参考english.lbx文件
+%直接利用当地化格式english进行修改一些中文的格式，具体可以修改哪些，参考english.lbx文件
 %当然也可以增加比如上面定义的andotherscn
 %注意:在lbx文件和bbx文件中定义本地字符串的不同语法，两个参数和一个参数的区别
 \DefineBibliographyStrings{english}{
@@ -213,7 +217,7 @@ backrefpages     = {引用页:},
 
 %=====================================================================
 %=====================================================================
-%动态数据修改，修改输入的源文件数据，用于中文判断等
+%动态数据修改，修改输入的源文件数据，用于中文判断等操作
 %=====================================================================
 %首先把作者和译者信息准确的记录到userf，usere中，用于后面判断是否是cjk字符。
 %注意\DeclareSourcemap命令只能出现一次
@@ -374,126 +378,126 @@ backrefpages     = {引用页:},
 }
 
 \def\dealnoathorfalse{
-\iftoggle{iftexlivesix}{
-    \DeclareStyleSourcemap{
-        \maps[datatype=bibtex]{
-            \map[overwrite, foreach={title,booktitle,journaltitle,journal,publisher,address,location,institution,organization}]{
-                \step[fieldsource=\regexp{$MAPLOOP}, match=\regexp{([^\\])\#}, replace=\regexp{$1\\\#}]
+    \iftoggle{iftlfive}{
+        \DeclareStyleSourcemap{
+            \maps[datatype=bibtex]{
+                \map[overwrite]{%title,booktitle,journaltitle,journal,publisher,address,location,institution,organization
+                \step[fieldsource={title}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+                }
+                \map[overwrite]{
+                \step[fieldsource={booktitle}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+                }
+                \map[overwrite]{
+                \step[fieldsource={journaltitle}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+                }
+                \map[overwrite]{
+                \step[fieldsource={journal}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+                }
+                \map[overwrite]{
+                \step[fieldsource={publisher}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+                }
+                \map[overwrite]{
+                \step[fieldsource={address}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+                }
+                \map[overwrite]{
+                \step[fieldsource={location}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+                }
+                \map[overwrite]{
+                \step[fieldsource={institution}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+                }
+                \map[overwrite]{
+                \step[fieldsource={booktitle}, match=\regexp{([^\\])\#}, replace=\regexp{$1\\\#}]
+                }
+                \map[overwrite]{
+                \step[fieldsource={booktitle}, match=\regexp{([^\\])\%}, replace=\regexp{$1\\\%}]
+                }
             }
-            \map[overwrite, foreach={title,booktitle,journaltitle,journal,publisher,address,location,institution,organization}]{
-                \step[fieldsource=\regexp{$MAPLOOP}, match=\regexp{([^\\])\%}, replace=\regexp{$1\\\%}]
-            }
-            \map[overwrite, foreach={title,booktitle,journaltitle,journal,publisher,%
-            address,location,institution,organization}]{
-                \step[fieldsource=\regexp{$MAPLOOP}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+        }
+    }{\DeclareStyleSourcemap{
+            \maps[datatype=bibtex]{
+                \map[overwrite, foreach={title,booktitle,journaltitle,journal,publisher,address,location,institution,organization}]{
+                    \step[fieldsource=\regexp{$MAPLOOP}, match=\regexp{([^\\])\#}, replace=\regexp{$1\\\#}]
+                }
+                \map[overwrite, foreach={title,booktitle,journaltitle,journal,publisher,address,location,institution,organization}]{
+                    \step[fieldsource=\regexp{$MAPLOOP}, match=\regexp{([^\\])\%}, replace=\regexp{$1\\\%}]
+                }
+                \map[overwrite, foreach={title,booktitle,journaltitle,journal,publisher,%
+                address,location,institution,organization}]{
+                    \step[fieldsource=\regexp{$MAPLOOP}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+                }
             }
         }
     }
-}{
-    \DeclareStyleSourcemap{
-        \maps[datatype=bibtex]{
-            \map[overwrite]{%title,booktitle,journaltitle,journal,publisher,address,location,institution,organization
-            \step[fieldsource={title}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
-            }
-            \map[overwrite]{
-            \step[fieldsource={booktitle}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
-            }
-            \map[overwrite]{
-            \step[fieldsource={journaltitle}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
-            }
-            \map[overwrite]{
-            \step[fieldsource={journal}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
-            }
-            \map[overwrite]{
-            \step[fieldsource={publisher}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
-            }
-            \map[overwrite]{
-            \step[fieldsource={address}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
-            }
-            \map[overwrite]{
-            \step[fieldsource={location}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
-            }
-            \map[overwrite]{
-            \step[fieldsource={institution}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
-            }
-            \map[overwrite]{
-            \step[fieldsource={booktitle}, match=\regexp{([^\\])\#}, replace=\regexp{$1\\\#}]
-            }
-            \map[overwrite]{
-            \step[fieldsource={booktitle}, match=\regexp{([^\\])\%}, replace=\regexp{$1\\\%}]
-            }
-        }
-    }
-}}
+}
 
 \def\dealnoathor{
-\iftoggle{iftexlivesix}{
-    \DeclareStyleSourcemap{
-        \maps[datatype=bibtex]{
-            \map{%默认情况下将空缺作者设置为佚名
-                \step[fieldsource=userb,match={cn},final]
-                \step[fieldset=author, fieldvalue={佚名}]
+    \iftoggle{iftlfive}{
+        \DeclareStyleSourcemap{
+            \maps[datatype=bibtex]{
+                \map{%默认情况下将空缺作者设置为佚名
+                    \step[fieldsource=userb,match={cn},final]
+                    \step[fieldset=author, fieldvalue={佚名}]
+                }
+                \map{%默认情况下将空缺作者设置为佚名
+                    \step[fieldsource=userb,match={en},final]
+                    \step[fieldset=author, fieldvalue={NOAUTHOR}]
+                }
+                \map[overwrite]{%title,booktitle,journaltitle,journal,publisher,address,location,institution,organization
+                \step[fieldsource={title}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+                }
+                \map[overwrite]{
+                \step[fieldsource={booktitle}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+                }
+                \map[overwrite]{
+                \step[fieldsource={journaltitle}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+                }
+                \map[overwrite]{
+                \step[fieldsource={journal}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+                }
+                \map[overwrite]{
+                \step[fieldsource={publisher}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+                }
+                \map[overwrite]{
+                \step[fieldsource={address}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+                }
+                \map[overwrite]{
+                \step[fieldsource={location}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+                }
+                \map[overwrite]{
+                \step[fieldsource={institution}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+                }
+                \map[overwrite]{
+                \step[fieldsource={booktitle}, match=\regexp{([^\\])\#}, replace=\regexp{$1\\\#}]
+                }
+                \map[overwrite]{
+                \step[fieldsource={booktitle}, match=\regexp{([^\\])\%}, replace=\regexp{$1\\\%}]
+                }
             }
-            \map{%默认情况下将空缺作者设置为佚名
-                \step[fieldsource=userb,match={en},final]
-                \step[fieldset=author, fieldvalue={NOAUTHOR}]
-            }
-            \map[overwrite, foreach={title,booktitle,journaltitle,journal,publisher,address,location,institution,organization}]{
-                \step[fieldsource=\regexp{$MAPLOOP}, match=\regexp{([^\\])\#}, replace=\regexp{$1\\\#}]
-            }
-            \map[overwrite, foreach={title,booktitle,journaltitle,journal,publisher,address,location,institution,organization}]{
-                \step[fieldsource=\regexp{$MAPLOOP}, match=\regexp{([^\\])\%}, replace=\regexp{$1\\\%}]
-            }
-            \map[overwrite, foreach={title,booktitle,journaltitle,journal,publisher,%
-            address,location,institution,organization}]{
-                \step[fieldsource=\regexp{$MAPLOOP}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+        }
+    }{  \DeclareStyleSourcemap{
+            \maps[datatype=bibtex]{
+                \map{%默认情况下将空缺作者设置为佚名
+                    \step[fieldsource=userb,match={cn},final]
+                    \step[fieldset=author, fieldvalue={佚名}]
+                }
+                \map{%默认情况下将空缺作者设置为佚名
+                    \step[fieldsource=userb,match={en},final]
+                    \step[fieldset=author, fieldvalue={NOAUTHOR}]
+                }
+                \map[overwrite, foreach={title,booktitle,journaltitle,journal,publisher,address,location,institution,organization}]{
+                    \step[fieldsource=\regexp{$MAPLOOP}, match=\regexp{([^\\])\#}, replace=\regexp{$1\\\#}]
+                }
+                \map[overwrite, foreach={title,booktitle,journaltitle,journal,publisher,address,location,institution,organization}]{
+                    \step[fieldsource=\regexp{$MAPLOOP}, match=\regexp{([^\\])\%}, replace=\regexp{$1\\\%}]
+                }
+                \map[overwrite, foreach={title,booktitle,journaltitle,journal,publisher,%
+                address,location,institution,organization}]{
+                    \step[fieldsource=\regexp{$MAPLOOP}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
+                }
             }
         }
     }
-}{
-    \DeclareStyleSourcemap{
-        \maps[datatype=bibtex]{
-            \map{%默认情况下将空缺作者设置为佚名
-                \step[fieldsource=userb,match={cn},final]
-                \step[fieldset=author, fieldvalue={佚名}]
-            }
-            \map{%默认情况下将空缺作者设置为佚名
-                \step[fieldsource=userb,match={en},final]
-                \step[fieldset=author, fieldvalue={NOAUTHOR}]
-            }
-            \map[overwrite]{%title,booktitle,journaltitle,journal,publisher,address,location,institution,organization
-            \step[fieldsource={title}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
-            }
-            \map[overwrite]{
-            \step[fieldsource={booktitle}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
-            }
-            \map[overwrite]{
-            \step[fieldsource={journaltitle}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
-            }
-            \map[overwrite]{
-            \step[fieldsource={journal}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
-            }
-            \map[overwrite]{
-            \step[fieldsource={publisher}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
-            }
-            \map[overwrite]{
-            \step[fieldsource={address}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
-            }
-            \map[overwrite]{
-            \step[fieldsource={location}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
-            }
-            \map[overwrite]{
-            \step[fieldsource={institution}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
-            }
-            \map[overwrite]{
-            \step[fieldsource={booktitle}, match=\regexp{([^\\])\#}, replace=\regexp{$1\\\#}]
-            }
-            \map[overwrite]{
-            \step[fieldsource={booktitle}, match=\regexp{([^\\])\%}, replace=\regexp{$1\\\%}]
-            }
-        }
-    }
-}}
+}
 
 
 %=====================================================================
@@ -501,69 +505,83 @@ backrefpages     = {引用页:},
 %设置排序格式
 %=====================================================================
 %排序用降序或userb域
-\iftoggle{iftexliveeight}%biblatex3.8版把名称改成了
-{\DeclareSortingTemplate{nyt}{
-  \sort{
-    \field{presort}
-  }
-  \sort[final]{
-    \field{sortkey}
-  }
-  \sort{
-		\field{userb}
-	}
-  \sort{%[direction=descending]
-    \field{sortname}
-    \field{author}
-    \field{editor}
-    \field{translator}
-    \field{sorttitle}
-    \field{title}
-  }
-  \sort{
-    \field{sortyear}
-    \field{year}
-  }
-  \sort{
-    \field{sorttitle}
-    \field{title}
-  }
-  \sort{
-    \field[padside=left,padwidth=4,padchar=0]{volume}
-    \literal{0000}
-  }
+\defversion{3.7}{sort}{
+    \DeclareSortingScheme{nyt}{
+      \sort{
+        \field{presort}
+      }
+      \sort[final]{
+        \field{sortkey}
+      }
+      \sort{
+    		\field{userb}
+    	}
+      \sort{%[direction=descending]
+        \field{sortname}
+        \field{author}
+        \field{editor}
+        \field{translator}
+        \field{sorttitle}
+        \field{title}
+      }
+      \sort{
+        \field{sortyear}
+        \field{year}
+      }
+      \sort{
+        \field{sorttitle}
+        \field{title}
+      }
+      \sort{
+        \field[padside=left,padwidth=4,padchar=0]{volume}
+        \literal{0000}
+      }
+    }
 }
-}{\DeclareSortingScheme{nyt}{
-  \sort{
-    \field{presort}
-  }
-  \sort[final]{
-    \field{sortkey}
-  }
-  \sort{
-		\field{userb}
-	}
-  \sort{%[direction=descending]
-    \field{sortname}
-    \field{author}
-    \field{editor}
-    \field{translator}
-    \field{sorttitle}
-    \field{title}
-  }
-  \sort{
-    \field{sortyear}
-    \field{year}
-  }
-  \sort{
-    \field{sorttitle}
-    \field{title}
-  }
-  \sort{
-    \field[padside=left,padwidth=4,padchar=0]{volume}
-    \literal{0000}
-  }
-}}
+
+\defversion{3.8}{sort}{
+    \DeclareSortingTemplate{nyt}{
+      \sort{
+        \field{presort}
+      }
+      \sort[final]{
+        \field{sortkey}
+      }
+      \sort{
+    		\field{userb}
+    	}
+      \sort{%[direction=descending]
+        \field{sortname}
+        \field{author}
+        \field{editor}
+        \field{translator}
+        \field{sorttitle}
+        \field{title}
+      }
+      \sort{
+        \field{sortyear}
+        \field{year}
+      }
+      \sort{
+        \field{sorttitle}
+        \field{title}
+      }
+      \sort{
+        \field[padside=left,padwidth=4,padchar=0]{volume}
+        \literal{0000}
+      }
+    }
+}
+
+\iftoggle{iftlfive}
+    {\switchversion{3.7}{sort}}%%当采用texlive2015以下版本时
+    {\iftoggle{iftlsix}%
+        {\switchversion{3.7}{sort}}%%当采用texlive2016版本时
+        {\iftoggle{iftlseven}%
+            {\switchversion{3.7}{sort}}%%当采用texlive2017版本时
+            {\switchversion{3.8}{sort}}%%当采用biblatex3.8a版本时
+        }%
+    }
 
 
 %=====================================================================
@@ -587,22 +605,13 @@ backrefpages     = {引用页:},
 %=====================================================================
 %设置单元或块等的标点
 %=====================================================================
-%将名字简写后的点去掉
-%\renewrobustcmd*{\bibinitperiod}{\adddot} %来源biblatex2.STY
-\renewrobustcmd*{\bibinitperiod}{}
-%\newcommand*{\revsdnamepunct}{\addcomma}  %来源biblatex.def
-\renewcommand*{\revsdnamepunct}{}
-%\newcommand*{\subtitlepunct}{\newunitpunct} %修改标题和其它标题信息间的标点
-\renewcommand*{\subtitlepunct}{\addcolon\space} %来源biblatex.def
-
-%关于双语言或多语言的参考文献，可以参考3.11.5 Entry Sets，4.11.1 Entry Sets
-%这里调整一下两种语言参考文献的间隔
-%\renewcommand*{\entrysetpunct}{\addsemicolon\space}%源来自biblatex.def
+\renewrobustcmd*{\bibinitperiod}{} %将名字简写后的点去掉%来源biblatex2.STY
+\renewcommand*{\revsdnamepunct}{}%来源biblatex.def
+\renewcommand*{\subtitlepunct}{\addcolon\space} %修改标题和其它标题信息间的标点%来源biblatex.def
+%双语言或多语言的参考文献，可以参考3.11.5 Entry Sets，4.11.1 Entry Sets
+%这里调整一下两种语言参考文献的间隔,%源来自biblatex.def
 \renewcommand*{\entrysetpunct}{\adddot\par\nobreak}
-
-%页码引用格式的修改
-%\newcommand*{\bibpagespunct}{\addcomma\space}
-\renewcommand*{\bibpagespunct}{\addcolon\space}%修改为用冒号
+\renewcommand*{\bibpagespunct}{\addcolon\space}%页码引用格式的修改%修改为用冒号
 
 
 %=====================================================================
@@ -610,8 +619,6 @@ backrefpages     = {引用页:},
 %修改域的格式
 %=====================================================================
 %新增文献类型标识符的格式
-%\DeclareFieldFormat{gbtypeflag}{\nobreak\mkbibbrackets{\nobreak#1}\nobreak}
-
 \DeclareFieldFormat{gbtypeflag}{%
 \iftoggle{bbx:url}{\iffieldundef{url}%当存在url时，增加一个OL标识符
 {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{]}}%
@@ -631,146 +638,117 @@ backrefpages     = {引用页:},
 }{\nobreak\printtext{[}\nobreak S\printtext{]}\nobreak}}
 
 %重设title的输出格式，不加emph，原格式来自biblatex.def文件
-%\DeclareFieldFormat{journaltitle}{\mkbibemph{#1}}
-%\DeclareFieldFormat{issuetitle}{\mkbibemph{#1}}
-%\DeclareFieldFormat{maintitle}{\mkbibemph{#1}}
-%\DeclareFieldFormat{title}{\mkbibemph{#1}}
-%\DeclareFieldFormat{booktitle}{\mkbibemph{#1}}
 \DeclareFieldFormat{title}{#1\adddot\addthinspace}
 \DeclareFieldFormat{journaltitle}{#1\isdot}%添加\isdot，用于缩写名带点情况，将其转换为缩写点，便于标点的追踪
 \DeclareFieldFormat{issuetitle}{#1}
 \DeclareFieldFormat{maintitle}{#1}
 \DeclareFieldFormat{booktitle}{#1}
-%\DeclareFieldFormat[article,inbook,incollection,inproceedings,patent,thesis,unpublished]
-%  {title}{\mkbibquote{#1\isdot}}
 \DeclareFieldFormat%将期刊等文献的标题中原来带的引号去掉
   [article,patent,thesis,unpublished]
   {title}{#1\adddot\addthinspace}
 \DeclareFieldFormat%将期刊等文献的标题中原来带的引号去掉
   [inbook,incollection,inproceedings]
   {title}{#1\nopunct\unspace}
+\DeclareFieldFormat{titlecase}{\MakeCapital#1}%重设标题格式，将其修改为首字母大写
 
-%重设标题格式，将其修改为首字母大写
-%\DeclareFieldFormat{titlecase}{#1}
-\DeclareFieldFormat{titlecase}{\MakeCapital#1}
 
-\iftoggle{iftexlivesix}{
-%biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
-\renewbibmacro*{name:given-family}[4]{%利用family-given定义given-family
-  \ifuseprefix
-    {\usebibmacro{name:delim}{#3#1}%
-     \usebibmacro{name:hook}{#3#1}%
-     \ifdefvoid{#3}{}{%
-       \ifcapital
-         {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
-         {\mkbibnameprefix{#3}\isdot}%
-       \ifprefchar{}{\bibnamedelimc}}%
-     \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeUppercase{#1}}}\isdot
-     \ifdefvoid{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{\MakeUppercase{#2}}\isdot}%\MakeCapital{#2}
-     \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}
-    {\usebibmacro{name:delim}{#1}%
-     \usebibmacro{name:hook}{#1}%
-     \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeUppercase{#1}}}\isdot
-     %
-     \ifboolexpe{%
-       test {\ifdefvoid{#2}}
-       and
-       test {\ifdefvoid{#3}}}
-       {}
-       {\revsdnamepunct}%
-     \ifdefvoid{#2}{}{\bibnamedelimd\mkbibnamegiven{\MakeUppercase{#2}}\isdot}%\MakeCapital{#2}
-     \ifdefvoid{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}
-     \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}}
+\defversion{3.0}{name}{
+    %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
+    \renewbibmacro*{name:first-last}[4]{%
+      \ifuseprefix
+        {\usebibmacro{name:delim}{##3##1}%
+         \usebibmacro{name:hook}{##3##1}%
+         \ifblank{##3}{}{%
+           \ifcapital
+             {\mkbibnameprefix{\MakeCapital{##3}}\isdot}
+             {\mkbibnameprefix{##3}\isdot}%
+           \ifpunctmark{'}{}{\bibnamedelimc}}%
+         %\mkbibnamelast{#1}\isdot
+         \ifblank{##2}{\MakeCapital##1}{\mkbibnamelast{\MakeUppercase{##1}}}\isdot%\MakeUppercase %\mkbibnamelast{\MakeUppercase{#1}} %\MakeSentenceCase
+         %注意上一句\MakeCapital后面如果再跟一个{}包含#1，则没有效果，可能是包在里面少了一层展开
+         %因为机构名通常包括在{}内，所以要多展开一次才行，所以这里去掉#1外面的{}
+         %\mkbibnamelast{\MakeUppercase{#1}}\isdot
+         %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
+         \ifblank{##2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamefirst{\MakeUppercase{##2}}\isdot}%
+         \ifblank{##4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{##4}\isdot}}
+        {\usebibmacro{name:delim}{##1}%
+         \usebibmacro{name:hook}{##1}%
+         %\mkbibnamelast{#1}\isdot  %3.9.1 Generic Commands and Hooks，对姓重新处理，如下句: %\mkbibnamelast{\MakeUppercase{#1}}
+         \ifblank{##2}{\MakeCapital##1}{\mkbibnamelast{\MakeUppercase{##1}}}\isdot  %大写，参考4.6.4 Miscellaneous Commands，\MakeUppercase %\MakeSentenceCase
+         %\mkbibnamelast{\MakeUppercase{#1}}\isdot
+         %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
+         \ifblank{##2##3}{}{\revsdnamepunct}%
+         \ifblank{##2}{}{\bibnamedelimd\mkbibnamefirst{\MakeUppercase{##2}}\isdot}%
+         \ifblank{##3}{}{\bibnamedelimd\mkbibnameprefix{##3}\isdot}%
+         \addcomma\addspace%
+         \ifblank{##4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{##4}\isdot}%
+         }}
 
-\renewbibmacro*{name:family-given}[4]{%利用family-given定义given-family
-  \ifuseprefix
-    {\usebibmacro{name:delim}{#3#1}%
-     \usebibmacro{name:hook}{#3#1}%
-     \ifdefvoid{#3}{}{%
-       \ifcapital
-         {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
-         {\mkbibnameprefix{#3}\isdot}%
-       \ifprefchar{}{\bibnamedelimc}}%
-     \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeUppercase{#1}}}\isdot
-     \ifdefvoid{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{\MakeUppercase{#2}}\isdot}%\MakeCapital{#2}
-     \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}
-    {\usebibmacro{name:delim}{#1}%
-     \usebibmacro{name:hook}{#1}%
-     \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeUppercase{#1}}}\isdot
-     %
-     \ifboolexpe{%
-       test {\ifdefvoid{#2}}
-       and
-       test {\ifdefvoid{#3}}}
-       {}
-       {\revsdnamepunct}%
-     \ifdefvoid{#2}{}{\bibnamedelimd\mkbibnamegiven{\MakeUppercase{#2}}\isdot}%%\MakeCapital{#2}
-     \ifdefvoid{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}
-     \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}}
-
+    \renewbibmacro*{name:last-first}[4]{%
+      \ifuseprefix
+        {\usebibmacro{name:delim}{##3##1}%
+         \usebibmacro{name:hook}{##3##1}%
+         \ifblank{##3}{}{%
+           \ifcapital
+             {\mkbibnameprefix{\MakeCapital{##3}}\isdot}
+             {\mkbibnameprefix{##3}\isdot}%
+           \ifpunctmark{'}{}{\bibnamedelimc}}%
+         %\mkbibnamelast{#1}\isdot
+         \ifblank{##2}{\MakeCapital##1}{\mkbibnamelast{\MakeUppercase{##1}}}\isdot%\MakeUppercase %\mkbibnamelast{\MakeUppercase{#1}} %\MakeSentenceCase
+         %注意上一句\MakeCapital后面如果再跟一个{}包含#1，则没有效果，可能是包在里面少了一层展开
+         %因为机构名通常包括在{}内，所以要多展开一次才行，所以这里去掉#1外面的{}
+         %\mkbibnamelast{\MakeUppercase{#1}}\isdot
+         %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
+         \ifblank{##2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamefirst{\MakeUppercase{##2}}\isdot}%
+         \ifblank{##4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{##4}\isdot}}
+        {\usebibmacro{name:delim}{##1}%
+         \usebibmacro{name:hook}{##1}%
+         %\mkbibnamelast{#1}\isdot  %3.9.1 Generic Commands and Hooks，对姓重新处理，如下句: %\mkbibnamelast{\MakeUppercase{#1}}
+         \ifblank{##2}{\MakeCapital##1}{\mkbibnamelast{\MakeUppercase{##1}}}\isdot  %大写，参考4.6.4 Miscellaneous Commands，\MakeUppercase %\MakeSentenceCase
+         %\mkbibnamelast{\MakeUppercase{#1}}\isdot
+         %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
+         \ifblank{##2##3}{}{\revsdnamepunct}%
+         \ifblank{##2}{}{\bibnamedelimd\mkbibnamefirst{\MakeUppercase{##2}}\isdot}%
+         \ifblank{##3}{}{\bibnamedelimd\mkbibnameprefix{##3}\isdot}%
+         \addcomma\addspace%
+         \ifblank{##4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{##4}\isdot}%
+         }
+     }
 }
-{%biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
-%作者名字的处理，参考文档4.2.3节，3.12.4 Name Parts and Name Spacing
-\renewbibmacro*{name:last-first}[4]{%
-  \ifuseprefix
-    {\usebibmacro{name:delim}{#3#1}%
-     \usebibmacro{name:hook}{#3#1}%
-     \ifblank{#3}{}{%
-       \ifcapital
-         {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
-         {\mkbibnameprefix{#3}\isdot}%
-       \ifpunctmark{'}{}{\bibnamedelimc}}%
-     %\mkbibnamelast{#1}\isdot
-     \ifblank{#2}{\MakeCapital#1}{\mkbibnamelast{\MakeUppercase{#1}}}\isdot%\MakeUppercase %\mkbibnamelast{\MakeUppercase{#1}} %\MakeSentenceCase
-     %注意上一句\MakeCapital后面如果再跟一个{}包含#1，则没有效果，可能是包在里面少了一层展开
-     %因为机构名通常包括在{}内，所以要多展开一次才行，所以这里去掉#1外面的{}
-     %\mkbibnamelast{\MakeUppercase{#1}}\isdot
-     %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
-     \ifblank{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamefirst{\MakeUppercase{#2}}\isdot}%
-     \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}}
-    {\usebibmacro{name:delim}{#1}%
-     \usebibmacro{name:hook}{#1}%
-     %\mkbibnamelast{#1}\isdot  %3.9.1 Generic Commands and Hooks，对姓重新处理，如下句: %\mkbibnamelast{\MakeUppercase{#1}}
-     \ifblank{#2}{\MakeCapital#1}{\mkbibnamelast{\MakeUppercase{#1}}}\isdot  %大写，参考4.6.4 Miscellaneous Commands，\MakeUppercase %\MakeSentenceCase
-     %\mkbibnamelast{\MakeUppercase{#1}}\isdot
-     %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
-     \ifblank{#2#3}{}{\revsdnamepunct}%
-     \ifblank{#2}{}{\bibnamedelimd\mkbibnamefirst{\MakeUppercase{#2}}\isdot}%
-     \ifblank{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}%
-     \addcomma\addspace%
-     \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}%
-     }}
 
-\renewbibmacro*{name:first-last}[4]{%
-  \ifuseprefix
-    {\usebibmacro{name:delim}{#3#1}%
-     \usebibmacro{name:hook}{#3#1}%
-     \ifblank{#3}{}{%
-       \ifcapital
-         {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
-         {\mkbibnameprefix{#3}\isdot}%
-       \ifpunctmark{'}{}{\bibnamedelimc}}%
-     %\mkbibnamelast{#1}\isdot
-     \ifblank{#2}{\MakeCapital#1}{\mkbibnamelast{\MakeUppercase{#1}}}\isdot%\MakeUppercase %\mkbibnamelast{\MakeUppercase{#1}} %\MakeSentenceCase
-     %注意上一句\MakeCapital后面如果再跟一个{}包含#1，则没有效果，可能是包在里面少了一层展开
-     %因为机构名通常包括在{}内，所以要多展开一次才行，所以这里去掉#1外面的{}
-     %\mkbibnamelast{\MakeUppercase{#1}}\isdot
-     %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
-     \ifblank{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamefirst{\MakeUppercase{#2}}\isdot}%
-     \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}}
-    {\usebibmacro{name:delim}{#1}%
-     \usebibmacro{name:hook}{#1}%
-     %\mkbibnamelast{#1}\isdot  %3.9.1 Generic Commands and Hooks，对姓重新处理，如下句: %\mkbibnamelast{\MakeUppercase{#1}}
-     \ifblank{#2}{\MakeCapital#1}{\mkbibnamelast{\MakeUppercase{#1}}}\isdot  %大写，参考4.6.4 Miscellaneous Commands，\MakeUppercase %\MakeSentenceCase
-     %\mkbibnamelast{\MakeUppercase{#1}}\isdot
-     %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
-     \ifblank{#2#3}{}{\revsdnamepunct}%
-     \ifblank{#2}{}{\bibnamedelimd\mkbibnamefirst{\MakeUppercase{#2}}\isdot}%
-     \ifblank{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}%
-     \addcomma\addspace%
-     \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}%
-     }}
+\defversion{3.4}{name}{
+    %biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
+    \renewbibmacro*{name:given-family}[4]{%利用family-given定义given-family
+      \ifuseprefix
+        {\usebibmacro{name:delim}{##3##1}%
+         \usebibmacro{name:hook}{##3##1}%
+         \ifdefvoid{##3}{}{%
+           \ifcapital
+             {\mkbibnameprefix{\MakeCapital{##3}}\isdot}
+             {\mkbibnameprefix{##3}\isdot}%
+           \ifprefchar{}{\bibnamedelimc}}%
+         \ifdefvoid{##2}{\mkbibnamefamily{\MakeCapital{##1}}}{\mkbibnamefamily{\MakeUppercase{##1}}}\isdot
+         \ifdefvoid{##2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{\MakeUppercase{##2}}\isdot}%\MakeCapital
+         \ifdefvoid{##4}{}{\bibnamedelimd\mkbibnamesuffix{##4}\isdot}}
+        {\usebibmacro{name:delim}{##1}%
+         \usebibmacro{name:hook}{##1}%
+         \ifdefvoid{##2}{\mkbibnamefamily{\MakeCapital{##1}}}{\mkbibnamefamily{\MakeUppercase{##1}}}\isdot
+         %
+         \ifboolexpe{%
+           test {\ifdefvoid{##2}}
+           and
+           test {\ifdefvoid{##3}}}
+           {}
+           {\revsdnamepunct}%
+         \ifdefvoid{##2}{}{\bibnamedelimd\mkbibnamegiven{\MakeUppercase{##2}}\isdot}%\MakeCapital
+         \ifdefvoid{##3}{}{\bibnamedelimd\mkbibnameprefix{##3}\isdot}
+         \ifdefvoid{##4}{}{\bibnamedelimd\mkbibnamesuffix{##4}\isdot}}
+     }
 }
+
+\iftoggle{iftlfive}%根据texlive/biblatex版本选择
+    {\switchversion{3.0}{name}}%
+    {\switchversion{3.4}{name}}
 
 %重设title的输出，将文献类型标识符输出出去，原输出来自biblatex.def文件
 \renewbibmacro*{title}{%
@@ -791,16 +769,6 @@ backrefpages     = {引用页:},
         {\iffieldequalstr{note}{standard}{\printfield[gbtypeflags]{usera}}%判断是否为标准
                                          {\iffieldequalstr{note}{news}{\printfield[gbtypeflagn]{usera}}%判断是否为报纸
                                                                       {\printfield[gbtypeflag]{usera}}}%其它
-%        \def\comparetmp{news}\def\comparetmpa{standard}\edef\comparetmpb{\thefield{note}}%
-%        \ifx\comparetmp\comparetmpb%判断是否为报纸
-%        \printfield[gbtypeflagn]{usera}%
-%        \else%
-%            \ifx\comparetmpa\comparetmpb%判断是否为标准
-%            \printfield[gbtypeflags]{usera}%
-%            \else%
-%            \printfield[gbtypeflag]{usera}%
-%            \fi%
-%        \fi%
         }%
      \iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
      %\newunit
@@ -808,11 +776,7 @@ backrefpages     = {引用页:},
 }%
 }
 
-%url相关输出，源来自biblatex.def
-%\DeclareFieldFormat{url}{\mkbibacro{URL}\addcolon\space\url{#1}}
-\DeclareFieldFormat{url}{\url{#1}} %url域修改如本行
-%\DeclareFieldFormat{urldate}{\mkbibparens{\bibstring{urlseen}\space#1}}
-
+\DeclareFieldFormat{url}{\url{#1}} %url域修改如本行%url相关输出，源来自biblatex.def
 \renewbibmacro*{url+urldate}{%
   %\usebibmacro{url}%%更换url的位置，放到下面
   \iffieldundef{urlyear}%
@@ -820,41 +784,70 @@ backrefpages     = {引用页:},
     \usebibmacro{urldate}}%
      \setunit{\addperiod\addspace}%
      \usebibmacro{url}}
-
 \renewbibmacro*{url}{\printfield{url}}
-%\newbibmacro*{urldate}{\printurldate} %引用时间修改如下一行
-\renewbibmacro*{urldate}{%
-\addspace\printtext{[}\printfield{urlyear}%
-\iffieldundef{urlmonth}{}{\bibrangedash\printfield{urlmonth}}%
-\iffieldundef{urlday}{}{\bibrangedash\printfield{urlday}}\printtext{]}}
 
-\newbibmacro*{newsdate}{%%新增加一个新闻日期
-\iffieldundef{year}{}{\printfield{year}%
-\iffieldundef{month}{}{\bibrangedash\printtext{\thefield{month}}%
-\iffieldundef{day}{}{\bibrangedash\printfield{day}}}}
-}%
+\defversion{3.7}{date}{
+    \DeclareFieldFormat{urldate}{##1}
+    \renewbibmacro*{urldate}{%
+    \addspace\printtext{[}\printurldate\printtext{]}}%能用高层命令+选项尽量用命令(比如这里的\printurldate)，而不用\blx@edtfdate这种更底层的命令
 
-\newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示表示电子资源的更新和修改日期，而公告日期安按日期格式
-\iffieldequalstr{year}{}{%替换\iffieldundef{year}，因为year总是存在，但为空
-\iffieldundef{endyear}{%
-\iffieldundef{eventyear}{}{\printtext{\mkbibparens{\printtext{\printfield{eventyear}}%
-\iffieldundef{eventmonth}{}{\bibrangedash\thefield{eventmonth}}%
-\iffieldundef{eventday}{}{\bibrangedash\printfield{eventday}}}}%
-}%
-}{%
-\iffieldundef{endyear}{}{\printtext{\mkbibparens{\printtext{\printfield{endyear}}%
-\iffieldundef{endmonth}{}{\bibrangedash\thefield{endmonth}}%
-\iffieldundef{endday}{}{\bibrangedash\printfield{endday}}}}%
-}%
-}}{%
-\iffieldundef{year}{}{\printtext{\mkbibparens{\printtext{\printfield{year}}%
-\iffieldundef{month}{}{\bibrangedash\thefield{month}}%
-\iffieldundef{day}{}{\bibrangedash\printfield{day}}}}%
-}}%
-}%
+    \newbibmacro*{newsdate}{%%新增加一个新闻日期
+    \blx@edtfdate{}{}%
+    }
 
-%\DeclareFieldFormat{pages}{\mkpageprefix[bookpagination]{#1}}%页码引用格式的修改
-\DeclareFieldFormat{pages}{#1}%去掉前面引导页码的pp.等字符
+    \newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示电子资源的更新和修改日期，而公告日期则按日期格式
+        \iffieldundef{year}{%
+                \iffieldundef{endyear}{\iffieldundef{eventyear}{}{\printtext{(}\printeventdate\printtext{)}}}%
+                {\printtext{(}\printenddate\printtext{)}}%
+        }{\iffieldequalstr{year}{}{%因为year存在，但为空
+            }{\printtext{(}\blx@edtfdate{}{}\printtext{)}}%
+         }%
+    }%
+}
+
+\defversion{3.4}{date}{
+    \renewbibmacro*{urldate}{%
+    \addspace\printtext{[}\printfield{urlyear}%
+    \iffieldundef{urlmonth}{}{\bibrangedash\printfield{urlmonth}}%
+    \iffieldundef{urlday}{}{\bibrangedash\printfield{urlday}}\printtext{]}}
+
+    \newbibmacro*{newsdate}{%%新增加一个新闻日期
+    \iffieldundef{year}{}{\printfield{year}%
+    \iffieldundef{month}{}{\bibrangedash\printtext{\thefield{month}}%
+    \iffieldundef{day}{}{\bibrangedash\printfield{day}}}}%
+    }
+
+    \newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示电子资源的更新和修改日期，而公告日期则按日期格式
+        \iffieldequalstr{year}{}{%替换\iffieldundef{year}，因为year总是存在，但为空
+            \iffieldundef{endyear}{%
+                \iffieldundef{eventyear}{}{\printtext{\mkbibparens{\printtext{\printfield{eventyear}}%
+                \iffieldundef{eventmonth}{}{\bibrangedash\thefield{eventmonth}}%
+                \iffieldundef{eventday}{}{\bibrangedash\printfield{eventday}}}}%
+                }%
+            }{%
+                \iffieldundef{endyear}{}{\printtext{\mkbibparens{\printtext{\printfield{endyear}}%
+                \iffieldundef{endmonth}{}{\bibrangedash\thefield{endmonth}}%
+                \iffieldundef{endday}{}{\bibrangedash\printfield{endday}}}}%
+                }%
+            }%
+        }%
+        {%
+            \iffieldundef{year}{}{\printtext{\mkbibparens{\printtext{\printfield{year}}%
+            \iffieldundef{month}{}{\bibrangedash\thefield{month}}%
+            \iffieldundef{day}{}{\bibrangedash\printfield{day}}}}%
+            }%
+        }%
+    }%
+}
+
+\iftoggle{iftlfive}%%根据texlive/biblatex版本选择
+    {\switchversion{3.4}{date}}%
+    {\iftoggle{iftlsix}%
+        {\switchversion{3.4}{date}}%
+        {\switchversion{3.7}{date}}%
+    }
+
+\DeclareFieldFormat{pages}{#1}%页码引用格式的修改%去掉前面引导页码的pp.等字符
 
 %调整doi+eprint+url格式，源来自standard.bbx
 %因为页码后面直接跟引用日期，没有标点所以去掉其中的标点。
@@ -885,10 +878,7 @@ backrefpages     = {引用页:},
 
 %对edition版本信息做出修改，源来自biblatex.DEF
 \DeclareFieldFormat{edition}{%
-%\testCJKfirst{\thefield{title}}%
 \iffieldundef{title}{}{\testCJKfirst{\thefield{title}}}%
-%直接用title不行？可能是需要在该句后面在加一个{}，在展开的时候需要。
-%\testCJKfirst{\thefield{title}} %直接用这句不行，原因不明
   \ifinteger{#1}%
     {\iftoggle{ifCJKforgbt}{\printtext{#1版}}%
     {\mkbibordedition{#1}~\bibstring{edition}}}%
@@ -931,13 +921,19 @@ backrefpages     = {引用页:},
 
 %设置因为mergedate默认为true时的情况，来自\bbx@opt@mergedate@compact
 %去掉作者后面包围年份的圆括号
-%这里因为biblatex版本的不同，做不同的处理，texlive2017版的在iftexliveseven=true中设置
-%2016等低版本的在iftexliveseven=false中设置
-%当然其实这还有更简单的解决方法就是:
-%    \let\printdateextralabel=\printlabeldateextra
-%只是这里为了清楚区分才用判断的方式。
+%这里因为biblatex版本的不同，做不同的处理，texlive2017版/2016等低版本分开处理
 %重设date+extrayear格式，源来自authoryear.BBX
-\iftoggle{iftexliveseven}{%
+\defversion{3.4}{dateextra}{
+    \renewbibmacro*{date+extrayear}{%
+        \iffieldundef{\thefield{datelabelsource}year}
+          {}
+          {\printtext{%[parens]%这里把括号去掉
+             \iffieldsequal{year}{\thefield{datelabelsource}year}
+               {\printdateextralabel}%
+               {\printfield{labelyear}%
+                \printfield{extrayear}}}}}%
+}
+\defversion{3.7}{dateextra}{
   \renewbibmacro*{date+extrayear}{%
     \iffieldundef{labelyear}
       {}
@@ -946,16 +942,13 @@ backrefpages     = {引用页:},
            {\printlabeldateextra}%
            {\printfield{labelyear}%
             \printfield{extrayear}}}}}%
-}{%
-\renewbibmacro*{date+extrayear}{%
-    \iffieldundef{\thefield{datelabelsource}year}
-      {}
-      {\printtext{%[parens]%这里把括号去掉
-         \iffieldsequal{year}{\thefield{datelabelsource}year}
-           {\printdateextralabel}%
-           {\printfield{labelyear}%
-            \printfield{extrayear}}}}}%
 }
+\iftoggle{iftlfive}%%根据texlive/biblatex版本选择
+    {\switchversion{3.4}{dateextra}}%
+    {\iftoggle{iftlsix}%
+        {\switchversion{3.4}{dateextra}}%
+        {\switchversion{3.7}{dateextra}}%
+    }
 
 %修改译者位置格式，bytranslator+others原格式来自biblatex.def文件
 \renewbibmacro*{bytranslator+others}{%
@@ -1026,17 +1019,14 @@ backrefpages     = {引用页:},
 \renewbibmacro*{publisher+location+date}{%
 \iftoggle{bbx:gbpub}%
 {\testCJKfirst{\thefield{title}}%
-%\testifnoteeqstd%
 \iflistundef{location}{%\adddot
 \iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准第19页看到，标准存在出版项时输出，没有时完全省略。
-%\iftoggle{ifnoteeqstandard}{}{%}替换为上一句，尽可能用biblatex提供的函数
 \iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}\addcolon\addspace}{\printtext{[S.l.\adddot]}\addcolon\addspace}%
 }}%  \bibstring{noaddress}
 {\printlist{location}\addcolon\addspace}%
 %\addcolon\addspace%
 \iflistundef{publisher}{%
 \iffieldequalstr{note}{standard}{}{%
-%\iftoggle{ifnoteeqstandard}{}{%}替换为上一句，尽可能用biblatex提供的函数
 \iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
 {\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
 }}%
@@ -1193,16 +1183,16 @@ backrefpages     = {引用页:},
   \bibrangedash%
   \iffieldundef{endyear}{}{\printfield{endyear}\printtext{\mkbibparens{\multinumbersecond}}}%
   }%
-  {\gbt@parse@range{\thefield{volume}}%
+  {\multivolparser{\thefield{volume}}%
   \printfield{year}%
   \setunit{\addcomma\space}%将冒号修改为逗号
-  \printtext{\gbt@range@first}%
+  \printtext{\multivolfirst}%
   \printtext{\mkbibparens{\multinumberfirst}}%
   \bibrangedash%
   \iffieldundef{endyear}{}{%
   \printfield{endyear}%
   \setunit{\addcomma\space}%将冒号修改为逗号
-  \printtext{\gbt@range@second}%
+  \printtext{\multivolsecond}%
   \printtext{\mkbibparens{\multinumbersecond}}}%
   }%
   \setunit{\addcomma\space}%

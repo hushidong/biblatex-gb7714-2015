@@ -53,9 +53,12 @@ please see the file 'biblatex-gb7714-2015.pdf' for more information!
 ### date of change: 2017-11-21 to version v1.0i
 * Changes to pkg code:
     - "*.bbx": deal compatibility problem of author-year style for biblatex v3.8a, include labeldate->labeldateparts and DeclareSortingScheme -> DeclareSortingTemplate.
-    - "*.bbx": change the version judgement macro,using macro form pkg xstring.
+    - "*.bbx": change the version judgement macro,using macro form pkg xstring. change version switch method, define version's code first then switch depend on the biblatex version.
 	- "*.bbx": replace the \iffieldundef{year} by \iffieldequalstr{year}{} in \newbibmacro*{modifydate}, for the year field is defined with empty string for biblatex version >3.7 after biber dealing with none date info.
-
+	- "*.bbx": change the date format control mechanism for biblatex version >3.7, lower version keep the old fansion.
+	- "*.bbx": rewrite the volume and number parsing macro using xstring pkg.
+* Changes to documentation:
+	- biblatex-gb7714-2015.tex: revise this document 
 
 
 ### date of change: 2017-04-11 to version v1.0h, the last version support texlive2015
