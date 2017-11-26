@@ -56,7 +56,7 @@
     %4E00-9FBF cjk统一表意符号
     %中文范围4E00-9FA5
     \providetoggle{ifCJKforgbt}
-    \def\testCJKfirstchar#1#2&{%
+    \def\testCJKfirstchar#1#2&{%#1#2&
         \ifnumgreater{`#1}{"2E7F}{\toggletrue{ifCJKforgbt}}{\togglefalse{ifCJKforgbt}}%
     }%
 
@@ -521,7 +521,7 @@
 %这里调整一下两种语言参考文献的间隔，源来自biblatex.def
 %%双语之间用newline替换par(20170411 v1.0h)，避免采用gb7714-2015的项对齐方式第二语言间分段导致没有缩进
 \renewcommand*{\entrysetpunct}{\adddot\newline\nobreak}
-\renewcommand*{\bibpagespunct}{\addcolon\space}%%页码引用格式的修改，修改为用冒号
+\renewcommand*{\bibpagespunct}{\addcolon\addthinspace}%%页码引用格式的修改，修改为用冒号
 
 
 %=====================================================================
@@ -734,7 +734,7 @@
 \defversion{3.7}{date}{
     \DeclareFieldFormat{urldate}{##1}
     \renewbibmacro*{urldate}{%
-    \addspace\printtext{[}\printurldate\printtext{]}}%能用高层命令+选项尽量用命令(比如这里的\printurldate)，而不用\blx@edtfdate这种更底层的命令
+    \addthinspace\printtext{[}\printurldate\printtext{]}}%能用高层命令+选项尽量用命令(比如这里的\printurldate)，而不用\blx@edtfdate这种更底层的命令
 
     \newbibmacro*{newsdate}{%%新增加一个新闻日期
     \blx@edtfdate{}{}%
@@ -752,7 +752,7 @@
 
 \defversion{3.4}{date}{
     \renewbibmacro*{urldate}{%
-    \addspace\printtext{[}\printfield{urlyear}%
+    \addthinspace\printtext{[}\printfield{urlyear}%
     \iffieldundef{urlmonth}{}{\bibrangedash\printfield{urlmonth}}%
     \iffieldundef{urlday}{}{\bibrangedash\printfield{urlday}}\printtext{]}}
 
@@ -1236,7 +1236,7 @@
 %\setunit{\labelnamepunct}\newblock
 \usebibmacro{title}%
 %\nopunct
-\printtext{\texttt{//}\addnbthinspace}%%\texttt{//}
+\printtext{\texttt{//}\addthinspace}%%\texttt{//}\addnbthinspace
 \usebibmacro{bybookauthor}%
 \ifnameundef{bookauthor}{\newblock}{\newunit\newblock}%替换下一句
 %\newunit\newblock
@@ -1639,7 +1639,7 @@
 {\setunit{\labelnamepunct}\newblock}%
 %\setunit{\labelnamepunct}\newblock
 \usebibmacro{title}%
-\printtext{\texttt{//}\addnbthinspace}%似乎顶格加百分号可以避免一些不必要的空格加入，特别是这种直接处理的语句前后
+\printtext{\texttt{//}\addthinspace}%似乎顶格加百分号可以避免一些不必要的空格加入，特别是这种直接处理的语句前后
 \usebibmacro{bybookauthor}%
 \ifnameundef{bookauthor}{\newblock}{\newunit\newblock}%替换下一句
   %\newunit\newblock
@@ -1693,7 +1693,7 @@
 %  \usebibmacro{byauthor}%
 %  \newunit\newblock
   %\usebibmacro{in:}%
-  \printtext{\texttt{//}\addnbthinspace}%似乎顶格加百分号可以避免一些不必要的空格加入，特别是这种直接处理的语句前后
+  \printtext{\texttt{//}\addthinspace}%似乎顶格加百分号可以避免一些不必要的空格加入，特别是这种直接处理的语句前后
   \usebibmacro{bybookauthor}%用类似inbook的方式处理
  \ifnameundef{bookauthor}{\newblock}{\newunit\newblock}%替换下一句
   %\newunit\newblock
