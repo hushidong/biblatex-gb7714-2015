@@ -55,8 +55,9 @@ please see the file 'biblatex-gb7714-2015.pdf' for more information!
     - "*.bbx": deal compatibility problem of author-year style for biblatex v3.8a, include labeldate->labeldateparts and DeclareSortingScheme -> DeclareSortingTemplate.
     - "*.bbx": change the version judgement macro,using macro form pkg xstring. change version switch method, define version's code first then switch depend on the biblatex version.
 	- "*.bbx": replace the \iffieldundef{year} by \iffieldequalstr{year}{} in \newbibmacro*{modifydate}, for the year field is defined with empty string for biblatex version >3.7 after biber dealing with none date info.
-	- "*.bbx": change the date format control mechanism for biblatex version >3.7, lower version keep the old fansion.
+	- "*.bbx": change the date format control mechanism for biblatex version >3.7, lower versions keep the old fansion.
 	- "*.bbx": rewrite the volume and number parsing macro using xstring pkg.
+	- "*.bbx": correct a bug with option gbnoauthor when book entry has none author.
 * Changes to documentation:
 	- biblatex-gb7714-2015.tex: revise this document 
 

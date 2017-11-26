@@ -103,7 +103,7 @@ pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
 \renewcommand{\cftegcodeaftersnum}{.}
 \renewcommand{\cftegcodeaftersnumb}{~}
 \cftsetindents{egcode}{0em}{3em}
-\setlength{\cftbeforeegcodeskip}{2mm}
+\setlength{\cftbeforeegcodeskip}{1pt}%各条目的垂直间距
 \renewcommand{\cftegcodepagefont}{\bfseries}
 
 \setlength{\cftbeforetoctitleskip}{\baselineskip}
@@ -231,6 +231,8 @@ colback=green!50!yellow!15!white,terminator sign={\ }}{rfeg}
 {\songti{\zihao{-4}{\riqiudf}}\par}
 \end{center}
 }
+
+\renewcommand{\thefootnote}{\textcircled{\tiny\arabic{footnote}}}
 
 %--------------列表环境---------------------------------------------
 \usepackage[inline]{enumitem} %重设list环境

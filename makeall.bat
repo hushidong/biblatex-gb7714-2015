@@ -16,11 +16,9 @@ if exist *.pdf (
 
 call makeclear
 
-call makefileegenv
+call makefileeg
 
 call makefile
-
-call makefilebeamer
 
 ::call makeclear
 

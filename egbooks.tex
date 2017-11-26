@@ -1,0 +1,66 @@
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage{geometry}
+\geometry{paperwidth=21cm,paperheight=29cm,top=1.5cm, bottom=1.5cm, left=2.54cm,right=2.54cm}
+\usepackage{xcolor}
+\usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=blue]{hyperref}
+\usepackage[backend=biber,style=gb7714-2015,gbpub=true]{biblatex}%align=gb7714-2015
+%\addbibresource[location=local]{egtest.bib}
+\addbibresource[location=local]{example.bib}
+\addbibresource[location=local]{egspecialchar.bib}
+%\renewcommand{\bibfont}{\zihao{5}}
+%\setlength{\bibitemsep}{0ex}
+%\setlength{\bibnamesep}{0ex}
+%\setlength{\bibinitsep}{0ex}
+%\renewcommand{\thefootnote}{\textcircled{\tiny\arabic{footnote}}}
+
+\begin{document}
+
+%%%测试作者年/biblatex版本兼容性的文件
+%%%test file for author year style
+
+\section{文献表}
+\begin{refsection}
+\defbibentryset{bilangyi2013}{易仕和2013--,Yi2013--}
+\begin{enumerate}
+  \item 中文文献存在信息缺省的情况测试
+\cite{booknodate,booknolocation,booknopages,booknopublisher,booknopublishernoyear,booknopublisherpage, 余敏2001-179-193,余敏2001-179-193a,余敏2001-179-193b,余敏2001-179-193c,booknoauthor}
+  \item 英文文献信息缺省情况以及英文个人作者判断测试
+\cite{Parsons2000a--,Parsons2000b--,Parsons2000--,Parsons2000nodate--,
+Parsons2000noloc--,Parsons2000nopub--,Parsons2000nopubnoyear--,
+Parsons2000nopubpages--,Parsons2000noauthor--}
+  \item 年份信息有额外说明的文献比较测试\cite{汪昂1912--,汪昂1881--,王夫之1845--}
+  \item 页脚中引用和打印文献表\footnote{参考文献在脚注中引用\footcite{赵学功2001--}}
+  \footfullcite{赵学功2001--}
+  \item 专著的双语文献引用测试\cite{bilangyi2013}
+  \item 专著带前后缀的作者名\cite{Peebles2001-100-100}
+  \item 带页码的引用，使用pagescite命令。
+\pagescite{Peebles2001-100-100}\pagescite[][201-301]{Peebles2001-100-100}
+\parencite[见][49页]{Miroslav2004--}\cite[见][49页]{蔡敏2006--}
+  \item 作者年制文中已有作者只需要年份和页码的情况，使用命令yearpagescite，而顺序制的情况下该命令与pagescite命令作用相同。比如: 见赵耀东\yearpagescite[][205]{赵耀东1998--}和Simon\yearpagescite[][15]{Simon2001--} 的文献。
+  \item 专著更多测试
+\cite{GPS1988--}\cite{顾炎武1982--}\cite{PIGGOT1990--}\cite{PEEBLES2001--}
+\cite{Poisel2013--}\cite{张伯伟2002--}\cite{2009-155-155}
+\cite{GPS1988--,CRANE1972--,CRAWFPRD1995--,Gradshteyn2000--,IFLAI1977--,Kinchy2012-50-50,Lin2004--,Miroslav2004--,Mittelbach2004--,OBRIEN1994--}
+\cite{PEEBLES2001--,Peebles2001-100-100,PIGGOT1990--,Poisel2013--,Praetzellis2011-13-13,Proakis2007--,Reed2005--,ROOD2001--,Ross2010--,Simon2004--,Simon2001--,Stueber2001--,Yi2013--,YUFIN2000--, 埃伯哈德$ullet$蔡德勒等2012--,蔡敏2006--,陈希孺2009--,陈志杰2006--,樊昌信2005--,顾炎武1982--,广西壮族自治区林业厅1993--,郭文彬2006--,候文顺2010-119-119,胡承正2010-112-112,胡广书2012--,胡伟2011--,蒋有绪1998--,库恩2012--,李云霞2009--,廖平2012--,刘海洋2013--,罗斯基2009--,美国妇产科医师学会2010-38-39,鸟哥--,孙玉文2000--,唐绪军1999-117-121,同济大学数学系2014--,王雪松2010--,辛希孟1994--,阎毅2013--,杨林2015--}
+\cite{张伯伟2002--,赵凯华1995--,赵学功2001--,赵耀东1998--,中国企业投资协会2013--,中国社会科学院语言研究所词典编辑室1996--,庄钊文2007--,1962-50-50,2009-155-155,booknoauthor,Parsons2000noauthor--}
+\end{enumerate}
+\printbibliography[heading=bibliography,title=【专著】]
+\end{refsection}
+
+
+\begin{refsection}
+\begin{enumerate}
+  \item 专著的析出文献\cite{马克思2013-302-302}\cite{王夫之2011-1109-1109}
+  \cite{BUSECK1980-117-211,MARTIN1996-85-96,WEINSTEIN1974-745-772,白书农1998-146-163,陈晋镳1980-56-114,程根伟1999-32-36,楼梦麟2011-11-12,马克思1982-505-505,马克思2013-302-302,钟文发1996-468-471,1977-49-49,1988-590-590,王夫之2011-1109-1109}
+\end{enumerate}
+\printbibliography[heading=bibliography,title=【专著中的析出文献】]
+\end{refsection}
+\begin{refsection}
+
+\begin{enumerate}
+  \item 标准引用\cite{国家标准局信息分类编码研究所1988-59-92,国家环境保护局科技标准司1996-2-3, 全国广播电视标准化技术委员会2007-1-1,全国文献工作标准化委员会第七分委员会1986--,全国信息文献标准化技术委员会2010-3-3, 中华人民共和国国家质量监督检验检疫总局2015,standardinfoiso158}
+\end{enumerate}
+\printbibliography[heading=bibliography,title=【标准】]
+\end{refsection}
+\end{document} 

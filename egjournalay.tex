@@ -1,0 +1,48 @@
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage{geometry}
+\geometry{paperwidth=21cm,paperheight=29cm,top=1.5cm, bottom=1.5cm, left=2.54cm,right=2.54cm}
+\usepackage{xcolor}
+\usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=blue]{hyperref}
+\usepackage[backend=biber,style=gb7714-2015ay,gbpub=true,gbnoauthor=true]{biblatex}%align=gb7714-2015
+%\addbibresource[location=local]{egtest.bib}
+\addbibresource[location=local]{example.bib}
+\addbibresource[location=local]{egspecialchar.bib}
+%\renewcommand{\bibfont}{\zihao{5}}
+%\setlength{\bibitemsep}{0ex}
+%\setlength{\bibnamesep}{0ex}
+%\setlength{\bibinitsep}{0ex}
+%\renewcommand{\thefootnote}{\textcircled{\tiny\arabic{footnote}}}
+
+\begin{document}
+
+%%%测试作者年/biblatex版本兼容性的文件
+%%%test file for author year style
+
+\section{文献表}
+\begin{refsection}
+
+\begin{enumerate}
+  \item 期刊完整引用\cite{中国地质学会1936--,中国图书馆学会1957--,AAAS1883--,中华医学会湖北分会1984--}
+\end{enumerate}
+
+\printbibliography[heading=bibliography,title=【连续出版物】]
+\end{refsection}
+
+\begin{refsection}
+\defbibentryset{bilangchenzhang}{张敏莉2007-500-503,Zhang2007-500-503}
+
+\begin{enumerate}
+  \item 期刊文章引用和引用标签测试\cite{Chiani1998-2998-3008,Chiani2004-1312-1318,Chiani2004-1312-1318a,
+Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
+  \item doi和卷期样式\cite{储大同2010-721-724}
+  \item 双语言引用测试\cite{bilangchenzhang}
+  \item 合期期刊测试\cite{储大同2010-721-724m}
+  \item 报纸引用测试\cite{丁文祥2000--,傅刚2000--,刘裕国2013-01-12--,张田勤2000--}
+  \item 更多测试
+  \cite{Andersen1995-42-49,Andrisano1998-1383-1401,CAPLAN1993-61-66,Chiani1998-2998-3008,Chiani2004-1312-1318,Chiani2009-231-254,CHRISTINE1998-331-332,Coulson2004-2277-2287,Coulson2006-2484-2492,Dardari2004-1557-1567,Dardari1999-1709-1721,DESMARAIS1992-605-609,Franz2013-1053-1062,Giorgetti2005-384-389,Giorgetti2005-2139-2149,Giorgetti2005-1037-1042,Haemaelaeinen2002-1712-1721,HEWITT1984-205-218,Holtzman1992-243-247,Hu2006-1720-1724,KANAMORI1998-2063-2064,KENNEDY1975-311-386,KENNEDY1975-339-360,McEliece1984-44-53,Milstein1982-436-446,Moeneclaey2001-497-505,Molisch2006-3151-3166,Nasri2007-4090-4100,articlemorenames,Park2010-696-715,Pinto2009-1268-1282,Quek2007-2126-2139,Saito2006-169-176,Shi2007-1118-1128,Snow2007-1736-1746,STIEG1981-549-560,Walls2013-399-418,Zhang2007-500-503,Zhao2002-1684-1691, 陈高峰2011-230-232,陈建军2010-93-93,陈金成2001-1861-1864,储大同2010-721-724,储大同2010-721-724m,高光明1998-60-65, 高翔2015-26-31,江向东1999-4-4,李炳穆2000-5-8,李晓东1999-101-106,梁振兴1999-24-32,刘彻东1998-38-39,刘晨2007-400-404, 刘武1999-2481-2488,卢秋红2009-247-251,鲁明羽1998-290-295,莫少强1999-1-6,谭跃进2011-441-445,陶仁骥1984-527-527,王雪峥2013-249-254, 伍江华2010-70-74,亚洲地质图编目组1978-194-208,杨洪升2013-56-75,杨友烈1999-60-65, 于潇2012-1518-1523,詹广平2013-8-10,张敏莉2007-500-503,张庆杰2009-30-33,张晓琴2011--,周学武2013-49-52,郜宪林2001-114-116}
+\end{enumerate}
+
+\printbibliography[heading=bibliography,title=【连续出版物中的析出文献】]
+\end{refsection}
+\end{document} 
