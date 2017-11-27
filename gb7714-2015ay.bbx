@@ -24,7 +24,7 @@
 
 %=====================================================================
 %=====================================================================
-%增加一些功能函数
+%新增功能函数
 %=====================================================================
     %版本判断
     \providetoggle{iftlfive}%用于处理biblatex3.2之前的版本,即texlive2015以下版本中的biblatex
@@ -357,7 +357,7 @@ backrefpages     = {引用页:},
             \step[fieldset=userb,fieldvalue={en}]
             }
         %本来后面这些是放到DeclareStyleSourcemap中处理的，但是因为texlive2016的biblatex3.4不支持多个DeclareStyleSourcemap，
-        %但有处理特殊字符和处理gbnoauthor选项的需求，所以把这些提到这来，让后让这两个功能结合到一个DeclareStyleSourcemap时，
+        %但有处理特殊字符和处理gbnoauthor选项的需求，所以把这些提到这来，以后将这两个功能结合到一个DeclareStyleSourcemap时，
         %不用复制如下段代码了。
         \map{%尝试未定义数据模型的newspaper类型映射为article，newspaper完全是针对gb7714的新类型，在biblatex中完全没有定义
                  %但从实践看，并没有什么影响，映射过来就可以了。
@@ -662,36 +662,6 @@ backrefpages     = {引用页:},
 
 \defversion{3.0}{name}{
     %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
-    \renewbibmacro*{name:first-last}[4]{%
-      \ifuseprefix
-        {\usebibmacro{name:delim}{##3##1}%
-         \usebibmacro{name:hook}{##3##1}%
-         \ifblank{##3}{}{%
-           \ifcapital
-             {\mkbibnameprefix{\MakeCapital{##3}}\isdot}
-             {\mkbibnameprefix{##3}\isdot}%
-           \ifpunctmark{'}{}{\bibnamedelimc}}%
-         %\mkbibnamelast{#1}\isdot
-         \ifblank{##2}{\MakeCapital##1}{\mkbibnamelast{\MakeUppercase{##1}}}\isdot%\MakeUppercase %\mkbibnamelast{\MakeUppercase{#1}} %\MakeSentenceCase
-         %注意上一句\MakeCapital后面如果再跟一个{}包含#1，则没有效果，可能是包在里面少了一层展开
-         %因为机构名通常包括在{}内，所以要多展开一次才行，所以这里去掉#1外面的{}
-         %\mkbibnamelast{\MakeUppercase{#1}}\isdot
-         %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
-         \ifblank{##2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamefirst{\MakeUppercase{##2}}\isdot}%
-         \ifblank{##4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{##4}\isdot}}
-        {\usebibmacro{name:delim}{##1}%
-         \usebibmacro{name:hook}{##1}%
-         %\mkbibnamelast{#1}\isdot  %3.9.1 Generic Commands and Hooks，对姓重新处理，如下句: %\mkbibnamelast{\MakeUppercase{#1}}
-         \ifblank{##2}{\MakeCapital##1}{\mkbibnamelast{\MakeUppercase{##1}}}\isdot  %大写，参考4.6.4 Miscellaneous Commands，\MakeUppercase %\MakeSentenceCase
-         %\mkbibnamelast{\MakeUppercase{#1}}\isdot
-         %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
-         \ifblank{##2##3}{}{\revsdnamepunct}%
-         \ifblank{##2}{}{\bibnamedelimd\mkbibnamefirst{\MakeUppercase{##2}}\isdot}%
-         \ifblank{##3}{}{\bibnamedelimd\mkbibnameprefix{##3}\isdot}%
-         \addcomma\addspace%
-         \ifblank{##4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{##4}\isdot}%
-         }}
-
     \renewbibmacro*{name:last-first}[4]{%
       \ifuseprefix
         {\usebibmacro{name:delim}{##3##1}%
@@ -722,6 +692,9 @@ backrefpages     = {引用页:},
          \ifblank{##4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{##4}\isdot}%
          }
      }
+
+     \renewbibmacro*{name:first-last}[4]{%
+     \usebibmacro{name:last-first}{##1}{##2}{##3}{##4}}
 }
 
 \defversion{3.4}{name}{
@@ -752,6 +725,8 @@ backrefpages     = {引用页:},
          \ifdefvoid{##3}{}{\bibnamedelimd\mkbibnameprefix{##3}\isdot}
          \ifdefvoid{##4}{}{\bibnamedelimd\mkbibnamesuffix{##4}\isdot}}
      }
+     \renewbibmacro*{name:family-given}[4]{%
+     \usebibmacro{name:given-family}{##1}{##2}{##3}{##4}}
 }
 
 \iftoggle{iftlfive}%根据texlive/biblatex版本选择
@@ -815,7 +790,7 @@ backrefpages     = {引用页:},
 
 \defversion{3.4}{date}{
     \renewbibmacro*{urldate}{%
-    \addspace\printtext{[}\printfield{urlyear}%
+    \addthinspace\printtext{[}\printfield{urlyear}%
     \iffieldundef{urlmonth}{}{\bibrangedash\printfield{urlmonth}}%
     \iffieldundef{urlday}{}{\bibrangedash\printfield{urlday}}\printtext{]}}
 

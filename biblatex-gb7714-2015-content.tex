@@ -1,10 +1,13 @@
 %------------------------------------------------------------
 \def\versionnumber{v1.0i}    %版本和修改时间信息
 \def\versiondate{2017/11/21}
+\makeatletter
+\def\versionbiblatex{\abx@version}
+\makeatother
 %------------------------------------------------------------
 %-----------------标题和目录---------------------------------
 \titleformanual{符合GB/T 7714-2015标准的biblatex参考\\
-文献样式文件\footnote{The files (gb7714-2015*.*) have version number \versionnumber, last revised \versiondate.}}
+文献样式文件\footnote{The files (gb7714-2015*.*) have v\versionnumber, last revised \versiondate, created with biblatex v\versionbiblatex}}
 \authorformanual{胡振震\setcounter{footnote}{0}\footnote{hzzmail@163.com}}
 \dateformanual{2016-07-01}
 \titleandauthor
@@ -286,7 +289,9 @@ GB/T 7714-2015规定采用作者年制组织时，各篇文献首先按文种组
 
 若正文中已有著者姓名，则()内只标注出版年，这一点样式文件无法判断，只能是文档作者自身把握，当然样式文件提供了标签只有年份、附加年份和页码信息的引用命令yearpagescite，方便文档写作者使用，使用方法详见第\ref{sec:cbx:usage}节。
 
-引用多个著者的文献时，对西文只需标注第一著者的姓(而在参考文献列表中的作者按最大数量三个处理，这与顺序编码制一致，参考GB/T 7714-2015第8.1.2节)，其后附“et al.”，对于中文著者，标注第一著者的姓名，其后附“等”。姓名与“et al.”“等”间留适当空隙。注意到在GB/T 7714-2015第10.2.1节给出的例子中作者姓的大小写格式与参考文献表中的要求是不同的，这说明标注中的作者姓名是由写文档的作者来决定的，因此本样式文件原样输出bib源文件中作者姓的大小格式。
+引用多个著者的文献时，对西文只需标注第一著者的姓(而在参考文献列表中的作者按最大数量三个处理，这与顺序编码制一致，参考GB/T 7714-2015第8.1.2节)，其后附“et al.”，对于中文著者，标注第一著者的姓名，其后附“等”。姓名与“et al.”“等”间留适当空隙。
+
+\emph{注意到在GB/T 7714-2015第10.2.1节给出的例子中作者姓的大小写格式与参考文献表中的要求是不同的，这说明标注中的作者姓名是由写文档的作者来决定的，因此本样式文件原样输出bib源文件中作者姓的大小格式}。
 
 引用同一著者同一年出版的多篇文献时，出版年后应采用小写字符a,b,c等区别。
 
@@ -294,7 +299,7 @@ GB/T 7714-2015规定采用作者年制组织时，各篇文献首先按文种组
 
 标注要求具体参考GB/T 7714-2015第10.2节。
 
-\qd{注意:一般情况下，当文献作者缺省时，作者年制就没有作者可以用，因此文献题名用来生成标签，这样会导致参考文献表中文献题名后的文献类型标识/文献载体标识消失(这是因为题名用于生产标签后，题名域会被清除，因此也就不输出题名相关的信息了)。但是可以用佚名替代缺省作者的方式避免这个问题，即可以使用样式文件选项gbnoauthor=true，一旦设置该选项为true，则缺省的作者会根据文献语种填充为佚名或NOAUTHOR。默认情况下，不进行这种处理，即相当于设置选项gbnoauthor=false。}
+\qd{注意:一般情况下，当文献作者缺省时，作者年制就没有作者可以用，因此文献题名用来生成标签，这样会导致参考文献表中文献题名后的文献类型标识/文献载体标识消失(这是因为题名用于生产标签后，题名域会被清除，因此也就不输出题名相关的信息了)。但是可以用佚名替代缺省作者的方式避免这个问题，即可以使用样式文件提供的选项gbnoauthor=true，一旦设置该选项为true，则缺省的作者会根据文献语种填充为佚名或NOAUTHOR。默认情况下，不进行这种处理，即相当于设置选项gbnoauthor=false。}
 
 %本样式文件默认情况下采用佚名方式，如果不需要使用佚名，那么需要在样式文件中注释掉一段代码，这段代码在本文档末尾2016-11-14的更新历史中有说明，见\pageref{up:20161114}页。}
 
@@ -1339,6 +1344,133 @@ biblatex很多命令都有类似的方式。
 2. 日期的数据来源由DeclareLabeldate定义选择。
 日期的的具体格式，则由宏包选项控制。比如labeldate=ymd来控制。(3.5版以上，以前的是datelabel选项)
 
+\subsection{作者格式控制}\label{sec:name:fmt}
+\zhongdian{【注意】：texlive2015中的biblatex版本是3.0，texlive2016中biblatex的版本是3.4，新版本对于名字域打印有了较大变化(即不同版本的biblatex对于DeclareNameFormat的输入参数处理有所不同，如例\ref{eg:name:variables}所示)，所以需做相应的修改，为此在biblatex中首先进行版本判断，然后根据版本不同分别进行设置。}
+
+    \begin{codetex}{texlive2016中biblatex3.4版Name域格式输入参数的修改}{eg:name:variables}
+    for biblatex version 3.0
+    #1 The last names.
+    #2 The last names, given as initials.
+    #3 The first names.
+    #4 The first names, given as initials.
+    #5 The name prefixes,
+    #6 The name prefixes, given as initials.
+    #7 The name affixes,
+    #8 The name affixes, given as initials.
+    for biblatex version 3.4
+    \namepartfamily
+    \namepartfamilyi
+    \namepartgiven
+    \namepartgiveni
+    \namepartprefix
+    \namepartprefixi
+    \namepartsuffix
+    \namepartsuffixi
+    \end{codetex}
+    样式文件中的处理见\ref{sec:name:fmt:out}节。
+
+\subsubsection{作者信息输出与格式控制}\label{sec:name:fmt:out}
+作者信息的输出最高一层是在驱动中:
+\begin{texlist}
+\usebibmacro{author/editor+others/translator+others}
+\end{texlist}
+
+其中当存在作者时，由如下宏输出:
+\begin{texlist}
+\renewbibmacro*{author}
+\end{texlist}
+
+其中作者列表又由如下命令输出:
+\begin{texlist}
+\printnames{author}
+\end{texlist}
+
+printnames这种命令的输出格式通常由相应输出域的域格式控制，这里则是author域控制:
+\begin{texlist}
+\DeclareNameAlias{author}{sortname}%for author year style
+
+\DeclareNameAlias{author}{default}%for numeric style
+\end{texlist}
+
+其中sortname，default域格式又是:
+\begin{texlist}
+\DeclareNameAlias{sortname}{family-given/given-family}
+
+\DeclareNameAlias{author}{default}
+\DeclareNameAlias{default}{given-family}
+\end{texlist}
+
+其中的关键是given-family和family-given两个域格式使用name:family-given和name:family-given宏进行输出。
+真实的作者姓名格式在这两个宏中，因此做一定的处理:
+\begin{texlist}
+    %biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
+    \renewbibmacro*{name:given-family}[4]{%利用family-given定义given-family
+      \ifuseprefix
+        {\usebibmacro{name:delim}{##3##1}%
+         \usebibmacro{name:hook}{##3##1}%
+         \ifdefvoid{##3}{}{%
+           \ifcapital
+             {\mkbibnameprefix{\MakeCapital{##3}}\isdot}
+             {\mkbibnameprefix{##3}\isdot}%
+           \ifprefchar{}{\bibnamedelimc}}%
+         \ifdefvoid{##2}{\mkbibnamefamily{\MakeCapital{##1}}}{\mkbibnamefamily{\MakeUppercase{##1}}}\isdot
+         \ifdefvoid{##2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{\MakeUppercase{##2}}\isdot}%\MakeCapital
+         \ifdefvoid{##4}{}{\bibnamedelimd\mkbibnamesuffix{##4}\isdot}}
+        {\usebibmacro{name:delim}{##1}%
+         \usebibmacro{name:hook}{##1}%
+         \ifdefvoid{##2}{\mkbibnamefamily{\MakeCapital{##1}}}{\mkbibnamefamily{\MakeUppercase{##1}}}\isdot
+         %
+         \ifboolexpe{%
+           test {\ifdefvoid{##2}}
+           and
+           test {\ifdefvoid{##3}}}
+           {}
+           {\revsdnamepunct}%
+         \ifdefvoid{##2}{}{\bibnamedelimd\mkbibnamegiven{\MakeUppercase{##2}}\isdot}%\MakeCapital
+         \ifdefvoid{##3}{}{\bibnamedelimd\mkbibnameprefix{##3}\isdot}
+         \ifdefvoid{##4}{}{\bibnamedelimd\mkbibnamesuffix{##4}\isdot}}
+     }
+     \renewbibmacro*{name:family-given}[4]{%
+     \usebibmacro{name:given-family}{##1}{##2}{##3}{##4}}
+     
+        %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
+    \renewbibmacro*{name:last-first}[4]{%
+      \ifuseprefix
+        {\usebibmacro{name:delim}{##3##1}%
+         \usebibmacro{name:hook}{##3##1}%
+         \ifblank{##3}{}{%
+           \ifcapital
+             {\mkbibnameprefix{\MakeCapital{##3}}\isdot}
+             {\mkbibnameprefix{##3}\isdot}%
+           \ifpunctmark{'}{}{\bibnamedelimc}}%
+         %\mkbibnamelast{#1}\isdot
+         \ifblank{##2}{\MakeCapital##1}{\mkbibnamelast{\MakeUppercase{##1}}}\isdot%\MakeUppercase %\mkbibnamelast{\MakeUppercase{#1}} %\MakeSentenceCase
+         %注意上一句\MakeCapital后面如果再跟一个{}包含#1，则没有效果，可能是包在里面少了一层展开
+         %因为机构名通常包括在{}内，所以要多展开一次才行，所以这里去掉#1外面的{}
+         %\mkbibnamelast{\MakeUppercase{#1}}\isdot
+         %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
+         \ifblank{##2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamefirst{\MakeUppercase{##2}}\isdot}%
+         \ifblank{##4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{##4}\isdot}}
+        {\usebibmacro{name:delim}{##1}%
+         \usebibmacro{name:hook}{##1}%
+         %\mkbibnamelast{#1}\isdot  %3.9.1 Generic Commands and Hooks，对姓重新处理，如下句: %\mkbibnamelast{\MakeUppercase{#1}}
+         \ifblank{##2}{\MakeCapital##1}{\mkbibnamelast{\MakeUppercase{##1}}}\isdot  %大写，参考4.6.4 Miscellaneous Commands，\MakeUppercase %\MakeSentenceCase
+         %\mkbibnamelast{\MakeUppercase{#1}}\isdot
+         %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
+         \ifblank{##2##3}{}{\revsdnamepunct}%
+         \ifblank{##2}{}{\bibnamedelimd\mkbibnamefirst{\MakeUppercase{##2}}\isdot}%
+         \ifblank{##3}{}{\bibnamedelimd\mkbibnameprefix{##3}\isdot}%
+         \addcomma\addspace%
+         \ifblank{##4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{##4}\isdot}%
+         }
+     }
+
+     \renewbibmacro*{name:first-last}[4]{%
+     \usebibmacro{name:last-first}{##1}{##2}{##3}{##4}}
+\end{texlist}
+
+
+
 
 \subsection{样式文件设计途径}
   biblatex的核心-参考文献样式文件的设计，更详细内容见
@@ -1525,33 +1657,9 @@ biblatex的宏包选项增加
 样式首先根据biblatex版本信息进行版本判断，然后做针对性的兼容处理。
 biblatex在texlive中的版本对应关系是:
 texlive2015对应biblatex3.0;
-texlive2016对应biblatex3.4，从3.2版开始修改了姓名机制;
+texlive2016对应biblatex3.4，从3.2版开始修改了姓名机制(如\ref{sec:name:fmt}节所述);
 texlive2017对应biblatex3.7;
 2017年底又出了biblatex3.8a版。
-
-\zhongdian{【注意】：texlive2015中的biblatex版本是3.0，texlive2016中biblatex的版本是3.4，新版本对于名字域打印有了较大变化(即不同版本的biblatex对于DeclareNameFormat的输入参数处理有所不同，如例\ref{eg:name:variables}所示)，所以需做相应的修改，为此在biblatex中首先进行版本判断，然后根据版本不同分别进行设置。}
-
-    \begin{codetex}{texlive2016中biblatex3.4版Name域格式输入参数的修改}{eg:name:variables}
-    for biblatex version 3.0
-    #1 The last names.
-    #2 The last names, given as initials.
-    #3 The first names.
-    #4 The first names, given as initials.
-    #5 The name prefixes,
-    #6 The name prefixes, given as initials.
-    #7 The name affixes,
-    #8 The name affixes, given as initials.
-    for biblatex version 3.4
-    \namepartfamily
-    \namepartfamilyi
-    \namepartgiven
-    \namepartgiveni
-    \namepartprefix
-    \namepartprefixi
-    \namepartsuffix
-    \namepartsuffixi
-    \end{codetex}
-    相应的样式文件也需要修改，详见bbx文件。
 
   \begin{enumerate}
   \item biblatex版本判断
@@ -2624,29 +2732,7 @@ backrefpages     = {引用页:},
 }
 \end{texlist}
 
-\item 在处理姓名相关的问题时，biblatex3.2以前的版本利用DeclareNameFormat的方式修改得到需要的姓和名的前后顺序，当maxbibnames和maxcitenames不一致时，可能用到NameFormat:last-first/first-last，所以除了第一个姓名和后面姓名的姓和名的前后顺序时不同的，所以进一步做修改如下。而biblatex3.3以后的版本，直接利用newbibmacro来修改name:family-given和name:given-family，这样就避免了DeclareNameFormat格式的修改，所以不用进行改动。
-\begin{texlist}
-%\DeclareNameFormat{first-last}{%修改作者的姓和名的顺序，源来自于biblatex.def文件
-%  \iffirstinits%
-%    {\usebibmacro{name:last-first}{#1}{#4}{#5}{#7}}
-%    {\usebibmacro{name:last-first}{#1}{#3}{#5}{#7}}%
-%    \usebibmacro{name:andothers}}
-
-%\DeclareNameFormat{last-first/first-last}{%
-%  \ifnumequal{\value{listcount}}{1}
-%    {\iffirstinits
-%       {\usebibmacro{name:last-first}{#1}{#4}{#5}{#7}}
-%       {\usebibmacro{name:last-first}{#1}{#3}{#5}{#7}}%
-%     \ifblank{#3#5}
-%       {}
-%       {\usebibmacro{name:revsdelim}}}
-%    {\iffirstinits
-%       {\usebibmacro{name:last-first}{#1}{#4}{#5}{#7}}%name:first-last 换成为name:last-first
-%       {\usebibmacro{name:last-first}{#1}{#3}{#5}{#7}}}%name:first-last 换成为name:last-first
-%  \usebibmacro{name:andothers}}
-\end{texlist}
-
-但是这样的处理仍然会出现问题，在引用标签的生成过程中，某些时候仍然会有first-last出现，因为在某些情况下，biblatex会利用first-last和last-first进行区分，因此不在使用这种方式，而是直接重定义输出宏first-last为last-first，类似于对3.3以后版本的处理。
+\item 在处理姓名相关的问题时，利用DeclareNameFormat的方式控制需要的姓和名的前后顺序，当maxbibnames和maxcitenames不一致时，可能用到last-first/first-last(biblatex3.2以前的版本)/family-given/given-family(3.3以后版本)，其中第一个姓名和后面姓名的姓和名的前后顺序时不同的。可以直接利用其中的name:first-last和name:last-first或name:family-given和name:given-family宏做修改控制具体姓名成分的格式，而避免重定义DeclareNameFormat格式，详见\ref{sec:name:fmt:out}节。
 
 \item 作者年制区分文献表和引用中的作者名数量，引用相关的选项设置需要放到cbx 文件中，否则可能失效。同时因为一些特殊情况下，姓名数量截短为1个的引用标签，可能无法区分文献，所以默认情况下，biblatex会增加作者数量用于区分，这是因为uniquelist会自动重设maxcitenames和mincitenames，因此修改uniquelist选项为minyear，明确在年份也一样的情况下再利用增加姓名进行区分。*ay.bbx文件中的选项设置为:
 \begin{texlist}
