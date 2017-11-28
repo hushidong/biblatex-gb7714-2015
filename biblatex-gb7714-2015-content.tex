@@ -1253,9 +1253,32 @@ biber动态数据处理，详见biblatex说明文档Dynamic Modification of Data
 \subsection{标注(引用)标签}
 引用标签的生成机制，即责任者截短时的歧义消除问题，见说明文档4.11.4 Name Disambiguation 节。
   \begin{enumerate}
-    \item uniquename的作用
-    \item uniquelist的作用
+    \item uniquename的作用，用于姓名间的歧义消除。
+    \item uniquelist的作用，用于姓名列表间的歧义消除。
   \end{enumerate}
+  
+  
+关于这两个选项的参数设置，可以在样式中设置，也可以在宏包加载时设置，\emph{注意宏包加载时的设置会覆盖样式中的设置}。  
+
+还要注意，说明文档中uniquelist的默认选项是false，这是错误的，从实践看是true，从代码看也是如此，比如:
+\begin{texlist}
+\DeclareBibliographyOption[boolean]{uniquelist}[true]{%
+  \ifcsdef{blx@opt@uniquelist@#1}
+    {\letcs\blx@uniquelist{blx@opt@uniquelist@#1}}
+    {\blx@err@invopt{uniquelist=#1}{}}}
+\DeclareTypeOption[boolean]{uniquelist}[true]{%
+  \ifcsdef{blx@opt@uniquelist@#1}
+    {\letcs\blx@uniquelist{blx@opt@uniquelist@#1}}
+    {\blx@err@invopt{uniquelist=#1}{}}}
+\DeclareEntryOption[boolean]{uniquelist}[true]{%
+  \ifcsdef{blx@opt@uniquelist@#1}
+    {\letcs\blx@uniquelist{blx@opt@uniquelist@#1}}
+    {\blx@err@invopt{uniquelist=#1}{}}}
+\def\blx@opt@uniquelist@false{0}
+\def\blx@opt@uniquelist@true{1}
+\def\blx@opt@uniquelist@minyear{2}
+\end{texlist}
+无论选项是否给出，上面定义选项中的代码都会自动执行，当选项不给出，则自动调用默认的参数(因为代码中直接使用了输入参数，当没有输入参数，自然就会使用默认参数)来进行处理，显然这里是true。
 
 \subsection{日期格式控制}\label{sec:date:fmt}
 随着biblatex的更新，日期格式控制更趋完善。加上biblatex3.8a中biber解析出日期中月份和天数都不带引导的0，比如6月直接解析为6，而不像以前那样解析为06，所以需要特别的注意。因此对于新版本，有些日期比如online的发布日期，访问日期等，采用专门的格式edtf控制，而老版本则仍然使用原来的自定义的输出宏。比如:
@@ -1432,7 +1455,7 @@ printnames这种命令的输出格式通常由相应输出域的域格式控制�
      }
      \renewbibmacro*{name:family-given}[4]{%
      \usebibmacro{name:given-family}{##1}{##2}{##3}{##4}}
-     
+
         %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
     \renewbibmacro*{name:last-first}[4]{%
       \ifuseprefix

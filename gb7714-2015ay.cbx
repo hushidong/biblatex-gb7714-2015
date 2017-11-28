@@ -26,7 +26,7 @@
       mincitenames=1,
       uniquename=init,%因为使用了名字缩写选项，所以需要设置uniquename=init而不是full避免冲突
       labeldate=true,
-      uniquelist=minyear,
+      uniquelist=minyear
     }
 }
 
@@ -40,17 +40,17 @@
       uniquename=init,%因为使用了名字缩写选项，所以需要设置uniquename=init而不是full避免冲突
       labeldateparts=true,
       %labeldate=true,
-      uniquelist=minyear,
+      uniquelist=minyear %minyear,
     }
 }
 
 \iftoggle{iftlfive}
-    {\switchversion{3.4}{sort}}%%当采用texlive2015以下版本时
+    {\switchversion{3.4}{cbxopt}}%%当采用texlive2015以下版本时
     {\iftoggle{iftlsix}%
-        {\switchversion{3.4}{sort}}%%当采用texlive2016版本时
+        {\switchversion{3.4}{cbxopt}}%%当采用texlive2016版本时
         {\iftoggle{iftlseven}%
-            {\switchversion{3.7}{sort}}%%当采用texlive2017版本时
-            {\switchversion{3.7}{sort}}%%当采用biblatex3.8a版本时
+            {\switchversion{3.7}{cbxopt}}%%当采用texlive2017版本时
+            {\switchversion{3.7}{cbxopt}}%%当采用biblatex3.8a版本时
         }%
     }
 
