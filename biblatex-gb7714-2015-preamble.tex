@@ -1,11 +1,8 @@
-%\usepackage{bbding}
-
 \usepackage{expl3,etoolbox,ifthen,xstring}
 \usepackage{ctex}
 \let\kaiti=\kaishu
 \usepackage{xeCJKfntef}
-\usepackage[paperwidth=210mm,paperheight=290mm,left=20mm,right=20mm,top=25mm, bottom=15mm]{geometry}            %定义版面
-
+\usepackage[paperwidth=210mm,paperheight=290mm,left=20mm,right=20mm,top=25mm, bottom=15mm]{geometry}%定义版面
 \usepackage[colorlinks=true,%
 pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}  %书签功能，选项去掉链接红色方框
 \usepackage{titleref} %标题引用
@@ -14,43 +11,11 @@ pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
 %lime, olive, orange, red,purple, teal, violet.
 %CJKbookmarks,bookmarksnumbered=true,
 
-%%%========================参考文献===============================
-%\usepackage[backend=bibtex8,sorting=none,citestyle=authoryear,bibstyle=alphabetic]{biblatex}
-%采用分章的参考文献的快捷方法
-%\renewcommand{\bibfont}{\zihao{-5}\songti}
 \setlength{\bibitemsep}{2pt}
 \defbibheading{bibliography}[\bibname]{%
 %\phantomsection%解决链接指引出错的问题，相当于加入了一个引导点
 %\addcontentsline{toc}{subsection}{#1}
 	\centering\subsubsection*{#1}}%
-
-%参考文献的bib文件
-%	\markboth{#1}{#1}}
-%注意在实际使用中用titsec宏包的页眉页脚也有点问题，一旦给出markboth就会出现问题
-%这里因为bibliography给出了markboth所以出错。因此重定义bibliography以消除问题
-%重定义命令中去掉了markboth那一句命令。
-%常用样式
-%style=trad-plain
-%style=trad-unsrt
-%style=trad-alpha
-%style=trad-abbrv
-%style=musuos
-%style=nature
-%style=nejm  %New England Journal of Medicine
-%style=phys  %follows the guidelines of the aip and aps
-%bibstyle=publist
-%style=science  %follows the guidelines of the journal Science
-
-%style=ieee % follows the guidelines of the ieee.
-%style=ieee-alphabetic
-%bibstyle=manuscripts,otheroption
-%style=chem-acs %American Chemistry Society journals.
-%style=chem-angew %Angewandte Chemie Chemistry – A European Journal.
-%style=chem-biochem %Biochemistry and a small number of other American Chemistry Society journals.
-%style=chem-rsc  %Royal Society of Chemistry journals.
-%style=authortitle-dw
-%style=footnote-dw
-%%%=================================================================
 
 %自定义下划红线和背景颜色
 \usepackage{ulem}
@@ -67,32 +32,19 @@ pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
 \captiontitlefont{\zihao{-5}} %图题样式
 \captionwidth{0.8\linewidth} %标题宽度
 \changecaptionwidth
-%\captionstyle{<style>} can be used to alter this. Sensible values for
-%style are: \centering, \raggedleft or \raggedright
-\captionstyle{\centering}
+\captionstyle{\centering} %\captionstyle{<style>} style are: \centering, \raggedleft or \raggedright
 %\precaption{\rule{\linewidth}{0.4pt}\par}
-%\postcaption{\rule[0.5\baselineskip]{\linewidth}{0.4pt}}
-\setlength{\belowcaptionskip}{0.2cm} %设置caption上下间距
-\setlength{\abovecaptionskip}{0.2cm}
-\setlength{\abovelegendskip}{0.2cm}  %设置legend上下间距
-\setlength{\belowlegendskip}{0.2cm}
+%\postcaption{\vspace{-1cm}}
+\setlength{\belowcaptionskip}{2pt} %设置caption上下间距
+\setlength{\abovecaptionskip}{0pt}
+%\setlength{\abovelegendskip}{0pt}  %设置legend上下间距
+%\setlength{\belowlegendskip}{0pt}
 %新的浮动体设置
-%\newfloatlist[within]{fenv}{ext}{listname}{capname}
-%\newfloatlist{X}{Z}{flist}{fcap}
-%within，可以设为chapter表示以章节为单位
-%fenv，环境名
-%ext，写入条目的文件的扩展名
-%listname，新环境目录的标题
-%capname，新环境标题的图序
-\newcommand{\listegcodename}{示~~ 例}
-\newcommand{\egcodename}{示例}
-\newfloatlist{egcode}{loc}{\listegcodename}{\egcodename}
-\newfixedcaption{\codecaption}{egcode}
-
-%环境名：
-%\begin{source}\end{source}
-%\begin{source*}\end{source*}
-%目录命令
+\newcommand{\listegcodename}{示~~ 例}%listegcodename，新环境目录的标题
+\newcommand{\egcodename}{示例}%egcodename，新环境标题的图序
+\newfloatlist{egcode}{loc}{\listegcodename}{\egcodename}%loc，写入条目的文件的扩展名
+\newfixedcaption{\codecaption}{egcode}%egcode，环境名
+%新的浮动体目录命令
 %可以设置\cftbeforeZtitleskip，\cftafterZtitleskip长度，比如：
 \setlength{\cftbeforeloctitleskip}{\baselineskip}
 \setlength{\cftafterloctitleskip}{0.5\baselineskip}
@@ -105,11 +57,9 @@ pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
 \cftsetindents{egcode}{0em}{3em}
 \setlength{\cftbeforeegcodeskip}{1pt}%各条目的垂直间距
 \renewcommand{\cftegcodepagefont}{\bfseries}
-
 \setlength{\cftbeforetoctitleskip}{\baselineskip}
 \setlength{\cftaftertoctitleskip}{0.5\baselineskip}
-%\renewcommand\contentsname{\hfill 目~~ 录 \hfill \hspace{1cm}}
-%用这一句也是一样的。
+%目录命令
 \renewcommand{\cfttoctitlefont}{\hfill\Large\heiti}
 \renewcommand{\cftaftertoctitle}{\hfill\hspace{0.1cm}}
 \renewcommand\contentsname{目~~ 录}
@@ -137,7 +87,7 @@ pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
 {\noindent\makebox{\color{green!50!black}\rule[1pt]{\linewidth}{0.4pt}}}
 
 \lstnewenvironment{codetex}[2]%
-{\begin{center}\end{center}\centering\setlength{\abovecaptionskip}{1mm}\setlength{\belowcaptionskip}{1mm}%
+{\begin{center}\end{center}\centering\setlength{\abovecaptionskip}{1mm}\setlength{\belowcaptionskip}{-3mm}%
 \vspace{-2.0\baselineskip}
 \codecaption{#1}\label{#2}%\nopagebreak
 %\vspace{-1.0\baselineskip}
@@ -157,7 +107,7 @@ frame=none,
 fontadjust=true,
 language=[LaTeX]TeX,
 %backgroundcolor=\color{yellow}, %背景颜色
-backgroundcolor=\color{codebackground},
+backgroundcolor=\color{blue!5},%codebackground
 numbers=left,
 numberstyle=\tiny\color{red},
 basicstyle=\small, % print whole listing small，footnotesize
@@ -243,12 +193,8 @@ leftmargin=4.5em,itemindent=0em}
 \setlist[description]{font=\bfseries\textcolor{violet},align=right,topsep=5pt,partopsep=0pt,parsep=0pt,%
 itemsep=0pt,leftmargin=2em,itemindent=0em}%注意，font或format中的最后一个命令自动提取标签为其参数
 
-%\usepackage{fancyvrb}%fancyvrb宏包
-%\DefineVerbatimEnvironment%  %定义环境-myverbatim
-%{myverbatim}{Verbatim}
-%{gobble=0,numbers=left,numbersep=2mm,framerule=0.2mm,fontsize=\footnotesize,
-%firstnumber=auto,%frame=lines,
-%rulecolor=\color{red!25},fillcolor=\color{red!25},showspaces=true,xleftmargin=0mm}
+
+\usepackage{longtable}
 
 \newcommand{\pz}[1]{%定义pz为旁注命令
 \marginpar[\flushright\youyuan\color{red}\footnotesize #1]{\youyuan\color{red}\small #1}}
