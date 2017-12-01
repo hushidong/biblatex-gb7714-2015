@@ -1,5 +1,6 @@
 \usepackage{expl3,etoolbox,ifthen,xstring}
 \usepackage{ctex}
+\ctexset{today=old}
 \let\kaiti=\kaishu
 \usepackage{xeCJKfntef}
 \usepackage[paperwidth=210mm,paperheight=290mm,left=20mm,right=20mm,top=25mm, bottom=15mm]{geometry}%定义版面
@@ -196,27 +197,32 @@ itemsep=0pt,leftmargin=2em,itemindent=0em}%注意，font或format中的最后一
 
 \usepackage{longtable}
 
+\usepackage{amssymb}
+\newcommand{\HandRight}{$\bigstar$}
+\newcommand{\zhongdian}[1]{\textcolor{violet}{\HandRight\heiti#1}}
 \newcommand{\pz}[1]{%定义pz为旁注命令
-\marginpar[\flushright\youyuan\color{red}\footnotesize #1]{\youyuan\color{red}\small #1}}
+\marginpar[\flushright\youyuan\color{violet}\footnotesize #1]{\youyuan\color{red}\small #1}}
 \newcommand{\PZ}[1]{%定义pz为旁注命令
-\marginpar[\flushright\youyuan\color{red}\footnotesize  #1]{\youyuan\color{red}\small #1}}
+\marginpar[\flushright\youyuan\color{violet}\footnotesize  #1]{\youyuan\color{red}\small #1}}
 \newcommand{\qd}[1]{%定义qd为强调命令
 \begin{quote}
-  \fangsong\color{blue}#1
+  \fangsong\color{violet}#1%blue!50!black
 \end{quote}}
 \newcommand{\QD}[1]{%定义qd为强调命令
 \begin{quote}
-  \fangsong\color{blue}#1
+  \fangsong\color{violet}#1
 \end{quote}}
 \newcommand{\bc}[1]{%定义补充信息
-{\kaiti\color{teal}#1}} %orange，brown，purple，teal，violet，olive，cyan
+{\kaiti\color{violet}#1}} %orange，brown，purple，teal，violet，olive，cyan
 \newcommand{\BC}[1]{%定义补充信息
-{\kaiti\color{teal}#1}}
+{\kaiti\color{violet}#1}}
+\newcommand{\zd}[1]{%定义补充信息
+{\heiti\color{violet}#1}} %orange，brown，purple，teal，violet，olive，cyan
+\newcommand{\ZD}[1]{%定义补充信息
+{\heiti\color{violet}#1}}
 
 
-\usepackage{amssymb}
-\newcommand{\HandRight}{$\bigstar$}
-\newcommand{\zhongdian}[1]{\textcolor{red}{\HandRight\heiti#1}}
+
 
 \newenvironment*{marglist}
 {\list{}{\setlength{\topsep}{0pt}
