@@ -50,6 +50,10 @@ please see the file 'biblatex-gb7714-2015.pdf' for more information!
 
 ## update history:
 
+### need to do:
+	* userd,userf to namea,nameb?
+	* special characters in all fields?
+
 ### date of change: 2017-11-21 to version v1.0i
 * Changes to pkg code:
     - "*.bbx": deal compatibility problem of author-year style for biblatex v3.8a, include labeldate->labeldateparts and DeclareSortingScheme -> DeclareSortingTemplate.
