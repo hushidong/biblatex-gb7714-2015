@@ -615,7 +615,7 @@ author.title[usera].translator.type number.version.location:institution,date或y
 \end{property}
 
 使用条目集类型(set)时，有静态和动态两种方法:
-动态方法的使用更方便，直接在写文档时候，将双语文献设置成set，然后引用set的bibtex键。比如:
+动态方法使用更为方便，在写文档时候，将利用set设置双语文献，然后引用set的bibtex键。比如:
 \begin{codetex}{设置set条目集用于双语文献动态方法}{eg:setforbilangentry}
 \defbibentryset{bilangyi2013}{易仕和2013--,Yi2013--}
 5. 专著，双语文献引用\cite{bilangyi2013}
@@ -633,22 +633,20 @@ entryset = {key1,key2,key3},
 entryset = {易仕和2013--,Yi2013--},
 }
 \end{codetex}
-当使用bibtex后端时，则需要进一步设置，具体参考biblatex宏包说明文档。
+%当使用bibtex后端时，则需要进一步设置，具体参考biblatex宏包说明文档。
 
 \subsubsection{数字}
 
 \begin{property}{}{}
 用户给bib源文件录入数字时，应按照GB/T 7714-2015第6.2节要求用阿拉伯数字表示。
-
-为了符合西文文献责任者的字母大小写习惯，本bbx样式文件，通过判断是否存在first name来确定是否是个人作者，当存在first name 时认为是个人作者，不存在则是机构作者，当是个人作者时lastname按GB/T 7714-2015要求全大写，是机构作者则仅大写首字母。所以对于仅有lastname的个人作者，填入信息英文姓的字母请全用大写。个人著者的格式要求参考GB/T 7714-2015第6.3节。
 \end{property}
 
 \subsubsection{英文字母}
 
 \begin{property}{}{}
-用户给bib源文件录入出版项、西文期刊名缩写以及西文文献的字母时，应按照GB/T 7714-2015第6.4节，第6.5节，6.6节要求，使用符合要求的习惯用法和大小写方式。
+为了符合西文文献责任者的字母大小写习惯，本bbx样式文件，通过判断是否存在first name来确定是否是个人作者，当存在first name 时认为是个人作者，不存在则是机构作者，当是个人作者时lastname按GB/T 7714-2015要求全大写，是机构作者则仅大写首字母。所以对于仅有lastname的个人作者，填入信息英文姓的字母请全用大写。个人著者的格式要求参考GB/T 7714-2015第6.3节。
 
-本样式文件使用原样打印的方式进行处理。
+用户给bib源文件录入出版项、西文期刊名缩写以及西文文献的字母时，应按照GB/T 7714-2015第6.4节，第6.5节，6.6节要求，使用符合要求的习惯用法和大小写方式。本样式文件使用原样打印的方式进行处理。
 \end{property}
 
 \subsubsection{标点}
@@ -674,7 +672,7 @@ entryset = {易仕和2013--,Yi2013--},
 \begin{property}{}{}
 用户在给bib源文件录入引文题名信息时，不需要给出文献类型标识/文献载体标识。同一责任者的合订题名，应用户根据GB/T 7714-2015 第8.2.1节的要求，在多个题名间用英文分号分隔，并整体录入到title数据域中。而分卷号，卷次，册次等信息时，除了专利号用number域录入外，其它可以直接在title数据域或者subtitle/titleaddon等数据域中给出。
 
-本样式文件实现了符合GB/T 7714-2015第8.2节要求的格式，能根据条目类型直接给出文献类型标识/文献载体标识并设置给自定义域usera，并在biblatex的参考文献条目驱动中直接使用，各不同类型文献的文献类型标识/文献载体标识，参考GB/T 7714-2015表B.1和B.2。
+本样式文件实现了符合GB/T 7714-2015第8.2节要求的格式，能根据条目类型选择文献类型标识/文献载体标识，自动录入到自定义域usera中，并在各类参考文献条目驱动中直接使用。各不同类型文献的文献类型标识/文献载体标识，参考GB/T 7714-2015表B.1和B.2。
 \end{property}
 
 \subsubsection{版次}
@@ -688,21 +686,21 @@ entryset = {易仕和2013--,Yi2013--},
 \subsubsection{出版项}
 
 \begin{property}{}{}
-用户在给bib源文件录入出版项信息时，当出版日期有其它形式的纪年时，将其置于公元纪年后面的()内，并整体录入year或date数据域，比如1845(清同治四年)。而引用日期应录入到urldate数据域。当除了出版日期外还有修改更新日期等时，可在year或date数据域录入第二个日期，并用/符号与前一个出版日期隔开。
+用户在给bib源文件录入出版项信息时，当出版日期有其它形式的纪年时，将其置于公元纪年后面的()内，并整体录入到 year 数据域中，比如: 1845(清同治四年)。而引用日期应录入到 urldate 数据域。当除了出版日期外还有修改/更新日期等时，可在year或date数据域录入第二个日期，并用/符号与前一个出版日期隔开。而专利的公告日期和其它条目类型的出版年应录入到 date 域中。
 
 本样式文件实现了GB/T 7714-2015第8.4节要求的格式。当出版地和出版者缺省时，中英文自动区分处理。对于用/符号隔开的两个日期，biblatex后端biber能自动解析，后一个日期数据自动解析到endyear等域可作为修改日期等在样式文件中使用。
 \end{property}
 
 \subsubsection{页码}
 \begin{property}{}{}
-用户在给bib源文件录入页码信息时，可以在pages域中根据需要录入可解析的页码(即用整数表示页码，起讫页码用-分隔)，比如81-86。也可以直接录入需要打印的信息，比如序2-3等。
+用户在给bib源文件录入页码信息时，可以在pages域中根据需要录入可解析的页码(即用整数表示页码，起讫页码用-分隔)，比如: 81-86。 也可以直接录入需要打印的信息，比如: 序2-3等。
 
-本样式实现了GB/T 7714-2015第8.5，8.8.2节的要求，对于能解析的页码自动解析，对于不能解析的页码原样输出。
+本样式实现了GB/T 7714-2015第8.5，8.8.2节的要求，对于能解析的页码自动解析，对于不能解析的页码则原样输出。
 \end{property}
 
 \subsubsection{访问路径URL和DOI}
 \begin{property}{}{}
-用户在给bib源文件录入获取和访问路径、数字对象唯一标识符信息时，将访问路径录入到url域中，数字对象唯一标识符格式录入到doi域中即可。
+用户在给bib源文件录入获取和访问路径、数字对象唯一标识符信息时，将访问路径录入到url域中，数字对象唯一标识符录入到doi域中即可。
 
 本样式文件实现了GB/T 7714-2015第8.6,8.7节要求的格式。
 \end{property}
@@ -876,7 +874,8 @@ and keyword=standard
 \href{run:./egonlineay.tex}{egonlineay.tex}，
 \href{run:./egonlineay.pdf}{egonlineay.pdf}。
 
-\qd{注意:对于作者年制，这里有4篇文献都是noauthor，有两篇有年份可以轻易分开，还有两篇没有年份存在歧义，所以在标注中用了[n.d.]加a和b分开，但在参考文献表中，各个版本的biblatex表现是不同的，其中3.4版因为进行newbibmacro*\{date+extrayear\}的定义时候，首先判断iffieldundef\{\textbackslash thefield\{datelabelsource\}year\}，当不存在datelabelsource的值+year的域时，就不再添加了。如果需要加extrayear也可以修改出来，但其实并没有必要了。这与标注中用的newbibmacro*\{cite:labelyear+extrayear\}(在authoryear.cbx文件中)的定义是不一样的。更多的内容详见\label{sec:dateinlabel}节。\par}
+\qd{注意:对于作者年制，这里有4篇文献都是noauthor，有两篇有年份可以轻易分开，还有两篇没有年份存在歧义，所以在标注中用了[n.d.]加a和b分开，但在参考文献表中，各个版本的biblatex表现是不同的，其中3.4版因为进行newbibmacro*\{date+extrayear\}的定义时候，首先判断iffieldundef\{\textbackslash thefield\{datelabelsource\}year\}，当不存在datelabelsource的值+year的域时，就不再添加了。如果需要加extrayear也可以修改出来，但其实并无必要。这与标注中用的newbibmacro*\{cite:labelyear+extrayear\}(在authoryear.cbx文件中)的定义是不一样的。更多的内容详见
+\ref{sec:dateinlabel}节。\par}
 
 
 \subsection{测试:学位论文thesis}
@@ -1052,11 +1051,11 @@ beamer类中的参考文献测试，参见:
 
 
 \section{样式文件设计、实现、应用}\label{sec:biblatex:mech}
-使用biblatex总的感受，biblatex相当完善和强大，笔者制作的样式文件实现的功能和格式只是biblatex功能的很小一部分，biblatex提供的更多功能其实都没有用到。可以说，biblatex作为参考文献问题的一个完整解决方案是名副其实的。笔者在设计样式文件时应用biblatex宏包功能的思路和实现总结如下:
+biblatex相当完善和强大，笔者开发样式文件过程中仅使用了biblatex提供的一小部分功能，更多功能其实都没有涉及到。可以说，biblatex作为参考文献问题的一个完整解决方案是名副其实的。笔者在设计样式文件时应用biblatex宏包功能的思路和实现总结如下:
 
 \subsection{基本思路}
 
-考虑到我国引用参考文献通常是中英文混合的情况，修改过程没有考虑针对中文的本地化处理，而是在英文本地化的基础(英文的本地化字符串设置文档是english.lbx)上添加一些中文要求的本地化字符串来使用。而为了区分使用中英文的字符串，对参考文献各条目内容进行中英文判断，若中文则使用中文字符串，若英文则使用英文字符串。
+考虑到我国引用参考文献通常是中英文混合的情况，因此不考虑针对中文的本地化处理，而是在英文本地化的基础(英文的本地化字符串设置文档是english.lbx)上添加一些中文要求的本地化字符串来使用。而为了区分使用中英文的字符串，对参考文献条目中数据域内容进行中英文判断，若是中文则使用中文字符串，若是英文则使用英文字符串。
 
 这里的中英文判断主要是在tex中的判断，利用对域中的信息进行检测，当信息的第一个字符是CJK字符时，判断该域的信息是中文的，否则是英文的。
 
@@ -1151,24 +1150,6 @@ beamer类中的参考文献测试，参见:
 \end{texlist}
 
 \end{enumerate}
-
-
-\subsection{脚注或旁注文献}
-  标注命令自定义，在脚注中引用文献，或者把引文放在脚注中或者旁注中
-  \begin{enumerate}
-    \item 标注命令定义可以使用DeclareCiteCommand命令，设置上标，包围符号，标注前后内容等。针对GB/T7714-2015中关于引用标注的特殊要求，增加了一些方便实现要求的命令比如pagescite、yearpagescite等。
-    \item 在footnote的脚注文本中使用footcite命令
-    \item 在正文中使用footfullcite命令，见4.11.6 Mixing Programming Interfaces
-  \end{enumerate}
-
-\subsection{参考文献标题}
-  参考文献标题修改并将标题加入目录中
-  \begin{enumerate}
-    \item 利用defbibheading\{bibliography\}[\textbackslash bibname]\{\}重定义标题
-    \item 使用bibliography外的其它标题样式比如bibintoc等
-    \item 利用titlesec等宏包进行修改标题样式，利用其局部性可以调整生成多种样式。注意: 利用titlesec后，直接在defbibheading\{bibliography\}[\textbackslash bibname]\{\} 中放置居中命令centering无效。
-  \end{enumerate}
-
 
 \subsection{标点和空格的特点和机制}
   \begin{enumerate}
@@ -1902,6 +1883,22 @@ texlive2017对应biblatex3.7;
 
 
 
+\subsection{脚注或旁注文献}
+  标注命令自定义，在脚注中引用文献，或者把引文放在脚注中或者旁注中
+  \begin{enumerate}
+    \item 标注命令定义可以使用DeclareCiteCommand命令，设置上标，包围符号，标注前后内容等。针对GB/T7714-2015中关于引用标注的特殊要求，增加了一些方便实现要求的命令比如pagescite、yearpagescite等。
+    \item 在footnote的脚注文本中使用footcite命令
+    \item 在正文中使用footfullcite命令，见4.11.6 Mixing Programming Interfaces
+  \end{enumerate}
+
+\subsection{参考文献标题}
+  参考文献标题修改并将标题加入目录中
+  \begin{enumerate}
+    \item 利用defbibheading\{bibliography\}[\textbackslash bibname]\{\}重定义标题
+    \item 使用bibliography外的其它标题样式比如bibintoc等
+    \item 利用titlesec等宏包进行修改标题样式，利用其局部性可以调整生成多种样式。注意: 利用titlesec后，直接在defbibheading\{bibliography\}[\textbackslash bibname]\{\} 中放置居中命令centering无效。
+  \end{enumerate}
+
 
 \subsection{其它需要说明的问题}
 下面的问题想到哪写到哪，没有特别的顺序:
@@ -1954,15 +1951,15 @@ texlive2017对应biblatex3.7;
 \end{enumerate}
 
 
-\section{总结}
+\section{总结与致谢}
 
-样式文件在标准样式基础上修改设计而成，读者若查看样式文件内容可以看到作者对各目标要求所做的修改及其注释，读者也可以根据自己的需求进行修改，作者设计样式文件的思路以及在设计过程中用到的一些biblatex宏包功能说明，详见第\ref{sec:biblatex:mech}节和LaTeX文档中文参考文献的biblatex解决方案的第2.7节。
+通过对 GB/T 7714-2015 标准的分析，对 biblatex 的学习和理解，在 biblatex 标准标准样式基础上，设计完成了符合 GB/T 7714-2015 标准的biblatex参考文献样式。从测试实践看，基本能够满足使用要求，用户可以放心使用。遇到问题时，除了可以查看
+本文档说明外，也可以看样式文件代码，其中给出了详细注释，如果遇到无法解决的问题，请邮件联系作者。
 
-需要特别说明的是，在作者设计完成这个样式之前，一直都是在使用基于李志奇编写的样式文件修改的参考文献样式，
-其中关于usera域的使用思路和卷期范围解析函数对于作者设计gb7714-2015样式很有启发，非常感谢。在完成样式设计过程中，因为希望通过判断条目的内容来判断中英文，特别需要一个好用的判断CJK字符的函数，因此在知乎、CTEX论坛和微博提问，得到了包括秀文工作组、刘海洋、leipility、qingkuan等人的回答，多有受益，特别是刘海洋(LeoLiu)给出的回答非常完美
-\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152663&extra=page\%3D3}}
-，其中代码直接用于本参考文献样式，深表感谢。当然还有更多这里没有提到姓名的师长和朋友们的热心帮忙，在此一并表示感谢!
+%读者若查看样式文件内容可以看到作者对各目标要求所做的修改及，读者也可以根据自己的需求进行修改，作者设计样式文件的思路以及在设计过程中用到的一些biblatex宏包功能说明，详见第\ref{sec:biblatex:mech}节和LaTeX文档中文参考文献的biblatex解决方案的第2.7节。
 
+最后要感谢如下各位师长和朋友，正是在各位的帮助建议下，本样式不断升级逐渐完善。包括: moewew(biblatex 现在的维护者之一，给了不少有益的建议)、 李志奇(基于biblatex的符合GBT7714-2005的中文文献生成工具作者，笔者以前使用该工具，其代码对于设计本样式很有启发)、LeoLiu(刘海洋，CJK字符判断函数
+\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152663&extra=page\%3D3}}对本宏包非常有帮助)、chinatex(china tex版主，给了很多建议和帮助，并且一起合作)、Sheng wenbo(biblatex用户手册合作译者，LaTeX2e 插图指南第三版译者，我们一起翻译的过程相互激励相互促进)、zepinglee(gbt7714-2015 bst样式作者，给了很多建议和讨论)、Harry Chen(ctex 维护者，给了不少好的建议)、秀文工作组、leipility、qingkuan、湘厦人、秋平、任蒲军、fredericky123、qiuzhu、chaoxiaosu、Old Jack、Wu Nailong、Yibai Zhang、wayne508、钟乙源、Xiaodong Yao、dsycircle、rpjshu、zjsdut、谢澜涛、Zutian Luo、海阔天空、zzqzyx、程晨、xmtangjun、蔡伟等等。当然还有更多这里没有列全的朋友们的热心帮忙，在此一并表示感谢!
 
 
 \section{存在的问题和下一步工作}
