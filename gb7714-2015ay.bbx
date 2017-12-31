@@ -33,14 +33,23 @@
     \providetoggle{iftleight}%用于处理biblatex3.8a的兼容性
     \StrChar{\abx@version}{1}[\numinteger]
     \StrChar{\abx@version}{3}[\numdigital]
-    \ifnumcomp{\numinteger}{=}{2}{\toggletrue{iftlfive}}{\togglefalse{iftlfive}}
+    %2.x版本统一用iftlfive=true表示
+    %3.0-3.2版本用iftlfive=true表示
+    %3.3-3.6版本用iftlsix=true表示
+    %3.7版本用iftlseven=true表示
+    %>3.8版本用iftleight=true表示
     \ifnumcomp{\numinteger}{=}{3}{
         \ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftlsix}\togglefalse{iftlfive}}{\togglefalse{iftlsix}\toggletrue{iftlfive}}
         \ifnumcomp{\numdigital}{>}{6}{\toggletrue{iftlseven}\togglefalse{iftlsix}}{\togglefalse{iftlseven}}
         \ifnumcomp{\numdigital}{>}{7}{\toggletrue{iftleight}\togglefalse{iftlseven}}{\togglefalse{iftleight}}
-    }{\blx@warning@noline{%
-       biblatex version undefined in biblatex-gb7714-2015.\MessageBreak
-       Please contact pkg author.}}
+    }{\ifnumcomp{\numinteger}{>}{3}{
+    \toggletrue{iftleight}\blx@warning@noline{%
+       biblatex version is >= 4.x.\MessageBreak
+       if errors raised，Please contact biblatex-gb7714-2015 pkg author.}%
+    }{\toggletrue{iftlfive}\blx@warning@noline{%
+       biblatex version is <= 2.x.\MessageBreak
+       if errors raised，Please contact biblatex-gb7714-2015 pkg author.}%
+    }}
     \newcommand\defversion[2]{\csdef{codeversion#1#2}}%定义不同版本的命令
     \newcommand\switchversion[2]{\csuse{codeversion#1#2}}%使用不同版本的命令
 
