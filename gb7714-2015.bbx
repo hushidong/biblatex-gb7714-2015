@@ -73,6 +73,7 @@
     %现在采用xstring方法，避免抽取的是编组符号
     \def\testCJKfirst#1{%
         %\edef\tempa{#1}%
+        %\expandarg%\noexpandarg
         \exploregroups%
         \StrChar{#1}{1}[\tempa]%
         \expandafter\testCJKfirstchar\tempa&}
@@ -337,6 +338,10 @@
             \step[fieldset=usere, origfieldval]
             \step[fieldsource=year]
             \step[fieldset=date, origfieldval]
+            }
+        \map{%title
+            \step[fieldsource={title}, match=\regexp{([^\\\{])}]
+            \step[fieldset=userd, fieldvalue={$1}]
             }
         \map{%将entrykey放入keywords中用于后期的使用
             \step[fieldsource=entrykey]
@@ -812,7 +817,7 @@
 %新增一个样式用于输出连续出版物的地址，单位，时间，%类似\newbibmacro*{publisher+location+date}
 \newbibmacro*{location+institution+date}{%
 \iftoggle{bbx:gbpub}%
-{\testCJKfirst{\thefield{title}}
+{\testCJKfirst{\thefield{userd}}
 \iflistundef{location}{\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}}{\printtext{[S.l.\adddot]}}}%
   {\printlist{location}}%
 %  \iflistundef{institution}
@@ -842,7 +847,7 @@
 
 \renewbibmacro*{publisher+location+date}{%
 \iftoggle{bbx:gbpub}%
-{\testCJKfirst{\thefield{title}}%
+{\testCJKfirst{\thefield{userd}}%
 \iflistundef{location}{%\adddot
 \iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准第19页看到，标准存在出版项时输出，没有时完全省略。
 \iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}\addcolon\addspace}{\printtext{[S.l.\adddot]}\addcolon\addspace}%
@@ -872,7 +877,7 @@
 
 %对edition版本信息做出修改，源来自biblatex.DEF
 \DeclareFieldFormat{edition}{%
-\testCJKfirst{\thefield{title}}%
+\testCJKfirst{\thefield{userd}}%
 \iftoggle{ifCJKforgbt}%
 {\ifinteger{#1}%
 {\printtext{#1版}}%
@@ -883,7 +888,7 @@
 
 %对version的版本信息做出修改，源来自biblatex.DEF
 \DeclareFieldFormat{version}{%
-\testCJKfirst{\thefield{title}}%
+\testCJKfirst{\thefield{userd}}%
 \ifinteger{#1}%
 {\iftoggle{ifCJKforgbt}{\printtext{#1版}}%
 {\mkbibordedition{#1}~\bibstring{version}}}%

@@ -71,6 +71,7 @@
 %现在采用xstring方法，避免抽取的是编组符号
 \def\testCJKfirst#1{%
 %\edef\tempa{#1}%
+%\expandarg%
 \exploregroups%
 \StrChar{#1}{1}[\tempa]%
 \expandafter\testCJKfirstchar\tempa&}
@@ -335,9 +336,9 @@ backrefpages     = {引用页:},
             \step[fieldsource=year]
             \step[fieldset=date, origfieldval]
             }
-        \map{
-            \step[fieldsource=title]%将title信息保存到userd中避免因为标签生成原因导致title域被清除
-            \step[fieldset=userd, origfieldval]
+        \map{%将title信息保存到userd中避免因为标签生成原因导致title域被清除
+            \step[fieldsource=title, match=\regexp{([^\\\{])}]
+            \step[fieldset=userd, fieldvalue={$1}]
             }
         \map{%将entrykey放入keywords中用于后期的使用
             \step[fieldsource=entrykey]

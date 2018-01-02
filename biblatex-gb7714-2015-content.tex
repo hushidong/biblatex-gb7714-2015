@@ -970,7 +970,7 @@ gbnoauthor选项测试参见:
 \href{run:./eggbnoauthorfalseay.tex}{eggbnoauthorfalseay.tex}，
 \href{run:./eggbnoauthorfalseay.pdf}{eggbnoauthorfalseay.pdf}。
 
-\subsection{测试:beamer类}
+\subsection{测试: beamer类}
 
 beamer类中的参考文献测试，参见:
 
@@ -982,7 +982,7 @@ beamer类中的参考文献测试，参见:
 \href{run:./egbeameray.tex}{egbeameray.tex}，
 \href{run:./egbeameray.pdf}{egbeameray.pdf}。
 
-\subsection{测试:采用gb7714-2015顺序编码制样式时的上标和非上标标注}\label{sec:cite:cmd:test}
+\subsection{测试: 采用gb7714-2015顺序编码制样式时的上标和非上标标注}\label{sec:cite:cmd:test}
 \begin{refsection}
 不带页码的引用(顺序编码制上标，方括号包围；作者年制行内，括号包围):
 \begin{itemize}
@@ -1025,7 +1025,7 @@ beamer类中的参考文献测试，参见:
 \printbibliography[heading=bibliography,title=【兼容phdthsis等条目类型】]
 \end{refsection}
 
-\subsection{测试:当责任者等需要判断中英文的信息中存在编组时的处理}
+\subsection{测试: 当责任者等需要判断中英文的信息中存在编组时的处理}
 \begin{refsection}
 当责任者等需要判断中英文的信息中存在编组时的处理\cite{IFLAI1977b--,IFLAI1977--}
 \cite{r27-BenHadjAlaya-FekiA.2008-1-5,中国企业投资协会2014--,中国企业投资协会2015--}
@@ -1035,18 +1035,25 @@ beamer类中的参考文献测试，参见:
 
 
 
-\subsection{测试:处理参考文献信息中\&等特殊字符}\label{sec:entrytype:compatibility}
+\subsection{测试: 处理参考文献信息中\&等特殊字符}\label{sec:entrytype:compatibility}
 \begin{refsection}
 文献中\cite{ref-replace-char}的booktitle域中含有\%，\&，\#符号，样式文件自动处理使其符合tex代码规则。
 \printbibliography[heading=bibliography,title=【处理参考文献信息中\&等特殊字符】]
 \end{refsection}
 
-\subsection{测试:处理作者年制article中卷信息缺省的标点}\label{sec:article:novol}
+\subsection{测试: 处理作者年制article中卷信息缺省的标点}\label{sec:article:novol}
 \begin{refsection}
 文献\cite{刘彻东1998-38-39}\cite{亚洲地质图编目组1978-194-208}
 \cite{高光明1998-60-65}
 
 \printbibliography[heading=bibliography,title=【author-year style:article without volume】]
+\end{refsection}
+
+\subsection{测试:标题中有\textbackslash LaTeX\{\}等名称时的情况}\label{sec:with:latex}
+\begin{refsection}
+文献\cite{Peebles2001-100-100}\cite{赵凯华1995--}\cite{蒋有绪1998--}
+
+\printbibliography[heading=bibliography,title=【title with \textbackslash LaTeX\{\}】]
 \end{refsection}
 
 
@@ -1959,7 +1966,7 @@ texlive2017对应biblatex3.7;
 %读者若查看样式文件内容可以看到作者对各目标要求所做的修改及，读者也可以根据自己的需求进行修改，作者设计样式文件的思路以及在设计过程中用到的一些biblatex宏包功能说明，详见第\ref{sec:biblatex:mech}节和LaTeX文档中文参考文献的biblatex解决方案的第2.7节。
 
 最后要感谢如下各位师长和朋友，正是在各位的帮助建议下，本样式不断升级逐渐完善。包括: moewew(biblatex 现在的维护者之一，给了不少有益的建议)、 李志奇(基于biblatex的符合GBT7714-2005的中文文献生成工具作者，笔者以前使用该工具，其代码对于设计本样式很有启发)、LeoLiu(刘海洋，CJK字符判断函数
-\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152663&extra=page\%3D3}}对本宏包非常有帮助)、chinatex(china tex版主，给了很多建议和帮助，并且一起合作)、Sheng wenbo(biblatex用户手册合作译者，LaTeX2e 插图指南第三版译者，我们一起翻译的过程相互激励相互促进)、zepinglee(gbt7714-2015 bst样式作者，给了很多建议和讨论)、Harry Chen(ctex 维护者，给了不少好的建议)、秀文工作组、leipility、qingkuan、湘厦人、秋平、任蒲军、fredericky123、qiuzhu、chaoxiaosu、Old Jack、Wu Nailong、Yibai Zhang、wayne508、钟乙源、Xiaodong Yao、dsycircle、rpjshu、zjsdut、谢澜涛、Zutian Luo、海阔天空、zzqzyx、程晨、xmtangjun、蔡伟等等。当然还有更多这里没有列全的朋友们的热心帮忙，在此一并表示感谢!
+\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152663&extra=page\%3D3}}对本宏包非常有帮助)、chinatex(china tex版主，给了很多建议和帮助，并且一起合作)、Sheng wenbo(biblatex用户手册合作译者，LaTeX2e 插图指南第三版译者，我们一起翻译的过程相互激励相互促进)、zepinglee(gbt7714-2015 bst样式作者，给了很多建议和讨论)、Harry Chen(ctex 维护者，给了不少好的建议)、秀文工作组、leipility、qingkuan、湘厦人、秋平、任蒲军、fredericky123、qiuzhu、chaoxiaosu、Old Jack、Wu Nailong、Yibai Zhang、wayne508、钟乙源、Xiaodong Yao、dsycircle、rpjshu、zjsdut、谢澜涛、Zutian Luo、海阔天空、zzqzyx、程晨、xmtangjun、蔡伟、liubenyuan 等等。当然还有更多这里没有列全的朋友们的热心帮忙，在此一并表示感谢!
 
 
 \section{存在的问题和下一步工作}
@@ -2012,6 +2019,27 @@ texlive2017对应biblatex3.7;
 %============================
 \updateinfo[2017-11-21]{update to version 1.0i}\label{up:171121}
 \begin{enumerate}
+\item 修正了一个liubenyuan发现的bug。当标题中含有\verb|\LaTeX{}|这样的宏时，cjk判断函数出错。解决如下:
+    \begin{texlist}
+    这个问题是这样的，
+    因为在cjk判断函数中，使用了xtring的StrChar函数来抽取字符，但这个函数默认情况下需要其参数完全展开。因为\LaTeX{}宏比较复杂，展开时会出现问题。设置该函数不展开或展开一次，都可以解决判断出错的问题。比如:
+
+    \expandarg
+    %
+    \StrChar{english}{1}[\tempa]%
+    \tempa
+
+    \StrChar{中文}{1}[\tempa]%
+    \tempa
+
+    \StrChar{english \LaTeX{} abc}{1}[\tempa]%
+    \tempa
+
+    但解决的是直接给出文本的情况，在biblatex使用中需要用\thefield取出文本，显然\thefield不止展开一次，因此不展开或者展开一次，都会出现问题，所以无解。只能从另外一个角度出发。
+
+    考虑到动态数据修改时，也可以利用正则表达式抽取数据，因此利用它来将title信息的第一个非特殊符号字符抽取出来，放到userd中用于cjk判断，这样就避开了\LaTeX{}展开的问题。
+    \end{texlist}
+
 \item 针对biblatex3.8a的更新做了兼容性处理，主要是修改版本判断和处理机制，替换新的宏包选项，替换新的排序格式命令。详见第\ref{sec:blx:compatibility}节
 
 \item 重写了范围解析函数，详见\ref{sec:cjkjudge}节
