@@ -947,7 +947,9 @@ backrefpages     = {引用页:},
     not test {\ifnameundef{author}}
   }
     {\usebibmacro{bbx:dashcheck}
-       {}%\bibnamedash %去掉相同作者用横线代替的处理
+       {%\bibnamedash %去掉相同作者用横线代替的处理
+       \printnames{author}%
+       }
        {\usebibmacro{bbx:savehash}%
         \printnames{author}%
         \iffieldundef{authortype}
