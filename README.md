@@ -18,33 +18,96 @@ A biblatex implementation of the GB/T7714-2015 bibliography style for Chinese us
 The biblatex-gb7714-2015 package provides an implementation of the bibliography style of the GB/T7714-2015 bibliography style. This implementation follows GB/T7714-2015 standard, and can be used simply by loading biblatex with the appropriate option
 
 ## usage
-%for numerical sequence style
+* for numerical sequence style
 
-	`\usepackage[backend=biber,style=gb7714-2015]{biblatex}`
+    `\usepackage[backend=biber,style=gb7714-2015]{biblatex}`
 
-	%add an option "align" for the numerical label, option value maybe "right" or "left" or "gb7714-2015"
+    - add an option "align" for the numerical label, option value maybe "right" or "left" or "gb7714-2015"
 
-	`\usepackage[backend=biber,style=gb7714-2015,align=gb7714-2015]{biblatex}`
+        `\usepackage[backend=biber,style=gb7714-2015,align=gb7714-2015]{biblatex}`
 
-	%add an option "gbpub" for dealing publishing items, option value = "true" for gb7714 style or "false" for standard style. 
+    - add an option "gbpub" for dealing publishing items, option value = "true" for gb7714 style or "false" for standard style. 
 
-	`\usepackage[backend=biber,style=gb7714-2015,gbpub=true]{biblatex}`
+        `\usepackage[backend=biber,style=gb7714-2015,gbpub=true]{biblatex}`
 
-%for author year style
+* for author year style
 
-	`\usepackage[backend=biber,style=gb7714-2015ay,gbpub=true]{biblatex}`
+    `\usepackage[backend=biber,style=gb7714-2015ay,gbpub=true]{biblatex}`
 
-    %add an option "gbnoauthor" for dealing undefined author, option value = "true" for gb7714 style or "false" for standard style. 
+    - add an option "gbnoauthor" for dealing undefined author, option value = "true" for gb7714 style or "false" for standard style. 
 
-	`\usepackage[backend=biber,style=gb7714-2015ay,gbnoauthor=true]{biblatex}`
+        `\usepackage[backend=biber,style=gb7714-2015ay,gbnoauthor=true]{biblatex}`
 	
-%for perl script transformation tool(only for the numerical style)
+* for perl script transformation tool(only for the numerical style)
 
-	`perl gb7714texttobib.pl in=textfilename out=bibfilename`
+    `perl gb7714texttobib.pl in=textfilename out=bibfilename`
 
 A demonstration database is provided to show how to format input for the style. The biblatex-gb7714-2015 style works with texlive2014, texlive2015, texlive2016, texlive2017 and so on.
 
-please see the file 'biblatex-gb7714-2015.pdf' for more information!
+please see the file 'biblatex-gb7714-2015.pdf' for further information!
+
+---------------------------------------------------------
+
+## tutorial/使用入门
+
+### 1. Tex source file/tex文档一般结构
+
+    \documentclass{article}%文档类%导言区开始:
+    
+    \usepackage{ctex}%加载ctex宏包，中文支持
+    \usepackage[left=20mm,right=20mm,top=25mm, bottom=15mm]{geometry}%加载geometry宏包，定义版面
+    \usepackage[colorlinks=true,pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}%加载hyperref宏包，使用超链接
+
+    %加载biblatex宏包，使用参考文献
+    %其中后端backend使用biber
+    %引用样式citestyle，著录样式bibstyle都采用gb7714-2015样式
+    \usepackage[backend=biber,bibstyle=gb7714-2015,%nature,%
+    citestyle=gb7714-2015%,backref=true%
+    ]{biblatex}
+    %biblatex宏包的参考文献数据源加载方式
+    \addbibresource[location=local]{example.bib}
+
+    
+    \begin{document}%正文区开始:
+
+    %正文内容，引用参考文献
+    不带页码的引用(上标，方括号包围):
+    \cite{Peebles2001-100-100}
+    不带页码的引用(非上标，方括号包围):
+    \parencite{Miroslav2004--}
+    带页码的引用:
+    \cite[见][49页]{蔡敏2006--}  \parencite[见][49页]{Miroslav2004--}
+    \pagescite{Peebles2001-100-100}  \pagescite[][201-301]{Peebles2001-100-100}
+    作者年制文中已有作者只需要年份和页码的情况，使用命令yearpagescite，比如:
+    见赵耀东\yearpagescite[][205]{赵耀东1998--}和Simon\yearpagescite[][15]{Simon2001--}的文献。
+    在页脚中引用和打印文献表:
+    \footnote{在脚注中引用\footcite{赵学功2001--}}  \footfullcite{赵学功2001--}
+    
+
+    %打印参考文献表
+    \printbibliography[heading=bibliography,title=参考文献]
+    \end{document}
+
+### 2. Compile method/文档编译方式
+
+    xelatex jobname.tex
+    biber jobname
+    xelatex jobname.tex
+    xelatex jobname.tex
+
+### 3. Recommended environment/推荐使用环境
+    
+    Texlive+Winedt
+    Texlive+Texstudio
+
+### 4. Examples/著录和标注结果示例
+	* 顺序编码制
+	![示例a](egaligngb7714-2015.jpg)
+	
+	* 作者年制
+	![示例b](egaligngb7714-2015ay.jpg)
+
+
 
 ---------------------------------------------------------
 

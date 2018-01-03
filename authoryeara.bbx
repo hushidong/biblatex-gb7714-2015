@@ -1,0 +1,319 @@
+\ProvidesFile{authoryeara.bbx}
+[\abx@bbxid]
+
+\RequireBibliographyStyle{standard}
+
+\DeclareBibliographyOption[boolean]{dashed}[true]{%
+  \ifstrequal{#1}{true}
+    {\ExecuteBibliographyOptions{pagetracker}%
+     \renewbibmacro*{bbx:savehash}{\savefield{fullhash}{\bbx@lasthash}}}
+    {\renewbibmacro*{bbx:savehash}{}}}
+
+\DeclareBibliographyOption[boolean]{mergedate}[true]{%
+  \ifcsdef{bbx@opt@mergedate@#1}
+    {\csuse{bbx@opt@mergedate@#1}}
+    {\PackageError{biblatex}
+       {Invalid option 'mergedate=#1'}
+       {Valid values are 'maximum', 'compact', 'basic', 'minimum',\MessageBreak
+        'true' (=compact), and 'false'.}}}
+
+\providebibmacro*{date+extradate}{}
+\providebibmacro*{date+extrayear}{%
+  \blx@warning{bibmacro 'date+extrayear' is deprecated.\MessageBreak
+    Please use 'date+extradate'.\MessageBreak
+    Using 'date+extradate' instead}%
+  \usebibmacro{date+extradate}}
+
+\def\bbx@opt@mergedate@true{\bbx@opt@mergedate@compact}
+
+% merge date/issue with date label
+\def\bbx@opt@mergedate@maximum{%
+  \renewbibmacro*{date+extradate}{%
+    \iffieldundef{labelyear}
+      {}
+      {\printtext[parens]{%
+         \iflabeldateisdate
+           {\printfield{issue}%
+            \setunit*{\addspace}%
+            \printdateextra}
+           {\printlabeldateextra}}}}%
+  \renewbibmacro*{date}{%
+    \iflabeldateisdate
+      {}
+      {\printdate}}%
+  \renewbibmacro*{issue+date}{%
+    \iflabeldateisdate
+      {}
+      {\printtext[parens]{%
+         \printfield{issue}%
+         \setunit*{\addspace}%
+         \printdate}}}}
+
+% merge date with date label
+\def\bbx@opt@mergedate@compact{%
+  \renewbibmacro*{date+extradate}{%
+    \iffieldundef{labelyear}
+      {}
+      {\printtext[parens]{%
+         \iflabeldateisdate
+           {\printdateextra}
+           {\printlabeldateextra}}}}%
+  \renewbibmacro*{date}{%
+    \iflabeldateisdate
+      {}
+      {\printdate}}%
+  \renewbibmacro*{issue+date}{%
+    \ifboolexpr{not test {\iffieldundef{issue}}
+                or not test {\iflabeldateisdate}}
+      {\printtext[parens]{%
+         \printfield{issue}%
+         \setunit*{\addspace}%
+         \iflabeldateisdate
+           {}
+           {\printdate}}}
+      {}%
+    \newunit}}
+
+% merge year-only date with date label
+\def\bbx@opt@mergedate@basic{%
+  \renewbibmacro*{date+extradate}{%
+    \iffieldundef{labelyear}
+      {}
+      {\printtext[parens]{\printlabeldateextra}}}%
+  \renewbibmacro*{date}{%
+    \ifboolexpr{
+      test {\iflabeldateisdate}
+      and
+      not test {\ifdateshavedifferentprecision{label}{}}
+    }
+      {}
+      {\printdate}}%
+  \renewbibmacro*{issue+date}{%
+    \ifboolexpr{
+      test {\iflabeldateisdate}
+      and
+      not test {\ifdateshavedifferentprecision{label}{}}
+      and
+      test {\iffieldundef{issue}}
+    }
+      {}
+      {\printtext[parens]{%
+         \printfield{issue}%
+         \setunit*{\addspace}%
+         \printdate}}%
+    \newunit}}
+
+% merge year-only date with year-only date label
+\def\bbx@opt@mergedate@minimum{%
+  \renewbibmacro*{date+extradate}{%
+    \iffieldundef{labelyear}
+      {}
+      {\printtext[parens]{\printlabeldateextra}}}%
+  \renewbibmacro*{date}{%
+    \ifboolexpr{
+      test {\iflabeldateisdate}
+      and
+      not test {\ifdateshavedifferentprecision{label}{}}
+      and
+      test {\iffieldundef{extradate}}
+    }
+      {}
+      {\printdate}}%
+  \renewbibmacro*{issue+date}{%
+    \ifboolexpr{
+      test {\iflabeldateisdate}
+      and
+      not test {\ifdateshavedifferentprecision{label}{}}
+      and
+      test {\iffieldundef{extradate}}
+      and
+      test {\iffieldundef{issue}}
+    }
+      {}
+      {\printtext[parens]{%
+         \printfield{issue}%
+         \setunit*{\addspace}%
+         \printdate}}%
+    \newunit}}
+
+% don't merge date/issue with date label
+\def\bbx@opt@mergedate@false{%
+  \renewbibmacro*{date+extradate}{%
+    \iffieldundef{labelyear}
+      {}
+      {\printtext[parens]{\printlabeldateextra}}}%
+  \renewbibmacro*{date}{\printdate}%
+  \renewbibmacro*{issue+date}{%
+    \printtext[parens]{%
+      \printfield{issue}%
+      \setunit*{\addspace}%
+      \usebibmacro{date}}%
+    \newunit}}
+
+\ExecuteBibliographyOptions{labeldateparts,sorting=nyt,pagetracker,mergedate}
+
+\DeclareFieldFormat{shorthandwidth}{#1}
+\setlength{\bibitemsep}{0pt}
+
+\DeclareNameAlias{author}{sortname}
+\DeclareNameAlias{editor}{sortname}
+\DeclareNameAlias{translator}{sortname}
+
+\defbibenvironment{bibliography}
+  {\list
+     {}
+     {\setlength{\leftmargin}{\bibhang}%
+      \setlength{\itemindent}{-\leftmargin}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}}}
+  {\endlist}
+  {\item}
+
+\defbibenvironment{shorthand}
+  {\list
+     {\printfield[shorthandwidth]{shorthand}}
+     {\setlength{\labelwidth}{\shorthandwidth}%
+      \setlength{\leftmargin}{\labelwidth}%
+      \setlength{\labelsep}{\biblabelsep}%
+      \addtolength{\leftmargin}{\labelsep}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}%
+      \renewcommand*{\makelabel}[1]{##1\hss}}}
+  {\endlist}
+  {\item}
+
+\InitializeBibliographyStyle{\global\undef\bbx@lasthash}
+
+\newbibmacro*{bbx:savehash}{%
+  \savefield{fullhash}{\bbx@lasthash}}
+
+\newbool{bbx@inset}
+\DeclareBibliographyDriver{set}{%
+  \booltrue{bbx@inset}%
+  \entryset{}{}%
+  \newunit\newblock
+  \usebibmacro{setpageref}%
+  \finentry}
+
+\renewbibmacro*{begrelated}{%
+  \booltrue{bbx@inset}}
+
+\renewbibmacro*{endrelated}{%
+  \usebibmacro*{bbx:savehash}}
+
+\renewbibmacro*{author}{%
+  \ifboolexpr{
+    test \ifuseauthor
+    and
+    not test {\ifnameundef{author}}
+  }
+    {\usebibmacro{bbx:dashcheck}
+       {\bibnamedash}
+       {\usebibmacro{bbx:savehash}%
+        \printnames{author}%
+        \iffieldundef{authortype}
+          {\setunit{\printdelim{nameyeardelim}}}
+          {\setunit{\printdelim{authortypedelim}}}}%
+     \iffieldundef{authortype}
+       {}
+       {\usebibmacro{authorstrg}%
+        \setunit{\printdelim{nameyeardelim}}}}%
+    {\global\undef\bbx@lasthash
+     \usebibmacro{labeltitle}%
+     \setunit*{\printdelim{nonameyeardelim}}}%
+  \usebibmacro{date+extradate}}
+
+\renewbibmacro*{editor}{%
+  \usebibmacro{bbx:editor}{editorstrg}}
+\renewbibmacro*{editor+others}{%
+  \usebibmacro{bbx:editor}{editor+othersstrg}}
+\newbibmacro*{bbx:editor}[1]{%
+  \ifboolexpr{
+    test \ifuseeditor
+    and
+    not test {\ifnameundef{editor}}
+  }
+    {\usebibmacro{bbx:dashcheck}
+       {\bibnamedash}
+       {\printnames{editor}%
+        \setunit{\printdelim{editortypedelim}}%
+        \usebibmacro{bbx:savehash}}%
+     \usebibmacro{#1}%
+     \clearname{editor}%
+     \setunit{\printdelim{nameyeardelim}}}%
+    {\global\undef\bbx@lasthash
+     \usebibmacro{labeltitle}%
+     \setunit*{\printdelim{nonameyeardelim}}}%
+  \usebibmacro{date+extradate}}
+
+\renewbibmacro*{translator}{%
+  \usebibmacro{bbx:translator}{translatorstrg}}
+\renewbibmacro*{translator+others}{%
+  \usebibmacro{bbx:translator}{translator+othersstrg}}
+\newbibmacro*{bbx:translator}[1]{%
+  \ifboolexpr{
+    test \ifusetranslator
+    and
+    not test {\ifnameundef{translator}}
+  }
+    {\usebibmacro{bbx:dashcheck}
+       {\bibnamedash}
+       {\printnames{translator}%
+        \setunit{\printdelim{translatortypedelim}}%
+        \usebibmacro{bbx:savehash}}%
+     \usebibmacro{#1}%
+     \clearname{translator}%
+     \setunit{\printdelim{nameyeardelim}}}%
+    {\global\undef\bbx@lasthash
+     \usebibmacro{labeltitle}%
+     \setunit*{\printdelim{nonameyeardelim}}}%
+  \usebibmacro{date+extradate}}
+
+\newbibmacro*{bbx:dashcheck}[2]{%
+  \ifboolexpr{
+    test {\iffieldequals{fullhash}{\bbx@lasthash}}
+    and
+    not test \iffirstonpage
+    and
+    (
+       not bool {bbx@inset}
+       or
+       test {\iffieldequalstr{entrysetcount}{1}}
+    )
+  }
+    {#1}
+    {#2}}
+
+\newbibmacro*{labeltitle}{%
+  \iffieldundef{label}
+    {\iffieldundef{shorttitle}
+       {\printfield{title}%
+        \clearfield{title}}
+       {\printfield[title]{shorttitle}}}
+    {\printfield{label}}}
+
+\DeclareBibliographyDriver{set}{%
+  \entryset
+    {\printfield{entrykey}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{setpageref}%
+  \finentry}
+
+\DeclareLabelname[set]{%
+\field{shortauthor}
+\field{author}
+\field{shorteditor}
+\field{editor}
+\field{translator}
+\field{childentrykey}
+}
+
+\DeclareLabeltitle[set]{%
+\field{shorttitle}
+\field{title}
+\field{entrykey}
+\field{childentrykey}
+}
+
+\endinput

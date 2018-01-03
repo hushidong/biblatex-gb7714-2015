@@ -54,6 +54,13 @@
         }%
     }
 
+%当条目是set时，所有的信息都没有于是利用entrykey来给出标签，那么就要set的条目关键字是需要的字符串，注意字符串中间不能有空格
+\renewbibmacro*{cite:label}{%
+  \iffieldundef{label}%
+    {\iffieldundef{labeltitle}{\printtext[bibhyperref]{\printfield{entrykey}}}%entrykey
+    {\printtext[bibhyperref]{\printfield[citetitle]{labeltitle}}}}%
+    {\printtext[bibhyperref]{\printfield{label}}}}
+
 %\DeclareCiteCommand{\cite}[\mkbibparens]{⟨precode⟩}{⟨loopcode⟩}{⟨sepcode⟩}{⟨postcode⟩}
 \DeclareCiteCommand{\cite}[\mkbibparens]
   {\usebibmacro{prenote}}
