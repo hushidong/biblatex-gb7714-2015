@@ -101,11 +101,13 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
     Texlive+Texstudio
 
 ### 4. Examples/著录和标注结果示例
-	* 顺序编码制
-	![示例a](egaligngb7714-2015.jpg)
+* 顺序编码制
+
+![示例a](egaligngb7714-2015.jpg)
 	
-	* 作者年制
-	![示例b](egaligngb7714-2015ay.jpg)
+* 作者年制
+
+![示例b](egaligngb7714-2015ay.jpg)
 
 
 
