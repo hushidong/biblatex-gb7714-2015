@@ -30,9 +30,10 @@
     \providetoggle{iftlfive}%用于处理biblatex3.2之前的版本,即texlive2015以下版本中的biblatex
     \providetoggle{iftlsix}%用于处理biblatex3.3开始改变的新的姓名机制后版本，包括
     \providetoggle{iftlseven}%用于处理biblatex3.7的兼容性
-    \providetoggle{iftleight}%用于处理biblatex3.8a的兼容性
-    \StrChar{\abx@version}{1}[\numinteger]
-    \StrChar{\abx@version}{3}[\numdigital]
+    \providetoggle{iftleight}%用于处理>=biblatex3.8的兼容性
+    \StrBefore{\abx@version}{.}[\numinteger]
+    \StrBehind{\abx@version}{.}[\numdigital]
+    \IfInteger{\numdigital}{}{\StrGobbleRight{\numdigital}{1}[\numdigital]}
     %2.x版本统一用iftlfive=true表示
     %3.0-3.2版本用iftlfive=true表示
     %3.3-3.6版本用iftlsix=true表示

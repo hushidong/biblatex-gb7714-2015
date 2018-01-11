@@ -31,7 +31,8 @@
 
 样式文件由如下文件构成:
 
-顺序编码制的\zd{gb7714-2015.bbx}，\zd{gb7714-2015.cbx}文件和作者年制的\zd{gb7714-2015ay.bbx}，\zd{gb7714-2015ay.cbx}文件。
+顺序编码制的 \zd{gb7714-2015.bbx}，\zd{gb7714-2015.cbx} 文件和作者年制的
+\zd{gb7714-2015ay.bbx}，\zd{gb7714-2015ay.cbx} 文件。
 
 说明文档源文件包括:
 
@@ -464,7 +465,7 @@ author/editor.title[usera].year或date,volume(number)-endyear, endvolume(endnumb
 \bc{需要注意: 因为连续出版物可能用到两个日期，两个卷，两个期，所以录入数据时需要特别处理。不需要录入endyear等信息，只需要在到year或date域录入日期，由biber自动解析，两个日期之间用/分隔。而卷和期由于可能有合订模式，合订卷期之间用/分隔(参考GB/T 7714-2015第8.8.3节)，因此如果需要解析有起止范围的卷和期，录入到volume和number域的信息中起止值之间应用-分隔}。
 
 \subsubsection{连续出版物的析出文献/article}
-\begin{refentry}{}{}
+\begin{refentry}{}{}%[break at=0.5cm/0pt]
 连续出版物的析出文献对应的biblatex的entrytype为:article。文献类型标识用J表示。
 
 \paragraph{其著录格式为}(参考GB/T 7714-2015第4.4节):\\
@@ -498,7 +499,7 @@ author.title[usera].journaltitle或journal,date(number)[urldate].url.doi
 \end{codetex}
 
 \subsubsection{专利/patent}
-\begin{refentry}{}{}
+\begin{refentry}{}{}%[break at=3cm/0pt]
 专利文献对应的biblatex的entrytype为:patent。文献类型标识用P表示。
 
 \paragraph{其著录格式为}(参考GB/T 7714-2015第4.5节):\\
@@ -621,7 +622,7 @@ author.title[usera].translator.type number.version.location:institution,date或y
 专著，双语文献引用\cite{bilangyi2013}
 \end{codetex}
 
-得到的参考文献打印结果见\ref{sec:test:book}节的参考文献表。\bc{需要注意的是:因为set条目类型除了子条目关键词信息外，并无其他信息，因此它的标注标签通常会是空的。这个问题目前的解决方法是设置一个指定格式和内容中间无空格无英文逗号的关键字，用它来作为标签}。比如:
+得到的参考文献打印结果见\ref{sec:test:book}节的参考文献表。\bc{需要注意的是:因为set条目类型除了子条目关键词信息外，并无其他信息，因此它的标注标签通常会是空的。这个问题目前的解决方法是设置一个指定格式和内容中间无空格无英文逗号的关键字，用它来作为标签，这个问题可能与biblatex版本有关，v3.7版没有这个问题，因为set中还带有第一个子条目的信息，但v3.8a版及以上就不行了}。比如:
 \begin{codetex}{设置set条目集用于双语文献动态方法}{eg:setforbilangentry}
 \defbibentryset{易仕和，2013}{易仕和2013--,Yi2013--}
 专著，双语文献引用\cite{易仕和，2013}
@@ -1167,7 +1168,7 @@ biblatex相当完善和强大，笔者开发样式文件过程中仅使用了bib
 
 \subsection{标点和空格的特点和机制}
   \begin{enumerate}
-    \item 标点符号设置比如:renewrobustcmd*\{\textbackslash bibinitperiod\}\{\}和renewcommand*\{\textbackslash revsdnamepunct\}\{\}等用于全局修改标点。
+    \item 标点符号设置比如:renewrobustcmd*\{\textbackslash bibinitperiod\}\{\} 和renewcommand*\{\textbackslash revsdnamepunct\}\{\}等用于全局修改标点。
     \item 如isdot/adddot，adddot将原样(逐字，如实)句点转换为缩写点在有利用printtext输入原样字符的时候很重要比如[s.n.] 中，比如title末尾。
     \item 利用newunit输出的标点，需要后面遇到printfield等命令有内容才输出标点，这是标点的异步处理机制。
     \item setunit*的作用是前面printtext等没有输出时候就不输出，见4.11.7.3 节的应用以及出版项缺省时的代码处理。
@@ -1973,7 +1974,7 @@ texlive2017对应biblatex3.7;
 %读者若查看样式文件内容可以看到作者对各目标要求所做的修改及，读者也可以根据自己的需求进行修改，作者设计样式文件的思路以及在设计过程中用到的一些biblatex宏包功能说明，详见第\ref{sec:biblatex:mech}节和LaTeX文档中文参考文献的biblatex解决方案的第2.7节。
 
 最后要感谢如下各位师长和朋友，正是在各位的帮助建议下，本样式不断升级逐渐完善。包括: moewew(biblatex 现在的维护者之一，给了不少有益的建议)、 李志奇(基于biblatex的符合GBT7714-2005的中文文献生成工具作者，笔者以前使用该工具，其代码对于设计本样式很有启发)、LeoLiu(刘海洋，CJK字符判断函数
-\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152663&extra=page\%3D3}}对本宏包非常有帮助)、chinatex(china tex版主，给了很多建议和帮助，并且一起合作)、Sheng wenbo(biblatex用户手册合作译者，LaTeX2e 插图指南第三版译者，我们一起翻译的过程相互激励相互促进)、zepinglee(gbt7714-2015 bst样式作者，给了很多建议和讨论)、Harry Chen(ctex 维护者，给了不少好的建议)、liubenyuan(关于项目组织给出了很好的建议)、秀文工作组、leipility、qingkuan、湘厦人、秋平、任蒲军、fredericky123、qiuzhu、chaoxiaosu、Old Jack、Wu Nailong、Yibai Zhang、wayne508、钟乙源、Xiaodong Yao、dsycircle、rpjshu、zjsdut、谢澜涛、Zutian Luo、海阔天空、zzqzyx、程晨、xmtangjun、蔡伟 等等。当然还有更多这里没有列全的朋友们的热心帮忙，在此一并表示感谢!
+\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152663&extra=page\%3D3}} 对本宏包非常有帮助)、chinatex(china tex版主，给了很多建议和帮助，并且一起合作)、Sheng wenbo(biblatex用户手册合作译者，LaTeX2e 插图指南第三版译者，我们一起翻译的过程相互激励相互促进)、zepinglee(gbt7714-2015 bst样式作者，给了很多建议和讨论)、Harry Chen(ctex 维护者，给了不少好的建议)、liubenyuan(关于项目组织给出了很好的建议)、秀文工作组、leipility、qingkuan、湘厦人、秋平、任蒲军、fredericky123、qiuzhu、chaoxiaosu、Old Jack、Wu Nailong、Yibai Zhang、wayne508、 钟乙源、Xiaodong Yao、dsycircle、rpjshu、zjsdut、谢澜涛、Zutian Luo、海阔天空、zzqzyx、程晨、xmtangjun、蔡伟 等等。当然还有更多这里没有列全的朋友们的热心帮忙，在此一并表示感谢!
 
 
 \section{存在的问题和下一步工作}

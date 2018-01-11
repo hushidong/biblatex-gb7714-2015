@@ -4,7 +4,7 @@
 \ctexset{today=old}
 \let\kaiti=\kaishu
 \usepackage{xeCJKfntef}
-\usepackage[paperwidth=210mm,paperheight=290mm,left=20mm,right=20mm,top=25mm, bottom=15mm]{geometry}%定义版面
+\usepackage[paperwidth=210mm,paperheight=290mm,left=20mm,right=15mm,top=20mm, bottom=15mm,showframe,showcrop]{geometry}%定义版面
 \usepackage[colorlinks=true,%
 pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}  %书签功能，选项去掉链接红色方框
 \usepackage{titleref} %标题引用
@@ -104,8 +104,9 @@ breaklines=true,
 %showspaces=true,
 extendedchars=false,
 columns=fullflexible,%flexible,
-%frame=tb,
-frame=none,
+frame=b,
+%frame=none,
+rulecolor=\color{green!50!black},
 fontadjust=true,
 language=[LaTeX]TeX,
 %backgroundcolor=\color{yellow}, %背景颜色
@@ -121,7 +122,7 @@ stringstyle=\ttfamily, % typewriter type for strings
 showstringspaces=false}% no special string spaces
 %\renewcommand{\baselinestretch}{0.9} %加这句的话需要进行垂直空间位置调整
 }
-{\nopagebreak\vspace*{-\baselineskip}\codebottomline\\}
+{}%\nopagebreak\vspace*{-\baselineskip}\codebottomline
 
 \lstnewenvironment{texlist}%
 {\lstset{% general command to set parameter(s)
@@ -150,19 +151,20 @@ showstringspaces=false}% no special string spaces
 {}
 
 \usepackage[listings,theorems]{tcolorbox}
-
+\tcbuselibrary{breakable}
 \newcounter{myprop}\def\themyprop{\arabic{myprop}}
 %序号如果带章节的话可以改为比如:\thesection.\arabic{myprop}
-\tcbmaketheorem{property}{方法}{theorem style=plain,fonttitle=\bfseries\upshape, %
-fontupper=\slshape,boxrule=0mm,arc=0mm, %
-coltitle=black,colback=green!25,colframe=blue!50,%
-separator sign={\ $\blacktriangleright$},
+\tcbmaketheorem{property}{方法}
+{separator sign={\ $\blacktriangleright$},breakable,
+theorem style=plain,fonttitle=\bfseries\upshape, fontupper=\slshape,boxrule=0mm,arc=0mm, %
+coltitle=black,colback=green!50!yellow!15!white,colframe=blue!50,%
 description delimiters={}{},
 terminator sign={\ }}{myprop}{pp}
 %最后一个必须参数是prefix用来做label比如这里是pp:加上给出的标签名
 
 \newtcbtheorem[]{refentry}{条目类型}
-{separator sign={\ $\blacktriangleright$},theorem style=plain,fonttitle=\bfseries,
+{separator sign={\ $\blacktriangleright$},breakable,
+theorem style=plain,fonttitle=\bfseries,
 fontupper=\normalsize,boxrule=0mm,arc=0mm,
 coltitle=green!35!black,colbacktitle=green!15!white,
 colback=green!50!yellow!15!white,terminator sign={\ }}{rfeg}
