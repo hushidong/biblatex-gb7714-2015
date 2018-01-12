@@ -33,6 +33,7 @@
     \providetoggle{iftlsix}%用于处理biblatex3.3开始改变的新的姓名机制后版本，包括
     \providetoggle{iftlseven}%用于处理biblatex3.7的兼容性
     \providetoggle{iftleight}%用于处理>=biblatex3.8的兼容性
+    \providetoggle{iftlnine}%用于处理>=biblatex3.10的兼容性
     \StrBefore{\abx@version}{.}[\numinteger]
     \StrBehind{\abx@version}{.}[\numdigital]
     \IfInteger{\numdigital}{}{\StrGobbleRight{\numdigital}{1}[\numdigital]}
@@ -45,6 +46,7 @@
         \ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftlsix}\togglefalse{iftlfive}}{\togglefalse{iftlsix}\toggletrue{iftlfive}}
         \ifnumcomp{\numdigital}{>}{6}{\toggletrue{iftlseven}\togglefalse{iftlsix}}{\togglefalse{iftlseven}}
         \ifnumcomp{\numdigital}{>}{7}{\toggletrue{iftleight}\togglefalse{iftlseven}}{\togglefalse{iftleight}}
+        \ifnumcomp{\numdigital}{>}{9}{\toggletrue{iftlnine}\togglefalse{iftleight}}{\togglefalse{iftlnine}}
     }{\ifnumcomp{\numinteger}{>}{3}{
     \toggletrue{iftleight}\blx@warning@noline{%
        biblatex version is >= 4.x.\MessageBreak
@@ -194,11 +196,47 @@
     }
 }
 
+\defversion{3.10}{opt}{
+    %biblatex3.7版后(比如texlive2017中的3.7版)的使用方式
+    %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
+    \DeclareBibliographyOption[string]{align}[right]{%
+        \ifstrequal{##1}{left}{\setalignleft}{}
+        \ifstrequal{##1}{gb7714-2015}{\setaligngbstyle}{}
+    }
+
+    %增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
+    \newtoggle{bbx:gbpub}
+    \DeclareBibliographyOption[boolean]{gbpub}[true]{%
+        %\settoggle{bbx:gbpub}{#1} %或采用下面这一句
+        \ifstrequal{##1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
+    \ExecuteBibliographyOptions{gbpub}
+
+    %增加一个处理佚名或noauthor的控制选项
+    %因为在顺序编码制中，不需要使用，这里也增加，为了与作者年制的兼容性考虑。
+    \DeclareBibliographyOption[boolean]{gbnoauthor}[true]{}%
+
+    \ExecuteBibliographyOptions{
+      sorting=none,
+      useprefix=true,  %名字的信息包括前缀
+      %firstinits=true,    %名字有缩写，参考3.1.2.3 Internal
+      giveninits=true,
+      date         = year,  %日期仅写到年
+      urldate =iso, %iso8601，edtf
+      eventdate =iso,
+      maxnames     = 3 ,    %设置名字最大数量
+      minnames     = 3       %设置缩减后的名字最小数量
+      %uniquename   = init
+    }
+}
+
 \iftoggle{iftlfive}
-    {\switchversion{3.0}{opt}}%%当采用texlive2015以下版本时
+    {\switchversion{3.0}{opt}}%%当采用texlive2015以下版本时，biblatex3.0
     {\iftoggle{iftlsix}%
-        {\switchversion{3.4}{opt}}%%当采用texlive2016版本时
-        {\switchversion{3.7}{opt}}%%当采用texlive2017以上版本时
+        {\switchversion{3.4}{opt}}%%当采用texlive2016版本时，biblatex3.4
+        {\iftoggle{iftlnine}%
+            {\switchversion{3.10}{opt}}%%当采用biblatex3.10以上版本时
+            {\switchversion{3.7}{opt}}%%当采用biblatex3.4以上版本时
+        }
     }
 
 
@@ -724,25 +762,6 @@
      \usebibmacro{url}}
 \renewbibmacro*{url}{\printfield{url}}
 
-\defversion{3.7}{date}{
-    \DeclareFieldFormat{urldate}{##1}
-    \renewbibmacro*{urldate}{%
-    \addthinspace\printtext{[}\printurldate\printtext{]}}%能用高层命令+选项尽量用命令(比如这里的\printurldate)，而不用\blx@edtfdate这种更底层的命令
-
-    \newbibmacro*{newsdate}{%%新增加一个新闻日期
-    \blx@edtfdate{}{}%
-    }
-
-    \newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示电子资源的更新和修改日期，而公告日期则按日期格式
-        \iffieldundef{year}{%
-                \iffieldundef{endyear}{\iffieldundef{eventyear}{}{\printtext{(}\printeventdate\printtext{)}}}%
-                {\printtext{(}\printenddate\printtext{)}}%
-        }{\iffieldequalstr{year}{}{%因为year存在，但为空
-            }{\printtext{(}\blx@edtfdate{}{}\printtext{)}}%
-         }%
-    }%
-}
-
 \defversion{3.4}{date}{
     \renewbibmacro*{urldate}{%
     \addthinspace\printtext{[}\printfield{urlyear}%
@@ -778,11 +797,52 @@
     }%
 }
 
+\defversion{3.7}{date}{
+    \DeclareFieldFormat{urldate}{##1}
+    \renewbibmacro*{urldate}{%
+    \addthinspace\printtext{[}\printurldate\printtext{]}}%能用高层命令+选项尽量用命令(比如这里的\printurldate)，而不用\blx@edtfdate这种更底层的命令
+
+    \newbibmacro*{newsdate}{%%新增加一个新闻日期
+    \blx@edtfdate{}{}%
+    }
+
+    \newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示电子资源的更新和修改日期，而公告日期则按日期格式
+        \iffieldundef{year}{%
+                \iffieldundef{endyear}{\iffieldundef{eventyear}{}{\printtext{(}\printeventdate\printtext{)}}}%
+                {\printtext{(}\printenddate\printtext{)}}%
+        }{\iffieldequalstr{year}{}{%因为year存在，但为空
+            }{\printtext{(}\blx@edtfdate{}{}\printtext{)}}%
+         }%
+    }%
+}
+
+\defversion{3.10}{date}{
+    \DeclareFieldFormat{urldate}{##1}
+    \renewbibmacro*{urldate}{%
+    \addthinspace\printtext{[}\printurldate\printtext{]}}%能用高层命令+选项尽量用命令(比如这里的\printurldate)，而不用\blx@edtfdate这种更底层的命令
+
+    \newbibmacro*{newsdate}{%%新增加一个新闻日期
+    \blx@isodate{}{}%
+    }
+
+    \newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示电子资源的更新和修改日期，而公告日期则按日期格式
+        \iffieldundef{year}{%
+                \iffieldundef{endyear}{\iffieldundef{eventyear}{}{\printtext{(}\printeventdate\printtext{)}}}%
+                {\printtext{(}\printenddate\printtext{)}}%
+        }{\iffieldequalstr{year}{}{%因为year存在，但为空
+            }{\printtext{(}\blx@isodate{}{}\printtext{)}}%
+         }%
+    }%
+}
+
 \iftoggle{iftlfive}%%根据texlive/biblatex版本选择
     {\switchversion{3.4}{date}}%
     {\iftoggle{iftlsix}%
         {\switchversion{3.4}{date}}%
-        {\switchversion{3.7}{date}}%
+        {\iftoggle{iftlnine}%
+            {\switchversion{3.10}{date}}%biblatex3.10版
+            {\switchversion{3.7}{date}}%
+        }%
     }
 
 %调整doi+eprint+url格式，源来自standard.bbx
