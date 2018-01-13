@@ -117,10 +117,11 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 
 ### need to do:
 	* special characters in all fields?
-    * entry type set's author-year style?
+    * citation command like cite*?
 
 ### date of change: 2017-11-21 to version v1.0i
 * Changes to pkg code:
+    - "*.bbx": add a new solution for multi-language bibliography based on related entry other than the old @set method for biblatex version >3.8, because biblatex(>v3.8) does not copy info from its first member any longer.
 	- "*.bbx": correct a bug of entry's title with \LaTeX{} macro reported by liubenyuan. this bug is raised in CJK char check function when StrChar from xtring pkg to extract chars. 
     - "*.bbx": deal compatibility problem of author-year style for biblatex v>3.8a, include labeldate->labeldateparts and DeclareSortingScheme -> DeclareSortingTemplate.
     - "*.bbx": change the version check macro,using macro form pkg xstring. change version switch method, define version's code first then switch depend on the biblatex version.

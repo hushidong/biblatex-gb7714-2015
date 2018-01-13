@@ -632,6 +632,22 @@ backrefpages     = {引用页:},
         \literal{0}
       }
     }
+
+    %为了实现v3.8以上版本的双语文献，采用related的方法代替set方法，因为set方法已经无法实现了，
+    %因为set不再复制其第一个成员的信息。于是定义一个命令，用于动态的修改数据，即添加related域的信息
+    %其中使用了\DeclareStyleSourcemap，但由于其只能出现在导言区中，因此\defdoublelangentry命令也只能出现在导言区中
+    \newcommand{\defdoublelangentry}[2]{%
+    \edef\entrykeya{##1}
+    \edef\entrykeyb{##2}
+        \DeclareStyleSourcemap{
+          \maps[datatype=bibtex]{
+            \map{
+              \step[fieldsource=entrykey, match=\entrykeya, final]
+              \step[fieldset=related, fieldvalue=\entrykeyb]
+            }
+          }
+       }
+    }
 }
 
 \iftoggle{iftlfive}
@@ -645,6 +661,7 @@ backrefpages     = {引用页:},
     }
 
 
+
 %=====================================================================
 %=====================================================================
 %参考文献列表环境
@@ -654,8 +671,8 @@ backrefpages     = {引用页:},
      {}
      {%\setlength{\leftmargin}{\bibhang}%
       %\setlength{\itemindent}{-\leftmargin}%
-      \setlength{\leftmargin}{0pt}%
-      \setlength{\itemindent}{0pt}%
+      \setlength{\leftmargin}{1em}%
+      \setlength{\itemindent}{-1em}%
       \setlength{\itemsep}{\bibitemsep}%
       \setlength{\parsep}{\bibparsep}}}
   {\endlist}
@@ -673,7 +690,7 @@ backrefpages     = {引用页:},
 %这里调整一下两种语言参考文献的间隔,%源来自biblatex.def
 \renewcommand*{\entrysetpunct}{\adddot\par\nobreak}
 \renewcommand*{\bibpagespunct}{\addcolon\addthinspace}%页码引用格式的修改%修改为用冒号
-
+%\renewcommand{\relateddelim}{}%\par
 
 %=====================================================================
 %=====================================================================
@@ -905,6 +922,65 @@ backrefpages     = {引用页:},
         }%
     }
 
+\renewbibmacro*{related}{%
+  \ifboolexpr{ test {\iffieldundef{related}} or test {\ifrelatedloop} }
+    {}
+    {\usebibmacro{begrelated}%
+     \def\bbx@tempa{}%
+     \setcounter{bbx:relatedtotal}{0}%
+     \def\do##1{%
+       \entrydata{##1}{%
+         \ifrelatedloop
+           {}
+           {\stepcounter{bbx:relatedtotal}%
+            \gappto{\bbx@tempa}{##1,}}}}%
+     \docsvfield{related}%
+     \restorefield{related}{\bbx@tempa}%
+     \ifnumgreater{\value{bbx:relatedtotal}}{0}
+       {\listcsxadd{bbx:relatedloop}{\strfield{entrykey}}%
+        \iffieldundef{clonesourcekey}
+          {}
+          {\listcsxadd{bbx:relatedloop}{\strfield{clonesourcekey}}}%
+        \setcounter{bbx:relatedcount}{0}%
+        \def\do{%
+          \stepcounter{bbx:relatedcount}%
+          \ifnumgreater{\value{bbx:relatedcount}}{0}
+            {\ifcsundef{relateddelim\strfield{relatedtype}}
+              {\printtext{\relateddelim}}
+              {\printtext{\csuse{relateddelim\strfield{relatedtype}}}}}
+            {}}%
+        \ifbibmacroundef{related:\strfield{relatedtype}}
+          {\appto{\do}{\usebibmacro{related:default}}}
+          {\appto{\do}{\usebibmacro*{related:\strfield{relatedtype}}}}%
+        \iffieldformatundef{related:\strfield{relatedtype}}
+          {\def\bbx@tempa{related}}
+          {\def\bbx@tempa{related:\strfield{relatedtype}}}%
+        \iffieldformatundef{relatedstring:\strfield{relatedtype}}
+          {\def\bbx@tempb{relatedstring:default}}
+          {\def\bbx@tempb{relatedstring:\strfield{relatedtype}}}%
+        \printtext[\bbx@tempa]{%
+          \usebibmacro{begrelatedloop}%
+          \iffieldundef{relatedstring}
+            {\ifboolexpr{
+               test {\ifnumgreater{\value{bbx:relatedtotal}}{1}}
+               and
+               test {\ifbibxstring{\thefield{relatedtype}s}}
+             }
+               {\printtext[\bbx@tempb]{%
+                  \bibstring[\mkrelatedstring]{\thefield{relatedtype}s}}}
+               {\iffieldbibstring{relatedtype}
+                  {\printtext[\bbx@tempb]{%
+                     \bibstring[\mkrelatedstring]{\thefield{relatedtype}}}}
+                  {}}}
+            {\iffieldbibstring{relatedstring}
+               {\printtext[\bbx@tempb]{%
+                  \bibstring[\mkrelatedstring]{\thefield{relatedstring}}}}
+               {\printfield[\bbx@tempb]{relatedstring}}}%
+          \docsvfield{related}%
+          \usebibmacro{endrelatedloop}}}%
+       {}%
+     \usebibmacro{endrelated}}}
+
 \DeclareFieldFormat{pages}{#1}%页码引用格式的修改%去掉前面引导页码的pp.等字符
 
 %调整doi+eprint+url格式，源来自standard.bbx
@@ -976,7 +1052,8 @@ backrefpages     = {引用页:},
   \usebibmacro{date+extrayear}
   }
 
-
+%设置标注和文献表中作者和年份之间的分隔符
+    \DeclareDelimFormat{nameyeardelim}{\addcomma\space}
 %设置因为mergedate默认为true时的情况，来自\bbx@opt@mergedate@compact
 %去掉作者后面包围年份的圆括号
 %这里因为biblatex版本的不同，做不同的处理，texlive2017版/2016等低版本分开处理
@@ -1002,8 +1079,7 @@ backrefpages     = {引用页:},
             \printfield{extrayear}}}}}%
 }
 \defversion{3.8}{dateextra}{
-\DeclareDelimFormat{nameyeardelim}{\addcomma\space}
-\renewbibmacro*{author}{%
+\renewbibmacro*{author}{%以前的date+extrayear变为date+extradate，所以对3.8以上版本重定义一下author
   \ifboolexpr{
     test \ifuseauthor
     and

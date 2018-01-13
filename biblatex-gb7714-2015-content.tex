@@ -47,7 +47,7 @@
 biblatex生成参考文献有其优越性。笔者从最初开始学习latex时利用thebibliography环境生成参考文献，到后来对格式化参考文献有更多需求，开始寻求利用参考文献宏包，再到最后选择了使用biblatex宏包[也由于对bibtex语言不熟悉，偷懒不想学$( \hat{} \bot \hat{} )$]，经过大量的实践总结biblatex宏包参考文献生成的优点如下:
 
 \begin{enumerate}
-\item 使用简单。样式随宏包加载，参考文献源bib文件利用addbibresource加载，打印文献表利用printbibliography命令可以在文档任意位置打印。参考文献只需三步编译，第一遍xelatex，第二遍biber，第三遍xelatex，当然如果需要反向超链接，除设置backref 选项外，还需要第四遍xelatex。例\ref{eg:compile:cmd} 给出编译命令，其中xelatex命令也可以用mklatex -xelatex 代替。
+\item 使用简单。样式随宏包加载，参考文献源bib文件利用addbibresource加载，打印文献表利用printbibliography命令可以在文档任意位置打印。参考文献只需三步编译，第一遍xelatex，第二遍biber，第三遍xelatex，当然如果需要反向超链接，除设置backref 选项外，还需要第四遍xelatex。例\ref{eg:compile:cmd} 给出编译命令，其中xelatex命令也可以用mklatex -xelatex 代替，--synctex=-1选项也可以是-synctex=1。
 
     \begin{codetex}{使用biblatex宏包的文档编译命令}{eg:compile:cmd}
     xelatex --synctex=-1 jobname.tex
@@ -60,8 +60,20 @@ biblatex生成参考文献有其优越性。笔者从最初开始学习latex时�
 \item 划分自由。利用biblatex宏包可以在一个文档中生成任意数量的参考文献表，而不需要用include把分档划分成不同的文件来生成分章参考文献。利用refsection 和refsegment可以很方便地划分参考文献节，甚至还可以嵌套使用。
 %划分很自由，划分无限制
 
-\item 支持全面。biber处理大数据量参考文献毫无压力，不用担心bibtex可能存在的内存不足等局限，字符编码也支持utf-8，完全支持中文的bibtex键(引用关键字)。
 %处理无限制，支持更全面
+\item 支持全面。后端处理程序biber处理大数据量参考文献毫无压力，不用担心bibtex可能存在的内存不足等局限，字符编码也支持utf-8，完全支持中文的bibtex键(引用关键字)。此外，biber还具有根据拼音和笔画排序(例\ref{eg:sort:bibercmd})、输出引用文献的数据(例\ref{eg:bibercmd:outbibfile})等其它更多功能。
+
+        \begin{codetex}{中文文献排序时的biber选项}{eg:sort:bibercmd}
+        %按拼音排序，biber命令
+        biber -l zh__pinyin jobname
+        %按笔画排序，biber命令
+        biber -l zh__stroke jobname
+        \end{codetex}
+
+        \begin{codetex}{输出引用文献数据时的biber选项}{eg:bibercmd:outbibfile}
+        biber jobname.tex --output-format=bibtex
+        \end{codetex}
+
 
 \item 定制方便。biblatex宏包实现参考文献著录格式使用的是tex语言，相比传统的bibtex 语言学习更为容易。biblatex 提供了很多不同类型的参考文献标准样式，查看、参考和引用都很方便，因此定制起需要的参考文献格式也很便捷。
 %定制很容易
@@ -512,7 +524,7 @@ author.title:number[usera].date或year[urldate].url.doi
 \end{codetex}
 
 \subsubsection{电子资源/online}
-\begin{refentry}{}{}
+\begin{refentry}{}{}%[break at=0.4cm/0pt]
 电子资源对应的biblatex的entrytype为:online或electronic或者www。文献类型标识用EB表示。(注意:biblatex将electronic或www作为online条目类型的别名，对于标准样式来说这两者出现在bib文件中等同于online，但这种等同标准样式是在驱动层进行处理的，而gb7714样式还需要处理文献类型标识，本样式文件做了进一步支持。因此bib文件中也可以直接使用electronic和www)
 
 \paragraph{其著录格式为}(参考GB/T 7714-2015第4.6节):\\
@@ -609,27 +621,30 @@ author.title[usera].translator.type number.version.location:institution,date或y
 
 除了上一小节针对不同条目类型的著录格式要求外，GB/T 7714-2015还有一些细节要求比如文字、符号等需要满足，可以采用如下方法：
 
-\subsubsection{多语言文献}
+\subsubsection{多语言文献}\label{sec:multilan:implement}
 
 \begin{property}{}{}
-某些期刊对于参考文献有双语文献要求，那么可以通过条目集类型(set)进行设置，这对于专著和连续出版物的析出文献来说有可能是常用的。具体要求见GB/T 7714-2015第6.1节。
+某些期刊对于参考文献有双语文献要求，那么可以通过条目集类型(set)/或者条目关联(related)来解决。具体要求见GB/T 7714-2015第6.1节。
 \end{property}
 
+\paragraph{利用条目集类型满足双语文献要求}
+
 使用条目集类型(set)时，有静态和动态两种方法:
-动态方法使用更为方便，在写文档时候，将利用set设置双语文献，然后引用set的bibtex键。比如:
+动态方法使用更为方便，在写文档时候，直接利用defbibentryset设置双语文献的set，然后引用set的bibtex键。比如:
 \begin{codetex}{设置set条目集用于双语文献动态方法}{eg:setforbilangentry}
 \defbibentryset{bilangyi2013}{易仕和2013--,Yi2013--}
 专著，双语文献引用\cite{bilangyi2013}
 \end{codetex}
 
-得到的参考文献打印结果见\ref{sec:test:book}节的参考文献表。\bc{需要注意的是:因为set条目类型除了子条目关键词信息外，并无其他信息，因此它的标注标签通常会是空的。这个问题目前的解决方法是设置一个指定格式和内容中间无空格无英文逗号的关键字，用它来作为标签，这个问题可能与biblatex版本有关，v3.7版没有这个问题，因为set中还带有第一个子条目的信息，但v3.8a版及以上就不行了}。比如:
+得到的参考文献打印结果见\ref{sec:test:book}节的参考文献表。\bc{需要注意的是:因为set条目类型除了子条目关键词信息外，并无其他信息，因此它的标注标签通常会是空的。这个问题目前的解决方法是设置一个指定格式和内容中间无空格无英文逗号的关键字，用它来作为标签，这个问题与biblatex版本有关，v3.7及之前版本没有这个问题，因为set中还带有第一个子条目的信息，但v3.8及以上版本就不行了}。比如:
 \begin{codetex}{设置set条目集用于双语文献动态方法}{eg:setforbilangentry}
-\defbibentryset{易仕和，2013}{易仕和2013--,Yi2013--}
-专著，双语文献引用\cite{易仕和，2013}
+\defbibentryset{易仕和，等，2013}{易仕和2013--,Yi2013--}
+专著，双语文献引用\cite{易仕和，等，2013}
 \end{codetex}
-注意到“易仕和，2013”中的逗号是中文全角逗号，这样使得“易仕和，2013”以一个整体字符串来作关键字，而不会被分开解析。但是这种解决方案中的中文全角逗号与其它标签的英文逗号的差异使得该问题并没有完美解决。
+注意到“易仕和，等，2013”中的逗号是中文全角逗号，这样使得“易仕和，等，2013”以一个整体字符串当作关键字，而不会被分开解析。但是这种解决方案中的中文全角逗号与其它标签的英文逗号的差异使得该问题并没有完美解决。对于v3.8及以上版本，可以利用后面介绍的关联(related)方法来解决，或者也可以用静态方法手动添加标签来解决。
 
-静态方法是在bib源文件中给出条目集(set)并使用biber后端，条目的域信息采用如下方法定义:
+静态方法是在bib源文件中给出条目集(set)并使用biber后端进行解析，条目的域信息采用如下方法定义:
+%当使用bibtex后端时，则需要进一步设置，具体参考biblatex宏包说明文档。
 \begin{codetex}{设置set条目集用于双语文献静态方法}{eg:set:static}
 @Set{set1,
 entryset = {key1,key2,key3},
@@ -640,8 +655,53 @@ entryset = {易仕和2013--,Yi2013--},
 }
 \end{codetex}
 
-同时还要注意，当使用静态方法时，中文排序也会出现问题。使用静态方法的条目集通常出现在文献表末尾。但动态方法则没有这一问题。
-%当使用bibtex后端时，则需要进一步设置，具体参考biblatex宏包说明文档。
+需要注意，使用静态条目集时，如果仅采用上述这般简单设置，中文排序会出现问题，条目集会出现在文献表末尾，这是因为条目集没有设置userb域用于排序，而通常的条目都是利用动态数据修改设置了userb域，在biber运行中因为要解析文献集，所以无法对userb域进行处理。但动态方法没有这一问题，因为其解析过程直接会利用第一个子条目的排序信息。静态方法的这个问题可以在set条目中手动设置userb域来修正。此外，对于v3.8以上版本的biblatex，无论动态方法还是静态方法，条目集不复制第一个子条目信息，因此引用时也无法生成标注标签，这就是前面介绍动态方法时讨论过的问题，该问题也可以通过在set条目中手动设置label域来解决。比如:
+
+\begin{codetex}{在bib文件中正确设置set条目集的静态方法}{eg:set:staticright}
+%在bib文件中静态设置set条目如下，其中:
+%手动设置userb域用于解决排序问题
+%手动设置label域用于解决标注标签问题
+@Set{bilangyi2013,
+entryset = {易仕和2013--,Yi2013--},
+label={易仕和, 等, 2013},
+userb={cn}
+}
+\end{codetex}
+
+\paragraph{利用条目关联满足双语文献要求}
+
+除上述给出的条目集方案外，关联条目方法则是另一种可行方案，该方案的讨论可以见“Again about the \@ set label for authoryear style”\footnote{https://github.com/plk/biblatex/issues/681}。该方案同样也有静态和动态两种方法，静态就是修改bib文件内容，动态则是在源文档中做设置。
+
+静态方法很简单，bib文件中条目设置如例\ref{eg:related:staticright}所示，它能解决双语同时显示的问题，也能解决排序和标注标签问题，唯一的问题在于修改了bib文件后当不需要双语文献时，它还需要改回来，这会带来不便，因此可以考虑下面的动态方法，但要注意动态方法需要利用多个DeclareStyleSourcemap，因此该方法只适用于biblatex3.7及以上版本。
+
+\begin{codetex}{在bib文件中正确设置关联条目的静态方法}{eg:related:staticright}
+%在bib文件中静态设置条目如下，其中:
+%易仕和2013--条目中增加了related域用于关联其对应的英文条目Yi2013--
+@Book{易仕和2013--,
+  Title                    = {超声速和高超声速喷管设计},
+  Address                  = {北京},
+  Author                   = {易仕和 and 赵玉新 and 何霖 and 张敏莉},
+  Publisher                = {国防工业出版社},
+  Year                     = {2013}
+  related                  = {Yi2013--}
+}
+@Book{Yi2013--,
+  Title                    = {Supersonic and hypersonic nozzle design},
+  Address                  = {BeiJing},
+  Author                   = {Yi, S H and Zhao, Y X and He, L and Zhang, M L},
+  Publisher                = {National Defense Industry Press},
+  Year                     = {2013}
+}
+\end{codetex}
+
+动态方法利用动态数据修改自动添加related域，避免对bib文件做直接修改。本样式中对该过程进行了封装，定义一个新的命令defdoublelangentry，例如:
+\begin{codetex}{设置关联条目的动态方法}{eg:related:dynamic}
+\defdoublelangentry{易仕和2013--}{Yi2013--}
+\end{codetex}
+
+使用该命令后，可以引用主条目“易仕和2013--”生成双语文献。但要注意由于DeclareStyleSourcemap命令只能在导言区中使用，因此defdoublelangentry命令也只能出现在导言区中，这也是相比条目集动态方法的唯一遗憾。
+实现的具体细节见\ref{sec:data:mdf:forrelated}节。
+
 
 \subsubsection{数字}
 
@@ -714,7 +774,7 @@ entryset = {易仕和2013--,Yi2013--},
 \end{property}
 
 \subsubsection{卷和期}
-\begin{property}{}{}
+\begin{property}{}{}%[break at=0.4cm/0pt]
 用户在给bib源文件录入卷、期等信息时，如\ref{sec:bib:bibtex}节中所述，合期的期号用/间隔，比如9/10，填入number域，报纸的版次也填入number域。
 
 本样式文件实现了GB/T 7714-2015第8.8节要求的析出文献相关格式。
@@ -922,6 +982,11 @@ proceedings和inproceedings及collection和incollection文献测试，参见:
 \href{run:./egprcdorinprcday.tex}{egprcdorinprcday.tex}，
 \href{run:./egprcdorinprcday.pdf}{egprcdorinprcday.pdf}。
 
+\subsection{测试: 双语文献}\label{sec:doublelang:test}
+
+双语文献的两种实现方法，一是基于set的动态方法，二是基于related的动态方法，参见:
+\href{run:./egaligngb7714-2015ay.tex}{egaligngb7714-2015ay.tex}，
+\href{run:./egaligngb7714-2015ay.pdf}{egaligngb7714-2015ay.pdf}。
 
 \subsection{测试: align选项}\label{sec:align:test}
 align选项主要控制顺序编码制序号标签三种对齐方式，
@@ -1013,7 +1078,7 @@ beamer类中的参考文献测试，参见:
   \item 见赵耀东\yearpagescite[][205]{赵耀东1998--}和Simon\yearpagescite[][15]{Simon2001--}的文献。
 \end{itemize}
 
-\printbibliography[heading=bibliography,title=【gb7714-2015顺序编码制上标和非上标标注测试】]
+\printbibliography[heading=subbibliography,title=【gb7714-2015顺序编码制上标和非上标标注测试】]
 \end{refsection}
 
 \subsection{测试: phdthsis等条目类型的兼容性}\label{sec:entrytype:compatibility}
@@ -1030,7 +1095,7 @@ beamer类中的参考文献测试，参见:
   \item phdthsis:\cite{张若凌2004--}
 \end{itemize}
 
-\printbibliography[heading=bibliography,title=【兼容phdthsis等条目类型】]
+\printbibliography[heading=subbibliography,title=【兼容phdthsis等条目类型】]
 \end{refsection}
 
 \subsection{测试: 当责任者等需要判断中英文的信息中存在编组时的处理}
@@ -1038,7 +1103,7 @@ beamer类中的参考文献测试，参见:
 当责任者等需要判断中英文的信息中存在编组时的处理\cite{IFLAI1977b--,IFLAI1977--}
 \cite{r27-BenHadjAlaya-FekiA.2008-1-5,中国企业投资协会2014--,中国企业投资协会2015--}
 
-\printbibliography[heading=bibliography,title=【中英文判断信息中存在编组的测试】]
+\printbibliography[heading=subbibliography,title=【中英文判断信息中存在编组的测试】]
 \end{refsection}
 
 
@@ -1046,7 +1111,7 @@ beamer类中的参考文献测试，参见:
 \subsection{测试: 处理参考文献信息中\&等特殊字符}\label{sec:entrytype:compatibility}
 \begin{refsection}
 文献中\cite{ref-replace-char}的booktitle域中含有\%，\&，\#符号，样式文件自动处理使其符合tex代码规则。
-\printbibliography[heading=bibliography,title=【处理参考文献信息中\&等特殊字符】]
+\printbibliography[heading=subbibliography,title=【处理参考文献信息中\&等特殊字符】]
 \end{refsection}
 
 \subsection{测试: 处理作者年制article中卷信息缺省的标点}\label{sec:article:novol}
@@ -1054,15 +1119,17 @@ beamer类中的参考文献测试，参见:
 文献\cite{刘彻东1998-38-39}\cite{亚洲地质图编目组1978-194-208}
 \cite{高光明1998-60-65}
 
-\printbibliography[heading=bibliography,title=【author-year style:article without volume】]
+\printbibliography[heading=subbibliography,title=【author-year style:article without volume】]
 \end{refsection}
 
-\subsection{测试:标题中有\textbackslash LaTeX\{\}等名称时的情况}\label{sec:with:latex}
+\subsection{测试: 标题中有\textbackslash LaTeX\{\}等名称时的情况}\label{sec:with:latex}
 \begin{refsection}
 文献\cite{Peebles2001-100-100}\cite{赵凯华1995--}\cite{蒋有绪1998--}
 
-\printbibliography[heading=bibliography,title=【title with \textbackslash LaTeX\{\}】]
+\printbibliography[heading=subbibliography,title=【title with \textbackslash LaTeX\{\}】]
 \end{refsection}
+
+
 
 
 \section{样式文件设计、实现、应用}\label{sec:biblatex:mech}
@@ -1293,6 +1360,90 @@ biber动态数据处理，详见biblatex说明文档Dynamic Modification of Data
 
       \item 从实践看，数据模型中完全没有定义的条目类型newspaper也可以进行数据源映射。
   \end{enumerate}
+
+\subsubsection{用于关联条目的动态修改的命令封装及关联条目格式}\label{sec:data:mdf:forrelated}
+
+实现动态的条目关联，可以利用动态数据修改的方法。要对多个条目实现关联，那么需要多次数据映射，biblatex3.7及以上版本可以存在多个DeclareStyleSourcemap，因此做关联的封装命令就是基于此:
+
+\begin{texlist}
+    \newcommand{\defdoublelangentry}[2]{%
+    \edef\entrykeya{#1}
+    \edef\entrykeyb{#2}
+        \DeclareStyleSourcemap{
+          \maps[datatype=bibtex]{
+            \map{
+              \step[fieldsource=entrykey, match=\entrykeya, final]
+              \step[fieldset=related, fieldvalue=\entrykeyb]
+            }
+          }
+       }
+    }
+\end{texlist}
+
+命令defdoublelangentry有两个输入参数，第一个是主条目，第二个是与主条目关联的条目的列表。多次使用该命令，即可实现多次数据映射，当然因为DeclareStyleSourcemap只能存在于导言区，因此defdoublelangentry也只能存在于导言区。
+
+关联条目之间用命令relateddelim分隔，但实际上因为related宏输出时，不知道是何原因考虑的是主条目的关联条目之间的分隔，这在双语文献中是有问题的，需要在主条目后也进行分隔，因此对该宏修改如下:
+
+\begin{texlist}
+\renewbibmacro*{related}{%
+  \ifboolexpr{ test {\iffieldundef{related}} or test {\ifrelatedloop} }
+    {}
+    {\usebibmacro{begrelated}%
+     \def\bbx@tempa{}%
+     \setcounter{bbx:relatedtotal}{0}%
+     \def\do##1{%
+       \entrydata{##1}{%
+         \ifrelatedloop
+           {}
+           {\stepcounter{bbx:relatedtotal}%
+            \gappto{\bbx@tempa}{##1,}}}}%
+     \docsvfield{related}%
+     \restorefield{related}{\bbx@tempa}%
+     \ifnumgreater{\value{bbx:relatedtotal}}{0}
+       {\listcsxadd{bbx:relatedloop}{\strfield{entrykey}}%
+        \iffieldundef{clonesourcekey}
+          {}
+          {\listcsxadd{bbx:relatedloop}{\strfield{clonesourcekey}}}%
+        \setcounter{bbx:relatedcount}{0}%
+        \def\do{%
+          \stepcounter{bbx:relatedcount}%
+          \ifnumgreater{\value{bbx:relatedcount}}{0}%为使主条目与关联条目做分隔，这里做修改，从1改为0
+            {\ifcsundef{relateddelim\strfield{relatedtype}}
+              {\printtext{\relateddelim}}
+              {\printtext{\csuse{relateddelim\strfield{relatedtype}}}}}
+            {}}%
+        \ifbibmacroundef{related:\strfield{relatedtype}}
+          {\appto{\do}{\usebibmacro{related:default}}}
+          {\appto{\do}{\usebibmacro*{related:\strfield{relatedtype}}}}%
+        \iffieldformatundef{related:\strfield{relatedtype}}
+          {\def\bbx@tempa{related}}
+          {\def\bbx@tempa{related:\strfield{relatedtype}}}%
+        \iffieldformatundef{relatedstring:\strfield{relatedtype}}
+          {\def\bbx@tempb{relatedstring:default}}
+          {\def\bbx@tempb{relatedstring:\strfield{relatedtype}}}%
+        \printtext[\bbx@tempa]{%
+          \usebibmacro{begrelatedloop}%
+          \iffieldundef{relatedstring}
+            {\ifboolexpr{
+               test {\ifnumgreater{\value{bbx:relatedtotal}}{1}}
+               and
+               test {\ifbibxstring{\thefield{relatedtype}s}}
+             }
+               {\printtext[\bbx@tempb]{%
+                  \bibstring[\mkrelatedstring]{\thefield{relatedtype}s}}}
+               {\iffieldbibstring{relatedtype}
+                  {\printtext[\bbx@tempb]{%
+                     \bibstring[\mkrelatedstring]{\thefield{relatedtype}}}}
+                  {}}}
+            {\iffieldbibstring{relatedstring}
+               {\printtext[\bbx@tempb]{%
+                  \bibstring[\mkrelatedstring]{\thefield{relatedstring}}}}
+               {\printfield[\bbx@tempb]{relatedstring}}}%
+          \docsvfield{related}%
+          \usebibmacro{endrelatedloop}}}%
+       {}%
+     \usebibmacro{endrelated}}}
+\end{texlist}
 
 \subsection{标注(引用)标签}
 引用标签的生成机制，即责任者截短时的歧义消除问题，见说明文档4.11.4 Name Disambiguation 节。
@@ -1925,22 +2076,6 @@ texlive2017对应biblatex3.7;
 
   \item 需要注意：当bibtex键中含有中文的时候，texlive2015中的biblatex3.0版的对参考文献条目的超链接会出现问题，而texlive2016中的biblatex3.4或以后的版本则没有问题。
 
-  \item {\heiti 中文文献的拼音排序，可以利用biber进行处理，这个问题可以参考Casper Ti. Vector在biblatex 参考文献样式caspervector v0.2.6中的方法
-      \footnote{\url{https://gitlab.com/CasperVector/biblatex-caspervector}}，特此说明，表示感谢!}
-
-        \begin{codetex}{中文文献排序时采用biber命令}{eg:sort:bibercmd}
-        %按拼音排序，biber命令
-        biber -l zh__pinyin jobname
-        %按笔画排序，biber命令
-        biber -l zh__stroke jobname
-        \end{codetex}
-
-  \item biber输出文档中引用文献的信息生成新的bib文件，命令为:
-        \begin{codetex}{biber输出文档引用文献的数据}{eg:bibercmd:outbibfile}
-        biber jobname.tex --output-format=bibtex
-        \end{codetex}
-
-
   \item GB/T 7714-2015中的作者年制要求参考文献按文种集合，且中文在前英文在后。主要通过定义DeclareSortingScheme\{nyt\}(biblatex3.7 以前版本) 或DeclareSortingTemplate\{nyt\}(biblatex3.8以后版本)，利用userb域排序实现。\bc{默认情况下，样式能基本正确的区分中文和英文文献并排序。当如果出现错误的情况，用户可以手动修改bib源文件，将userb 域设置成合适的字符串，用于排序，详见\ref{sec:usage:bbx}节的说明}。
 
 %上一段2016-1114更新，下面这段是旧的说法，
@@ -1948,7 +2083,8 @@ texlive2017对应biblatex3.7;
 
   \item 关于出版地和出版者同时缺省的情况，GB/T 7714-2015中没有给出明确的说明，但英文给出了一个例子(见GB/T 7714-2015 附录A.3)而中文没有，英文的样式是[S.l. : s.n.]，这种形式本样式文件中没有给出，而直接用两者分开的形式，[S.l.] : [s.n.]，事实上这里作者认为没有必要把s.l.和s.n. 合起来，不仅与缺省两者之一的情况不统一，样式处理起来也增加不必要的麻烦。
 
-  \item 目前符合GB/T7714-2005或GB/T7714-2015参考文献著录规则的biblatex样式有好几个实现，除了这里作者提供的之外，还有李志奇(icetea)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}} 和沈周(szsdk)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152561&extra=page\%3D1}} 分别提供的样式文件，效果是类似的，也感谢两位作者的分享!
+  \item 目前符合GB/T7714-2005或GB/T7714-2015参考文献著录规则的biblatex样式有好几个实现，除本样式外，还有李志奇(icetea)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}} 和沈周(szsdk)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152561&extra=page\%3D1}} 分别提供的样式文件，效果是类似的。此外，Casper Ti. Vector提供的biblatex 样式caspervector也是不错的中文参考文献样式
+      \footnote{\url{https://gitlab.com/CasperVector/biblatex-caspervector}}。 感谢各位作者的分享!
 
   \item 本文档根据GB/T 7714-2015提供的参考文献表著录格式示例做了测试和验证，详见第\ref{sec:eg:gb77142015}节。测试系统环境为:
     \begin{itemize}
@@ -2027,6 +2163,8 @@ texlive2017对应biblatex3.7;
 %============================
 \updateinfo[2017-11-21]{update to version 1.0i}\label{up:171121}
 \begin{enumerate}
+\item 因为biblatex版本升级，3.8及以上版的set类型不再复制第一个子条目的信息，因此增加使用关联条目的解决方案，详见
+\ref{sec:multilan:implement}， \ref{sec:data:mdf:forrelated}节。
 \item 修正了一个liubenyuan发现的bug。当标题中含有\verb|\LaTeX{}|这样的宏时，cjk判断函数出错。解决如下:
     \begin{texlist}
     这个问题是这样的，
