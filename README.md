@@ -30,7 +30,7 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
         `\usepackage[backend=biber,style=gb7714-2015,gbpub=true]{biblatex}`
         
-    - add an option `gbnamefmt` for dealing name's CASE, option value = `uppercase` for gb7714 style or `lowercase` for gb7714 style with none case switch of names or `none` for standard style. this option is also for author year style.
+    - add an option `gbnamefmt` for dealing name's letter case, option value = `uppercase` for gb7714 style or `lowercase` for gb7714 style with no case switch of names or `none` for standard style. this option is also for author year style.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbnamefmt=uppercase]{biblatex}`
 
@@ -149,10 +149,10 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 
 ### date of change: 2017-04-11 to version v1.0h
 * Changes to pkg code:
-    - "*.bbx": deal compatibility problem of author year style for texlive2017, because the old cmd printdateextralabel with biblatex3.4 has been replaced by printlabeldateextra with biblatex3.7 in texlive2017.
+    - "*.bbx": deal compatibility problem of author year style for texlive2017, because the old cmd `printdateextralabel` with biblatex3.4 has been replaced by `printlabeldateextra` with biblatex3.7 in texlive2017.
     - "*.bbx": change the seperator between multi-language reference text from cmd par to cmd newline for the gb7714-2015 align style
-	- "*.bbx": fix a flaw reported by Lee Zeping. remove the comma between journaltitle and (number) when the volume is undefined.
-    - "*.bbx": add an option gbpub to control the publishing info. if gbpub=false, publishing info's format is the biblatex standard style, otherwise is gb7714-2015 style. The origin idea comes from Wayne08.
+	- "*.bbx": fix a flaw reported by Lee Zeping. remove the comma between `journaltitle` and (number) when the volume is undefined.
+    - "*.bbx": add an option `gbpub` to control the publishing info. if `gbpub=false`, publishing info's format is the biblatex standard style, otherwise is gb7714-2015 style. The origin idea comes from Wayne08.
     - "*.bbx": fix a flaw reported by zjsdut@163.com. remove the dot before url when url is the only info available。
     - "*.bbx": add an option gbnoauthor for author-year style. when author is undefined, set option gbnoauthor=true then author with "佚名"or"NOAUTHOR" will be defined. note that with biblatex version 3.7 or higher for multiple DeclareStyleSourcemap support, code can be simplifed, because the realization code now with texlive2016(biblatex 3.4) is subjected to the one DeclareStyleSourcemap constraint.
 * Changes to documentation:
@@ -162,7 +162,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
     
 ### date of change: 2017-02-26 to version v1.0g
 * Changes to pkg code:
-	- "*.bbx": deal the compatibility problem for some entrytypes: mastersthesis,phdthesis,www,electronic,standard,techreport,conference, and newspaper. these entrytypes can be used in the source bib file.
+	- "*.bbx": deal the compatibility problem for some entrytypes: `mastersthesis`,`phdthesis`,`www`,`electronic`,`standard`,`techreport`,`conference`, and `newspaper`. these entrytypes can be used in the source bib file.
 	- "*.bbx": for online type, the revised/changed date is denoted by date/enddate/eventdate
 	- "*.bbx": modify the usera field's format, taking into account the standard style's package option url, proposed by Sheng Wenbo.
 	- "*.bbx": add a no breakthinspace after the entrytype identifier (like [M]//) to make the next word break correctly
