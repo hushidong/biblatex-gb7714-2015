@@ -7,12 +7,12 @@
 %% 2016/05/20 v1.0  2016/10/23 v1.0a 2016/11/11 v1.0b
 %% 2016/11/14 v1.0c 2016/11/24 v1.0d 2016/12/07 v1.0e
 %% 2017/02/26 v1.0g 2017/04/11 v1.0h
-%% 2017/11/21 v1.0i
+%% 2017/11/21 v1.0i 2018/01/20 v1.0j
 %% E-mail: hzzmail@163.com
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\ProvidesFile{gb7714-2015.bbx}[2017/11/21 v1.0i biblatex bibliography style]
+\ProvidesFile{gb7714-2015.bbx}[2018/01/20 v1.0j biblatex bibliography style]
 
 
 %=====================================================================
@@ -29,29 +29,30 @@
 %新增功能函数
 %=====================================================================
     %版本判断
-    \providetoggle{iftlfive}%用于处理biblatex3.2之前的版本,即texlive2015以下版本中的biblatex
-    \providetoggle{iftlsix}%用于处理biblatex3.3开始改变的新的姓名机制后版本，包括
+    \providetoggle{iftlfive}%用于处理biblatex3.2之前的版本
+    \providetoggle{iftlsix}%用于处理biblatex3.3开始改变的新的姓名机制后版本
     \providetoggle{iftlseven}%用于处理biblatex3.7的兼容性
-    \providetoggle{iftleight}%用于处理>=biblatex3.8的兼容性
-    \providetoggle{iftlnine}%用于处理>=biblatex3.10的兼容性
+    \providetoggle{iftleight}%用于处理biblatex3.8到3.9的兼容性
+    \providetoggle{iftlatest}%用于最新版biblatex，目前是biblatex3.10，20180117
     \StrBefore{\abx@version}{.}[\numinteger]
     \StrBehind{\abx@version}{.}[\numdigital]
     \IfInteger{\numdigital}{}{\StrGobbleRight{\numdigital}{1}[\numdigital]}
-    %2.x版本统一用iftlfive=true表示
-    %3.0-3.2版本用iftlfive=true表示
-    %3.3-3.6版本用iftlsix=true表示
-    %3.7版本用iftlseven=true表示
-    %>3.8版本用iftleight=true表示
+    \togglefalse{iftlfive}
+    \togglefalse{iftlsix}
+    \togglefalse{iftlseven}
+    \togglefalse{iftleight}
+    \toggletrue{iftlatest}
     \ifnumcomp{\numinteger}{=}{3}{
-        \ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftlsix}\togglefalse{iftlfive}}{\togglefalse{iftlsix}\toggletrue{iftlfive}}
-        \ifnumcomp{\numdigital}{>}{6}{\toggletrue{iftlseven}\togglefalse{iftlsix}}{\togglefalse{iftlseven}}
-        \ifnumcomp{\numdigital}{>}{7}{\toggletrue{iftleight}\togglefalse{iftlseven}}{\togglefalse{iftleight}}
-        \ifnumcomp{\numdigital}{>}{9}{\toggletrue{iftlnine}\togglefalse{iftleight}}{\togglefalse{iftlnine}}
+        \ifnumcomp{\numdigital}{<}{10}{\ifnumcomp{\numdigital}{>}{7}{\toggletrue{iftleight}\togglefalse{iftlatest}}{}}{}%>3.8版本用iftleight=true表示
+        \ifnumcomp{\numdigital}{=}{7}{\toggletrue{iftlseven}\togglefalse{iftlatest}}{}%3.7版本用iftlseven=true表示
+        \ifnumcomp{\numdigital}{<}{7}{\ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftlsix}\togglefalse{iftlatest}}{}}{}%3.3-3.6版本用iftlsix=true表示
+        \ifnumcomp{\numdigital}{<}{3}{\toggletrue{iftlfive}\togglefalse{iftlatest}}{}%3.0-3.2版本用iftlfive=true表示
     }{\ifnumcomp{\numinteger}{>}{3}{
-    \toggletrue{iftleight}\blx@warning@noline{%
+       \blx@warning@noline{%
        biblatex version is >= 4.x.\MessageBreak
        if errors raised，Please contact biblatex-gb7714-2015 pkg author.}%
-    }{\toggletrue{iftlfive}\blx@warning@noline{%
+    }{ \toggletrue{iftlfive}\togglefalse{iftlatest}%2.x版本统一用iftlfive=true表示
+       \blx@warning@noline{%
        biblatex version is <= 2.x.\MessageBreak
        if errors raised，Please contact biblatex-gb7714-2015 pkg author.}%
     }}
@@ -101,8 +102,17 @@
 %=====================================================================
 \defversion{3.0}{opt}{
     %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
+
+    %增加姓名大小写格式处理选项
+    \DeclareBibliographyOption{gbnamefmt}[uppercase]{%
+        %\ifstrequal{##1}{gbuppercase}{}{}%
+        \ifstrequal{##1}{lowercase}{\execgblowercase}{}%
+        \ifstrequal{##1}{none}{\execnamedefault}{}
+    }
+    %\ExecuteBibliographyOptions{gbnamefmt}
+
     %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015无效，仍然为右对齐模式，因为舍弃了list类环境后出错。
-    \DeclareBibliographyOption{align}[right]{%texlive2015中的3.0版中的DeclareBibliographyOption选项没有类型说明
+    \DeclareBibliographyOption{gbalign}[right]{%texlive2015中的3.0版中的DeclareBibliographyOption选项没有类型说明
         \ifstrequal{##1}{right}{}{}
         \ifstrequal{##1}{left}{\setalignleft}{}
         \ifstrequal{##1}{gb7714-2015}{}{}
@@ -134,8 +144,17 @@
 \defversion{3.4}{opt}{
     % Alter settings that carry through from biblatex
     %biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
+
+    %增加姓名大小写格式处理选项
+    \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
+        %\ifstrequal{##1}{gbuppercase}{}{}%
+        \ifstrequal{##1}{lowercase}{\execgblowercase}{}%
+        \ifstrequal{##1}{none}{\execnamedefault}{}
+    }
+    %\ExecuteBibliographyOptions{gbnamefmt}
+
     %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
-    \DeclareBibliographyOption[string]{align}[right]{%
+    \DeclareBibliographyOption[string]{gbalign}[right]{%
         \ifstrequal{##1}{left}{\setalignleft}{}
         \ifstrequal{##1}{gb7714-2015}{\setaligngbstyle}{}
     }
@@ -165,8 +184,17 @@
 
 \defversion{3.7}{opt}{
     %biblatex3.7版后(比如texlive2017中的3.7版)的使用方式
+
+    %增加姓名大小写格式处理选项
+    \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
+        %\ifstrequal{##1}{gbuppercase}{}{}%
+        \ifstrequal{##1}{lowercase}{\execgblowercase}{}%
+        \ifstrequal{##1}{none}{\execnamedefault}{}
+    }
+    %\ExecuteBibliographyOptions{gbnamefmt}
+
     %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
-    \DeclareBibliographyOption[string]{align}[right]{%
+    \DeclareBibliographyOption[string]{gbalign}[right]{%
         \ifstrequal{##1}{left}{\setalignleft}{}
         \ifstrequal{##1}{gb7714-2015}{\setaligngbstyle}{}
     }
@@ -197,9 +225,18 @@
 }
 
 \defversion{3.10}{opt}{
-    %biblatex3.7版后(比如texlive2017中的3.7版)的使用方式
+    %biblatex3.10版后的使用方式
+
+    %增加姓名大小写格式处理选项
+    \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
+        %\ifstrequal{##1}{gbuppercase}{}{}%
+        \ifstrequal{##1}{lowercase}{\execgblowercase}{}%
+        \ifstrequal{##1}{none}{\execnamedefault}{}
+    }
+    %\ExecuteBibliographyOptions{gbnamefmt}
+
     %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
-    \DeclareBibliographyOption[string]{align}[right]{%
+    \DeclareBibliographyOption[string]{gbalign}[right]{%
         \ifstrequal{##1}{left}{\setalignleft}{}
         \ifstrequal{##1}{gb7714-2015}{\setaligngbstyle}{}
     }
@@ -229,15 +266,11 @@
     }
 }
 
-\iftoggle{iftlfive}
-    {\switchversion{3.0}{opt}}%%当采用texlive2015以下版本时，biblatex3.0
-    {\iftoggle{iftlsix}%
-        {\switchversion{3.4}{opt}}%%当采用texlive2016版本时，biblatex3.4
-        {\iftoggle{iftlnine}%
-            {\switchversion{3.10}{opt}}%%当采用biblatex3.10以上版本时
-            {\switchversion{3.7}{opt}}%%当采用biblatex3.4以上版本时
-        }
-    }
+\iftoggle{iftlfive}{\switchversion{3.0}{opt}}{}%biblatex<=3.2
+\iftoggle{iftlsix}{\switchversion{3.4}{opt}}{}%3.3<=biblatex<=3.6
+\iftoggle{iftlseven}{\switchversion{3.7}{opt}}{}%biblatex=3.7
+\iftoggle{iftleight}{\switchversion{3.7}{opt}}{}%3.8<=biblatex<=3.9
+\iftoggle{iftlatest}{\switchversion{3.10}{opt}}{}%biblatex最新3.10
 
 
 %=====================================================================
@@ -278,6 +311,9 @@
 %注意\DeclareSourcemap命令只能出现一次
 \DeclareSourcemap{
 \maps[datatype=bibtex]{%增加文献标识符如[M],[J]等，下面首先生成这一信息
+        \map[overwrite]{%用于处理zotero从cnki导出中文文献姓名中存在逗号的情况
+                \step[fieldsource={author}, match=\regexp{([\x{2FF0}-\x{9FA5}])\,\s*}, replace=\regexp{$1}]
+                }
         \map{%使用下面biber动态修改bbl文件的方法是正确的
             %\perdatasource{examples.bib}
             \pertype{article}
@@ -495,8 +531,8 @@
 }
 
 \iftoggle{iftlfive}%
-    {\switchversion{3.0}{map}}%
-    {\switchversion{3.4}{map}}
+    {\switchversion{3.0}{map}}%%当采用biblatex<=3.2版本时
+    {\switchversion{3.4}{map}}%%当采用3.3<=biblatex版本时
 
 \DeclareBibliographyAlias{newspaper}{article}%定义驱动别名，尝试以替代驱动层映射，实践表明是可行的。
 
@@ -571,8 +607,6 @@
 %=====================================================================
 %设置单元或块等的标点
 %=====================================================================
-\renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
-\renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
 \renewcommand*{\subtitlepunct}{\addcolon\space} %修改标题和其它标题信息间的标点，来源biblatex.def，
 %双语言或多语言的参考文献，可以参考3.11.5 Entry Sets，4.11.1 Entry Sets
 %这里调整一下两种语言参考文献的间隔，源来自biblatex.def
@@ -682,6 +716,8 @@
 }
 
 \defversion{3.0}{name}{
+    \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
+    \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
     %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
     \renewbibmacro*{name:last-first}[4]{%
       \ifuseprefix
@@ -718,6 +754,8 @@
 }
 
 \defversion{3.4}{name}{
+    \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
+    \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
     %biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
     \renewbibmacro*{name:given-family}[4]{%用family-given修改后的内容定义given-family
       \ifuseprefix
@@ -728,12 +766,12 @@
              {\mkbibnameprefix{\MakeCapital{##3}}\isdot}
              {\mkbibnameprefix{##3}\isdot}%
            \ifprefchar{}{\bibnamedelimc}}%
-         \ifdefvoid{##2}{\mkbibnamefamily{\MakeCapital{##1}}}{\mkbibnamefamily{\MakeUppercase{##1}}}\isdot
+         \ifdefvoid{##2}{\mkbibnamefamily{\MakeCapital{##1}}}{\mkbibnamefamily{\MakeUppercase{##1}}}\isdot%
          \ifdefvoid{##2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{\MakeUppercase{##2}}\isdot}%\MakeCapital
          \ifdefvoid{##4}{}{\bibnamedelimd\mkbibnamesuffix{##4}\isdot}}
         {\usebibmacro{name:delim}{##1}%
          \usebibmacro{name:hook}{##1}%
-         \ifdefvoid{##2}{\mkbibnamefamily{\MakeCapital{##1}}}{\mkbibnamefamily{\MakeUppercase{##1}}}\isdot
+         \ifdefvoid{##2}{\mkbibnamefamily{\MakeCapital{##1}}}{\mkbibnamefamily{\MakeUppercase{##1}}}\isdot%
          %
          \ifboolexpe{%
            test {\ifdefvoid{##2}}
@@ -749,9 +787,155 @@
      \usebibmacro{name:given-family}{##1}{##2}{##3}{##4}}
 }
 
+\defversion{3.0}{nameb}{
+    \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
+    \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
+    %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
+    \renewbibmacro*{name:last-first}[4]{%
+      \ifuseprefix
+        {\usebibmacro{name:delim}{##3##1}%
+         \usebibmacro{name:hook}{##3##1}%
+         \ifblank{##3}{}{%
+           \ifcapital
+             {\mkbibnameprefix{\MakeCapital{##3}}\isdot}
+             {\mkbibnameprefix{##3}\isdot}%
+           \ifpunctmark{'}{}{\bibnamedelimc}}%
+         %\mkbibnamelast{#1}\isdot
+         \ifblank{##2}{\MakeCapital##1}{\mkbibnamelast{{##1}}}\isdot%\MakeUppercase %\mkbibnamelast{\MakeUppercase{#1}} %\MakeSentenceCase
+         %注意上一句\MakeCapital后面如果再跟一个{}包含#1，则没有效果，可能是包在里面少了一层展开
+         %因为机构名通常包括在{}内，所以要多展开一次才行，所以这里去掉#1外面的{}
+         %\mkbibnamelast{\MakeUppercase{#1}}\isdot
+         %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
+         \ifblank{##2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamefirst{{##2}}\isdot}%
+         \ifblank{##4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{##4}\isdot}}
+        {\usebibmacro{name:delim}{##1}%
+         \usebibmacro{name:hook}{##1}%
+         %\mkbibnamelast{#1}\isdot  %3.9.1 Generic Commands and Hooks，对姓重新处理，如下句: %\mkbibnamelast{\MakeUppercase{#1}}
+         \ifblank{##2}{\MakeCapital##1}{\mkbibnamelast{{##1}}}\isdot  %大写，参考4.6.4 Miscellaneous Commands，\MakeUppercase %\MakeSentenceCase
+         %\mkbibnamelast{\MakeUppercase{#1}}\isdot
+         %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
+         \ifblank{##2##3}{}{\revsdnamepunct}%
+         \ifblank{##2}{}{\bibnamedelimd\mkbibnamefirst{{##2}}\isdot}%
+         \ifblank{##3}{}{\bibnamedelimd\mkbibnameprefix{##3}\isdot}%
+         \addcomma\addspace%
+         \ifblank{##4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{##4}\isdot}%
+         }
+     }
+     \renewbibmacro*{name:first-last}[4]{%
+     \usebibmacro{name:last-first}{##1}{##2}{##3}{##4}}
+}
+
+\defversion{3.4}{nameb}{
+    \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
+    \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
+    %biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
+    \renewbibmacro*{name:given-family}[4]{%用family-given修改后的内容定义given-family
+      \ifuseprefix
+        {\usebibmacro{name:delim}{##3##1}%
+         \usebibmacro{name:hook}{##3##1}%
+         \ifdefvoid{##3}{}{%
+           \ifcapital
+             {\mkbibnameprefix{\MakeCapital{##3}}\isdot}
+             {\mkbibnameprefix{##3}\isdot}%
+           \ifprefchar{}{\bibnamedelimc}}%
+         \ifdefvoid{##2}{\mkbibnamefamily{\MakeCapital{##1}}}{\mkbibnamefamily{{##1}}}\isdot%
+         \ifdefvoid{##2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{{##2}}\isdot}%\MakeCapital
+         \ifdefvoid{##4}{}{\bibnamedelimd\mkbibnamesuffix{##4}\isdot}}
+        {\usebibmacro{name:delim}{##1}%
+         \usebibmacro{name:hook}{##1}%
+         \ifdefvoid{##2}{\mkbibnamefamily{\MakeCapital{##1}}}{\mkbibnamefamily{{##1}}}\isdot%
+         %
+         \ifboolexpe{%
+           test {\ifdefvoid{##2}}
+           and
+           test {\ifdefvoid{##3}}}
+           {}
+           {\revsdnamepunct}%
+         \ifdefvoid{##2}{}{\bibnamedelimd\mkbibnamegiven{{##2}}\isdot}%\MakeCapital
+         \ifdefvoid{##3}{}{\bibnamedelimd\mkbibnameprefix{##3}\isdot}
+         \ifdefvoid{##4}{}{\bibnamedelimd\mkbibnamesuffix{##4}\isdot}}
+     }
+     \renewbibmacro*{name:family-given}[4]{%
+     \usebibmacro{name:given-family}{##1}{##2}{##3}{##4}}
+}
+
+\defversion{3.0}{namec}{
+    \renewrobustcmd*{\bibinitperiod}{\adddot}
+    \renewcommand*{\revsdnamepunct}{\addcomma}
+    %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
+    \renewbibmacro*{name:last-first}[4]{%
+      \ifuseprefix
+        {\usebibmacro{name:delim}{##3##1}%
+         \usebibmacro{name:hook}{##3##1}%
+         \ifblank{##3}{}{%
+           \ifcapital
+             {\mkbibnameprefix{\MakeCapital{##3}}\isdot}
+             {\mkbibnameprefix{##3}\isdot}%
+           \ifpunctmark{'}{}{\bibnamedelimc}}%
+         \mkbibnamelast{##1}\isdot
+         \ifblank{##4}{}{\bibnamedelimd\mkbibnameaffix{##4}\isdot}%这句放到后面
+         \ifblank{##2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamefirst{{##2}}\isdot}}
+        {\usebibmacro{name:delim}{##1}%
+         \usebibmacro{name:hook}{##1}%
+         \mkbibnamelast{##1}\isdot  %3.9.1 Generic Commands and Hooks，对姓重新处理，如下句: %\mkbibnamelast{\MakeUppercase{#1}}
+         \ifblank{##4}{}{\bibnamedelimd\mkbibnameaffix{##4}\isdot}%这句放到后面
+         \ifblank{##2##3}{}{\revsdnamepunct}%
+         \ifblank{##2}{}{\bibnamedelimd\mkbibnamefirst{{##2}}\isdot}%
+         \ifblank{##3}{}{\bibnamedelimd\mkbibnameprefix{##3}\isdot}%
+         }
+     }
+     \renewbibmacro*{name:first-last}[4]{%
+     \usebibmacro{name:last-first}{##1}{##2}{##3}{##4}}
+}
+
+\defversion{3.4}{namec}{
+    \renewrobustcmd*{\bibinitperiod}{\adddot}
+    \renewcommand*{\revsdnamepunct}{\addcomma}
+    \renewbibmacro*{name:given-family}[4]{%
+      \usebibmacro{name:delim}{##2##3##1}%
+      \usebibmacro{name:hook}{##2##3##1}%
+      \ifdefvoid{##2}{}{\mkbibnamegiven{##2}\isdot\bibnamedelimd}%
+      \ifdefvoid{##3}{}{%
+        \mkbibnameprefix{##3}\isdot
+        \ifprefchar
+          {}
+          {\ifuseprefix{\bibnamedelimc}{\bibnamedelimd}}}%
+      \mkbibnamefamily{##1}\isdot
+      \ifdefvoid{##4}{}{\bibnamedelimd\mkbibnamesuffix{##4}\isdot}}
+    \DeclareNameAlias{family-given}{default}
+
+    \renewbibmacro*{name:family-given}[4]{%
+         \usebibmacro{name:given-family}{##1}{##2}{##3}{##4}}
+}
+
+
+%\def\execgbuppercase{
 \iftoggle{iftlfive}%根据texlive/biblatex版本选择
-    {\switchversion{3.0}{name}}%
-    {\switchversion{3.4}{name}}
+    {%%当采用biblatex<=3.3版本时
+    \switchversion{3.0}{name}
+    }{%%当采用3.3<=biblatex版本时
+    \switchversion{3.4}{name}
+    }
+%}
+
+\def\execnamedefault{
+\iftoggle{iftlfive}%根据texlive/biblatex版本选择
+    {%%当采用biblatex<=3.3版本时
+    \switchversion{3.0}{namec}
+    }{%%当采用3.3<=biblatex版本时
+    \switchversion{3.4}{namec}
+    }
+}
+
+\def\execgblowercase{
+\iftoggle{iftlfive}%根据texlive/biblatex版本选择
+    {%%当采用biblatex<=3.3版本时
+    \switchversion{3.0}{nameb}
+    }{%%当采用3.3<=biblatex版本时
+    \switchversion{3.4}{nameb}
+    }
+}
+
 
 \renewbibmacro*{url+urldate}{%
   %\usebibmacro{url}%%更换url的位置，放到下面
@@ -853,22 +1037,11 @@
     }
 }
 
-\iftoggle{iftlfive}%%根据texlive/biblatex版本选择
-    {\switchversion{3.4}{date}}%
-    {\iftoggle{iftlsix}%
-        {\switchversion{3.4}{date}}%
-        {\iftoggle{iftlnine}%
-            {\switchversion{3.10}{date}}%biblatex3.10版
-            {\switchversion{3.7}{date}}%
-        }%
-    }
-
-\iftoggle{iftlnine}
-    {\switchversion{3.8}{dblang}}
-    {\iftoggle{iftleight}
-        {\switchversion{3.8}{dblang}}
-        {}
-    }
+\iftoggle{iftlfive}{\switchversion{3.4}{date}}{}%biblatex<=3.2
+\iftoggle{iftlsix}{\switchversion{3.4}{date}}{}%3.3<=biblatex<=3.6
+\iftoggle{iftlseven}{\switchversion{3.7}{date}}{}%biblatex=3.7
+\iftoggle{iftleight}{\switchversion{3.7}{date}\switchversion{3.8}{dblang}}{}%3.8<=biblatex<=3.9
+\iftoggle{iftlatest}{\switchversion{3.10}{date}\switchversion{3.8}{dblang}}{}%biblatex最新3.10
 
 \renewcommand{\relateddelim}{\adddot\newline\nobreak}%\par
 

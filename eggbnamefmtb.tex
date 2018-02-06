@@ -4,7 +4,7 @@
 \geometry{paperwidth=21cm,paperheight=29cm,top=1.5cm, bottom=1.5cm, left=2.54cm,right=2.54cm}
 \usepackage{xcolor}
 \usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=blue]{hyperref}
-\usepackage[backend=biber,style=gb7714-2015ay,gbpub=false]{biblatex}%align=gb7714-2015
+\usepackage[backend=biber,style=gb7714-2015ay,gbpub=true,gbnamefmt=none]{biblatex}%align=gb7714-2015
 %\addbibresource[location=local]{egtest.bib}
 \addbibresource[location=local]{example.bib}
 \addbibresource[location=local]{egspecialchar.bib}
@@ -20,12 +20,12 @@
 %%%test file for author year style
 
 \section{文献表}
-文献
-\cite{AAAS1883--}
-\cite{陈志勇2011--}
-\cite{萧钰2001--}
-\cite{北京交通大学研究生公众号2016--}
-\cite{赵学功2001--}
+\begin{enumerate}
+  \item 文献\cite{张伯伟2002--}\cite{CRAWFPRD1995--}\cite{陈志勇2011--}\cite{Babu2014--}
+\cite{Calkin2011-8-9}\cite{吴云芳2003--}\cite{CALMS1965--}\cite{张凯军2012-04-05--}\cite{KOSEKI2002--}
+\cite{楼梦麟2011-11-12}\cite{BUSECK1980-117-211}
+\cite{DESMARAIS1992-605-609}\cite{张田勤2000--}
+\end{enumerate}
 
 {
 %\hyphenation{kurose-gawa}

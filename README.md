@@ -1,4 +1,4 @@
-<b>Date of last change:2017-11-21 to version v1.0i</b>
+<b>Date of last change: 2018-01-20 to version v1.0j</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -13,28 +13,32 @@ Homepage: <https://github.com/hushidong/biblatex-gb7714-2015>
 License: LaTeX Project Public License 1.3 or later
 
 
-A biblatex implementation of the GB/T7714-2015 bibliography style for Chinese users
+A biblatex implementation of the `GB/T 7714-2015` bibliography style for Chinese users
 
-The biblatex-gb7714-2015 package provides an implementation of the bibliography style of the GB/T7714-2015 bibliography style. This implementation follows GB/T7714-2015 standard, and can be used simply by loading biblatex with the appropriate option
+The biblatex-gb7714-2015 package provides an implementation of the bibliography style of the `GB/T 7714-2015` bibliography style. This implementation follows `GB/T 7714-2015` standard, and can be used simply by loading biblatex with the appropriate option
 
 ## usage
 * for numerical sequence style
 
     `\usepackage[backend=biber,style=gb7714-2015]{biblatex}`
 
-    - add an option "align" for the numerical label, option value maybe "right" or "left" or "gb7714-2015"
+    - add an option `gbalign` for the numerical label, option value maybe `right` or `left` or `gb7714-2015`
 
-        `\usepackage[backend=biber,style=gb7714-2015,align=gb7714-2015]{biblatex}`
+        `\usepackage[backend=biber,style=gb7714-2015,gbalign=gb7714-2015]{biblatex}`
 
-    - add an option "gbpub" for dealing publishing items, option value = "true" for gb7714 style or "false" for standard style. 
+    - add an option `gbpub` for dealing publishing items, option value = `true` for gb7714 style or `false` for standard style. this option is also for author year style.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbpub=true]{biblatex}`
+        
+    - add an option `gbnamefmt` for dealing name's CASE, option value = `uppercase` for gb7714 style or `lowercase` for gb7714 style with none case switch of names or `none` for standard style. this option is also for author year style.
+
+        `\usepackage[backend=biber,style=gb7714-2015,gbnamefmt=uppercase]{biblatex}`
 
 * for author year style
 
     `\usepackage[backend=biber,style=gb7714-2015ay,gbpub=true]{biblatex}`
 
-    - add an option "gbnoauthor" for dealing undefined author, option value = "true" for gb7714 style or "false" for standard style. 
+    - add an option `gbnoauthor` for dealing undefined author, option value = `true` for gb7714 style or `false` for standard style. 
 
         `\usepackage[backend=biber,style=gb7714-2015ay,gbnoauthor=true]{biblatex}`
 	
@@ -116,24 +120,34 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 ## update history:
 
 ### need to do:
-	* special characters in all fields?
+    * special characters in all fields?
     * citation command like cite*?
+    * citestyle is gb7714-2015ay, bibstyle is gb7714-2015?
+    * the dashline in range? the dash line in date info?
+    * entry without author: the delimiter between title and year?
 
+### date of change: 2018-01-20 to version v1.0j
+* Changes to pkg code:
+    - "*.bbx": change the version code switch mechanism.
+    - "*.bbx": change the option align to `gbalign` for standardising option terminology.
+    - "*.bbx": add an option `gbnamefmt` to control the letter case of author name，and eliminate the comma in author names of the chinese references exported from cnki by `zotero`，these demand raised by liuxiaotao.
+    - "*.bbx": correct the delimiter between author and year for author-year style with right using of the `\nameyeardelim`
+    
 ### date of change: 2017-11-21 to version v1.0i
 * Changes to pkg code:
     - "*.bbx": add a new solution for multi-language bibliography based on related entry other than the old @set method for biblatex version >3.8, because biblatex(>v3.8) does not copy info from its first member any longer.
-	- "*.bbx": correct a bug of entry's title with \LaTeX{} macro reported by liubenyuan. this bug is raised in CJK char check function when StrChar from xtring pkg to extract chars. 
-    - "*.bbx": deal compatibility problem of author-year style for biblatex v>3.8a, include labeldate->labeldateparts and DeclareSortingScheme -> DeclareSortingTemplate.
+	- "*.bbx": correct a bug of entry's title with `\LaTeX{}` macro reported by liubenyuan. this bug is raised in CJK char check function when StrChar from xtring pkg to extract chars. 
+    - "*.bbx": deal compatibility problem of author-year style for biblatex v>3.8a, include `labeldate`->`labeldateparts` and `DeclareSortingScheme` -> `DeclareSortingTemplate`.
     - "*.bbx": change the version check macro,using macro form pkg xstring. change version switch method, define version's code first then switch depend on the biblatex version.
-	- "*.bbx": replace the \iffieldundef{year} by \iffieldequalstr{year}{} in \newbibmacro*{modifydate}, for the year field is defined with empty string for biblatex version >3.7 after biber dealing with none date info.
+	- "*.bbx": replace the `\iffieldundef{year}` by `\iffieldequalstr{year}{}` in `\newbibmacro*{modifydate}`, for the year field is defined with empty string for biblatex version >3.7 after biber dealing with none date info.
 	- "*.bbx": change the date format control mechanism for biblatex version >3.7, lower versions keep the old fansion.
-	- "*.bbx": rewrite the volume and number parsing macro using xstring pkg.
-	- "*.bbx": correct a bug with option gbnoauthor when book entry has none author.
+	- "*.bbx": rewrite the volume and number parsing macro using `xstring` pkg.
+	- "*.bbx": correct a bug with option `gbnoauthor` when book entry has none author.
 * Changes to documentation:
 	- biblatex-gb7714-2015.tex: revise this document 
 
 
-### date of change: 2017-04-11 to version v1.0h, the last version support texlive2015
+### date of change: 2017-04-11 to version v1.0h
 * Changes to pkg code:
     - "*.bbx": deal compatibility problem of author year style for texlive2017, because the old cmd printdateextralabel with biblatex3.4 has been replaced by printlabeldateextra with biblatex3.7 in texlive2017.
     - "*.bbx": change the seperator between multi-language reference text from cmd par to cmd newline for the gb7714-2015 align style

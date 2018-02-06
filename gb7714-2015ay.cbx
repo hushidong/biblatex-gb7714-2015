@@ -7,12 +7,12 @@
 %% 2016/05/20 v1.0  2016/10/23 v1.0a 2016/11/11 v1.0b
 %% 2016/11/14 v1.0c 2016/11/24 v1.0d 2016/12/07 v1.0e
 %% 2017/02/26 v1.0g 2017/04/11 v1.0h
-%% 2017/11/21 v1.0i
+%% 2017/11/21 v1.0i 2018/01/20 v1.0j
 %% E-mail: hzzmail@163.com
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\ProvidesFile{gb7714-2015ay.cbx}[2017/11/21 v1.0i biblatex citation style]
+\ProvidesFile{gb7714-2015ay.cbx}[2018/01/20 v1.0j biblatex citation style]
 
 \RequireCitationStyle{authoryear}
 %\RequireCitationStyle{numeric}
@@ -44,15 +44,11 @@
     }
 }
 
-\iftoggle{iftlfive}
-    {\switchversion{3.4}{cbxopt}}%%当采用texlive2015以下版本时
-    {\iftoggle{iftlsix}%
-        {\switchversion{3.4}{cbxopt}}%%当采用texlive2016版本时
-        {\iftoggle{iftlseven}%
-            {\switchversion{3.7}{cbxopt}}%%当采用texlive2017版本时
-            {\switchversion{3.7}{cbxopt}}%%当采用biblatex3.8a版本时
-        }%
-    }
+\iftoggle{iftlfive}{\switchversion{3.4}{cbxopt}}{}%biblatex<=3.2
+\iftoggle{iftlsix}{\switchversion{3.4}{cbxopt}}{}%3.3<=biblatex<=3.6
+\iftoggle{iftlseven}{\switchversion{3.7}{cbxopt}}{}%biblatex=3.7
+\iftoggle{iftleight}{\switchversion{3.7}{cbxopt}}{}%3.8<=biblatex<=3.9
+\iftoggle{iftlatest}{\switchversion{3.7}{cbxopt}}{}%biblatex最新3.10
 
 %当条目是set时，所有的信息都没有于是利用entrykey来给出标签，那么就要set的条目关键字是需要的字符串，注意字符串中间不能有空格
 \renewbibmacro*{cite:label}{%
