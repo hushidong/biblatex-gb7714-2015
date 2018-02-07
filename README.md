@@ -59,32 +59,37 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
     \documentclass{article}%文档类%导言区开始:
     
     \usepackage{ctex}%加载ctex宏包，中文支持
+    
     \usepackage[left=20mm,right=20mm,top=25mm, bottom=15mm]{geometry}%加载geometry宏包，定义版面
-    \usepackage[colorlinks=true,pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}%加载hyperref宏包，使用超链接
+    
+    \usepackage[colorlinks=true,pdfstartview=FitH,%
+    linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}%加载hyperref宏包，使用超链接
 
-    %加载biblatex宏包，使用参考文献
-    %其中后端backend使用biber
-    %引用样式citestyle，著录样式bibstyle都采用gb7714-2015样式
-    \usepackage[backend=biber,bibstyle=gb7714-2015,%nature,%
-    citestyle=gb7714-2015%,backref=true%
-    ]{biblatex}
-    %biblatex宏包的参考文献数据源加载方式
-    \addbibresource[location=local]{example.bib}
+    \usepackage[backend=biber,bibstyle=gb7714-2015,%nature,%%加载biblatex宏包，使用参考文献
+    citestyle=gb7714-2015%,backref=true%%其中后端backend使用biber
+    ]{biblatex}%标注(引用)样式citestyle，著录样式bibstyle都采用gb7714-2015样式
+    
+    \addbibresource[location=local]{example.bib}%biblatex宏包的参考文献数据源加载方式
 
     
     \begin{document}%正文区开始:
 
     %正文内容，引用参考文献
-    不带页码的引用(上标，方括号包围):
+    
+    1. 不带页码的引用(上标，方括号包围):
     \cite{Peebles2001-100-100}
-    不带页码的引用(非上标，方括号包围):
+    
+    2. 不带页码的引用(非上标，方括号包围):
     \parencite{Miroslav2004--}
-    带页码的引用:
+    
+    3. 带页码的引用:
     \cite[见][49页]{蔡敏2006--}  \parencite[见][49页]{Miroslav2004--}
     \pagescite{Peebles2001-100-100}  \pagescite[][201-301]{Peebles2001-100-100}
-    作者年制文中已有作者只需要年份和页码的情况，使用命令yearpagescite，比如:
+    
+    4. 作者年制文中已有作者只需要年份和页码的情况，使用命令yearpagescite，比如:
     见赵耀东\yearpagescite[][205]{赵耀东1998--}和Simon\yearpagescite[][15]{Simon2001--}的文献。
-    在页脚中引用和打印文献表:
+    
+    5. 在页脚中引用和打印文献表:
     \footnote{在脚注中引用\footcite{赵学功2001--}}  \footfullcite{赵学功2001--}
     
 
