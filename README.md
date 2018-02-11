@@ -30,7 +30,11 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
         `\usepackage[backend=biber,style=gb7714-2015,gbpub=true]{biblatex}`
         
-    - add an option `gbnamefmt` for dealing name's letter case, option value = `uppercase` for gb7714 style or `lowercase` for gb7714 style with no case switch of names or `none` for standard style. this option is also for author year style.
+    - add an option `gbnamefmt` for dealing name's letter case(this option is also for author year style):
+        `gbnamefmt = uppercase` for gb7714 style 
+        `gbnamefmt = lowercase` for gb7714 style with no case switch of names 
+        `gbnamefmt = none` for standard style. 
+        `gbnamefmt = pinyin` for a common Chinese style, like: ZHANG Min-li, YI Shi-he and so on. 
 
         `\usepackage[backend=biber,style=gb7714-2015,gbnamefmt=uppercase]{biblatex}`
 
@@ -119,6 +123,47 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 ![示例b](egaligngb7714-2015ay.jpg)
 
 
+* 姓名的格式更改
+
+对于bib文件中的如下条目，有:
+
+    @Article{Zhang2007-500-503,
+      Title                    = {The design and experimental investigations of supersonic length shorted nozzle},
+      Author                   = {Zhang, Min-li and Yi, Shi-he and Zhao, Yu-xin},
+      Journal                  = {ACTA AERODYNAMICA SINICA},
+      Number                   = {4},
+      Pages                    = {500-503},
+      Volume                   = {25},
+      Year                     = {2007}
+    }
+
+    @Book{Yi2013--,
+      Title                    = {Supersonic and hypersonic nozzle design},
+      Address                  = {Beijing},
+      Author                   = {Yi, Shi he and Zhao, Yu xin and He, Lin and Zhang, Min li},
+      Publisher                = {National Defense Industry Press},
+      Year                     = {2013}
+    }
+
+    @Book{LIAO2012--,
+      Title                    = {Electronic countermeasure techniques for missile penetration},
+      Address                  = {Beijing},
+      Author                   = {LIAO, ping and JIANG, qin bo},
+      Publisher                = {National Defense Industry Press},
+      Year                     = {2013}
+    }
+
+    @Book{LIU2003--,
+      Title                    = {Introduction of Ballistic Misille Techniques},
+      Address                  = {Beijing},
+      Author                   = {LIU, shi Qiu},
+      Publisher                = {China Astronautic Publishing House},
+      Year                     = {2003}
+    }
+
+![示例c](eggbnamefmt.jpg)
+
+
 
 ---------------------------------------------------------
 
@@ -135,7 +180,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * Changes to pkg code:
     - "*.bbx": change the version code switch mechanism.
     - "*.bbx": change the option align to `gbalign` for standardising option terminology.
-    - "*.bbx": add an option `gbnamefmt` to control the letter case of author name，and eliminate the comma in author names of the chinese references exported from cnki by `zotero`，these demand raised by liuxiaotao.
+    - "*.bbx": add an option `gbnamefmt` to control the letter case and format of author's name，and eliminate the comma in author names of the chinese references exported from cnki by `zotero`，these demand raised by liuxiaotao.
     - "*.bbx": correct the delimiter between author and year for author-year style with right using of the `\nameyeardelim`
     
 ### date of change: 2017-11-21 to version v1.0i
