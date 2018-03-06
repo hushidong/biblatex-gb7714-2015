@@ -28,14 +28,14 @@
 %=====================================================================
 %新增功能函数
 %=====================================================================
-    %版本判断
+    %版本判断，当版本继续更新时，增加一个新的toggle用以处理新的旧版，最新版本永远用iftlatest
     \providetoggle{iftlfive}%用于处理biblatex3.2之前的版本
     \providetoggle{iftlsix}%用于处理biblatex3.3开始改变的新的姓名机制后版本
     \providetoggle{iftlseven}%用于处理biblatex3.7的兼容性
     \providetoggle{iftleight}%用于处理biblatex3.8到3.9的兼容性
     \providetoggle{iftlatest}%用于最新版biblatex，目前是biblatex3.10，20180117
-    \StrBefore{\abx@version}{.}[\numinteger]
-    \StrBehind{\abx@version}{.}[\numdigital]
+    \StrBefore{\abx@version}{.}[\numinteger]%以点区分整数和小数
+    \StrBehind{\abx@version}{.}[\numdigital]%小数部分可能带字母所以需将其去掉，见下一行代码
     \IfInteger{\numdigital}{}{\StrGobbleRight{\numdigital}{1}[\numdigital]}
     \togglefalse{iftlfive}
     \togglefalse{iftlsix}

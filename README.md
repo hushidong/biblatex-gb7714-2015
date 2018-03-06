@@ -90,10 +90,15 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
     \cite[见][49页]{蔡敏2006--}  \parencite[见][49页]{Miroslav2004--}
     \pagescite{Peebles2001-100-100}  \pagescite[][201-301]{Peebles2001-100-100}
     
-    4. 作者年制文中已有作者只需要年份和页码的情况，使用命令yearpagescite，比如:
-    见赵耀东\yearpagescite[][205]{赵耀东1998--}和Simon\yearpagescite[][15]{Simon2001--}的文献。
+    4. 作者年制文中已有作者还需要年份和页码的情况，使用命令yearpagescite，比如:
+    见赵耀东\yearpagescite[][205]{赵耀东1998--}和Simon\yearpagescite[][15]{Simon2001--}
+	
+	5. 作者年制文中已有作者只需要年份的情况，使用命令yearcite和手动方式，比如:
+	见赵耀东\yearcite{赵耀东1998--}
+	见赵耀东(\cite*{赵耀东1998--})
+	见赵耀东(\citeyear{赵耀东1998--})
     
-    5. 在页脚中引用和打印文献表:
+    6. 在页脚中引用和打印文献表:
     \footnote{在脚注中引用\footcite{赵学功2001--}}  \footfullcite{赵学功2001--}
     
 
@@ -182,6 +187,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
     - "*.bbx": change the option align to `gbalign` for standardising option terminology.
     - "*.bbx": add an option `gbnamefmt` to control the letter case and format of author's name，and eliminate the comma in author names of the chinese references exported from cnki by `zotero`，these demand raised by liuxiaotao.
     - "*.bbx": correct the delimiter between author and year for author-year style with right using of the `\nameyeardelim`
+	- "*.bbx": add an cmd `\yearcite` to print year info only for author-year style when author has been written manually.
     
 ### date of change: 2017-11-21 to version v1.0i
 * Changes to pkg code:

@@ -83,7 +83,8 @@ biblatex生成参考文献有其优越性。笔者从最初开始学习latex时�
 
 %上述这些优点也是笔者决定编写符合GB/T 7714-2015标准的参考文献样式文件的原因之一。
 
-下面直接给出最小工作示例的tex源文档(例\ref{code:doc:structrue})，用以简单介绍biblatex宏包参考文献生成的一般方法。给出的详细注释，说明了使用biblatex的文档基本结构，所有基于biblatex生成参考文献的文档无论大小万变不离其宗，当然除tex文档外另需准备保存参考文献信息的bib文件(详见\ref{sec:bib:bibtex}节)。要进一步了解biblatex参考文献生成相关内容可以参考biblatex宏包手册或者LaTeX 文档中文参考文献的biblatex解决方案\footnote{地址:\url{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}}。
+下面直接给出最小工作示例的tex源文档(例\ref{code:doc:structrue})，用以简单介绍biblatex宏包参考文献生成的一般方法。给出的详细注释，说明了使用biblatex的文档基本结构，所有基于biblatex生成参考文献的文档无论大小万变不离其宗，当然除tex文档外另需准备保存参考文献信息的bib文件(详见\ref{sec:bib:bibtex}节)。要进一步了解biblatex参考文献生成相关内容可以参考: biblatex宏包手册或者LaTeX 文档中文参考文献的biblatex解决方案
+\footnote{地址:\url{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}}。
 
 \begin{codetex}{biblatex参考文献生成最小工作示例}{code:doc:structrue}
 \documentclass{article}%文档类
@@ -96,7 +97,7 @@ biblatex生成参考文献有其优越性。笔者从最初开始学习latex时�
 \usepackage[colorlinks=true,pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
 %加载biblatex宏包，使用参考文献
 %其中后端backend使用biber
-%引用样式citestyle，著录样式bibstyle都采用gb7714-2015样式
+%标注(引用)样式citestyle，著录样式bibstyle都采用gb7714-2015样式
 \usepackage[backend=biber,bibstyle=gb7714-2015,%nature,%
 citestyle=gb7714-2015%,backref=true%
 ]{biblatex}
@@ -135,7 +136,7 @@ citestyle=gb7714-2015%,backref=true%
 perl gb7714texttobib.pl in=textfilename out=bibfilename
 \end{codetex}
 
-\subsubsection{增加的选项}
+\subsubsection{增加的选项}\label{sec:added:opt}
 gb7714-2015样式增加了部分用于控制标签对齐、出版项缺省处理、责任者(作者)缺省处理的选项，使用方式与biblatex宏包选项完全相同:
 \begin{description}
   \item[gbalign]=right，left，gb7714-2015. \hfill default is right
@@ -170,6 +171,8 @@ gb7714-2015样式增加了部分用于控制标签对齐、出版项缺省处理
   \item[uniquelist]=true, false, minyear \hfill default: minyear
 
   该选项用于作者年制样式，用于正文中引用(标注)标签的作者列表控制(目的是消除歧义)。当uniquelist=true时，自动利用扩展作者姓名列表长度的方式消除labelname 列表的歧义; 当=false 时则禁用扩展，标签仅使用一个作者，消除歧义通过跟在年份后面的字母实现; 默认使用minyear，即当被截短的作者姓名列表存在歧义时，只有当年份相同，才会扩展列表长度以消除歧义。
+
+  注意当使用uniquelist=false后标签只有一个作者，但文中可能有同姓作者的文献，这时根据uniquename选项的设置，biblatex会使用姓名的其它部分比如名来消除歧义，但如果想强制要求仅用姓作为文中的标注标签，那么可以设置uniquename=false，但此时标注是可能存在歧义的。
 
   \item[hyperref]=true, false, auto. \hfill default: auto
 
@@ -277,7 +280,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
       这里的第一个姓名输入为前缀，姓，后缀，名，中间名。第二个姓名输入为名，姓。第三个姓名输入为姓，名，中间名。
 
-      \bc{需要强调:对于第二种输入方式非首字母大写，姓名各个组成部分最好首字母是大写的，可能导致解析出错，比如姓名只有两个组成部分firstname和lastname，如果firstname小写的话，有可能会解析为prefix lastname。对于第一种输入方式，则至少lastname需要首字母大写，否则有可能将lastname解析成prefix。其中lastname也称familyname，firstname middlename 两者共称givenname}
+      \bc{需要强调:对于第二种输入方式，姓名各个组成部分最好首字母是大写的，首字母非大写可能导致解析出错，比如姓名只有两个组成部分firstname和lastname，如果firstname小写的话，有可能会解析为prefix lastname。对于第一种输入方式，则至少lastname需要首字母大写，否则有可能将lastname解析成prefix。其中lastname也称familyname，firstname middlename 两者共称givenname}
 
       对于机构作者，不需要解析，直接输入机构名，英文的各个机构名用\{\}包起来，比如:
 
@@ -318,6 +321,17 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
   \item[journal] 用于连续出版物析出文献，表示连续出版物的题名，直接输入需要打印的内容。journaltitle，journalsubtitle域类似处理。
    \item[version] 用于report和manual的版本信息，直接输入需要打印的内容。
 \end{description}
+
+除了上述输入内容要求外，GB/T 7714-2015还有对数字、字母大小写等有一些格式要求，这些细节需要注意，请参考:
+\begin{itemize}
+\item 数字:\ref{sec:fmt:number}节
+\item 字母大小写:\ref{sec:fmt:lettercase}节
+\item 卷和期:\ref{sec:fmt:volnum}节
+\item 版次:\ref{sec:fmt:edition}节
+\item 出版项:\ref{sec:fmt:pubitem}节
+\item 页码:\ref{sec:fmt:pages}节
+\end{itemize}
+
 
 
 \subsubsection{关于参考文献著录样式: bbx文件的说明}\label{sec:usage:bbx}
@@ -363,7 +377,12 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
     \cite[见][49页]{蔡敏2006--} \parencite[见][49页]{Miroslav2004--}
     \pagescite{Peebles2001-100-100} \pagescite[][201-301]{Peebles2001-100-100}
 作者年制文中已有作者只需要年份和页码的情况，使用命令yearpagescite，比如:
-    见赵耀东\yearpagescite[][205]{赵耀东1998--}和Simon\yearpagescite[][15]{Simon2001--}的文献。
+    见赵耀东\yearpagescite[][205]{赵耀东1998--}和Simon\yearpagescite[][15]{Simon2001--}。
+    
+需要注意，\yearpagescite命令在输出年份的同时也输出页码，但有时有些参考文献格式不要求页码，此时可以用\yearcite命令，或者也可利用cite*和citeyear命令手动实现(如果要用超链接目前可以使用cite*)，比如:
+    见赵耀东\yearcite{赵耀东1998--}
+    见赵耀东(\cite*{赵耀东1998--})
+    见赵耀东(\citeyear{赵耀东1998--})
 在页脚中引用和打印文献表:
     \footnote{在脚注中引用\footcite{赵学功2001--}} \footfullcite{赵学功2001--}
 \end{codetex}
@@ -624,15 +643,9 @@ author.title[usera].translator.type number.version.location:institution,date 或
 \paragraph{其著录格式为} 也直接采用report格式处理。
 \end{refentry}
 
-\subsection{标准的其它要求与实现}
+\subsection{多语言文献}\label{sec:multilan:implement}
 
-除了上一小节针对不同条目类型的著录格式要求外，GB/T 7714-2015还有一些细节要求比如文字、符号等需要满足，可以采用如下方法：
-
-\subsubsection{多语言文献}\label{sec:multilan:implement}
-
-\begin{property}{}{}
 某些期刊对于参考文献有双语文献要求，那么可以通过条目集类型(set)/或者条目关联(related)来解决。具体要求见GB/T 7714-2015第6.1节。
-\end{property}
 
 \paragraph{利用条目集类型满足双语文献要求}
 
@@ -709,19 +722,25 @@ userb={cn}
 使用该命令后，可以引用主条目“易仕和2013--”生成双语文献。但要注意由于DeclareStyleSourcemap命令只能在导言区中使用，因此defdoublelangentry命令也只能出现在导言区中，这也是相比条目集动态方法的唯一遗憾。
 实现的具体细节见\ref{sec:data:mdf:forrelated}节。
 
+\subsection{标准的其它细节要求}
 
-\subsubsection{数字}
+除了第\ref{sec:numeric:data}节针对不同条目类型的著录格式要求外，GB/T 7714-2015还有一些细节要求比如文字、符号等需要满足，可以采用如下方法：
+
+\subsubsection{数字}\label{sec:fmt:number}
 
 \begin{property}{}{}
 用户给bib源文件录入数字时，应按照GB/T 7714-2015第6.2节要求用阿拉伯数字表示。
 \end{property}
 
-\subsubsection{英文字母}
+\subsubsection{英文字母}\label{sec:fmt:lettercase}
 
 \begin{property}{}{}
 为了符合西文文献责任者的字母大小写习惯，本bbx样式文件，通过判断是否存在first name来确定是否是个人作者，当存在first name 时认为是个人作者，不存在则是机构作者，当是个人作者时lastname按GB/T 7714-2015要求全大写，是机构作者则仅大写首字母。所以对于仅有lastname的个人作者，填入信息英文姓的字母请全用大写。个人著者的格式要求参考GB/T 7714-2015第6.3节。
 
 用户给bib源文件录入出版项、西文期刊名缩写以及西文文献的字母时，应按照GB/T 7714-2015第6.4节，第6.5节，6.6节要求，使用符合要求的习惯用法和大小写方式。本样式文件使用原样打印的方式进行处理。
+
+实际上，对于英文大小写问题，GB/T 7714-2015除了责任者的大写要求外，其它的要求相对比较模糊，所以一般不同的期刊会有各自不同的要求，比如不能使用缩写，而GB/T 7714-2015规定可参照ISO 4的要求等。从作者的经验看，一般国内的期刊对于字母大小写通常要求:
+责任者(全部大写);题名(句首字母大写其它全部小写);期刊名会议名(单词首字母大写);出版项和其它(单词首字母大写)。所以在录入bib文件时可以按照这种常见方式来输入可以减少后期的修改。
 \end{property}
 
 \subsubsection{标点}
@@ -750,7 +769,7 @@ userb={cn}
 本样式文件实现了符合GB/T 7714-2015第8.2节要求的格式，能根据条目类型选择文献类型标识/文献载体标识，自动录入到自定义域usera中，并在各类参考文献条目驱动中直接使用。各不同类型文献的文献类型标识/文献载体标识，参考GB/T 7714-2015表B.1和B.2。
 \end{property}
 
-\subsubsection{版次}
+\subsubsection{版次}\label{sec:fmt:edition}
 
 \begin{property}{}{}
 用户在给bib源文件录入版次信息时，只要录入版次的整数数字或者录入需要打印的字符串。
@@ -758,7 +777,7 @@ userb={cn}
 本样式文件实现了GB/T 7714-2015第8.3节要求的格式，对于一般的版式格式，根据edition/version域输入的整数进行处理，其它特殊的版本说明，比如新1版，明刻本等直接在edition域录入后原样打印。
 \end{property}
 
-\subsubsection{出版项}
+\subsubsection{出版项}\label{sec:fmt:pubitem}
 
 \begin{property}{}{}
 用户在给bib源文件录入出版项信息时，当出版日期有其它形式的纪年时，将其置于公元纪年后面的()内，并整体录入到 year 数据域中，比如: 1845(清同治四年)。而引用日期应录入到 urldate 数据域。当除了出版日期外还有修改/更新日期等时，可在year或date数据域录入第二个日期，并用/符号与前一个出版日期隔开。而专利的公告日期和其它条目类型的出版年应录入到 date 域中。
@@ -766,7 +785,7 @@ userb={cn}
 本样式文件实现了GB/T 7714-2015第8.4节要求的格式。当出版地和出版者缺省时，中英文自动区分处理。对于用/符号隔开的两个日期，biblatex后端biber能自动解析，后一个日期数据自动解析到endyear等域可作为修改日期等在样式文件中使用。
 \end{property}
 
-\subsubsection{页码}
+\subsubsection{页码}\label{sec:fmt:pages}
 \begin{property}{}{}
 用户在给bib源文件录入页码信息时，可以在pages域中根据需要录入可解析的页码(即用整数表示页码，起讫页码用-分隔)，比如: 81-86。 也可以直接录入需要打印的信息，比如: 序2-3等。
 
@@ -780,7 +799,7 @@ userb={cn}
 本样式文件实现了GB/T 7714-2015第8.6,8.7节要求的格式。
 \end{property}
 
-\subsubsection{卷和期}
+\subsubsection{卷和期}\label{sec:fmt:volnum}
 \begin{property}{}{}%[break at=0.4cm/0pt]
 用户在给bib源文件录入卷、期等信息时，如\ref{sec:bib:bibtex}节中所述，合期的期号用/间隔，比如9/10，填入number域，报纸的版次也填入number域。
 
@@ -1052,7 +1071,7 @@ beamer类中的参考文献测试，参见:
 \href{run:./egbeameray.tex}{egbeameray.tex}，
 \href{run:./egbeameray.pdf}{egbeameray.pdf}。
 
-\subsection{测试: 采用gb7714-2015顺序编码制样式时的上标和非上标标注}\label{sec:cite:cmd:test}
+\subsection{测试: 上标和非上标等不同的标注格式}\label{sec:cite:cmd:test}
 \begin{refsection}
 不带页码的引用(顺序编码制上标，方括号包围；作者年制行内，括号包围):
 \begin{itemize}
@@ -1070,9 +1089,13 @@ beamer类中的参考文献测试，参见:
   \item \pagescite{Peebles2001-100-100}\pagescite[][201-301]{Peebles2001-100-100}
 \end{itemize}
 
-已有作者只需要年份和页码的情况(命令yearpagescite)，作者年制(上标)，顺序编码制(与pagescite作用相同):
+已有作者只需要年份和页码的情况(命令yearpagescite)，作者年制(上标)，顺序编码制(与pagescite作用相同);
+已有作者只需要年份的情况(命令yearcite):
 \begin{itemize}
   \item 见赵耀东\yearpagescite[][205]{赵耀东1998--}和Simon\yearpagescite[][15]{Simon2001--}的文献。
+  \item 见赵耀东\yearcite{赵耀东1998--}
+  \item 见赵耀东(\cite*{赵耀东1998--})
+  \item 见赵耀东(\citeyear{赵耀东1998--})
 \end{itemize}
 
 \printbibliography[heading=subbibliography,title=【gb7714-2015顺序编码制上标和非上标标注测试】]
@@ -1471,6 +1494,12 @@ biber动态数据处理，详见biblatex说明文档Dynamic Modification of Data
 \def\blx@opt@uniquelist@minyear{2}
 \end{texlist}
 无论选项是否给出，上面定义选项中的代码都会自动执行，当选项不给出，则自动调用默认的参数(因为代码中直接使用了输入参数，当没有输入参数，自然就会使用默认参数)来进行处理，显然这里是true。
+
+\subsubsection{标签中的标点和间隔符号}\label{sec:label:fmt}
+文献表中的标签和正文中的标注标签都有标点和间隔符号问题，但两者可能存在一定的差异，不同版本的biblatex中也可能不同，但新的版本中通常是可以用一个相同的钩子来实现的，比如作者年制中作者和年份之间的标点:
+\begin{texlist}
+\renewcommand*{\nameyeardelim}{\addcomma\space}
+\end{texlist}
 
 \subsection{日期格式控制}\label{sec:date:fmt}
 随着biblatex的更新，日期格式控制更趋完善。加上biblatex3.8a中biber解析出日期中月份和天数都不带引导的0，比如6月直接解析为6，而不像以前那样解析为06，所以需要特别的注意。因此对于新版本，有些日期比如online的发布日期，访问日期等，采用专门的格式edtf控制，而老版本则仍然使用原来定义的输出宏。比如:
@@ -1929,26 +1958,49 @@ texlive2017对应biblatex3.7;
 
   经过最终设计，下面给出的另一版本兼容性处理方式取代前面给出的处理方式，便于以后的扩展。
   \begin{texlist}
-  %版本判断
-    \providetoggle{iftlfive}%用于处理biblatex3.2之前的版本,即texlive2015以下版本中的biblatex
-    \providetoggle{iftlsix}%用于处理biblatex3.3开始改变的新的姓名机制后版本，包括
+    %版本判断，当版本继续更新时，增加一个新的toggle用以处理新的旧版，最新版本永远用iftlatest
+    \providetoggle{iftlfive}%用于处理biblatex3.2之前的版本
+    \providetoggle{iftlsix}%用于处理biblatex3.3开始改变的新的姓名机制后版本
     \providetoggle{iftlseven}%用于处理biblatex3.7的兼容性
-    \providetoggle{iftleight}%用于处理biblatex3.8a的兼容性
-    \StrChar{\abx@version}{1}[\numinteger]
-    \StrChar{\abx@version}{3}[\numdigital]
-    \ifnumcomp{\numinteger}{=}{2}{\toggletrue{iftlfive}}{\togglefalse{iftlfive}}
+    \providetoggle{iftleight}%用于处理biblatex3.8到3.9的兼容性
+    \providetoggle{iftlatest}%用于最新版biblatex，目前是biblatex3.10，20180117
+    \StrBefore{\abx@version}{.}[\numinteger]%以点区分整数和小数
+    \StrBehind{\abx@version}{.}[\numdigital]%小数部分可能带字母所以需将其去掉，见下一行代码
+    \IfInteger{\numdigital}{}{\StrGobbleRight{\numdigital}{1}[\numdigital]}
+    \togglefalse{iftlfive}
+    \togglefalse{iftlsix}
+    \togglefalse{iftlseven}
+    \togglefalse{iftleight}
+    \toggletrue{iftlatest}
     \ifnumcomp{\numinteger}{=}{3}{
-        \ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftlsix}\togglefalse{iftlfive}}{\togglefalse{iftlsix}\toggletrue{iftlfive}}
-        \ifnumcomp{\numdigital}{>}{6}{\toggletrue{iftlseven}\togglefalse{iftlsix}}{\togglefalse{iftlseven}}
-        \ifnumcomp{\numdigital}{>}{7}{\toggletrue{iftleight}\togglefalse{iftlseven}}{\togglefalse{iftleight}}
-    }{\blx@warning@noline{%
-       biblatex version undefined in biblatex-gb7714-2015.\MessageBreak
-       Please contact pkg author.}}
+        \ifnumcomp{\numdigital}{<}{10}{\ifnumcomp{\numdigital}{>}{7}{\toggletrue{iftleight}\togglefalse{iftlatest}}{}}{}%>3.8 版本用iftleight=true表示
+        \ifnumcomp{\numdigital}{=}{7}{\toggletrue{iftlseven}\togglefalse{iftlatest}}{}%3.7版本用iftlseven=true表示
+        \ifnumcomp{\numdigital}{<}{7}{\ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftlsix}\togglefalse{iftlatest}}{}}{}%3.3-3.6 版本用iftlsix=true表示
+        \ifnumcomp{\numdigital}{<}{3}{\toggletrue{iftlfive}\togglefalse{iftlatest}}{}%3.0-3.2版本用iftlfive=true表示
+    }{\ifnumcomp{\numinteger}{>}{3}{
+       \blx@warning@noline{%
+       biblatex version is >= 4.x.\MessageBreak
+       if errors raised，Please contact biblatex-gb7714-2015 pkg author.}%
+    }{ \toggletrue{iftlfive}\togglefalse{iftlatest}%2.x版本统一用iftlfive=true表示
+       \blx@warning@noline{%
+       biblatex version is <= 2.x.\MessageBreak
+       if errors raised，Please contact biblatex-gb7714-2015 pkg author.}%
+    }}
     \newcommand\defversion[2]{\csdef{codeversion#1#2}}%定义不同版本的命令
     \newcommand\switchversion[2]{\csuse{codeversion#1#2}}%使用不同版本的命令
 
-    \defversion{3.0}{opt}{
+\defversion{3.0}{opt}{
     %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
+
+    %增加姓名大小写格式处理选项
+    \DeclareBibliographyOption{gbnamefmt}[uppercase]{%
+        %\ifstrequal{##1}{gbuppercase}{}{}%
+        \ifstrequal{##1}{lowercase}{\execgblowercase}{}%
+        \ifstrequal{##1}{none}{\execnamedefault}{}
+        \ifstrequal{##1}{pinyin}{\execnamepinyin}{}
+    }
+    %\ExecuteBibliographyOptions{gbnamefmt}
+
     %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015无效，仍然为右对齐模式，因为舍弃了list类环境后出错。
     \DeclareBibliographyOption{gbalign}[right]{%texlive2015中的3.0版中的DeclareBibliographyOption选项没有类型说明
         \ifstrequal{##1}{right}{}{}
@@ -1982,6 +2034,16 @@ texlive2017对应biblatex3.7;
 \defversion{3.4}{opt}{
     % Alter settings that carry through from biblatex
     %biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
+
+    %增加姓名大小写格式处理选项
+    \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
+        %\ifstrequal{##1}{gbuppercase}{}{}%
+        \ifstrequal{##1}{lowercase}{\execgblowercase}{}%
+        \ifstrequal{##1}{none}{\execnamedefault}{}
+        \ifstrequal{##1}{pinyin}{\execnamepinyin}{}
+    }
+    %\ExecuteBibliographyOptions{gbnamefmt}
+
     %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
     \DeclareBibliographyOption[string]{gbalign}[right]{%
         \ifstrequal{##1}{left}{\setalignleft}{}
@@ -2013,6 +2075,16 @@ texlive2017对应biblatex3.7;
 
 \defversion{3.7}{opt}{
     %biblatex3.7版后(比如texlive2017中的3.7版)的使用方式
+
+    %增加姓名大小写格式处理选项
+    \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
+        %\ifstrequal{##1}{gbuppercase}{}{}%
+        \ifstrequal{##1}{lowercase}{\execgblowercase}{}%
+        \ifstrequal{##1}{none}{\execnamedefault}{}
+        \ifstrequal{##1}{pinyin}{\execnamepinyin}{}
+    }
+    %\ExecuteBibliographyOptions{gbnamefmt}
+
     %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
     \DeclareBibliographyOption[string]{gbalign}[right]{%
         \ifstrequal{##1}{left}{\setalignleft}{}
@@ -2044,12 +2116,54 @@ texlive2017对应biblatex3.7;
     }
 }
 
-\iftoggle{iftlfive}
-    {\switchversion{3.0}{opt}}%%当采用texlive2015以下版本时
-    {\iftoggle{iftlsix}%
-        {\switchversion{3.4}{opt}}%%当采用texlive2016版本时
-        {\switchversion{3.7}{opt}}%%当采用texlive2017以上版本时
+\defversion{3.10}{opt}{
+    %biblatex3.10版后的使用方式
+
+    %增加姓名大小写格式处理选项
+    \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
+        %\ifstrequal{##1}{gbuppercase}{}{}%
+        \ifstrequal{##1}{lowercase}{\execgblowercase}{}%
+        \ifstrequal{##1}{none}{\execnamedefault}{}
+        \ifstrequal{##1}{pinyin}{\execnamepinyin}{}
     }
+    %\ExecuteBibliographyOptions{gbnamefmt}
+
+    %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
+    \DeclareBibliographyOption[string]{gbalign}[right]{%
+        \ifstrequal{##1}{left}{\setalignleft}{}
+        \ifstrequal{##1}{gb7714-2015}{\setaligngbstyle}{}
+    }
+
+    %增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
+    \newtoggle{bbx:gbpub}
+    \DeclareBibliographyOption[boolean]{gbpub}[true]{%
+        %\settoggle{bbx:gbpub}{#1} %或采用下面这一句
+        \ifstrequal{##1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
+    \ExecuteBibliographyOptions{gbpub}
+
+    %增加一个处理佚名或noauthor的控制选项
+    %因为在顺序编码制中，不需要使用，这里也增加，为了与作者年制的兼容性考虑。
+    \DeclareBibliographyOption[boolean]{gbnoauthor}[true]{}%
+
+    \ExecuteBibliographyOptions{
+      sorting=none,
+      useprefix=true,  %名字的信息包括前缀
+      %firstinits=true,    %名字有缩写，参考3.1.2.3 Internal
+      giveninits=true,
+      date         = year,  %日期仅写到年
+      urldate =iso, %iso8601，edtf
+      eventdate =iso,
+      maxnames     = 3 ,    %设置名字最大数量
+      minnames     = 3       %设置缩减后的名字最小数量
+      %uniquename   = init
+    }
+}
+
+\iftoggle{iftlfive}{\switchversion{3.0}{opt}}{}%biblatex<=3.2
+\iftoggle{iftlsix}{\switchversion{3.4}{opt}}{}%3.3<=biblatex<=3.6
+\iftoggle{iftlseven}{\switchversion{3.7}{opt}}{}%biblatex=3.7
+\iftoggle{iftleight}{\switchversion{3.7}{opt}}{}%3.8<=biblatex<=3.9
+\iftoggle{iftlatest}{\switchversion{3.10}{opt}}{}%biblatex最新3.10
   \end{texlist}
 
   \end{enumerate}
@@ -2117,7 +2231,7 @@ texlive2017对应biblatex3.7;
 %读者若查看样式文件内容可以看到作者对各目标要求所做的修改及，读者也可以根据自己的需求进行修改，作者设计样式文件的思路以及在设计过程中用到的一些biblatex宏包功能说明，详见第\ref{sec:biblatex:mech}节和LaTeX文档中文参考文献的biblatex解决方案的第2.7节。
 
 最后要感谢如下各位师长和朋友，正是在各位的帮助建议下，本样式不断升级逐渐完善。包括: moewew(biblatex 现在的维护者之一，给了不少有益的建议)、 李志奇(基于biblatex的符合GBT7714-2005的中文文献生成工具作者，笔者以前使用该工具，其代码对于设计本样式很有启发)、LeoLiu(刘海洋，CJK字符判断函数
-\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152663&extra=page\%3D3}} 对本宏包非常有帮助)、chinatex(china tex版主，给了很多建议和帮助，并且一起合作)、Sheng wenbo(biblatex用户手册合作译者，LaTeX2e 插图指南第三版译者，我们一起翻译的过程相互激励相互促进)、zepinglee(gbt7714-2015 bst样式作者，给了很多建议和讨论)、Harry Chen(ctex 维护者，给了不少好的建议)、liubenyuan(关于项目组织给出了很好的建议)、刘小涛（讨论了关于zotero的使用并提出了建议）、秀文工作组、leipility、qingkuan、湘厦人、秋平、任蒲军、fredericky123、qiuzhu、chaoxiaosu、Old Jack、Wu Nailong、Yibai Zhang、wayne508、 钟乙源、Xiaodong Yao、dsycircle、rpjshu、zjsdut、谢澜涛、Zutian Luo、海阔天空、zzqzyx、程晨、xmtangjun、蔡伟 等等。当然还有更多这里没有列全的朋友们的热心帮忙，在此一并表示感谢!
+\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152663&extra=page\%3D3}} 对本宏包非常有帮助)、chinatex(china tex版主，给了很多建议和帮助，并且一起合作)、Sheng wenbo(biblatex用户手册合作译者，LaTeX2e 插图指南第三版译者，我们一起翻译的过程相互激励相互促进)、zepinglee(gbt7714-2015 bst样式作者，给了很多建议和讨论)、Harry Chen(ctex 维护者，给了不少好的建议)、liubenyuan(关于项目组织给出了很好的建议)、刘小涛（讨论了关于zotero的使用并提出了建议）、ghiclgi(讨论了GB中作者年制标注标签的一些问题)、秀文工作组、leipility、qingkuan、湘厦人、秋平、任蒲军、fredericky123、qiuzhu、chaoxiaosu、Old Jack、Wu Nailong、Yibai Zhang、wayne508、 钟乙源、Xiaodong Yao、dsycircle、rpjshu、zjsdut、谢澜涛、Zutian Luo、海阔天空、zzqzyx、程晨、xmtangjun、蔡伟 等等。当然还有更多这里没有列全的朋友们的热心帮忙，在此一并表示感谢!
 
 
 \section{存在的问题和下一步工作}
@@ -2170,10 +2284,12 @@ texlive2017对应biblatex3.7;
 %============================
 \updateinfo[2018-01-20]{update to version 1.0j}\label{up:180120}
 \begin{enumerate}
-\item 进一步修改了版本判断机制，以使最新版本的兼容性更强。
-\item 根据刘小涛等朋友的需求增加了gbnamefmt选项用于控制姓名的大小写和输出格式，同时根据zotero从cnki识别输出中文文献姓名中带逗号的情况做了兼容性处理，见\ref{sec:opt:namefmt}节。
-\item 为统一样式增加的选项将原来的align选项修改为gbalign。
-\item 通过正确使用nameyeardelim相关命令，修正了作者年制，标注和著录表中的中作者与年份之间的标点符号。
+\item 进一步修改了版本判断机制，以使最新版本的兼容性更强，见\ref{sec:blx:compatibility}节。
+\item 根据刘小涛的需求和建议，增加了gbnamefmt选项用于控制姓名的大小写和输出格式，同时根据zotero从cnki识别输出中文文献姓名中带逗号的情况做了兼容性处理，见\ref{sec:opt:namefmt}节。
+\item 为统一样式增加的选项将原来的align选项修改为gbalign，见\ref{sec:added:opt}节。
+\item 通过正确使用nameyeardelim相关命令，修正了作者年制，标注和著录表中的中作者与年份之间的标点符号，
+    见\ref{sec:label:fmt}节。
+\item 根据ghiclgi的建议，增加了yearcite命令以满足，作者年制中作者已经给出仅需要年份信息而不需要页码信息的情况，说明和测试见\ref{sec:test:book}，\ref{sec:cite:cmd:test}节。
 \end{enumerate}
 
 %============================

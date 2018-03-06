@@ -71,3 +71,13 @@
   {}
   {\usebibmacro{cite:dump}]%
    \usebibmacro{postpages}}
+
+%不要页码
+\DeclareCiteCommand{\yearcite}[\mkbibsuperscript]%\mkbibbrackets,仍然用上标
+  {[\usebibmacro{cite:init}%
+   \usebibmacro{prenote}%
+   }
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:comp}}
+  {}
+  {\usebibmacro{cite:dump}]}

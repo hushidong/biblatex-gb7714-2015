@@ -94,3 +94,9 @@
   {\printfield{year}\printfield{extrayear}}
   {\multicitedelim}
   {\printtext{)}\textsuperscript{\usebibmacro{postpages}}}
+
+\DeclareCiteCommand{\yearcite}%仅输出年份，不要页码
+  {\printtext{(}\usebibmacro{prenote}}
+  {\printfield{year}\printfield{extrayear}}
+  {\multicitedelim}
+  {\printtext{)}}
