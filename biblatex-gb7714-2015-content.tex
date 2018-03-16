@@ -157,7 +157,7 @@ gb7714-2015样式增加了部分用于控制标签对齐、出版项缺省处理
 
   为姓名大小写格式控制增加的选项。默认选择gbnamefmt=uppercase，大小写要求符合GB/T 7714-2015 的要求。gbnamefmt=lowercase 时，大小写根据输入信息确定。gbnamefmt=none时，姓名的格式与biblatex标准样式一致。gbnamefmt=pinyin时，姓名的格式采用一种常用的中文拼音全拼方式，比如对于Zhao Yu Xin这个姓名拼音格式化为ZHAO Yu-xin。
   测试结果见第\ref{sec:opt:namefmt}节。
-  
+
   \item[gbtype]=true，false. \hfill default is true
 
   为控制是否输出题名后面的文献类型和载体标识符而增加的选项。默认选择gbtype=true，根据GB/T 7714-2015 要求输出标识符，例如“在线的期刊析出文献题名[J/OL]”。gbtype=false 时，不输出标识符，例如“在线的期刊析出文献题名”。
@@ -433,7 +433,7 @@ GB/T 7714-2015规定采用作者年制组织时，各篇文献首先按文种组
 
 标注要求具体参考GB/T 7714-2015第10.2节。
 
-\qd{注意:一般情况下，当文献作者缺省时，作者年制就没有作者可以用，因此文献题名用来生成标签，这样会导致文献表中文献题名后的文献类型标识/文献载体标识消失(这是因为题名用于生产标签后，题名域会被清除，自然也就不输出题名相关的信息了)。但是可以用佚名替代缺省作者的方式避免这个问题，即可以使用样式文件提供的选项gbnoauthor=true，一旦设置该选项为true，则缺省的作者会根据文献语种填充为佚名或NOAUTHOR。默认情况下，不进行这种处理，即相当于设置选项gbnoauthor=false。而顺序编码制因为标签是数字序号，所以不存在这个问题。}
+\qd{注意:一般情况下，当文献作者缺省时，作者年制就没有作者可以用，因此文献题名用来生成标签，这样会导致文献表中文献题名后的文献类型标识/文献载体标识消失(这是因为题名用于生产标签后，题名域会被清除，自然也就不输出题名相关的信息了，见“\hyperlink{entrystdwithoutauthor}{Information and documentation-the Dublin core metadata element set}”)。但是可以用佚名替代缺省作者的方式避免这个问题，即可以使用样式文件提供的选项gbnoauthor=true，一旦设置该选项为true，则缺省的作者会根据文献语种填充为佚名或NOAUTHOR。默认情况下，不进行这种处理，即相当于设置选项gbnoauthor=false。而顺序编码制因为标签是数字序号，所以不存在这个问题。}
 
 %本样式文件默认情况下采用佚名方式，如果不需要使用佚名，那么需要在样式文件中注释掉一段代码，这段代码在本文档末尾2016-11-14的更新历史中有说明，见\pageref{up:20161114}页。}
 
@@ -916,6 +916,7 @@ or type=inproceedings
 and keyword=standard
 }
 \printbibliography[heading=subbibliography,filter=standard,title=【标准文献-著录格式示例】]
+\hypertarget{entrystdwithoutauthor}{注意:这里最后一篇标准文献没有责任者，所以作者年制默认情况下无法给出文献标识符。}
 \printbibliography[heading=subbibliography,type=inbook,notkeyword=standard,title=【专著中析出的文献-著录格式示例】]
 \printbibliography[heading=subbibliography,type=article,notkeyword=news,title=【期刊中析出的文献-著录格式示例】]
 \printbibliography[heading=subbibliography,keyword=news,title=【报纸析出的文献-著录格式示例】]%type=article,有时type是newspaper所以不指定type为article
