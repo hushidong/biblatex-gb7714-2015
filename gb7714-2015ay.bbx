@@ -96,6 +96,30 @@
 %=====================================================================
 %设置宏包选项
 %=====================================================================
+%增加各biblatex版本兼容的选项
+    %对于biblatex3.4以上版本DeclareBibliographyOption命令
+    %中的[datatype]如果是boolean也是可以省略的。
+    %增加一个控制是否输出文献类型和载体标识的选项
+    \newtoggle{bbx:gbtype}
+    %\DeclareBibliographyOption[boolean]{gbtype}[true]{%biblatex高版本
+    \DeclareBibliographyOption{gbtype}[true]{%biblatex低版本
+      \settoggle{bbx:gbtype}{#1}}
+    \ExecuteBibliographyOptions{gbtype}
+
+    %增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
+    \newtoggle{bbx:gbpub}
+    \DeclareBibliographyOption{gbpub}[true]{%
+    %\settoggle{bbx:gbpub}{#1} %或采用下面这一句
+      \ifstrequal{##1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
+    \ExecuteBibliographyOptions{gbpub}
+
+    %增加一个处理佚名或noauthor的控制选项
+    \DeclareBibliographyOption{gbnoauthor}[true]{%
+      \ifstrequal{##1}{false}{}{\dealnoathor}}
+    %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能用宏包加载时给出的选项。
+
+
+
 \defversion{3.0}{opt}{
     %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
 
@@ -111,18 +135,6 @@
     %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
     %因为在作者年制中，不需要使用，这里也增加，为了与顺序年制的兼容性考虑。
     \DeclareBibliographyOption{gbalign}[right]{}%
-
-    %增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
-    \newtoggle{bbx:gbpub}
-    \DeclareBibliographyOption{gbpub}[true]{%
-    %\settoggle{bbx:gbpub}{#1} %或采用下面这一句
-      \ifstrequal{##1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
-    \ExecuteBibliographyOptions{gbpub}
-
-    %增加一个处理佚名或noauthor的控制选项
-    \DeclareBibliographyOption{gbnoauthor}[true]{%
-      \ifstrequal{##1}{false}{}{\dealnoathor}}
-    %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能用宏包加载时给出的选项。
 
     \ExecuteBibliographyOptions{
       useprefix = true,  %名字的信息包括前缀
@@ -153,18 +165,6 @@
     %因为在作者年制中，不需要使用，这里也增加，为了与顺序编码制的兼容性考虑。
     \DeclareBibliographyOption[string]{gbalign}[right]{}%
 
-    %增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
-    \newtoggle{bbx:gbpub}
-    \DeclareBibliographyOption[boolean]{gbpub}[true]{%
-    %\settoggle{bbx:gbpub}{#1} %或采用下面这一句
-      \ifstrequal{##1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
-    \ExecuteBibliographyOptions{gbpub}
-
-    %增加一个处理佚名或noauthor的控制选项
-    \DeclareBibliographyOption[boolean]{gbnoauthor}[true]{%
-      \ifstrequal{##1}{false}{}{\dealnoathor}}
-    %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能利用宏包加载时给出选项达到目的。
-
     \ExecuteBibliographyOptions{
       useprefix = true,  %名字的信息包括前缀
       %firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
@@ -194,18 +194,6 @@
     %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
     %因为在作者年制中，不需要使用，这里也增加，为了与顺序编码制的兼容性考虑。
     \DeclareBibliographyOption[string]{gbalign}[right]{}%
-
-    %增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
-    \newtoggle{bbx:gbpub}
-    \DeclareBibliographyOption[boolean]{gbpub}[true]{%
-    %\settoggle{bbx:gbpub}{#1} %或采用下面这一句
-      \ifstrequal{##1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
-    \ExecuteBibliographyOptions{gbpub}
-
-    %增加一个处理佚名或noauthor的控制选项
-    \DeclareBibliographyOption[boolean]{gbnoauthor}[true]{%
-      \ifstrequal{##1}{false}{}{\dealnoathor}}
-    %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能利用宏包加载时给出选项达到目的。
 
     \ExecuteBibliographyOptions{
       useprefix = true,  %名字的信息包括前缀
@@ -238,18 +226,6 @@
     %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
     %因为在作者年制中，不需要使用，这里也增加，为了与顺序编码制的兼容性考虑。
     \DeclareBibliographyOption[string]{gbalign}[right]{}%
-
-    %增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
-    \newtoggle{bbx:gbpub}
-    \DeclareBibliographyOption[boolean]{gbpub}[true]{%
-    %\settoggle{bbx:gbpub}{#1} %或采用下面这一句
-      \ifstrequal{##1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
-    \ExecuteBibliographyOptions{gbpub}
-
-    %增加一个处理佚名或noauthor的控制选项
-    \DeclareBibliographyOption[boolean]{gbnoauthor}[true]{%
-      \ifstrequal{##1}{false}{}{\dealnoathor}}
-    %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能利用宏包加载时给出选项达到目的。
 
     \ExecuteBibliographyOptions{
       useprefix = true,  %名字的信息包括前缀
@@ -1025,11 +1001,12 @@ backrefpages     = {引用页:},
        \printfield[titlecase]{subtitle}}%
        \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
         {\setunit{\subtitlepunct}\printfield{titleaddon}}%
+        \iftoggle{bbx:gbtype}{%
          \iffieldundef{note}{\printfield[gbtypeflag]{usera}}%在标题后直接给出文献标识字母，判断一下，是否是报纸和标准
         {\iffieldequalstr{note}{standard}{\printfield[gbtypeflags]{usera}}%判断是否为标准
                                          {\iffieldequalstr{note}{news}{\printfield[gbtypeflagn]{usera}}%判断是否为报纸
                                                                       {\printfield[gbtypeflag]{usera}}}%其它
-        }%
+        }}{}%
      \iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
      %\newunit
      }%

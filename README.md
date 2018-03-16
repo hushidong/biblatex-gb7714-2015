@@ -26,17 +26,27 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
         `\usepackage[backend=biber,style=gb7714-2015,gbalign=gb7714-2015]{biblatex}`
 
-    - add an option `gbpub` for dealing publishing items, option value = `true` for gb7714 style or `false` for standard style. this option is also for author year style.
+    - add an option `gbpub` for dealing publishing items, option value = `true` for gb7714 style or `false` for standard style. This option is also for author year style.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbpub=true]{biblatex}`
         
     - add an option `gbnamefmt` for dealing name's letter case(this option is also for author year style):
+	
         `gbnamefmt = uppercase` for gb7714 style 
+		
         `gbnamefmt = lowercase` for gb7714 style with no case switch of names 
+		
         `gbnamefmt = none` for standard style. 
+		
         `gbnamefmt = pinyin` for a common Chinese style, like: ZHANG Min-li, YI Shi-he and so on. 
+		
+		This option is also for author year style.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbnamefmt=uppercase]{biblatex}`
+		
+	- add an option `gbtype` for dealing the reference type and carrier identifier like a [J/OL] for an on-line article, option value = `true` for gb7714 style or `false` for none identifier, e.g. An article title followed by empty string instead of the [J/OL]. This option is also for author year style.
+
+        `\usepackage[backend=biber,style=gb7714-2015,gbtype=true]{biblatex}`
 
 * for author year style
 
@@ -183,6 +193,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 
 ### date of change: 2018-01-20 to version v1.0j
 * Changes to pkg code:
+	- "*.bbx": add an option `gbtype` to control the type and carrier identifier after title.
     - "*.bbx": change the version code switch mechanism.
     - "*.bbx": change the option align to `gbalign` for standardising option terminology.
     - "*.bbx": add an option `gbnamefmt` to control the letter case and format of author's name，and eliminate the comma in author names of the chinese references exported from cnki by `zotero`，these demand raised by liuxiaotao.

@@ -155,8 +155,12 @@ gb7714-2015样式增加了部分用于控制标签对齐、出版项缺省处理
 
   \item[gbnamefmt]=uppercase，lowercase，none，pinyin. \hfill default is uppercase
 
-  为姓名大小写控制增加的选项。默认选择gbnamefmt=uppercase，大小写要求符合GB/T 7714-2015 的要求。gbnamefmt=lowercase 时，大小写根据输入信息确定。gbnamefmt=none时，姓名的格式与biblatex标准样式一致。gbnamefmt=pinyin时，姓名的格式采用一种常用的中文拼音全拼方式，比如对于Zhao Yu Xin这个姓名拼音格式化为ZHAO Yu-xin。
+  为姓名大小写格式控制增加的选项。默认选择gbnamefmt=uppercase，大小写要求符合GB/T 7714-2015 的要求。gbnamefmt=lowercase 时，大小写根据输入信息确定。gbnamefmt=none时，姓名的格式与biblatex标准样式一致。gbnamefmt=pinyin时，姓名的格式采用一种常用的中文拼音全拼方式，比如对于Zhao Yu Xin这个姓名拼音格式化为ZHAO Yu-xin。
   测试结果见第\ref{sec:opt:namefmt}节。
+  
+  \item[gbtype]=true，false. \hfill default is true
+
+  为控制是否输出题名后面的文献类型和载体标识符而增加的选项。默认选择gbtype=true，根据GB/T 7714-2015 要求输出标识符，例如“在线的期刊析出文献题名[J/OL]”。gbtype=false 时，不输出标识符，例如“在线的期刊析出文献题名”。
 \end{description}
 
 
@@ -378,7 +382,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
     \pagescite{Peebles2001-100-100} \pagescite[][201-301]{Peebles2001-100-100}
 作者年制文中已有作者只需要年份和页码的情况，使用命令yearpagescite，比如:
     见赵耀东\yearpagescite[][205]{赵耀东1998--}和Simon\yearpagescite[][15]{Simon2001--}。
-    
+
 需要注意，\yearpagescite命令在输出年份的同时也输出页码，但有时有些参考文献格式不要求页码，此时可以用\yearcite命令，或者也可利用cite*和citeyear命令手动实现(如果要用超链接目前可以使用cite*)，比如:
     见赵耀东\yearcite{赵耀东1998--}
     见赵耀东(\cite*{赵耀东1998--})
@@ -1974,9 +1978,9 @@ texlive2017对应biblatex3.7;
     \toggletrue{iftlatest}
     \ifnumcomp{\numinteger}{=}{3}{
         \ifnumcomp{\numdigital}{<}{10}{\ifnumcomp{\numdigital}{>}{7}{\toggletrue{iftleight}\togglefalse{iftlatest}}{}}{}%>3.8 版本用iftleight=true表示
-        \ifnumcomp{\numdigital}{=}{7}{\toggletrue{iftlseven}\togglefalse{iftlatest}}{}%3.7版本用iftlseven=true表示
+        \ifnumcomp{\numdigital}{=}{7}{\toggletrue{iftlseven}\togglefalse{iftlatest}}{}%3.7 版本用iftlseven=true表示
         \ifnumcomp{\numdigital}{<}{7}{\ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftlsix}\togglefalse{iftlatest}}{}}{}%3.3-3.6 版本用iftlsix=true表示
-        \ifnumcomp{\numdigital}{<}{3}{\toggletrue{iftlfive}\togglefalse{iftlatest}}{}%3.0-3.2版本用iftlfive=true表示
+        \ifnumcomp{\numdigital}{<}{3}{\toggletrue{iftlfive}\togglefalse{iftlatest}}{}%3.0-3.2 版本用iftlfive=true表示
     }{\ifnumcomp{\numinteger}{>}{3}{
        \blx@warning@noline{%
        biblatex version is >= 4.x.\MessageBreak
@@ -2284,6 +2288,7 @@ texlive2017对应biblatex3.7;
 %============================
 \updateinfo[2018-01-20]{update to version 1.0j}\label{up:180120}
 \begin{enumerate}
+\item 增加gbtype选项用于控制是否输出题名后的标识符，见\ref{sec:added:opt} 节。
 \item 进一步修改了版本判断机制，以使最新版本的兼容性更强，见\ref{sec:blx:compatibility}节。
 \item 根据刘小涛的需求和建议，增加了gbnamefmt选项用于控制姓名的大小写和输出格式，同时根据zotero从cnki识别输出中文文献姓名中带逗号的情况做了兼容性处理，见\ref{sec:opt:namefmt}节。
 \item 为统一样式增加的选项将原来的align选项修改为gbalign，见\ref{sec:added:opt}节。
