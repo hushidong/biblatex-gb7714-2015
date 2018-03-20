@@ -110,7 +110,7 @@
     \newtoggle{bbx:gbpub}
     \DeclareBibliographyOption{gbpub}[true]{%
     %\settoggle{bbx:gbpub}{#1} %或采用下面这一句
-      \ifstrequal{##1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
+      \ifstrequal{#1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
     \ExecuteBibliographyOptions{gbpub}
 
     %增加一个处理佚名或noauthor的控制选项
