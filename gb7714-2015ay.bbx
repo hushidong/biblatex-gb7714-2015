@@ -113,11 +113,6 @@
       \ifstrequal{#1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
     \ExecuteBibliographyOptions{gbpub}
 
-    %增加一个处理佚名或noauthor的控制选项
-    \DeclareBibliographyOption{gbnoauthor}[true]{%
-      \ifstrequal{##1}{false}{}{\dealnoathor}}
-    %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能用宏包加载时给出的选项。
-
 
 
 \defversion{3.0}{opt}{
@@ -135,6 +130,11 @@
     %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
     %因为在作者年制中，不需要使用，这里也增加，为了与顺序年制的兼容性考虑。
     \DeclareBibliographyOption{gbalign}[right]{}%
+
+    %增加一个处理佚名或noauthor的控制选项
+    \DeclareBibliographyOption{gbnoauthor}[true]{%
+      \ifstrequal{##1}{false}{}{\dealnoathor}}
+    %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能用宏包加载时给出的选项。
 
     \ExecuteBibliographyOptions{
       useprefix = true,  %名字的信息包括前缀
@@ -165,6 +165,11 @@
     %因为在作者年制中，不需要使用，这里也增加，为了与顺序编码制的兼容性考虑。
     \DeclareBibliographyOption[string]{gbalign}[right]{}%
 
+    %增加一个处理佚名或noauthor的控制选项
+    \DeclareBibliographyOption{gbnoauthor}[true]{%
+      \ifstrequal{##1}{false}{}{\dealnoathor}}
+    %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能用宏包加载时给出的选项。
+
     \ExecuteBibliographyOptions{
       useprefix = true,  %名字的信息包括前缀
       %firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
@@ -194,6 +199,11 @@
     %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
     %因为在作者年制中，不需要使用，这里也增加，为了与顺序编码制的兼容性考虑。
     \DeclareBibliographyOption[string]{gbalign}[right]{}%
+
+    %增加一个处理佚名或noauthor的控制选项
+    \DeclareBibliographyOption{gbnoauthor}[true]{%
+      \ifstrequal{##1}{false}{}{\dealnoathor}}
+    %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能用宏包加载时给出的选项。
 
     \ExecuteBibliographyOptions{
       useprefix = true,  %名字的信息包括前缀
@@ -226,6 +236,11 @@
     %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
     %因为在作者年制中，不需要使用，这里也增加，为了与顺序编码制的兼容性考虑。
     \DeclareBibliographyOption[string]{gbalign}[right]{}%
+
+    %增加一个处理佚名或noauthor的控制选项
+    \DeclareBibliographyOption{gbnoauthor}[true]{%
+      \ifstrequal{##1}{false}{}{\dealnoathor}}
+    %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能用宏包加载时给出的选项。
 
     \ExecuteBibliographyOptions{
       useprefix = true,  %名字的信息包括前缀
@@ -1289,7 +1304,7 @@ backrefpages     = {引用页:},
   }
     {\usebibmacro{bbx:dashcheck}
        {%\bibnamedash %去掉相同作者用横线代替的处理
-       \printnames{author}%
+       \printnames{author}\setunit{\printdelim{nameyeardelim}}%把标点也带上
        }
        {\usebibmacro{bbx:savehash}%
         \printnames{author}%
