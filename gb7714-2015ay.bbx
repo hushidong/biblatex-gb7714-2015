@@ -640,6 +640,7 @@ backrefpages     = {引用页:},
 %=====================================================================
 %设置单元或块等的标点
 %=====================================================================
+\renewrobustcmd*{\bibinithyphendelim}{\addhighpenspace}%用于处理姓名中名部分存在-的情况，比如ZHANG Yu-xin
 \renewcommand*{\subtitlepunct}{\addcolon\space} %修改标题和其它标题信息间的标点%来源biblatex.def
 %双语言或多语言的参考文献，可以参考3.11.5 Entry Sets，4.11.1 Entry Sets
 %这里调整一下两种语言参考文献的间隔,%源来自biblatex.def
@@ -832,6 +833,7 @@ backrefpages     = {引用页:},
 
 \defversion{3.0}{namec}{
     \renewrobustcmd*{\bibinitperiod}{\adddot}
+    \renewrobustcmd*{\bibinithyphendelim}{\adddot\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
     \renewcommand*{\revsdnamepunct}{\addcomma}
     %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
     \renewbibmacro*{name:last-first}[4]{%
@@ -861,6 +863,7 @@ backrefpages     = {引用页:},
 
 \defversion{3.4}{namec}{
     \renewrobustcmd*{\bibinitperiod}{\adddot}
+    \renewrobustcmd*{\bibinithyphendelim}{\adddot\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
     \renewcommand*{\revsdnamepunct}{\addcomma}
     \renewbibmacro*{name:given-family}[4]{%
       \usebibmacro{name:delim}{##2##3##1}%
