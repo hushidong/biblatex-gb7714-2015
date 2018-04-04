@@ -64,6 +64,13 @@ A demonstration database is provided to show how to format input for the style. 
 
 please see the file 'biblatex-gb7714-2015.pdf' for further information!
 
+
+## applications
+
+* [SJTUThesis(上海交通大学学位论文模板)](https://github.com/sjtug/SJTUThesis)
+* [ECNU-Undergraduate-LaTeX(华东师范大学本科毕业论文模板 )](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)
+
+
 ---------------------------------------------------------
 
 ## tutorial/使用入门
