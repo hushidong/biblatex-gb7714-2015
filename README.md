@@ -3,7 +3,7 @@
 
 # biblatex-gb7714-2015: a biblatex style  package
 ---------------------------------------------------------
-[使用入门](#jumptotutorial)  [说明文档](biblatex-gb7714-2015.pdf)  [WIKI](https://github.com/hushidong/biblatex-gb7714-2015/wiki) 
+[使用入门](#jumptotutorial)  |==| [说明文档](biblatex-gb7714-2015.pdf) |==| [WIKI](https://github.com/hushidong/biblatex-gb7714-2015/wiki) 
     
 
 ## Introduction
@@ -85,7 +85,8 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 
 ---------------------------------------------------------
 
-## <span id="jumptotutorial">Tutorial/使用入门</span>
+## Tutorial/<span id="jumptotutorial">使用入门</span>
+
 
 ### 1. Tex source file/tex文档一般结构
 
