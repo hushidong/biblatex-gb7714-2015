@@ -3,8 +3,10 @@
 
 # biblatex-gb7714-2015: a biblatex style  package
 ---------------------------------------------------------
+[使用入门](#jumptotutorial)  [说明文档](biblatex-gb7714-2015.pdf)  [WIKI](https://github.com/hushidong/biblatex-gb7714-2015/wiki) 
+    
 
-## introduction
+## Introduction
 
 Maintainer: huzhenzhen <hzzmail@163.com>
 
@@ -17,7 +19,7 @@ A biblatex implementation of the `GB/T 7714-2015` bibliography style for Chinese
 
 The biblatex-gb7714-2015 package provides an implementation of the bibliography style of the `GB/T 7714-2015` bibliography style. This implementation follows `GB/T 7714-2015` standard, and can be used simply by loading biblatex with the appropriate option
 
-## usage
+## Usage
 * for numerical sequence style
 
     `\usepackage[backend=biber,style=gb7714-2015]{biblatex}`
@@ -31,7 +33,7 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
         `\usepackage[backend=biber,style=gb7714-2015,gbpub=true]{biblatex}`
         
     - add an option `gbnamefmt` for dealing name's letter case(this option is also for author year style):
-	
+
         `gbnamefmt = uppercase` for gb7714 style 
 		
         `gbnamefmt = lowercase` for gb7714 style with no case switch of names 
@@ -65,13 +67,13 @@ A demonstration database is provided to show how to format input for the style. 
 please see the file 'biblatex-gb7714-2015.pdf' for further information!
 
 
-## applications
+## Applications
 
 * [SJTUThesis(上海交通大学学位论文模板)](https://github.com/sjtug/SJTUThesis)
 * [ECNU-Undergraduate-LaTeX(华东师范大学本科毕业论文模板 )](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)
 
 
-## related links
+## Related Links
 
 * [biblatex](https://github.com/plk/biblatex)
 * [beamer](https://github.com/josephwright/beamer)
@@ -83,7 +85,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 
 ---------------------------------------------------------
 
-## tutorial/使用入门
+## <span id="jumptotutorial">Tutorial/使用入门</span>
 
 ### 1. Tex source file/tex文档一般结构
 
@@ -197,7 +199,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 
 ---------------------------------------------------------
 
-## need to do:
+## Need to do:
     * special characters in all fields?
     * citestyle is gb7714-2015ay, bibstyle is gb7714-2015?
     * entry without author: the delimiter between title and year?
@@ -206,7 +208,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 
 ---------------------------------------------------------
 
-## update history:
+## Update history:
 
 [update latest](example/updatehistory.tex)
 
