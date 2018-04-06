@@ -208,7 +208,8 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 
 ## update history:
 
-[update latest](file:///example/updatehistory.tex)
-[update v1.0-v1.0j](file:///example/updatehistoryold.md)
+[update latest](example/updatehistory.tex)
+
+[update v1.0-v1.0j](example/updatehistoryold.md)
 
 
