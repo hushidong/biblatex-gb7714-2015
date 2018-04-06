@@ -6,17 +6,25 @@
 %% history:
 %% 2016/05/20 v1.0  2016/10/23 v1.0a 2016/11/11 v1.0b
 %% 2016/11/14 v1.0c 2016/11/24 v1.0d 2016/12/07 v1.0e
-%% 2017/02/26 v1.0g 2017/04/11 v1.0h
-%% 2017/11/21 v1.0i 2018/01/20 v1.0j
+%% 2017/02/26 v1.0g 2017/04/11 v1.0h 2017/11/21 v1.0i
+%% 2018/01/20 v1.0j 2018/04/03 v1.0k
 %% E-mail: hzzmail@163.com
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\ProvidesFile{gb7714-2015ay.cbx}[2018/01/20 v1.0j biblatex citation style]
+\ProvidesFile{gb7714-2015ay.cbx}[2018/04/03 v1.0k biblatex citation style]
 
+%
+%   加载标准样式
+%
 \RequireCitationStyle{authoryear}
 %\RequireCitationStyle{numeric}
 
+
+%
+%   选项设置，针对3.7以下版本
+%
+%   原理方法:labeldate用于控制是否给引用标签提供日期的成分
 \defversion{3.4}{cbxopt}{
     \ExecuteBibliographyOptions{
       %autocite  = superscript ,
@@ -30,6 +38,10 @@
     }
 }
 
+%
+%   选项设置，针对3.7以上版本
+%
+%   原理方法:labeldateparts用于控制是否给引用标签提供日期的成分
 \defversion{3.7}{cbxopt}{
     \ExecuteBibliographyOptions{
       %autocite  = superscript ,
@@ -44,20 +56,28 @@
     }
 }
 
-\iftoggle{iftlfive}{\switchversion{3.4}{cbxopt}}{}%biblatex<=3.2
-\iftoggle{iftlsix}{\switchversion{3.4}{cbxopt}}{}%3.3<=biblatex<=3.6
-\iftoggle{iftlseven}{\switchversion{3.7}{cbxopt}}{}%biblatex=3.7
-\iftoggle{iftleight}{\switchversion{3.7}{cbxopt}}{}%3.8<=biblatex<=3.9
-\iftoggle{iftlatest}{\switchversion{3.7}{cbxopt}}{}%biblatex最新3.10
+\ifboolexpr{%选择选项设置
+test {\iftoggle{iftlfive}}%biblatex<=3.2
+or
+test {\iftoggle{iftlsix}}%3.3<=biblatex<=3.6
+}{\switchversion{3.4}{cbxopt}}{\switchversion{3.7}{cbxopt}}%else: biblatex>=3.7
 
-%当条目是set时，所有的信息都没有于是利用entrykey来给出标签，那么就要set的条目关键字是需要的字符串，注意字符串中间不能有空格
+
+%
+%   重定义cite:label，针对biblatex3.8以上版本set条目集的标注(引用)标签
+%
+%   原理方法:当条目是set时，v3.8以上版本，都没有有用的信息(区别于3.7以下版本set复制第一个成员的信息)，
+%   于是利用entrykey来给出标签，那么就要set的条目关键字是需要的字符串，注意字符串中间不能有空格
 \renewbibmacro*{cite:label}{%
   \iffieldundef{label}%
     {\iffieldundef{labeltitle}{\printtext[bibhyperref]{\printfield{entrykey}}}%entrykey
     {\printtext[bibhyperref]{\printfield[citetitle]{labeltitle}}}}%
     {\printtext[bibhyperref]{\printfield{label}}}}
 
-%\DeclareCiteCommand{\cite}[\mkbibparens]{⟨precode⟩}{⟨loopcode⟩}{⟨sepcode⟩}{⟨postcode⟩}
+%
+%   重定义cite命令
+%
+%   方法:\DeclareCiteCommand{\cite}[\mkbibparens]{⟨precode⟩}{⟨loopcode⟩}{⟨sepcode⟩}{⟨postcode⟩}
 \DeclareCiteCommand{\cite}[\mkbibparens]
   {\usebibmacro{prenote}}
   {\usebibmacro{citeindex}%
@@ -65,6 +85,9 @@
   {\multicitedelim}
   {\usebibmacro{postnote}}
 
+%
+%   重定义parencite命令
+%
 \DeclareCiteCommand{\parencite}[\mkbibparens]
   {\usebibmacro{prenote}}
   {\usebibmacro{citeindex}%
@@ -72,14 +95,19 @@
   {\multicitedelim}
   {\usebibmacro{postnote}}
 
+
+%
+%   新定义pagescite命令，以满足标签带页码的国标要求
+%
+%   原理方法:
+%   1.修改postnote的输出格式
 \newbibmacro*{postpages}{%
   \iffieldundef{postnote}
     {\printfield{pages}}
     {\printfield{postnote}}}
-
-%修改括号外带页码的引用格式
+%   2.新增页码输出宏(括号外的页码格式)
 \DeclareFieldFormat{postnote}{#1}
-
+%   3.新增\pagescite引用命令
 \DeclareCiteCommand{\pagescite}
   {\printtext{(}\usebibmacro{prenote}}
   {\usebibmacro{citeindex}%
@@ -87,14 +115,21 @@
   {\multicitedelim}
   {\printtext{)}\textsuperscript{\usebibmacro{postpages}}}
 
-%增加一个命令yearpagescite用于当文中作者已经存在，需要页码和年份的情况。
-%参考来源，biblatex.DEF,其中\DeclareCiteCommand*{\citeyear}命令
+%
+%   定义yearpagescite，用于当文中作者已经存在，需要页码和年份的情况
+%
+%   原理:增加一个命令yearpagescite
+%   参考biblatex.DEF中的\DeclareCiteCommand*{\citeyear}命令
 \DeclareCiteCommand{\yearpagescite}
   {\printtext{(}\usebibmacro{prenote}}
   {\printfield{year}\printfield{extrayear}}
   {\multicitedelim}
   {\printtext{)}\textsuperscript{\usebibmacro{postpages}}}
 
+%
+%   定义yearcite，用于当文中作者已经存在，仅需要年份的情况
+%
+%   原理:增加一个命令yearcite
 \DeclareCiteCommand{\yearcite}%仅输出年份，不要页码
   {\printtext{(}\usebibmacro{prenote}}
   {\printfield{year}\printfield{extrayear}}

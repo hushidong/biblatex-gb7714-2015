@@ -9,7 +9,7 @@ call makeclear
 
 ::pause
 
-echo biblatex-gb7714-2015.tex >> makecompilerec.dat
+echo biblatex-gb7714-2015.tex >> example/makecompilerec.dat
 
 xelatex.exe --synctex=-1 biblatex-gb7714-2015.tex
 

@@ -6,25 +6,34 @@
 %% history:
 %% 2016/05/20 v1.0  2016/10/23 v1.0a 2016/11/11 v1.0b
 %% 2016/11/14 v1.0c 2016/11/24 v1.0d 2016/12/07 v1.0e
-%% 2017/02/26 v1.0g 2017/04/11 v1.0h
-%% 2017/11/21 v1.0i 2018/01/20 v1.0j
+%% 2017/02/26 v1.0g 2017/04/11 v1.0h 2017/11/21 v1.0i
+%% 2018/01/20 v1.0j 2018/04/03 v1.0k
 %% E-mail: hzzmail@163.com
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\ProvidesFile{gb7714-2015.cbx}[2018/01/20 v1.0j biblatex citation style]
+\ProvidesFile{gb7714-2015.cbx}[2018/04/03 v1.0k biblatex citation style]
 
+%
+%   加载标准样式
+%
 \RequireCitationStyle{numeric-comp}
 %\RequireCitationStyle{numeric}
 
+
+%
+%   选项设置
+%
 \ExecuteBibliographyOptions{
   autocite  = superscript ,
   autopunct = true       ,
   sorting   = none        ,
 }
 
-%\DeclareCiteCommand{\cite}[\mkbibparens]{⟨precode⟩}{⟨loopcode⟩}{⟨sepcode⟩}{⟨postcode⟩}
 %
+%   重定义cite命令
+%
+%   方法:\DeclareCiteCommand{\cite}[\mkbibparens]{⟨precode⟩}{⟨loopcode⟩}{⟨sepcode⟩}{⟨postcode⟩}
 \DeclareCiteCommand{\cite}[\mkbibsuperscript]
   {[\usebibmacro{cite:init}%直接添加方括号
    \usebibmacro{prenote}}
@@ -34,23 +43,19 @@
   {\usebibmacro{cite:dump}%
    \usebibmacro{postnote}]}
 
-%\DeclareCiteCommand{\parencite}[\mkbibsuperscript]%\mkbibbrackets,仍然用上标
-%  {[\usebibmacro{cite:init}%
-%   \usebibmacro{prenote}}
-%  {\usebibmacro{citeindex}%
-%   \usebibmacro{cite:comp}}
-%  {}
-%  {\usebibmacro{cite:dump}%
-%   \usebibmacro{postnote}]}
 
+%
+%   新定义pagescite命令，以满足标签带页码的国标要求
+%
+%   原理方法:
+%   1.修改postnote的输出格式
+\DeclareFieldFormat{postnote}{#1}
+%   2.新增页码输出宏
 \newbibmacro*{postpages}{%
   \iffieldundef{postnote}
     {\printfield{pages}}
     {\printfield{postnote}}}
-
-%修改括号外带页码的引用格式
-\DeclareFieldFormat{postnote}{#1}
-
+%   3.新增\pagescite引用命令
 \DeclareCiteCommand{\pagescite}[\mkbibsuperscript]%\mkbibbrackets,仍然用上标
   {[\usebibmacro{cite:init}%
    \usebibmacro{prenote}%
@@ -61,7 +66,9 @@
   {\usebibmacro{cite:dump}]%
    \usebibmacro{postpages}}
 
-%增加一个命令yearpagescite为与ay样式兼容，命令等同于\pagescite
+%
+%   定义yearpagescite，为与ay样式兼容，等同于\pagescite
+%
 \DeclareCiteCommand{\yearpagescite}[\mkbibsuperscript]%\mkbibbrackets,仍然用上标
   {[\usebibmacro{cite:init}%
    \usebibmacro{prenote}%
@@ -72,7 +79,10 @@
   {\usebibmacro{cite:dump}]%
    \usebibmacro{postpages}}
 
-%不要页码
+%
+%   定义\yearcite命令，为与ay样式兼容，且提供不输出页码的标签格式，
+%
+%   原理方法:等同于\pagescite，但不要页码
 \DeclareCiteCommand{\yearcite}[\mkbibsuperscript]%\mkbibbrackets,仍然用上标
   {[\usebibmacro{cite:init}%
    \usebibmacro{prenote}%

@@ -14,9 +14,13 @@ if exist *.pdf (
 
 ::pause
 
-call makeclear
+cd example
 
 call makefileeg
+
+cd ..
+
+call makeclear
 
 call makefile
 

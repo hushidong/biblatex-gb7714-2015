@@ -1,0 +1,26 @@
+
+%更新历史仅给出更新针对的问题，相应的处理代码和解释不在此给出，详见提示对应的说明文档内容
+%============================
+\updateinfo[2018-04-03]{date of update: 2018-04-03 to version v1.0k}\label{up:180403}
+\begin{enumerate}
+\item 修正了gbnamefmt中的一些小错误。
+
+correct some flaws for gbnamefmt option.
+
+\item 修改了代码用于兼容3.11版本
+
+change the separator before related block for v3.11.
+
+\item 页码范围的间隔符从en dash改为hyphen
+
+change the pages range separator from en dash to hyphen.
+	
+\item 修正了v3.7以上版本中专利文献中公告日期后多出点的问题，该bug是由于输入公告日期没有使用printtext导致异步标点机制破坏所致。
+
+correct a bug of newsdate in patent for biblatex >v3.7, which added an additional dot before urldate caused by broken asynchronous punctuation .
+
+\item 修正了texlive2017以上版本中beamer类中标题后面多出点的问题，由于beamer会对bibmacro\{title\}做patch导致其输出不同于普通文档类，该bug是由于beamer升级后patch的内容发生变化导致。
+
+correct a bug of punctuation after title with beamer for >texlive2017, the bug is caused by the update of beamer.
+\end{enumerate}
+

@@ -1,0 +1,37 @@
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage{geometry}
+\geometry{paperwidth=21cm,paperheight=20cm,top=1.5cm, bottom=1.5cm, left=1cm,right=1cm}
+\usepackage{xcolor}
+\usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=blue]{hyperref}
+\usepackage[backend=biber,style=gb7714-2015,gbalign=gb7714-2015,gbnamefmt=pinyin]{biblatex}
+\addbibresource[location=local]{example.bib}
+%\renewcommand{\bibfont}{\zihao{5}}
+%\setlength{\bibitemsep}{0ex}
+%\setlength{\bibnamesep}{0ex}
+%\setlength{\bibinitsep}{0ex}
+
+\iftoggle{iftleight}{\defdoublelangentry{易仕和2013--}{Yi2013--}}{}
+\iftoggle{iftlnine}{\defdoublelangentry{易仕和2013--}{Yi2013--}}{}
+\iftoggle{iftlatest}{\defdoublelangentry{易仕和2013--}{Yi2013--}}{}
+
+\begin{document}
+编译信息:biblatex v\versionofbiblatex;gb7714-2015*.* version number \versionofgbtstyle.
+
+\section{顺序编码制标注与著录样式}
+
+\defbibentryset{bilangzhang}{张敏莉2007-500-503,Zhang2007-500-503}
+%\defbibentryset{bilangyi}{易仕和2013--,Yi2013--}
+双语文献:set动态方法\cite{bilangzhang};
+\iftoggle{iftleight}{related动态方法\cite{易仕和2013--}}{}
+\iftoggle{iftlnine}{related动态方法\cite{易仕和2013--}}{}
+\iftoggle{iftlatest}{related动态方法\cite{易仕和2013--}}{}
+
+文献\cite{王夫之1845--}\cite{陈建军2010-93-93};
+文献\parencite{张田勤2000--}\parencite{吴云芳2003--};
+文献\pagescite[][300]{汤万金2013-09-30--}\pagescite[][100-107]{张凯军2012-04-05--};
+文献\yearpagescite{萧钰2001--}\yearpagescite{国家环境保护局科技标准司1996-2-3};
+其它\cite{Calkin2011-8-9,CRAWFPRD1995--,Babu2014--,CALMS1965--,DESMARAIS1992-605-609}
+
+\printbibliography[heading=subbibintoc,title=【参考文献】]
+\end{document} 

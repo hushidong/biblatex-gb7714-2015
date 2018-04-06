@@ -6,15 +6,19 @@
 %% history:
 %% 2016/05/20 v1.0  2016/10/23 v1.0a 2016/11/11 v1.0b
 %% 2016/11/14 v1.0c 2016/11/24 v1.0d 2016/12/07 v1.0e
-%% 2017/02/26 v1.0g 2017/04/11 v1.0h
-%% 2017/11/21 v1.0i 2018/01/20 v1.0j
+%% 2017/02/26 v1.0g 2017/04/11 v1.0h 2017/11/21 v1.0i
+%% 2018/01/20 v1.0j 2018/04/03 v1.0k
 %% E-mail: hzzmail@163.com
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\ProvidesFile{gb7714-2015ay.bbx}[2018/01/20 v1.0j biblatex bibliography style]
+%
+%   版本和时间信息
+%
+\ProvidesFile{gb7714-2015ay.bbx}[2018/04/03 v1.0k biblatex bibliography style]
+\def\versionofgbtstyle{2018/04/03 v1.0k}    %版本和修改时间信息
+\def\versionofbiblatex{\abx@version}
 
-%=====================================================================
 %=====================================================================
 %加载标准样式
 %=====================================================================
@@ -23,14 +27,19 @@
 
 
 %=====================================================================
-%=====================================================================
 %新增功能函数
 %=====================================================================
+    %
+    %   biblatex版本判断
+    %   20180405，v1.0k，为兼容biblatexv3.11增加toggle:iftlnine，HU zhenzhen
+    %
+    %   原理方法:当版本继续更新时，增加一个新的toggle用以处理新的旧版，最新版本永远用iftlatest
     \providetoggle{iftlfive}%用于处理biblatex3.2之前的版本
     \providetoggle{iftlsix}%用于处理biblatex3.3开始改变的新的姓名机制后版本
     \providetoggle{iftlseven}%用于处理biblatex3.7的兼容性
     \providetoggle{iftleight}%用于处理biblatex3.8到3.9的兼容性
-    \providetoggle{iftlatest}%用于最新版biblatex，目前是biblatex3.10，20180117
+    \providetoggle{iftlnine}%用于处理biblatex10的兼容性
+    \providetoggle{iftlatest}%用于最新版biblatex，目前是biblatex3.11，20180402
     \StrBefore{\abx@version}{.}[\numinteger]
     \StrBehind{\abx@version}{.}[\numdigital]
     \IfInteger{\numdigital}{}{\StrGobbleRight{\numdigital}{1}[\numdigital]}
@@ -38,8 +47,10 @@
     \togglefalse{iftlsix}
     \togglefalse{iftlseven}
     \togglefalse{iftleight}
+    \togglefalse{iftlnine}
     \toggletrue{iftlatest}
     \ifnumcomp{\numinteger}{=}{3}{
+        \ifnumcomp{\numdigital}{=}{10}{\toggletrue{iftlnine}\togglefalse{iftlatest}}{}%3.10版本
         \ifnumcomp{\numdigital}{<}{10}{\ifnumcomp{\numdigital}{>}{7}{\toggletrue{iftleight}\togglefalse{iftlatest}}{}}{}%>3.8版本用iftleight=true表示
         \ifnumcomp{\numdigital}{=}{7}{\toggletrue{iftlseven}\togglefalse{iftlatest}}{}%3.7版本用iftlseven=true表示
         \ifnumcomp{\numdigital}{<}{7}{\ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftlsix}\togglefalse{iftlatest}}{}}{}%3.3-3.6版本用iftlsix=true表示
@@ -56,20 +67,22 @@
     \newcommand\defversion[2]{\csdef{codeversion#1#2}}%定义不同版本的命令
     \newcommand\switchversion[2]{\csuse{codeversion#1#2}}%使用不同版本的命令
 
-%定义判断中文字符的函数，用于判断作者等信息是否由中文字符构成
-%2E00-2E7F 追加标点
-%2E80-2EFF cjk部首补充
-%2FF0-2FFF 表意文字描述符
-%3000-303F cjk符号和标点
-%3300-33FF cjk兼容
-%3400-4DBF cjk统一表意符号扩展
-%4E00-9FBF cjk统一表意符号
-%中文范围4E00-9FA5
+    %
+    %   判断CJK字符的函数，用于判断作者等信息是否由中文字符构成
+    %
+    %   原理方法:
+    %    2E00-2E7F 追加标点
+    %    2E80-2EFF cjk部首补充
+    %    2FF0-2FFF 表意文字描述符
+    %    3000-303F cjk符号和标点
+    %    3300-33FF cjk兼容
+    %    3400-4DBF cjk统一表意符号扩展
+    %    4E00-9FBF cjk统一表意符号
+    %    中文范围4E00-9FA5
 \providetoggle{ifCJKforgbt}
 \def\testCJKfirstchar#1#2&{%#1#2&
 \ifnumgreater{`#1}{"2E7F}{\toggletrue{ifCJKforgbt}}{\togglefalse{ifCJKforgbt}}%
 }%
-
 %利用edef展开或xstring抽取第一个字符判断
 %现在采用xstring方法，避免抽取的是编组符号
 \def\testCJKfirst#1{%
@@ -79,34 +92,45 @@
 \StrChar{#1}{1}[\tempa]%
 \expandafter\testCJKfirstchar\tempa&}
 
-%用于解析连续出版物，2个卷期的情况
-%范围起止间隔符号还是用-，而不是与date相同的/，因为有合期期刊的问题，需要用到/符号
-\newcommand{\multivolparser}[1]{%
-    \IfSubStr{#1}{-}%
-        {\StrBefore{#1}{-}[\multivolfirst]\StrBehind{#1}{-}[\multivolsecond]}%
-        {\def\multivolfirst{#1}\def\multivolsecond{}}%
-}
-\newcommand{\multinumberparser}[1]{%
-    \IfSubStr{#1}{-}%
-        {\StrBefore{#1}{-}[\multinumberfirst]\StrBehind{#1}{-}[\multinumbersecond]}%
-        {\def\multinumberfirst{#1}\def\multinumbersecond{}}%
-}
+
+    %
+    %   2个卷的解析函数，用于连续出版物
+    %
+    %   原理方法: 范围起止间隔符号还是用-，而不是与date相同的/，因为有合期期刊的问题，需要用到/符号
+    \newcommand{\multivolparser}[1]{%
+        \IfSubStr{#1}{-}%
+            {\StrBefore{#1}{-}[\multivolfirst]\StrBehind{#1}{-}[\multivolsecond]}%
+            {\def\multivolfirst{#1}\def\multivolsecond{}}%
+    }
+
+    %
+    %   2个期的解析函数，用于连续出版物
+    %
+    \newcommand{\multinumberparser}[1]{%
+        \IfSubStr{#1}{-}%
+            {\StrBefore{#1}{-}[\multinumberfirst]\StrBehind{#1}{-}[\multinumbersecond]}%
+            {\def\multinumberfirst{#1}\def\multinumbersecond{}}%
+    }
 
 %=====================================================================
+%   设置宏包选项
 %=====================================================================
-%设置宏包选项
-%=====================================================================
-%增加各biblatex版本兼容的选项
-    %对于biblatex3.4以上版本DeclareBibliographyOption命令
-    %中的[datatype]如果是boolean也是可以省略的。
-    %增加一个控制是否输出文献类型和载体标识的选项
+    %
+    %   增加一个控制是否输出文献类型和载体标识的选项
+    %
+    %   原理方法:
+    %   对于biblatex3.4以上版本DeclareBibliographyOption命令中的[datatype]如果是boolean，那么是可以省略的
+    %   所以用老版本的不用[datatype]的命令可以兼容所有biblatex版本
     \newtoggle{bbx:gbtype}
     %\DeclareBibliographyOption[boolean]{gbtype}[true]{%biblatex高版本
     \DeclareBibliographyOption{gbtype}[true]{%biblatex低版本
       \settoggle{bbx:gbtype}{#1}}
     \ExecuteBibliographyOptions{gbtype}
 
-    %增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
+
+    %
+    %   增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
+    %
     \newtoggle{bbx:gbpub}
     \DeclareBibliographyOption{gbpub}[true]{%
     %\settoggle{bbx:gbpub}{#1} %或采用下面这一句
@@ -114,11 +138,13 @@
     \ExecuteBibliographyOptions{gbpub}
 
 
-
+%
+%   针对biblatex<3.3版本的选项设置，比如texlive2015中的3.0版
+%
 \defversion{3.0}{opt}{
-    %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
-
-    %增加姓名大小写格式处理选项
+    %
+    %   增加姓名大小写格式处理选项
+    %
     \DeclareBibliographyOption{gbnamefmt}[uppercase]{%
         %\ifstrequal{##1}{gbuppercase}{}{}%
         \ifstrequal{##1}{lowercase}{\execgblowercase}{}%
@@ -127,7 +153,9 @@
     }
     %\ExecuteBibliographyOptions{gbnamefmt}
 
-    %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
+    %
+    %   增加标签对齐选项
+    %
     %因为在作者年制中，不需要使用，这里也增加，为了与顺序年制的兼容性考虑。
     \DeclareBibliographyOption{gbalign}[right]{}%
 
@@ -136,6 +164,9 @@
       \ifstrequal{##1}{false}{}{\dealnoathor}}
     %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能用宏包加载时给出的选项。
 
+    %
+    %   选项设置
+    %
     \ExecuteBibliographyOptions{
       useprefix = true,  %名字的信息包括前缀
       firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
@@ -148,11 +179,13 @@
     }
 }
 
+%
+%   针对3.3<=biblatex<3.5版本的选项设置，比如texlive2016中的3.4版
+%
 \defversion{3.4}{opt}{
-    %Alter settings that carry through from biblatex
-    %biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
-
-    %增加姓名大小写格式处理选项
+    %
+    %   增加姓名大小写格式处理选项
+    %
     \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
         %\ifstrequal{##1}{gbuppercase}{}{}%
         \ifstrequal{##1}{lowercase}{\execgblowercase}{}%
@@ -161,7 +194,10 @@
     }
     %\ExecuteBibliographyOptions{gbnamefmt}
 
-    %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
+    %
+    %   增加标签对齐选项
+    %
+
     %因为在作者年制中，不需要使用，这里也增加，为了与顺序编码制的兼容性考虑。
     \DeclareBibliographyOption[string]{gbalign}[right]{}%
 
@@ -170,6 +206,9 @@
       \ifstrequal{##1}{false}{}{\dealnoathor}}
     %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能用宏包加载时给出的选项。
 
+    %
+    %   选项设置
+    %
     \ExecuteBibliographyOptions{
       useprefix = true,  %名字的信息包括前缀
       %firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
@@ -183,11 +222,13 @@
     }
 }
 
+%
+%   针对3.7<=biblatex<=3.9版本的选项设置，比如texlive2017中的3.7版
+%
 \defversion{3.7}{opt}{
-    %Alter settings that carry through from biblatex
-    %biblatex3.7版后(比如texlive2017)的使用方式
-
-    %增加姓名大小写格式处理选项
+    %
+    %   增加姓名大小写格式处理选项
+    %
     \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
         %\ifstrequal{##1}{gbuppercase}{}{}%
         \ifstrequal{##1}{lowercase}{\execgblowercase}{}%
@@ -196,7 +237,9 @@
     }
     %\ExecuteBibliographyOptions{gbnamefmt}
 
-    %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
+    %
+    %   增加标签对齐选项
+    %
     %因为在作者年制中，不需要使用，这里也增加，为了与顺序编码制的兼容性考虑。
     \DeclareBibliographyOption[string]{gbalign}[right]{}%
 
@@ -205,6 +248,9 @@
       \ifstrequal{##1}{false}{}{\dealnoathor}}
     %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能用宏包加载时给出的选项。
 
+    %
+    %   选项设置
+    %
     \ExecuteBibliographyOptions{
       useprefix = true,  %名字的信息包括前缀
       %firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
@@ -220,11 +266,13 @@
     }
 }
 
-\defversion{3.10}{opt}{
-    %Alter settings that carry through from biblatex
-    %biblatex3.10版后的使用方式
-
-    %增加姓名大小写格式处理选项
+%
+%   针对3.10<=biblatex版本的选项设置，比如texlive2018中的3.11版
+%
+    \defversion{3.10}{opt}{
+    %
+    %   增加姓名大小写格式处理选项
+    %
     \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
         %\ifstrequal{##1}{gbuppercase}{}{}%
         \ifstrequal{##1}{lowercase}{\execgblowercase}{}%
@@ -233,8 +281,10 @@
     }
     %\ExecuteBibliographyOptions{gbnamefmt}
 
-    %增加标签对齐选项，right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
-    %因为在作者年制中，不需要使用，这里也增加，为了与顺序编码制的兼容性考虑。
+    %
+    %   增加标签对齐选项
+    %
+    %   原理方法:因为在作者年制中，不需要使用，这里也增加，为了与顺序编码制的兼容性考虑。
     \DeclareBibliographyOption[string]{gbalign}[right]{}%
 
     %增加一个处理佚名或noauthor的控制选项
@@ -242,6 +292,9 @@
       \ifstrequal{##1}{false}{}{\dealnoathor}}
     %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能用宏包加载时给出的选项。
 
+    %
+    %   选项设置
+    %
     \ExecuteBibliographyOptions{
       useprefix = true,  %名字的信息包括前缀
       %firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
@@ -257,45 +310,60 @@
     }
 }
 
+%
+%   根据biblatex版本信息，选择选项设置
+%
+%   原理方法:如下这种选择机制能自动兼容更新的版本，但对于老版本
+%   必须要把情况列全。
 \iftoggle{iftlfive}{\switchversion{3.0}{opt}}{}%biblatex<=3.2
 \iftoggle{iftlsix}{\switchversion{3.4}{opt}}{}%3.3<=biblatex<=3.6
 \iftoggle{iftlseven}{\switchversion{3.7}{opt}}{}%biblatex=3.7
 \iftoggle{iftleight}{\switchversion{3.7}{opt}}{}%3.8<=biblatex<=3.9
-\iftoggle{iftlatest}{\switchversion{3.10}{opt}}{}%biblatex最新3.10
+\iftoggle{iftlnine}{\switchversion{3.10}{opt}}{}%biblatex=3.10
+\iftoggle{iftlatest}{\switchversion{3.10}{opt}}{}%biblatex最新3.11
 
 
-%=====================================================================
 %=====================================================================
 %设置本地化字符串
 %=====================================================================
-    %新建一个当地化字符串，用来记录“等”字符
+    %
+    %   新建当地化字符串，用来记录“等”字符
+    %
     \NewBibliographyString{andotherscn}
     \NewBibliographyString{noaddress}
     \NewBibliographyString{nopublisher}
 
-%直接利用当地化格式english进行修改一些中文的格式，具体可以修改哪些，参考english.lbx文件
-%当然也可以增加比如上面定义的andotherscn
-%注意:在lbx文件和bbx文件中定义本地字符串的不同语法，两个参数和一个参数的区别
+    %
+    %   修改一些当地化字符串
+    %
+    %   原理方法:直接利用当地化格式english修改出一些中文的格式，具体修改内容参考english.lbx文件
+    %   当然也可以增加比如上面定义的andotherscn
+    %   注意:在lbx文件和bbx文件中定义本地字符串的不同语法，两个参数和一个参数的区别
 \DefineBibliographyStrings{english}{
-bibliography     = {参考文献},
-references       = {参考文献},
-bytranslator= {\addcomma\ 译\adddot}, %将trans. by 改成 译
-and         = {\addcomma},%将第2和3人名见的and符号改成 逗号，用\finalnamedelim命令也可以定义，参见3.9.1节
-%andothers   = {et al.},        %将超过3个人名的省略，et al.改成为 等
-andotherscn   = {等},        %将超过3个人名的省略，et al.改成为 等
-noaddress = {[S.l.]},
-nopublisher = {[s.n.]},
-backrefpage      = {引用页:},
-backrefpages     = {引用页:},
+    bibliography     = {参考文献},
+    references       = {参考文献},
+    bytranslator= {\addcomma\ 译\adddot}, %将trans. by 改成 译
+    and         = {\addcomma},%将第2和3人名见的and符号改成 逗号，用\finalnamedelim命令也可以定义，参见3.9.1节
+    %andothers   = {et al.},        %将超过3个人名的省略，et al.改成为 等
+    andotherscn   = {等},        %将超过3个人名的省略，et al.改成为 等
+    noaddress = {[S.l.]},
+    nopublisher = {[s.n.]},
+    backrefpage      = {引用页:},
+    backrefpages     = {引用页:},
 }
 
 
 %=====================================================================
-%=====================================================================
 %动态数据修改，修改输入的源文件数据，用于中文判断等操作
 %=====================================================================
-%首先把作者和译者信息准确的记录到userf，usere中，用于后面判断是否是cjk字符。
-%注意\DeclareSourcemap命令只能出现一次
+%
+%   修改输入的参考文献数据，源文件层的操作
+%
+%   原理方法:增加文献标识符如[M],[J]等
+%   把作者和译者信息准确的记录到userf，usere中，用于后面判断是否是cjk字符。
+%   注意:这里用userf，usere而不是namee，namef，是因为只有把name列表转成域，才能有效读取姓名中的字符，
+%   如果用namee，namef，name信息会自动解析，所以就不能为cjk判断提供需要的信息
+%   注意\DeclareSourcemap命令对于biblatex3.11以下版本只能出现一次，3.11版开始支持多个
 \DeclareSourcemap{
 \maps[datatype=bibtex]{
         \map[overwrite]{%用于处理zotero从cnki导出中文文献姓名中存在逗号的情况
@@ -308,9 +376,9 @@ backrefpages     = {引用页:},
         \map{
             \pertype{periodical}
             \step[fieldset=usera, fieldvalue={J}]
-            \step[fieldsource=author] %有时会把author和editor混淆，这里处理后就没有这个问题
+            \step[fieldsource=author] %有时会把author和editor混淆，处理后避免该问题
             \step[fieldset=editor, origfieldval]
-            \step[fieldsource=publisher] %有时会把publisher和institution混淆，这里处理后就没有这个问题
+            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后避免该问题
             \step[fieldset=institution, origfieldval]
             }
         \map{
@@ -322,7 +390,7 @@ backrefpages     = {引用页:},
             \pertype{book}
             \pertype{inbook}
             \step[fieldset=usera, fieldvalue={M}]
-            \step[fieldsource=version] %有时会把version和edition混淆，这里处理后就没有这个问题，可以直接用version
+            \step[fieldsource=version] %有时会把version和edition混淆，处理后避免该问题，可以直接用version
             \step[fieldset=edition, origfieldval]
             }
         \map{
@@ -338,7 +406,7 @@ backrefpages     = {引用页:},
             \pertype{inproceedings}
             \pertype{conference}%兼容老的conference类型
             \step[fieldset=usera, fieldvalue={C}]
-            \step[fieldsource=institution] %有时会把publisher和institution混淆，这里处理后就没有这个问题
+            \step[fieldsource=institution] %有时会把publisher和institution混淆，处理后避免该问题
             \step[fieldset=publisher, origfieldval]
             \step[fieldsource=editor] %
             \step[fieldset=bookauthor, origfieldval]
@@ -355,7 +423,7 @@ backrefpages     = {引用页:},
             \pertype{report}
             \pertype{techreport}%兼容老的techreport类型
             \step[fieldset=usera, fieldvalue={R}]
-            \step[fieldsource=publisher] %有时会把publisher和institution混淆，这里处理后就没有这个问题
+            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后避免该问题
             \step[fieldset=institution, origfieldval]
             }
         \map{
@@ -373,7 +441,7 @@ backrefpages     = {引用页:},
         \map{
             \pertype{manual}
             \step[fieldset=usera, fieldvalue={A}]
-            \step[fieldsource=edition] %有时会把version和edition混淆，这里处理后就没有这个问题，可以直接用version
+            \step[fieldsource=edition] %有时会把version和edition混淆，处理后避免该问题，可以直接用version
             \step[fieldset=version, origfieldval]
             \step[fieldsource=organization]%因为用的report的驱动，所以需要institution域，也把organization转成它，这样增大兼容性
             \step[fieldset=institution, origfieldval]
@@ -412,7 +480,7 @@ backrefpages     = {引用页:},
             \step[fieldsource=entrykey]
             \step[fieldset=keywords, origfieldval]
             }
-        \map[overwrite]{%这里还必须有overwrite，怎么之前会觉得没有问题呢，可能是之前版本拷错了，还是之前是texlive2015变16后biber有了变化(2016-1207修改正确)
+        \map[overwrite]{%这里还必须有overwrite，注意不同版本存在差异，比如texlive2015变16后biber有变化(20161207修改正确)
             \step[fieldsource=note, final]%将note域信息复制给keywords，用于输出时容易区分标准和报纸
             \step[fieldset=keywords, fieldvalue={,}, append]
             \step[fieldset=keywords, origfieldval, append]
@@ -437,8 +505,8 @@ backrefpages     = {引用页:},
             \step[fieldset=userb,fieldvalue={en}]
             }
         %本来后面这些是放到DeclareStyleSourcemap中处理的，但是因为texlive2016的biblatex3.4不支持多个DeclareStyleSourcemap，
-        %但有处理特殊字符和处理gbnoauthor选项的需求，所以把这些提到这来，以后将这两个功能结合到一个DeclareStyleSourcemap时，
-        %不用复制如下段代码了。
+        %但又有处理特殊字符和处理gbnoauthor选项两个需求，但gbnoauthor需要用DeclareStyleSourcemap所以把这些提到这来，
+	    %以后将这两个功能结合到一个DeclareStyleSourcemap时，不用复制如下段代码了。
         \map{%尝试未定义数据模型的newspaper类型映射为article，newspaper完全是针对gb7714的新类型，在biblatex中完全没有定义
                  %但从实践看，并没有什么影响，映射过来就可以了。
             \step[typesource=newspaper, typetarget=article, final]
@@ -506,6 +574,10 @@ backrefpages     = {引用页:},
     }
 }
 
+%
+%   佚名/noauthor的处理
+%
+%   原理方法:利用样式层的动态数据修改实现
 \def\dealnoathor{
         \DeclareStyleSourcemap{
             \maps[datatype=bibtex]{
@@ -523,10 +595,11 @@ backrefpages     = {引用页:},
 
 
 %=====================================================================
+%   设置排序格式
 %=====================================================================
-%设置排序格式
-%=====================================================================
-%排序用降序或userb域
+%
+%   排序格式，用降序，及userb域，针对biblatex3.7及以下版本
+%
 \defversion{3.7}{sort}{%这是3.4版的，3.7版略有差异，但不大，后面有注释
     \DeclareSortingScheme{nyt}{
       \sort{
@@ -561,6 +634,9 @@ backrefpages     = {引用页:},
     }
 }
 
+%
+%   排序格式，用降序，及userb域，针对biblatex3.8及以上版本
+%
 \defversion{3.8}{sort}{
     \DeclareSortingTemplate{nyt}{
       \sort{
@@ -594,6 +670,9 @@ backrefpages     = {引用页:},
       }
     }
 
+    %
+    %   定义命令\defdoublelangentry，用于biblatex>v3.8版利用related实现双语文献的处理
+    %
     %为了实现v3.8以上版本的双语文献，采用related的方法代替set方法，因为set方法已经无法实现了，
     %因为set不再复制其第一个成员的信息。于是定义一个命令，用于动态的修改数据，即添加related域的信息
     %其中使用了\DeclareStyleSourcemap，但由于其只能出现在导言区中，因此\defdoublelangentry命令也只能出现在导言区中
@@ -612,14 +691,15 @@ backrefpages     = {引用页:},
 }
 
 
-\iftoggle{iftlfive}{\switchversion{3.7}{sort}}{}%biblatex<=3.2
-\iftoggle{iftlsix}{\switchversion{3.7}{sort}}{}%3.3<=biblatex<=3.6
-\iftoggle{iftlseven}{\switchversion{3.7}{sort}}{}%biblatex=3.7
-\iftoggle{iftleight}{\switchversion{3.8}{sort}}{}%3.8<=biblatex<=3.9
-\iftoggle{iftlatest}{\switchversion{3.8}{sort}}{}%biblatex最新3.10
+\ifboolexpr{
+test {\iftoggle{iftlfive}}
+or
+test {\iftoggle{iftlsix}}
+or
+test {\iftoggle{iftlseven}}%biblatex<=3.7
+}{\switchversion{3.7}{sort}}{\switchversion{3.8}{sort}}%3.8<=biblatex
 
 
-%=====================================================================
 %=====================================================================
 %参考文献列表环境
 %=====================================================================
@@ -637,41 +717,55 @@ backrefpages     = {引用页:},
 
 
 %=====================================================================
-%=====================================================================
-%设置单元或块等的标点
+%   设置单元或块等的标点
 %=====================================================================
 \renewrobustcmd*{\bibinithyphendelim}{\addhighpenspace}%用于处理姓名中名部分存在-的情况，比如ZHANG Yu-xin
 \renewcommand*{\subtitlepunct}{\addcolon\space} %修改标题和其它标题信息间的标点%来源biblatex.def
-%双语言或多语言的参考文献，可以参考3.11.5 Entry Sets，4.11.1 Entry Sets
-%这里调整一下两种语言参考文献的间隔,%源来自biblatex.def
+%
+%   利用set实现的多语言文献不同语言间的分隔符
+%   20170411，双语之间用newline替换par，避免采用gb7714-2015的项对齐方式第二语言间分段导致没有缩进
+%
+%   原理方法:set方法可以参考3.11.5 Entry Sets，4.11.1 Entry Sets
+%   这里调整一下两种语言参考文献的间隔，源来自biblatex.def
 \renewcommand*{\entrysetpunct}{\adddot\par\nobreak}
 \renewcommand*{\bibpagespunct}{\addcolon\addthinspace}%页码引用格式的修改%修改为用冒号
 %\renewcommand{\relateddelim}{}%\par
 
 %=====================================================================
+%   修改域的格式
 %=====================================================================
-%修改域的格式
-%=====================================================================
-%新增文献类型标识符的格式
+%
+%   新增文献类型标识符的格式
+%
 \DeclareFieldFormat{gbtypeflag}{%
 \iftoggle{bbx:url}{\iffieldundef{url}%当存在url时，增加一个OL标识符
 {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{]}}%
 {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\texttt{/}OL]}}%
 }{\nobreak\printtext{[}\nobreak#1\nobreak\printtext{]}}}
 
+%
+%   新增用于报纸的文献类型标识符的格式
+%
 \DeclareFieldFormat{gbtypeflagn}{%用于报纸newspaper
 \iftoggle{bbx:url}{\iffieldundef{url}%当存在url时，增加一个OL标识符
 {\nobreak\printtext{[}\nobreak N\printtext{]}\nobreak}%
 {\nobreak\printtext{[}\nobreak N\printtext{\texttt{/}OL]}\nobreak}%
 }{\nobreak\printtext{[}\nobreak N\printtext{]}\nobreak}}
 
+%
+%   新增用于标准的文献类型标识符的格式
+%
 \DeclareFieldFormat{gbtypeflags}{%用于标准standard
 \iftoggle{bbx:url}{\iffieldundef{url}%当存在url时，增加一个OL标识符
 {\nobreak\printtext{[}\nobreak S\printtext{]}\nobreak}%
 {\nobreak\printtext{[}\nobreak S\printtext{\texttt{/}OL]}\nobreak}%
 }{\nobreak\printtext{[}\nobreak S\printtext{]}\nobreak}}
 
-%重设title的输出格式，不加emph，原格式来自biblatex.def文件
+%
+%   重设title等参考文献信息的输出格式
+%
+%   原理方法:修改来自biblatex.def文件的原格式
+
 \DeclareFieldFormat{title}{#1\adddot\addthinspace}
 \DeclareFieldFormat{journaltitle}{#1\isdot}%添加\isdot，用于缩写名带点情况，将其转换为缩写点，便于标点的追踪
 \DeclareFieldFormat{issuetitle}{#1}
@@ -683,11 +777,119 @@ backrefpages     = {引用页:},
 \DeclareFieldFormat%将期刊等文献的标题中原来带的引号去掉
   [inbook,incollection,inproceedings]
   {title}{#1\nopunct\unspace}
+\DeclareFieldFormat{url}{\url{#1}} %url域修改如本行%url相关输出，源来自biblatex.def
+%
+%   标题的字母大小写格式修改
+%
+%   注意:修改标题的字母大小写，不同用前面的title的格式而要用titlecase
+%   因为titlecase is applied to the contents of the field directly，title is not
 \DeclareFieldFormat{titlecase}{\MakeCapital#1}%重设标题格式，将其修改为首字母大写
+\DeclareFieldFormat{pages}{#1}%页码引用格式的修改%去掉前面引导页码的pp.等字符
+\DefineBibliographyExtras{english}{\renewcommand*{\bibrangedash}{-}}
 
 
+%
+%   文献标题后的标点问题
+%   20180405，v1.0k，为texlive2017以上版本中的beamer兼容性做的处理，Hu Zhenzhen
+%
+%   原理方法:如下代码处理texlive2017以上版本中，beamer中文献的标题后出现两个点的情况:
+%   texlive2017以上的beamer中对macro{title}做了patch，正常情况下不会出现两个点的情况，但由于
+%   之前为了处理texlive2015，2016下的title格式添加了adddot，导致出现两个点的情况，而且也影响
+%   析出文献的//符号的输出，因此再次对macro{title}做patch消除beamer中做apptocmd时添加的\newunitpunct
+\ifboolexpr{%
+    test{\iftoggle{iftlfive}}
+    or
+    test{\iftoggle{iftlsix}}
+  }{}%
+  {%texlive 2017对应iftlseven以上版本
+  \DeclareFieldFormat{title}{#1}%
+  \DeclareFieldFormat[article,patent,thesis,unpublished]{title}{#1}
+  \AtBeginDocument{%
+  \@ifclassloaded{beamer}
+    {\patchcmd{\abx@macro@title}{\newunitpunct}{}{}{}}{}}
+  }
+
+
+%
+%   修改译者位置格式
+%
+%   原理方法:修改来自biblatex.def文件的bytranslator+others宏的格式
+\renewbibmacro*{bytranslator+others}{%
+  \ifnameundef{translator}
+    {}
+    {%\usebibmacro{bytranslator+othersstrg}
+     %\setunit{\addspace}%
+     \printnames[bytranslator]{translator}%
+     \clearname{translator}%
+     \usebibmacro{bytranslator+othersstrg}%“译”的位置换到下面来，即放到译者后面。
+     \setunit{\addspace}%
+     \newunit}%
+  \usebibmacro{withothers}}
+
+%
+%   下面一段没有作用，但从中可以看到当地化字符串格式的引用前的代码处理
+%   比如生成cotranslator等用于调用cotranslator所代表的当地化字符串
+%   \renewbibmacro*{bytranslator+othersstrg}{%
+
+
+%
+%   修改作者数量超过限定值，做省略时的处理格式
+%
+%   原理方法:判断作者或译者是否中文，若中文用字符等，否则用etcl。
+\renewbibmacro*{name:andothers}{%
+  \ifboolexpr{
+    test {\ifnumequal{\value{listcount}}{\value{liststop}}}
+    and
+    test \ifmorenames
+  }{%这里做一个判断是在处理author还是translator用于两者是不同语言的情况
+    \ifcurrentname{translator}{\iffieldundef{usere}{\togglefalse{ifCJKforgbt}}{\testCJKfirst{\thefield{usere}}}}%
+    {\iffieldundef{usere}{\togglefalse{ifCJKforgbt}}{\testCJKfirst{\thefield{userf}}}}%
+    %这句判断如果放到\andothersdelim后面会在等或etc.前增加一个空格，所以放前面
+    \ifnumgreater{\value{liststop}}{1}
+       {\finalandcomma}
+       {\finalandcomma}%
+\andothersdelim\iftoggle{ifCJKforgbt}{\bibstring{andotherscn}}{\bibstring{andothers}}
+%\andothersdelim\bibstring{andotherscn}
+}{}}
+
+
+%   重设title的输出
+%
+%   原理方法:将文献类型标识符输出出去，原输出来自biblatex.def文件
+%   利用toggle做标识符是否输出的判断
+\renewbibmacro*{title}{%
+  \ifboolexpr{%
+    test{\iffieldundef{title}}%
+    and%
+    test{\iffieldundef{subtitle}}%
+  }%
+    {}%
+    {\printtext[title]{%
+       \printfield[titlecase]{title}%
+       \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
+       {}{\setunit{\subtitlepunct}%
+       \printfield[titlecase]{subtitle}}%
+       \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
+        {\setunit{\subtitlepunct}\printfield{titleaddon}}%
+        \iftoggle{bbx:gbtype}{%
+         \iffieldundef{note}{\printfield[gbtypeflag]{usera}}%在标题后直接给出文献标识字母，判断一下，是否是报纸和标准
+        {\iffieldequalstr{note}{standard}{\printfield[gbtypeflags]{usera}}%判断是否为标准
+                                         {\iffieldequalstr{note}{news}{\printfield[gbtypeflagn]{usera}}%判断是否为报纸
+                                                                      {\printfield[gbtypeflag]{usera}}}%其它
+        }}{}%
+     \iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
+     %\newunit
+     }%
+}%
+}
+
+
+%
+%   作者信息的输出格式，针对biblatex<3.3版本，gbt7714-2015的姓名全大写格式
+%
 \defversion{3.0}{name}{
     \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
+    %\renewrobustcmd*{\bibinithyphendelim}{\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
     \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
     %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
     \renewbibmacro*{name:last-first}[4]{%
@@ -725,8 +927,12 @@ backrefpages     = {引用页:},
      \usebibmacro{name:last-first}{##1}{##2}{##3}{##4}}
 }
 
+%
+%   作者信息的输出格式，针对biblatex>=3.3版本，gbt7714-2015的姓名全大写格式
+%
 \defversion{3.4}{name}{
     \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
+    %\renewrobustcmd*{\bibinithyphendelim}{\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
     \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
     %biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
     \renewbibmacro*{name:given-family}[4]{%利用family-given定义given-family
@@ -759,8 +965,12 @@ backrefpages     = {引用页:},
      \usebibmacro{name:given-family}{##1}{##2}{##3}{##4}}
 }
 
+%
+%   作者信息的输出格式，针对biblatex<3.3版本，姓名大小写格式不变
+%
 \defversion{3.0}{nameb}{
     \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
+    %\renewrobustcmd*{\bibinithyphendelim}{\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
     \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
     %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
     \renewbibmacro*{name:last-first}[4]{%
@@ -797,8 +1007,12 @@ backrefpages     = {引用页:},
      \usebibmacro{name:last-first}{##1}{##2}{##3}{##4}}
 }
 
+%
+%   作者信息的输出格式，针对biblatex>=3.3版本，姓名大小写格式不变
+%
 \defversion{3.4}{nameb}{
     \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
+    %\renewrobustcmd*{\bibinithyphendelim}{\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
     \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
     %biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
     \renewbibmacro*{name:given-family}[4]{%用family-given修改后的内容定义given-family
@@ -831,6 +1045,9 @@ backrefpages     = {引用页:},
      \usebibmacro{name:given-family}{##1}{##2}{##3}{##4}}
 }
 
+%
+%   作者信息的输出格式，针对biblatex<3.3版本，姓名大小写格式采用标准样式
+%
 \defversion{3.0}{namec}{
     \renewrobustcmd*{\bibinitperiod}{\adddot}
     \renewrobustcmd*{\bibinithyphendelim}{\adddot\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
@@ -861,6 +1078,9 @@ backrefpages     = {引用页:},
      \usebibmacro{name:last-first}{##1}{##2}{##3}{##4}}
 }
 
+%
+%   作者信息的输出格式，针对biblatex>=3.3版本，姓名大小写格式采用标准样式
+%
 \defversion{3.4}{namec}{
     \renewrobustcmd*{\bibinitperiod}{\adddot}
     \renewrobustcmd*{\bibinithyphendelim}{\adddot\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
@@ -882,6 +1102,9 @@ backrefpages     = {引用页:},
          \usebibmacro{name:given-family}{##1}{##2}{##3}{##4}}
 }
 
+%
+%   作者信息的输出格式，针对biblatex<3.3版本，姓名大小写格式采用拼音样式
+%
 \defversion{3.0}{named}{
     \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
     \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
@@ -928,6 +1151,9 @@ backrefpages     = {引用页:},
      \usebibmacro{name:last-first}{##1}{##2}{##3}{##4}}
 }
 
+%
+%   作者信息的输出格式，针对biblatex>=3.3版本，姓名大小写格式采用拼音样式
+%
 \defversion{3.4}{named}{
     \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
     \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
@@ -974,10 +1200,16 @@ backrefpages     = {引用页:},
      \usebibmacro{name:given-family}{##1}{##2}{##3}{##4}}
 }
 
+%
+%   根据姓名格式控制选项做处理
+%
 \iftoggle{iftlfive}%根据texlive/biblatex版本选择
-    {\switchversion{3.0}{name}}%
-    {\switchversion{3.4}{name}}
-
+    {%%当采用biblatex<=3.3版本时
+    \switchversion{3.0}{name}
+    }{%%当采用3.3<=biblatex版本时
+    \switchversion{3.4}{name}
+    }
+%
 \def\execnamedefault{
 \iftoggle{iftlfive}%根据texlive/biblatex版本选择
     {%%当采用biblatex<=3.3版本时
@@ -986,7 +1218,7 @@ backrefpages     = {引用页:},
     \switchversion{3.4}{namec}
     }
 }
-
+%
 \def\execgblowercase{
 \iftoggle{iftlfive}%根据texlive/biblatex版本选择
     {%%当采用biblatex<=3.3版本时
@@ -995,7 +1227,7 @@ backrefpages     = {引用页:},
     \switchversion{3.4}{nameb}
     }
 }
-
+%
 \def\execnamepinyin{
 \iftoggle{iftlfive}%根据texlive/biblatex版本选择
     {%%当采用biblatex<=3.3版本时
@@ -1004,34 +1236,10 @@ backrefpages     = {引用页:},
     \switchversion{3.4}{named}
     }}
 
-%重设title的输出，将文献类型标识符输出出去，原输出来自biblatex.def文件
-\renewbibmacro*{title}{%
-  \ifboolexpr{%
-    test{\iffieldundef{title}}%
-    and%
-    test{\iffieldundef{subtitle}}%
-  }%
-    {}%
-    {\printtext[title]{%
-       \printfield[titlecase]{title}%
-       \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
-       {}{\setunit{\subtitlepunct}%
-       \printfield[titlecase]{subtitle}}%
-       \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
-        {\setunit{\subtitlepunct}\printfield{titleaddon}}%
-        \iftoggle{bbx:gbtype}{%
-         \iffieldundef{note}{\printfield[gbtypeflag]{usera}}%在标题后直接给出文献标识字母，判断一下，是否是报纸和标准
-        {\iffieldequalstr{note}{standard}{\printfield[gbtypeflags]{usera}}%判断是否为标准
-                                         {\iffieldequalstr{note}{news}{\printfield[gbtypeflagn]{usera}}%判断是否为报纸
-                                                                      {\printfield[gbtypeflag]{usera}}}%其它
-        }}{}%
-     \iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
-     %\newunit
-     }%
-}%
-}
 
-\DeclareFieldFormat{url}{\url{#1}} %url域修改如本行%url相关输出，源来自biblatex.def
+%
+%   url和url日期格式
+%
 \renewbibmacro*{url+urldate}{%
   %\usebibmacro{url}%%更换url的位置，放到下面
   \iffieldundef{urlyear}%
@@ -1041,6 +1249,9 @@ backrefpages     = {引用页:},
      \usebibmacro{url}}
 \renewbibmacro*{url}{\printfield{url}}
 
+%
+%   日期信息的输出格式，针对biblatex<3.7版本
+%
 \defversion{3.4}{date}{
     \renewbibmacro*{urldate}{%
     \addthinspace\printtext{[}\printfield{urlyear}%
@@ -1076,13 +1287,23 @@ backrefpages     = {引用页:},
     }%
 }
 
+%
+%   日期信息的输出格式，针对3.9>=biblatex>=3.7版本
+%
 \defversion{3.7}{date}{
     \DeclareFieldFormat{urldate}{##1}
     \renewbibmacro*{urldate}{%
     \addthinspace\printtext{[}\printurldate\printtext{]}}%能用高层命令+选项尽量用命令(比如这里的\printurldate)，而不用\blx@edtfdate这种更底层的命令
 
-    \newbibmacro*{newsdate}{%%新增加一个新闻日期
-    \blx@edtfdate{}{}%
+    %
+    %   专利的公告日期、或报纸的日期的输出宏
+    %   20160701，v1.0，新增加
+    %   20180405，v1.0k，为biblatexv3.7-3.9版本，出现多出点bug做处理，Hu Zhenzhen
+    %
+    %   原理方法:加上printtext避免破坏异步标点机制
+    %
+    \newbibmacro*{newsdate}{%
+    \printtext{\blx@edtfdate{}{}}%
     }
 
     \newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示电子资源的更新和修改日期，而公告日期则按日期格式
@@ -1095,13 +1316,23 @@ backrefpages     = {引用页:},
     }%
 }
 
+%
+%   日期信息的输出格式，针对biblatex>=3.10版本
+%
 \defversion{3.10}{date}{
     \DeclareFieldFormat{urldate}{##1}
     \renewbibmacro*{urldate}{%
     \addthinspace\printtext{[}\printurldate\printtext{]}}%能用高层命令+选项尽量用命令(比如这里的\printurldate)，而不用\blx@edtfdate这种更底层的命令
 
-    \newbibmacro*{newsdate}{%%新增加一个新闻日期
-    \blx@isodate{}{}%
+    %
+    %   专利的公告日期、或报纸的日期的输出宏
+    %   20160701，v1.0，新增加
+    %   20180405，为biblatexv3.10版本，出现多出点bug做处理，Hu Zhenzhen
+    %
+    %   原理方法:加上printtext避免破坏异步标点机制
+    %
+    \newbibmacro*{newsdate}{%%
+    \printtext{\blx@isodate{}{}}%%
     }
 
     \newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示电子资源的更新和修改日期，而公告日期则按日期格式
@@ -1114,14 +1345,16 @@ backrefpages     = {引用页:},
     }%
 }
 
-\iftoggle{iftlfive}{\switchversion{3.4}{date}}{}%biblatex<=3.2
-\iftoggle{iftlsix}{\switchversion{3.4}{date}}{}%3.3<=biblatex<=3.6
-\iftoggle{iftlseven}{\switchversion{3.7}{date}}{}%biblatex=3.7
-\iftoggle{iftleight}{\switchversion{3.7}{date}}{}%3.8<=biblatex<=3.9
-\iftoggle{iftlatest}{\switchversion{3.10}{date}}{}%biblatex最新
-
-
-\renewbibmacro*{related}{%
+%
+%   关联文献的输出格式，针对3.9>=biblatex>=3.7版本
+%
+%   原理方法:因为related宏中带有##了，所以无法封装到defversion中了。所以直接做判断
+%   下面这一段主要针对v3.8-3.10，因为我提问后，biblatex作者为3.11版增加了一个钩子控制relatedblock前的分隔符。
+\ifboolexpr{
+test{\iftoggle{iftleight}}
+or
+test{\iftoggle{iftlnine}}
+}{\renewbibmacro*{related}{%standard.bbx
   \ifboolexpr{ test {\iffieldundef{related}} or test {\ifrelatedloop} }
     {}
     {\usebibmacro{begrelated}%
@@ -1143,7 +1376,7 @@ backrefpages     = {引用页:},
         \setcounter{bbx:relatedcount}{0}%
         \def\do{%
           \stepcounter{bbx:relatedcount}%
-          \ifnumgreater{\value{bbx:relatedcount}}{0}
+          \ifnumgreater{\value{bbx:relatedcount}}{0}%这里从1改为0
             {\ifcsundef{relateddelim\strfield{relatedtype}}
               {\printtext{\relateddelim}}
               {\printtext{\csuse{relateddelim\strfield{relatedtype}}}}}
@@ -1179,11 +1412,27 @@ backrefpages     = {引用页:},
           \usebibmacro{endrelatedloop}}}%
        {}%
      \usebibmacro{endrelated}}}
+}{}
 
-\DeclareFieldFormat{pages}{#1}%页码引用格式的修改%去掉前面引导页码的pp.等字符
+%
+%   关联文献块前的分隔符，针对biblatex3.11
+%
+%   原理方法:因为增加了begrelateddelim钩子，所以不需要重定义related输出宏
+\defversion{3.11}{related}{
+\renewcommand{\begrelateddelim}{\adddot\newline\nobreak}
+}
 
-%调整doi+eprint+url格式，源来自standard.bbx
-%因为页码后面直接跟引用日期，没有标点所以去掉其中的标点。
+\iftoggle{iftlfive}{\switchversion{3.4}{date}}{}%biblatex<=3.2
+\iftoggle{iftlsix}{\switchversion{3.4}{date}}{}%3.3<=biblatex<=3.6
+\iftoggle{iftlseven}{\switchversion{3.7}{date}}{}%biblatex=3.7
+\iftoggle{iftleight}{\switchversion{3.7}{date}}{}%3.8<=biblatex<=3.9
+\iftoggle{iftlnine}{\switchversion{3.10}{date}}{}%biblatex3.10
+\iftoggle{iftlatest}{\switchversion{3.10}{date}\switchversion{3.11}{related}}{}%biblatex最新
+
+%
+%   调整doi+eprint+url格式
+%
+%   原理方法:源来自standard.bbx，因为页码后面直接跟引用日期，没有标点所以去掉其中的标点。
 \renewbibmacro*{doi+eprint+url}{%
 %  \iftoggle{bbx:doi}%把doi的位置放到url后面
 %    {\printfield{doi}}
@@ -1201,6 +1450,9 @@ backrefpages     = {引用页:},
     {\printfield{doi}}
     {}}
 
+%
+%   调整页码的格式，即chapter+pages格式
+%
 \renewbibmacro*{chapter+pages}{%
   \printfield{chapter}%
   \iffieldundef{pages}{}{%这里增加一个判断，当没有页码时就不输出
@@ -1209,22 +1461,97 @@ backrefpages     = {引用页:},
   %\newunit %这里的标点去掉
   }
 
-%对edition版本信息做出修改，源来自biblatex.DEF
-\DeclareFieldFormat{edition}{%
-\iffieldundef{title}{}{\testCJKfirst{\thefield{userd}}}%
+
+%   出版社和地址的处理
+%
+%   原理方法:当没有出版社地址时，直接判断title的信息是否是中文，若为中文，则写出版地不详，否则用英文的字符表示。
+%   事实上title对于每个文献来说是必须的，所以用它判断是最快的，而且一般标题和出版社的语言是一样的。
+%   新增一个样式用于输出连续出版物的地址，单位，时间，%类似\newbibmacro*{publisher+location+date}
+\newbibmacro*{location+institution+date}{%
+\iftoggle{bbx:gbpub}%
+{\testCJKfirst{\thefield{userd}}
+\iflistundef{location}{\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}}{\printtext{[S.l.\adddot]}}}%
+  {\printlist{location}}%
+%  \iflistundef{institution}
+%    {\setunit*{\addcomma\space}}
+%    {\setunit*{\addcolon\space}}%
+%  \printlist{institution}%
+%  \setunit*{\addcomma\space}%
+\addcolon\addspace%
+\iflistundef{institution}{%
+\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}}{\printtext{\mkbibbrackets{s.n.}}}}% \bibstring{nopublisher}%[s.n.\adddot]
+{\printlist{institution}}%
+\setunit{\addcomma\addspace}%
+  %\usebibmacro{date}%
+  \printfield{year}%
+  \bibrangedash%
+  \iffieldundef{endyear}{}{\printfield{endyear}}%
+  \newunit}%
+{  \printlist{location}%
+  \iflistundef{institution}%
+    {\setunit*{\addcomma\space}}
+    {\setunit*{\addcolon\space}}%
+  \printlist{institution}%
+  \setunit*{\addcomma\space}%
+  \usebibmacro{date}%
+  \newunit}%
+}
+%
+\renewbibmacro*{publisher+location+date}{%
+\iftoggle{bbx:gbpub}%
+{\testCJKfirst{\thefield{userd}}%
+\iflistundef{location}{%\adddot
+\iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准第19页看到，标准存在出版项时输出，没有时完全省略。
+\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}\addcolon\addspace}{\printtext{[S.l.\adddot]}\addcolon\addspace}%
+}}%  \bibstring{noaddress}
+{\printlist{location}\addcolon\addspace}%
+%\addcolon\addspace%
+\iflistundef{publisher}{%
+\iffieldequalstr{note}{standard}{}{%
+\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
+{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
+}}%
+{\printlist{publisher}\setunit*{\addcomma\addspace}}%
+%\addcomma\addspace%
+\usebibmacro{date}%
+%\newunit %去掉这个标点
+}%
+{\printlist{location}%
+  \iflistundef{publisher}
+    {\setunit*{\addcomma\space}}
+    {\setunit*{\addcolon\space}}%
+  \printlist{publisher}%
+  \setunit*{\addcomma\space}%
+  \usebibmacro{date}%
+  %\newunit
+  }%
+}
+
+
+%
+%   对edition版本信息格式做出修改
+%
+\DeclareFieldFormat{edition}{%源来自biblatex.DEF
+\testCJKfirst{\thefield{userd}}%
   \ifinteger{#1}%
     {\iftoggle{ifCJKforgbt}{\printtext{#1版}}%
     {\mkbibordedition{#1}~\bibstring{edition}}}%
     {#1\isdot}}
 
-%对version的版本信息做出修改，源来自biblatex.DEF
-\DeclareFieldFormat{version}{%
-\iffieldundef{title}{}{\testCJKfirst{\thefield{userd}}}%
+%
+%   对version的版本信息做出修改
+%
+\DeclareFieldFormat{version}{%源来自biblatex.DEF
+\testCJKfirst{\thefield{userd}}%
   \ifinteger{#1}%
     {\iftoggle{ifCJKforgbt}{\printtext{#1版}}%
     {\mkbibordedition{#1}~\bibstring{version}}}%
     {#1\isdot}}
 
+%
+%   作者域的输出控制宏
+%
+%   当两篇文献作者相同且连续时，标准样式是用-代替后面的文献的作者，这里取消这一设置
 \renewbibmacro*{author}{%author for biblatex version <=3.7
   \ifboolexpr{
     test \ifuseauthor
@@ -1251,11 +1578,13 @@ backrefpages     = {引用页:},
   \usebibmacro{date+extrayear}
   }
 
-%设置标注和文献表中作者和年份之间的分隔符
-%注意3.4版已经有\nameyeardelim，上述修改的author宏虽然定义了著录表中的标点，但标注中的未定义
-%设置因为mergedate默认为true时的情况，来自\bbx@opt@mergedate@compact
-%去掉作者后面包围年份的圆括号
-%这里因为biblatex版本的不同，做不同的处理，texlive2017版/2016等低版本分开处理
+%
+%   设置标注和文献表中作者和年份之间的分隔符
+%
+%   原理方法:注意3.4版已经有\nameyeardelim，上述修改的author宏虽然定义了著录表中的标点，但标注中的未定义
+%   设置因为mergedate默认为true时的情况，来自\bbx@opt@mergedate@compact
+%   去掉作者后面包围年份的圆括号
+%   这里因为biblatex版本的不同，做不同的处理，texlive2017版/2016等低版本分开处理
 \defversion{3.0}{dateextra}{
 \renewcommand*{\nameyeardelim}{\addcomma\space}
     \renewbibmacro*{date+extrayear}{%%重设date+extrayear格式，源来自authoryear.BBX
@@ -1335,108 +1664,12 @@ backrefpages     = {引用页:},
 \iftoggle{iftlsix}{\switchversion{3.4}{dateextra}}{}%3.3<=biblatex<=3.6
 \iftoggle{iftlseven}{\switchversion{3.7}{dateextra}}{}%biblatex=3.7
 \iftoggle{iftleight}{\switchversion{3.8}{dateextra}}{}%<=3.8biblatex<=3.9
-\iftoggle{iftlatest}{\switchversion{3.8}{dateextra}}{}%biblatex最新3.10
+\iftoggle{iftlnine}{\switchversion{3.8}{dateextra}}{}%biblatex3.10
+\iftoggle{iftlatest}{\switchversion{3.8}{dateextra}}{}%biblatex最新3.11
 
-
-%修改译者位置格式，bytranslator+others原格式来自biblatex.def文件
-\renewbibmacro*{bytranslator+others}{%
-  \ifnameundef{translator}
-    {}
-    {%\usebibmacro{bytranslator+othersstrg}
-     %\setunit{\addspace}%
-     \printnames[bytranslator]{translator}%
-     \clearname{translator}%
-     \usebibmacro{bytranslator+othersstrg}%“译”的位置换到下面来，即放到译者后面。
-     \setunit{\addspace}%
-     \newunit}%
-  \usebibmacro{withothers}}
-
-%判断作者或译者是否中文，若中文用字符等，否则用etal。
-\renewbibmacro*{name:andothers}{%
-  \ifboolexpr{
-    test {\ifnumequal{\value{listcount}}{\value{liststop}}}
-    and
-    test \ifmorenames
-  }
-    {%这里做一个判断是在处理author还是translator用于两者是不同语言的情况
-    \ifcurrentname{translator}{\iffieldundef{usere}{\togglefalse{ifCJKforgbt}}{\testCJKfirst{\thefield{usere}}}}%
-    {\iffieldundef{usere}{\togglefalse{ifCJKforgbt}}{\testCJKfirst{\thefield{userf}}}}%
-    %这句判断如果放到\andothersdelim后面会在等或etc.前增加一个空格，所以放前面
-    \ifnumgreater{\value{liststop}}{1}
-       {\finalandcomma}
-       {\finalandcomma}%
-\andothersdelim\iftoggle{ifCJKforgbt}{\bibstring{andotherscn}}{\bibstring{andothers}}
-%\andothersdelim\bibstring{andotherscn}
-}
-{}}
-
-
-%出版社和地址的处理
-%当没有出版社地址时，直接判断title的信息是否是中文，若为中文，则写出版地不详，否则用英文的字符表示。
-%事实上title对于每个文献来说是必须的，所以用它判断是最快的，而且一般标题和出版社的语言是一样的。
-%新增一个样式用于输出连续出版物的地址，单位，时间，%类似\newbibmacro*{publisher+location+date}
-\newbibmacro*{location+institution+date}{%
-\iftoggle{bbx:gbpub}%
-{\testCJKfirst{\thefield{userd}}
-\iflistundef{location}{\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}}{\printtext{[S.l.\adddot]}}}%
-  {\printlist{location}}%
-%  \iflistundef{institution}
-%    {\setunit*{\addcomma\space}}
-%    {\setunit*{\addcolon\space}}%
-%  \printlist{institution}%
-%  \setunit*{\addcomma\space}%
-\addcolon\addspace%
-\iflistundef{institution}{%
-\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}}{\printtext{\mkbibbrackets{s.n.}}}}% \bibstring{nopublisher}%[s.n.\adddot]
-{\printlist{institution}}%
-\setunit{\addcomma\addspace}%
-  %\usebibmacro{date}%
-  \printfield{year}%
-  \bibrangedash%
-  \iffieldundef{endyear}{}{\printfield{endyear}}%
-  \newunit}%
-{  \printlist{location}%
-  \iflistundef{institution}%
-    {\setunit*{\addcomma\space}}
-    {\setunit*{\addcolon\space}}%
-  \printlist{institution}%
-  \setunit*{\addcomma\space}%
-  \usebibmacro{date}%
-  \newunit}%
-}
-
-\renewbibmacro*{publisher+location+date}{%
-\iftoggle{bbx:gbpub}%
-{\testCJKfirst{\thefield{userd}}%
-\iflistundef{location}{%\adddot
-\iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准第19页看到，标准存在出版项时输出，没有时完全省略。
-\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}\addcolon\addspace}{\printtext{[S.l.\adddot]}\addcolon\addspace}%
-}}%  \bibstring{noaddress}
-{\printlist{location}\addcolon\addspace}%
-%\addcolon\addspace%
-\iflistundef{publisher}{%
-\iffieldequalstr{note}{standard}{}{%
-\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
-{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
-}}%
-{\printlist{publisher}\setunit*{\addcomma\addspace}}%
-%\addcomma\addspace%
-\usebibmacro{date}%
-%\newunit %去掉这个标点
-}%
-{\printlist{location}%
-  \iflistundef{publisher}
-    {\setunit*{\addcomma\space}}
-    {\setunit*{\addcolon\space}}%
-  \printlist{publisher}%
-  \setunit*{\addcomma\space}%
-  \usebibmacro{date}%
-  %\newunit
-  }%
-}
-
-
-%修改析出文献的文集的标题与附加标题间的符号
+%
+%   修改析出文献的文集的标题与附加标题间的符号
+%
 \renewbibmacro*{booktitle}{%
   \ifboolexpr{
     test {\iffieldundef{booktitle}}
@@ -1452,8 +1685,11 @@ backrefpages     = {引用页:},
      \setunit{\subtitlepunct}}%
   \printfield{booktitleaddon}}
 
-%调整期刊名的格式，源来自standard.bbx
-\renewbibmacro*{journal+issuetitle}{%
+%
+%   调整期刊名的格式
+%
+%   原理方法:因为作者年制年份提到前面，因此涉及到期刊名与后面的卷期的关系。
+\renewbibmacro*{journal+issuetitle}{%源来自standard.bbx
   \usebibmacro{journal}%
   %\setunit*{\addspace}%
   %\setunit*{\addcomma\addspace}%修改为增加一个逗号
@@ -1473,7 +1709,11 @@ backrefpages     = {引用页:},
   %\newunit
   }
 
-%调整journal，首先判断子标题，然后在设置标点。避免直接设置标点后，当volume不存在是需要使用\nopuct去标点进而引入不必要的空格
+%
+%   调整journal输出
+%
+%   原理方法:首先判断子标题，然后再设置标点。
+%   避免直接设置标点后，当volume不存在时需要使用\nopuct去标点进而引入不必要的空格
 \renewbibmacro*{journal}{%
   \iffieldundef{journaltitle}%
     {}%
@@ -1482,19 +1722,26 @@ backrefpages     = {引用页:},
        \iffieldundef{journalsubtitle}{}{\setunit{\subtitlepunct}%
        \printfield[titlecase]{journalsubtitle}}}}}
 
-%调整issue+date，原在authoryear.BBX中\bbx@opt@mergedate@compact中定义
-%当issue存在时，才设置newunit。避免直接设置标点后，当volume不存在是需要使用\nopuct去标点进而引入不必要的空格
+%
+%   调整issue+date
+%
+%   原理方法:原在authoryear.BBX中\bbx@opt@mergedate@compact中定义
+%   当issue存在时，才设置newunit。避免直接设置标点后，当volume不存在是需要使用\nopuct去标点进而引入不必要的空格
   \renewbibmacro*{issue+date}{%
     \iffieldundef{issue}%
       {}%
       {\printtext[parens]{\printfield{issue}}\newunit}}
 
-%增加一个number带括号的格式，避免使用mkbibparens而引入一个不必要的空格
+%
+%   增加一个number带括号的格式，避免使用mkbibparens而引入一个不必要的空格
+%
 \DeclareFieldFormat{addnumflag}{%
 \nobreak\printtext{(}\nobreak #1\nobreak\printtext{)}}
 
-%调整期刊卷和期的格式，源来自standard.bbx
-\renewbibmacro*{volume+number+eid}{%
+%
+%   调整期刊卷和期的格式
+%
+\renewbibmacro*{volume+number+eid}{%源来自standard.bbx
   \printfield{volume}%
   %\setunit*{\adddot}%去掉点号
   %\printfield{number}%
@@ -1504,8 +1751,10 @@ backrefpages     = {引用页:},
   \setunit{\addcomma\space}%
   \printfield{eid}}}
 
-%调整页码前的标点和去掉期刊文章等页码后面的标点，源来自standard.bbx
-\renewbibmacro*{note+pages}{%
+%
+%   调整页码前的标点和去掉期刊文章等页码后面的标点
+%
+\renewbibmacro*{note+pages}{%源来自standard.bbx
   %\printfield{note}%不要note，note用来判断是否是报纸newspaper
   \iffieldundef{pages}{}{
   \setunit{\bibpagespunct}%
@@ -1513,11 +1762,13 @@ backrefpages     = {引用页:},
   %\newunit
   }
 
-%编者类型做一修改，源来自biblatex.DEF
-\renewbibmacro*{editorstrg}{%
+%
+%   编者类型做一修改
+%
+\renewbibmacro*{editorstrg}{%源来自biblatex.DEF
   \printtext[editortype]{%
     \iffieldundef{editortype}
-      {
+      {%
 %      \ifboolexpr{ %这一段去掉，未定义编者类型情况下不处理
 %         test {\ifnumgreater{\value{editor}}{1}}
 %         or
@@ -1537,8 +1788,10 @@ backrefpages     = {引用页:},
          {\thefield{editortype}}}
          }}
 
-%修改期刊的标题，源来自biblatex.DEF
-\renewbibmacro*{periodical}{%
+%
+%   修改期刊的标题
+%
+\renewbibmacro*{periodical}{%源来自biblatex.DEF
   \iffieldundef{title}
     {}
     {\printtext[title]{%
@@ -1548,13 +1801,16 @@ backrefpages     = {引用页:},
        {}{\setunit{\subtitlepunct}
        \printfield[titlecase]{subtitle}}%
        %}%把编组结束移到后面去
+       \iftoggle{bbx:gbtype}{%
        \iffieldundef{usera}{}{%在标题后直接给出文献标识字母
-        \printfield[gbtypeflag]{usera}}
+        \printfield[gbtypeflag]{usera}}}{}
        }}
        }
 
-%期刊的标题做修改，源来自standard.BBX
-\renewbibmacro*{title+issuetitle}{%
+%
+%   期刊的标题做修改
+%
+\renewbibmacro*{title+issuetitle}{%源来自standard.BBX
   \usebibmacro{periodical}%
   %\setunit*{\addspace}%
   \setunit*{\adddot\addspace}%标点修改为句点
@@ -1592,7 +1848,9 @@ backrefpages     = {引用页:},
   \usebibmacro{issue}%
   \newunit}
 
-%新增一个样式用于调整期刊年份的格式，只打印年份
+%
+%   新增一个样式用于调整期刊年份的格式，只打印年份
+%
 \newbibmacro*{periodical+issue}{%
   \printtext{%去掉了[parens]
     \iffieldundef{issue}
@@ -1606,8 +1864,10 @@ backrefpages     = {引用页:},
   %\newunit
 }
 
-%重设专利title的输出，将文献类型标识符输出出去，原输出来自biblatex.def文件
-\newbibmacro*{patenttitle}{%
+%
+%   重设专利title的输出，将文献类型标识符输出出去
+%
+\newbibmacro*{patenttitle}{%原输出来自biblatex.def文件
   \ifboolexpr{%
     test{\iffieldundef{title}}%
     and%
@@ -1622,15 +1882,17 @@ backrefpages     = {引用页:},
        \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
         {\setunit{\subtitlepunct}\printfield{titleaddon}}%
         \setunit{\subtitlepunct}\printfield{number}%写专利号
-         \printfield[gbtypeflag]{usera}%
+        \iftoggle{bbx:gbtype}{\printfield[gbtypeflag]{usera}}{}%
      \iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
      %\newunit
      }%
 }%
 }
 
-%修改了一个institution+location+date用于report等的，当没有institution时不处理。
-\renewbibmacro*{institution+location+date}{%
+%
+%   修改了一个institution+location+date用于report等类型
+%
+\renewbibmacro*{institution+location+date}{%当没有institution时不处理。
   \printlist{location}%
   \iflistundef{institution}
     {\setunit*{\addcomma\space}}
@@ -1644,11 +1906,12 @@ backrefpages     = {引用页:},
 
 
 %=====================================================================
-%=====================================================================
 %设置驱动格式
 %=====================================================================
-%修改book的驱动，源来自standard.BBX
-\DeclareBibliographyDriver{book}{%
+%
+%   book条目类的驱动
+%
+  \DeclareBibliographyDriver{book}{%源来自standard.bbx文件
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/editor+others/translator+others}%
@@ -1698,8 +1961,10 @@ backrefpages     = {引用页:},
     {}%
   \usebibmacro{finentry}}
 
-%修改inbook的驱动，源来自standard.BBX
-\DeclareBibliographyDriver{inbook}{%
+%
+%   inbook的驱动
+%
+\DeclareBibliographyDriver{inbook}{%源来自standard.BBX
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
@@ -1754,8 +2019,11 @@ backrefpages     = {引用页:},
     {}%
   \usebibmacro{finentry}}
 
-%collection直接用book的驱动
-\DeclareBibliographyDriver{collection}{%
+
+%
+%   collection类型驱动
+%
+\DeclareBibliographyDriver{collection}{%直接用book的驱动
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/editor+others/translator+others}%
@@ -1805,8 +2073,11 @@ backrefpages     = {引用页:},
     {}%
   \usebibmacro{finentry}}
 
-%incollection直接用inbook的驱动
-\DeclareBibliographyDriver{incollection}{%
+
+%
+%   incollection类型驱动
+%
+\DeclareBibliographyDriver{incollection}{%直接用inbook的驱动
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
@@ -1861,7 +2132,9 @@ backrefpages     = {引用页:},
     {}%
   \usebibmacro{finentry}}
 
-%期刊文章，连续出版物中的析出文献的格式
+%
+%   期刊文章，连续出版物中的析出文献的格式
+%
   \DeclareBibliographyDriver{article}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
@@ -1901,8 +2174,11 @@ backrefpages     = {引用页:},
     {}%
   \usebibmacro{finentry}}
 
-%修改连续出版物的驱动，源来自standard.BBX
-  \DeclareBibliographyDriver{periodical}{%
+
+%
+%   连续出版物的驱动
+%
+  \DeclareBibliographyDriver{periodical}{%源来自standard.BBX
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{editor}%
@@ -1934,8 +2210,10 @@ backrefpages     = {引用页:},
     {}%
   \usebibmacro{finentry}}
 
-%处理专利文献，源来自standard.BBX
-  \DeclareBibliographyDriver{patent}{%
+%
+%   专利文献驱动
+%
+  \DeclareBibliographyDriver{patent}{%源来自standard.BBX
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author}%
@@ -1974,8 +2252,10 @@ backrefpages     = {引用页:},
     {}%
   \usebibmacro{finentry}}
 
-%处理在线文献，源来自standard.BBX
-\DeclareBibliographyDriver{online}{%
+%
+%   在线文献驱动
+%
+\DeclareBibliographyDriver{online}{%源来自standard.BBX
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/editor+others/translator+others}%
@@ -2014,14 +2294,16 @@ backrefpages     = {引用页:},
     {}%
   \usebibmacro{finentry}}
 
-%学位论文修改，源来自standard.BBX
-  \DeclareBibliographyDriver{thesis}{%
+%
+%   学位论文修改
+%
+  \DeclareBibliographyDriver{thesis}{%源来自standard.BBX
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author}%
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{title}%
-  \newunit
+  \newunit%
   \printlist{language}%
   \newunit\newblock
   \usebibmacro{byauthor}%
@@ -2053,8 +2335,10 @@ backrefpages     = {引用页:},
     {}%
   \usebibmacro{finentry}}
 
-
-%2016-11-11增加了译者信息
+%
+%   报告类型驱动
+%   2016-11-11，增加了译者信息
+%
 \DeclareBibliographyDriver{report}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
@@ -2099,8 +2383,11 @@ backrefpages     = {引用页:},
     {}%
   \usebibmacro{finentry}}
 
-%直接利用report做manual,2016-11-11增加了译者信息
-%\DeclareBibliographyDriver{report}{%
+%
+%   手册类型驱动
+%   2016-11-11，增加了译者信息
+%
+%   直接利用report做manual
 \DeclareBibliographyDriver{manual}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
@@ -2145,8 +2432,10 @@ backrefpages     = {引用页:},
     {}%
   \usebibmacro{finentry}}
 
-%直接利用report做unpublished
-%\DeclareBibliographyDriver{report}{%
+%
+%   未出版物类型驱动
+%
+%   直接利用report做unpublished
 \DeclareBibliographyDriver{unpublished}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
@@ -2189,8 +2478,11 @@ backrefpages     = {引用页:},
     {}%
   \usebibmacro{finentry}}
 
-%会议论文格式修改，源来自standard.BBX
-  \DeclareBibliographyDriver{inproceedings}{%
+
+%
+%   会议论文文献类型驱动
+%
+  \DeclareBibliographyDriver{inproceedings}{%源来自standard.BBX
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
@@ -2245,8 +2537,10 @@ backrefpages     = {引用页:},
     {}%
   \usebibmacro{finentry}}
 
-%会议论文集格式修改，源来自standard.BBX
-\DeclareBibliographyDriver{proceedings}{%
+%
+%   会议论文集文献类型驱动
+%
+\DeclareBibliographyDriver{proceedings}{%源来自standard.BBX
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   %\usebibmacro{editor+others}%
