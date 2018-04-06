@@ -85,7 +85,9 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 
 ---------------------------------------------------------
 
-<span id="jumptotutorial">## Tutorial/使用入门</span>
+<h2 id="jumptotutorial">Tutorial/使用入门</h2>
+
+[comment]: # (<span id="jumptotutorial">## Tutorial/使用入门</span>)
 
 
 ### 1. Tex source file/tex文档一般结构
