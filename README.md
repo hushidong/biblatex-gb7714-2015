@@ -75,9 +75,9 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 
 ## Related Links
 
-* [biblatex](https://github.com/plk/biblatex)
-* [beamer](https://github.com/josephwright/beamer)
-* [biblatex说明文档中文版](https://github.com/hushidong/biblatex-zh-cn)
+* [Biblatex 宏包](https://github.com/plk/biblatex)
+* [Beamer 文档类](https://github.com/josephwright/beamer)
+* [Biblatex说明文档 中文版](https://github.com/hushidong/biblatex-zh-cn)
 * [LaTeX中文参考文献的biblatex解决方案](https://github.com/hushidong/biblatex-solution-to-latex-bibliography)
 * [gbt7714-bibtex-style: GB/T7714-2015 标准的bst实现版本](https://github.com/zepinglee/gbt7714-bibtex-style)
 * [LaTeX学习网站](http://www.latexstudio.net/)
