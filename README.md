@@ -153,7 +153,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 	
 ### 4. Common questions/常见问题
 
-#### Installation and use/安装和使用
+#### 4.1 Installation and use/安装和使用
 
 * <b>怎么利用biblatex生成国标GB/T 7714-2015格式的参考文献表？</b>
 	
@@ -222,7 +222,7 @@ GB/T 7714-2015标准实现的bst版本，已经由[zeping lee](https://github.co
 请邮件联系hzzmail@163.com或在项目内发issue提问即可。
 		
 	
-#### Bibliography format/文献表著录格式
+#### 4.2 Bibliography format/文献表著录格式
 
 * <b>请问可以在参考文献表中实现类似于word那样的与文献内容等间距标签对齐格式么？</b>
 	
@@ -241,7 +241,7 @@ biblatex-7714-2015的顺序编码制样式特别设计了这样的环境，以�
 `\usepackage[backend=biber,bibstyle=gb7714-2015,gbpub=false]{biblatex}`
 
 		
-* <b>我觉得文献表中英文作者全部用大小不好看，请问能换一种大小写方式么？</b>
+* <b>我觉得文献表中英文作者全部用大写不好看，请问能换一种大小写方式么？</b>
 	
 能，通过设置gbnamefmt可以实现，默认情况下gbnamefmt=uppercase，作者姓名字母全部大写。
 当设置gbnamefmt=lowercase时，biblatex-gb7714-2015宏包对于bib文件中的作者姓名的大小写不做改变，
@@ -311,7 +311,7 @@ biblatex-gb7714-2015设计了两种多语言对照参考文献的实现方式，
 		
 	
 	
-#### Citation format/正文引用标注格式
+#### 4.3 Citation format/正文引用标注格式
 
 * <b>我希望在正文中同时使用上标和非上标的引用标签，该怎么操作？</b>
 	
