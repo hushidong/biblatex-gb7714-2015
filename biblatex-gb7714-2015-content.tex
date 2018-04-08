@@ -244,25 +244,61 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 \hline
   GB/T 7714-2015标准中的参考文献类型 &  biblatex中的条目类型\\ \hline
   专著& book\\
-  标准& standard\\
+  标准& standard/book or inbook with field note=standard\\
   专著中的析出文献& inbook\\
   连续出版物& periodical\\
   连续出版物的析出文献& article\\
-  报纸析出的文献& newspaper\\
+  报纸析出的文献& newspaper/article with field note=standard\\
   专利& patent\\
-  电子资源& online\\
+  电子资源& online/www/electronic\\
   会议录或会议文集& proceedings\\
-  会议文集中析出的文献& inproceedings\\
+  会议文集中析出的文献& inproceedings/conference\\
   汇编或论文集& collection\\
   汇编或论文集析出中的文献& incollection\\
-  学位论文& thesis\\
-  报告& report\\
+  学位论文& thesis/mastersthsis/phdthsis\\
+  报告& report/techreport\\
   手册或档案& manual\\
   未出版物& unpublished\\ \hline
   \end{tabular}
 \end{table}
 
-组成各个条目的不同数据域(字段)保存有参考文献的各部分内容，比如作者、标题、出版项、日期等等。各个数据域的录入应符合bib文件规范。\bc{需要注意: 有时直接从网络获取的参考文献信息中可能带有一些特殊字符比如\%，\&等，这些字符在tex中通常需要做转义处理，本样式中对像title，journal等常见的域中出现的特殊字符已经做了转义，但是一些不常见的域比如abstract等没有考虑，所以用户需要手动处理，例如把\%改为\textbackslash \%，否则可能导致出错}。下面详细介绍本样式中使用的域及其数据录入方式:
+
+组成各个条目的不同数据域(字段)保存有参考文献的各部分信息，比如作者、标题、出版项、日期等等，这些在标准中称为著录项目，
+其对应关系如表\ref{tab:entryfields}所示。需要注意的是，note域在本样式中也做特殊用途，即在book类型的note域中输入standard表示标准，在aritcle类型的note域中输入news表示报纸，当然也可以不做特殊用，而只是表示杂项信息，因为标准和报纸可以用standard和newspaper类型表示，尽管这两种类型不是biblatex原生的条目类型。而usera域用于表示参考文献类型和载体标识符，一般不用出现在bib文件中，而由样式文件自动处理得到，这也为了使bib文件更纯粹，也为了兼容不同的样式，因为如果在bib文件中给出usera域，如果某一样式需要使用usera域且用途不同，那么就会有兼容性问题。
+
+各个数据域的录入应符合bib文件规范。\bc{需要注意: 有时直接从网络获取的参考文献信息中可能带有一些特殊字符比如\%，\&等，这些字符在tex中通常需要做转义处理，本样式中对像title，journal等常见的域中出现的特殊字符已经做了转义，但是一些不常见的域比如abstract等没有考虑，所以用户需要手动处理，例如把\%改为\textbackslash \%，否则可能导致出错}。下面详细介绍本样式中使用的域及其数据录入方式:
+
+\begin{table}[!htb]
+\centering
+\caption{常见信息域}\label{tab:entryfields}
+\begin{tabular}{cl}
+\hline
+  GB/T 7714-2015中的文献著录项目 &  biblatex中的域\\ \hline
+  责任者 & author\\
+  题名 & title\\
+  译者 & translator\\
+  版本(主要用于出版物) & edition\\
+  版本(主要用于软件和手册) & version\\
+  出版地 & location/address\\
+  出版者 & publisher\\
+  出版者(大学和研究所) & institution/school\\
+  出版者(会议主办方、手册和电子资源出品方) & organization\\
+  日期 & date\\
+  日期(不可解析的日期) & year\\
+  页码 & pages\\
+  析出文献来源的责任者 & bookauthor\\
+  析出文献来源的标题 & booktitle\\
+  连续出版物题名(期刊名) & journal/journaltitle\\
+  期刊的卷 & volume\\
+  期刊的期/专利号等 & number\\
+  获取和访问路径 & url\\
+  引用日期 & urldate\\
+  数字对象标识符 & doi\\
+  杂项 & note\\
+  文献类型载体标识符 & usera\\
+   \hline
+  \end{tabular}
+\end{table}
 
 \begin{description}
   \item[author] 在biblatex中author域属于name数据类型，输入数据时，各姓名间用and 连接，当姓名过多省略时，用others代替。
