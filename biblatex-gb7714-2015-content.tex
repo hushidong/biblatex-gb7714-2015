@@ -18,6 +18,23 @@
 \section{概述}
 提供了符合GB/T 7714-2015~信息与文献~参考文献著录规则要求的biblatex参考文献样式。分为两种编制方式:一、顺序编码制；二、作者年制。主要特点包括:
 \begin{enumerate}
+  \item 兼容性
+
+自biblatex-gb7714-2015宏包发布以来，一直秉承兼容各版本biblatex的原则，可与所有biblatex 2.8(texlive2014) 以上版本配合使用。并解决在不同文档类特别是beamer类中使用问题。兼容一些老的参考文献类型，比如www/electronic/conference/mastersthsis/phdthsis/techreport/standard，并为报纸析出的文献新增加了newpaper类型。
+
+  \item 易用性
+
+从biblatex-gb7714-2015宏包设计的最开始就遵守尽可能让用户减少对于bib文件准备等方面的关注，用户可以很简单的输入或者从网络上下载(如百度学术、zotero等)参考文献信息然后直接使用，而不需要因为参考文献包的要求而特别地去修改增添参考文件信息，如参考文献类型和载体标识、语言等。并为用户提供全面、详实的说明，包括
+\href{https://github.com/hushidong/biblatex-gb7714-2015/wiki}{WIKI}，
+\href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography/blob/master/biblatex-solution-to-latex-bibliography.pdf}{LaTeX 文档参考文献的biblatex解决方案}等，以帮助用户更好的入门。
+
+  \item 灵活性
+
+biblatex-gb7714-2015宏包除了能提供严格遵守GB/T 7714-2015标准的格式外，还通过增加很多新的用户设置选项，使用户可以根据自己的需求很灵活调整参考文献表的生成。包括标签的对齐方式、出版项缺省时的处理、作者缺失时的处理、作者姓名格式的调整、文献类型和载体标识等信息的输出控制等。能通过标注和著录分别采用作者年制、顺序编码制样式实现特殊的参考文献格式，并尽最大可能利用biblatex的选项来实现用于的一些特殊需求，比如文献表中作者数量大于3、标注中严格仅给出第一作者的姓、参考文献表按拼音或笔画排序等等。
+\end{enumerate}
+
+具体来讲，完成了4个方面的工作:
+\begin{enumerate}
   \item 完成了GB/T 7714-2015标准的完整实现，包括两种编制方式下的各类型参考文献著录格式和标注格式等基本内容，还包括: 双语文献格式，带页码的标注格式，作者年制下仅有年的标注格式和文献按语言集中并自动排序，起止卷期自动解析，增加gbnoauthor选项控制作者年制责任者缺省的处理，增加gbpub选项控制出版信息缺省时的处理，增加gbalign选项控制顺序编码制文献表的标签对齐方式，提供右对齐、左对齐和项对齐三种方式。
   \item 实现了用户文献数据录入优化，用户在录入参考文献数据时，只需要录入文献的实际信息即可，不需要录入文献标识符和载体标识符，无需录入language或者其它域信息来区分中英文参考文献，实现中英文自动判断并处理。支持一些特殊或老的条目类型，比如standard，newspaper，www，mastersthesis，phdthesis等。
   \item 实现了对biblatex不同版本的兼容，能够应用于biblatex3.2以前的老版本，也能用于3.3版姓名处理方式改变后的版本。即可以与texlive2014/2015/2016/2017配合使用，无需升级biblatex情况下直接使用biblatex-gb7714-2015宏包(即本样式)。
