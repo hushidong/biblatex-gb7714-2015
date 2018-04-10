@@ -412,7 +412,7 @@ biber -l zh__stroke jobname
     * citestyle is gb7714-2015ay, bibstyle is gb7714-2015?
     * entry without author: the delimiter between title and year?
 	* more languages, to be compatible with language field in old bib file?
-	* wiki?
+	* more complex citation cmd?
 
 ---------------------------------------------------------
 
