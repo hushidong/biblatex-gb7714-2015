@@ -220,9 +220,9 @@ biber -l zh__stroke jobname
 
 > `\usepackage[backend=biber,citestyle=gb7714-2015ay,bibstyle=gb7714-2015]{biblatex}`
 
-* <b>请问我希望顺序编码的文献著录表以拼音排序，该怎么操作？</b>
+* <b>请问我还希望顺序编码的文献著录表以拼音排序，该怎么操作？</b>
 
-> 顺序编码文献著录表默认是按引用顺序排序，但可以通过设置sorting选项进行调整，比如sorting=nyt表示已作者姓名年份以及文献标题进行排序，比如:
+> 顺序编码文献著录表默认是按引用顺序排序，但可以通过设置sorting选项进行调整，比如sorting=nyt表示按作者姓名年份以及文献标题进行排序，比如:
 
 > `\usepackage[backend=biber,citestyle=gb7714-2015ay,bibstyle=gb7714-2015,sorting=nyt]{biblatex}`
 
