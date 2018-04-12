@@ -194,7 +194,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 > 一般情况下文献表是按引用顺序进行排列，标签是顺序的数字，这种方式称为顺序编码制。
 > 如果要以文献作者字母顺序排列，那么需要换一种编制方式，称为作者年制:
 		
-> `\usepackage[backend=biber,bibstyle=gb7714-2015ay]{biblatex}`
+> `\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}`
 		
 * <b>英文文献能按字母顺序排列，那么参考文献表中的中文文献能否以拼音或者笔画进行排序呢？</b>
 	
@@ -213,6 +213,23 @@ biber -l zh__stroke jobname
 > `\sort{%[direction=descending]`
 > 修改为:
 > `\sort[direction=descending]{%`
+
+* <b>我希望文献表以阿拉伯数字编号，而正文中的引用标签使用作者和年份标注而不是数字，请问我该如何处理？</b>
+
+> 可以设置不同的标注和著录样式，比如标注样式用作者年制，而著录样式用顺序编码制，比如:
+
+> `\usepackage[backend=biber,citestyle=gb7714-2015ay,bibstyle=gb7714-2015]{biblatex}`
+
+* <b>请问我希望顺序编码的文献著录表以拼音排序，该怎么操作？</b>
+
+> 顺序编码文献著录表默认是按引用顺序排序，但可以通过设置sorting选项进行调整，比如sorting=nyt表示已作者姓名年份以及文献标题进行排序，比如:
+
+> `\usepackage[backend=biber,citestyle=gb7714-2015ay,bibstyle=gb7714-2015,sorting=nyt]{biblatex}`
+
+> 同时，因为默认情况下中文字符排序是按unicode编码顺序进行排序，因此要按拼音排序，还需要使用biber的按拼音排序编译选项，比如:
+
+> `biber -l zh__pinyin jobname`
+
 		
 * <b>请问参考文献中存在一些特殊字符比如&或者一些特殊命令比如\LaTex{}是不是会出现问题？</b>
 	
@@ -304,7 +321,10 @@ biber -l zh__stroke jobname
 > 因此有两种方法:
 
 > 方法一，动态定义条目集:
+> 在导言区或正文中定义:
 > `\defbibentryset{易仕和，等，2013}{易仕和2013--,Yi2013--}
+
+> 在正文中引用:
 > 双语文献引用\cite{易仕和，等，2013}`
 
 > 方法二，动态定义关联条目:
@@ -316,7 +336,7 @@ biber -l zh__stroke jobname
 		
 	
 	
-#### 4.3 Citation format/正文引用标注格式
+#### 4.3 Citation format/正文引用的标注格式
 
 * <b>我希望在正文中同时使用上标和非上标的引用标签，该怎么操作？</b>
 	
@@ -329,10 +349,7 @@ biber -l zh__stroke jobname
 	
 > 需要给出年份的标签是作者年制的标签，可以使用命令`yearpagescite{bibtex}`给出仅包含年份和页码信息的标签，
 > 使用命令`yearcite{bibtex}`给出仅包含年份的标签。
-> 可以使用不同的命令来实现上标和非上标的标签，上标标签的命令为`\cite{bibtexkey}`，
-> 非上标标签的命令为`\parencite{bibtexkey}`。
-> 当希望上标的标签也给出国标要求的页码时，则可以使用`\pagescite[][50-55]{bibtexkey}`给出指定页码
-> 或者`\pagescite{bibtexkey}`使用bib文件中的页码信息。
+
 		
 * <b>请问希望正文中作者年制的标注(引用)标签中作者数量超过国标规定的1个时，该怎么处理？</b>
 	
