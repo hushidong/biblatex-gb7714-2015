@@ -70,7 +70,15 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 ## Applications
 
 * [SJTUThesis(上海交通大学学位论文模板)](https://github.com/sjtug/SJTUThesis)(母校的论文模板，不得不说缘分真的很神奇)
-* [ECNU-Undergraduate-LaTeX(华东师范大学本科毕业论文模板 )](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)
+* [fduthesis(复旦大学论文模板)](https://github.com/Stone-Zeng/fduthesis)
+* [ECNU-Undergraduate-LaTeX(华东师范大学本科毕业论文模板)](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)
+* [UCASthesis(中国科学院大学学位论文模板**国科大新版标准**)](https://github.com/xiaoyao9933/UCASthesis)
+* [nuaathesis(南京航空航天大学(非官方)本科生学位 LaTeX 模板)](https://github.com/nuaatug/nuaathesis)
+* [Study-LaTeX(LaTeX学习笔记)](https://github.com/Zousiyu/Study-LaTeX)
+* [LaTeX-template(开箱即用的 LaTeX 模板)](https://github.com/tsai1993/LaTeX-template)
+* [...]
+
+
 
 
 ## Related Links
