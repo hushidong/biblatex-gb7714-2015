@@ -20,17 +20,17 @@
 \begin{enumerate}
   \item 兼容性
 
-自biblatex-gb7714-2015宏包发布以来，一直秉承兼容各版本biblatex的原则，可与所有biblatex 2.8(texlive2014) 以上版本配合使用。并解决在不同文档类特别是beamer类中使用问题。兼容一些老的参考文献类型，比如www/electronic/conference/mastersthsis/phdthsis/techreport/standard，并为报纸析出的文献新增加了newpaper类型。
+自biblatex-gb7714-2015宏包发布以来，一直秉承兼容各版本biblatex的原则，可与biblatex v2.8 (contained in texlive2014) 以上所有版本配合使用。并解决在不同文档类特别是beamer类中的使用问题。兼容一些传统的参考文献条目类型，比如www/electronic/conference/mastersthsis/phdthsis/techreport/standard，并为报纸析出的文献新增加了newspaper类型。
 
   \item 易用性
 
-从biblatex-gb7714-2015宏包设计的最开始就遵守尽可能让用户减少对于bib文件准备等方面的关注，用户可以很简单的输入或者从网络上下载(如百度学术、zotero等)参考文献信息然后直接使用，而不需要因为参考文献包的要求而特别地去修改增添参考文件信息，如参考文献类型和载体标识、语言等。并为用户提供全面、详实的说明，包括
+从biblatex-gb7714-2015宏包设计的最开始就遵守尽可能让用户减少对于bib文件准备等方面的关注，用户可以很简单的输入或者从网络上下载(如各种学术、zotero等)参考文献信息然后直接使用，而不需要因为参考文献包的要求而特别地去修改增添参考文献信息，如参考文献类型和载体标识、语言等。并为用户提供全面、详实的说明，包括
 \href{https://github.com/hushidong/biblatex-gb7714-2015/wiki}{WIKI}，
-\href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography/blob/master/biblatex-solution-to-latex-bibliography.pdf}{LaTeX 文档参考文献的biblatex解决方案}等，以帮助用户更好的入门。
+\href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography/blob/master/biblatex-solution-to-latex-bibliography.pdf}{LaTeX 文档参考文献的biblatex解决方案}等文档，以帮助用户更好的入门。
 
   \item 灵活性
 
-biblatex-gb7714-2015宏包除了能提供严格遵守GB/T 7714-2015标准的格式外，还通过增加很多新的用户设置选项，使用户可以根据自己的需求很灵活调整参考文献表的生成。包括标签的对齐方式、出版项缺省时的处理、作者缺失时的处理、作者姓名格式的调整、文献类型和载体标识等信息的输出控制等。能通过标注和著录分别采用作者年制、顺序编码制样式实现特殊的参考文献格式，并尽最大可能利用biblatex的选项来实现一些特殊需求，比如文献表中作者数量大于3、标注中严格仅给出第一作者的姓、参考文献表按拼音或笔画排序等等。
+biblatex-gb7714-2015宏包除了提供严格遵守GB/T 7714-2015标准的格式外，还通过增加很多新的用户设置选项，使用户可以根据自己的需求很灵活地调整参考文献表的生成。包括标签的对齐方式、出版项缺省时的处理、作者缺省时的处理、作者姓名格式的调整、文献类型和载体标识等信息的输出控制等。能通过标注和著录分别采用作者年制、顺序编码制样式实现特殊的参考文献格式，并尽最大可能利用biblatex的选项来实现一些特殊需求，比如文献表中作者数量大于3、标注中严格仅给出第一作者的姓、参考文献表按拼音或笔画排序等等。
 \end{enumerate}
 
 具体来讲，完成了4个方面的工作:
