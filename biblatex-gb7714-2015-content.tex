@@ -10,8 +10,10 @@
 %\addcontentsline{toc}{section}{目录}
 \tableofcontents
 %\renewcommand{\numberline}[1]{#1~}
-\phantomsection
-\addcontentsline{toc}{section}{示例}
+%\phantomsection
+%\addcontentsline{toc}{section}{示例}
+\listoffigures
+\listoftables
 \listofegcode
 %------------------------------------------------------------
 
@@ -20,54 +22,94 @@
 \begin{enumerate}
   \item 兼容性
 
-自biblatex-gb7714-2015宏包发布以来，一直秉承兼容各版本biblatex的原则，可与biblatex v2.8 (contained in texlive2014) 以上所有版本配合使用。并解决在不同文档类特别是beamer类中的使用问题。兼容一些传统的参考文献条目类型，比如www/electronic/conference/mastersthsis/phdthsis/techreport/standard，并为报纸析出的文献新增加了newspaper类型。
+自biblatex-gb7714-2015宏包发布以来，一直秉承兼容各版本biblatex的原则，可与biblatex v2.8 (contained in texlive2014) 以上所有版本配合使用(注意 ctex2.9.4 的用户需升级 biblatex)。并解决在不同文档类特别是beamer类中的使用问题。兼容一些传统的参考文献条目类型，比如www/electronic/conference/mastersthsis/phdthsis/techreport/standard，并为报纸析出的文献新增加了newspaper类型。
 
   \item 易用性
 
-从biblatex-gb7714-2015宏包设计的最开始就遵守尽可能让用户减少对于bib文件准备等方面的关注，用户可以很简单的输入或者从网络上下载(如各种学术、zotero等)参考文献信息然后直接使用，而不需要因为参考文献包的要求而特别地去修改增添参考文献信息，如参考文献类型和载体标识、语言等。并为用户提供全面、详实的说明，包括
+从biblatex-gb7714-2015宏包设计的最开始就遵守尽可能让用户减少对于bib文件准备等方面的关注，用户可以很简单的输入或者从网络上下载(如各种学术、zotero等)参考文献信息然后直接使用，能够自动判断文献类型和载体并区分中英文，而不需要用户手动修改增添参考文献信息比如参考文献类型和载体标识、语言等。并为用户提供全面、详实的说明，包括条目类型、域、域信息输入方法以及
 \href{https://github.com/hushidong/biblatex-gb7714-2015/wiki}{WIKI}，
 \href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography/blob/master/biblatex-solution-to-latex-bibliography.pdf}{LaTeX 文档参考文献的biblatex解决方案}等文档，以帮助用户更好的入门。
 
   \item 灵活性
 
-biblatex-gb7714-2015宏包除了提供严格遵守GB/T 7714-2015标准的格式外，还通过增加很多新的用户设置选项，使用户可以根据自己的需求很灵活地调整参考文献表的生成。包括标签的对齐方式、出版项缺省时的处理、作者缺省时的处理、作者姓名格式的调整、文献类型和载体标识等信息的输出控制等。能通过标注和著录分别采用作者年制、顺序编码制样式实现特殊的参考文献格式，并尽最大可能利用biblatex的选项来实现一些特殊需求，比如文献表中作者数量大于3、标注中严格仅给出第一作者的姓、参考文献表按拼音或笔画排序等等。
+biblatex-gb7714-2015宏包除了提供严格遵守GB/T 7714-2015标准的格式外，还通过增加很多新的用户设置选项，使用户可以根据自己的需求很灵活地调整参考文献表的生成。包括标签的对齐方式(gbalign选项)、出版项缺省时的处理(gbpub选项)、作者缺省时的处理(gbnoauthor选项)、作者姓名格式的调整(gbnamefmt选项)、文献类型和载体标识的输出控制(gbtype选项)、双语对照文献表等。能通过标注和著录分别采用作者年制、顺序编码制样式实现特殊的参考文献格式，并尽最大可能利用biblatex的选项来实现一些特殊需求，比如文献表中作者数量大于3、标注中严格仅给出第一作者的姓、参考文献表按拼音或笔画排序等等。
 \end{enumerate}
 
-具体来讲，完成了4个方面的工作:
-\begin{enumerate}
-  \item 完成了GB/T 7714-2015标准的完整实现，包括两种编制方式下的各类型参考文献著录格式和标注格式等基本内容，还包括: 双语文献格式，带页码的标注格式，作者年制下仅有年的标注格式和文献按语言集中并自动排序，起止卷期自动解析，增加gbnoauthor选项控制作者年制责任者缺省的处理，增加gbpub选项控制出版信息缺省时的处理，增加gbalign选项控制顺序编码制文献表的标签对齐方式，提供右对齐、左对齐和项对齐三种方式。
-  \item 实现了用户文献数据录入优化，用户在录入参考文献数据时，只需要录入文献的实际信息即可，不需要录入文献标识符和载体标识符，无需录入language或者其它域信息来区分中英文参考文献，实现中英文自动判断并处理。支持一些特殊或老的条目类型，比如standard，newspaper，www，mastersthesis，phdthesis等。
-  \item 实现了对biblatex不同版本的兼容，能够应用于biblatex3.2以前的老版本，也能用于3.3版姓名处理方式改变后的版本。即可以与texlive2014/2015/2016/2017配合使用，无需升级biblatex情况下直接使用biblatex-gb7714-2015宏包(即本样式)。
-      \bc{当然 ctex2.9.4 的用户可能要升级一下biblatex，因为ctex多年没有更新，其中的biblatex版本过低}。
-  \item 测试了样式文件在book/report/article文档类以及beamer类下的适用性，结果表明均能满足要求。文档详细介绍了样式文件的使用方法和注意事项，说明了各条目类型的著录格式及其在biblatex 中对应信息域的构成，以及域信息的录入方法，并严格按照GB/T 7714-2015 标准测试了各种类型的文献。
-\end{enumerate}
+%具体来讲，完成了4个方面的工作:
+%\begin{enumerate}
+%  \item 完成了GB/T 7714-2015标准的完整实现，包括两种编制方式下的各类型参考文献著录格式和标注格式等基本内容，还包括: 双语文献格式，带页码的标注格式，作者年制下仅有年的标注格式和文献按语言集中并自动排序，起止卷期自动解析，增加gbnoauthor选项控制作者年制责任者缺省的处理，增加gbpub选项控制出版信息缺省时的处理，增加gbalign选项控制顺序编码制文献表的标签对齐方式，提供右对齐、左对齐和项对齐三种方式。
+%  \item 实现了用户文献数据录入优化，用户在录入参考文献数据时，只需要录入文献的实际信息即可，不需要录入文献标识符和载体标识符，无需录入language或者其它域信息来区分中英文参考文献，实现中英文自动判断并处理。支持一些特殊或老的条目类型，比如standard，newspaper，www，mastersthesis，phdthesis等。
+%  \item 实现了对biblatex不同版本的兼容，能够应用于biblatex3.2以前的老版本，也能用于3.3版姓名处理方式改变后的版本。即可以与texlive2014/2015/2016/2017配合使用，无需升级biblatex情况下直接使用biblatex-gb7714-2015宏包(即本样式)。
+%      \bc{当然 ctex2.9.4 的用户可能要升级一下biblatex，因为ctex多年没有更新，其中的biblatex版本过低}。
+%  \item 测试了样式文件在book/report/article文档类以及beamer类下的适用性，结果表明均能满足要求。文档详细介绍了样式文件的使用方法和注意事项，说明了各条目类型的著录格式及其在biblatex 中对应信息域的构成，以及域信息的录入方法，并严格按照GB/T 7714-2015 标准测试了各种类型的文献。
+%\end{enumerate}
 
-样式文件由如下文件构成:
+宏包文件结构如图\ref{fig:pkg:structure}所示:
+\begin{figure}[!htb]
+\centering
+\begin{tikzpicture}[node distance=1.5cm]
+%\definecolor{bluea}{rgb}{0.05,0.62,0.94}
+\ttfamily
+\node[align=center,fill=cyan,text width=4cm,inner sep=8pt] (project) {\textcolor{white}{Biblatex-gb7714-2015}};
 
-顺序编码制的 \zd{gb7714-2015.bbx}，\zd{gb7714-2015.cbx} 文件和作者年制的
-\zd{gb7714-2015ay.bbx}，\zd{gb7714-2015ay.cbx} 文件。
+\node[align=center,below of=project,draw=red,thick,text width=3.5cm] (manual) {\textcolor{red}{Manual of Package}};
+\node[align=center,left of=manual,xshift=-3cm,draw=blue,thick,text width=3.5cm] (style) {\textcolor{blue}{Style Files}};
+\node[align=center,right of=manual,xshift=3cm,draw=orange,thick,text width=3.5cm] (script) {\textcolor{orange}{Compiling Scripts}};
+\draw[color=cyan,thick] (project.south) -- (manual.north) ;
+\draw[color=cyan,thick] (style.north) -- ($(style.north)+(0mm,3mm)$) ;
+\draw[color=cyan,thick] (script.north) -- ($(script.north)+(0mm,3mm)$) ;
+\draw[color=cyan,thick] ($(style.north)+(0mm,3mm)$) -- ($(script.north)+(0mm,3mm)$);
 
-说明文档源文件包括:
+\node[below of=style,fill=cyan,yshift=0.5cm,xshift=2mm,text width=2cm] (numbbx) {\tiny \textcolor{white}{gb7715-2015.bbx}};
+\node[below of=numbbx,fill=cyan,yshift=8mm,text width=2cm] (numcbx) {\tiny \textcolor{white}{gb7715-2015.cbx}};
+\node[below of=numcbx,fill=cyan,yshift=8mm,text width=2cm] (aybbx) {\tiny \textcolor{white}{gb7715-2015ay.bbx}};
+\node[below of=aybbx,fill=cyan,yshift=8mm,text width=2cm] (aycbx) {\tiny \textcolor{white}{gb7715-2015ay.cbx}};
+\draw[color=blue,semithick] (numbbx.west) -- ($(numbbx.west)+(-3mm,0mm)$) ;
+\draw[color=blue,semithick] (numcbx.west) -- ($(numcbx.west)+(-3mm,0mm)$) ;
+\draw[color=blue,semithick] (aybbx.west) -- ($(aybbx.west)+(-3mm,0mm)$) ;
+\draw[color=blue,semithick] (aycbx.west) -- ($(aycbx.west)+(-3mm,0mm)$) ;
+\draw[color=blue,semithick] ($(aycbx.west)+(-3mm,0mm)$) -- ($(aycbx.west)+(-3mm,28.1mm)$) ;
 
-\zd{biblatex-gb7714-2015.tex}，\zd{eg*.tex}分别是本样式说明文档和测试用例。
+\node[below of=manual,fill=green!30!yellow,yshift=0.5cm,xshift=2mm,text width=2.8cm] (mtex) {\tiny \textcolor{red}{biblatex-gb7714-2015.tex}};
+\node[below of=mtex,fill=green!30!yellow,yshift=8mm,text width=2.8cm] (mpdf) {\tiny \textcolor{red}{biblatex-gb7714-2015.pdf}};
+\node[below of=mpdf,fill=green!30!yellow,yshift=8mm,text width=2.8cm] (egtex) {\tiny \textcolor{red}{example/eg*.tex}};
+\node[below of=egtex,fill=green!30!yellow,yshift=8mm,text width=2.8cm] (egbib) {\tiny \textcolor{red}{example/*.bib}};
+\draw[color=red,semithick] (mtex.west) -- ($(mtex.west)+(-3mm,0mm)$) ;
+\draw[color=red,semithick] (mpdf.west) -- ($(mpdf.west)+(-3mm,0mm)$) ;
+\draw[color=red,semithick] (egtex.west) -- ($(egtex.west)+(-3mm,0mm)$) ;
+\draw[color=red,semithick] (egbib.west) -- ($(egbib.west)+(-3mm,0mm)$) ;
+\draw[color=red,semithick] ($(egbib.west)+(-3mm,0mm)$) -- ($(egbib.west)+(-3mm,28.1mm)$) ;
 
-脚本文件包括:
+\node[below of=script,fill=yellow!60!brown,yshift=0.5cm,xshift=2mm,text width=2cm] (cpall) {\tiny \textcolor{blue}{makeall.bat/sh}};
+\node[below of=cpall,fill=yellow!60!brown,yshift=8mm,text width=2cm] (cpfil) {\tiny \textcolor{blue}{makefile.bat/sh}};
+\node[below of=cpfil,fill=yellow!60!brown,yshift=8mm,text width=2cm] (cpcln) {\tiny \textcolor{blue}{makeclear.bat/sh}};
+\node[below of=cpcln,fill=yellow!60!brown,yshift=8mm,text width=2cm] (plspt) {\tiny \textcolor{blue}{gb7714text*.pl/dat}};
+\draw[color=orange,semithick] (cpall.west) -- ($(cpall.west)+(-3mm,0mm)$) ;
+\draw[color=orange,semithick] (cpfil.west) -- ($(cpfil.west)+(-3mm,0mm)$) ;
+\draw[color=orange,semithick] (cpcln.west) -- ($(cpcln.west)+(-3mm,0mm)$) ;
+\draw[color=orange,semithick] (plspt.west) -- ($(plspt.west)+(-3mm,0mm)$) ;
+\draw[color=orange,semithick] ($(plspt.west)+(-3mm,0mm)$) -- ($(plspt.west)+(-3mm,28.1mm)$) ;
+\end{tikzpicture}
+\caption{宏包文件结构}\label{fig:pkg:structure}
+\end{figure}
 
-\zd{*.bat}和\zd{*.sh}分别是windows下和linux下的编译脚本。\zd{*.pl}是用来将gb7714格式的著录文献文本转换为bib文件的perl脚本，
-\zd{*.dat}是用于转换的测试文本文件。
+其中，\zd{gb7714-2015.bbx/cbx}、\zd{gb7714-2015ay.bbx/cbx}分别为顺序编码制和作者年制样式文件。
+\zd{biblatex-gb7714-2015.tex}，\zd{eg*.tex}为说明文档和测试用例。\zd{*.bat}、\zd{*.sh}分别为windows下和linux下的编译脚本。\zd{*.pl}为gb7714格式著录文献表到bib文件的perl转换脚本，\zd{*.dat}为转换测试文献表。
 
 \subsection{biblatex宏包的参考文献生成方法}
-biblatex生成参考文献有其优越性。笔者从最初开始学习latex时利用thebibliography环境生成参考文献，到后来对格式化参考文献有更多需求，开始寻求利用参考文献宏包，再到最后选择了使用biblatex宏包[也由于对bibtex语言不熟悉，偷懒不想学$( \hat{} \bot \hat{} )$]，经过大量的实践总结biblatex宏包参考文献生成的优点如下:
-
+笔者从最初开始学习latex时利用thebibliography环境生成参考文献，到后来对格式化参考文献有更多需求开始寻求利用参考文献宏包，再到最后选择使用biblatex宏包，越发感觉到biblatex生成参考文献具有的强大能力。经过大量实践，总结其优点如下:
+%[也由于对bibtex语言不熟悉，偷懒不想学$( \hat{} \bot \hat{} )$]
 \begin{enumerate}
 \item 使用简单。样式随宏包加载，参考文献源bib文件利用addbibresource加载，打印文献表利用printbibliography命令可以在文档任意位置打印。参考文献只需三步编译，第一遍xelatex，第二遍biber，第三遍xelatex，当然如果需要反向超链接，除设置backref 选项外，还需要第四遍xelatex。例\ref{eg:compile:cmd} 给出编译命令，其中xelatex命令也可以用mklatex -xelatex 代替，--synctex=-1选项也可以是-synctex=1。
 
-    \begin{codetex}{使用biblatex宏包的文档编译命令}{eg:compile:cmd}
+    \begin{example}{使用biblatex宏包的文档编译命令}{eg:compile:cmd}
+    \begin{texlist}
     xelatex --synctex=-1 jobname.tex
     biber jobname
     xelatex --synctex=-1 jobname.tex
     xelatex --synctex=-1 jobname.tex
-    \end{codetex}
+    \end{texlist}
+    \end{example}
 %使用够方便
 
 \item 划分自由。利用biblatex宏包可以在一个文档中生成任意数量的参考文献表，而不需要用include把分档划分成不同的文件来生成分章参考文献。利用refsection 和refsegment可以很方便地划分参考文献节，甚至还可以嵌套使用。
@@ -76,16 +118,20 @@ biblatex生成参考文献有其优越性。笔者从最初开始学习latex时�
 %处理无限制，支持更全面
 \item 支持全面。后端处理程序biber处理大数据量参考文献毫无压力，不用担心bibtex可能存在的内存不足等局限，字符编码也支持utf-8，完全支持中文的bibtex键(引用关键字)。此外，biber还具有根据拼音和笔画排序(例\ref{eg:sort:bibercmd})、输出引用文献的数据(例\ref{eg:bibercmd:outbibfile})等其它更多功能。
 
-        \begin{codetex}{中文文献排序时的biber选项}{eg:sort:bibercmd}
+        \begin{example}{中文文献排序时的biber选项}{eg:sort:bibercmd}
+        \begin{texlist}
         %按拼音排序，biber命令
         biber -l zh__pinyin jobname
         %按笔画排序，biber命令
         biber -l zh__stroke jobname
-        \end{codetex}
+        \end{texlist}
+        \end{example}
 
-        \begin{codetex}{输出引用文献数据时的biber选项}{eg:bibercmd:outbibfile}
+        \begin{example}{输出引用文献数据时的biber选项}{eg:bibercmd:outbibfile}
+        \begin{texlist}
         biber jobname.tex --output-format=bibtex
-        \end{codetex}
+        \end{texlist}
+        \end{example}
 
 
 \item 定制方便。biblatex宏包实现参考文献著录格式使用的是tex语言，相比传统的bibtex 语言学习更为容易。biblatex 提供了很多不同类型的参考文献标准样式，查看、参考和引用都很方便，因此定制起需要的参考文献格式也很便捷。
@@ -96,10 +142,13 @@ biblatex生成参考文献有其优越性。笔者从最初开始学习latex时�
 
 %上述这些优点也是笔者决定编写符合GB/T 7714-2015标准的参考文献样式文件的原因之一。
 
-下面直接给出最小工作示例的tex源文档(例\ref{code:doc:structrue})，用以简单介绍biblatex宏包参考文献生成的一般方法。给出的详细注释，说明了使用biblatex的文档基本结构，所有基于biblatex生成参考文献的文档无论大小万变不离其宗，当然除tex文档外另需准备保存参考文献信息的bib文件(详见\ref{sec:bib:bibtex}节)。要进一步了解biblatex参考文献生成相关内容可以参考: biblatex宏包手册或者LaTeX 文档中文参考文献的biblatex解决方案
+下面直接给出最小工作示例用以简单介绍biblatex宏包参考文献生成的一般方法。例\ref{code:doc:structrue}的tex源文档给出的详细注释，说明了使用biblatex的tex文档基本结构，所有基于biblatex生成参考文献的文档无论大小万变不离其宗，当然除tex文档外另需准备保存参考文献信息的bib文件(详见\ref{sec:bib:bibtex}节)。要更全面深入得了解biblatex参考文献生成，可以参考: biblatex宏包手册\footnote{地址:\url{https://github.com/plk/biblatex}}、
+中文版\footnote{地址:\url{https://github.com/hushidong/biblatex-zh-cn}}
+或者LaTeX 文档中文参考文献的biblatex解决方案
 \footnote{地址:\url{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}}。
 
-\begin{codetex}{biblatex参考文献生成最小工作示例}{code:doc:structrue}
+\begin{example}{biblatex参考文献生成最小工作示例}{code:doc:structrue}
+\begin{texlist}
 \documentclass{article}%文档类
 %导言区开始:
 %加载ctex宏包，中文支持
@@ -126,28 +175,35 @@ citestyle=gb7714-2015%,backref=true%
 %打印参考文献表
 \printbibliography[heading=bibliography,title=参考文献]
 \end{document}
-\end{codetex}
+\end{texlist}
+\end{example}
 
 
 \subsection{gb7714-2015样式加载方式和选项说明}
-\subsubsection{样式加载方式}
+\subsubsection{加载方式}
 例\ref{code:doc:structrue}中给出了宏包和样式的基本加载方式，gb7714-2015样式类似。注意，当著录样式bibstyle和标注样式citestyle相同时，两者可以合并为一个选项style。比如:
 
-\begin{codetex}{gb7714-2015顺序编码制加载方式}{eg:gb7714numeric}
+\begin{example}{gb7714-2015顺序编码制加载方式}{eg:gb7714numeric}
+\begin{texlist}
 \usepackage[backend=biber,bibstyle=gb7714-2015,citestyle=gb7714-2015]{biblatex}
 %如果要设置参考文献表序号标签对齐方式的话请设置gbalign选项，如果要取消缺省出版项自动填补的话设置gbpub=false，比如:
 \usepackage[backend=biber,style=gb7714-2015,gbalign=left,gbpub=true]{biblatex}
-\end{codetex}
+\end{texlist}
+\end{example}
 
-\begin{codetex}{gb7714-2015作者年制加载方式}{eg:gb7714authoryear}
+\begin{example}{gb7714-2015作者年制加载方式}{eg:gb7714authoryear}
+\begin{texlist}
 \usepackage[backend=biber,style=gb7714-2015ay]{biblatex}
 %如果要取消缺省出版项自动填补的话设置gbpub=false，如果要使用佚名或NOAUTHOR代替补充缺失的author信息可以设置gbnoauthor=true，比如:
 \usepackage[backend=biber,style=gb7714-2015ay,gbpub=true,gbnoauthor=true]{biblatex}
-\end{codetex}
+\end{texlist}
+\end{example}
 
-\begin{codetex}{参考文献文本转换为bib文件perl脚本使用方式}{eg:transtobib}
+\begin{example}{参考文献文本转换为bib文件perl脚本使用方式}{eg:transtobib}
+\begin{texlist}
 perl gb7714texttobib.pl in=textfilename out=bibfilename
-\end{codetex}
+\end{texlist}
+\end{example}
 
 \subsubsection{增加的选项}\label{sec:added:opt}
 gb7714-2015样式增加了部分用于控制标签对齐、出版项缺省处理、责任者(作者)缺省处理的选项，使用方式与biblatex宏包选项完全相同:
@@ -405,7 +461,8 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 %顺序编码制的标注样式文件大体使用标准引用样式numeric-comp的内容
 顺序编码制的标注样式大体使用标准标注样式numeric，仅对cite等部分命令做了修改。为满足GB/T 7714-2015第10.1.3节的要求，增加了pagescite命令。为方便在同一文章中同时使用上标和非上标的标注方式，仅将cite命令修改为上标模式，而parencite保留标准样式提供的非上标模式。这些命令使用方式如下:
 
-\begin{codetex}{顺序编码制cbx样式命令使用说明}{eg:citefornumeric}
+\begin{example}{顺序编码制cbx样式命令使用说明}{eg:citefornumeric}
+\begin{texlist}
 不带页码的引用(上标，方括号包围):
     \cite{Peebles2001-100-100}
 不带页码的引用(非上标，方括号包围):
@@ -415,7 +472,8 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
     \pagescite{Peebles2001-100-100}  \pagescite[][201-301]{Peebles2001-100-100}
 在页脚中引用和打印文献表:
     \footnote{在脚注中引用\footcite{赵学功2001--}}  \footfullcite{赵学功2001--}
-\end{codetex}
+    \end{texlist}
+\end{example}
 
 其中，当不指定页码时，pagescite命令默认调用参考文献的页码数据进行输出，如果需要指定页码，那么需要在第二个[]内输入页码内容。
 
@@ -423,7 +481,8 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 %作者年制的标注样式文件大体使用标准引用样式authoryear的内容。
 作者年制的标注样式情况类似。对cite，parencite进行了修改，将引用标签用圆括号括起来。为满足GB/T 7714-2015第10.2.4节的要求，增加了pagescite命令。为满足GB/T 7714-2015第10.2.1节的要求，增加了yearpagescite命令用于处理文中已有作者信息只需要年份和页码的情况(为兼容考虑，顺序编码制也给出该命令，但作用与pagescite命令相同)。使用方式如下:
 
-\begin{codetex}{作者年制cbx样式命令使用说明}{eg:citeforauthoryear}
+\begin{example}{作者年制cbx样式命令使用说明}{eg:citeforauthoryear}
+\begin{texlist}
 不带页码的引用:
     \cite{Peebles2001-100-100}  \parencite{Miroslav2004--}
 带页码的引用:
@@ -438,7 +497,8 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
     见赵耀东(\citeyear{赵耀东1998--})
 在页脚中引用和打印文献表:
     \footnote{在脚注中引用\footcite{赵学功2001--}} \footfullcite{赵学功2001--}
-\end{codetex}
+    \end{texlist}
+\end{example}
 
 各引用命令的效果见\ref{sec:test:book}，\ref{sec:cite:cmd:test}节。
 
@@ -499,9 +559,11 @@ gb7714-2015.bbx是按照GB/T 7714-2015要求实现的biblatex参考文献著录�
 \end{refentry}
 
 其对应的biblatex数据域为:
-\begin{codetex}{专著/book条目的域格式}{eg:bookfieldfmt}
+\begin{example}{专著/book条目的域格式}{eg:bookfieldfmt}
+\begin{texlist}
 author.title[usera].translator.edition.location:publisher,date或year:pages[urldate].url.doi
-\end{codetex}
+\end{texlist}
+\end{example}
 
 其中标题相关的附加信息除了可以直接在title域中录入外，还可以在subtitle或titleaddon域中添加，后面出现的booktitle，journaltitle，也有类似情况，可以在booktitleaddon或者journalsubtitle中附加信息。其中出版地用location域表示，也可以用传统的address表示，biblatex将address作为location的别名处理，使用两者中的任何一个都可以表示出版地信息。\bc{特别强调:usera域不用录入，该域内容由bbx样式文件根据条目类型自动处理得到。}
 
@@ -521,9 +583,11 @@ author.title[usera].translator.edition.location:publisher,date或year:pages[urld
 \end{refentry}
 
 其对应的biblatex数据域为:
-\begin{codetex}{标准/standard条目的域格式}{eg:standardfieldfmt}
+\begin{example}{标准/standard条目的域格式}{eg:standardfieldfmt}
+\begin{texlist}
 author.title[usera](//bookauthor.booktitle).edition.location:publisher,date或year:pages[urldate].url.doi
-\end{codetex}
+\end{texlist}
+\end{example}
 
 
 \subsubsection{专著中的析出文献/inbook}
@@ -535,9 +599,11 @@ author.title[usera](//bookauthor.booktitle).edition.location:publisher,date或ye
 \end{refentry}
 
 其对应的biblatex数据域为:
-\begin{codetex}{专著析出文献/inbook条目的域格式}{eg:inbookfieldfmt}
+\begin{example}{专著析出文献/inbook条目的域格式}{eg:inbookfieldfmt}
+\begin{texlist}
 author.title[usera]//bookauthor.booktitle.edition.location:publisher,date或year:pages[urldate].url.doi
-\end{codetex}
+\end{texlist}
+\end{example}
 
 \subsubsection{连续出版物/periodical}
 \begin{refentry}{}{}
@@ -548,9 +614,11 @@ author.title[usera]//bookauthor.booktitle.edition.location:publisher,date或year
 \end{refentry}
 
 其对应的biblatex数据域为:
-\begin{codetex}{连续出版物/periodical条目的域格式}{eg:periodicalfieldfmt}
+\begin{example}{连续出版物/periodical条目的域格式}{eg:periodicalfieldfmt}
+\begin{texlist}
 author/editor.title[usera].year或date,volume(number)-endyear, endvolume(endnumber).location:institution,date或year[urldate].url.doi
-\end{codetex}
+\end{texlist}
+\end{example}
 
 其中连续出版物的出版者用institution表示。
 \bc{需要注意: 因为连续出版物可能用到两个日期，两个卷，两个期，所以录入数据时需要特别处理。不需要录入endyear等信息，只需要在到year或date域录入日期，由biber自动解析，两个日期之间用/分隔。而卷和期由于可能有合订模式，合订卷期之间用/分隔(参考GB/T 7714-2015第8.8.3节)，因此如果需要解析有起止范围的卷和期，录入到volume和number域的信息中起止值之间应用-分隔}。
@@ -564,9 +632,11 @@ author/editor.title[usera].year或date,volume(number)-endyear, endvolume(endnumb
 \end{refentry}
 
 其对应的biblatex数据域为:
-\begin{codetex}{连续出版物析出文献/article条目的域格式}{eg:articlefieldfmt}
+\begin{example}{连续出版物析出文献/article条目的域格式}{eg:articlefieldfmt}
+\begin{texlist}
 author.title[usera].journaltitle或journal,year,volume(number):pages[urldate].url.doi
-\end{codetex}
+\end{texlist}
+\end{example}
 
 \qd{需要注意:由于biblatex不支持newspaper 条目类型，所以条目类型报纸析出的文献用article表示，但使用note域等于news作为一个区分，当note域数据存在且内容等于news时，就将其作为报纸的析出文献进行处理。报纸文献类型标识用N表示，报纸的版次用number域描述。}
 
@@ -585,9 +655,11 @@ biblatex没有将报纸的析出文献(newspaper)作为一种文献条目类型�
 \end{refentry}
 
 其对应的biblatex数据域为:
-\begin{codetex}{报纸析出的文献/newspaper条目的域格式}{eg:newspaperfieldfmt}
+\begin{example}{报纸析出的文献/newspaper条目的域格式}{eg:newspaperfieldfmt}
+\begin{texlist}
 author.title[usera].journaltitle或journal,date(number)[urldate].url.doi
-\end{codetex}
+\end{texlist}
+\end{example}
 
 \subsubsection{专利/patent}
 \begin{refentry}{}{}%[break at=3cm/0pt]
@@ -598,9 +670,11 @@ author.title[usera].journaltitle或journal,date(number)[urldate].url.doi
 \end{refentry}
 
 其对应的biblatex数据域为:
-\begin{codetex}{专利文献/patent条目的域格式}{eg:patentfieldfmt}
+\begin{example}{专利文献/patent条目的域格式}{eg:patentfieldfmt}
+\begin{texlist}
 author.title:number[usera].date或year[urldate].url.doi
-\end{codetex}
+\end{texlist}
+\end{example}
 
 \subsubsection{电子资源/online}
 \begin{refentry}{}{}%[break at=0.4cm/0pt]
@@ -611,9 +685,11 @@ author.title:number[usera].date或year[urldate].url.doi
 \end{refentry}
 
 其对应的biblatex数据域为:
-\begin{codetex}{电子资源/online/electronic/www条目的域格式}{eg:onlinefieldfmt}
+\begin{example}{电子资源/online/electronic/www条目的域格式}{eg:onlinefieldfmt}
+\begin{texlist}
 author.title[usera].organization,date或year:pages(date/enddate/eventdate)[urldate].url.doi
-\end{codetex}
+\end{texlist}
+\end{example}
 
 注意: 尽管GB/T 7714-2015中给出的著录格式包含出版地和出版者，但通常情况下具有出版地和出版者的文献会归类到其它条目类型中，至于存在的url信息，只要标识文献载体即可，即一般情况下(出版地:出版者,出版年:引文页码)这些信息很少出现在online[EB]条目中。因此默认情况下，gb7714-2015样式只处理出现organization中的出版项信息，此外用date表示更新或修改日期，urldate表示引用(访问)日期。如果出现复杂情况，更新或修改日期还可以利用enddate/eventdate表示。
 
@@ -658,9 +734,11 @@ author.title[usera].organization,date或year:pages(date/enddate/eventdate)[urlda
 \end{refentry}
 
 其对应的biblatex数据域为:
-\begin{codetex}{学位论文/thesis/mastersthesis/phdthesis条目的域格式}{eg:thesisfieldfmt}
+\begin{example}{学位论文/thesis/mastersthesis/phdthesis条目的域格式}{eg:thesisfieldfmt}
+\begin{texlist}
 author.title[usera].translator.location:institution,date或year:pages[urldate].url.doi
-\end{codetex}
+\end{texlist}
+\end{example}
 
 注意: thesis和后面report及manual的出版者用institution域表示，体现的是机构而不是一般的出版社。
 
@@ -674,9 +752,11 @@ author.title[usera].translator.location:institution,date或year:pages[urldate].u
 \end{refentry}
 
 其对应的biblatex数据域为:
-\begin{codetex}{报告/report/techreport条目的域格式}{eg:reportfieldfmt}
+\begin{example}{报告/report/techreport条目的域格式}{eg:reportfieldfmt}
+\begin{texlist}
 author.title[usera].translator.type number.version.location:institution,date 或year:pages[urldate].url.doi
-\end{codetex}
+\end{texlist}
+\end{example}
 
 注意:因为有的报告文献可能存在类型和报告号信息，比如AIAA 9076或AD 730029等，所以著录格式需要有所体现，而这两个数据体现在type和number两个域中，或者在version域中体现也可，而对于标题中的出现的报告号，可以直接在标题或子标题或者附加标题中体现。
 需要注意: report和后面manual的版本信息放在version域中，而不是book等条目的edition域中。
@@ -704,21 +784,26 @@ author.title[usera].translator.type number.version.location:institution,date 或
 
 使用条目集类型(set)时，有静态和动态两种方法:
 动态方法使用更为方便，在写文档时候，直接利用defbibentryset设置双语文献的set，然后引用set的bibtex键。比如:
-\begin{codetex}{设置set条目集用于双语文献动态方法}{eg:setforbilangentry}
+\begin{example}{设置set条目集用于双语文献动态方法}{eg:setforbilangentry}
+\begin{texlist}
 \defbibentryset{bilangyi2013}{易仕和2013--,Yi2013--}
 专著，双语文献引用\cite{bilangyi2013}
-\end{codetex}
+\end{texlist}
+\end{example}
 
 得到的参考文献打印结果见\ref{sec:test:book}节的参考文献表。\bc{需要注意的是:因为set条目类型除了子条目关键词信息外，并无其他信息，因此它的标注标签通常会是空的。这个问题目前的解决方法是设置一个指定格式和内容中间无空格无英文逗号的关键字，用它来作为标签，这个问题与biblatex版本有关，v3.7及之前版本没有这个问题，因为set中还带有第一个子条目的信息，但v3.8及以上版本就不行了}。比如:
-\begin{codetex}{设置set条目集用于双语文献动态方法}{eg:setforbilangentry}
+\begin{example}{设置set条目集用于双语文献动态方法}{eg:setforbilangentry}
+\begin{texlist}
 \defbibentryset{易仕和，等，2013}{易仕和2013--,Yi2013--}
 专著，双语文献引用\cite{易仕和，等，2013}
-\end{codetex}
+\end{texlist}
+\end{example}
 注意到“易仕和，等，2013”中的逗号是中文全角逗号，这样使得“易仕和，等，2013”以一个整体字符串当作关键字，而不会被分开解析。但是这种解决方案中的中文全角逗号与其它标签的英文逗号的差异使得该问题并没有完美解决。对于v3.8及以上版本，可以利用后面介绍的关联(related)方法来解决，或者也可以用静态方法手动添加标签来解决。
 
 静态方法是在bib源文件中给出条目集(set)并使用biber后端进行解析，条目的域信息采用如下方法定义:
 %当使用bibtex后端时，则需要进一步设置，具体参考biblatex宏包说明文档。
-\begin{codetex}{设置set条目集用于双语文献静态方法}{eg:set:static}
+\begin{example}{设置set条目集用于双语文献静态方法}{eg:set:static}
+\begin{texlist}
 @Set{set1,
 entryset = {key1,key2,key3},
 }
@@ -726,11 +811,13 @@ entryset = {key1,key2,key3},
 @Set{bilangyi2013,
 entryset = {易仕和2013--,Yi2013--},
 }
-\end{codetex}
+\end{texlist}
+\end{example}
 
 需要注意，使用静态条目集时，如果仅采用上述这般简单设置，中文排序会出现问题，条目集会出现在文献表末尾，这是因为条目集没有设置userb域用于排序，而通常的条目都是利用动态数据修改设置了userb域，在biber运行中因为要解析文献集，所以无法对userb域进行处理。但动态方法没有这一问题，因为其解析过程直接会利用第一个子条目的排序信息。静态方法的这个问题可以在set条目中手动设置userb域来修正。此外，对于v3.8以上版本的biblatex，无论动态方法还是静态方法，条目集不复制第一个子条目信息，因此引用时也无法生成标注标签，这就是前面介绍动态方法时讨论过的问题，该问题也可以通过在set条目中手动设置label域来解决。比如:
 
-\begin{codetex}{在bib文件中正确设置set条目集的静态方法}{eg:set:staticright}
+\begin{example}{在bib文件中正确设置set条目集的静态方法}{eg:set:staticright}
+\begin{texlist}
 %在bib文件中静态设置set条目如下，其中:
 %手动设置userb域用于解决排序问题
 %手动设置label域用于解决标注标签问题
@@ -739,7 +826,8 @@ entryset = {易仕和2013--,Yi2013--},
 label={易仕和, 等, 2013},
 userb={cn}
 }
-\end{codetex}
+\end{texlist}
+\end{example}
 
 还要注意的是，\emph{动态set条目集等价于使用nocite命令，因此只要定义了动态条目集的文献都会出现在文献表中，因此如果不引用相应的文献，那么就不应该对其定义动态条目集}。
 
@@ -749,7 +837,8 @@ userb={cn}
 
 静态方法很简单，bib文件中条目设置如例\ref{eg:related:staticright}所示，它能解决双语同时显示的问题，也能解决排序和标注标签问题，唯一的问题在于修改了bib文件后当不需要双语文献时，它还需要改回来，这会带来不便，因此可以考虑下面的动态方法，但要注意动态方法需要利用多个DeclareStyleSourcemap，因此该方法只适用于biblatex3.7及以上版本。
 
-\begin{codetex}{在bib文件中正确设置关联条目的静态方法}{eg:related:staticright}
+\begin{example}{在bib文件中正确设置关联条目的静态方法}{eg:related:staticright}
+\begin{texlist}
 %在bib文件中静态设置条目如下，其中:
 %易仕和2013--条目中增加了related域用于关联其对应的英文条目Yi2013--
 @Book{易仕和2013--,
@@ -767,12 +856,15 @@ userb={cn}
   Publisher                = {National Defense Industry Press},
   Year                     = {2013}
 }
-\end{codetex}
+\end{texlist}
+\end{example}
 
 动态方法利用动态数据修改自动添加related域，避免对bib文件做直接修改。本样式中对该过程进行了封装，定义一个新的命令defdoublelangentry，例如:
-\begin{codetex}{设置关联条目的动态方法}{eg:related:dynamic}
+\begin{example}{设置关联条目的动态方法}{eg:related:dynamic}
+\begin{texlist}
 \defdoublelangentry{易仕和2013--}{Yi2013--}
-\end{codetex}
+\end{texlist}
+\end{example}
 
 使用该命令后，可以引用主条目“易仕和2013--”生成双语文献。但要注意由于DeclareStyleSourcemap命令只能在导言区中使用，因此defdoublelangentry命令也只能出现在导言区中，这也是相比条目集动态方法的唯一遗憾。
 实现的具体细节见\ref{sec:data:mdf:forrelated}节。
@@ -1715,7 +1807,8 @@ biblatex很多命令都有类似的方式。
 \subsection{作者格式控制}\label{sec:name:fmt}
 \zhongdian{【注意】：texlive2015中的biblatex版本是3.0，texlive2016中biblatex的版本是3.4，新版本对于名字域打印有了较大变化(即不同版本的biblatex对于DeclareNameFormat的输入参数处理有所不同，如例\ref{eg:name:variables}所示)，所以需做相应的修改，为此在biblatex中首先进行版本判断，然后根据版本不同分别进行设置。}
 
-    \begin{codetex}{texlive2016中biblatex3.4版Name域格式输入参数的修改}{eg:name:variables}
+    \begin{example}{texlive2016中biblatex3.4版Name域格式输入参数的修改}{eg:name:variables}
+    \begin{texlist}
     for biblatex version 3.0
     #1 The last names.
     #2 The last names, given as initials.
@@ -1734,7 +1827,8 @@ biblatex很多命令都有类似的方式。
     \namepartprefixi
     \namepartsuffix
     \namepartsuffixi
-    \end{codetex}
+    \end{texlist}
+    \end{example}
     样式文件中的处理见\ref{sec:name:fmt:out}节。
 
 \subsubsection{作者信息输出与格式控制}\label{sec:name:fmt:out}

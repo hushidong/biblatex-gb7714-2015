@@ -1,19 +1,25 @@
 \usepackage{expl3,etoolbox,ifthen,xstring}
 \usepackage{xltxtra,mflogo,texnames}
-\usepackage{ctex}
+\usepackage[zihao=5]{ctex}
 \ctexset{today=old}
 \let\kaiti=\kaishu
 \usepackage{xeCJKfntef}
+
 \usepackage[paperwidth=210mm,paperheight=290mm,left=20mm,right=20mm,top=25mm, bottom=15mm,showcrop
 ]{geometry}%定义版面showframe,
+
 \usepackage[colorlinks=true,%
 pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}  %书签功能，选项去掉链接红色方框
-\usepackage{titleref} %标题引用
 %linkcolor=black,linkcolor=green,blue,red,cyan, magenta,
 %yellow, black, gray,white, darkgray, lightgray, brown,
 %lime, olive, orange, red,purple, teal, violet.
 %CJKbookmarks,bookmarksnumbered=true,
+\usepackage{titleref} %标题引用
+
+
 %\usepackage[unit=cm,type=lowerleft,showframe=true,hshift=2cm,vshift=1.5cm]{fgruler}
+
+
 \usepackage{titlesec}
 %\titlespacing*{hcommandi}{hlefti}{hbefore-sepi}{hafter-sepi}[hright-sepi]
 \titlespacing*{\section}{0pt}{\baselineskip}{0.5\baselineskip}
@@ -44,92 +50,99 @@ pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
 \captionstyle{\centering} %\captionstyle{<style>} style are: \centering, \raggedleft or \raggedright
 %\precaption{\rule{\linewidth}{0.4pt}\par}
 %\postcaption{\vspace{-1cm}}
-\setlength{\belowcaptionskip}{2pt} %设置caption上下间距
+\setlength{\belowcaptionskip}{2pt}%设置caption上下间距
 \setlength{\abovecaptionskip}{0pt}
-%\setlength{\abovelegendskip}{0pt}  %设置legend上下间距
+%\setlength{\abovelegendskip}{0pt} %设置legend上下间距
 %\setlength{\belowlegendskip}{0pt}
 %新的浮动体设置
-\newcommand{\listegcodename}{示~~ 例}%listegcodename，新环境目录的标题
+\newcommand{\listegcodename}{\centerline{示~~例}}%listegcodename，新环境目录的标题
 \newcommand{\egcodename}{示例}%egcodename，新环境标题的图序
 \newfloatlist{egcode}{loc}{\listegcodename}{\egcodename}%loc，写入条目的文件的扩展名
 \newfixedcaption{\codecaption}{egcode}%egcode，环境名
-%新的浮动体目录命令
-%可以设置\cftbeforeZtitleskip，\cftafterZtitleskip长度，比如：
+
+%目录命令
+\setlength{\cftbeforetoctitleskip}{\baselineskip}
+\setlength{\cftaftertoctitleskip}{0.5\baselineskip}
+\setlength{\cftbeforeloftitleskip}{\baselineskip}
+\setlength{\cftafterloftitleskip}{0.5\baselineskip}
+\setlength{\cftbeforelottitleskip}{\baselineskip}
+\setlength{\cftafterlottitleskip}{0.5\baselineskip}
 \setlength{\cftbeforeloctitleskip}{\baselineskip}
 \setlength{\cftafterloctitleskip}{0.5\baselineskip}
-%可以设置\cftZtitlefont字体样式比如
-\renewcommand{\cftloctitlefont}{\hfill\Large\heiti}
-\renewcommand{\cftafterloctitle}{\hfill}
+%\renewcommand\contentsname{\hfill 目~~ 录 \hfill \hspace{1cm}} %用这一句也是一样的。
+\renewcommand{\cfttoctitlefont}{\zihao{-3}\heiti}
+\renewcommand{\cftaftertoctitle}{}
+\renewcommand{\cftloftitlefont}{\zihao{-3}\heiti}
+\renewcommand{\cftafterloftitle}{}
+\renewcommand{\cftlottitlefont}{\zihao{-3}\heiti}
+\renewcommand{\cftafterlottitle}{}
+\renewcommand{\cftloctitlefont}{\zihao{-3}\heiti}
+\renewcommand{\cftafterloctitle}{}
+\renewcommand{\contentsname}{\centerline{目~~录}}
+\renewcommand{\listfigurename}{\centerline{图~~片}}
+\renewcommand{\listtablename}{\centerline{表~~格}}
+\renewcommand{\cftsecfont}{\zihao{5}\heiti} %条目样式
+\renewcommand{\cftsubsecfont}{\zihao{5}\fangsong} %条目样式
+\renewcommand{\cftsubsubsecfont}{\zihao{-5}\songti} %条目样式
+%−−−−−−−−−−设置egcode条目样式−−−−−−−−−−−−−−−−−−−−−−
+%\renewcommand{\cftegcodeleader}{\leaders\hbox to 1em{\hss.\hss}\hfill}
+\setlength{\cftbeforeegcodeskip}{0.1ex} %条目前的间距
+\setlength{\cftegcodeindent}{0em} %条目缩进
+\setlength{\cftegcodenumwidth}{2.5em} %条目标签宽度
+\renewcommand{\cftegcodefont}{\color{blue}\fangsong} %条目样式
 \renewcommand{\cftegcodepresnum}{例}
 \renewcommand{\cftegcodeaftersnum}{.}
 \renewcommand{\cftegcodeaftersnumb}{~}
-\cftsetindents{egcode}{0em}{3em}
-\setlength{\cftbeforeegcodeskip}{1pt}%各条目的垂直间距
-\renewcommand{\cftegcodepagefont}{\bfseries}
-\setlength{\cftbeforetoctitleskip}{\baselineskip}
-\setlength{\cftaftertoctitleskip}{0.5\baselineskip}
-%目录命令
-\renewcommand{\cfttoctitlefont}{\hfill\Large\heiti}
-\renewcommand{\cftaftertoctitle}{\hfill\hspace{0.1cm}}
-\renewcommand\contentsname{目~~ 录}
-\renewcommand{\cftsecleader}{\leaders\hbox to 1em{\hss.\hss}\hfill}
-\setlength{\cftbeforesecskip}{2mm}
-\renewcommand{\cftsecfont}{\songti}
+%\cftsetindents{egcode}{0em}{3em}
+%\renewcommand{\cftegcodepagefont}{\bfseries}
+%−−−−−−−−−−设置figure条目样式−−−−−−−−−−−−−−−−−−−−−−
+%\newcommand{\cftfigfill}{\renewcommand{\cftdot}{$\diamond$}\cftdotfill{\cftdotsep}}
+\setlength{\cftbeforefigskip}{0.1ex} %条目前的间距
+\setlength{\cftfigindent}{0em} %条目缩进
+\setlength{\cftfignumwidth}{2.5em} %条目标签宽度
+\renewcommand{\cftfigfont}{\color{blue}\fangsong} %条目样式
+\renewcommand{\cftfigpresnum}{图} %条目数字前的内容
+\renewcommand{\cftfigaftersnum}{.} %条目数字后的内容
+\renewcommand{\cftfigaftersnumb}{~} %条目数字后的第二个内容
+%\renewcommand{\cftfigdotsep}{\cftdotsep} %连接符之间的宽度
+%\renewcommand{\cftfigleader}{\bfseries\cftfigfill} %连接符粘连团
+%\renewcommand{\cftfigpagefont}{\color{red}\zihao{-5}$\diamond$\itshape} %页码的样式
+%\renewcommand{\cftfigafterpnum}{\color{red}$\diamond$} %页码后内容
+%−−−−−−−−−−设置table条目样式−−−−−−−−−−−−−−−−−−−−−−
+%\newcommand{\cfttabfill}{\renewcommand{\cftdot}{$\infty$}\cftdotfill{\cftdotsep}}
+\setlength{\cftbeforetabskip}{0.1ex} %条目前的间距
+\setlength{\cfttabindent}{0em} %条目缩进
+\setlength{\cfttabnumwidth}{2.5em} %条目标签宽度
+\renewcommand{\cfttabfont}{\color{blue}\fangsong} %条目样式
+\renewcommand{\cfttabpresnum}{表} %条目数字前的内容
+\renewcommand{\cfttabaftersnum}{.} %条目数字后的内容
+\renewcommand{\cfttabaftersnumb}{~} %条目数字后的第二个内容
+%\renewcommand{\cfttabdotsep}{\cftdotsep} %连接符之间的宽度
+%\renewcommand{\cfttableader}{\bfseries\cfttabfill} %连接符粘连团
+%\renewcommand{\cfttabpagefont}{\color{red}\zihao{-5}$\infty$\itshape} %页码的样式
+%\renewcommand{\cfttabafterpnum}{\color{red}$\infty$} %页码后内容
 
 \usepackage{listings}
 \usepackage{color,xcolor}
+\usepackage{tikz,pgf}
+\usetikzlibrary{calc}
 \colorlet{examplefill}{yellow!80!black}
 \definecolor{graphicbackground}{rgb}{0.96,0.96,0.8}
 \definecolor{codebackground}{rgb}{0.9,0.9,1}
 
-\newlength{\outleftdis}
-\newcommand{\codetopline}[1]{\settowidth{\outleftdis}{\footnotesize{\kaishu{#1}}~~~}%
-\ifodd\thepage%判断奇数页，画一条有左标签的线
-{\noindent\hspace*{-\outleftdis}\colorbox{yellow!50}{\color{blue}\footnotesize{\kaishu{#1}}~}\color{green!50!black}\rule[0.1\baselineskip]{\linewidth}{0.4pt}}%
-\else%否则为偶数页，画一条有右标签的线
-{%\noindent\makebox{\color{green!50!black}\rule[0.1\baselineskip]{\linewidth}{0.4pt}\colorbox{yellow}{\color{blue}~\footnotesize{#1}}}
-\noindent\color{green!50!black}\rule[0.1\baselineskip]{\linewidth}{0.4pt}\colorbox{yellow!50}{\color{blue}~\footnotesize{\kaishu{#1}}}%
-}%
-\fi%
-}
-\newcommand{\codebottomline}
-{\noindent\makebox{\color{green!50!black}\rule[1pt]{\linewidth}{0.4pt}}}
 
-\lstnewenvironment{codetex}[2]%
-{\begin{center}\end{center}\centering\setlength{\abovecaptionskip}{1mm}\setlength{\belowcaptionskip}{-3mm}%
-\vspace{-2.0\baselineskip}
-\codecaption{#1}\label{#2}%\nopagebreak
-%\vspace{-1.0\baselineskip}
-\codetopline{代码}%
-\vspace{-0.5\baselineskip}
-\lstset{% general command to set parameter(s)
-%name=#1,
-%label=#2,
-%caption=\lstname,
-linewidth=\linewidth,
-breaklines=true,
-%showspaces=true,
-extendedchars=false,
-columns=fullflexible,%flexible,
-frame=b,
-%frame=none,
-rulecolor=\color{green!50!black},
-fontadjust=true,
-language=[LaTeX]TeX,
-%backgroundcolor=\color{yellow}, %背景颜色
-backgroundcolor=\color{blue!5},%codebackground
-numbers=left,
-numberstyle=\tiny\color{red},
-basicstyle=\small\ttfamily, % print whole listing small，footnotesize
-keywordstyle=\color{blue}\bfseries,%\underbar,
-% underlined bold black keywords
-identifierstyle=, % nothing happens
-commentstyle=\color{green!50!black}, % white comments
-stringstyle=\ttfamily, % typewriter type for strings
-showstringspaces=false}% no special string spaces
-%\renewcommand{\baselinestretch}{0.9} %加这句的话需要进行垂直空间位置调整
-}
-{}%\nopagebreak\vspace*{-\baselineskip}\codebottomline
+\newenvironment{example}[3][代码]%
+{\list{}{\begingroup\codecaption{#2}\label{#3}\endgroup
+\setlength{\topsep}{0pt}
+\setlength{\partopsep}{0pt}
+\setlength{\itemsep}{0pt}
+\setlength{\parsep}{0pt}
+\setlength{\leftmargin}{0pt}%
+\setlength{\itemindent}{0pt}%
+%\renewcommand*{\makelabel}[1]{\hss\llap{\footnotesize\color{orange}\bfseries##1}}
+}\item[\footnotesize\color{orange}\bfseries#1]\relax}
+{\endlist}
+
 
 \lstnewenvironment{texlist}%
 {\lstset{% general command to set parameter(s)
@@ -141,7 +154,12 @@ breaklines=true,
 %showspaces=true,
 extendedchars=false,
 columns=fullflexible,%flexible,
-%frame=tb,
+aboveskip=2pt,
+boxpos=t,
+rulesep=0pt,
+frame=tb,
+framesep=0pt,
+rulecolor=\color{orange},
 fontadjust=true,
 language=[LaTeX]TeX,
 %backgroundcolor=\color{yellow}, %背景颜色
@@ -198,7 +216,7 @@ colback=green!50!yellow!15!white,terminator sign={\ }}{rfeg}
 %--------------列表环境---------------------------------------------
 \usepackage[inline]{enumitem} %重设list环境
 \setlist[enumerate]{label=\bfseries\textcolor{violet}{\arabic*.},topsep=2pt,partopsep=0pt,parsep=0pt,%
-align=left,leftmargin=0em,itemsep=0.5em,labelwidth=0.1em,itemindent=2.6em}%label=$\triangleright$,itemindent=1em
+align=left,leftmargin=0em,itemsep=0.5em,labelwidth=0.1em,itemindent=2.6em,listparindent=2em}%label=$\triangleright$,itemindent=1em
 \setlist[itemize]{topsep=2pt,partopsep=0pt,parsep=0pt,%
 leftmargin=4.5em,itemindent=0em}
 \setlist[description]{font=\bfseries\textcolor{violet},align=right,topsep=5pt,partopsep=0pt,parsep=0pt,%
