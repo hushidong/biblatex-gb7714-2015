@@ -49,6 +49,10 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 	- add an option `gbtype` for dealing the reference type and carrier identifier like a [J/OL] for an on-line article, option value = `true` for gb7714 style or `false` for none identifier, e.g. An article title followed by empty string instead of the [J/OL]. This option is also for author year style.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbtype=true]{biblatex}`
+		
+	- add an option `gbpunctin` to control the output of `//` before bookauthor for entrytypes like inbook/incollection/inproceedings. `gbpunctin=true` to output `//`, `gbpunctin=false` to output the bibstring for English is IN:, If want to eliminate it at all, please add a cmd `\DefineBibliographyStrings{english}{in={}}` in the preamble. This option is also for author year style.
+
+        `\usepackage[backend=biber,style=gb7714-2015,gbpunctin=true]{biblatex}`
 
 * for author year style
 

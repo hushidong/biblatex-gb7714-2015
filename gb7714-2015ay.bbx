@@ -137,6 +137,14 @@
       \ifstrequal{#1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
     \ExecuteBibliographyOptions{gbpub}
 
+    %
+    %   增加控制析出文献来源前的标点符号//输出的选项
+    %   added in v1.0k, 2018.04.20, by hzz
+    \newtoggle{bbx:gbpunctin}
+    \DeclareBibliographyOption{gbpunctin}[true]{%
+        \settoggle{bbx:gbpunctin}{#1}}
+    \ExecuteBibliographyOptions{gbpunctin}
+
 
 %
 %   针对biblatex<3.3版本的选项设置，比如texlive2015中的3.0版
@@ -350,6 +358,7 @@
     nopublisher = {[s.n.]},
     backrefpage      = {引用页:},
     backrefpages     = {引用页:},
+    in={in\intitlepunct},
 }
 
 
@@ -776,7 +785,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
   {title}{#1\adddot\addthinspace}
 \DeclareFieldFormat%将期刊等文献的标题中原来带的引号去掉
   [inbook,incollection,inproceedings]
-  {title}{#1\nopunct\unspace}
+  {title}{#1}%\nopunct\unspace
 \DeclareFieldFormat{url}{\url{#1}} %url域修改如本行%url相关输出，源来自biblatex.def
 %
 %   标题的字母大小写格式修改
@@ -1904,6 +1913,15 @@ test{\iftoggle{iftlnine}}
   %\newunit
   }
 
+%
+%   修改in:用于inbook、incollection、inproceedings等类型
+%   added in v1.0k, 2018.04.20, by hzz
+%
+%   原理方法:使用bibmacro{in:}改变了以前在driver中直接输出//的方式，同时也简化了标点控制。
+\renewbibmacro*{in:}{%
+ \iftoggle{bbx:gbpunctin}{\printtext{\texttt{//}\addthinspace}}%
+                         {\setunit{\adddot\addspace}\printtext{\bibstring{in}\intitlepunct}}}%\newunit\newblock
+
 
 %=====================================================================
 %设置驱动格式
@@ -1970,13 +1988,8 @@ test{\iftoggle{iftlnine}}
   \usebibmacro{author/translator+others}%
   \setunit{\labelnamepunct}\newblock%
   \usebibmacro{title}%
-%  \newunit
-%  \printlist{language}%
-%  \newunit\newblock
-%  \usebibmacro{byauthor}%
-%  \newunit\newblock
-%  \usebibmacro{in:}%
-  \printtext{\texttt{//}\addthinspace}%
+\usebibmacro{in:}%
+%\printtext{\texttt{//}\addthinspace}%
   \usebibmacro{bybookauthor}%
   \ifnameundef{bookauthor}{}{\newunit\newblock}%替换下一句
   %\newunit\newblock
@@ -2083,13 +2096,8 @@ test{\iftoggle{iftlnine}}
   \usebibmacro{author/translator+others}%
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{title}%
-%  \newunit
-%  \printlist{language}%
-%  \newunit\newblock
-%  \usebibmacro{byauthor}%
-%  \newunit\newblock
-%  \usebibmacro{in:}%
-  \printtext{\texttt{//}\addthinspace}%
+  \usebibmacro{in:}%
+  %\printtext{\texttt{//}\addthinspace}%
   \usebibmacro{bybookauthor}%
   \ifnameundef{bookauthor}{}{\newunit\newblock}%替换下一句
   %\newunit\newblock
@@ -2488,13 +2496,8 @@ test{\iftoggle{iftlnine}}
   \usebibmacro{author/translator+others}%
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{title}%
-%  \newunit
-%  \printlist{language}%
-%  \newunit\newblock
-%  \usebibmacro{byauthor}%
-%  \newunit\newblock
-  %\usebibmacro{in:}%
-  \printtext{\texttt{//}\addthinspace}%似乎顶格加百分号可以避免一些不必要的空格加入，特别是这种直接处理的语句前后
+  \usebibmacro{in:}%
+  %\printtext{\texttt{//}\addthinspace}%
   \usebibmacro{bybookauthor}%用类似inbook的方式处理
   \ifnameundef{bookauthor}{}{\newunit\newblock}%替换下一句
   %\newunit\newblock

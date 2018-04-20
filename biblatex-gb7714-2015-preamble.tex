@@ -5,6 +5,19 @@
 \let\kaiti=\kaishu
 \usepackage{xeCJKfntef}
 
+%一些字符串格式化命令
+\newcommand*{\verbatimfont}{\ttfamily}
+\newrobustcmd*{\cnt}[1]{\mbox{\verbatimfont#1}}
+\newrobustcmd*{\bibfield}[1]{\mbox{\verbatimfont#1}}
+\newrobustcmd*{\opt}[1]{\mbox{\verbatimfont#1}}
+\newrobustcmd*{\prm}[1]{%
+  \ifblank{#1}
+    {}
+    {\mbox{%
+       \ensuremath\langle
+       \normalfont\textit{#1}%
+       \ensuremath\rangle}}}
+
 \usepackage[paperwidth=210mm,paperheight=290mm,left=20mm,right=20mm,top=25mm, bottom=15mm,showcrop
 ]{geometry}%定义版面showframe,
 
@@ -56,7 +69,7 @@ pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
 %\setlength{\belowlegendskip}{0pt}
 %新的浮动体设置
 \newcommand{\listegcodename}{\centerline{示~~例}}%listegcodename，新环境目录的标题
-\newcommand{\egcodename}{示例}%egcodename，新环境标题的图序
+\newcommand{\egcodename}{例}%egcodename，新环境标题的图序
 \newfloatlist{egcode}{loc}{\listegcodename}{\egcodename}%loc，写入条目的文件的扩展名
 \newfixedcaption{\codecaption}{egcode}%egcode，环境名
 

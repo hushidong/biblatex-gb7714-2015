@@ -18,7 +18,7 @@
 %------------------------------------------------------------
 
 \section{概述}
-提供了符合GB/T 7714-2015~信息与文献~参考文献著录规则要求的biblatex参考文献样式。分为两种编制方式:一、顺序编码制；二、作者年制。主要特点包括:
+提供了符合《GB/T 7714-2015~信息与文献~参考文献著录规则》要求的biblatex参考文献样式。分为两种编制方式:一、顺序编码制；二、作者年制。主要特点包括:
 \begin{enumerate}
   \item 兼容性
 
@@ -100,7 +100,7 @@ biblatex-gb7714-2015宏包除了提供严格遵守GB/T 7714-2015标准的格式�
 笔者从最初开始学习latex时利用thebibliography环境生成参考文献，到后来对格式化参考文献有更多需求开始寻求利用参考文献宏包，再到最后选择使用biblatex宏包，越发感觉到biblatex生成参考文献具有的强大能力。经过大量实践，总结其优点如下:
 %[也由于对bibtex语言不熟悉，偷懒不想学$( \hat{} \bot \hat{} )$]
 \begin{enumerate}
-\item 使用简单。样式随宏包加载，参考文献源bib文件利用addbibresource加载，打印文献表利用printbibliography命令可以在文档任意位置打印。参考文献只需三步编译，第一遍xelatex，第二遍biber，第三遍xelatex，当然如果需要反向超链接，除设置backref 选项外，还需要第四遍xelatex。例\ref{eg:compile:cmd} 给出编译命令，其中xelatex命令也可以用mklatex -xelatex 代替，--synctex=-1选项也可以是-synctex=1。
+\item 使用简单。样式随宏包加载，参考文献源bib文件利用addbibresource加载，打印文献表利用printbibliography命令可以在文档任意位置打印。参考文献只需三步编译，第一遍xelatex，第二遍biber，第三遍xelatex，当然如果需要反向超链接，除设置backref 选项外，还需要第四遍xelatex。例\ref{eg:compile:cmd} 给出编译命令，其中--synctex=-1 选项也可以是-synctex=1。而且这四步命令可以用一条命令latexmk -xelatex jobname.tex代替。
 
     \begin{example}{使用biblatex宏包的文档编译命令}{eg:compile:cmd}
     \begin{texlist}
@@ -134,7 +134,7 @@ biblatex-gb7714-2015宏包除了提供严格遵守GB/T 7714-2015标准的格式�
         \end{example}
 
 
-\item 定制方便。biblatex宏包实现参考文献著录格式使用的是tex语言，相比传统的bibtex 语言学习更为容易。biblatex 提供了很多不同类型的参考文献标准样式，查看、参考和引用都很方便，因此定制起需要的参考文献格式也很便捷。
+\item 定制方便。biblatex宏包实现参考文献著录格式使用的是tex语法，相比传统的bibtex 语言学习更为容易。biblatex 提供了很多不同类型的参考文献标准样式，查看、参考和引用都很方便，因此定制起需要的参考文献格式也很便捷。
 %定制很容易
 %\item 学习无障碍，因为biblatex宏包用的是tex语言，所以查看代码，学习都很方便，自然也便于生成需要的参考文献样式。
 %\item 定制很容易，biblatex提供了很多不同的参考文献标准样式，学习参考都很方便，因此定制起需要的参考文献格式来非常容易。
@@ -142,10 +142,12 @@ biblatex-gb7714-2015宏包除了提供严格遵守GB/T 7714-2015标准的格式�
 
 %上述这些优点也是笔者决定编写符合GB/T 7714-2015标准的参考文献样式文件的原因之一。
 
-下面直接给出最小工作示例用以简单介绍biblatex宏包参考文献生成的一般方法。例\ref{code:doc:structrue}的对应的结果
-如图\ref{fig:eg:ref}所示。示例源代码给出了详细注释，说明了使用biblatex的tex文档的基本结构，所有基于biblatex生成参考文献的文档无论大小万变不离其宗，当然除tex文档外另需准备保存参考文献信息的bib文件(详见\ref{sec:bib:bibtex}节)。要更全面深入得了解biblatex参考文献生成，可以参考: biblatex宏包手册\footnote{地址:\url{https://github.com/plk/biblatex}}、
-中文版\footnote{地址:\url{https://github.com/hushidong/biblatex-zh-cn}}
-或者LaTeX 文档中文参考文献的biblatex解决方案
+下面直接给出最小工作示例用以简单介绍biblatex宏包参考文献生成的一般方法。例\ref{code:doc:structrue}对应的结果
+如图\ref{fig:eg:ref}所示。示例源代码给出了详细注释，说明了使用biblatex的tex文档的基本结构，所有基于biblatex生成参考文献的文档无论大小万变不离其宗，当然除tex文档外另需准备保存参考文献信息的bib文件(详见\ref{sec:bib:bibtex}节)。要更全面深入了解biblatex的参考文献生成，可以参考: 
+\href{https://github.com/plk/biblatex}{biblatex宏包手册}\footnote{地址:\url{https://github.com/plk/biblatex}}、
+\href{https://github.com/hushidong/biblatex-zh-cn}{中文版}\footnote{地址:\url{https://github.com/hushidong/biblatex-zh-cn}}
+或者
+\href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}{LaTeX 文档中文参考文献的biblatex解决方案}
 \footnote{地址:\url{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}}。
 
 \begin{example}{biblatex参考文献生成最小工作示例}{code:doc:structrue}
@@ -201,7 +203,7 @@ citestyle=gb7714-2015%,backref=true%
 \begin{example}{gb7714-2015顺序编码制加载方式}{eg:gb7714numeric}
 \begin{texlist}
 \usepackage[backend=biber,bibstyle=gb7714-2015,citestyle=gb7714-2015]{biblatex}
-%如果要设置参考文献表序号标签对齐方式的话请设置gbalign选项，如果要取消缺省出版项自动填补的话设置gbpub=false，比如:
+%如需改变参考文献表序号标签对齐方式请设置gbalign选项，如需取消缺省出版项自动填补请设置gbpub=false，比如:
 \usepackage[backend=biber,style=gb7714-2015,gbalign=left,gbpub=true]{biblatex}
 \end{texlist}
 \end{example}
@@ -209,7 +211,7 @@ citestyle=gb7714-2015%,backref=true%
 \begin{example}{gb7714-2015作者年制加载方式}{eg:gb7714authoryear}
 \begin{texlist}
 \usepackage[backend=biber,style=gb7714-2015ay]{biblatex}
-%如果要取消缺省出版项自动填补的话设置gbpub=false，如果要使用佚名或NOAUTHOR代替补充缺失的author信息可以设置gbnoauthor=true，比如:
+%如需取消缺省出版项自动填补请设置gbpub=false，如需使用佚名或NOAUTHOR代替缺失的author信息请设置gbnoauthor=true，比如:
 \usepackage[backend=biber,style=gb7714-2015ay,gbpub=true,gbnoauthor=true]{biblatex}
 \end{texlist}
 \end{example}
@@ -221,7 +223,7 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 \end{example}
 
 \subsubsection{增加的选项}\label{sec:added:opt}
-gb7714-2015样式增加了部分用于控制标签对齐、出版项缺省处理、责任者(作者)缺省处理的选项，使用方式与biblatex宏包选项完全相同:
+样式包增加了用于控制标签对齐方式、出版项缺省处理、责任者(作者)缺省处理等功能的选项，使用方式与biblatex宏包选项完全相同:
 \begin{description}
   \item[gbalign]=right，left，gb7714-2015. \hfill default is right
 
@@ -239,17 +241,21 @@ gb7714-2015样式增加了部分用于控制标签对齐、出版项缺省处理
 
   \item[gbnamefmt]=uppercase，lowercase，none，pinyin. \hfill default is uppercase
 
-  为姓名大小写格式控制增加的选项。默认选择gbnamefmt=uppercase，大小写要求符合GB/T 7714-2015 的要求。gbnamefmt=lowercase 时，大小写根据输入信息确定。gbnamefmt=none时，姓名的格式与biblatex标准样式一致。gbnamefmt=pinyin时，姓名的格式采用一种常用的中文拼音全拼方式，比如对于 Zhao, Yu Xin 或 Yu Xin Zhao 这个姓名拼音格式化为ZHAO Yu-xin。\emph{需要注意当使用pinyin选项时，姓名中应给出完整的名而不是名的缩写，否则出来的效果未必好看}。
+  为姓名大小写格式控制增加的选项。默认选择gbnamefmt=uppercase，大小写符合GB/T 7714-2015 的要求。gbnamefmt=lowercase 时，大小写由输入信息确定不做改变。gbnamefmt=none时，姓名的格式与biblatex标准样式一致。gbnamefmt=pinyin时，姓名的格式采用一种常见的中文拼音方式，比如对于 Zhao, Yu Xin 或 Yu Xin Zhao 这个姓名拼音格式化为ZHAO Yu-xin。\emph{需注意当使用pinyin选项时，姓名中应给出完整的名而不是名的缩写，否则出来的效果未必好看}。
   测试结果见第\ref{sec:opt:namefmt}节。
 
   \item[gbtype]=true，false. \hfill default is true
 
   为控制是否输出题名后面的文献类型和载体标识符而增加的选项。默认选择gbtype=true，根据GB/T 7714-2015 要求输出标识符，例如“在线的期刊析出文献题名[J/OL]”。而gbtype=false 时，不输出标识符，例如“在线的期刊析出文献题名”。
+  
+  \item[gbpunctin]=true，false. \hfill default is true
+
+  为控制inbook,incollection,inproceedings中析出来源文献前的\texttt{//}符号而增加的选项。默认设置为true，根据GB/T 7714-2015 要求输出\texttt{//}。 而gbpunctin=false 时，输出默认的本地字符串，英语中是in:，若要完全去掉该符号则可以在导言区增加命令\lstinline!\DefineBibliographyStrings{english}{in={}}!。
 \end{description}
 
 
 \subsubsection{与标准选项的兼容性}
-绝大部分biblatex标准样式选项可与gb7714-2015样式联合使用，下面给出一些经过兼容性测试的选项说明。需要注意的是:使用gb7714-2015样式时(即style=gb7714-2015)，backend选择应指定为biber，还有一些选项已经在样式设计中固定，不能修改设置。比如sorting，maxnames，minnames，date，useprefix，giveninits等。
+绝大部分biblatex标准样式选项可与gb7714-2015样式联合使用，下面给出一些经过兼容性测试的选项说明。需要注意的是:使用gb7714-2015样式时(即style=gb7714-2015)，backend选择应指定为biber，还有一些选项已经在样式设计中固定，如果要严格使用国标样式，一般不应做修改，比如sorting，maxnames，minnames，date，useprefix，giveninits等，但如果用户有自己的定制需求，则可以按需修改。
 
 \begin{description}
   \item[url]=true, false. \hfill default: true
@@ -261,6 +267,30 @@ gb7714-2015样式增加了部分用于控制标签对齐、出版项缺省处理
   该选项用于作者年制样式，用于正文中引用(标注)标签的作者列表控制(目的是消除歧义)。当uniquelist=true时，自动利用扩展作者姓名列表长度的方式消除labelname 列表的歧义; 当=false 时则禁用扩展，标签仅使用一个作者，消除歧义通过跟在年份后面的字母实现; 默认使用minyear，即当被截短的作者姓名列表存在歧义时，只有当年份相同，才会扩展列表长度以消除歧义。
 
   注意当使用uniquelist=false后标签只有一个作者，但文中可能有同姓作者的文献，这时根据uniquename选项的设置，biblatex会使用姓名的其它部分比如名来消除歧义，但如果想强制要求仅用姓作为文中的标注标签，那么可以设置uniquename=false，但此时标注是可能存在歧义的。
+  
+  \item[maxnames]=整数 \hfill default: 3
+
+  影响所有名称列表（\bibfield{author}、\bibfield{editor} 等）的阈值。如果某个列表超过了该阈值，即，它包含的姓名数量超过 \prm{integer}，那么就会根据 \opt{minnames} 选项的设置进行自动截断。\opt{maxnames} 是设置 \opt{maxbibnames} 和 \opt{maxcitenames} 两个选项的支配选项。
+
+  \item[minnames]=整数 \hfill default: 3
+
+  影响所有名称列表（\bibfield{author}、\bibfield{editor} 等）的限制值。如果某个列表包含的姓名数量超过 \prm{integer}，那么就会自动截断至\opt{minnames}个姓名。\prm{minnames} 的值必须小于或等于 \prm{maxnames}。\opt{minnames} 是设置 \opt{minbibnames} 和 \opt{mincitenames} 两个选项的支配选项。
+
+  \item[maxbibnames]=整数 \hfill default: \prm{maxnames}
+
+  类似于 \opt{maxnames} 但只影响参考文献表。
+
+  \item[minbibnames]=整数 \hfill default: \prm{minnames}
+
+  类似于  \opt{minnames} 但只影响参考文献表。
+
+  \item[maxcitenames]=整数 \hfill default: \prm{maxnames}
+
+  类似于 \opt{maxnames} 但只影响正文中的标注(引用)。
+
+  \item[mincitenames]=整数 \hfill default: \prm{minnames}
+
+  类似于 \opt{minnames} 但只影响正文中的标注(引用)。
 
   \item[hyperref]=true, false, auto. \hfill default: auto
 
@@ -285,6 +315,14 @@ gb7714-2015样式增加了部分用于控制标签对齐、出版项缺省处理
   \item[labeldate]=year, short, long, terse, comp, ymd, edtf. \hfill default: year
 
   类似于 date 选项，但控制的是由DeclareLabeldate 选择的日期域的格式。
+  
+  \item[doi]=true,false. \hfill default: true
+
+  该选项控制是否打印 \bibfield{doi} 域。
+  
+  \item[isbn]=true,false. \hfill default: true
+
+  该选项控制是否打印 \bibfield{isbn}\slash \bibfield{issn}\slash \bibfield{isrn} 等域。
 
   \item[其它]=下面还有很多选项，有些是宏包载入时选项，与样式无关，一般可以使用，但笔者没有做测试，各位朋友可以测试使用。选项的作用可以参考biblatex 使用手册，以及笔者和Wenbo 翻译的中文版。
       \begin{itemize}
@@ -310,8 +348,6 @@ gb7714-2015样式增加了部分用于控制标签对齐、出版项缺省处理
           \item arxiv=abs, ps, pdf, format default: abs
           \item mincrossrefs=integer default: 2
           \item minxrefs=integer default: 2
-          \item isbn=true, false default: true
-          \item doi=true, false default: true
           \item eprint=true, false default: true
       \end{itemize}
 
@@ -2464,7 +2500,7 @@ texlive2017对应biblatex3.7;
 %读者若查看样式文件内容可以看到作者对各目标要求所做的修改及，读者也可以根据自己的需求进行修改，作者设计样式文件的思路以及在设计过程中用到的一些biblatex宏包功能说明，详见第\ref{sec:biblatex:mech}节和LaTeX文档中文参考文献的biblatex解决方案的第2.7节。
 
 最后要感谢如下各位师长和朋友，正是在各位的帮助建议下，本样式不断升级逐渐完善。包括: moewew(biblatex 现在的维护者之一，给了不少有益的建议)、 李志奇(基于biblatex的符合GBT7714-2005的中文文献生成工具作者，笔者以前使用该工具，其代码对于设计本样式很有启发)、LeoLiu(刘海洋，CJK字符判断函数
-\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152663&extra=page\%3D3}} 对本宏包非常有帮助)、chinatex(china tex版主，给了很多建议和帮助，并且一起合作)、Sheng wenbo(biblatex用户手册合作译者，LaTeX2e 插图指南第三版译者，我们一起翻译的过程相互激励相互促进)、zepinglee(gbt7714-2015 bst样式作者，给了很多建议和讨论)、Harry Chen(ctex 维护者，给了不少好的建议)、liubenyuan(关于项目组织给出了很好的建议)、刘小涛（讨论了关于zotero的使用并提出了建议）、ghiclgi(讨论了GB中作者年制标注标签的一些问题)、秀文工作组、leipility、qingkuan、湘厦人、秋平、任蒲军、fredericky123、qiuzhu、chaoxiaosu、Old Jack、Wu Nailong、Yibai Zhang、wayne508、 钟乙源、Xiaodong Yao、dsycircle、rpjshu、zjsdut、谢澜涛、Zutian Luo、海阔天空、zzqzyx、程晨、xmtangjun、蔡伟 等等。当然还有更多这里没有列全的朋友们的热心帮忙，在此一并表示感谢!
+\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152663&extra=page\%3D3}} 对本宏包非常有帮助)、chinatex(china tex版主，给了很多建议和帮助，并且一起合作)、Sheng wenbo(biblatex用户手册合作译者，LaTeX2e 插图指南第三版译者，我们一起翻译的过程相互激励相互促进)、zepinglee(gbt7714-2015 bst样式作者，给了很多建议和讨论)、Harry Chen(ctex 维护者，给了不少好的建议)、liubenyuan(关于项目组织给出了很好的建议)、刘小涛（讨论了关于zotero的使用并提出了建议）、ghiclgi(讨论了GB中作者年制标注标签的一些问题)、秀文工作组、leipility、qingkuan、湘厦人、秋平、任蒲军、fredericky123、qiuzhu、chaoxiaosu、Old Jack、Wu Nailong、Yibai Zhang、wayne508、 钟乙源、Xiaodong Yao、dsycircle、rpjshu、zjsdut、谢澜涛、Zutian Luo、海阔天空、zzqzyx、程晨、xmtangjun、蔡伟 等等。当然还有更多朋友提供了bug报告，提出了issue，提供了热心帮助，限于篇幅这里不再一一列举，在此一并表示感谢!
 
 
 \section{存在的问题和下一步工作}
