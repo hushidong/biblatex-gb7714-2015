@@ -142,7 +142,8 @@ biblatex-gb7714-2015宏包除了提供严格遵守GB/T 7714-2015标准的格式�
 
 %上述这些优点也是笔者决定编写符合GB/T 7714-2015标准的参考文献样式文件的原因之一。
 
-下面直接给出最小工作示例用以简单介绍biblatex宏包参考文献生成的一般方法。例\ref{code:doc:structrue}的tex源文档给出的详细注释，说明了使用biblatex的tex文档基本结构，所有基于biblatex生成参考文献的文档无论大小万变不离其宗，当然除tex文档外另需准备保存参考文献信息的bib文件(详见\ref{sec:bib:bibtex}节)。要更全面深入得了解biblatex参考文献生成，可以参考: biblatex宏包手册\footnote{地址:\url{https://github.com/plk/biblatex}}、
+下面直接给出最小工作示例用以简单介绍biblatex宏包参考文献生成的一般方法。例\ref{code:doc:structrue}的对应的结果
+如图\ref{fig:eg:ref}所示。示例源代码给出了详细注释，说明了使用biblatex的tex文档的基本结构，所有基于biblatex生成参考文献的文档无论大小万变不离其宗，当然除tex文档外另需准备保存参考文献信息的bib文件(详见\ref{sec:bib:bibtex}节)。要更全面深入得了解biblatex参考文献生成，可以参考: biblatex宏包手册\footnote{地址:\url{https://github.com/plk/biblatex}}、
 中文版\footnote{地址:\url{https://github.com/hushidong/biblatex-zh-cn}}
 或者LaTeX 文档中文参考文献的biblatex解决方案
 \footnote{地址:\url{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}}。
@@ -177,6 +178,20 @@ citestyle=gb7714-2015%,backref=true%
 \end{document}
 \end{texlist}
 \end{example}
+
+\begin{refsection}
+\begin{figure}[!htb]
+\centering
+\fbox{
+\parbox{16cm}{%\raggedright
+详见文献\cite{Peebles2001-100-100}\parencite{Miroslav2004--}
+参考文献\cite[见][49页]{蔡敏2006--}\parencite[见][49页]{Miroslav2004--}
+\printbibliography[heading=subbibliography,title=参考文献]
+}
+}
+\caption{最小工作示例的结果}\label{fig:eg:ref}
+\end{figure}
+\end{refsection}
 
 
 \subsection{gb7714-2015样式加载方式和选项说明}

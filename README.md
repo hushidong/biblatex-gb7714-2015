@@ -228,6 +228,8 @@ biber -l zh__stroke jobname
 
 > `\usepackage[backend=biber,citestyle=gb7714-2015ay,bibstyle=gb7714-2015]{biblatex}`
 
+> 参见:[issue:参考文献的顺序](https://github.com/sjtug/SJTUThesis/issues/300)
+
 * <b>请问我还希望顺序编码的文献著录表以拼音排序，该怎么操作？</b>
 
 > 顺序编码文献著录表默认是按引用顺序排序，但可以通过设置sorting选项进行调整，比如sorting=nyt表示按作者姓名年份以及文献标题进行排序，比如:
@@ -357,6 +359,26 @@ biber -l zh__stroke jobname
 	
 > 需要给出年份的标签是作者年制的标签，可以使用命令`yearpagescite{bibtex}`给出仅包含年份和页码信息的标签，
 > 使用命令`yearcite{bibtex}`给出仅包含年份的标签。
+
+* <b>在使用作者年制时，我希望文献表是按作者年份标题排序，而正文某处一个cite命令引用多个参考文献，且这些文献的标签是按年份作者标题排序，该怎么操作？</b>
+	
+> 有两种方法:
+> 一是自动排序
+> 宏包加载时使用
+> `\usepackage[backend=biber,style=gb7714-2015ay,sortcite,sorting=ynt]{biblatex}`
+> 正文中引用:
+> `\cite{refa2010,refb2008,refc2009}`
+> 然后在文献打印前加
+> `\newrefcontext[sorting=nyt]`
+
+> 二是手动给出排序
+> 宏包加载时使用
+> `\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}`
+> 引用多个文献时按照年份顺序给出引用关键字，即正文中引用:
+> `\cite{refb2008,refc2009,refa2010}`
+
+> 参考:[issue:citation的顺序和bibliography的顺序如何不关联](https://github.com/hushidong/biblatex-gb7714-2015/issues/30)
+
 
 		
 * <b>请问希望正文中作者年制的标注(引用)标签中作者数量超过国标规定的1个时，该怎么处理？</b>
