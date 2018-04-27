@@ -100,7 +100,7 @@ biblatex-gb7714-2015宏包除了提供严格遵守GB/T 7714-2015标准的格式�
 笔者从最初开始学习latex时利用thebibliography环境生成参考文献，到后来对格式化参考文献有更多需求开始寻求利用参考文献宏包，再到最后选择使用biblatex宏包，越发感觉到biblatex生成参考文献具有的强大能力。经过大量实践，总结其优点如下:
 %[也由于对bibtex语言不熟悉，偷懒不想学$( \hat{} \bot \hat{} )$]
 \begin{enumerate}
-\item 使用简单。样式随宏包加载，参考文献源bib文件利用addbibresource加载，打印文献表利用printbibliography命令可以在文档任意位置打印。参考文献只需三步编译，第一遍xelatex，第二遍biber，第三遍xelatex，当然如果需要反向超链接，除设置backref 选项外，还需要第四遍xelatex。例\ref{eg:compile:cmd} 给出编译命令，其中--synctex=-1 选项也可以是-synctex=1。而且这四步命令可以用一条命令latexmk -xelatex jobname.tex代替。
+\item 使用简单。样式随宏包加载，参考文献源bib文件利用addbibresource加载，打印文献表利用printbibliography命令可以在文档任意位置打印。参考文献只需三步编译，第一遍xelatex，第二遍biber，第三遍xelatex，当然如果需要反向超链接，除设置backref 选项外，还需要第四遍xelatex。例\ref{eg:compile:cmd} 给出编译命令，其中--synctex=-1 选项也可以是-synctex=1。而且这四步命令可以用一条命令latexmk -xelatex jobname.tex 代替。
 
     \begin{example}{使用biblatex宏包的文档编译命令}{eg:compile:cmd}
     \begin{texlist}
@@ -198,9 +198,9 @@ citestyle=gb7714-2015%,backref=true%
 
 \subsection{gb7714-2015样式加载方式和选项说明}
 \subsubsection{加载方式}
-例\ref{code:doc:structrue}中给出了宏包和样式的基本加载方式，gb7714-2015样式类似。注意，当著录样式bibstyle和标注样式citestyle相同时，两者可以合并为一个选项style。比如:
+例\ref{code:doc:structrue}中给出了宏包和样式的基本加载方式，biblatex-gb7714-2015样式类似。注意，当著录样式bibstyle和标注样式citestyle相同时，两者可以合并为一个选项style。比如:
 
-\begin{example}{gb7714-2015顺序编码制加载方式}{eg:gb7714numeric}
+\begin{example}{顺序编码制(gb7714-2015)加载方式}{eg:gb7714numeric}
 \begin{texlist}
 \usepackage[backend=biber,bibstyle=gb7714-2015,citestyle=gb7714-2015]{biblatex}
 %如需改变参考文献表序号标签对齐方式请设置gbalign选项，如需取消缺省出版项自动填补请设置gbpub=false，比如:
@@ -208,7 +208,7 @@ citestyle=gb7714-2015%,backref=true%
 \end{texlist}
 \end{example}
 
-\begin{example}{gb7714-2015作者年制加载方式}{eg:gb7714authoryear}
+\begin{example}{作者年制(gb7714-2015ay)加载方式}{eg:gb7714authoryear}
 \begin{texlist}
 \usepackage[backend=biber,style=gb7714-2015ay]{biblatex}
 %如需取消缺省出版项自动填补请设置gbpub=false，如需使用佚名或NOAUTHOR代替缺失的author信息请设置gbnoauthor=true，比如:
@@ -507,10 +507,40 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 %上一段2016-1114更新，下面是以前的说法。
 %\qd{根据文种文献集中的要求，修改了nyt排序格式，增加了userb作为name前的排序域，当有需求进行多文种分集且有特殊顺序时，在bib文件中给相应文种的文献设置适合排序的字符串。比如中文文献设置为cn，英文文献设置为en，法文文献设置为fr，那么排序中，相应的中文文献排在最前面，英文文献在中间，法文文献最后，因为升序情况下字母顺序是c然后e然后f。}
 
+另外，为了方便用户控制文献表内容的字体和颜色等，在biblatex提供的bibfont命令基础上增加了bibauthorfont、bibtitlefont、bibpubfont等用于控制文献不同部分的信息，比如作者，标题，出版项等，用法具体见例\ref{eg:biblist:fontset}，
+测试用例见\href{run:example/egfontinbiblio.tex}{egfontinbiblio.tex}。
+
+\begin{example}{文献表字体、颜色、间距控制}{eg:biblist:fontset}
+\begin{texlist}
+% 换行的控制
+%
+% 选项 block=none , space , par , nbpar , ragged
+%\renewcommand*{\newblockpunct}{\par\nobreak}
+
+% 字体的控制：\textit，sl，emph-楷体，\textbf，sf-黑体，\texttt-仿宋，\textsc，md，up-宋体
+%
+% 全局字体
+\renewcommand{\bibfont}{\zihao{-5}}%\fangsong
+% 标题字体
+\renewcommand{\bibauthorfont}{\bfseries\color{teal}}%
+\renewcommand{\bibtitlefont}{\ttfamily\color{blue}}%
+\renewcommand{\bibpubfont}{\itshape\color{violet}}%
+% url和doi字体
+\def\UrlFont{\ttfamily} %\urlstyle{sf} %\def\UrlFont{\bfseries}
+
+% 间距的控制
+\setlength{\bibitemsep}{0ex}
+\setlength{\bibnamesep}{0ex}
+\setlength{\bibinitsep}{0ex}
+
+% 标点类型的控制（全局字体能控制标点的字体）
+\end{texlist}
+\end{example}
+
 \subsubsection{关于参考文献标注样式: cbx文件的说明}\label{sec:cbx:usage}
 正文中的参考文献标注样式也称引用样式或引用标签样式，也分两类: 顺序编码制和作者年制。
 %顺序编码制的标注样式文件大体使用标准引用样式numeric-comp的内容
-顺序编码制的标注样式大体使用标准标注样式numeric，仅对cite等部分命令做了修改。为满足GB/T 7714-2015第10.1.3节的要求，增加了pagescite命令。为方便在同一文章中同时使用上标和非上标的标注方式，仅将cite命令修改为上标模式，而parencite保留标准样式提供的非上标模式。这些命令使用方式如下:
+顺序编码制的标注样式大体使用标准标注样式numeric，仅对cite等部分命令做了修改。为满足GB/T 7714-2015第10.1.3节的要求，增加了pagescite命令。为方便在同一文章中同时使用上标和非上标的标注方式，仅将cite命令修改为上标模式，而parencite保留标准样式提供的非上标模式。为方便用户使用增加了authornumcite命令用于同时输出作者和顺序编码。这些命令使用方式如下:
 
 \begin{example}{顺序编码制cbx样式命令使用说明}{eg:citefornumeric}
 \begin{texlist}
@@ -521,6 +551,12 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 带页码的引用:
     \cite[见][49页]{蔡敏2006--}  \parencite[见][49页]{Miroslav2004--}
     \pagescite{Peebles2001-100-100}  \pagescite[][201-301]{Peebles2001-100-100}
+    
+注意：有时希望同时输出作者和顺序编码，有三种方式可以实现：
+    （一），直接的方法：见\citeauthor{refb}\cite{refb},\citeauthor{refc}\cite{refc}
+    （二），定义新的标注命令：见\authornumcite{refb,refc}
+    （三），用textcite但没有上标：见\textcite{refb,refc}
+
 在页脚中引用和打印文献表:
     \footnote{在脚注中引用\footcite{赵学功2001--}}  \footfullcite{赵学功2001--}
     \end{texlist}
@@ -546,6 +582,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
     见赵耀东\yearcite{赵耀东1998--}
     见赵耀东(\cite*{赵耀东1998--})
     见赵耀东(\citeyear{赵耀东1998--})
+    
 在页脚中引用和打印文献表:
     \footnote{在脚注中引用\footcite{赵学功2001--}} \footfullcite{赵学功2001--}
     \end{texlist}
@@ -558,7 +595,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 \begin{enumerate}
   \item 本样式包的设计与实现方法以及设计到的一些biblatex功能介绍，以项目示例的形式总结在
   \href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}{\LaTeX 文档中文参考文献的biblatex解决方案}中，本文档不再重复给出，有需要了解用户可以参见，其中的第3.1节。
-  
+
   \item 因为采用xelatex编译，所以样式文件采用UTF-8编码，没有考虑GBK 编码问题，如果tex源文档是GBK编码的，请利用notepad++，或notepad2等编辑器将其转换为UTF-8编码。
 
   \item 当在顺序编码和作者年制的切换，或者biblatex版本切换时，如果使用出错，可先清理一下辅助文件，清理完后，重新编译即可。
@@ -571,7 +608,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 %通过定义DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现中文在前英文在后但两个文种的文献各自也是降序的。还有一种变通的方法是，在录入bib文件时，在userb域填入用于排序的信息，比如需要排前面中文文献填cn，排后面的英文文献用en。这样因为修改后的排序格式nyt会在author域前先用userb进行排序，自然会把中文文献放在前面。
 
   \item 当出版地和出版者同时缺省时，GB/T 7714-2015中没有给出明确的说明，但英文给出了一个例子(见GB/T 7714-2015 附录A.3)而中文没有，英文的样式是[S.l. : s.n.]，这种形式本样式文件中没有给出，而直接用两者分开的形式，[S.l.] : [s.n.]
-      
+
       %事实上这里作者认为没有必要把s.l.和s.n. 合起来，不仅与缺省两者之一的情况不统一，样式处理起来也增加不必要的麻烦。
 
   \item 目前符合GB/T7714-2005或GB/T7714-2015参考文献著录规则的biblatex 样式有好几个实现，除本样式外，还有李志奇(icetea)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}} 和沈周(szsdk)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152561&extra=page\%3D1}} 分别提供的样式文件，效果是类似的。此外，Casper Ti. Vector提供的biblatex 样式caspervector也是不错的中文参考文献样式
@@ -1432,7 +1469,7 @@ beamer类中的参考文献测试，参见:
   \item 到目前，无论是基本功能还是附加功能，biblatex-gb7714-2015样式包已经基本够用，剩下的问题可能是一些特殊情况时带来的适应性问题，这需要经过大量的测试来发现问题。如果在使用过程中发现什么问题，请邮件联系作者，非常感谢!
 
       % 到1.0i版为止，进一步完善了: GB7714风格的文献表标签项对齐设计，编组内信息的中英文判断，特殊或老的bibtex 条目类型支持，改善空格设计以满足断行要求，支持了宏包选项(url等)应用，增加了宏包选项用于GB7714风格实现控制(gbpub 等)，重新设计了版本兼容方式，以后的版本中将更容易兼容biblatex的升级。
-      
+
        %到1.0h版为止，进一步完善了样式宏包，该版本将是最后支持texlive2015的版本，以后版本的功能实现将基于最新texlive中biblatex 版本，而不再考虑texlive2015中3.0版的biblatex。
 
        %1.0g版增加对mastersthesis，phdthesis，www，electronic，standard，techreport，conference，newspaper等条目类型的兼容，增加了对标准样式standard.bbx中url包选项的兼容性，增加了析出文献标识符//后面的短空格以支持著录表的断行机制，增加了特殊字符处理功能并实现对texlive2015 的兼容，给出了gb7714风格参考文献著录表文本转换为bib文件的perl脚本，与gb7714-2015 样式形成闭环。

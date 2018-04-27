@@ -91,3 +91,24 @@
    \usebibmacro{cite:comp}}
   {}
   {\usebibmacro{cite:dump}]}
+
+%
+%   定义\authornumcite命令，输出作者信息，然后在后面带上顺序编码
+%   20180427，v1.0k，增加，hzz
+%   gb7714样式新定义的命令都把cite放到最后，比如前面的pagescite，yearcite，这里的\authornumcite
+%   区别于biblatex定义的命令都把cite放到前面，比如citeauthor等。
+%见numeric.CBX
+\newbibmacro*{cite}{%
+  \printtext[bibhyperref]{%
+    \printfield{labelprefix}%
+    \printfield{labelnumber}%
+    \ifbool{bbx:subentry}
+      {\printfield{entrysetcount}}
+      {}}}
+%见numeric.CBX，\DeclareCiteCommand{\cite},
+\DeclareCiteCommand{\authornumcite}%[\mkbibsuperscript]
+  {\usebibmacro{prenote}}
+  {\printnames{labelname}\mkbibsuperscript{\mkbibbrackets{\usebibmacro{citeindex}%
+   \usebibmacro{cite}}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}

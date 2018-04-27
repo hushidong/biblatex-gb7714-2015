@@ -774,7 +774,9 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %   重设title等参考文献信息的输出格式
 %
 %   原理方法:修改来自biblatex.def文件的原格式
-
+\newcommand{\bibtitlefont}{}
+\newcommand{\bibauthorfont}{}
+\newcommand{\bibpubfont}{}
 \DeclareFieldFormat{title}{#1\adddot\addthinspace}
 \DeclareFieldFormat{journaltitle}{#1\isdot}%添加\isdot，用于缩写名带点情况，将其转换为缩写点，便于标点的追踪
 \DeclareFieldFormat{issuetitle}{#1}
@@ -873,7 +875,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     test{\iffieldundef{subtitle}}%
   }%
     {}%
-    {\printtext[title]{%
+    {\printtext[title]{\bibtitlefont%增加字体控制命令
        \printfield[titlecase]{title}%
        \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
        {}{\setunit{\subtitlepunct}%
@@ -896,12 +898,14 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %
 %   作者信息的输出格式，针对biblatex<3.3版本，gbt7714-2015的姓名全大写格式
 %
+%   20180425，v1.0k，为作者增加字体控制命令，Hu Zhenzhen
+%   针对biblatex<3.3版本，gbt7714-2015的姓名全大写格式
 \defversion{3.0}{name}{
     \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
     %\renewrobustcmd*{\bibinithyphendelim}{\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
     \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
     %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
-    \renewbibmacro*{name:last-first}[4]{%
+    \renewbibmacro*{name:last-first}[4]{\bibauthorfont%增加字体控制命令%
       \ifuseprefix
         {\usebibmacro{name:delim}{##3##1}%
          \usebibmacro{name:hook}{##3##1}%
@@ -929,7 +933,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
          \ifblank{##3}{}{\bibnamedelimd\mkbibnameprefix{##3}\isdot}%
          \addcomma\addspace%
          \ifblank{##4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{##4}\isdot}%
-         }
+         }%
      }
 
      \renewbibmacro*{name:first-last}[4]{%
@@ -937,15 +941,15 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 }
 
 %
-%   作者信息的输出格式，针对biblatex>=3.3版本，gbt7714-2015的姓名全大写格式
+%   针对biblatex>=3.3版本，gbt7714-2015的姓名全大写格式
 %
 \defversion{3.4}{name}{
     \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
     %\renewrobustcmd*{\bibinithyphendelim}{\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
     \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
     %biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
-    \renewbibmacro*{name:given-family}[4]{%利用family-given定义given-family
-      \ifuseprefix
+    \renewbibmacro*{name:given-family}[4]{\bibauthorfont%用family-given修改后的内容定义given-family
+      \ifuseprefix%
         {\usebibmacro{name:delim}{##3##1}%
          \usebibmacro{name:hook}{##3##1}%
          \ifdefvoid{##3}{}{%
@@ -959,7 +963,6 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
         {\usebibmacro{name:delim}{##1}%
          \usebibmacro{name:hook}{##1}%
          \ifdefvoid{##2}{\mkbibnamefamily{\MakeCapital{##1}}}{\mkbibnamefamily{\MakeUppercase{##1}}}\isdot
-         %
          \ifboolexpe{%
            test {\ifdefvoid{##2}}
            and
@@ -968,21 +971,21 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
            {\revsdnamepunct}%
          \ifdefvoid{##2}{}{\bibnamedelimd\mkbibnamegiven{\MakeUppercase{##2}}\isdot}%\MakeCapital
          \ifdefvoid{##3}{}{\bibnamedelimd\mkbibnameprefix{##3}\isdot}
-         \ifdefvoid{##4}{}{\bibnamedelimd\mkbibnamesuffix{##4}\isdot}}
+         \ifdefvoid{##4}{}{\bibnamedelimd\mkbibnamesuffix{##4}\isdot}}%
      }
      \renewbibmacro*{name:family-given}[4]{%
      \usebibmacro{name:given-family}{##1}{##2}{##3}{##4}}
 }
 
 %
-%   作者信息的输出格式，针对biblatex<3.3版本，姓名大小写格式不变
+%   针对biblatex<3.3版本，姓名大小写格式不变
 %
 \defversion{3.0}{nameb}{
     \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
     %\renewrobustcmd*{\bibinithyphendelim}{\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
     \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
     %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
-    \renewbibmacro*{name:last-first}[4]{%
+    \renewbibmacro*{name:last-first}[4]{\bibauthorfont%
       \ifuseprefix
         {\usebibmacro{name:delim}{##3##1}%
          \usebibmacro{name:hook}{##3##1}%
@@ -1010,21 +1013,21 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
          \ifblank{##3}{}{\bibnamedelimd\mkbibnameprefix{##3}\isdot}%
          \addcomma\addspace%
          \ifblank{##4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{##4}\isdot}%
-         }
+         }%
      }
      \renewbibmacro*{name:first-last}[4]{%
      \usebibmacro{name:last-first}{##1}{##2}{##3}{##4}}
 }
 
 %
-%   作者信息的输出格式，针对biblatex>=3.3版本，姓名大小写格式不变
+%   针对biblatex>=3.3版本，姓名大小写格式不变
 %
 \defversion{3.4}{nameb}{
     \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
     %\renewrobustcmd*{\bibinithyphendelim}{\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
     \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
     %biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
-    \renewbibmacro*{name:given-family}[4]{%用family-given修改后的内容定义given-family
+    \renewbibmacro*{name:given-family}[4]{\bibauthorfont%用family-given修改后的内容定义given-family
       \ifuseprefix
         {\usebibmacro{name:delim}{##3##1}%
          \usebibmacro{name:hook}{##3##1}%
@@ -1039,7 +1042,6 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
         {\usebibmacro{name:delim}{##1}%
          \usebibmacro{name:hook}{##1}%
          \ifdefvoid{##2}{\mkbibnamefamily{\MakeCapital{##1}}}{\mkbibnamefamily{{##1}}}\isdot%
-         %
          \ifboolexpe{%
            test {\ifdefvoid{##2}}
            and
@@ -1048,21 +1050,21 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
            {\revsdnamepunct}%
          \ifdefvoid{##2}{}{\bibnamedelimd\mkbibnamegiven{{##2}}\isdot}%\MakeCapital
          \ifdefvoid{##3}{}{\bibnamedelimd\mkbibnameprefix{##3}\isdot}
-         \ifdefvoid{##4}{}{\bibnamedelimd\mkbibnamesuffix{##4}\isdot}}
+         \ifdefvoid{##4}{}{\bibnamedelimd\mkbibnamesuffix{##4}\isdot}}%
      }
      \renewbibmacro*{name:family-given}[4]{%
      \usebibmacro{name:given-family}{##1}{##2}{##3}{##4}}
 }
 
 %
-%   作者信息的输出格式，针对biblatex<3.3版本，姓名大小写格式采用标准样式
+%   针对biblatex<3.3版本，姓名大小写格式采用标准样式
 %
 \defversion{3.0}{namec}{
     \renewrobustcmd*{\bibinitperiod}{\adddot}
     \renewrobustcmd*{\bibinithyphendelim}{\adddot\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
     \renewcommand*{\revsdnamepunct}{\addcomma}
     %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
-    \renewbibmacro*{name:last-first}[4]{%
+    \renewbibmacro*{name:last-first}[4]{\bibauthorfont%
       \ifuseprefix
         {\usebibmacro{name:delim}{##3##1}%
          \usebibmacro{name:hook}{##3##1}%
@@ -1081,20 +1083,20 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
          \ifblank{##2##3}{}{\revsdnamepunct}%
          \ifblank{##2}{}{\bibnamedelimd\mkbibnamefirst{{##2}}\isdot}%
          \ifblank{##3}{}{\bibnamedelimd\mkbibnameprefix{##3}\isdot}%
-         }
+         }%
      }
      \renewbibmacro*{name:first-last}[4]{%
      \usebibmacro{name:last-first}{##1}{##2}{##3}{##4}}
 }
 
 %
-%   作者信息的输出格式，针对biblatex>=3.3版本，姓名大小写格式采用标准样式
+%   针对biblatex>=3.3版本，姓名大小写格式采用标准样式
 %
 \defversion{3.4}{namec}{
     \renewrobustcmd*{\bibinitperiod}{\adddot}
     \renewrobustcmd*{\bibinithyphendelim}{\adddot\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
     \renewcommand*{\revsdnamepunct}{\addcomma}
-    \renewbibmacro*{name:given-family}[4]{%
+    \renewbibmacro*{name:given-family}[4]{\bibauthorfont%
       \usebibmacro{name:delim}{##2##3##1}%
       \usebibmacro{name:hook}{##2##3##1}%
       \ifdefvoid{##2}{}{\mkbibnamegiven{##2}\isdot\bibnamedelimd}%
@@ -1112,7 +1114,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 }
 
 %
-%   作者信息的输出格式，针对biblatex<3.3版本，姓名大小写格式采用拼音样式
+%   针对biblatex<3.3版本，姓名大小写格式采用拼音样式
 %
 \defversion{3.0}{named}{
     \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
@@ -1126,7 +1128,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     \usebibmacro{name:andothers}}
 
     %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
-    \renewbibmacro*{name:last-first}[4]{%
+    \renewbibmacro*{name:last-first}[4]{\bibauthorfont%
       \ifuseprefix
         {\usebibmacro{name:delim}{##3##1}%
          \usebibmacro{name:hook}{##3##1}%
@@ -1154,14 +1156,14 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
          \ifblank{##3}{}{\bibnamedelimd\mkbibnameprefix{##3}\isdot}%
          \addcomma\addspace%
          \ifblank{##4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{##4}\isdot}%
-         }
+         }%
      }
      \renewbibmacro*{name:first-last}[4]{%
      \usebibmacro{name:last-first}{##1}{##2}{##3}{##4}}
 }
 
 %
-%   作者信息的输出格式，针对biblatex>=3.3版本，姓名大小写格式采用拼音样式
+%   针对biblatex>=3.3版本，姓名大小写格式采用拼音样式
 %
 \defversion{3.4}{named}{
     \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
@@ -1179,7 +1181,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
       \usebibmacro{name:andothers}}
 
     %biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
-    \renewbibmacro*{name:given-family}[4]{%用family-given修改后的内容定义given-family
+    \renewbibmacro*{name:given-family}[4]{\bibauthorfont%用family-given修改后的内容定义given-family
       \ifuseprefix
         {\usebibmacro{name:delim}{##3##1}%
          \usebibmacro{name:hook}{##3##1}%
@@ -1194,7 +1196,6 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
         {\usebibmacro{name:delim}{##1}%
          \usebibmacro{name:hook}{##1}%
          \ifdefvoid{##2}{\mkbibnamefamily{\MakeCapital{##1}}}{\mkbibnamefamily{\MakeUppercase{##1}}}\isdot%
-         %
          \ifboolexpe{%
            test {\ifdefvoid{##2}}
            and
@@ -1203,7 +1204,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
            {\revsdnamepunct}%
          \ifdefvoid{##2}{}{\bibnamedelimd\mkbibnamegiven{\MakeCapital{##2}}\isdot}%\MakeCapital
          \ifdefvoid{##3}{}{\bibnamedelimd\mkbibnameprefix{##3}\isdot}
-         \ifdefvoid{##4}{}{\bibnamedelimd\mkbibnamesuffix{##4}\isdot}}
+         \ifdefvoid{##4}{}{\bibnamedelimd\mkbibnamesuffix{##4}\isdot}}%
      }
      \renewbibmacro*{name:family-given}[4]{%
      \usebibmacro{name:given-family}{##1}{##2}{##3}{##4}}
@@ -1470,13 +1471,14 @@ test{\iftoggle{iftlnine}}
   %\newunit %这里的标点去掉
   }
 
-
+%
 %   出版社和地址的处理
 %
+%   20180425,v1.0k,为出版信息增加字体控制命令，hzz
 %   原理方法:当没有出版社地址时，直接判断title的信息是否是中文，若为中文，则写出版地不详，否则用英文的字符表示。
 %   事实上title对于每个文献来说是必须的，所以用它判断是最快的，而且一般标题和出版社的语言是一样的。
 %   新增一个样式用于输出连续出版物的地址，单位，时间，%类似\newbibmacro*{publisher+location+date}
-\newbibmacro*{location+institution+date}{%
+\newbibmacro*{location+institution+date}{\bibpubfont%
 \iftoggle{bbx:gbpub}%
 {\testCJKfirst{\thefield{userd}}
 \iflistundef{location}{\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}}{\printtext{[S.l.\adddot]}}}%
@@ -1506,7 +1508,8 @@ test{\iftoggle{iftlnine}}
   \newunit}%
 }
 %
-\renewbibmacro*{publisher+location+date}{%
+%
+\renewbibmacro*{publisher+location+date}{\bibpubfont%
 \iftoggle{bbx:gbpub}%
 {\testCJKfirst{\thefield{userd}}%
 \iflistundef{location}{%\adddot
@@ -1686,7 +1689,7 @@ test{\iftoggle{iftlnine}}
     test {\iffieldundef{booksubtitle}}
   }
     {}
-    {\printtext[booktitle]{%
+    {\printtext[booktitle]{\bibtitlefont%
        \printfield[titlecase]{booktitle}%
        \setunit{\subtitlepunct}%
        \printfield[titlecase]{booksubtitle}}%
@@ -1698,7 +1701,8 @@ test{\iftoggle{iftlnine}}
 %   调整期刊名的格式
 %
 %   原理方法:因为作者年制年份提到前面，因此涉及到期刊名与后面的卷期的关系。
-\renewbibmacro*{journal+issuetitle}{%源来自standard.bbx
+%   20180425,v1.0k,增加了字体控制命令，hzz
+\renewbibmacro*{journal+issuetitle}{\bibpubfont%源来自standard.bbx
   \usebibmacro{journal}%
   %\setunit*{\addspace}%
   %\setunit*{\addcomma\addspace}%修改为增加一个逗号
@@ -1711,9 +1715,9 @@ test{\iftoggle{iftlnine}}
   %\setunit{\addspace}%
   \usebibmacro{issue+date}%
   %\setunit{\addcolon\space}%
+  \iffieldundef{volume}{}{\setunit{\addcomma\space}}%
   %换成逗号和空格
   \usebibmacro{issue}%
-  \iffieldundef{volume}{}{\setunit{\addcomma\space}}%
   \usebibmacro{volume+number+eid}%把卷期放到年份后面
   %\newunit
   }
@@ -1803,7 +1807,7 @@ test{\iftoggle{iftlnine}}
 \renewbibmacro*{periodical}{%源来自biblatex.DEF
   \iffieldundef{title}
     {}
-    {\printtext[title]{%
+    {\printtext[title]{\bibtitlefont%
        \printfield[titlecase]{title}%
        %\setunit{\subtitlepunct}%
        \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
@@ -1883,7 +1887,7 @@ test{\iftoggle{iftlnine}}
     test{\iffieldundef{subtitle}}%
   }%
     {}%
-    {\printtext[title]{%
+    {\printtext[title]{\bibtitlefont%
        \printfield[titlecase]{title}%
        \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
        {}{\setunit{\subtitlepunct}%
@@ -1901,7 +1905,8 @@ test{\iftoggle{iftlnine}}
 %
 %   修改了一个institution+location+date用于report等类型
 %
-\renewbibmacro*{institution+location+date}{%当没有institution时不处理。
+%   20180425，v1.0k，增加了字体控制命令，hzz
+\renewbibmacro*{institution+location+date}{\bibpubfont%当没有institution时不处理。
   \printlist{location}%
   \iflistundef{institution}
     {\setunit*{\addcomma\space}}
@@ -1915,12 +1920,12 @@ test{\iftoggle{iftlnine}}
 
 %
 %   修改in:用于inbook、incollection、inproceedings等类型
-%   added in v1.0k, 2018.04.20, by hzz
+%   2018.04.20,v1.0k,renewed marco，by hzz
 %
 %   原理方法:使用bibmacro{in:}改变了以前在driver中直接输出//的方式，同时也简化了标点控制。
 \renewbibmacro*{in:}{%
  \iftoggle{bbx:gbpunctin}{\printtext{\texttt{//}\addthinspace}}%
-                         {\setunit{\adddot\addspace}\printtext{\bibstring{in}\intitlepunct}}}%\newunit\newblock
+                         {\setunit{\adddot\addspace}\printtext{\bibstring{in}}}}%\newunit\newblock\intitlepunct
 
 
 %=====================================================================
@@ -1935,128 +1940,21 @@ test{\iftoggle{iftlnine}}
   \usebibmacro{author/editor+others/translator+others}%
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{maintitle+title}%
-  \newunit
-  \printlist{language}%
-  \newunit\newblock
-  \usebibmacro{byauthor}%
-  \newunit\newblock
-  \usebibmacro{byeditor+others}%
-  \newunit\newblock
-  \printfield{edition}%
-  \newunit
-  \iffieldundef{maintitle}
-    {\printfield{volume}%
-     \printfield{part}}
-    {}%
-  \newunit
-  \printfield{volumes}%
-  \newunit\newblock
-  \usebibmacro{series+number}%
-  \newunit\newblock
-  %\printfield{note}%
-  %\newunit\newblock
-  \usebibmacro{publisher+location+date}%
-  \newunit\newblock
-  \usebibmacro{chapter+pages}%
-  %\newunit
-  \usebibmacro{doi+eprint+url}%从下面提上来
-  \newunit\newblock
-  \printfield{pagetotal}%
-  \newunit\newblock
-  \iftoggle{bbx:isbn}
-    {\printfield{isbn}}
-    {}%
-  \newunit\newblock
-  %\usebibmacro{doi+eprint+url}%
-  %\newunit\newblock
-  \usebibmacro{addendum+pubstate}%
-  \setunit{\bibpagerefpunct}\newblock
-  \usebibmacro{pageref}%
-  \newunit\newblock
-  \iftoggle{bbx:related}
-    {\usebibmacro{related:init}%
-     \usebibmacro{related}}
-    {}%
-  \usebibmacro{finentry}}
-
-%
-%   inbook的驱动
-%
-\DeclareBibliographyDriver{inbook}{%源来自standard.BBX
-  \usebibmacro{bibindex}%
-  \usebibmacro{begentry}%
-  \usebibmacro{author/translator+others}%
-  \setunit{\labelnamepunct}\newblock%
-  \usebibmacro{title}%
-\usebibmacro{in:}%
-%\printtext{\texttt{//}\addthinspace}%
-  \usebibmacro{bybookauthor}%
-  \ifnameundef{bookauthor}{}{\newunit\newblock}%替换下一句
-  %\newunit\newblock
-  \usebibmacro{maintitle+booktitle}%
-  \newunit\newblock%
-%  \usebibmacro{byeditor+others}%
-%  \newunit\newblock
-  \printfield{edition}%
-  \newunit
-  \iffieldundef{maintitle}
-    {\printfield{volume}%
-     \printfield{part}}
-    {}%
-  \newunit
-  \printfield{volumes}%
-  \newunit\newblock
-  \usebibmacro{series+number}%
-  \newunit\newblock
-  %\printfield{note}%
-  %\newunit\newblock
-  \usebibmacro{publisher+location+date}%
-  \newunit\newblock
-  \usebibmacro{chapter+pages}%
-  %\newunit\newblock
-  \usebibmacro{doi+eprint+url}%移到上面来
-  \newunit\newblock
-  \iftoggle{bbx:isbn}
-    {\printfield{isbn}}
-    {}%
-  \newunit\newblock
-%  \usebibmacro{doi+eprint+url}%
-%  \newunit\newblock
-  \usebibmacro{addendum+pubstate}%
-  \setunit{\bibpagerefpunct}\newblock
-  \usebibmacro{pageref}%
-  \newunit\newblock
-  \iftoggle{bbx:related}
-    {\usebibmacro{related:init}%
-     \usebibmacro{related}}
-    {}%
-  \usebibmacro{finentry}}
-
-
-%
-%   collection类型驱动
-%
-\DeclareBibliographyDriver{collection}{%直接用book的驱动
-  \usebibmacro{bibindex}%
-  \usebibmacro{begentry}%
-  \usebibmacro{author/editor+others/translator+others}%
-  \setunit{\labelnamepunct}\newblock
-  \usebibmacro{maintitle+title}%
-  \newunit
-  \printlist{language}%
-  \newunit\newblock
-  \usebibmacro{byauthor}%
-  \newunit\newblock
-  \usebibmacro{byeditor+others}%
-  \newunit\newblock
-  \printfield{edition}%
-  \newunit
-  \iffieldundef{maintitle}
-    {\printfield{volume}%
-     \printfield{part}}
-    {}%
-  \newunit
-  \printfield{volumes}%
+\newunit
+\printlist{language}%
+\newunit\newblock
+\usebibmacro{byauthor}%
+\newunit\newblock
+\usebibmacro{byeditor+others}%
+\newunit\newblock
+\printfield{edition}%
+\newunit
+\iffieldundef{maintitle}
+{\printfield{volume}%
+\printfield{part}}
+{}%
+\newunit
+\printfield{volumes}%
   \newunit\newblock
   \usebibmacro{series+number}%
   \newunit\newblock
@@ -2086,10 +1984,10 @@ test{\iftoggle{iftlnine}}
     {}%
   \usebibmacro{finentry}}
 
-
 %
-%   incollection类型驱动
+%   文集中析出文献类型驱动
 %
+%   直接利用inbook做incollection
 \DeclareBibliographyDriver{incollection}{%直接用inbook的驱动
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
@@ -2099,7 +1997,7 @@ test{\iftoggle{iftlnine}}
   \usebibmacro{in:}%
   %\printtext{\texttt{//}\addthinspace}%
   \usebibmacro{bybookauthor}%
-  \ifnameundef{bookauthor}{}{\newunit\newblock}%替换下一句
+  \ifnameundef{bookauthor}{}{\newunit}%替换下一句
   %\newunit\newblock
   \usebibmacro{maintitle+booktitle}%
   \newunit\newblock
@@ -2139,6 +2037,8 @@ test{\iftoggle{iftlnine}}
      \usebibmacro{related}}
     {}%
   \usebibmacro{finentry}}
+
+
 
 %
 %   期刊文章，连续出版物中的析出文献的格式
@@ -2193,7 +2093,7 @@ test{\iftoggle{iftlnine}}
   %\setunit{\labelnamepunct}\newblock
   \newunit\newblock %删除上面一行，添加这一行
   \usebibmacro{title+issuetitle}%
-  \newunit
+  \newunit\newblock
   \usebibmacro{location+institution+date}%添加这一行用于输出地址，单位和时间
   \newunit\newblock%添加这一行
   \printlist{language}%
@@ -2260,6 +2160,7 @@ test{\iftoggle{iftlnine}}
     {}%
   \usebibmacro{finentry}}
 
+
 %
 %   在线文献驱动
 %
@@ -2301,6 +2202,8 @@ test{\iftoggle{iftlnine}}
      \usebibmacro{related}}
     {}%
   \usebibmacro{finentry}}
+
+
 
 %
 %   学位论文修改
@@ -2499,7 +2402,7 @@ test{\iftoggle{iftlnine}}
   \usebibmacro{in:}%
   %\printtext{\texttt{//}\addthinspace}%
   \usebibmacro{bybookauthor}%用类似inbook的方式处理
-  \ifnameundef{bookauthor}{}{\newunit\newblock}%替换下一句
+  \ifnameundef{bookauthor}{}{\newunit}%替换下一句
   %\newunit\newblock
   \usebibmacro{maintitle+booktitle}%
   \newunit\newblock
@@ -2583,6 +2486,115 @@ test{\iftoggle{iftlnine}}
   \newunit\newblock
 %  \usebibmacro{doi+eprint+url}%
 %  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
+
+%
+%   专著中的析出文献的格式修改
+%
+\DeclareBibliographyDriver{inbook}{%源来自standard.BBX
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock%
+  \usebibmacro{title}%
+\usebibmacro{in:}%
+%\printtext{\texttt{//}\addthinspace}%
+  \usebibmacro{bybookauthor}%
+  \ifnameundef{bookauthor}{}{\newunit}%替换下一句
+  %\newunit\newblock
+  \usebibmacro{maintitle+booktitle}%
+  \newunit\newblock%
+%  \usebibmacro{byeditor+others}%
+%  \newunit\newblock
+  \printfield{edition}%
+  \newunit
+  \iffieldundef{maintitle}
+    {\printfield{volume}%
+     \printfield{part}}
+    {}%
+  \newunit
+  \printfield{volumes}%
+  \newunit\newblock
+  \usebibmacro{series+number}%
+  \newunit\newblock
+  %\printfield{note}%
+  %\newunit\newblock
+  \usebibmacro{publisher+location+date}%
+  \newunit\newblock
+  \usebibmacro{chapter+pages}%
+  %\newunit\newblock
+  \usebibmacro{doi+eprint+url}%移到上面来
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isbn}}
+    {}%
+  \newunit\newblock
+%  \usebibmacro{doi+eprint+url}%
+%  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
+
+%
+%   文集类型驱动
+%
+%   直接利用book做collection
+\DeclareBibliographyDriver{collection}{%直接用book的驱动
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/editor+others/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{maintitle+title}%
+  \newunit
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}%
+  \newunit\newblock
+  \printfield{edition}%
+  \newunit
+  \iffieldundef{maintitle}
+    {\printfield{volume}%
+     \printfield{part}}
+    {}%
+  \newunit
+  \printfield{volumes}%
+  \newunit\newblock
+  \usebibmacro{series+number}%
+  \newunit\newblock
+  %\printfield{note}%
+  %\newunit\newblock
+  \usebibmacro{publisher+location+date}%
+  \newunit\newblock
+  \usebibmacro{chapter+pages}%
+  %\newunit
+  \usebibmacro{doi+eprint+url}%从下面提上来
+  \newunit\newblock
+  \printfield{pagetotal}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isbn}}
+    {}%
+  \newunit\newblock
+  %\usebibmacro{doi+eprint+url}%
+  %\newunit\newblock
   \usebibmacro{addendum+pubstate}%
   \setunit{\bibpagerefpunct}\newblock
   \usebibmacro{pageref}%

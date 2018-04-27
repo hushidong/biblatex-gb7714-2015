@@ -1,0 +1,74 @@
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage{geometry}
+\geometry{paperwidth=21cm,paperheight=29cm,top=1.5cm, bottom=1.5cm, left=2.54cm,right=2.54cm}
+\usepackage{xcolor}
+\usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=blue]{hyperref}
+\usepackage[backend=biber,style=gb7714-2015,gbtype=true,block=none]{biblatex}%align=gb7714-2015
+\addbibresource[location=local]{example.bib}
+
+% 换行的控制
+%
+% 选项 block=none , space , par , nbpar , ragged
+%\renewcommand*{\newblockpunct}{\par\nobreak}
+
+% 字体的控制：\textit，sl，emph-楷体，\textbf，sf-黑体，\texttt-仿宋，\textsc，md，up-宋体
+%
+% 全局字体
+\renewcommand{\bibfont}{\zihao{-5}}%\fangsong
+% 标题字体
+\renewcommand{\bibauthorfont}{\bfseries\color{teal}}%
+\renewcommand{\bibtitlefont}{\ttfamily\color{blue}}%
+\renewcommand{\bibpubfont}{\itshape\color{violet}}%
+% url和doi字体
+\def\UrlFont{\ttfamily} %\urlstyle{sf} %\def\UrlFont{\bfseries}
+
+% 间距的控制
+\setlength{\bibitemsep}{0ex}
+\setlength{\bibnamesep}{0ex}
+\setlength{\bibinitsep}{0ex}
+
+% 标点类型的控制（全局字体能控制标点的字体）
+
+
+%\renewcommand{\thefootnote}{\textcircled{\tiny\arabic{footnote}}}
+
+\begin{document}
+编译信息:biblatex v\versionofbiblatex;gb7714-2015*.* version number \versionofgbtstyle.
+%%%测试作者年/biblatex版本兼容性的文件
+%%%test file for author year style
+
+\section{文献表}
+文献
+\cite{张伯伟2002--}
+\cite{白书农1998-146-163}
+\cite{杨洪升2013-56-75}
+\cite{中华医学会湖北分会1984--}
+\cite{雷光春2012--}
+\cite{贾东琴2011-45-52}
+\cite{汤万金2013-09-30--}
+\cite{韩吉人1985-90-99}
+\cite{马欢2011-27-27}
+\cite{张凯军2012-04-05--}
+\cite{国家环境保护局科技标准司1996-2-3}
+\cite{中国职工教育研究会1985--}
+\cite{丁文祥2000--}
+\cite{李强2012-05-03--}
+
+\cite{OBRIEN1994--}
+\cite{FOURNEY1971-17-38}
+\cite{Park2010-696-715}
+\cite{Babu2014--}
+\cite{Calkin2011-8-9}
+\cite{CALMS1965--}
+\cite{KOSEKI2002--}
+\cite{standardinfoiso158}
+\cite{Dublin2012-06-14--}
+
+{
+%\hyphenation{kurose-gawa}
+%\hyphenpenalty=1000
+%\tolerance=500
+\printbibliography[heading=subbibliography,title=【参考文献】]
+}
+\end{document} 

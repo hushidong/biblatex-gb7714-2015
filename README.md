@@ -89,8 +89,8 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 
 * [Biblatex 宏包](https://github.com/plk/biblatex)
 * [Beamer 文档类](https://github.com/josephwright/beamer)
-* [Biblatex说明文档 中文版](https://github.com/hushidong/biblatex-zh-cn)
-* [LaTeX中文参考文献的biblatex解决方案](https://github.com/hushidong/biblatex-solution-to-latex-bibliography)
+* [biblatex 宏包中文手册 ](https://github.com/hushidong/biblatex-zh-cn)
+* [biblatex 简明使用手册](https://github.com/hushidong/biblatex-solution-to-latex-bibliography)
 * [gbt7714-bibtex-style: GB/T7714-2015 标准的bst实现版本](https://github.com/zepinglee/gbt7714-bibtex-style)
 * [LaTeX学习网站](http://www.latexstudio.net/)
 * [LaTeX交流论坛](http://bbs.ctex.org/)
@@ -468,6 +468,50 @@ biber -l zh__stroke jobname
 ---------------------------------------------------------
 
 ## Update history:
+
+
+\updateinfo[2018-04-03]{date of update: 2018-04-03 to version v1.0k}\label{up:180403}
+\begin{enumerate}
+\item 增加了标注命令authornumcite，用于在标注标签中同时输出作者和顺序编码。（20180427）
+
+add a citation cmd：authornumcite to print author and numeric number at the same time.
+
+\item 增加了字体控制命令bibauthorfont，bibtitlefont，bibpubfont，用于控制文献表中作者、标题、出版项的字体和颜色。（20180427）
+
+add 3 font set cmd：bibauthorfont，bibtitlefont，bibpubfont to control the font and color of author，title，and publication items.
+
+\item 增加了gbpunctin选项，用于控制inbook等类型是否输出析出来源文献前的//符号，主要是为方便用户定制。
+
+add an option gbpunctin to control the output of // before bookauthor for entry types like inbook.
+
+\item 修正了析出文献来源的作者为editor是出现两次的问题，这个很简单的问题如果用bookauthor就不会出现问题，所以以前一直没有发现，才由杨志红提出来，感谢。
+
+correct a bug that the editor appears twice for the entry with booktitle's bookauthor is editor, which is reported by Yang zhihong,3ks!
+
+\item 完善了github上的wiki。
+
+WIKI on github was accomplished.
+
+\item 修正了gbnamefmt中的一些小错误。
+
+correct some flaws for gbnamefmt option.
+
+\item 修改了代码用于兼容3.11版本
+
+change the separator before related block for v3.11.
+
+\item 页码范围的间隔符从en dash改为hyphen
+
+change the pages range separator from en dash to hyphen.
+	
+\item 修正了v3.7以上版本中专利文献中公告日期后多出点的问题，该bug是由于输入公告日期没有使用printtext导致异步标点机制破坏所致。
+
+correct a bug of newsdate in patent for biblatex >v3.7, which added an additional dot before urldate caused by broken asynchronous punctuation .
+
+\item 修正了texlive2017以上版本中beamer类中标题后面多出点的问题，由于beamer会对bibmacro\{title\}做patch导致其输出不同于普通文档类，该bug是由于beamer升级后patch的内容发生变化导致。
+
+correct a bug of punctuation after title with beamer for >texlive2017, the bug is caused by the update of beamer.
+\end{enumerate}
 
 [update latest](example/updatehistory.tex)
 

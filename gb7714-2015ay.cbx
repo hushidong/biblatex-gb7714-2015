@@ -135,3 +135,14 @@ test {\iftoggle{iftlsix}}%3.3<=biblatex<=3.6
   {\printfield{year}\printfield{extrayear}}
   {\multicitedelim}
   {\printtext{)}}
+
+%
+%   定义\authornumcite命令，输出作者信息，然后在后面带上顺序编码
+%   20180427，v1.0k，增加，hzz
+%   为与顺序编码制兼容，增加了命令，定义与cite相同
+\DeclareCiteCommand{\authornumcite}[\mkbibparens]
+  {\usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
