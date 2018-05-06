@@ -464,7 +464,6 @@ biber -l zh__stroke jobname
 
 ## Need to do:
     * special characters in all fields?
-    * citestyle is gb7714-2015ay, bibstyle is gb7714-2015?
     * entry without author: the delimiter between title and year?
 	* more languages, to be compatible with language field in old bib file?
 	* more complex citation cmd?

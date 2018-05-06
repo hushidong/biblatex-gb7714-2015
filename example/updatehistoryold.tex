@@ -1,22 +1,12 @@
-%============================
-\updateinfo[2018-04-03]{update to version 1.0k}\label{up:180403}
-\begin{enumerate}
-\item 修正了gbnamefmt中的一些小错误。
-\item 修改了代码用于兼容3.11版本
-\item 页码范围的间隔符从en dash改为hyphen
-\item 修正了v3.7以上版本中专利文献中公告日期后多出点的问题，该bug是由于输入公告日期没有使用printtext导致异步标点机制破坏所致。
-\item 修正了texlive2017以上版本中beamer类中标题后面多出点的问题，由于beamer会对bibmacro\{title\}做patch导致其输出不同于普通文档类，该bug是由于beamer升级后patch的内容发生变化导致。
-\end{enumerate}
 
 %============================
 \updateinfo[2018-01-20]{update to version 1.0j}\label{up:180120}
 \begin{enumerate}
 \item 增加gbtype选项用于控制是否输出题名后的标识符，见\ref{sec:added:opt} 节。
-\item 进一步修改了版本判断机制，以使最新版本的兼容性更强，见\ref{sec:blx:compatibility}节。
+\item 进一步修改了版本判断机制，以使最新版本的兼容性更强。
 \item 根据刘小涛的需求和建议，增加了gbnamefmt选项用于控制姓名的大小写和输出格式，同时根据zotero从cnki识别输出中文文献姓名中带逗号的情况做了兼容性处理，见\ref{sec:opt:namefmt}节。
-\item 为统一样式增加的选项将原来的align选项修改为gbalign，见\ref{sec:added:opt}节。
-\item 通过正确使用nameyeardelim相关命令，修正了作者年制，标注和著录表中的中作者与年份之间的标点符号，
-    见\ref{sec:label:fmt}节。
+\item 为统一样式增加的选项，将原来的align选项修改为gbalign。
+\item 通过正确使用nameyeardelim相关命令，修正了作者年制，标注和著录表中的中作者与年份之间的标点符号。
 \item 根据ghiclgi的建议，增加了yearcite命令以满足，作者年制中作者已经给出仅需要年份信息而不需要页码信息的情况，说明和测试见\ref{sec:test:book}，\ref{sec:cite:cmd:test}节。
 \end{enumerate}
 
@@ -41,14 +31,14 @@
     \StrChar{english \LaTeX{} abc}{1}[\tempa]%
     \tempa
 
-    但解决的是直接给出文本的情况，在biblatex使用中需要用\thefield取出文本，显然\thefield不止展开一次，因此不展开或者展开一次，都会出现问题，所以无解。只能从另外一个角度出发。
+    但解决的是直接给出文本的情况，在biblatex使用中需要用\thefield 取出文本，显然\thefield 不止展开一次，因此不展开或者展开一次，都会出现问题，所以无解。只能从另外一个角度出发。
 
     考虑到动态数据修改时，也可以利用正则表达式抽取数据，因此利用它来将title信息的第一个非特殊符号字符抽取出来，放到userd 中用于cjk判断，这样就避开了\LaTeX{}展开的问题。
     \end{texlist}
 
-\item 针对biblatex3.8a的更新做了兼容性处理，主要是修改版本判断和处理机制，替换新的宏包选项，替换新的排序格式命令。详见第\ref{sec:blx:compatibility}节
+\item 针对biblatex3.8a的更新做了兼容性处理，主要是修改版本判断和处理机制，替换新的宏包选项，替换新的排序格式命令。
 
-\item 重写了范围解析函数，详见\ref{sec:cjkjudge}节
+\item 重写了范围解析函数。
 
 \end{enumerate}
 
@@ -88,10 +78,10 @@
     \end{texlist}
     这个方式似乎有点问题。
 
-\item 根据同学(zjsdut@163.com)发现的问题，修改一个bug，感谢。当online 类型仅有url 信息时，url前面多了一个点。这是modifydate宏设计中printtext位置导致标点异步处理机制失效所产生现象。因此作出修改，newbibmacro*\{modifydate\}宏详见\ref{sec:date:fmt}节。
+\item 根据同学(zjsdut@163.com)发现的问题，修改一个bug，感谢。当online 类型仅有url 信息时，url前面多了一个点。这是modifydate宏设计中printtext位置导致标点异步处理机制失效所产生现象。因此对newbibmacro*\{modifydate\}宏作出修改。
 
 
-\item 增加一个选项gbnoauthor。当给出选项gbnoauthor=true时，作者年制中当作者缺省时，使用佚名或noauthor代替，即将佚名或noauthor作为作者处理。默认情况下gbnoauthor=true不处理，即当无作者进行处理，选择增加的代码详见\ref{sec:blx:compatibility}节。同时也修改了中英文排序判断和佚名代替的机制。
+\item 增加一个选项gbnoauthor。当给出选项gbnoauthor=true时，作者年制中当作者缺省时，使用佚名或noauthor代替，即将佚名或noauthor作为作者处理。默认情况下gbnoauthor=true不处理，即当无作者进行处理。同时也修改了中英文排序判断和佚名代替的机制。
     \begin{texlist}
         \map{%因为无法进行cjk字符判断，所以用反的思路，判断没有英文字符，没有空格，没有逗号等字符情况下
              %认为是中文的，将文献userb设置成cn，用于排序
@@ -208,7 +198,7 @@
       \printfield{eid}}}
     \end{texlist}
 
-\item wayne508同学提出了一个需求，就是不希望使用出版项缺省时的默认处理，即不使用[出版地不详]，[出版者不详]，[S.l.]，[s.n.]等填充，因此增加了一个宏包选项gbpub，当等于false时，去掉自动处理，使用biblatex 的标准处理方式。增加选项代码见\ref{sec:blx:compatibility}节，下面给出的是具体的处理代码:
+\item wayne508同学提出了一个需求，就是不希望使用出版项缺省时的默认处理，即不使用[出版地不详]，[出版者不详]，[S.l.]，[s.n.]等填充，因此增加了一个宏包选项gbpub，当等于false时，去掉自动处理，使用biblatex 的标准处理方式。下面给出具体的处理代码:
 
     \begin{texlist}
     %出版社和地址的处理
@@ -360,7 +350,7 @@
 \begin{enumerate}
 \item 进一步增加兼容性，支持条目类型比如MASTERSTHESIS，PHDTHESIS，www，electronic，standard，techreport，conference等，支持本样式增加的newspaper类型。因此在bib文件中可以直接使用这些条目类型。具体的测试详见\ref{sec:entrytype:compatibility}节。
 
-    为了实现兼容，主要从三个方面进行修改，包括用户层数据源映射，样式层的数据源映射，驱动。关于数据源映射和数据模型的原理详见\ref{sec:biblatex:mech} 节。
+    为了实现兼容，主要从三个方面进行修改，包括用户层数据源映射，样式层的数据源映射，驱动。
 
     因为biblatex提供的一些类型的别名的处理是在驱动层数据源映射时处理，所以要实现完全的兼容，还需要在用户层或者样式层进一步处理，首先是标识符的问题。因为以前做的标识符处理时在用户层映射中，所以这里仍然如此:
     \begin{texlist}
@@ -435,7 +425,7 @@
     \DeclareBibliographyAlias{newspaper}{article}%定义驱动别名，尝试以替代驱动层映射，实践表明是可行的。
     \end{texlist}
 
-\item 在online类型中，公告日期改为首选用date实现，然后用enddate，当没有date 和enddate时则用eventdate输出。代码详见\ref{sec:date:fmt}节。
+\item 在online类型中，公告日期改为首选用date实现，然后用enddate，当没有date 和enddate时则用eventdate输出。
 
 \item 为方便bib文件生成，构建可以从gb7714-2015格式的参考文献表文本转bib 文件的perl 程序，利用它可以批量解析参考文献信息并转换为bib数据源文件。详见:\href{run:./gb7714texttobib.pl}{gb7714texttobib.pl}，测试文件见:\href{run:./gb7714texteg.dat}{gb7714texteg.dat}。
 
@@ -469,7 +459,7 @@
     \usebibmacro{bybookauthor}%
     \end{texlist}
 
-\item 对参考文献的一些域中存在的一些特殊字符比如\&，\%，\#等进行处理，方法是利用动态数据修改。同时因为texlive2015/texlive2016中biblatex 版本的不同分别进行处理。这个需求是湘厦人提出的，这里做出修改，详见\ref{sec:dynamic:modify}节。
+\item 对参考文献的一些域中存在的一些特殊字符比如\&，\%，\#等进行处理，方法是利用动态数据修改。同时因为texlive2015/texlive2016中biblatex 版本的不同分别进行处理。这个需求是湘厦人提出的，这里做出修改。
 
 
 \end{enumerate}
@@ -538,7 +528,7 @@
 }
 \end{texlist}
 
-\item 之前1.0e版增加gbalign选项的时候，没有测试对texlive2015的兼容性，所以导致一些错误。因为texlive2015的biblatex3.0版本的DeclareBibliographyOption 命令定义选项时不像texlive2016的biblatex3.4版的是带类型说明的。所以做出一定的处理，把该命令分两个版本进行设置。同时需要注意新定义的参考文献表环境在texlive2015中的biblatex3.0中无效且出错，所以直接去掉，因此文献表的标签的项对齐效果在texlive2015中的biblatex3.0 版中无法实现。代码详见\ref{sec:blx:compatibility}节。
+\item 之前1.0e版增加gbalign选项的时候，没有测试对texlive2015的兼容性，所以导致一些错误。因为texlive2015的biblatex3.0版本的DeclareBibliographyOption 命令定义选项时不像texlive2016的biblatex3.4版的是带类型说明的。所以做出一定的处理，把该命令分两个版本进行设置。同时需要注意新定义的参考文献表环境在texlive2015中的biblatex3.0中无效且出错，所以直接去掉，因此文献表的标签的项对齐效果在texlive2015中的biblatex3.0 版中无法实现。
 
 \item 之前1.0e版解决编组符号包围的责任者的中英文判断问题的时候，没有测试对texlive2015的兼容性，所以导致一些错误。因为使用了xstring宏包的功能，但texlive2015的biblatex3.0版本不默认加载xstring宏包，所以在修改样式文件，在其中加载一下该宏包。
 \begin{texlist}
@@ -552,8 +542,7 @@
 \begin{enumerate}
 \item 应海阔天空和xmtangjun等朋友的要求，在同一文献中可以使用上标或非上标的标注方式，修改顺序编码制的标注样式文件，去掉parencite命令的上标模式，恢复非上标方式。这样可以在同一文章中使用cite命令标注上标，而parencite命令标注非上标。而作者年制没有这一问题，不做修改。具体的效果见第\ref{sec:cite:cmd:test}节的内容。
 
-\item 给宏包增加了一个选项gbalign，用于控制顺序编码制的参考文献表的标签对齐方式，默认是right即右对齐，可以设置left即左对齐，也可以设置gb7714-2015，即以各条参考文献自身为基准对齐实现对齐。效果见第\ref{sec:align:test}节的内容。增加一个选项，真正实现起来并不复杂，但在未明白其运行机制之前尝试了好长时间，显得很麻烦，具体的机制见第\ref{sec:biblatex:mech} 节。
-    修改代码如下:
+\item 给宏包增加了一个选项gbalign，用于控制顺序编码制的参考文献表的标签对齐方式，默认是right即右对齐，可以设置left即左对齐，也可以设置gb7714-2015，即以各条参考文献自身为基准对齐实现对齐。增加一个选项，真正实现起来并不复杂，但在未明白其运行机制之前尝试了好长时间，显得很麻烦。修改代码如下:
 \begin{texlist}
 \DeclareBibliographyOption[string]{gbalign}[right]{%
 \ifstrequal{#1}{left}{\setalignleft}{}
@@ -650,10 +639,10 @@
 }
 \end{texlist}
 
-\item 当urldate域给出的信息不全时，比如只有年和月，而没有日，那么就需要进行判断，只输出存在的信息，因此对urldate域格式做修改，代码详见\ref{sec:date:fmt}节。
+\item 当urldate域给出的信息不全时，比如只有年和月，而没有日，那么就需要进行判断，只输出存在的信息，因此对urldate域格式做修改。
 
 
-\item 当责任者等需要判断中英文的信息是用编组符号包含的时候，原来的CJK判断函数会出现问题，所以利用xstring宏包做一定的修改，修改完成后可以应对信息中存在编组的情况，详见\ref{sec:cjkjudge}节。
+\item 当责任者等需要判断中英文的信息是用编组符号包含的时候，原来的CJK判断函数会出现问题，所以利用xstring宏包做一定的修改，修改完成后可以应对信息中存在编组的情况。
 \end{enumerate}
 
 %============================
