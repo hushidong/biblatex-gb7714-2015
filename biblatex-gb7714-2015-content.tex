@@ -551,7 +551,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 带页码的引用:
     \cite[见][49页]{蔡敏2006--}  \parencite[见][49页]{Miroslav2004--}
     \pagescite{Peebles2001-100-100}  \pagescite[][201-301]{Peebles2001-100-100}
-    
+
 注意：有时希望同时输出作者和顺序编码，有三种方式可以实现：
     （一），直接的方法：见\citeauthor{refb}\cite{refb},\citeauthor{refc}\cite{refc}
     （二），定义新的标注命令：见\authornumcite{refb,refc}
@@ -582,7 +582,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
     见赵耀东\yearcite{赵耀东1998--}
     见赵耀东(\cite*{赵耀东1998--})
     见赵耀东(\citeyear{赵耀东1998--})
-    
+
 在页脚中引用和打印文献表:
     \footnote{在脚注中引用\footcite{赵学功2001--}} \footfullcite{赵学功2001--}
     \end{texlist}
@@ -1433,8 +1433,8 @@ beamer类中的参考文献测试，参见:
 
 %读者若查看样式文件内容可以看到作者对各目标要求所做的修改及，读者也可以根据自己的需求进行修改，作者设计样式文件的思路以及在设计过程中用到的一些biblatex宏包功能说明，详见第\ref{sec:biblatex:mech}节和LaTeX文档中文参考文献的biblatex解决方案的第2.7节。
 
-最后要感谢如下各位师长和朋友，正是在各位的帮助建议下，本样式不断升级逐渐完善。包括: moewew(biblatex 现在的维护者之一，给了不少有益的建议)、 李志奇(基于biblatex的符合GBT7714-2005的中文文献生成工具作者，笔者以前使用该工具，其代码对于设计本样式很有启发)、LeoLiu(刘海洋，CJK字符判断函数
-\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152663&extra=page\%3D3}} 对本宏包非常有帮助)、chinatex(china tex版主，给了很多建议和帮助，并且一起合作)、Sheng wenbo(biblatex用户手册合作译者，LaTeX2e 插图指南第三版译者，我们一起翻译的过程相互激励相互促进)、zepinglee(gbt7714-2015 bst样式作者，给了很多建议和讨论)、Harry Chen(ctex 维护者，给了不少好的建议)、liubenyuan(关于项目组织给出了很好的建议)、刘小涛（讨论了关于zotero的使用并提出了建议）、ghiclgi(讨论了GB中作者年制标注标签的一些问题)、秀文工作组、leipility、qingkuan、湘厦人、秋平、任蒲军、fredericky123、qiuzhu、chaoxiaosu、Old Jack、Wu Nailong、Yibai Zhang、wayne508、 钟乙源、Xiaodong Yao、dsycircle、rpjshu、zjsdut、谢澜涛、Zutian Luo、海阔天空、zzqzyx、程晨、xmtangjun、蔡伟 等等。当然还有更多朋友提供了bug报告，提出了issue，提供了热心帮助，限于篇幅这里不再一一列举，在此一并表示感谢!
+最后要感谢如下各位师长和朋友，正是在各位的帮助建议下，本样式不断升级逐渐完善。包括: moewew (biblatex 现在的维护者之一，给予不少有益的建议和指导)、 李志奇(基于biblatex的符合GBT7714-2005的中文文献生成工具的作者，工具中的一些设计如usera域的使用/卷期范围解析等带来很多启发，本人之前一直使用该工具，之所以开发biblatex-gb7714-2015其实主要是因为该工具因biblatex升级而无法使用)、caspervector(虽然未曾真正交流，但从biblatex-caspervector样式包中学到很多，包括排序/GBK编码等问题的解决思路)、LeoLiu(刘海洋，给出的CJK字符判断函数
+\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152663&extra=page\%3D3}} 对本宏包非常有帮助)、chinatex(china tex版主，给了很多建议和帮助，并且一起合作)、Sheng wenbo(biblatex用户手册合作译者，LaTeX2e 插图指南第三版译者，我们一起翻译的过程相互激励相互促进)、zepinglee(gbt7714-2015 bst样式作者，给了很多建议和讨论)、Harry Chen(ctex套件维护者之一，给了不少好的建议)、liubenyuan(关于项目组织给出了很好的建议)、刘小涛（讨论了关于zotero的使用并提出了建议）、ghiclgi(讨论了GB中作者年制标注标签的一些问题)、秀文工作组、leipility、qingkuan、湘厦人、秋平、任蒲军、fredericky123、qiuzhu、chaoxiaosu、Old Jack、Wu Nailong、Yibai Zhang、wayne508、 钟乙源、Xiaodong Yao、dsycircle、rpjshu、zjsdut、谢澜涛、Zutian Luo、海阔天空、zzqzyx、程晨、xmtangjun、蔡伟 等等。当然还有更多朋友提供了bug报告，提出了issue，提供了热心帮助，限于篇幅这里不再一一列举，在此一并表示感谢!
 
 
 \section{存在的问题和下一步工作}

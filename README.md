@@ -91,6 +91,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * [Beamer 文档类](https://github.com/josephwright/beamer)
 * [biblatex 宏包中文手册 ](https://github.com/hushidong/biblatex-zh-cn)
 * [biblatex 简明使用手册](https://github.com/hushidong/biblatex-solution-to-latex-bibliography)
+* [biblatex-caspervector: caspervector 设计的中文参考文献样式](https://github.com/CasperVector/biblatex-caspervector)
 * [gbt7714-bibtex-style: GB/T7714-2015 标准的bst实现版本](https://github.com/zepinglee/gbt7714-bibtex-style)
 * [LaTeX学习网站](http://www.latexstudio.net/)
 * [LaTeX交流论坛](http://bbs.ctex.org/)
@@ -199,6 +200,18 @@ xelatex jobname.tex
 > 这时需要安装。最简单的方法是从本项目源码中下载gb7714-2015.bbx,gb7714-2015ay.bbx,gb7714-2015.cbx,
 > gb7714-2015ay.cbx四个文件放到你要编译的主文档所在目录。对于已经安装的用户需要更新到最新版，
 > 则可以下载这四个文件替换系统已经安装的文件。
+
+* <b>为什么我之前使用样式`style = caspervector`进行编译没有问题，换成`style = gb7714-2015`后，编译就出现错误？</b>
+	
+> 可能有三个原因：
+
+> 1. 辅助文件没有清理导致，当采用caspervector样式时编译产生的辅助文件中可能带有该样式的一些特有信息，可能产生一些不兼容。因此需要的操作是，清除辅助文件，然后再进行编译。清除命令为(下面的命令是windows下的，linux下的是类似的只需把删除命令换成`rm -f`)：
+
+`del /q *.aux *.bbl *.blg *.log *.out *.toc *.bcf *.xml *.synctex *.nlo *.nls *.bak *.ind *.idx *.ilg *.lof *.lot *.ent-x *.tmp *.ltx *.los *.lol *.loc *.listing *.gz *.synctex(busy) *.nav *.snm *.vrb *.fls *.xdv *.fdb_latexmk`
+
+> 2. biblatex-gb7714-2015版本过于陈旧，可能对于一些特殊情况考虑不全面。因此需要的操作是更新biblatex-gb7714-2015。方法见上一个问题。
+
+> 3. 编译命令问题，通常情况下tex文档和bib文档是utf8编码的，因此最好采用xelatex编译，而不用pdflatex。因此如果编译时用pdflatex出现错误，请换成xelatex。
 
 
 * <b>为什么利用ctex2.9套装进行编译时，编译出现错误？</b>
@@ -467,6 +480,8 @@ biber -l zh__stroke jobname
     * entry without author: the delimiter between title and year?
 	* more languages, to be compatible with language field in old bib file?
 	* more complex citation cmd?
+	* gbk encoding ？
+	* gbstrict to eliminate fields not in GB？
 
 ---------------------------------------------------------
 
