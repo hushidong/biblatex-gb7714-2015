@@ -6,6 +6,7 @@ copy ..\gb7714-2015.bbx . /y
 copy ..\gb7714-2015.cbx . /y
 copy ..\gb7714-2015ay.bbx . /y
 copy ..\gb7714-2015ay.cbx . /y
+copy ..\gb7714-2015-gbk.def . /y
 )
 
 echo compiled files info: > makecompilerec.dat
@@ -27,8 +28,14 @@ setlocal DISABLEDELAYEDEXPANSION
 
 call makeclear
 
+::call maketestutf.bat
+::call maketestgbk.bat
+
+call makeclear
+
 del *.bbx /Q
 del *.cbx /Q
+del *.def /Q
 
 
 ::pause

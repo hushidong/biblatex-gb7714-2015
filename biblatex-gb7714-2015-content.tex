@@ -129,7 +129,7 @@ biblatex-gb7714-2015宏包除了提供严格遵守GB/T 7714-2015标准的格式�
 
         \begin{example}{输出引用文献数据时的biber选项}{eg:bibercmd:outbibfile}
         \begin{texlist}
-        biber jobname.tex --output-format=bibtex
+        biber jobname --output-format=bibtex
         \end{texlist}
         \end{example}
 
@@ -250,7 +250,19 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 
   \item[gbpunctin]=true，false. \hfill default is true
 
-  为控制inbook,incollection,inproceedings中析出来源文献前的\texttt{//}符号而增加的选项。默认设置为true，根据GB/T 7714-2015 要求输出\texttt{//}。 而gbpunctin=false 时，输出默认的本地字符串，英语中是in:，若要完全去掉该符号则可以在导言区增加命令\lstinline!\DefineBibliographyStrings{english}{in={}}!。
+  为控制inbook,incollection,inproceedings中析出来源文献前的\texttt{//}符号而增加的选项。默认设置为true，根据GB/T 7714-2015 要求输出\texttt{//}。 而gbpunctin=false 时，输出默认的本地字符串，英语中是in:，若要完全去掉该符号则可以在导言区增加命令
+  \lstinline!\DefineBibliographyStrings{english}{in={}}!。
+  
+  \item[gbcodegbk]=true，false. \hfill default is false
+
+  为兼容GBK编码的文档增加的选项。默认设置为false，即默认是utf-8编码的文档。利用pdflatex/latex编译GBK编码文档时，应设置为true。当在源文档前面增加 XeTeX 原语：\lstinline!\XeTeXinputencoding "GBK"! 后，也可以使用xelatex编译，这是应设置为false或者不给出该选项。测试文件见：
+  \href{run:example/testgbkeg.tex}{testgbkeg.tex}，
+  \href{run:example/testutfeg.tex}{testutfeg.tex}。
+  
+  \item[gbstrict]=true，false. \hfill default is true
+
+  为避免输出bib文件中多余的域信息而增加选项，目的是为了兼容一些bib文件，因为某些bst样式文件进行中英文判断需要在bib文件中增加类似language这样的域作为支撑，而其中某些域在标准的biblatex样式文件中时默认输出的。gbstrict选项默认设置为true，即不输出。当需要还原标准样式的输出情况时，可设置为false。
+  
 \end{description}
 
 
@@ -1171,7 +1183,7 @@ userb={cn}
 \cite{Dublin2012-06-14--}
 
 
-\printbibliography[heading=subbibliography,type=book,notkeyword=standard,title=【A1-普通图书-著录格式示例】]%subbibintoc
+\printbibliography[heading=subbibliography,type=book,notkeyword=standard,title=【A1- 普通图书-著录格式示例】]%subbibintoc
 \defbibfilter{collections}{%
 type=collection
 or type=proceedings
@@ -1188,8 +1200,8 @@ and keyword=standard
 }
 \printbibliography[heading=subbibliography,filter=standard,title=【A6-标准文献-著录格式示例】]
 \hypertarget{entrystdwithoutauthor}{注意:这里最后一篇标准文献没有责任者，所以作者年制默认情况下无法给出文献标识符。}
-\printbibliography[heading=subbibliography,type=inbook,notkeyword=standard,title=【A7-专著中析出的文献-著录格式示例】]
-\printbibliography[heading=subbibliography,type=article,notkeyword=news,title=【A8-期刊中析出的文献-著录格式示例】]
+\printbibliography[heading=subbibliography,type=inbook,notkeyword=standard,title=【A7- 专著中析出的文献-著录格式示例】]
+\printbibliography[heading=subbibliography,type=article,notkeyword=news,title=【A8- 期刊中析出的文献-著录格式示例】]
 \printbibliography[heading=subbibliography,keyword=news,title=【A9-报纸析出的文献-著录格式示例】]%type=article,有时type是newspaper所以不指定type为article
 \printbibliography[heading=subbibliography,type=online,title=【A10-电子资源-著录格式示例】]
 \end{refsection}

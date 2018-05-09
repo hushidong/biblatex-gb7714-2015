@@ -16,32 +16,32 @@
 %   版本和时间信息
 %
 \ProvidesFile{gb7714-2015ay.bbx}[2018/04/03 v1.0k biblatex bibliography style]
-\def\versionofgbtstyle{2018/04/03 v1.0k}    %版本和修改时间信息
+\def\versionofgbtstyle{2018/04/03 v1.0k}
 \def\versionofbiblatex{\abx@version}
 
 %=====================================================================
 %加载标准样式
 %=====================================================================
-\RequireBibliographyStyle{authoryear} % Load the standard style to avoid copy-pasting unnecessary material
-\RequirePackage{xstring}%为兼容texlive2015的biblatex3.0不加载xstring包的问题
+\RequireBibliographyStyle{authoryear}
+\RequirePackage{xstring}%解决texlive2015的biblatex3.0不加载xstring包的问题
 
 
 %=====================================================================
-%新增功能函数
+%   功能函数
 %=====================================================================
     %
     %   biblatex版本判断
     %   20180405，v1.0k，为兼容biblatexv3.11增加toggle:iftlnine，HU zhenzhen
     %
-    %   原理方法:当版本继续更新时，增加一个新的toggle用以处理新的旧版，最新版本永远用iftlatest
+    %   原理方法:当版本继续更新时，增加一个新的toggle用以处理新的旧版，最新版和未判断出来的版本永远用iftlatest
     \providetoggle{iftlfive}%用于处理biblatex3.2之前的版本
     \providetoggle{iftlsix}%用于处理biblatex3.3开始改变的新的姓名机制后版本
     \providetoggle{iftlseven}%用于处理biblatex3.7的兼容性
     \providetoggle{iftleight}%用于处理biblatex3.8到3.9的兼容性
     \providetoggle{iftlnine}%用于处理biblatex10的兼容性
     \providetoggle{iftlatest}%用于最新版biblatex，目前是biblatex3.11，20180402
-    \StrBefore{\abx@version}{.}[\numinteger]
-    \StrBehind{\abx@version}{.}[\numdigital]
+    \StrBefore{\abx@version}{.}[\numinteger]%以点区分整数和小数
+    \StrBehind{\abx@version}{.}[\numdigital]%小数部分可能带字母所以需将其去掉，见下一行代码
     \IfInteger{\numdigital}{}{\StrGobbleRight{\numdigital}{1}[\numdigital]}
     \togglefalse{iftlfive}
     \togglefalse{iftlsix}
@@ -69,29 +69,18 @@
 
     %
     %   判断CJK字符的函数，用于判断作者等信息是否由中文字符构成
+    %   v1.0k,20180509,hzz
     %
-    %   原理方法:
-    %    2E00-2E7F 追加标点
-    %    2E80-2EFF cjk部首补充
-    %    2FF0-2FFF 表意文字描述符
-    %    3000-303F cjk符号和标点
-    %    3300-33FF cjk兼容
-    %    3400-4DBF cjk统一表意符号扩展
-    %    4E00-9FBF cjk统一表意符号
-    %    中文范围4E00-9FA5
-\providetoggle{ifCJKforgbt}
-\def\testCJKfirstchar#1#2&{%#1#2&
-\ifnumgreater{`#1}{"2E7F}{\toggletrue{ifCJKforgbt}}{\togglefalse{ifCJKforgbt}}%
-}%
-%利用edef展开或xstring抽取第一个字符判断
-%现在采用xstring方法，避免抽取的是编组符号
-\def\testCJKfirst#1{%
-%\edef\tempa{#1}%
-%\expandarg%
-\exploregroups%
-\StrChar{#1}{1}[\tempa]%
-\expandafter\testCJKfirstchar\tempa&}
-
+    %   原理方法:用biber中的perl方法代替。因为利用tex函数对字符判断时，当字符在宏
+    %   中时，基于`的方法无法解决GBK编码的问题，基于CJKsymbol的方法无法解决utf-8
+    %   编码用xelatex编译的问题。
+    %
+    %   原理是：利用perl正则将中文标识记录到域中，
+    %           然后利用\iffieldundef和\iffieldequalstr进行判断
+    \providetoggle{ifCJKforgbt}
+    \def\testCJKfirst#1{%
+        \iffieldundef{#1}{\togglefalse{ifCJKforgbt}}{%
+        \iffieldequalstr{#1}{cn}{\toggletrue{ifCJKforgbt}}{\togglefalse{ifCJKforgbt}}}}
 
     %
     %   2个卷的解析函数，用于连续出版物
@@ -127,6 +116,50 @@
       \settoggle{bbx:gbtype}{#1}}
     \ExecuteBibliographyOptions{gbtype}
 
+    %
+    %   增加一个源文件编码选择选项，当true时可以使用GBK编码。
+    %   v1.0k, 2018.05.08, by hzz
+    %
+    % 原理方法：将需要输出的中文字符串用命令形式表示存储，采用utf8编码时采用bbx文档
+    % 内的定义即是utf8编码的中文字符串，但tex源文件是gbk编码时，利用gb7714-2015-gbk.def
+    % 文档内的gbk编码的字符串覆盖。这种覆盖只能在宏包末尾加载时成功实现，所以使用
+    % AtEndOfPackage。该解决思路源自biblatex-caspervector宏包。
+    % 另外注意：
+    % gbk编码的tex文档，利用pdflatex/latex能正确编译，利用xelatex能编译，但中文显示乱码
+    % 在源文档前面增加 XeTeX 原语：\XeTeXinputencoding "GBK" 后，显示正常
+    % utf-8编码的tex文档，利用xelatex能正确编译，而pdflatex/latex不能编译。
+    \newtoggle{bbx:codegbk}
+    \DeclareBibliographyOption{gbcodegbk}[false]{%
+        \settoggle{bbx:codegbk}{#1}}
+    \ExecuteBibliographyOptions{gbcodegbk}
+
+    \def\str@bibliography{参考文献}
+    \def\str@references{参考文献}
+    \def\str@bytranslator{译}
+    \def\str@andotherscn{等}
+    \def\str@backrefpage{引用页}
+    \def\str@backrefpages{引用页}
+    \def\str@noaddress{出版地不详}
+    \def\str@nopublisher{出版者不详}
+    \def\str@edition{版}
+
+    \AtEndOfPackage{%
+	\iftoggle{bbx:codegbk}{%
+		\ExecuteBibliographyOptions{texencoding = GBK}
+        \input{gb7714-2015-gbk.def}
+	}{}}
+
+    %
+    %   增加一个严格按GB/T 7714-2015给出著录格式控制域的输出的选项
+    %
+    %   原理方法:
+    %   默认设置该选项为真，进而不输出GB/T 7714-2015中没有的域的信息
+    %   这样可以避免因为bib文件带有多余的域的信息的输出，比如因为bibtex样式
+    %   可能需要用于中英文判断的language域的信息。
+    \newtoggle{bbx:gbstrict}
+    \DeclareBibliographyOption{gbstrict}[true]{%
+      \settoggle{bbx:gbstrict}{#1}}
+    \ExecuteBibliographyOptions{gbstrict}
 
     %
     %   增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
@@ -348,17 +381,17 @@
     %   当然也可以增加比如上面定义的andotherscn
     %   注意:在lbx文件和bbx文件中定义本地字符串的不同语法，两个参数和一个参数的区别
 \DefineBibliographyStrings{english}{
-    bibliography     = {参考文献},
-    references       = {参考文献},
-    bytranslator= {\addcomma\ 译\adddot}, %将trans. by 改成 译
+        bibliography     = {\str@bibliography},
+        references       = {\str@references},
+    bytranslator= {\addcomma\ \str@bytranslator\adddot}, %将trans. by 改成 译
     and         = {\addcomma},%将第2和3人名见的and符号改成 逗号，用\finalnamedelim命令也可以定义，参见3.9.1节
     %andothers   = {et al.},        %将超过3个人名的省略，et al.改成为 等
-    andotherscn   = {等},        %将超过3个人名的省略，et al.改成为 等
+        andotherscn   = {\str@andotherscn},     %将超过3个人名的省略，et al.改成为 等
     noaddress = {[S.l.]},
     nopublisher = {[s.n.]},
-    backrefpage      = {引用页:},
-    backrefpages     = {引用页:},
-    in={in\intitlepunct},
+        backrefpage = {\str@backrefpage:},
+        backrefpages = {\str@backrefpages:},
+        in={in\intitlepunct},
 }
 
 
@@ -452,7 +485,7 @@
             \step[fieldset=usera, fieldvalue={A}]
             \step[fieldsource=edition] %有时会把version和edition混淆，处理后避免该问题，可以直接用version
             \step[fieldset=version, origfieldval]
-            \step[fieldsource=organization]%因为用的report的驱动，所以需要institution域，也把organization转成它，这样增大兼容性
+            \step[fieldsource=organization]%因为用的report的驱动，所以需要institution域，把organization转成它以增强兼容性
             \step[fieldset=institution, origfieldval]
             }
         \map{
@@ -470,10 +503,14 @@
             \step[fieldset=usera, fieldvalue={Z}]
             }
         \map{
-            \step[fieldsource=author]
-            \step[fieldset=userf, origfieldval]
-            \step[fieldsource=translator]
-            \step[fieldset=usere, origfieldval]
+            %\step[fieldsource=author]
+            %\step[fieldset=userf, origfieldval]
+            %\step[fieldsource=translator]
+            %\step[fieldset=usere, origfieldval]
+	    \step[fieldsource=author, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
+            \step[fieldset=userf, fieldvalue={cn}]
+            \step[fieldsource=translator, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
+            \step[fieldset=usere, fieldvalue={cn}]
             }
         \map{%处理一些用year表示date的情况
              %这样处理将会设置date域，并使得labeldatesource变为空，因为date的前缀为空(如果是urldate，那么labeldatesource就是url)。
@@ -482,8 +519,8 @@
             \step[fieldset=date, origfieldval]
             }
         \map{%将title信息保存到userd中避免因为标签生成原因导致title域被清除
-            \step[fieldsource=title, match=\regexp{([^\\\{])}]%}
-            \step[fieldset=userd, fieldvalue={$1}]
+            \step[fieldsource=title, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]%}
+            \step[fieldset=userd, fieldvalue={cn}]
             }
         \map{%将entrykey放入keywords中用于后期的使用
             \step[fieldsource=entrykey]
@@ -741,7 +778,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %\renewcommand{\relateddelim}{}%\par
 
 %=====================================================================
-%   修改域的格式
+%   修改域的格式，重定义域的输出宏
 %=====================================================================
 %
 %   新增文献类型标识符的格式
@@ -853,8 +890,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     and
     test \ifmorenames
   }{%这里做一个判断是在处理author还是translator用于两者是不同语言的情况
-    \ifcurrentname{translator}{\iffieldundef{usere}{\togglefalse{ifCJKforgbt}}{\testCJKfirst{\thefield{usere}}}}%
-    {\iffieldundef{usere}{\togglefalse{ifCJKforgbt}}{\testCJKfirst{\thefield{userf}}}}%
+   \ifcurrentname{translator}{\testCJKfirst{usere}}{\testCJKfirst{userf}}%
     %这句判断如果放到\andothersdelim后面会在等或etc.前增加一个空格，所以放前面
     \ifnumgreater{\value{liststop}}{1}
        {\finalandcomma}
@@ -866,6 +902,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 
 %   重设title的输出
 %
+%   20180425，v1.0k，为标题增加字体控制命令，Hu Zhenzhen
 %   原理方法:将文献类型标识符输出出去，原输出来自biblatex.def文件
 %   利用toggle做标识符是否输出的判断
 \renewbibmacro*{title}{%
@@ -896,7 +933,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 
 
 %
-%   作者信息的输出格式，针对biblatex<3.3版本，gbt7714-2015的姓名全大写格式
+%   作者信息的输出格式
 %
 %   20180425，v1.0k，为作者增加字体控制命令，Hu Zhenzhen
 %   针对biblatex<3.3版本，gbt7714-2015的姓名全大写格式
@@ -1175,7 +1212,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     \DeclareNameFormat{family-given/given-family}{%
     {\usebibmacro{name:given-family}
       {\namepartfamily}
-      {\namepartgiven}
+      {\namepartgiven}%用全名而不是首字母缩写,因为用的时拼音
       {\namepartprefix}
       {\namepartsuffix}}%
       \usebibmacro{name:andothers}}
@@ -1480,8 +1517,8 @@ test{\iftoggle{iftlnine}}
 %   新增一个样式用于输出连续出版物的地址，单位，时间，%类似\newbibmacro*{publisher+location+date}
 \newbibmacro*{location+institution+date}{\bibpubfont%
 \iftoggle{bbx:gbpub}%
-{\testCJKfirst{\thefield{userd}}
-\iflistundef{location}{\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}}{\printtext{[S.l.\adddot]}}}%
+{\testCJKfirst{userd}
+\iflistundef{location}{\iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress]}}{\printtext{[S.l.\adddot]}}}%
   {\printlist{location}}%
 %  \iflistundef{institution}
 %    {\setunit*{\addcomma\space}}
@@ -1490,7 +1527,7 @@ test{\iftoggle{iftlnine}}
 %  \setunit*{\addcomma\space}%
 \addcolon\addspace%
 \iflistundef{institution}{%
-\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}}{\printtext{\mkbibbrackets{s.n.}}}}% \bibstring{nopublisher}%[s.n.\adddot]
+\iftoggle{ifCJKforgbt}{\printtext{[\str@nopublisher]}}{\printtext{\mkbibbrackets{s.n.}}}}% \bibstring{nopublisher}%[s.n.\adddot]
 {\printlist{institution}}%
 \setunit{\addcomma\addspace}%
   %\usebibmacro{date}%
@@ -1511,16 +1548,16 @@ test{\iftoggle{iftlnine}}
 %
 \renewbibmacro*{publisher+location+date}{\bibpubfont%
 \iftoggle{bbx:gbpub}%
-{\testCJKfirst{\thefield{userd}}%
+{\testCJKfirst{userd}%
 \iflistundef{location}{%\adddot
 \iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准第19页看到，标准存在出版项时输出，没有时完全省略。
-\iftoggle{ifCJKforgbt}{\printtext{[出版地不详]}\addcolon\addspace}{\printtext{[S.l.\adddot]}\addcolon\addspace}%
+\iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress]}\addcolon\addspace}{\printtext{[S.l.\adddot]}\addcolon\addspace}%
 }}%  \bibstring{noaddress}
 {\printlist{location}\addcolon\addspace}%
 %\addcolon\addspace%
 \iflistundef{publisher}{%
 \iffieldequalstr{note}{standard}{}{%
-\iftoggle{ifCJKforgbt}{\printtext{[出版者不详]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
+\iftoggle{ifCJKforgbt}{\printtext{[\str@nopublisher]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
 {\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
 }}%
 {\printlist{publisher}\setunit*{\addcomma\addspace}}%
@@ -1544,9 +1581,9 @@ test{\iftoggle{iftlnine}}
 %   对edition版本信息格式做出修改
 %
 \DeclareFieldFormat{edition}{%源来自biblatex.DEF
-\testCJKfirst{\thefield{userd}}%
+\testCJKfirst{userd}%
   \ifinteger{#1}%
-    {\iftoggle{ifCJKforgbt}{\printtext{#1版}}%
+    {\iftoggle{ifCJKforgbt}{\printtext{#1\str@edition}}%
     {\mkbibordedition{#1}~\bibstring{edition}}}%
     {#1\isdot}}
 
@@ -1554,9 +1591,9 @@ test{\iftoggle{iftlnine}}
 %   对version的版本信息做出修改
 %
 \DeclareFieldFormat{version}{%源来自biblatex.DEF
-\testCJKfirst{\thefield{userd}}%
+\testCJKfirst{userd}%
   \ifinteger{#1}%
-    {\iftoggle{ifCJKforgbt}{\printtext{#1版}}%
+    {\iftoggle{ifCJKforgbt}{\printtext{#1\str@edition}}%
     {\mkbibordedition{#1}~\bibstring{version}}}%
     {#1\isdot}}
 
@@ -1723,6 +1760,12 @@ test{\iftoggle{iftlnine}}
   }
 
 %
+%   增加一个number带括号的格式，避免使用mkbibparens而引入一个不必要的空格
+%
+\DeclareFieldFormat{addnumflag}{%
+\nobreak\printtext{(}\nobreak #1\nobreak\printtext{)}}
+
+%
 %   调整journal输出
 %
 %   原理方法:首先判断子标题，然后再设置标点。
@@ -1735,21 +1778,7 @@ test{\iftoggle{iftlnine}}
        \iffieldundef{journalsubtitle}{}{\setunit{\subtitlepunct}%
        \printfield[titlecase]{journalsubtitle}}}}}
 
-%
-%   调整issue+date
-%
-%   原理方法:原在authoryear.BBX中\bbx@opt@mergedate@compact中定义
-%   当issue存在时，才设置newunit。避免直接设置标点后，当volume不存在是需要使用\nopuct去标点进而引入不必要的空格
-  \renewbibmacro*{issue+date}{%
-    \iffieldundef{issue}%
-      {}%
-      {\printtext[parens]{\printfield{issue}}\newunit}}
 
-%
-%   增加一个number带括号的格式，避免使用mkbibparens而引入一个不必要的空格
-%
-\DeclareFieldFormat{addnumflag}{%
-\nobreak\printtext{(}\nobreak #1\nobreak\printtext{)}}
 
 %
 %   调整期刊卷和期的格式
@@ -1763,6 +1792,18 @@ test{\iftoggle{iftlnine}}
   \iffieldundef{eid}{}{%
   \setunit{\addcomma\space}%
   \printfield{eid}}}
+
+%
+%   调整期刊年份的格式
+%
+%   原理方法:原在authoryear.BBX中\bbx@opt@mergedate@compact中定义
+%   当issue存在时，才设置newunit。避免直接设置标点后，当volume不存在是需要使用\nopuct去标点进而引入不必要的空格
+  \renewbibmacro*{issue+date}{%
+    \iffieldundef{issue}%
+      {}%
+      {\printtext[parens]{\printfield{issue}}\newunit}}
+
+
 
 %
 %   调整页码前的标点和去掉期刊文章等页码后面的标点
@@ -1940,11 +1981,12 @@ test{\iftoggle{iftlnine}}
   \usebibmacro{author/editor+others/translator+others}%
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{maintitle+title}%
+\iftoggle{bbx:gbstrict}{}{%
 \newunit
 \printlist{language}%
 \newunit\newblock
 \usebibmacro{byauthor}%
-\newunit\newblock
+\newunit\newblock}%
 \usebibmacro{byeditor+others}%
 \newunit\newblock
 \printfield{edition}%
@@ -1953,10 +1995,11 @@ test{\iftoggle{iftlnine}}
 {\printfield{volume}%
 \printfield{part}}
 {}%
-\newunit
+\iftoggle{bbx:gbstrict}{}{%
+\newunit%
 \printfield{volumes}%
   \newunit\newblock
-  \usebibmacro{series+number}%
+  \usebibmacro{series+number}}%
   \newunit\newblock
   %\printfield{note}%
   %\newunit\newblock
@@ -2049,14 +2092,15 @@ test{\iftoggle{iftlnine}}
   \usebibmacro{author/translator+others}%
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{title}%
-  \newunit
+  \iftoggle{bbx:gbstrict}{}{%
+  \newunit%
   \printlist{language}%
   \newunit\newblock
   \usebibmacro{byauthor}%
   \newunit\newblock
   \usebibmacro{bytranslator+others}%
   \newunit\newblock
-  \printfield{version}%
+  \printfield{version}}%
   \newunit\newblock
   %\usebibmacro{in:}% 不使用in来表示期刊等连续出版物
   \usebibmacro{journal+issuetitle}%
@@ -2096,12 +2140,13 @@ test{\iftoggle{iftlnine}}
   \newunit\newblock
   \usebibmacro{location+institution+date}%添加这一行用于输出地址，单位和时间
   \newunit\newblock%添加这一行
+  \iftoggle{bbx:gbstrict}{}{%
   \printlist{language}%
   \newunit\newblock
   \usebibmacro{byeditor}%
   \newunit\newblock
   \printfield{note}%
-  \newunit\newblock
+  \newunit\newblock}
   \iftoggle{bbx:isbn}
     {\printfield{issn}}
     {}%
@@ -2128,10 +2173,11 @@ test{\iftoggle{iftlnine}}
   \setunit{\labelnamepunct}\newblock
   %\usebibmacro{title}%
   \usebibmacro{patenttitle}%给出专利专用的标题输出
-  \newunit
+  \iftoggle{bbx:gbstrict}{}{%
+  \newunit%
   \printlist{language}%
   \newunit\newblock
-  \usebibmacro{byauthor}%
+  \usebibmacro{byauthor}}%
   \newunit\newblock
   \printfield{type}%
   \setunit*{\addspace}%
@@ -2170,12 +2216,13 @@ test{\iftoggle{iftlnine}}
   \usebibmacro{author/editor+others/translator+others}%
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{title}%
-  \newunit
+  \iftoggle{bbx:gbstrict}{}{%
+  \newunit%
   \printlist{language}%
   \newunit\newblock
   \usebibmacro{byauthor}%
   \newunit\newblock
-  \usebibmacro{byeditor+others}%
+  \usebibmacro{byeditor+others}}%
   \newunit\newblock
   \printfield{version}%
   \newunit
@@ -2214,6 +2261,7 @@ test{\iftoggle{iftlnine}}
   \usebibmacro{author}%
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{title}%
+  \iftoggle{bbx:gbstrict}{}{%
   \newunit%
   \printlist{language}%
   \newunit\newblock
@@ -2221,8 +2269,8 @@ test{\iftoggle{iftlnine}}
   \newunit\newblock
   \printfield{note}%
   \newunit\newblock
-  \printfield{type}%
-  \newunit
+  \printfield{type}}%
+  \newunit\newblock
   \usebibmacro{institution+location+date}%
   %\newunit\newblock
   \usebibmacro{chapter+pages}%
@@ -2256,10 +2304,11 @@ test{\iftoggle{iftlnine}}
   \usebibmacro{author}%
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{title}%
-  \newunit
+  \iftoggle{bbx:gbstrict}{}{%
+  \newunit%
   \printlist{language}%
   \newunit\newblock
-  \usebibmacro{byauthor}%
+  \usebibmacro{byauthor}}%
   \newunit\newblock
   \usebibmacro{byeditor+others}%增加的译者信息
   \newunit\newblock
@@ -2305,10 +2354,11 @@ test{\iftoggle{iftlnine}}
   \usebibmacro{author}%
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{title}%
-  \newunit
+  \iftoggle{bbx:gbstrict}{}{%
+  \newunit%
   \printlist{language}%
   \newunit\newblock
-  \usebibmacro{byauthor}%
+  \usebibmacro{byauthor}}%
   \newunit\newblock
   \usebibmacro{byeditor+others}%
   \newunit\newblock
@@ -2353,10 +2403,11 @@ test{\iftoggle{iftlnine}}
   \usebibmacro{author}%
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{title}%
-  \newunit
+  \iftoggle{bbx:gbstrict}{}{%
+  \newunit%
   \printlist{language}%
   \newunit\newblock
-  \usebibmacro{byauthor}%
+  \usebibmacro{byauthor}}%
   \newunit\newblock
   \printfield{type}%
   \setunit*{\addspace}%
@@ -2417,14 +2468,15 @@ test{\iftoggle{iftlnine}}
   \newunit
   \printfield{volumes}%
   \newunit\newblock
+  \iftoggle{bbx:gbstrict}{}{%
   \usebibmacro{series+number}%
   \newunit\newblock
   \printfield{note}%
   \newunit\newblock
   \printlist{organization}%
-  \newunit
+  \newunit}
   \usebibmacro{publisher+location+date}%
-  \newunit\newblock
+  %\newunit\newblock
   \usebibmacro{chapter+pages}%
   \newunit\newblock
   \iftoggle{bbx:isbn}
@@ -2453,8 +2505,9 @@ test{\iftoggle{iftlnine}}
   \usebibmacro{author/translator+others}%
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{maintitle+title}%
-  \newunit
-  \printlist{language}%
+  \iftoggle{bbx:gbstrict}{}{%
+  \newunit%
+  \printlist{language}}%
   \newunit\newblock
   \usebibmacro{event+venue+date}%
   \newunit\newblock
@@ -2467,12 +2520,13 @@ test{\iftoggle{iftlnine}}
   \newunit
   \printfield{volumes}%
   \newunit\newblock
+  \iftoggle{bbx:gbstrict}{}{%
   \usebibmacro{series+number}%
   \newunit\newblock
   \printfield{note}%
   \newunit\newblock
   \printlist{organization}%
-  \newunit
+  \newunit}
   \usebibmacro{publisher+location+date}%
   %\newunit\newblock
   \usebibmacro{chapter+pages}%
@@ -2521,15 +2575,16 @@ test{\iftoggle{iftlnine}}
     {\printfield{volume}%
      \printfield{part}}
     {}%
+  \iftoggle{bbx:gbstrict}{}{%
   \newunit
   \printfield{volumes}%
   \newunit\newblock
-  \usebibmacro{series+number}%
+  \usebibmacro{series+number}}%
   \newunit\newblock
   %\printfield{note}%
   %\newunit\newblock
   \usebibmacro{publisher+location+date}%
-  \newunit\newblock
+  %\newunit\newblock
   \usebibmacro{chapter+pages}%
   %\newunit\newblock
   \usebibmacro{doi+eprint+url}%移到上面来
@@ -2561,10 +2616,11 @@ test{\iftoggle{iftlnine}}
   \usebibmacro{author/editor+others/translator+others}%
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{maintitle+title}%
+\iftoggle{bbx:gbstrict}{}{%
   \newunit
   \printlist{language}%
   \newunit\newblock
-  \usebibmacro{byauthor}%
+  \usebibmacro{byauthor}}%
   \newunit\newblock
   \usebibmacro{byeditor+others}%
   \newunit\newblock
@@ -2582,10 +2638,9 @@ test{\iftoggle{iftlnine}}
   %\printfield{note}%
   %\newunit\newblock
   \usebibmacro{publisher+location+date}%
-  \newunit\newblock
+  %\newunit\newblock
   \usebibmacro{chapter+pages}%
-  %\newunit
-  \usebibmacro{doi+eprint+url}%从下面提上来
+  \usebibmacro{doi+eprint+url}%从下面移动到上面来，因为gbt2015的url需直接放在页码后面。
   \newunit\newblock
   \printfield{pagetotal}%
   \newunit\newblock

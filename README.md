@@ -53,6 +53,14 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 	- add an option `gbpunctin` to control the output of `//` before bookauthor for entrytypes like inbook/incollection/inproceedings. `gbpunctin=true` to output `//`, `gbpunctin=false` to output the bibstring for English is IN:, If want to eliminate it at all, please add a cmd `\DefineBibliographyStrings{english}{in={}}` in the preamble. This option is also for author year style.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbpunctin=true]{biblatex}`
+		
+	- add an option `gbcodegbk` to deal tex file encoded with GBK. if want to compile GBK file with pdflatex or latex，set `gbcodegbk=true` is needed. if compile with xelatex, it should be none or `gbcodegbk=false`. This option is also for author year style.
+
+        `\usepackage[backend=biber,style=gb7714-2015,gbcodegbk=false]{biblatex}`
+		
+	- add an option `gbstrict` to control the output of some unnecessary filed for GB/T7714-2015. If want to output them as the standard styles, it should be `gbstrict=false`. defaulty the option is set with `true`. This option is also for author year style.
+
+        `\usepackage[backend=biber,style=gb7714-2015,gbstrict=true]{biblatex}`
 
 * for author year style
 
