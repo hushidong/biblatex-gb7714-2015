@@ -178,6 +178,19 @@
         \settoggle{bbx:gbpunctin}{#1}}
     \ExecuteBibliographyOptions{gbpunctin}
 
+    %
+    %   选项设置
+    %
+    \ExecuteBibliographyOptions{
+      useprefix = true,  %名字的信息包括前缀
+      date   = year,  %日期仅写到年
+      %maxnames     = 3 , %设置名字最大数量
+      %minnames     = 3,  %设置缩减后的名字最小数量
+      maxbibnames=3, %将文献列表和引用中最大名字数量区分开
+      minbibnames=3,
+      %uniquename=init,
+    }
+
 
 %
 %   针对biblatex<3.3版本的选项设置，比如texlive2015中的3.0版
@@ -209,14 +222,7 @@
     %   选项设置
     %
     \ExecuteBibliographyOptions{
-      useprefix = true,  %名字的信息包括前缀
       firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
-      date   = year,  %日期仅写到年
-      %maxnames     = 3 , %设置名字最大数量
-      %minnames     = 3,  %设置缩减后的名字最小数量
-      maxbibnames=3, %将文献列表和引用中最大名字数量区分开
-      minbibnames=3,
-      %uniquename=init,
     }
 }
 
@@ -251,15 +257,7 @@
     %   选项设置
     %
     \ExecuteBibliographyOptions{
-      useprefix = true,  %名字的信息包括前缀
-      %firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
       giveninits = true,
-      date   = year,  %日期仅写到年
-      %maxnames     = 3 , %设置名字最大数量
-      %minnames     = 3,  %设置缩减后的名字最小数量
-      maxbibnames=3, %将文献列表和引用中最大名字数量区分开
-      minbibnames=3,
-      %datezeros=true,
     }
 }
 
@@ -293,17 +291,9 @@
     %   选项设置
     %
     \ExecuteBibliographyOptions{
-      useprefix = true,  %名字的信息包括前缀
-      %firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
       giveninits = true,
-      date   = year,  %日期仅写到年
       urldate =edtf,
       eventdate =edtf,
-      %maxnames     = 3 , %设置名字最大数量
-      %minnames     = 3,  %设置缩减后的名字最小数量
-      maxbibnames=3, %将文献列表和引用中最大名字数量区分开
-      minbibnames=3,
-      %datezeros=true,
     }
 }
 
@@ -337,17 +327,9 @@
     %   选项设置
     %
     \ExecuteBibliographyOptions{
-      useprefix = true,  %名字的信息包括前缀
-      %firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
       giveninits = true,
-      date   = year,  %日期仅写到年
       urldate =iso,
       eventdate =iso,
-      %maxnames     = 3 , %设置名字最大数量
-      %minnames     = 3,  %设置缩减后的名字最小数量
-      maxbibnames=3, %将文献列表和引用中最大名字数量区分开
-      minbibnames=3,
-      %datezeros=true,
     }
 }
 

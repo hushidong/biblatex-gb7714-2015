@@ -58,7 +58,7 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
         `\usepackage[backend=biber,style=gb7714-2015,gbcodegbk=false]{biblatex}`
 		
-	- add an option `gbstrict` to control the output of some unnecessary filed for GB/T7714-2015. If want to output them as the standard styles, it should be `gbstrict=false`. defaulty the option is set with `true`. This option is also for author year style.
+	- add an option `gbstrict` to control the output of some unnecessary fields for GB/T7714-2015. If want to output them as the standard styles, it should be `gbstrict=false`. defaulty the option is set with `true`. This option is also for author year style.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbstrict=true]{biblatex}`
 
@@ -74,7 +74,7 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
     `perl gb7714texttobib.pl in=textfilename out=bibfilename`
 
-A demonstration database is provided to show how to format input for the style. The biblatex-gb7714-2015 style works with texlive2014, texlive2015, texlive2016, texlive2017 and so on.
+A demonstration database is provided to show how to format input for the style. The biblatex-gb7714-2015 style works with texlive2014, texlive2015, texlive2016, texlive2017 , texlive2018 and so on.
 
 please see the file 'biblatex-gb7714-2015.pdf' for further information!
 
@@ -189,17 +189,19 @@ xelatex jobname.tex
 
 > (1)在导言区加载biblatex宏包，并使用gb7714-2015样式:
 
-> `\usepackage[backend=biber,style=gb7714-2015]{biblatex}`
+```\usepackage[backend=biber,style=gb7714-2015]{biblatex}```
 
 > (2)正文中引用参考文献:
 
-> `见文献\cite{referencbibtexkey}`
+```见文献\cite{referencbibtexkey}```
 
 > (3)在需要的地方打印参考文献表:
 
-> `\printbibliography`
+```\printbibliography```
 	   
 更直接的例子见前述的[tex源文档](#jumptotexsrcf)
+		
+		
 		
 * <b>请问我应该怎么安装和更新biblatex-gb7714-2015宏包？</b>
 		
@@ -209,33 +211,40 @@ xelatex jobname.tex
 > gb7714-2015ay.cbx四个文件放到你要编译的主文档所在目录。对于已经安装的用户需要更新到最新版，
 > 则可以下载这四个文件替换系统已经安装的文件。
 
+
+
 * <b>为什么我之前使用样式`style = caspervector`进行编译没有问题，换成`style = gb7714-2015`后，编译就出现错误？</b>
 	
 > 可能有三个原因：
 
 > 1. 辅助文件没有清理导致，当采用caspervector样式时编译产生的辅助文件中可能带有该样式的一些特有信息，可能产生一些不兼容。因此需要的操作是，清除辅助文件，然后再进行编译。清除命令为(下面的命令是windows下的，linux下的是类似的只需把删除命令换成`rm -f`)：
 
-`del /q *.aux *.bbl *.blg *.log *.out *.toc *.bcf *.xml *.synctex *.nlo *.nls *.bak *.ind *.idx *.ilg *.lof *.lot *.ent-x *.tmp *.ltx *.los *.lol *.loc *.listing *.gz *.synctex(busy) *.nav *.snm *.vrb *.fls *.xdv *.fdb_latexmk`
+```del /q *.aux *.bbl *.blg *.log *.out *.toc *.bcf *.xml *.synctex *.nlo *.nls *.bak *.ind *.idx *.ilg *.lof *.lot *.ent-x *.tmp *.ltx *.los *.lol *.loc *.listing *.gz *.synctex(busy) *.nav *.snm *.vrb *.fls *.xdv *.fdb_latexmk```
 
 > 2. biblatex-gb7714-2015版本过于陈旧，可能对于一些特殊情况考虑不全面。因此需要的操作是更新biblatex-gb7714-2015。方法见上一个问题。
 
 > 3. 编译命令问题，通常情况下tex文档和bib文档是utf8编码的，因此最好采用xelatex编译，而不用pdflatex。因此如果编译时用pdflatex出现错误，请换成xelatex。
 
 
+
 * <b>为什么利用ctex2.9套装进行编译时，编译出现错误？</b>
 	
 > 由于ctex2.9套装多年未更新，其中的biblatex宏包过老，所以需要更新一下biblatex。
-	   
+	
+	
+	
 * <b>我希望参考文献表中的文献不是按引用顺序而是以文献的字母顺序排序，怎么实现？</b>
 		
 > 一般情况下文献表是按引用顺序进行排列，标签是顺序的数字，这种方式称为顺序编码制。
 > 如果要以文献作者字母顺序排列，那么需要换一种编制方式，称为作者年制:
 		
-> `\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}`
-		
-* <b>英文文献能按字母顺序排列，那么参考文献表中的中文文献能否以拼音或者笔画进行排序呢？</b>
+```\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}```
 	
-> 可以，主要通过编译时，在biber编译参考文献信息命令中设置参数选项来实现:
+	
+	
+* <b>作者年制中英文文献能按字母顺序排列，那么中文文献能否以拼音或者笔画进行排序呢？</b>
+	
+> 能，可以通过编译时给biber设置选项来实现:
 		
 ```
 %按拼音排序，biber命令
@@ -243,41 +252,55 @@ biber -l zh__pinyin jobname
 %按笔画排序，biber命令
 biber -l zh__stroke jobname
 ```
+
+> 或者，也可以通过增加 biblatex 选项来实现（此时biber编译无需另加选项），比如：
+
+```\usepackage[backend=biber,style=gb7714-2015ay,sortlocale=zh__pinyin]{biblatex}```
+
+		
 		
 * <b>作者年制参考文献表目前的排序时升序排列，能不能改成降序排序？</b>
 		
 > 能，这需要通过修改gb7714-2015ay.bbx中的代码来实现，找到:
-> `\sort{%[direction=descending]`
+
+```\sort{%[direction=descending]```
+
 > 修改为:
-> `\sort[direction=descending]{%`
+
+```\sort[direction=descending]{%```
+
+
 
 * <b>我希望文献表以阿拉伯数字编号，而正文中的引用标签使用作者和年份标注而不是数字，请问我该如何处理？</b>
 
 > 可以设置不同的标注和著录样式，比如标注样式用作者年制，而著录样式用顺序编码制，比如:
 
-> `\usepackage[backend=biber,citestyle=gb7714-2015ay,bibstyle=gb7714-2015]{biblatex}`
+```\usepackage[backend=biber,citestyle=gb7714-2015ay,bibstyle=gb7714-2015]{biblatex}```
 
 > 参见:[issue:参考文献的顺序](https://github.com/sjtug/SJTUThesis/issues/300)
 
-* <b>请问我还希望顺序编码的文献著录表以拼音排序，该怎么操作？</b>
 
-> 顺序编码文献著录表默认是按引用顺序排序，但可以通过设置sorting选项进行调整，比如sorting=nyt表示按作者姓名年份以及文献标题进行排序，比如:
 
-> `\usepackage[backend=biber,citestyle=gb7714-2015ay,bibstyle=gb7714-2015,sorting=nyt]{biblatex}`
+* <b>请问如果我希望顺序编码的文献著录表以拼音排序，该怎么操作？</b>
 
-> 同时，因为默认情况下中文字符排序是按unicode编码顺序进行排序，因此要按拼音排序，还需要使用biber的按拼音排序编译选项，比如:
+> 顺序编码文献著录表默认是按引用顺序排序，但可以通过设置sorting选项进行调整，比如sorting=nyt表示按作者姓名年份以及文献标题进行排序。要使中文能按拼音排序，可以设置本地化排序调整方案，即sortlocale选项，比如:
 
-> `biber -l zh__pinyin jobname`
+```\usepackage[backend=biber,citestyle=gb7714-2015ay,bibstyle=gb7714-2015,sorting=nyt,sortlocale=zh__pinyin]{biblatex}```
 
+		
 		
 * <b>请问参考文献中存在一些特殊字符比如&或者一些特殊命令比如\LaTex{}是不是会出现问题？</b>
 	
 > 通常不会出现问题，直接输入即可，当出现问题时可以手动调整比如修改为`\&`和`{\LaTex{}}`
 		
+		
+		
 * <b>我习惯用传统的bst文件来生成参考文献，有没有GB/T 7714-2015标准的实现版本？</b>
 	
 > GB/T 7714-2015标准实现的bst版本，已经由[zeping lee](https://github.com/zepinglee/gbt7714-bibtex-style)开发完毕，直接使用即可。
-		
+	
+	
+	
 * <b>我在使用过程中遇到了一些无法理解和无法解决的问题，怎么办？</b>
 	
 > 请邮件联系hzzmail@163.com或在项目内发issue提问即可。
@@ -293,14 +316,17 @@ biber -l zh__stroke jobname
 > 如果要求标签左侧对齐，且标签与内容等间距必须放弃使用list。
 > biblatex-7714-2015的顺序编码制样式特别设计了这样的环境，以保持和word一致。通过设置选项gbalign来实现:
 		
-> `\usepackage[backend=biber,bibstyle=gb7714-2015,gbalign=gb7714-2015]{biblatex}`
+```\usepackage[backend=biber,bibstyle=gb7714-2015,gbalign=gb7714-2015]{biblatex}```
+		
+		
 		
 * <b>请问如果不希望在参考文献表中出现类似“出版地不详”“出版者不详”等信息时，该怎么处理？</b>
 	
 > 设置选项gbpub可以实现，当gbpub=false时，biblatex-gb7714-2015宏包会放弃国标的要求，不使用“出版地不详”等补充信息:
 		
-> `\usepackage[backend=biber,bibstyle=gb7714-2015,gbpub=false]{biblatex}`
+```\usepackage[backend=biber,bibstyle=gb7714-2015,gbpub=false]{biblatex}```
 
+		
 		
 * <b>我觉得文献表中英文作者全部用大写不好看，请问能换一种大小写方式么？</b>
 	
@@ -309,37 +335,48 @@ biber -l zh__stroke jobname
 > 这时可以在bib文件中手动设置想要的大小写方式。
 > 当要实现类似ZHAO Yu-xin这样的拼音方式，则可以设置gbnamefmt=pinyin:
 		
-> `\usepackage[backend=biber,bibstyle=gb7714-2015,gbnamefmt=lowercase]{biblatex}`
+```\usepackage[backend=biber,bibstyle=gb7714-2015,gbnamefmt=lowercase]{biblatex}```
+		
+		
 		
 * <b>请问如果不希望在参考文献表中出现类似“[M]”“[J]”等文献类型标识符时，该怎么处理？</b>
 	
 > 可通过设置选项gbtype=false实现:
 		
-> `\usepackage[backend=biber,bibstyle=gb7714-2015,gbtype=false]{biblatex}`
+```\usepackage[backend=biber,bibstyle=gb7714-2015,gbtype=false]{biblatex}```
+		
+		
 		
 * <b>请问如果不希望在参考文献表中出现网址信息时，该怎么处理？</b>
 	
 > 可通过设置选项url=false实现:
 		
-> `\usepackage[backend=biber,bibstyle=gb7714-2015,url=false]{biblatex}`
-		
+```\usepackage[backend=biber,bibstyle=gb7714-2015,url=false]{biblatex}```
+	
+	
+	
 * <b>请问如果不希望在参考文献表中出现DOI信息时，该怎么处理？</b>
 	
 > 可通过设置选项doi=false实现:
 		
-> `\usepackage[backend=biber,bibstyle=gb7714-2015,doi=false]{biblatex}`
+```\usepackage[backend=biber,bibstyle=gb7714-2015,doi=false]{biblatex}```
+		
+		
 		
 * <b>请问参考文献没有作者时，希望用佚名或Noauthor代替作者时，该怎么处理？</b>
 	
 > 可通过设置选项gbnoauthor=true实现，注意该方式主要用在作者年制中:
 		
-> `\usepackage[backend=biber,bibstyle=gb7714-2015,gbnoauthor=true]{biblatex}`
+```\usepackage[backend=biber,bibstyle=gb7714-2015,gbnoauthor=true]{biblatex}```
+		
+		
 		
 * <b>请问希望参考文献表中参考文献作者数量超过国标规定的3个时，该怎么处理？</b>
 	
 > 可通过设置选项maxbibnames，minbibnames实现，比如下面的设置用于显示5个作者:
 		
-> `\usepackage[backend=biber,bibstyle=gb7714-2015,maxbibnames=5,minbibnames=5]{biblatex}`
+```\usepackage[backend=biber,bibstyle=gb7714-2015,maxbibnames=5,minbibnames=5]{biblatex}```
+	
 	
 	
 * <b>请问如何使文献表中文献的标题的是句首字母大写而其它所有字母均小写？</b>
@@ -347,10 +384,13 @@ biber -l zh__stroke jobname
 > 默认情况下，biblatex-gb7714-2015不对标题的字母大小写做处理，因此要得到想要的字母大小写格式，
 > 需要在bib文件输入参考文献信息时给出需要的大小写格式。
 		
+		
+		
 * <b>请问如何使文献表中期刊名的是单词首字母大写的？</b>
 	
 > 默认情况下，biblatex-gb7714-2015不对期刊名的字母大小写做处理，
 > 因此需要在bib文件输入参考文献信息时给出需要的大小写格式。
+		
 		
 		
 * <b>请问我想得到中英文对照的双语参考文献，该如何处理？</b>
@@ -361,17 +401,17 @@ biber -l zh__stroke jobname
 
 > 方法一，动态定义条目集:
 > 在导言区或正文中定义:
-> `\defbibentryset{易仕和，等，2013}{易仕和2013--,Yi2013--}
+```\defbibentryset{易仕和，等，2013}{易仕和2013--,Yi2013--}```
 
 > 在正文中引用:
-> 双语文献引用\cite{易仕和，等，2013}`
+``双语文献引用\cite{易仕和，等，2013}```
 
 > 方法二，动态定义关联条目:
 > 在导言区定义:
-> `\defdoublelangentry{易仕和2013--}{Yi2013--}`
+```\defdoublelangentry{易仕和2013--}{Yi2013--}```
 
 > 在正文中引用:
-> `双语文献引用\cite{易仕和2013--}`
+```双语文献引用\cite{易仕和2013--}```
 		
 	
 	
@@ -383,28 +423,43 @@ biber -l zh__stroke jobname
 > 上标标签的命令为`\cite{bibtexkey}`，非上标标签的命令为`\parencite{bibtexkey}`。
 > 当希望上标的标签也给出国标要求的页码时，则可以使用`\pagescite[][50-55]{bibtexkey}`给出指定页码
 > 或者`\pagescite{bibtexkey}`使用bib文件中的页码。
-		
+	
+	
+	
 * <b>我在引用文献时已经给出作者信息，希望引用标签仅包含年份和页码信息或者仅包含年份信息时，该怎么操作？</b>
 	
-> 需要给出年份的标签是作者年制的标签，可以使用命令`yearpagescite{bibtex}`给出仅包含年份和页码信息的标签，
-> 使用命令`yearcite{bibtex}`给出仅包含年份的标签。
+> 需要给出年份的标签是作者年制的标签，可以使用命令`\yearpagescite{bibtex}`给出仅包含年份和页码信息的标签，
+> 使用命令`\yearcite{bibtex}`给出仅包含年份的标签。
+
+
 
 * <b>在使用作者年制时，我希望文献表是按作者年份标题排序，而正文某处一个cite命令引用多个参考文献，且这些文献的标签是按年份作者标题排序，该怎么操作？</b>
 	
 > 有两种方法:
+
 > 一是自动排序
-> 宏包加载时使用
-> `\usepackage[backend=biber,style=gb7714-2015ay,sortcite,sorting=ynt]{biblatex}`
+
+> 宏包加载时使用:
+
+```\usepackage[backend=biber,style=gb7714-2015ay,sortcite,sorting=ynt]{biblatex}```
+
 > 正文中引用:
-> `\cite{refa2010,refb2008,refc2009}`
+
+```\cite{refa2010,refb2008,refc2009}```
+
 > 然后在文献打印前加
-> `\newrefcontext[sorting=nyt]`
+
+```\newrefcontext[sorting=nyt]```
 
 > 二是手动给出排序
+
 > 宏包加载时使用
-> `\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}`
+
+```\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}```
+
 > 引用多个文献时按照年份顺序给出引用关键字，即正文中引用:
-> `\cite{refb2008,refc2009,refa2010}`
+
+```\cite{refb2008,refc2009,refa2010}```
 
 > 参考:[issue:citation的顺序和bibliography的顺序如何不关联](https://github.com/hushidong/biblatex-gb7714-2015/issues/30)
 
@@ -414,20 +469,23 @@ biber -l zh__stroke jobname
 	
 > 可通过设置选项maxcitenames，mincitenames实现，比如下面的设置用于显示5个作者:
 
-> `\usepackage[backend=biber,bibstyle=gb7714-2015,maxcitenames=5,mincitenames=5]{biblatex}`
+```\usepackage[backend=biber,style=gb7714-2015ay,maxcitenames=5,mincitenames=5]{biblatex}```
+		
 		
 		
 * <b>请问希望正文中作者年制的标注(引用)标签中作者数量只能是1个，而不管是否存在歧义时，该怎么处理？</b>
 	
 > 可通过设置选项uniquelist=false实现，该设置标签中的作者只会是指定的1个:
 
-> `\usepackage[backend=biber,bibstyle=gb7714-2015,uniquelist=false]{biblatex}`
+```\usepackage[backend=biber,style=gb7714-2015ay,uniquelist=false]{biblatex}```
+		
+		
 		
 * <b>请问希望正文中作者年制的标注(引用)标签中作者数量只能是1个，且只用其作者的姓而不管是否存在歧义时，该怎么处理？</b>
 	
 > 可通过设置选项uniquelist=false, uniquename=false实现，该设置标签中的作者只会是指定的1个且只用该作者的姓:
 
-> `\usepackage[backend=biber,bibstyle=gb7714-2015,uniquelist=false,uniquename=false]{biblatex}`
+```\usepackage[backend=biber,style=gb7714-2015ay,uniquelist=false,uniquename=false]{biblatex}```
 	
 	
 	
@@ -495,51 +553,57 @@ biber -l zh__stroke jobname
 
 ## Update history:
 
+date of update: 2018-04-03 to version v1.0k
 
-\updateinfo[2018-04-03]{date of update: 2018-04-03 to version v1.0k}\label{up:180403}
 
-\begin{enumerate}
+* 增加了选项gbcodegbk，用于兼容GBK编码的文件，方法源自biblatex-caspervector。 （20180509）
 
-\item 增加了标注命令authornumcite，用于在标注标签中同时输出作者和顺序编码。（20180427）
+add an option gbcodegbk to deal tex file encoded with GBK, the solution originated from biblatex-caspervector.
+
+* 增加了选项gbstrict，用于控制bib文件中一些多余的域的输出，目的是为了兼容一些bib文件。 （20180509）
+
+add an option gbstrict to control the output of some unnecessary fields, in order to be compatible with some bib file.
+
+* 增加了字体控制命令bibauthorfont，bibtitlefont，bibpubfont，用于控制文献表中作者、标题、出版项的字体和颜色。（20180427）
+
+add 3 font set cmds：bibauthorfont，bibtitlefont，bibpubfont to control the font and color of author，title，and publication items.
+
+* 增加了标注命令authornumcite，用于在标注标签中同时输出作者和顺序编码。（20180427）
 
 add a citation cmd：authornumcite to print author and numeric number at the same time.
 
-\item 增加了字体控制命令bibauthorfont，bibtitlefont，bibpubfont，用于控制文献表中作者、标题、出版项的字体和颜色。（20180427）
 
-add 3 font set cmd：bibauthorfont，bibtitlefont，bibpubfont to control the font and color of author，title，and publication items.
-
-\item 增加了gbpunctin选项，用于控制inbook等类型是否输出析出来源文献前的//符号，主要是为方便用户定制。
+* 增加了gbpunctin选项，用于控制inbook等类型是否输出析出来源文献前的//符号，主要是为方便用户定制。
 
 add an option gbpunctin to control the output of // before bookauthor for entry types like inbook.
 
-\item 修正了析出文献来源的作者为editor是出现两次的问题，这个很简单的问题如果用bookauthor就不会出现问题，所以以前一直没有发现，才由杨志红提出来，感谢。
+* 修正了析出文献来源的作者为editor是出现两次的问题，这个很简单的问题如果用bookauthor就不会出现问题，所以以前一直没有发现，才由杨志红提出来，感谢。
 
 correct a bug that the editor appears twice for the entry with booktitle's bookauthor is editor, which is reported by Yang zhihong,3ks!
 
-\item 完善了github上的wiki。
+* 完善了github上的wiki。
 
 WIKI on github was accomplished.
 
-\item 修正了gbnamefmt中的一些小错误。
+* 修正了gbnamefmt中的一些小错误。
 
 correct some flaws for gbnamefmt option.
 
-\item 修改了代码用于兼容3.11版本
+* 修改了代码用于兼容3.11版本
 
 change the separator before related block for v3.11.
 
-\item 页码范围的间隔符从en dash改为hyphen
+* 页码范围的间隔符从en dash改为hyphen
 
 change the pages range separator from en dash to hyphen.
 	
-\item 修正了v3.7以上版本中专利文献中公告日期后多出点的问题，该bug是由于输入公告日期没有使用printtext导致异步标点机制破坏所致。
+* 修正了v3.7以上版本中专利文献中公告日期后多出点的问题，该bug是由于输入公告日期没有使用printtext导致异步标点机制破坏所致。
 
 correct a bug of newsdate in patent for biblatex >v3.7, which added an additional dot before urldate caused by broken asynchronous punctuation .
 
-\item 修正了texlive2017以上版本中beamer类中标题后面多出点的问题，由于beamer会对bibmacro\{title\}做patch导致其输出不同于普通文档类，该bug是由于beamer升级后patch的内容发生变化导致。
+* 修正了texlive2017以上版本中beamer类中标题后面多出点的问题，由于beamer会对bibmacro\{title\}做patch导致其输出不同于普通文档类，该bug是由于beamer升级后patch的内容发生变化导致。
 
 correct a bug of punctuation after title with beamer for >texlive2017, the bug is caused by the update of beamer.
-\end{enumerate}
 
 [update latest](example/updatehistory.tex)
 

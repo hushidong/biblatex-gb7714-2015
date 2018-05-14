@@ -64,11 +64,13 @@ biblatex-gb7714-2015宏包除了提供严格遵守GB/T 7714-2015标准的格式�
 \node[below of=numbbx,fill=cyan,yshift=8mm,text width=2cm] (numcbx) {\tiny \textcolor{white}{gb7715-2015.cbx}};
 \node[below of=numcbx,fill=cyan,yshift=8mm,text width=2cm] (aybbx) {\tiny \textcolor{white}{gb7715-2015ay.bbx}};
 \node[below of=aybbx,fill=cyan,yshift=8mm,text width=2cm] (aycbx) {\tiny \textcolor{white}{gb7715-2015ay.cbx}};
+\node[below of=aycbx,fill=cyan,yshift=8mm,text width=2cm] (gbkdef) {\tiny \textcolor{white}{gb7715-2015-gbk.def}};
 \draw[color=blue,semithick] (numbbx.west) -- ($(numbbx.west)+(-3mm,0mm)$) ;
 \draw[color=blue,semithick] (numcbx.west) -- ($(numcbx.west)+(-3mm,0mm)$) ;
 \draw[color=blue,semithick] (aybbx.west) -- ($(aybbx.west)+(-3mm,0mm)$) ;
 \draw[color=blue,semithick] (aycbx.west) -- ($(aycbx.west)+(-3mm,0mm)$) ;
-\draw[color=blue,semithick] ($(aycbx.west)+(-3mm,0mm)$) -- ($(aycbx.west)+(-3mm,28.1mm)$) ;
+\draw[color=blue,semithick] (gbkdef.west) -- ($(gbkdef.west)+(-3mm,0mm)$) ;
+\draw[color=blue,semithick] ($(gbkdef.west)+(-3mm,0mm)$) -- ($(aycbx.west)+(-3mm,28.1mm)$) ;
 
 \node[below of=manual,fill=green!30!yellow,yshift=0.5cm,xshift=2mm,text width=2.8cm] (mtex) {\tiny \textcolor{red}{biblatex-gb7714-2015.tex}};
 \node[below of=mtex,fill=green!30!yellow,yshift=8mm,text width=2.8cm] (mpdf) {\tiny \textcolor{red}{biblatex-gb7714-2015.pdf}};
@@ -93,7 +95,7 @@ biblatex-gb7714-2015宏包除了提供严格遵守GB/T 7714-2015标准的格式�
 \caption{宏包文件结构}\label{fig:pkg:structure}
 \end{figure}
 
-其中，\zd{gb7714-2015.bbx/cbx}、\zd{gb7714-2015ay.bbx/cbx}分别为顺序编码制和作者年制样式文件。
+其中，\zd{gb7714-2015.bbx/cbx}、\zd{gb7714-2015ay.bbx/cbx}分别为顺序编码制和作者年制样式文件，\zd{gb7715-2015-gbk.def}为GBK编码文档编译所需的支撑文件。
 \zd{biblatex-gb7714-2015.tex}，\zd{eg*.tex}为说明文档和测试用例。\zd{*.bat}、\zd{*.sh}分别为windows下和linux下的编译脚本。\zd{*.pl}为gb7714格式著录文献表到bib文件的perl转换脚本，\zd{*.dat}为转换测试文献表。
 
 \subsection{biblatex宏包的参考文献生成方法}
@@ -116,22 +118,39 @@ biblatex-gb7714-2015宏包除了提供严格遵守GB/T 7714-2015标准的格式�
 %划分很自由，划分无限制
 
 %处理无限制，支持更全面
-\item 支持全面。后端处理程序biber处理大数据量参考文献毫无压力，不用担心bibtex可能存在的内存不足等局限，字符编码也支持utf-8，完全支持中文的bibtex键(引用关键字)。此外，biber还具有根据拼音和笔画排序(例\ref{eg:sort:bibercmd})、输出引用文献的数据(例\ref{eg:bibercmd:outbibfile})等其它更多功能。
-
-        \begin{example}{中文文献排序时的biber选项}{eg:sort:bibercmd}
-        \begin{texlist}
-        %按拼音排序，biber命令
-        biber -l zh__pinyin jobname
-        %按笔画排序，biber命令
-        biber -l zh__stroke jobname
-        \end{texlist}
-        \end{example}
+\item 支持全面。后端处理程序biber处理大数据量参考文献毫无压力，不用担心bibtex可能存在的内存不足等局限，字符编码支持utf-8，完全支持中文的bibtex 键(引用关键字)。biber除了自身大量功能特性如参考文献数据检查、输出引用文献的数据(例\ref{eg:bibercmd:outbibfile})等等外，还能有效利用一些perl模块，来实现文件编码的转换（perl的Encode::CN模块），排序的本地化调整（perl的Unicode::Collation::locale模块，
+    根据拼音和笔画排序见例\ref{eg:sort:bibercmd},\ref{eg:sort:opts}）等其它更多功能。
 
         \begin{example}{输出引用文献数据时的biber选项}{eg:bibercmd:outbibfile}
         \begin{texlist}
         biber jobname --output-format=bibtex
         \end{texlist}
         \end{example}
+
+        \begin{example}{中文文献排序可利用biblatex选项}{eg:sort:opts}
+        \begin{texlist}
+        %按拼音排序，biblatex加载选项
+        \usepackage[backend=biber,style=gb7714-2015ay,sortlocale=zh__pinyin]{biblatex}
+        %按笔画排序，biblatex加载选项
+        \usepackage[backend=biber,style=gb7714-2015ay,sortlocale=zh__stroke]{biblatex}%
+        %此时，biber则正常编译不用加选项，即不做排序本地化调整（sort tailoring）
+        biber jobname
+        \end{texlist}
+        \end{example}
+
+        \begin{example}{中文文献排序也可利用biber选项}{eg:sort:bibercmd}
+        \begin{texlist}
+        %biblatex正常加载，即不设置排序的本地化调整方案
+        \usepackage[backend=biber,style=gb7714-2015ay]{biblatex}
+
+        %此时需利用biber选项做排序调整：
+        %按拼音排序，则设置-l zh__pinyin
+        biber -l zh__pinyin jobname
+        %按笔画排序，则设置-l zh__pinyin
+        biber -l zh__stroke jobname
+        \end{texlist}
+        \end{example}
+
 
 
 \item 定制方便。biblatex宏包实现参考文献著录格式使用的是tex语法，相比传统的bibtex 语言学习更为容易。biblatex 提供了很多不同类型的参考文献标准样式，查看、参考和引用都很方便，因此定制起需要的参考文献格式也很便捷。
@@ -252,17 +271,17 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 
   为控制inbook,incollection,inproceedings中析出来源文献前的\texttt{//}符号而增加的选项。默认设置为true，根据GB/T 7714-2015 要求输出\texttt{//}。 而gbpunctin=false 时，输出默认的本地字符串，英语中是in:，若要完全去掉该符号则可以在导言区增加命令
   \lstinline!\DefineBibliographyStrings{english}{in={}}!。
-  
+
   \item[gbcodegbk]=true，false. \hfill default is false
 
-  为兼容GBK编码的文档增加的选项。默认设置为false，即默认是utf-8编码的文档。利用pdflatex/latex编译GBK编码文档时，应设置为true。当在源文档前面增加 XeTeX 原语：\lstinline!\XeTeXinputencoding "GBK"! 后，也可以使用xelatex编译，这是应设置为false或者不给出该选项。测试文件见：
+  为兼容GBK编码的文档增加的选项。默认设置为false，即默认是utf-8编码的文档。利用pdflatex/latex编译GBK编码文档时，应设置为true。当在源文档前面增加 XeTeX 原语：\lstinline!\XeTeXinputencoding "GBK"! 后，也可以使用xelatex编译，这时应设置为false或者不给出该选项。测试文件见：
   \href{run:example/testgbkeg.tex}{testgbkeg.tex}，
   \href{run:example/testutfeg.tex}{testutfeg.tex}。
-  
+
   \item[gbstrict]=true，false. \hfill default is true
 
   为避免输出bib文件中多余的域信息而增加选项，目的是为了兼容一些bib文件，因为某些bst样式文件进行中英文判断需要在bib文件中增加类似language这样的域作为支撑，而其中某些域在标准的biblatex样式文件中时默认输出的。gbstrict选项默认设置为true，即不输出。当需要还原标准样式的输出情况时，可设置为false。
-  
+
 \end{description}
 
 
@@ -335,6 +354,20 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   \item[isbn]=true,false. \hfill default: true
 
   该选项控制是否打印 \bibfield{isbn}\slash \bibfield{issn}\slash \bibfield{isrn} 等域。
+
+  \item[sortlocale]=auto, locale. \hfill default: auto
+
+  该选项控制排序的本地化调整方案。对于英文文献，该选项不需要设置。对于中文文献当有按拼音或笔划等进行排序的需求时，可以设置相应的本地化调整方案。主要的调整方案有：
+  \begin{itemize}
+    \item \verb|sortlocale=auto| 或者不设置该选项，为unicode编码顺序
+    \item \verb|sortlocale=zh|，为unicode编码顺序
+    \item \verb|sortlocale=zh__pinyin|，为拼音顺序
+    \item \verb|sortlocale=zh__big5han|，为big5 编码顺序
+    \item \verb|sortlocale=zh__gb2312han|，为GB-2312 顺序
+    \item \verb|sortlocale=zh__stroke|，为笔划数顺序
+    \item \verb|sortlocale=zh__zhuyin|，为注音顺序
+  \end{itemize}
+
 
   \item[其它]=下面还有很多选项，有些是宏包载入时选项，与样式无关，一般可以使用，但笔者没有做测试，各位朋友可以测试使用。选项的作用可以参考biblatex 使用手册，以及笔者和Wenbo 翻译的中文版。
       \begin{itemize}
@@ -602,15 +635,16 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
 各引用命令的效果见\ref{sec:test:book}，\ref{sec:cite:cmd:test}节。
 
-\subsubsection{使用样式的一些注意点:}
+\subsubsection{样式使用的注意事项}
 
 \begin{enumerate}
   \item 本样式包的设计与实现方法以及设计到的一些biblatex功能介绍，以项目示例的形式总结在
-  \href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}{\LaTeX 文档中文参考文献的biblatex解决方案}中，本文档不再重复给出，有需要了解用户可以参见，其中的第3.1节。
+  \href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}{\LaTeX 文档中文参考文献的biblatex解决方案}中，本文档不再重复给出，有需要了解的用户可以参见其中的第3.1节。
 
-  \item 因为采用xelatex编译，所以样式文件采用UTF-8编码，没有考虑GBK 编码问题，如果tex源文档是GBK编码的，请利用notepad++，或notepad2等编辑器将其转换为UTF-8编码。
+  \item 当tex源文档采用UTF-8编码时，可以采用xelatex编译。当tex源文档为GBK 编码时，可以利用notepad++ 或notepad2 等编辑器将其转换为UTF-8编码，然后用xelatex编译，或者也可以直接利用pdflatex或latex进行编译，本样式已经做了支持。
+      %增加了对GBK支持的说明，2018-05-11
 
-  \item 当在顺序编码和作者年制的切换，或者biblatex版本切换时，如果使用出错，可先清理一下辅助文件，清理完后，重新编译即可。
+  \item 当顺序编码和作者年制切换，或者biblatex版本切换时，如果编译出错，可先清理一下辅助文件，完成后再重新编译。
 
   \item 当bibtex键中含有中文的时候，texlive2015中的biblatex3.0版的对参考文献条目的超链接会出现问题，而texlive2016中的biblatex3.4或以后的版本则没有问题。
 
