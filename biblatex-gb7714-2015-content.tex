@@ -260,7 +260,7 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 
   \item[gbnamefmt]=uppercase，lowercase，none，pinyin. \hfill default is uppercase
 
-  为姓名大小写格式控制增加的选项。默认选择gbnamefmt=uppercase，大小写符合GB/T 7714-2015 的要求。gbnamefmt=lowercase 时，大小写由输入信息确定不做改变。gbnamefmt=none时，姓名的格式与biblatex标准样式一致。gbnamefmt=pinyin时，姓名的格式采用一种常见的中文拼音方式，比如对于 Zhao, Yu Xin 或 Yu Xin Zhao 这个姓名拼音格式化为ZHAO Yu-xin。\emph{需注意当使用pinyin选项时，姓名中应给出完整的名而不是名的缩写，否则出来的效果未必好看}。
+  为姓名大小写格式控制增加的选项。默认选择gbnamefmt=uppercase，大小写符合GB/T 7714-2015 的要求。gbnamefmt=lowercase 时，大小写由输入信息确定不做改变。gbnamefmt=none时，姓名的格式与biblatex标准样式的given-family格式一致，即名在前姓在后，类似于ieee的样式。gbnamefmt=apa时，姓名的格式与biblatex 标准样式的family-given格式一致，即姓在前名在后，类似于APA的样式。gbnamefmt=pinyin 时，姓名的格式采用一种常见的中文拼音方式，比如对于 Zhao, Yu Xin 或 Yu Xin Zhao 这个姓名拼音格式化为ZHAO Yu-xin。\emph{需注意当使用pinyin选项时，姓名中应给出完整的名而不是名的缩写，否则出来的效果未必好看}。
   测试结果见第\ref{sec:opt:namefmt}节。
 
   \item[gbtype]=true，false. \hfill default is true
@@ -281,6 +281,10 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   \item[gbstrict]=true，false. \hfill default is true
 
   为避免输出bib文件中多余的域信息而增加选项，目的是为了兼容一些bib文件，因为某些bst样式文件进行中英文判断需要在bib文件中增加类似language这样的域作为支撑，而其中某些域在标准的biblatex样式文件中时默认输出的。gbstrict选项默认设置为true，即不输出。当需要还原标准样式的输出情况时，可设置为false。
+  
+  \item[gbfieldstd]=true，false. \hfill default is false
+
+  为控制一些域如标题，网址，卷域的格式而增加选项。目的是使用一些标准样式的处理来增加格式多样性。gbstrict选项默认设置为false，即使用GB/T 7715要求的样式。设置为true时，即还原使用标准样式的格式，比如使用引号，字体，加引导词等。
 
 \end{description}
 
@@ -292,6 +296,10 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   \item[url]=true, false. \hfill default: true
 
   该选项控制是否打印 url 域并获取日期。该选项只影响 url 信息是可选的那些条目类型。而 @online 条目的 url 域总是会打印出来。它是导言区选项，与样式相关，gb7714-2015样式做了特别支持，可以兼容使用。
+  
+  \item[giveninits]=true, false. \hfill default: true
+  
+  启用该选项时姓名中的名部分会用首字母表示。
 
   \item[uniquelist]=true, false, minyear \hfill default: minyear
 

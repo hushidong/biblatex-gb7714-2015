@@ -38,7 +38,9 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 		
         `gbnamefmt = lowercase` for gb7714 style with no case switch of names 
 		
-        `gbnamefmt = none` for standard style. 
+        `gbnamefmt = none` for standard style, given-family style, like ieee style
+		
+		`gbnamefmt = apa` for standard style, family-given style, like apa style. 
 		
         `gbnamefmt = pinyin` for a common Chinese style, like: ZHANG Min-li, YI Shi-he and so on. 
 		
@@ -61,6 +63,10 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 	- add an option `gbstrict` to control the output of some unnecessary fields for GB/T7714-2015. If want to output them as the standard styles, it should be `gbstrict=false`. defaulty the option is set with `true`. This option is also for author year style.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbstrict=true]{biblatex}`
+		
+	- add an option `gbfieldstd` to control the format of some fields such as title, url and pages. option value = `false` for gb7714 style or `true` for standard style. This option is also for author year style.
+	
+        `\usepackage[backend=biber,style=gb7714-2015,gbfieldstd=false]{biblatex}`
 
 * for author year style
 
@@ -88,6 +94,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * [nuaathesis(南京航空航天大学(非官方)本科生学位 LaTeX 模板)](https://github.com/nuaatug/nuaathesis)
 * [Study-LaTeX(LaTeX学习笔记)](https://github.com/Zousiyu/Study-LaTeX)
 * [LaTeX-template(开箱即用的 LaTeX 模板)](https://github.com/tsai1993/LaTeX-template)
+* [Zhejiang University thesis(浙江大学毕业设计/论文模板)](https://github.com/TheNetAdmin/zjuthesis)
 * [...]
 
 
@@ -544,10 +551,7 @@ biber -l zh__stroke jobname
 ## Need to do:
     * special characters in all fields?
     * entry without author: the delimiter between title and year?
-	* more languages, to be compatible with language field in old bib file?
-	* more complex citation cmd?
-	* gbk encoding ？
-	* gbstrict to eliminate fields not in GB？
+	* more languages ?
 
 ---------------------------------------------------------
 
@@ -555,6 +559,9 @@ biber -l zh__stroke jobname
 
 date of update: 2018-04-03 to version v1.0k
 
+* 增加了选项gbfieldstd，用于控制一些域如标题，网址，卷等格式。 （20180515）
+
+add an option gbfieldstd to control the format of some fields like title, url, volume.
 
 * 增加了选项gbcodegbk，用于兼容GBK编码的文件，方法源自biblatex-caspervector。 （20180509）
 

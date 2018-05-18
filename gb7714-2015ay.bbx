@@ -151,6 +151,7 @@
 
     %
     %   增加一个严格按GB/T 7714-2015给出著录格式控制域的输出的选项
+    %   v1.0k, 2018.05.08, by hzz
     %
     %   原理方法:
     %   默认设置该选项为真，进而不输出GB/T 7714-2015中没有的域的信息
@@ -160,6 +161,21 @@
     \DeclareBibliographyOption{gbstrict}[true]{%
       \settoggle{bbx:gbstrict}{#1}}
     \ExecuteBibliographyOptions{gbstrict}
+
+
+    %
+    %   增加一个恢复域格式为标准样式的控制选项
+    %   v1.0k, 2018.05.15, by hzz
+    %
+    %   原理方法:
+    %   默认设置该选项为false，采用国标要求的域格式输出相关域
+    %   当设置该选项为true时，则重新利用标准样式的域格式输出相关的域
+    \newtoggle{bbx:gbfieldstd}
+    \DeclareBibliographyOption{gbfieldstd}[false]{%
+      \settoggle{bbx:gbfieldstd}{#1}%
+      \ifstrequal{#1}{false}{}{\execgbfdfmtstd}%
+      }
+    \ExecuteBibliographyOptions{gbfieldstd}
 
     %
     %   增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
@@ -172,7 +188,7 @@
 
     %
     %   增加控制析出文献来源前的标点符号//输出的选项
-    %   added in v1.0k, 2018.04.20, by hzz
+    %   v1.0k, 2018.04.20,added in  by hzz
     \newtoggle{bbx:gbpunctin}
     \DeclareBibliographyOption{gbpunctin}[true]{%
         \settoggle{bbx:gbpunctin}{#1}}
@@ -204,6 +220,7 @@
         \ifstrequal{##1}{lowercase}{\execgblowercase}{}%
         \ifstrequal{##1}{none}{\execnamedefault}{}
         \ifstrequal{##1}{pinyin}{\execnamepinyin}{}
+        \ifstrequal{##1}{apa}{\execnameapa}{}
     }
     %\ExecuteBibliographyOptions{gbnamefmt}
 
@@ -238,6 +255,7 @@
         \ifstrequal{##1}{lowercase}{\execgblowercase}{}%
         \ifstrequal{##1}{none}{\execnamedefault}{}
         \ifstrequal{##1}{pinyin}{\execnamepinyin}{}
+        \ifstrequal{##1}{apa}{\execnameapa}{}
     }
     %\ExecuteBibliographyOptions{gbnamefmt}
 
@@ -273,6 +291,7 @@
         \ifstrequal{##1}{lowercase}{\execgblowercase}{}%
         \ifstrequal{##1}{none}{\execnamedefault}{}
         \ifstrequal{##1}{pinyin}{\execnamepinyin}{}
+        \ifstrequal{##1}{apa}{\execnameapa}{}
     }
     %\ExecuteBibliographyOptions{gbnamefmt}
 
@@ -309,6 +328,7 @@
         \ifstrequal{##1}{lowercase}{\execgblowercase}{}%
         \ifstrequal{##1}{none}{\execnamedefault}{}
         \ifstrequal{##1}{pinyin}{\execnamepinyin}{}
+        \ifstrequal{##1}{apa}{\execnameapa}{}
     }
     %\ExecuteBibliographyOptions{gbnamefmt}
 
@@ -491,6 +511,8 @@
             %\step[fieldset=usere, origfieldval]
 	    \step[fieldsource=author, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
             \step[fieldset=userf, fieldvalue={cn}]
+            }
+	\map{
             \step[fieldsource=translator, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
             \step[fieldset=usere, fieldvalue={cn}]
             }
@@ -811,16 +833,32 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %
 %   标题的字母大小写格式修改
 %
-%   注意:修改标题的字母大小写，不同用前面的title的格式而要用titlecase
+%   注意:修改标题的字母大小写，不能用前面的title的格式而要用titlecase
 %   因为titlecase is applied to the contents of the field directly，title is not
 \DeclareFieldFormat{titlecase}{\MakeCapital#1}%重设标题格式，将其修改为首字母大写
 \DeclareFieldFormat{pages}{#1}%页码引用格式的修改%去掉前面引导页码的pp.等字符
 \DefineBibliographyExtras{english}{\renewcommand*{\bibrangedash}{-}}
 
+\def\execgbfdfmtstd{%恢复到标准样式的设置
+\DeclareFieldFormat{title}{\mkbibemph{##1}}
+\DeclareFieldFormat
+  [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
+  {title}{\mkbibquote{##1\isdot}}
+\DeclareFieldFormat
+  [suppbook,suppcollection,suppperiodical]
+  {title}{##1}
+\DeclareFieldFormat{journaltitle}{\mkbibemph{##1}}
+\DeclareFieldFormat{issuetitle}{\mkbibemph{##1}}
+\DeclareFieldFormat{maintitle}{\mkbibemph{##1}}
+\DeclareFieldFormat{booktitle}{\mkbibemph{##1}}
+\DeclareFieldFormat{url}{\mkbibacro{URL}\addcolon\space\url{##1}}
+\DeclareFieldFormat{titlecase}{##1}
+\DeclareFieldFormat{pages}{\mkpageprefix[bookpagination]{##1}}
+}
 
 %
 %   文献标题后的标点问题
-%   20180405，v1.0k，为texlive2017以上版本中的beamer兼容性做的处理，Hu Zhenzhen
+%   v1.0k，20180405，为texlive2017以上版本中的beamer兼容性做的处理，Hu Zhenzhen
 %
 %   原理方法:如下代码处理texlive2017以上版本中，beamer中文献的标题后出现两个点的情况:
 %   texlive2017以上的beamer中对macro{title}做了patch，正常情况下不会出现两个点的情况，但由于
@@ -832,11 +870,11 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     test{\iftoggle{iftlsix}}
   }{}%
   {%texlive 2017对应iftlseven以上版本
+  \@ifclassloaded{beamer}{
   \DeclareFieldFormat{title}{#1}%
   \DeclareFieldFormat[article,patent,thesis,unpublished]{title}{#1}
   \AtBeginDocument{%
-  \@ifclassloaded{beamer}
-    {\patchcmd{\abx@macro@title}{\newunitpunct}{}{}{}}{}}
+    \patchcmd{\abx@macro@title}{\newunitpunct}{}{}{}}}{}
   }
 
 
@@ -1076,7 +1114,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 }
 
 %
-%   针对biblatex<3.3版本，姓名大小写格式采用标准样式
+%   针对biblatex<3.3版本，姓名大小写格式采用标准样式，名在前，姓在后
 %
 \defversion{3.0}{namec}{
     \renewrobustcmd*{\bibinitperiod}{\adddot}
@@ -1228,6 +1266,80 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
      \renewbibmacro*{name:family-given}[4]{%
      \usebibmacro{name:given-family}{##1}{##2}{##3}{##4}}
 }
+%
+%   针对biblatex<3.3版本，姓名大小写格式采用标准样式，姓在前，名在后
+%
+\defversion{3.0}{namea}{
+    \renewrobustcmd*{\bibinitperiod}{\adddot}
+    \renewrobustcmd*{\bibinithyphendelim}{\adddot\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
+    \renewcommand*{\revsdnamepunct}{\addcomma}
+    %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
+    \renewbibmacro*{name:last-first}[4]{\bibauthorfont%
+      \ifuseprefix%
+        {%
+          \usebibmacro{name:delim}{##3##1}%
+           \usebibmacro{name:hook}{##3##1}%
+           \ifblank{##3}{}%
+             {%
+               \ifcapital%
+                 {\mkbibnameprefix{\MakeCapital{##3}}\isdot}%
+    	         {\mkbibnameprefix{##3}\isdot}%
+               \ifpunctmark{'}{}{\addhighpenspace}%
+             }%
+           \mkbibnamelast{##1}\isdot%
+           \ifblank{##2}%
+             {}{\addcomma\addlowpenspace\mkbibnamefirst{##2}\isdot}%
+           \ifblank{##4}{}{\addlowpenspace\mkbibnameaffix{##4}\isdot}%
+        }
+        {%
+          \usebibmacro{name:delim}{##1}%
+          \usebibmacro{name:hook}{##1}%
+          \mkbibnamelast{##1}\isdot%
+          \ifblank{##2##3}{}{\addcomma}%
+          \ifblank{##2}{}{\addlowpenspace\mkbibnamefirst{##2}\isdot}%
+          \ifblank{##3}{}{\addlowpenspace\mkbibnameprefix{##3}\isdot}%
+          \ifblank{##4}{}{\addlowpenspace\mkbibnameaffix{##4}\isdot}%
+        }%
+     }
+     \renewbibmacro*{name:first-last}[4]{%
+     \usebibmacro{name:last-first}{##1}{##2}{##3}{##4}}
+}
+%
+%   针对biblatex>=3.3版本，姓名大小写格式采用标准样式
+%
+\defversion{3.4}{namea}{
+    \renewrobustcmd*{\bibinitperiod}{\adddot}
+    \renewrobustcmd*{\bibinithyphendelim}{\adddot\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
+    \renewcommand*{\revsdnamepunct}{\addcomma}
+    \renewbibmacro*{name:given-family}[4]{\bibauthorfont%
+        \ifuseprefix
+        {\usebibmacro{name:delim}{##3##1}%
+         \usebibmacro{name:hook}{##3##1}%
+         \ifdefvoid{##3}{}{%
+           \ifcapital
+             {\mkbibnameprefix{\MakeCapital{##3}}\isdot}
+             {\mkbibnameprefix{##3}\isdot}%
+           \ifprefchar{}{\bibnamedelimc}}%
+         \mkbibnamefamily{##1}\isdot
+         \ifdefvoid{##4}{}{\bibnamedelimd\mkbibnamesuffix{##4}\isdot}%
+         \ifdefvoid{##2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{##2}\isdot}}
+        {\usebibmacro{name:delim}{##1}%
+         \usebibmacro{name:hook}{##1}%
+         \mkbibnamefamily{##1}\isdot
+         \ifdefvoid{##4}{}{\bibnamedelimd\mkbibnamesuffix{##4}\isdot}%
+         \ifboolexpe{%
+           test {\ifdefvoid{##2}}
+           and
+           test {\ifdefvoid{##3}}}
+           {}
+           {\revsdnamepunct}%
+         \ifdefvoid{##2}{}{\bibnamedelimd\mkbibnamegiven{##2}\isdot}%
+         \ifdefvoid{##3}{}{\bibnamedelimd\mkbibnameprefix{##3}\isdot}}}
+    \DeclareNameAlias{family-given}{default}
+
+    \renewbibmacro*{name:family-given}[4]{%
+         \usebibmacro{name:given-family}{##1}{##2}{##3}{##4}}
+}
 
 %
 %   根据姓名格式控制选项做处理
@@ -1239,12 +1351,21 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     \switchversion{3.4}{name}
     }
 %
-\def\execnamedefault{
+\def\execnamedefault{%style like: science、ieee,名在前，姓在后
 \iftoggle{iftlfive}%根据texlive/biblatex版本选择
     {%%当采用biblatex<=3.3版本时
     \switchversion{3.0}{namec}
     }{%%当采用3.3<=biblatex版本时
     \switchversion{3.4}{namec}
+    }
+}
+%
+\def\execnameapa{%style like: apa,nature,姓在前，名在后
+\iftoggle{iftlfive}%根据texlive/biblatex版本选择
+    {%%当采用biblatex<=3.3版本时
+    \switchversion{3.0}{namea}
+    }{%%当采用3.3<=biblatex版本时
+    \switchversion{3.4}{namea}
     }
 }
 %
@@ -1493,7 +1614,7 @@ test{\iftoggle{iftlnine}}
 %
 %   出版社和地址的处理
 %
-%   20180425,v1.0k,为出版信息增加字体控制命令，hzz
+%   v1.0k，20180425，为出版信息增加字体控制命令，hzz
 %   原理方法:当没有出版社地址时，直接判断title的信息是否是中文，若为中文，则写出版地不详，否则用英文的字符表示。
 %   事实上title对于每个文献来说是必须的，所以用它判断是最快的，而且一般标题和出版社的语言是一样的。
 %   新增一个样式用于输出连续出版物的地址，单位，时间，%类似\newbibmacro*{publisher+location+date}
@@ -1720,7 +1841,7 @@ test{\iftoggle{iftlnine}}
 %   调整期刊名的格式
 %
 %   原理方法:因为作者年制年份提到前面，因此涉及到期刊名与后面的卷期的关系。
-%   20180425,v1.0k,增加了字体控制命令，hzz
+%   v1.0k,20180425,增加了字体控制命令，hzz
 \renewbibmacro*{journal+issuetitle}{\bibpubfont%源来自standard.bbx
   \usebibmacro{journal}%
   %\setunit*{\addspace}%
@@ -1766,6 +1887,12 @@ test{\iftoggle{iftlnine}}
 %   调整期刊卷和期的格式
 %
 \renewbibmacro*{volume+number+eid}{%源来自standard.bbx
+\iftoggle{bbx:gbfieldstd}{%
+  \printfield{volume}%
+  \setunit*{\adddot}%
+  \printfield{number}%
+  \setunit{\addcomma\space}%
+  \printfield{eid}}{%
   \printfield{volume}%
   %\setunit*{\adddot}%去掉点号
   %\printfield{number}%
@@ -1773,7 +1900,7 @@ test{\iftoggle{iftlnine}}
   %\iffieldundef{number}{}{\printtext{\mkbibparens{\printfield{number}}}}%增加一个圆括号
   \iffieldundef{eid}{}{%
   \setunit{\addcomma\space}%
-  \printfield{eid}}}
+  \printfield{eid}}}}
 
 %
 %   调整期刊年份的格式
