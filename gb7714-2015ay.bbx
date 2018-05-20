@@ -101,6 +101,17 @@
             {\def\multinumberfirst{#1}\def\multinumbersecond{}}%
     }
 
+
+%=====================================================================
+%   数据模型定义
+%=====================================================================
+%定义类型和载体标识，从gb内容看载体基本属于介质。
+%为与lee zeping的bst的样式统一，使用mark和medium这一域名
+\DeclareDatamodelFields[type=field,datatype=literal]{mark}
+\DeclareDatamodelFields[type=field,datatype=literal]{medium}
+
+
+
 %=====================================================================
 %   设置宏包选项
 %=====================================================================
@@ -200,8 +211,6 @@
     \ExecuteBibliographyOptions{
       useprefix = true,  %名字的信息包括前缀
       date   = year,  %日期仅写到年
-      %maxnames     = 3 , %设置名字最大数量
-      %minnames     = 3,  %设置缩减后的名字最小数量
       maxbibnames=3, %将文献列表和引用中最大名字数量区分开
       minbibnames=3,
       %uniquename=init,
@@ -412,8 +421,13 @@
 \maps[datatype=bibtex]{
         \map[overwrite]{%用于处理zotero从cnki导出中文文献姓名中存在逗号的情况
                 \step[fieldsource={author}, match=\regexp{([\x{2FF0}-\x{9FA5}])\,\s*}, replace=\regexp{$1}]
-             }
-        \map{
+                }
+        \map{%
+            \step[fieldsource=mark,final]
+            \step[fieldset=usera, origfieldval]
+            }
+        \map{%
+            %\perdatasource{examples.bib}
             \pertype{article}
             \step[fieldset=usera, fieldvalue={J}]
             }
@@ -429,6 +443,30 @@
             \pertype{newspaper}%增加一个新闻报纸的类型newspaper
             \step[fieldset=usera, fieldvalue={N}]%因为没有专门的驱动，这句的目的是定义一个usera域，方便映射为article后判断
             \step[fieldset=note, fieldvalue=news]
+            }
+        \map{
+            \pertype{database}%对应增加的一个数据库类型database
+            \step[fieldset=usera, fieldvalue={DB}]%没有专门的驱动，定义一个usera域，方便映射后使用
+            }
+        \map{
+            \pertype{dataset}%对应增加的一个数据集类型dataset
+            \step[fieldset=usera, fieldvalue={DS}]%没有专门的驱动，定义一个usera域，方便映射后使用
+            }
+        \map{
+            \pertype{software}%对应增加的一个软件类型software
+            \step[fieldset=usera, fieldvalue={CP}]%没有专门的驱动，定义一个usera域，方便映射后使用
+            }
+        \map{
+            \pertype{map}%对应增加的一个舆图类型map
+            \step[fieldset=usera, fieldvalue={CM}]%没有专门的驱动，定义一个usera域，方便映射后使用
+            }
+        \map{
+            \pertype{archive}%对应增加的一个档案类型archive
+            \step[fieldset=usera, fieldvalue={A}]%没有专门的驱动，定义一个usera域，方便映射后使用
+            }
+        \map{
+            \pertype{misc}%对应增加的一个备选类型misc
+            \step[fieldset=usera, fieldvalue={Z}]%没有专门的驱动，定义一个usera域，方便映射后使用
             }
         \map{
             \pertype{book}
@@ -683,6 +721,12 @@
       }
     }
 }
+\DeclareBibliographyAlias{unpublished}{misc}
+\DeclareBibliographyAlias{database}{misc}
+\DeclareBibliographyAlias{dataset}{misc}
+\DeclareBibliographyAlias{software}{misc}
+\DeclareBibliographyAlias{map}{misc}
+\DeclareBibliographyAlias{archive}{manual}
 
 %
 %   排序格式，用降序，及userb域，针对biblatex3.8及以上版本
@@ -789,27 +833,27 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %
 \DeclareFieldFormat{gbtypeflag}{%
 \iftoggle{bbx:url}{\iffieldundef{url}%当存在url时，增加一个OL标识符
-{\nobreak\printtext{[}\nobreak#1\nobreak\printtext{]}}%
+{\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}}%
 {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\texttt{/}OL]}}%
-}{\nobreak\printtext{[}\nobreak#1\nobreak\printtext{]}}}
+}{\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}}}
 
 %
 %   新增用于报纸的文献类型标识符的格式
 %
 \DeclareFieldFormat{gbtypeflagn}{%用于报纸newspaper
 \iftoggle{bbx:url}{\iffieldundef{url}%当存在url时，增加一个OL标识符
-{\nobreak\printtext{[}\nobreak N\printtext{]}\nobreak}%
+{\nobreak\printtext{[}\nobreak N\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
 {\nobreak\printtext{[}\nobreak N\printtext{\texttt{/}OL]}\nobreak}%
-}{\nobreak\printtext{[}\nobreak N\printtext{]}\nobreak}}
+}{\nobreak\printtext{[}\nobreak N\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}}
 
 %
 %   新增用于标准的文献类型标识符的格式
 %
 \DeclareFieldFormat{gbtypeflags}{%用于标准standard
 \iftoggle{bbx:url}{\iffieldundef{url}%当存在url时，增加一个OL标识符
-{\nobreak\printtext{[}\nobreak S\printtext{]}\nobreak}%
+{\nobreak\printtext{[}\nobreak S\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
 {\nobreak\printtext{[}\nobreak S\printtext{\texttt{/}OL]}\nobreak}%
-}{\nobreak\printtext{[}\nobreak S\printtext{]}\nobreak}}
+}{\nobreak\printtext{[}\nobreak S\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}}
 
 %
 %   重设title等参考文献信息的输出格式
@@ -2503,10 +2547,10 @@ test{\iftoggle{iftlnine}}
   \usebibmacro{finentry}}
 
 %
-%   未出版物类型驱动
+%   备选类型驱动
 %
-%   直接利用report做unpublished
-\DeclareBibliographyDriver{unpublished}{%
+%   直接利用report做misc
+\DeclareBibliographyDriver{misc}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author}%

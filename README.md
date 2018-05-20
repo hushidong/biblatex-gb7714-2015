@@ -95,6 +95,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * [Study-LaTeX(LaTeX学习笔记)](https://github.com/Zousiyu/Study-LaTeX)
 * [LaTeX-template(开箱即用的 LaTeX 模板)](https://github.com/tsai1993/LaTeX-template)
 * [Zhejiang University thesis(浙江大学毕业设计/论文模板)](https://github.com/TheNetAdmin/zjuthesis)
+* [fjnu-bathesis (福建师范大学本科毕业论文LaTeX 模板)](https://github.com/fjnuer/fjnu-bathesis)
 * [...]
 
 
@@ -552,12 +553,17 @@ biber -l zh__stroke jobname
     * special characters in all fields?
     * entry without author: the delimiter between title and year?
 	* more languages ?
+	* TEST FOR texlive2015,2016
 
 ---------------------------------------------------------
 
 ## Update history:
 
 date of update: 2018-04-03 to version v1.0k
+
+* 增加对数据库，数据集，软件，舆图，档案等条目类型的处理，增加mark，medium域，以更好的实现标准的要求，条目类型和域命名与Lee zeping的gbt7714宏包一致以兼容bib文件。 （20180520）
+    
+add entry types：database, dataset, software, map, archive and fields: mark, medium to meet GB/T 7714-2015 betterly. the nomenclature of added entry types and fields is in keep with Pkg gbt7714 developed by Lee zeping to be compatible with bib files.
 
 * 增加了选项gbfieldstd，用于控制一些域如标题，网址，卷等格式。 （20180515）
 

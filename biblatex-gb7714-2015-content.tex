@@ -18,7 +18,7 @@
 %------------------------------------------------------------
 
 \section{概述}
-提供了符合《GB/T 7714-2015~信息与文献~参考文献著录规则》要求的biblatex参考文献样式。分为两种编制方式:一、顺序编码制；二、作者年制。主要特点包括:
+提供了符合《GB/T 7714-2015~信息与文献~参考文献著录规则》要求的biblatex参考文献样式。分为两种编制方式:一、顺序编码制；二、著者-出版年制。主要特点包括:
 \begin{enumerate}
   \item 兼容性
 
@@ -32,7 +32,7 @@
 
   \item 灵活性
 
-biblatex-gb7714-2015宏包除了提供严格遵守GB/T 7714-2015标准的格式外，还通过增加很多新的用户设置选项，使用户可以根据自己的需求很灵活地调整参考文献表的生成。包括标签的对齐方式(gbalign选项)、出版项缺省时的处理(gbpub选项)、作者缺省时的处理(gbnoauthor选项)、作者姓名格式的调整(gbnamefmt选项)、文献类型和载体标识的输出控制(gbtype选项)、双语对照文献表等。能通过标注和著录分别采用作者年制、顺序编码制样式实现特殊的参考文献格式，并尽最大可能利用biblatex的选项来实现一些特殊需求，比如文献表中作者数量大于3、标注中严格仅给出第一作者的姓、参考文献表按拼音或笔画排序等等。
+biblatex-gb7714-2015宏包除了提供严格遵守GB/T 7714-2015标准的格式外，还通过增加很多新的用户设置选项，使用户可以根据自己的需求很灵活地调整参考文献表的生成。包括标签的对齐方式(gbalign选项)、出版项缺省时的处理(gbpub选项)、作者缺省时的处理(gbnoauthor选项)、作者姓名格式的调整(gbnamefmt选项)、文献类型和载体标识的输出控制(gbtype选项)、双语对照文献表等。能通过标注和著录分别采用著者-出版年制（即作者年制）、顺序编码制样式实现特殊的参考文献格式，并尽最大可能利用biblatex的选项来实现一些特殊需求，比如文献表中作者数量大于3、标注中严格仅给出第一作者的姓、参考文献表按拼音或笔画排序等等。
 \end{enumerate}
 
 %具体来讲，完成了4个方面的工作:
@@ -217,7 +217,7 @@ citestyle=gb7714-2015%,backref=true%
 
 \subsection{gb7714-2015样式加载方式和选项说明}
 \subsubsection{加载方式}
-例\ref{code:doc:structrue}中给出了宏包和样式的基本加载方式，biblatex-gb7714-2015样式类似。注意，当著录样式bibstyle和标注样式citestyle相同时，两者可以合并为一个选项style。比如:
+例\ref{code:doc:structrue}中给出了宏包和样式的基本加载方式。注意，当著录样式bibstyle和标注样式citestyle相同时，两者可以合并为一个选项style。比如:
 
 \begin{example}{顺序编码制(gb7714-2015)加载方式}{eg:gb7714numeric}
 \begin{texlist}
@@ -227,7 +227,7 @@ citestyle=gb7714-2015%,backref=true%
 \end{texlist}
 \end{example}
 
-\begin{example}{作者年制(gb7714-2015ay)加载方式}{eg:gb7714authoryear}
+\begin{example}{著者-出版年制(gb7714-2015ay)加载方式}{eg:gb7714authoryear}
 \begin{texlist}
 \usepackage[backend=biber,style=gb7714-2015ay]{biblatex}
 %如需取消缺省出版项自动填补请设置gbpub=false，如需使用佚名或NOAUTHOR代替缺失的author信息请设置gbnoauthor=true，比如:
@@ -281,7 +281,7 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   \item[gbstrict]=true，false. \hfill default is true
 
   为避免输出bib文件中多余的域信息而增加选项，目的是为了兼容一些bib文件，因为某些bst样式文件进行中英文判断需要在bib文件中增加类似language这样的域作为支撑，而其中某些域在标准的biblatex样式文件中时默认输出的。gbstrict选项默认设置为true，即不输出。当需要还原标准样式的输出情况时，可设置为false。
-  
+
   \item[gbfieldstd]=true，false. \hfill default is false
 
   为控制一些域如标题，网址，卷域的格式而增加选项。目的是使用一些标准样式的处理来增加格式多样性。gbstrict选项默认设置为false，即使用GB/T 7715要求的样式。设置为true时，即还原使用标准样式的格式，比如使用引号，字体，加引导词等。
@@ -296,9 +296,9 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   \item[url]=true, false. \hfill default: true
 
   该选项控制是否打印 url 域并获取日期。该选项只影响 url 信息是可选的那些条目类型。而 @online 条目的 url 域总是会打印出来。它是导言区选项，与样式相关，gb7714-2015样式做了特别支持，可以兼容使用。
-  
+
   \item[giveninits]=true, false. \hfill default: true
-  
+
   启用该选项时姓名中的名部分会用首字母表示。
 
   \item[uniquelist]=true, false, minyear \hfill default: minyear
@@ -413,41 +413,50 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 
 参考文献数据以bibtex格式保存在bib文件中。生成参考文献除tex源文档外，还需创建参考文献数据源文件即bib文件。bib文件数据源准备完成后，在加载biblatex宏包时，使用addbibresource命令将其加载进tex源文档中。\bc{注意:数据源可以加载多个，比如多个章节的参考文献放在不同的bib文件中，那么全部加载进来即可}。
 
-bib文件中的参考文献信息是以条目形式组织，一篇文献创建一条记录即一个参考文献条目，一个条目由若干个数据域构成。文献的各部分信息应录入到条目的对应数据域中。GB/T 7714-2015标准中的文献类型与本样式中条目类型对应关系如表\ref{tab:entrytypes}所示，各类条目具体的著录格式详见\ref{sec:numeric:data}节。
+bib文件中的参考文献信息是以条目形式组织，一篇文献创建一条记录即一个参考文献条目，一个条目由若干个数据域构成。文献的各部分信息应录入到条目的对应数据域中。GB/T 7714-2015标准中的文献类型与本样式中条目类型对应关系
+如表\ref{tab:entrytypes}所示，
+各类条目具体的著录格式详见\ref{sec:numeric:data}节。
 \begin{table}[!htb]
 \centering
 \caption{常见条目类型}\label{tab:entrytypes}
-\begin{tabular}{cl}
+\small
+\begin{tabular}{clc}
 \hline
-  GB/T 7714-2015标准中的参考文献类型 &  biblatex中的条目类型\\ \hline
-  专著& book\\
-  标准& standard/book or inbook with field note=standard\\
-  专著中的析出文献& inbook\\
-  连续出版物& periodical\\
-  连续出版物的析出文献& article\\
-  报纸析出的文献& newspaper/article with field note=standard\\
-  专利& patent\\
-  电子资源& online/www/electronic\\
-  会议录或会议文集& proceedings\\
-  会议文集中析出的文献& inproceedings/conference\\
-  汇编或论文集& collection\\
-  汇编或论文集析出中的文献& incollection\\
-  学位论文& thesis/mastersthsis/phdthsis\\
-  报告& report/techreport\\
-  手册或档案& manual\\
-  未出版物& unpublished\\ \hline
+  GB/T 7714-2015标准中的参考文献类型 &  biblatex中的条目类型 &  类型标识代码\\ \hline
+  专著& book & M\\
+  标准& standard/book or inbook with field note=standard& S\\
+  专著中的析出文献& inbook & M\\
+  连续出版物& periodical& J\\
+  连续出版物的析出文献& article& J\\
+  报纸析出的文献& newspaper/article with field note=standard& N\\
+  专利& patent& P\\
+  电子资源或电子公告& online/www/electronic& EB\\
+  会议录或会议文集& proceedings& C\\
+  会议文集中析出的文献& inproceedings/conference& C\\
+  汇编或论文集& collection& G\\
+  汇编或论文集析出中的文献& incollection& M\\
+  学位论文& thesis/mastersthsis/phdthsis& D\\
+  报告& report/techreport& R\\
+  手册& manual& A\\
+  档案& archive/manual& A\\
+  数据库& database& DB\\ 
+  数据集& dataset& DS\\ 
+  软件& software& CP\\ 
+  舆图& map& CM\\
+  未出版物& unpublished& Z\\
+  其它& misc& Z\\ 
+  \hline
   \end{tabular}
 \end{table}
 
 
 组成各个条目的不同数据域(字段)保存有参考文献的各部分信息，比如作者、标题、出版项、日期等等，这些在标准中称为著录项目，
-其对应关系如表\ref{tab:entryfields}所示。需要注意的是，note域在本样式中也做特殊用途，即在book类型的note域中输入standard表示标准，在aritcle类型的note域中输入news表示报纸，当然也可以不做特殊用，而只是表示杂项信息，因为标准和报纸可以用standard和newspaper类型表示，尽管这两种类型不是biblatex原生的条目类型。而usera域用于表示参考文献类型和载体标识符，一般不用出现在bib文件中，而由样式文件自动处理得到，这也为了使bib文件更纯粹，也为了兼容不同的样式，因为如果在bib文件中给出usera域，如果某一样式需要使用usera域且用途不同，那么就会有兼容性问题。当然不用手动输入这一信息也可以为用户减负，因为用户可以直接使用从网络导出参考文献信息而不用再额外添加一个参考文献类型和载体标识符。本宏包自动判断语言，而不使用一个表示语言的域比如language来标记文献的语言类型也处于同样的考虑，当然还有一篇文献中存在多语言的情况是无法用一个language标识的，比如一本英文著作被翻译为中文，那么原作者是英文，而译者则是英文，这时标记language就存在困难。
-
-各个数据域的录入应符合bib文件规范。\bc{需要注意: 有时直接从网络获取的参考文献信息中可能带有一些特殊字符比如\%，\&等，这些字符在tex中通常需要做转义处理，本样式中对像title，journal等常见的域中出现的特殊字符已经做了转义，但是一些不常见的域比如abstract等没有考虑，所以用户需要手动处理，例如把\%改为\textbackslash \%，否则可能导致出错}。下面详细介绍本样式中使用的域及其数据录入方式:
+其对应关系如表\ref{tab:entryfields}所示。
 
 \begin{table}[!htb]
 \centering
 \caption{常见信息域}\label{tab:entryfields}
+\small
 \begin{tabular}{cl}
 \hline
   GB/T 7714-2015中的文献著录项目 &  biblatex中的域\\ \hline
@@ -472,10 +481,15 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
   引用日期 & urldate\\
   数字对象标识符 & doi\\
   杂项 & note\\
-  文献类型载体标识符 & usera\\
+  文献类型标识符 & usera/mark\\
+  文献载体标识符 & medium\\
    \hline
   \end{tabular}
 \end{table}
+
+需要注意的是，note域在本样式中也做特殊用途，即在book类型的note域中输入standard表示标准，在aritcle类型的note域中输入news表示报纸，当然也可以不做特殊用，而只是表示杂项信息，因为标准和报纸可以用standard和newspaper类型表示，尽管这两种类型不是biblatex原生的条目类型。而usera域用于表示参考文献类型和载体标识符（为兼容Lee zeping的bst样式使用的bib文件也可以用mark和medium表示）。一般情况下usera，mark，medium这些域不用在bib文件中输入，而由样式文件自动处理得到，既为了使bib文件更纯粹，也为了兼容不同的样式。想象一下如果在bib文件中给出usera域，但另一样式需要使用usera域且用途不同，那么就会有兼容性问题。不用手动输入更重要的目的是为用户减负，因为用户可以直接使用从网络（各种学术）导出参考文献信息而不用再额外添加一个参考文献类型和载体标识符。本宏包自动判断语言，而不使用一个表示语言的域比如language来标记文献的语言类型也处于同样的考虑，当然还有一篇文献中存在多语言的情况是无法用一个language标识的，比如一本英文著作被翻译为中文，那么原作者是英文，而译者则是中文，这时标记language的意义就失去了。标记language更多的时用在多种语言混合的文档中，可以用language来标记英语、中文、日语、法语和德语等等。
+
+各个数据域的录入应符合bib文件规范。\bc{需要注意: 有时直接从网络获取的参考文献信息中可能带有一些特殊字符比如\%，\&等，这些字符在tex中通常需要做转义处理，本样式中对像title，journal等常见的域中出现的特殊字符已经做了转义，但是一些不常见的域比如 abstract 等没有考虑，所以用户需要手动处理，例如把\%改为\textbackslash \%，否则可能导致出错}。下面详细介绍本样式中使用的域及其数据录入方式:
 
 \begin{description}
   \item[author] 在biblatex中author域属于name数据类型，输入数据时，各姓名间用and 连接，当姓名过多省略时，用others代替。
@@ -943,11 +957,11 @@ author.title[usera].translator.type number.version.location:institution,date 或
 注意:因为有的报告文献可能存在类型和报告号信息，比如AIAA 9076或AD 730029等，所以著录格式需要有所体现，而这两个数据体现在type和number两个域中，或者在version域中体现也可，而对于标题中的出现的报告号，可以直接在标题或子标题或者附加标题中体现。
 需要注意: report和后面manual的版本信息放在version域中，而不是book等条目的edition域中。
 
-\subsubsection{手册或档案/manual}
+\subsubsection{手册或档案/manual/archive}
 \begin{refentry}{}{}
-手册和档案采用一种格式，对应的biblatex的entrytype为:manual。文献类型标识用A表示。
+手册和档案采用一种格式，对应的biblatex的entrytype为:manual或archive。文献类型标识用A表示。
 
-\paragraph{其著录格式为} 直接采用report的格式，而不是标准样式中的manual格式，这种方式下，当没有出版地和出版者时，完全省略，因为GB/T 7714-2015并没有明确这种情况怎么处理。
+\paragraph{其著录格式为} 借用report格式处理，而不是标准样式中的manual格式，这种方式下，当没有出版地和出版者时，完全省略，因为GB/T 7714-2015并没有明确这种情况怎么处理。
 \end{refentry}
 
 
@@ -955,8 +969,16 @@ author.title[usera].translator.type number.version.location:institution,date 或
 \begin{refentry}{}{}
 未出版物，对应的biblatex的entrytype为:unpublished。文献类型标识用Z表示。
 
-\paragraph{其著录格式为} 也直接采用report格式处理。
+\paragraph{其著录格式为} 借用report格式处理。
 \end{refentry}
+
+\subsubsection{更多类型}
+\begin{refentry}{}{}
+数据库（database）、数据集（dataset）、软件（software）、舆图（map）、其它（misc）分别使用自己的数据类型和类型标识符。
+
+\paragraph{其著录格式为} 借用report格式处理。
+\end{refentry}
+
 
 \subsection{多语言文献}\label{sec:multilan:implement}
 

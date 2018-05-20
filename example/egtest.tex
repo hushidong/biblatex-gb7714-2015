@@ -7,17 +7,68 @@
 %\usepackage[backend=biber,style=gb7714-2015,gbalign=gb7714-2015,
 %gbnamefmt=none,gbfieldstd=false,gbtype=true,gbpunctin=true,gbpub=true]{biblatex}
 
-\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}
+\usepackage[backend=biber,style=gb7714-2015,gbnamefmt=apa,gbfieldstd=true]{biblatex}
 
 %\usepackage[backend=biber,style=numeric-comp,giveninits=false]{biblatex}%giveninits=false
 
-    \usepackage{filecontents}
-    \begin{filecontents}{\jobname.bib}
-    @ARTICLE{方军雄2007所有制,
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+@database{databaseeg,
+  AUTHOR = {Zhang, San},
+  DATE = {2007},
+  TITLE = {A data base},
+  medium={CD}
+}
+
+@dataset{dataseteg,
+  AUTHOR = {Zhang, Yi},
+  DATE = {2008},
+  TITLE = {A data set},
+  medium={DK}
+}
+
+@archive{archiveeg,
+  AUTHOR = {Zhang, Er},
+  DATE = {2009},
+  TITLE = {An archive for friend B},
+  medium={MT}
+}
+
+@software{softwareeg,
+  AUTHOR = {Zhang, Liu},
+  DATE = {2009},
+  TITLE = {A software for science computation},
+  medium={CD}
+}
+
+@map{mapeg,
+  AUTHOR = {Zhang, Si},
+  DATE = {2010},
+  TITLE = {An map},
+}
+
+@Misc{Misceg,
+  AUTHOR = {Zhang, Wu},
+  DATE = {2010},
+  TITLE = {An unknow type reference},
+}
+
+@ARTICLE{aritileeg,
+  AUTHOR = {Zhang, Qi},
+  DATE = {2007},
+  JOURNALTITLE = {An periodical},
+  PAGES = {82--92},
+  TITLE = {An article for test},
+  VOLUME = {12},
+  NUMBER ={2},
+  mark={J},
+  medium={OL},
+}
+
+@ARTICLE{方军雄2007所有制,
   AUTHOR = {方军雄},
   DATE = {2007},
   JOURNALTITLE = {经济研究},
-  KEYWORDS = {方军雄2007所有制},
   PAGES = {82--92},
   TITLE = {所有制, 制度环境与信贷资金配置},
   VOLUME = {12},
@@ -585,7 +636,7 @@
   VOLUME = {1},
   language = {chinese}
 }
-    \end{filecontents}
+\end{filecontents}
     \addbibresource{\jobname.bib}
     %
     \makeatletter
