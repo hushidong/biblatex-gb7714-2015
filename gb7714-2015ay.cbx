@@ -62,6 +62,12 @@ or
 test {\iftoggle{iftlsix}}%3.3<=biblatex<=3.6
 }{\switchversion{3.4}{cbxopt}}{\switchversion{3.7}{cbxopt}}%else: biblatex>=3.7
 
+%textcite标注命令中的标点设置
+\iftoggle{iftlfive}%
+{}{\DeclareDelimFormat[textcite]{nameyeardelim}{}%\addcomma\space
+\DeclareDelimFormat[textcite]{andothersdelim}{\addspace}%
+}
+
 
 %
 %   重定义cite:label，针对biblatex3.8以上版本set条目集的标注(引用)标签
@@ -122,7 +128,7 @@ test {\iftoggle{iftlsix}}%3.3<=biblatex<=3.6
 %   参考biblatex.DEF中的\DeclareCiteCommand*{\citeyear}命令
 \DeclareCiteCommand{\yearpagescite}
   {\printtext{(}\usebibmacro{prenote}}
-  {\printfield{year}\printfield{extrayear}}
+  {\usebibmacro{cite:labeldate+extradate}}%\printfield{year}\printfield{extrayear}
   {\multicitedelim}
   {\printtext{)}\textsuperscript{\usebibmacro{postpages}}}
 
@@ -132,7 +138,7 @@ test {\iftoggle{iftlsix}}%3.3<=biblatex<=3.6
 %   原理:增加一个命令yearcite
 \DeclareCiteCommand{\yearcite}%仅输出年份，不要页码
   {\printtext{(}\usebibmacro{prenote}}
-  {\printfield{year}\printfield{extrayear}}
+  {\usebibmacro{cite:labeldate+extradate}}%\printfield{year}\printfield{extrayear}
   {\multicitedelim}
   {\printtext{)}}
 

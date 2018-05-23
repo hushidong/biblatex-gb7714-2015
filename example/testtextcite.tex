@@ -1,0 +1,110 @@
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{lipsum}
+\usepackage[top=2cm,bottom=1cm,left=3cm,right=3cm]{geometry}
+
+\usepackage[backend=biber,style=gb7714-2015]{biblatex}
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+@ARTICLE{徐伟康2010对,
+  AUTHOR = {徐伟康},
+  DATE = {2010},
+  JOURNALTITLE = {经济研究},
+  NUMBER = {5},
+  PAGES = {139--148},
+  TITLE = {对《 消费者价格指数与生产者价格指数: 谁带动谁?》 一文的质疑},
+  USERA = {J},
+}
+
+@ARTICLE{徐伟康2011,
+  AUTHOR = {徐伟康 and others},
+  DATE = {2011},
+  JOURNALTITLE = {经济研究},
+  NUMBER = {5},
+  PAGES = {139--148},
+  TITLE = {对《 消费者价格指数与生产者价格指数: 谁带动谁?》 一文的质疑},
+  USERA = {J},
+}
+
+@ARTICLE{杨光2015经济波动,
+  AUTHOR = {杨光 and 孙浦阳 and 龚刚 and 徐伟康},
+  DATE = {2015},
+  JOURNALTITLE = {经济研究},
+  NUMBER = {2},
+  PAGES = {47--60},
+  TITLE = {经济波动, 成本约束与资源配置},
+  VOLUME = {50},
+}
+
+@INPROCEEDINGS{FOURNEY1971-17-38,
+  AUTHOR = {FOURNEY, M E},
+  LOCATION = {New York},
+  PUBLISHER = {ASME},
+  BOOKTITLE = {Symposium on Applications of Holography in Mechanics, August 23-25, 1971, University of Southern California, Los Angeles, California},
+  DATE = {1971},
+  PAGES = {17--38},
+  TITLE = {Advances in holographic photoelasticity},
+}
+
+@BOOK{Yi2013--,
+  AUTHOR = {Yi, S H and Zhao, Y X and He, L and Zhang, M L},
+  LOCATION = {BeiJing},
+  PUBLISHER = {National Defense Industry Press},
+  DATE = {2013},
+  TITLE = {Supersonic and hypersonic nozzle design},
+}
+\end{filecontents}
+    \addbibresource{\jobname.bib}
+    %
+
+    \begin{document}
+    \section{set title}
+    created with biblatex v\versionofbiblatex, last revised at \today; Style Files (gb7714-2015*.*) have version number: \versionofgbtstyle.
+
+\bigskip
+    GB/T 7714-2015 标准 10.1.1 节，引用单篇文献：
+
+    文献\cite{徐伟康2010对}提到。文献\cite{FOURNEY1971-17-38}提到。(use cite)\par
+    文献\parencite{徐伟康2010对}提到。文献\parencite{FOURNEY1971-17-38}提到。(use parencite)\par
+    \textcite{徐伟康2010对}提到。\textcite{FOURNEY1971-17-38}提到。(use textcite)\par
+    \authornumcite{徐伟康2010对}提到。\authornumcite{FOURNEY1971-17-38}提到。
+    (use authornumcite)\par
+    \textcite{徐伟康2011}提到。
+
+\bigskip
+    GB/T 7714-2015 标准 10.1.2 节，引用多篇文献：
+
+    文献\cite{杨光2015经济波动,Yi2013--}提到。(use cite)\par
+    文献\parencite{杨光2015经济波动,Yi2013--}提到。(use parencite)\par
+    \textcite{杨光2015经济波动,Yi2013--}提到。(use textcite)\par
+    \authornumcite{杨光2015经济波动,Yi2013--}提到。(use authornumcite)\par
+
+
+\bigskip
+    GB/T 7714-2015 标准 10.1.3 节，多次引用文献：
+
+    文献\pagescite[16]{杨光2015经济波动}提到。
+    文献\pagescite[16]{徐伟康2010对}提到。
+    文献\pagescite[16]{Yi2013--}提到。
+    文献\pagescite[16]{FOURNEY1971-17-38}提到。(use pagescite)\par
+    \authornumcite{杨光2015经济波动}提到。
+    \authornumcite{徐伟康2010对}提到。
+    \authornumcite{Yi2013--}提到。
+    \authornumcite{FOURNEY1971-17-38}提到。(use authornumcite)\par
+
+\bigskip
+    其它用法：
+
+    文献\cite[见][49页]{杨光2015经济波动}。
+    文献\parencite[见][49页]{杨光2015经济波动}。
+    见\citeauthor{杨光2015经济波动}\cite{杨光2015经济波动}。
+    文献\footnote{脚注中引用文献\footcite{杨光2015经济波动}。}。
+    文献\footfullcite{杨光2015经济波动}。
+
+
+    \printbibliography
+
+    \end{document} 

@@ -30,6 +30,12 @@
   sorting   = none        ,
 }
 
+%textcite标注命令中的标点设置
+\iftoggle{iftlfive}%
+{}{\DeclareDelimFormat[textcite]{andothersdelim}{\addspace}%
+}
+
+
 %
 %   重定义cite命令
 %
@@ -108,7 +114,8 @@
 %见numeric.CBX，\DeclareCiteCommand{\cite},
 \DeclareCiteCommand{\authornumcite}%[\mkbibsuperscript]
   {\usebibmacro{prenote}}
-  {\printnames{labelname}\mkbibsuperscript{\mkbibbrackets{\usebibmacro{citeindex}%
+  {\renewcommand*{\andothersdelim}{\addspace}%
+  \printnames{labelname}\mkbibsuperscript{\mkbibbrackets{\usebibmacro{citeindex}%
    \usebibmacro{cite}}}}
   {\multicitedelim}
   {\usebibmacro{postnote}}

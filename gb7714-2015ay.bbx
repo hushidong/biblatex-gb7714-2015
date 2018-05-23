@@ -957,9 +957,9 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
    \ifcurrentname{translator}{\testCJKfirst{usere}}{\testCJKfirst{userf}}%
     %这句判断如果放到\andothersdelim后面会在等或etc.前增加一个空格，所以放前面
     \ifnumgreater{\value{liststop}}{1}
-       {\finalandcomma}
-       {\finalandcomma}%
-\andothersdelim\iftoggle{ifCJKforgbt}{\bibstring{andotherscn}}{\bibstring{andothers}}
+       {\finalandcomma}%\finalandcomma
+       {}%\finalandcomma
+\printdelim{andothersdelim}\iftoggle{ifCJKforgbt}{\bibstring{andotherscn}}{\bibstring{andothers}}
 %\andothersdelim\bibstring{andotherscn}
 }{}}
 
@@ -1002,9 +1002,13 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %   20180425，v1.0k，为作者增加字体控制命令，Hu Zhenzhen
 %   针对biblatex<3.3版本，gbt7714-2015的姓名全大写格式
 \defversion{3.0}{name}{
+
     \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
     %\renewrobustcmd*{\bibinithyphendelim}{\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
     \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
+    \DeclareDelimFormat{andothersdelim}{\addcomma\addspace}
+
+
     %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
     \renewbibmacro*{name:last-first}[4]{\bibauthorfont%增加字体控制命令%
       \ifuseprefix
@@ -1045,9 +1049,12 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %   针对biblatex>=3.3版本，gbt7714-2015的姓名全大写格式
 %
 \defversion{3.4}{name}{
+
     \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
     %\renewrobustcmd*{\bibinithyphendelim}{\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
     \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
+    \DeclareDelimFormat{andothersdelim}{\addcomma\addspace}
+
     %biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
     \renewbibmacro*{name:given-family}[4]{\bibauthorfont%用family-given修改后的内容定义given-family
       \ifuseprefix%
@@ -1085,6 +1092,9 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
     %\renewrobustcmd*{\bibinithyphendelim}{\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
     \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
+    \DeclareDelimFormat{andothersdelim}{\addcomma\addspace}
+
+
     %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
     \renewbibmacro*{name:last-first}[4]{\bibauthorfont%
       \ifuseprefix
@@ -1127,6 +1137,9 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
     %\renewrobustcmd*{\bibinithyphendelim}{\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
     \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
+    \DeclareDelimFormat{andothersdelim}{\addcomma\addspace}
+
+
     %biblatex3.3版后(比如texlive2016中的3.4版)的使用方式
     \renewbibmacro*{name:given-family}[4]{\bibauthorfont%用family-given修改后的内容定义given-family
       \ifuseprefix
@@ -1161,9 +1174,13 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %   针对biblatex<3.3版本，姓名大小写格式采用标准样式，名在前，姓在后
 %
 \defversion{3.0}{namec}{
+
     \renewrobustcmd*{\bibinitperiod}{\adddot}
     \renewrobustcmd*{\bibinithyphendelim}{\adddot\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
     \renewcommand*{\revsdnamepunct}{\addcomma}
+    \DeclareDelimFormat{andothersdelim}{\addcomma\addspace}
+
+
     %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
     \renewbibmacro*{name:last-first}[4]{\bibauthorfont%
       \ifuseprefix
@@ -1197,6 +1214,9 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     \renewrobustcmd*{\bibinitperiod}{\adddot}
     \renewrobustcmd*{\bibinithyphendelim}{\adddot\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
     \renewcommand*{\revsdnamepunct}{\addcomma}
+    \DeclareDelimFormat{andothersdelim}{\addcomma\addspace}
+
+
     \renewbibmacro*{name:given-family}[4]{\bibauthorfont%
       \usebibmacro{name:delim}{##2##3##1}%
       \usebibmacro{name:hook}{##2##3##1}%
@@ -1221,6 +1241,8 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
     \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
     \renewrobustcmd*{\bibnamedelima}{\mbox{-}}
+    \DeclareDelimFormat{andothersdelim}{\addcomma\addspace}
+
 
     %注意authoryear作者输出用的sortname格式也就是family-given/given-family
     %不同于nemeric的first-last格式
@@ -1270,6 +1292,8 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
     \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
     \renewrobustcmd*{\bibnamedelima}{\mbox{-}}
+    \DeclareDelimFormat{andothersdelim}{\addcomma\addspace}
+
 
     %注意authoryear作者输出用的sortname格式也就是family-given/given-family
     %不同于nemeric的given-family格式
@@ -1317,6 +1341,9 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     \renewrobustcmd*{\bibinitperiod}{\adddot}
     \renewrobustcmd*{\bibinithyphendelim}{\adddot\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
     \renewcommand*{\revsdnamepunct}{\addcomma}
+    \DeclareDelimFormat{andothersdelim}{\addcomma\addspace}
+
+
     %biblatex3.3版前(比如texlive2015中的3.0版)的使用方式
     \renewbibmacro*{name:last-first}[4]{\bibauthorfont%
       \ifuseprefix%
@@ -1355,6 +1382,8 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     \renewrobustcmd*{\bibinitperiod}{\adddot}
     \renewrobustcmd*{\bibinithyphendelim}{\adddot\addnbspace}%biblatex.STY，名中间带-符号的情况下的首字母缩写中间的分隔符
     \renewcommand*{\revsdnamepunct}{\addcomma}
+    \DeclareDelimFormat{andothersdelim}{\addcomma\addspace}
+
     \renewbibmacro*{name:given-family}[4]{\bibauthorfont%
         \ifuseprefix
         {\usebibmacro{name:delim}{##3##1}%
@@ -1795,7 +1824,6 @@ test{\iftoggle{iftlnine}}
 
 \defversion{3.4}{dateextra}{
     \DeclareDelimFormat{nameyeardelim}{\addcomma\space}
-    \DeclareDelimFormat[textcite]{nameyeardelim}{\addcomma\space}
     \DeclareDelimFormat[bib,biblist]{nameyeardelim}{\addcomma\space}
     \renewbibmacro*{date+extrayear}{%%重设date+extrayear格式，源来自authoryear.BBX
         \iffieldundef{\thefield{datelabelsource}year}
@@ -1808,7 +1836,6 @@ test{\iftoggle{iftlnine}}
 }
 \defversion{3.7}{dateextra}{
     \DeclareDelimFormat{nameyeardelim}{\addcomma\space}
-    \DeclareDelimFormat[textcite]{nameyeardelim}{\addcomma\space}
     \DeclareDelimFormat[bib,biblist]{nameyeardelim}{\addcomma\space}
   \renewbibmacro*{date+extrayear}{%以前的\printdateextralabel宏变为了\printlabeldateextra
     \iffieldundef{labelyear}
@@ -1821,7 +1848,6 @@ test{\iftoggle{iftlnine}}
 }
 \defversion{3.8}{dateextra}{
     \DeclareDelimFormat{nameyeardelim}{\addcomma\space}
-    \DeclareDelimFormat[textcite]{nameyeardelim}{\addcomma\space}
     \DeclareDelimFormat[bib,biblist]{nameyeardelim}{\addcomma\space}
 %注意这里当没有作者只有标题时在年份之前的标点是否需要标准并未涉及，所以未做处理。
 \renewbibmacro*{author}{%以前的date+extrayear变为date+extradate，所以对3.8以上版本重定义一下author

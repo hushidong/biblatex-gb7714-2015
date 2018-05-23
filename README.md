@@ -166,7 +166,10 @@ citestyle=gb7714-2015%,backref=true%%其中后端backend使用biber
 见赵耀东(\cite*{赵耀东1998--})
 见赵耀东(\citeyear{赵耀东1998--})
 
-7. 在页脚中引用和打印文献表:
+7. 作者年制中由标注命令给出作者年份信息，作者以主语方式作为正文内容：
+\textcite{赵耀东1998--}
+
+8. 在页脚中引用和打印文献表:
 \footnote{在脚注中引用\footcite{赵学功2001--}}  \footfullcite{赵学功2001--}
 
 
@@ -560,6 +563,10 @@ biber -l zh__stroke jobname
 ## Update history:
 
 date of update: 2018-04-03 to version v1.0k
+
+* 根据 liuhui 等的建议，修改textcite命令中的标点，去掉等/et al前面和后面的逗号。(20180523)
+
+del the comma before and after 等/et al in the cite label for command textcite，suggested by liuhui and others.
 
 * 增加对数据库，数据集，软件，舆图，档案等条目类型的处理，增加mark，medium域，以更好的实现标准的要求，条目类型和域命名与Lee zeping的gbt7714宏包一致以兼容bib文件。 （20180520）
     
