@@ -67,6 +67,10 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 	- add an option `gbfieldstd` to control the format of some fields such as title, url and pages. option value = `false` for gb7714 style or `true` for standard style. This option is also for author year style.
 	
         `\usepackage[backend=biber,style=gb7714-2015,gbfieldstd=false]{biblatex}`
+		
+	- add an option `gbtitlelink` to control the hyperlink of title field. option value = `false` with none link or `true` to set the hyperlink. This option is also for author year style.
+	
+        `\usepackage[backend=biber,style=gb7714-2015,gbtitlelink=true]{biblatex}`
 
 * for author year style
 
@@ -563,6 +567,14 @@ biber -l zh__stroke jobname
 ## Update history:
 
 date of update: 2018-04-03 to version v1.0k
+
+* 重新设计了语言排序机制，以更好支持英/俄/法/日/韩/中等多语言。(20180524)
+
+sorting mechanism for different languages was redesigned to improve the support of languages like english/Russian/french/japanese/korean.
+
+* 增加了一个gbtitlelink选项，用于设置文献表标题的超链接。(20180524)
+
+add an option gbtitlelink to set hyperlink for the reference title.
 
 * 根据 liuhui 等的建议，修改textcite命令中的标点，去掉等/et al前面和后面的逗号。(20180523)
 

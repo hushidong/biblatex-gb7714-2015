@@ -173,6 +173,18 @@
       \settoggle{bbx:gbstrict}{#1}}
     \ExecuteBibliographyOptions{gbstrict}
 
+    %
+    %   增加一个控制标题域超链接设置的选项
+    %   v1.0k, 2018.05.24, by hzz
+    %
+    %   原理方法:
+    %   利用标题域格式来实现，默认设置该选项为false，不做超链接。
+    %   设置为true，则标题设置超链接
+    \newtoggle{bbx:titlelink}
+    \DeclareBibliographyOption{gbtitlelink}[false]{%
+      \settoggle{bbx:titlelink}{#1}}
+    \ExecuteBibliographyOptions{gbtitlelink}
+
 
     %
     %   增加一个恢复域格式为标准样式的控制选项
@@ -543,14 +555,10 @@
             \step[fieldset=usera, fieldvalue={Z}]
             }
         \map{
-            %\step[fieldsource=author]
-            %\step[fieldset=userf, origfieldval]
-            %\step[fieldsource=translator]
-            %\step[fieldset=usere, origfieldval]
-	    \step[fieldsource=author, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
+	        \step[fieldsource=author, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
             \step[fieldset=userf, fieldvalue={cn}]
             }
-	\map{
+	    \map{
             \step[fieldsource=translator, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
             \step[fieldset=usere, fieldvalue={cn}]
             }
@@ -577,20 +585,66 @@
             \step[fieldsource=editor]
             \step[fieldset=author,origfieldval]
             }
+        \map{%
+            \step[fieldsource=language,match=english,final]
+            \step[fieldset=langid,fieldvalue={english}]
+            }
+        \map{
+            \step[fieldsource=language,match=russian,final]
+            \step[fieldset=langid,fieldvalue={russian}]
+            }
+        \map{%
+            \step[fieldsource=language,match=french,final]
+            \step[fieldset=langid,fieldvalue={french}]
+            }
+        \map{%
+            \step[fieldsource=language,match=chinese,final]
+            \step[fieldset=langid,fieldvalue={english}]
+            }
+        \map{%
+            \step[fieldsource=language,match=japnese,final]
+            \step[fieldset=langid,fieldvalue={english}]
+            }
+        \map{%
+            \step[fieldsource=language,match=korean,final]
+            \step[fieldset=langid,fieldvalue={english}]
+            }
+        \map{%把语言信息设置language域内，而不再用userb域(20180525)
+             %接着根据信息域字符的unicode码判断
+            \step[fieldsource=title,match=\regexp{[\x{0100}-\x{017F}]},final]%\x80-\xFF
+            \step[fieldset=language,fieldvalue={french}]%法语,0080开始到00ff的字符没法匹配有点奇怪
+            \step[fieldset=langid,fieldvalue={french}]
+            }
+        \map{%
+            \step[fieldsource=title,match=\regexp{[\x{0400}-\x{052F}]},final]
+            \step[fieldset=language,fieldvalue={russian}]%俄语
+            \step[fieldset=langid,fieldvalue={russian}]
+            }
+        \map{%
+            \step[fieldsource=title,match=\regexp{[\x{3040}-\x{30FF}\x{31F0}-\x{31FF}]},final]
+            \step[fieldset=language,fieldvalue={japanese}]%日语
+            \step[fieldset=langid,fieldvalue={english}]%中日韩语目前都用english，
+            }               %确定形式后可增加类似andotherscn这样的本地化字符串处理
+        \map{%
+            \step[fieldsource=title,match=\regexp{[\x{1100}-\x{11FF}\x{3130}-\x{318F}\x{AC00}-\x{D7AF}]},final]
+            \step[fieldset=language,fieldvalue={korean}]%韩语
+            \step[fieldset=langid,fieldvalue={english}]
+            }
         \map{%因为无法进行cjk字符判断，所以用反的思路，判断没有英文字符，没有空格，没有逗号等字符情况下
-             %认为是中文的，将文献userb设置成cn，用于排序
+             %认为是中文的，将文献language设置成chinese，用于排序
              %参考4.5.8 姓名首字母生成控制
             %\step[fieldsource=author,match=\regexp{[^a-zA-Z\s\.\,\'\{\}\\\/\-\x22\x26\:0-9\p{IsP}\p{PosixPunct}\x{2bf}\x{2018}\xE9\p{IsASCII}]},final]
             %对于带重音符号的字符似乎无法匹配。比如\'e
             %最后选择直接匹配cjk字符，unicode编码位置从2FF0到9FA5
             \step[fieldsource=author,match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
-            \step[fieldset=userb,fieldvalue={cn}]
+            \step[fieldset=language,fieldvalue={chinese}]
             }
         \map{\step[fieldsource=title,match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
-            \step[fieldset=userb,fieldvalue={cn}]
+            \step[fieldset=language,fieldvalue={chinese}]
             }%如果没有作者和标题，那么剩下的最可能有意义的只有网址了，而网址通常是英文的，因此不用再进一步对其它域进行判断了。
-        \map{%将没有设置的userb设置成en，即认为不是中文的就是英文的。
-            \step[fieldset=userb,fieldvalue={en}]
+        \map{%将没有设置的language设置成en，即认为不是中文的就是英文的。
+            \step[fieldset=language,fieldvalue={english}]
+            \step[fieldset=langid,fieldvalue={english}]
             }
         %本来后面这些是放到DeclareStyleSourcemap中处理的，但是因为texlive2016的biblatex3.4不支持多个DeclareStyleSourcemap，
         %但又有处理特殊字符和处理gbnoauthor选项两个需求，但gbnoauthor需要用DeclareStyleSourcemap所以把这些提到这来，
@@ -697,7 +751,7 @@
         \field{sortkey}
       }
       \sort{
-    		\field{userb}
+    	\field{language}
     	}
       \sort{%[direction=descending]
         \field{sortname}
@@ -740,7 +794,7 @@
         \field{sortkey}
       }
       \sort{
-    		\field{userb}
+    	\field{language}
     	}
       \sort{%[direction=descending]
         \field{sortname}

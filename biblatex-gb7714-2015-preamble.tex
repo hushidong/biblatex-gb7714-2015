@@ -38,6 +38,7 @@ pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
 \titlespacing*{\section}{0pt}{\baselineskip}{0.5\baselineskip}
 \titlespacing*{\subsection}{0pt}{0.5\baselineskip}{0.5\baselineskip}
 \titlespacing*{\subsubsection}{0pt}{0.5\baselineskip}{0pt}
+\titlespacing{\paragraph}{2em}{0.5\baselineskip}{1em}
 
 \setlength{\bibitemsep}{2pt}
 %\defbibheading{bibliography}[\bibname]{%
@@ -228,7 +229,7 @@ colback=green!50!yellow!15!white,terminator sign={\ }}{rfeg}
 
 %--------------列表环境---------------------------------------------
 \usepackage[inline]{enumitem} %重设list环境
-\setlist[enumerate]{label=\bfseries\textcolor{violet}{\arabic*.},topsep=2pt,partopsep=0pt,parsep=0pt,%
+\setlist[enumerate]{label=\bfseries\textcolor{violet}{(\arabic*)},topsep=2pt,partopsep=0pt,parsep=0pt,%
 align=left,leftmargin=0em,itemsep=0.5em,labelwidth=0.1em,itemindent=2.6em,listparindent=2em}%label=$\triangleright$,itemindent=1em
 \setlist[itemize]{topsep=2pt,partopsep=0pt,parsep=0pt,%
 leftmargin=4.5em,itemindent=0em}

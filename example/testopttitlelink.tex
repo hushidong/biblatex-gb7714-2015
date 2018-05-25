@@ -1,0 +1,52 @@
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage{fontspec}
+%\setmainfont{CMU Serif}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{lipsum}
+\usepackage[top=10pt,bottom=10pt,left=10pt,right=10pt]{geometry}
+\usepackage[backend=biber,style=gb7714-2015,gbpub=false,gbtitlelink=true]{biblatex}
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+
+@ARTICLE{greenwood1988,
+  AUTHOR = {Greenwood, Jeremy and Hercowitz, Zvi and Huffman, Gregory W and Williams, Joedge},
+  PUBLISHER = {JSTOR},
+  DATE = {1988},
+  JOURNALTITLE = {The American Economic Review},
+  KEYWORDS = {greenwood1988investment},
+  PAGES = {402--417},
+  TITLE = {Investment, capacity utilization, and the real business cycle},
+  url={http://www.greenwood.com},
+}
+
+@ARTICLE{刘凤良2017,
+  AUTHOR = {刘凤良 and 章潇萌 and 于泽 and 黄晓},
+  DATE = {2017},
+  JOURNALTITLE = {金融研究},
+  KEYWORDS = {刘凤良2017},
+  NUMBER = {2},
+  PAGES = {54--69},
+  TITLE = {高投资、结构失衡与价格指数二元分化},
+  url={http://www.finance.com},
+}%  langid={english}
+
+\end{filecontents}
+    \addbibresource{\jobname.bib}
+    %
+    \makeatletter
+    \def\versionofgbtstyle{2018/04/03 v1.0k}
+    \def\versionofbiblatex{\abx@version}
+    \makeatother
+    %\renewcommand{\bibtitlefont}{\kaishu}
+
+    \begin{document}
+    \section{set title}
+    created with biblatex v\versionofbiblatex, last revised at \today;\\ \hspace*{1.5em} Style Files (gb7714-2015*.*) have version number: \versionofgbtstyle.
+
+	refs\nocite{*}
+
+    \printbibliography
+
+    \end{document} 
