@@ -104,6 +104,98 @@
             {\def\multinumberfirst{#1}\def\multinumbersecond{}}%
     }
 
+    \iftoggle{iftlfive}{
+
+    \def\blx@inf@delimdeclare#1#2{%
+    \blx@info{Delimiter '#1' in context '#2' already defined, overwriting}}
+
+    \def\blx@warn@delimuse#1#2{%
+    \blx@warning{Delimiter '#1' in context '#2' undefined}}
+    % Delimiter interface
+
+    % [<contextname, ...>]{<name, ...>}{<code>}
+    \newrobustcmd*{\DeclareDelimFormat}{%
+      \@ifstar
+        {\blx@declaredelimclear}
+        {\blx@declaredelim}}
+
+    \newrobustcmd*{\blx@declaredelimclear}[3][]{%
+      \ifcsvoid{blx@declaredelimcontexts@#2}
+        {}
+        {\def\do##1{\csundef{blx@printdelim@##1@#2}}%
+         \dolistcsloop{blx@declaredelimcontexts@#2}}%
+      \cslet{blx@declaredelimcontexts@#2}\@empty
+      \ifblank{#1}
+        {\blx@declaredelim{#2}{#3}}
+        {\blx@declaredelim[#1]{#2}{#3}}}
+
+    \newrobustcmd*{\blx@declaredelim}[3][]{%
+      \ifblank{#1}
+        {\blx@declaredelim@i{}{}{#2}{#3}}
+        {\def\do##1{%
+           \listcsadd{blx@declaredelimcontexts@#2}{##1}%
+           \blx@declaredelim@i{blx@printdelim@##1@}{##1}{#2}{#3}}%
+         \docsvlist{#1}}}%
+
+    \def\blx@declaredelim@i#1#2#3#4{%
+      \def\do@i##1{%
+        \ifcsdef{#1##1}
+          {\blx@inf@delimdeclare{##1}{#2}}
+          {}%
+        \csdef{#1##1}{#4}}%
+      \forcsvlist{\do@i}{#3}}
+
+    % *[<contextname, ...>]{<alias>}{<delim>}
+    \newrobustcmd*{\DeclareDelimAlias}{%
+      \@ifstar
+        {\blx@declaredelimalias}
+        {\blx@declaredelimaliasauto}}
+
+    \newrobustcmd*{\blx@declaredelimalias}[3][]{%
+      \ifblank{#1}
+        {\blx@declaredelimalias@i{}{#2}{#3}}
+        {\def\do##1{%
+           \blx@declaredelimalias@i{blx@printdelim@##1@}{#2}{#3}}%
+         \docsvlist{#1}}}
+
+    \newrobustcmd*{\blx@declaredelimaliasauto}[2]{%
+      \blx@declaredelimalias@i{}{#1}{#2}%
+      \ifcsvoid{blx@declaredelimcontexts@#2}
+        {}
+        {\def\do##1{%
+           \blx@declaredelimalias@i{blx@printdelim@##1@}{#1}{#2}}%
+         \dolistcsloop{blx@declaredelimcontexts@#2}}}
+
+    \def\blx@declaredelimalias@i#1#2#3{%
+      \ifcsdef{#1#2}
+        {\blx@inf@delimdeclare{#2}{#1}}
+        {}%
+      \csdef{#1#2}{\csuse{#1#3}}}
+
+    \def\blx@delimcontext{none}
+    \newcommand*{\printdelim}[2][]{%
+      \ifblank{#1}
+        {\ifcsdef{blx@printdelim@\blx@delimcontext @#2}
+          {\csuse{blx@printdelim@\blx@delimcontext @#2}}
+          {\ifcsdef{#2}% fall back on legacy macros
+            {\csuse{#2}}
+            {\blx@warn@delimuse{#2}{*}}}}
+        {\ifcsdef{blx@printdelim@#1@#2}
+          {\csuse{blx@printdelim@#1@#2}}
+          {\blx@warn@delimuse{#2}{#1}}}}
+
+    \newcommand*{\delimcontext}[1]{%
+      \edef\blx@delimcontext{\blx@delimcontextalias{#1}}}
+
+    \def\blx@delimcontextalias#1{%
+      \ifcsdef{blx@delimcontextalias@#1}
+        {\csuse{blx@delimcontextalias@#1}}
+        {#1}}
+
+    \newcommand*{\DeclareDelimcontextAlias}[2]{%
+      \csgdef{blx@delimcontextalias@#1}{#2}}
+    }{}
+
 
 %=====================================================================
 %   数据模型定义
