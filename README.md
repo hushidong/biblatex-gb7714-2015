@@ -1,4 +1,4 @@
-<b>Date of last change: 2018-04-03 to version v1.0k</b>
+<b>Date of last change: 2018-06-01 to version v1.0i</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -147,13 +147,13 @@ citestyle=gb7714-2015%,backref=true%%其中后端backend使用biber
 
 %正文内容，引用参考文献
 
-1. 不带页码的引用(上标，方括号包围):
+1. 不带页码的引用(顺序编码制上标，方括号包围；作者年制行内，括号包围):
 \cite{Peebles2001-100-100}
 
-2. 不带页码的引用(非上标，方括号包围):
+2. 不带页码的引用(顺序编码制非上标，方括号包围；作者年制行内，括号包围):
 \parencite{Miroslav2004--}
 
-3. 带页码的引用:
+3. 带页码的引用(标准命令，默认样式; 增加命令，GB/T 7714-2015样式):
 \cite[见][49页]{蔡敏2006--}  \parencite[见][49页]{Miroslav2004--}
 \pagescite{Peebles2001-100-100}  \pagescite[][201-301]{Peebles2001-100-100}
 
@@ -162,10 +162,10 @@ citestyle=gb7714-2015%,backref=true%%其中后端backend使用biber
 （二）定义新的标注命令：见\authornumcite{refb,refc}
 （三）用textcite但没有上标：见\textcite{refb,refc}
 
-5. 作者年制文中已有作者还需要年份和页码的情况，使用命令yearpagescite，比如:
+5. 作者年制文中已有作者还需要年份和页码(顺序编码制与pagescite作用相同，作者年制年份行内页码上标):
 见赵耀东\yearpagescite[][205]{赵耀东1998--}和Simon\yearpagescite[][15]{Simon2001--}
 
-6. 作者年制文中已有作者只需要年份的情况，使用命令yearcite和手动方式，比如:
+6. 作者年制文中已有作者只需要年份(顺序编码制与pagescite作用相同，作者年制年份行内):
 见赵耀东\yearcite{赵耀东1998--}
 见赵耀东(\cite*{赵耀东1998--})
 见赵耀东(\citeyear{赵耀东1998--})
@@ -559,86 +559,41 @@ biber -l zh__stroke jobname
 ## Need to do:
     * special characters in all fields?
     * entry without author: the delimiter between title and year?
-	* more languages ?
-	* TEST FOR texlive2015,2016
+	* TEST FOR texlive 2015,2016
 
 ---------------------------------------------------------
 
+## Version history:
+
+* 2016/05/20 v1.0  
+* 2016/10/23 v1.0a 
+* 2016/11/11 v1.0b
+* 2016/11/14 v1.0c 
+* 2016/11/24 v1.0d 
+* 2016/12/07 v1.0e
+* 2017/02/26 v1.0g 
+* 2017/04/11 v1.0h 
+* 2017/11/21 v1.0i
+* 2018/01/20 v1.0j 
+* 2018/04/03 v1.0k
+* 2018/06/01 v1.0l
+
+---------------------------------------------------------
 ## Update history:
 
-date of update: 2018-04-03 to version v1.0k
+date of update: 2018-06-01 to version v1.0l
 
-* 重新设计了语言排序机制，以更好支持英/俄/法/日/韩/中等多语言。(20180524)
+* 进一步完善了说明文档。(20180601)
 
-sorting mechanism for different languages was redesigned to improve the support of languages like english/Russian/french/japanese/korean.
+update the documentataion. 
 
-* 增加了一个gbtitlelink选项，用于设置文献表标题的超链接。(20180524)
+* 统一了url字体为roman字体。(20180601)
 
-add an option gbtitlelink to set hyperlink for the reference title.
-
-* 根据 liuhui 等的建议，修改textcite命令中的标点，去掉等/et al前面和后面的逗号。(20180523)
-
-del the comma before and after 等/et al in the cite label for command textcite，suggested by liuhui and others.
-
-* 增加对数据库，数据集，软件，舆图，档案等条目类型的处理，增加mark，medium域，以更好的实现标准的要求，条目类型和域命名与Lee zeping的gbt7714宏包一致以兼容bib文件。 （20180520）
-    
-add entry types：database, dataset, software, map, archive and fields: mark, medium to meet GB/T 7714-2015 betterly. the nomenclature of added entry types and fields is in keep with Pkg gbt7714 developed by Lee zeping to be compatible with bib files.
-
-* 增加了选项gbfieldstd，用于控制一些域如标题，网址，卷等格式。 （20180515）
-
-add an option gbfieldstd to control the format of some fields like title, url, volume.
-
-* 增加了选项gbcodegbk，用于兼容GBK编码的文件，方法源自biblatex-caspervector。 （20180509）
-
-add an option gbcodegbk to deal tex file encoded with GBK, the solution originated from biblatex-caspervector.
-
-* 增加了选项gbstrict，用于控制bib文件中一些多余的域的输出，目的是为了兼容一些bib文件。 （20180509）
-
-add an option gbstrict to control the output of some unnecessary fields, in order to be compatible with some bib file.
-
-* 增加了字体控制命令bibauthorfont，bibtitlefont，bibpubfont，用于控制文献表中作者、标题、出版项的字体和颜色。（20180427）
-
-add 3 font set cmds：bibauthorfont，bibtitlefont，bibpubfont to control the font and color of author，title，and publication items.
-
-* 增加了标注命令authornumcite，用于在标注标签中同时输出作者和顺序编码。（20180427）
-
-add a citation cmd：authornumcite to print author and numeric number at the same time.
+font of url set to be same as the main text. 
 
 
-* 增加了gbpunctin选项，用于控制inbook等类型是否输出析出来源文献前的//符号，主要是为方便用户定制。
+[update: tex](example/updatehistory.tex)
 
-add an option gbpunctin to control the output of // before bookauthor for entry types like inbook.
-
-* 修正了析出文献来源的作者为editor是出现两次的问题，这个很简单的问题如果用bookauthor就不会出现问题，所以以前一直没有发现，才由杨志红提出来，感谢。
-
-correct a bug that the editor appears twice for the entry with booktitle's bookauthor is editor, which is reported by Yang zhihong,3ks!
-
-* 完善了github上的wiki。
-
-WIKI on github was accomplished.
-
-* 修正了gbnamefmt中的一些小错误。
-
-correct some flaws for gbnamefmt option.
-
-* 修改了代码用于兼容3.11版本
-
-change the separator before related block for v3.11.
-
-* 页码范围的间隔符从en dash改为hyphen
-
-change the pages range separator from en dash to hyphen.
-	
-* 修正了v3.7以上版本中专利文献中公告日期后多出点的问题，该bug是由于输入公告日期没有使用printtext导致异步标点机制破坏所致。
-
-correct a bug of newsdate in patent for biblatex >v3.7, which added an additional dot before urldate caused by broken asynchronous punctuation .
-
-* 修正了texlive2017以上版本中beamer类中标题后面多出点的问题，由于beamer会对bibmacro\{title\}做patch导致其输出不同于普通文档类，该bug是由于beamer升级后patch的内容发生变化导致。
-
-correct a bug of punctuation after title with beamer for >texlive2017, the bug is caused by the update of beamer.
-
-[update latest](example/updatehistory.tex)
-
-[update v1.0-v1.0j](example/updatehistoryold.md)
+[update: md](example/updatehistoryold.md)
 
 

@@ -1,12 +1,83 @@
 
+### date of update: 2018-04-03 to version v1.0k
 
+- Changes to pkg code:
+
+	* ÷ÿ–¬…Ëº∆¡À”Ô—‘≈≈–Úª˙÷∆£¨“‘∏¸∫√÷ß≥÷”¢/∂Ì/∑®/»’/∫´/÷–µ»∂‡”Ô—‘°£(20180524)
+
+	sorting mechanism for different languages was redesigned to improve the support of languages like english/Russian/french/japanese/korean.
+
+	* ‘ˆº”¡À“ª∏ˆgbtitlelink—°œÓ£¨”√”⁄…Ë÷√Œƒœ◊±Ì±ÍÃ‚µƒ≥¨¡¥Ω”°£(20180524)
+
+	add an option gbtitlelink to set hyperlink for the reference title.
+
+	* ∏˘æ› liuhui µ»µƒΩ®“È£¨–ﬁ∏ƒtextcite√¸¡Ó÷–µƒ±Íµ„£¨»•µÙµ»/et al«∞√Ê∫Õ∫Û√Êµƒ∂∫∫≈°£(20180523)
+
+	del the comma before and after µ»/et al in the cite label for command textcite£¨suggested by liuhui and others.
+
+	* ‘ˆº”∂‘ ˝æ›ø‚£¨ ˝æ›ºØ£¨»Ìº˛£¨”ﬂÕº£¨µµ∞∏µ»Ãıƒø¿‡–Õµƒ¥¶¿Ì£¨‘ˆº”mark£¨medium”Ú£¨“‘∏¸∫√µƒ µœ÷±Í◊ºµƒ“™«Û£¨Ãıƒø¿‡–Õ∫Õ”Ú√¸√˚”ÎLee zepingµƒgbt7714∫Í∞¸“ª÷¬“‘ºÊ»›bibŒƒº˛°£ £®20180520£©
+		
+	add entry types£∫database, dataset, software, map, archive and fields: mark, medium to meet GB/T 7714-2015 betterly. the nomenclature of added entry types and fields is in keep with Pkg gbt7714 developed by Lee zeping to be compatible with bib files.
+
+	* ‘ˆº”¡À—°œÓgbfieldstd£¨”√”⁄øÿ÷∆“ª–©”Ú»Á±ÍÃ‚£¨Õ¯÷∑£¨æÌµ»∏Ò Ω°£ £®20180515£©
+
+	add an option gbfieldstd to control the format of some fields like title, url, volume.
+
+	* ‘ˆº”¡À—°œÓgbcodegbk£¨”√”⁄ºÊ»›GBK±‡¬ÎµƒŒƒº˛£¨∑Ω∑®‘¥◊‘biblatex-caspervector°£ £®20180509£©
+
+	add an option gbcodegbk to deal tex file encoded with GBK, the solution originated from biblatex-caspervector.
+
+	* ‘ˆº”¡À—°œÓgbstrict£¨”√”⁄øÿ÷∆bibŒƒº˛÷–“ª–©∂‡”‡µƒ”Úµƒ ‰≥ˆ£¨ƒøµƒ «Œ™¡ÀºÊ»›“ª–©bibŒƒº˛°£ £®20180509£©
+
+	add an option gbstrict to control the output of some unnecessary fields, in order to be compatible with some bib file.
+
+	* ‘ˆº”¡À◊÷ÃÂøÿ÷∆√¸¡Óbibauthorfont£¨bibtitlefont£¨bibpubfont£¨”√”⁄øÿ÷∆Œƒœ◊±Ì÷–◊˜’ﬂ°¢±ÍÃ‚°¢≥ˆ∞ÊœÓµƒ◊÷ÃÂ∫Õ—’…´°££®20180427£©
+
+	add 3 font set cmds£∫bibauthorfont£¨bibtitlefont£¨bibpubfont to control the font and color of author£¨title£¨and publication items.
+
+	* ‘ˆº”¡À±Í◊¢√¸¡Óauthornumcite£¨”√”⁄‘⁄±Í◊¢±Í«©÷–Õ¨ ± ‰≥ˆ◊˜’ﬂ∫ÕÀ≥–Ú±‡¬Î°££®20180427£©
+
+	add a citation cmd£∫authornumcite to print author and numeric number at the same time.
+
+
+	* ‘ˆº”¡Àgbpunctin—°œÓ£¨”√”⁄øÿ÷∆inbookµ»¿‡–Õ «∑Ò ‰≥ˆŒˆ≥ˆ¿¥‘¥Œƒœ◊«∞µƒ//∑˚∫≈£¨÷˜“™ «Œ™∑Ω±„”√ªß∂®÷∆°£
+
+	add an option gbpunctin to control the output of // before bookauthor for entry types like inbook.
+
+	* –ﬁ’˝¡ÀŒˆ≥ˆŒƒœ◊¿¥‘¥µƒ◊˜’ﬂŒ™editor «≥ˆœ÷¡Ω¥ŒµƒŒ Ã‚£¨’‚∏ˆ∫‹ºÚµ•µƒŒ Ã‚»Áπ˚”√bookauthoræÕ≤ªª·≥ˆœ÷Œ Ã‚£¨À˘“‘“‘«∞“ª÷±√ª”–∑¢œ÷£¨≤≈”…—Ó÷æ∫ÏÃ·≥ˆ¿¥£¨∏––ª°£
+
+	correct a bug that the editor appears twice for the entry with booktitle's bookauthor is editor, which is reported by Yang zhihong,3ks!
+
+	* ÕÍ…∆¡Àgithub…œµƒwiki°£
+
+	WIKI on github was accomplished.
+
+	* –ﬁ’˝¡Àgbnamefmt÷–µƒ“ª–©–°¥ÌŒÛ°£
+
+	correct some flaws for gbnamefmt option.
+
+	* –ﬁ∏ƒ¡À¥˙¬Î”√”⁄ºÊ»›3.11∞Ê±æ
+
+	change the separator before related block for v3.11.
+
+	* “≥¬Î∑∂Œßµƒº‰∏Ù∑˚¥”en dash∏ƒŒ™hyphen
+
+	change the pages range separator from en dash to hyphen.
+		
+	* –ﬁ’˝¡Àv3.7“‘…œ∞Ê±æ÷–◊®¿˚Œƒœ◊÷–π´∏Ê»’∆⁄∫Û∂‡≥ˆµ„µƒŒ Ã‚£¨∏√bug «”…”⁄ ‰»Îπ´∏Ê»’∆⁄√ª”– π”√printtextµº÷¬“Ï≤Ω±Íµ„ª˙÷∆∆∆ªµÀ˘÷¬°£
+
+	correct a bug of newsdate in patent for biblatex >v3.7, which added an additional dot before urldate caused by broken asynchronous punctuation .
+
+	* –ﬁ’˝¡Àtexlive2017“‘…œ∞Ê±æ÷–beamer¿‡÷–±ÍÃ‚∫Û√Ê∂‡≥ˆµ„µƒŒ Ã‚£¨”…”⁄beamerª·∂‘bibmacro\{title\}◊ˆpatchµº÷¬∆‰ ‰≥ˆ≤ªÕ¨”⁄∆’Õ®Œƒµµ¿‡£¨∏√bug «”…”⁄beamer…˝º∂∫Ûpatchµƒƒ⁄»›∑¢…˙±‰ªØµº÷¬°£
+
+	correct a bug of punctuation after title with beamer for >texlive2017, the bug is caused by the update of beamer.
 		
 ### date of change: 2018-01-20 to version v1.0j
 * Changes to pkg code:
 	- "*.bbx": add an option `gbtype` to control the type and carrier identifier after title.
     - "*.bbx": change the version code switch mechanism.
     - "*.bbx": change the option align to `gbalign` for standardising option terminology.
-    - "*.bbx": add an option `gbnamefmt` to control the letter case and format of author's nameÔºåand eliminate the comma in author names of the chinese references exported from cnki by `zotero`Ôºåthese demand raised by liuxiaotao.
+    - "*.bbx": add an option `gbnamefmt` to control the letter case and format of author's name£¨and eliminate the comma in author names of the chinese references exported from cnki by `zotero`£¨these demand raised by liuxiaotao.
     - "*.bbx": correct the delimiter between author and year for author-year style with right using of the `\nameyeardelim`
 	- "*.bbx": add an cmd `\yearcite` to print year info only for author-year style when author has been written manually.
     
@@ -30,8 +101,8 @@
     - "*.bbx": change the seperator between multi-language reference text from cmd par to cmd newline for the gb7714-2015 align style
 	- "*.bbx": fix a flaw reported by Lee Zeping. remove the comma between `journaltitle` and (number) when the volume is undefined.
     - "*.bbx": add an option `gbpub` to control the publishing info. if `gbpub=false`, publishing info's format is the biblatex standard style, otherwise is gb7714-2015 style. The origin idea comes from Wayne08.
-    - "*.bbx": fix a flaw reported by zjsdut@163.com. remove the dot before url when url is the only info available„ÄÇ
-    - "*.bbx": add an option gbnoauthor for author-year style. when author is undefined, set option gbnoauthor=true then author with "‰ΩöÂêç"or"NOAUTHOR" will be defined. note that with biblatex version 3.7 or higher for multiple DeclareStyleSourcemap support, code can be simplifed, because the realization code now with texlive2016(biblatex 3.4) is subjected to the one DeclareStyleSourcemap constraint.
+    - "*.bbx": fix a flaw reported by zjsdut@163.com. remove the dot before url when url is the only info available°£
+    - "*.bbx": add an option gbnoauthor for author-year style. when author is undefined, set option gbnoauthor=true then author with "ÿ˝√˚"or"NOAUTHOR" will be defined. note that with biblatex version 3.7 or higher for multiple DeclareStyleSourcemap support, code can be simplifed, because the realization code now with texlive2016(biblatex 3.4) is subjected to the one DeclareStyleSourcemap constraint.
 * Changes to documentation:
 	- biblatex-gb7714-2015.tex: revise this document 
 	- *.bib: correct a warning which is caused by long multi-line url info.
@@ -43,7 +114,7 @@
 	- "*.bbx": for online type, the revised/changed date is denoted by date/enddate/eventdate
 	- "*.bbx": modify the usera field's format, taking into account the standard style's package option url, proposed by Sheng Wenbo.
 	- "*.bbx": add a no breakthinspace after the entrytype identifier (like [M]//) to make the next word break correctly
-    - "*.bbx": add a feature for automatically dealing with special character(like &/%/#)Ôºåcompatibility with texlive2015 is done
+    - "*.bbx": add a feature for automatically dealing with special character(like &/%/#)£¨compatibility with texlive2015 is done
 * Changes to documentation:
 	- biblatex-gb7714-2015.tex: revise this document and add some explication
 	- *.bib: refine the bib source file
@@ -90,11 +161,11 @@
 ### date of change: 2016-11-14 to version v1.0c
 
 * Changes to pkg code:to fix a few bugs
-	- "*ay.bbx": add noauthor or "‰ΩöÂêç" for the authoryear style
+	- "*ay.bbx": add noauthor or "ÿ˝√˚" for the authoryear style
 	- "*ay.bbx": add some map cmds to automatically fill the userb field for sorting of the authoryear style
 	- "*ay.bbx": add a command yearpagescite for the authoryear style
 	- "*.bbx": add a dot after the null publisher with nothing followed
-	- "*.bbx": modify the english local string backrefpage to chinese "ÂºïÁî®È°µ:"
+	- "*.bbx": modify the english local string backrefpage to chinese "“˝”√“≥:"
 	- "*ay.bbx": add some options such as uniquelist,labeldate,uniquename for the authoryear style
 
 * Changes to documentation:

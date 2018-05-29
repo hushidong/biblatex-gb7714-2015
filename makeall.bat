@@ -18,6 +18,10 @@ cd example
 
 call makefileeg
 
+::call makefiletest
+
+::call makefilegbk
+
 cd ..
 
 call makeclear

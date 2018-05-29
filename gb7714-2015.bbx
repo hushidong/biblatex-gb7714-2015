@@ -3,11 +3,6 @@
 %% biblatex-gb7714-2015 --- A biblatex implementation of the
 %% GBT7714-2015  bibliography style,numerical sequence
 %% Maintained by huzhenzhen
-%% history:
-%% 2016/05/20 v1.0  2016/10/23 v1.0a 2016/11/11 v1.0b
-%% 2016/11/14 v1.0c 2016/11/24 v1.0d 2016/12/07 v1.0e
-%% 2017/02/26 v1.0g 2017/04/11 v1.0h 2017/11/21 v1.0i
-%% 2018/01/20 v1.0j 2018/04/03 v1.0k
 %% E-mail: hzzmail@163.com
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
@@ -16,8 +11,8 @@
 %
 %   版本和时间信息
 %
-\ProvidesFile{gb7714-2015.bbx}[2018/04/03 v1.0k biblatex bibliography style]
-\def\versionofgbtstyle{2018/04/03 v1.0k}
+\ProvidesFile{gb7714-2015.bbx}[2018/06/01 v1.0l biblatex bibliography style]
+\def\versionofgbtstyle{2018/06/01 v1.0l}
 \def\versionofbiblatex{\abx@version}
 
 %=====================================================================
@@ -329,7 +324,7 @@
       date    = year,  %日期仅写到年
       maxbibnames     = 3,%设置名字最大数量
       minbibnames     = 3, %设置缩减后的名字最小数量
-      %uniquename   = init
+      isbn=false,
     }
 
 
@@ -1008,6 +1003,10 @@
   [inbook,incollection,inproceedings]
   {title}{#1}%\nopunct\unspace
 \DeclareFieldFormat{url}{\url{#1}} %%url相关输出，url域修改如本行，源来自biblatex.def
+\def\UrlFont{\rmfamily}%设置url字体为roman字体%\ttfamily
+\setcounter{biburlnumpenalty}{100} %让url可以在数字后断行
+\setcounter{biburlucpenalty}{100} %让url可以在大写字母后断行
+\setcounter{biburllcpenalty}{100} %让url可以在小写字母后断行
 %
 %   标题的字母大小写格式修改
 %
