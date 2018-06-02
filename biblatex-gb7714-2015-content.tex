@@ -252,7 +252,7 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 \begin{description}
   \item[gbalign]=right，left，gb7714-2015. \hfill default is right
 
-  为顺序编码制增加的选项，用于选择参考文献表序号标签的对齐方式。gbalign=right 是默认的右对齐; gbalign=left是左对齐; gbalign=gb7714-2015是项对齐方式。对于作者年制该选项无效。
+  为顺序编码制增加的选项，用于选择参考文献表序号标签的对齐方式。gbalign=right 默认的list环境中的标签右对齐; gbalign=left是list环境中的标签左对齐; gbalign=center 是list环境中的等宽标签，数字在[]内局中; gbalign=gb7714-2015 是项对齐方式，即段落环境中标签使用原始宽度，标签与条目内容等间距。对于作者年制该选项无效。
   顺序编码制序号标签三种对齐方式测试，
   右对齐见:
   \href{run:./example/testalignright.tex}{testalignright.tex}，
