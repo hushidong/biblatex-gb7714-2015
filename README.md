@@ -24,7 +24,15 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
     `\usepackage[backend=biber,style=gb7714-2015]{biblatex}`
 
-    - add an option `gbalign` for the numerical label, option value maybe `right` or `left` or `gb7714-2015`
+    - add an option `gbalign` to control the align style of the numerical label：
+	
+		`gbalign=right`  for the label ragged left in a list environment
+		
+		`gbalign=center` for the same width label in a list environment with the number centered in the bracket
+		
+		`gbalign=left`   for the label ragged right in list environment
+		
+		`gbalign=gb7714-2015` for the label in paragraph with same separator space between label and entry content
 
         `\usepackage[backend=biber,style=gb7714-2015,gbalign=gb7714-2015]{biblatex}`
 
@@ -582,6 +590,10 @@ biber -l zh__stroke jobname
 ## Update history:
 
 date of update: 2018-06-01 to version v1.0l
+
+* 为顺序编码样式gbalign增加了center选项值。(20180602)
+
+add a value: center of the gbalign option for numerical sequence style. 
 
 * 进一步完善了说明文档。(20180601)
 

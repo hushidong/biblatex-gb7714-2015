@@ -353,6 +353,7 @@
     \DeclareBibliographyOption{gbalign}[right]{%
         \ifstrequal{##1}{right}{}{}
         \ifstrequal{##1}{left}{\setalignleft}{}
+        \ifstrequal{##1}{center}{\setaligncenter}{}
         \ifstrequal{##1}{gb7714-2015}{}{}
     }
 
@@ -387,6 +388,7 @@
     %   right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
     \DeclareBibliographyOption[string]{gbalign}[right]{%
         \ifstrequal{##1}{left}{\setalignleft}{}
+        \ifstrequal{##1}{center}{\setaligncenter}{}
         \ifstrequal{##1}{gb7714-2015}{\setaligngbstyle}{}
     }
 
@@ -421,6 +423,7 @@
     %   right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
     \DeclareBibliographyOption[string]{gbalign}[right]{%
         \ifstrequal{##1}{left}{\setalignleft}{}
+        \ifstrequal{##1}{center}{\setaligncenter}{}
         \ifstrequal{##1}{gb7714-2015}{\setaligngbstyle}{}
     }
 
@@ -456,6 +459,7 @@
     %   right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
     \DeclareBibliographyOption[string]{gbalign}[right]{%
         \ifstrequal{##1}{left}{\setalignleft}{}
+        \ifstrequal{##1}{center}{\setaligncenter}{}
         \ifstrequal{##1}{gb7714-2015}{\setaligngbstyle}{}
     }
 
@@ -886,6 +890,9 @@
 %   \DeclareFieldFormat{shorthandwidth}{\mkbibbrackets{#1}} %源来自numeric.BBX
 %   \DeclareFieldFormat{labelnumberwidth}{\ttfamily\mkbibbrackets{#1}\hfill}
 %   \iftoggle{alignleft}{\DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{#1}\hfill}}{}%这种方式无效是因为加载时就已经展开了。
+%
+%   修改序号标签格式为序号数字居于[]中间
+\def\setaligncenter{\DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{\hfill##1\hfill}}}
 %
 %   修改序号标签格式为左对齐
 \def\setalignleft{\DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{##1}\hfill}}
