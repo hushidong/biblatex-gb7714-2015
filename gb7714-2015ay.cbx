@@ -86,13 +86,23 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
 %
 %   重定义cite命令
 %
-%   方法:\DeclareCiteCommand{\cite}[\mkbibparens]{⟨precode⟩}{⟨loopcode⟩}{⟨sepcode⟩}{⟨postcode⟩}
+%   方法:\DeclareCiteCommand{\cite}[\mkbibparens]{precode}{loopcode}{sepcode}{postcode}
 \DeclareCiteCommand{\cite}[\mkbibparens]
   {\usebibmacro{prenote}}
   {\usebibmacro{citeindex}%
    \usebibmacro{cite}}
   {\multicitedelim}
   {\usebibmacro{postnote}}
+
+%
+%   定义upcite命令
+%   20180604，v1.0l，hzz
+%   方法:与yearcite命令相同
+\DeclareCiteCommand{\upcite}
+  {\printtext{(}\usebibmacro{prenote}}
+  {\usebibmacro{cite:labeldate+extradate}}%
+  {\multicitedelim}
+  {\printtext{)}}
 
 %
 %   重定义parencite命令

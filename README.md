@@ -46,13 +46,13 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 		
         `gbnamefmt = lowercase` for gb7714 style with no case switch of names 
 		
-        `gbnamefmt = none` for standard style, given-family style, like ieee style
+        `gbnamefmt = givenahead` for standard style, given-family style, like ieee style
 		
-		`gbnamefmt = apa` for standard style, family-given style, like apa style. 
+		`gbnamefmt = familyahead` for standard style, family-given style, like apa style. 
 		
         `gbnamefmt = pinyin` for a common Chinese style, like: ZHANG Min-li, YI Shi-he and so on. 
 		
-		This option is also for author year style.
+		the name format can be set per-entry using a field：`nameformat`=`pinyin` or others. This option is also for author year style.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbnamefmt=uppercase]{biblatex}`
 		
@@ -156,7 +156,7 @@ citestyle=gb7714-2015%,backref=true%%其中后端backend使用biber
 %正文内容，引用参考文献
 
 1. 不带页码的引用(顺序编码制上标，方括号包围；作者年制行内，括号包围):
-\cite{Peebles2001-100-100}
+\cite{Peebles2001-100-100}\upcite{Peebles2001-100-100}\supercite{Peebles2001-100-100}
 
 2. 不带页码的引用(顺序编码制非上标，方括号包围；作者年制行内，括号包围):
 \parencite{Miroslav2004--}
@@ -515,11 +515,11 @@ biber -l zh__stroke jobname
 ### 5. Examples/著录和标注结果示例
 * 顺序编码制
 
-![示例a](example/egaligngb7714-2015.jpg)
+![示例a](example/egaligngb7714-2015.tif)
 	
 * 作者年制
 
-![示例b](example/egaligngb7714-2015ay.jpg)
+![示例b](example/egaligngb7714-2015ay.tif)
 
 
 * 姓名的格式更改
@@ -560,7 +560,7 @@ biber -l zh__stroke jobname
       Year                     = {2003}
     }
 
-![示例c](example/eggbnamefmt.jpg)
+![示例c](example/eggbnamefmt.tif)
 
 ---------------------------------------------------------
 
@@ -590,6 +590,14 @@ biber -l zh__stroke jobname
 ## Update history:
 
 date of update: 2018-06-01 to version v1.0l
+
+* 增加upcite命令为兼容一些老的文档，顺序编码制中同supercite，作者年制中同yearcite。(20180604)
+
+add upcite to be compatible with some old doc，it behaves like supercite in numerical style and yearcite in author year style. 
+
+* 为更合理的表述选项值的意义，修改了gbnamefmt选项的值。(20180604)
+
+modify the values of the option gbnamefmt for standardising option terminology. 
 
 * 为顺序编码样式gbalign增加了center选项值。(20180602)
 

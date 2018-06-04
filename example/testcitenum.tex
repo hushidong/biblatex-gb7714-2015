@@ -1,0 +1,212 @@
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{lipsum}
+\usepackage[top=10pt,bottom=10pt,left=10pt,right=10pt]{geometry}
+%\usepackage[backend=biber,style=gb7714-2015,gbalign=gb7714-2015,
+%gbnamefmt=none,gbfieldstd=false,gbtype=true,gbpunctin=true,gbpub=true]{biblatex}
+
+\usepackage[backend=biber,style=gb7714-2015,gbalign=center]{biblatex}
+%gbnamefmt=givenahead,lowercase,familyahead,pinyin
+
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+@ARTICLE{fazzari1993working,
+  AUTHOR = {Fazzari, Steven M and Petersen, Bruce C},
+  PUBLISHER = {JSTOR},
+  DATE = {1993},
+  JOURNALTITLE = {The RAND Journal of Economics},
+  PAGES = {328--342},
+  TITLE = {Working capital and fixed investment: new evidence on financing constraints},
+  nameformat={lowercase},
+}%namefmtid={1},
+
+@INCOLLECTION{adam2011house,
+  AUTHOR = {Adam, Klaus and Kuang, Pei and Marcet, Albert},
+  PUBLISHER = {University of Chicago Press},
+  BOOKTITLE = {NBER Macroeconomics Annual 2011, Volume 26},
+  DATE = {2011},
+  PAGES = {77--122},
+  TITLE = {House price booms and the current account},
+}%namefmtid={0},
+
+@ARTICLE{bernanke1989agency,
+  AUTHOR = {Bernanke, Ben and Gertler, Mark},
+  PUBLISHER = {JSTOR},
+  DATE = {1989},
+  JOURNALTITLE = {The American Economic Review},
+  PAGES = {14--31},
+  TITLE = {Agency costs, net worth, and business fluctuations},
+  nameformat={givenahead},
+}%namefmtid={2},
+
+@REPORT{calvo2006phoenix,
+  AUTHOR = {Calvo, Guillermo A and Izquierdo, Alejandro and Talvi, Ernesto},
+  INSTITUTION = {National Bureau of Economic Research},
+  DATE = {2006},
+  TITLE = {Phoenix miracles in emerging markets: recovering without credit from systemic financial crises},
+  nameformat={familyahead},
+}%namefmtid={3},
+
+@ARTICLE{wang2006another,
+  AUTHOR = {Wang, Peng-fei and Wen, Yi},
+  PUBLISHER = {Elsevier},
+  DATE = {2006},
+  JOURNALTITLE = {Journal of Economic Dynamics and Control},
+  NUMBER = {12},
+  PAGES = {2533--2552},
+  TITLE = {Another look at sticky prices and output persistence},
+  VOLUME = {30},
+  nameformat={pinyin},
+}%namefmtid={4},
+
+@REPORT{xu2012role,
+  AUTHOR = {Xu, TengTeng},
+  INSTITUTION = {Faculty of Economics, University of Cambridge},
+  DATE = {2012},
+  TITLE = {The role of credit in international business cycles},
+  nameformat={pinyin},
+}
+
+@ARTICLE{zhang2009china,
+  AUTHOR = {Zhang, Wen lang},
+  PUBLISHER = {Elsevier},
+  DATE = {2009},
+  JOURNALTITLE = {Journal of Macroeconomics},
+  NUMBER = {3},
+  PAGES = {473--484},
+  TITLE = {China’s monetary policy: Quantity versus price rules},
+  VOLUME = {31},
+  nameformat={pinyin},
+}
+
+    @Book{Yi2013--,
+      Title                    = {Supersonic and hypersonic nozzle design},
+      Address                  = {BeiJing},
+      Author                   = {Yi, Shi-He and Zhao, Yu Xin and He, Lin and Zhang, Ming Li},
+      Publisher                = {National Defense Industry Press},
+      Year                     = {2013},
+      nameformat={pinyin},
+    }
+
+    @Book{易仕和2013--,
+  Title                    = {超声速和高超声速喷管设计},
+  Address                  = {北京},
+  Author                   = {易仕和 and 赵玉新 and 何霖 and 张敏莉},
+  Publisher                = {国防工业出版社},
+  Year                     = {2013}
+}
+
+    @Periodical{AAAS1883--,
+  Title                    = {Science},
+  Date                     = {1883},
+  Editor                   = {{American Association for the Advancement of Science}},
+  Number                   = {1},
+  Volume                   = {1},
+  Location                 = {Washington, D.C.},
+  Publisher                = {American Association for the Advancement of Science}
+}
+
+@Proceedings{ROSENTHALL1963--,
+  Title                    = {Proceedings of the Fifth Canadian Mathematical Congress, University of Montreal, 1961},
+  Date                     = {1963},
+  Publisher                = {University of Toronto Press},
+  Editor                   = {E M ROSENTHALL},
+  Location                 = {Toronto}
+}
+
+@Thesis{CALMS1965--,
+  Title                    = {Infrared spectroscopic studies on solid oxygen},
+  Author                   = {R B CALMS},
+  Date                     = {1965},
+  Institution              = {Univ. of California},
+  Location                 = {Berkeley}
+}
+
+@Report{WHO1970--,
+  Title                    = {Factors regulating the immune response},
+  Author                   = {{World Health Organization}},
+  Date                     = {1970},
+  Institution              = {WHO},
+  Location                 = {Geneva},
+  Titleaddon               = {report of WHO Scientific Group}
+}
+
+@Inproceedings{FOURNEY1971-17-38,
+  Title                    = {Advances in holographic photoelasticity},
+  Author                   = {M E FOURNEY and others},
+  Booktitle                = {Symposium on Applications of Holography in Mechanics, August 23-25, 1971, University of Southern California, Los Angeles, California},
+  Date                     = {1971},
+  Pages                    = {17-38},
+  Publisher                = {ASME},
+  Location                 = {New York}
+}
+	
+@Article{Zhang2007-500-503,
+  Title                    = {The design and experimental investigations of supersonic length shorted nozzle},
+  Author                   = {Zhang, Min-li and Yi, Shi he and Zhao, Yuxin and Li, Ming},
+  Journal                  = {ACTA AERODYNAMICA SINICA},
+  Number                   = {4},
+  Pages                    = {500-503},
+  Volume                   = {25},
+  Year                     = {2007},
+  nameformat={pinyin},
+}
+
+    @Article{张2007-500-503,
+      Title                    = {超声速短化喷管的设计和试验研究},
+      Author                   = {张敏莉 and 易仕和 and 赵玉新 and 李明},
+      Journal                  = {空气动力学报},
+      Year                     = {2007},
+      Number                   = {4},
+      Pages                    = {500-503},
+      Volume                   = {25},
+      language                 = {chinese}
+    }
+\end{filecontents}
+\addbibresource{\jobname.bib}
+
+\defbibentryset{bilangyi2013}{易仕和2013--,Yi2013--}
+\defbibentryset{bilangzhang2007}{张2007-500-503,Zhang2007-500-503}
+
+\DeclareBibliographyCategory{kindsofnameformats}
+\addtocategory{kindsofnameformats}{zhang2009china,xu2012role,wang2006another,
+calvo2006phoenix,bernanke1989agency,adam2011house,fazzari1993working}
+
+    \begin{document}
+    \section{作者姓名格式}
+    
+ 不带页码的引用(上标，方括号包围):
+ \cite{FOURNEY1971-17-38}\cite{wang2006another}
+ 
+ 不带页码的引用(非上标，方括号包围):
+ \parencite{FOURNEY1971-17-38}\parencite{wang2006another}
+ \upcite{FOURNEY1971-17-38}\upcite{wang2006another}
+ 
+ 带页码的引用:
+ \cite[见][49页]{FOURNEY1971-17-38} \parencite[见][49页]{wang2006another}
+ \pagescite{FOURNEY1971-17-38}\pagescite[150]{wang2006another}
+
+ 
+ 同时输出作者和顺序编码的三种引用方式：
+ 
+（a）直接的方法：见\citeauthor{FOURNEY1971-17-38}\cite{FOURNEY1971-17-38}, \citeauthor{wang2006another}\cite{wang2006another}
+
+（b）定义新的标注命令：见\authornumcite{FOURNEY1971-17-38,wang2006another}
+
+（c）用textcite但没有上标：见\textcite{FOURNEY1971-17-38,wang2006another}
+
+ 在页脚中引用和打印文献表:
+
+ \footnote{在脚注中引用\footcite{FOURNEY1971-17-38}} \footfullcite{FOURNEY1971-17-38}
+ \footnote{在脚注中引用\footcite{wang2006another}} \footfullcite{wang2006another}
+
+ \nocite{*}
+
+    \printbibliography[category=kindsofnameformats,title=五种不同的姓名格式]
+
+    \printbibliography[notcategory=kindsofnameformats,title=某种期刊的姓名格式]
+
+    \end{document} 

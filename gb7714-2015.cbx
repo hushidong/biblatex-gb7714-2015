@@ -28,13 +28,13 @@
 }
 
 %textcite标注命令中的标点设置
-\DeclareDelimFormat[textcite]{andothersdelim}{\addspace}%
+%\DeclareDelimFormat[textcite]{andothersdelim}{\addspace}%
 
 
 %
 %   重定义cite命令
 %
-%   方法:\DeclareCiteCommand{\cite}[\mkbibparens]{⟨precode⟩}{⟨loopcode⟩}{⟨sepcode⟩}{⟨postcode⟩}
+%   方法:\DeclareCiteCommand{\cite}[\mkbibparens]{precode}{loopcode}{sepcode}{postcode}
 \DeclareCiteCommand{\cite}[\mkbibsuperscript]
   {[\usebibmacro{cite:init}%直接添加方括号
    \usebibmacro{prenote}}
@@ -44,6 +44,23 @@
   {\usebibmacro{cite:dump}%
    \usebibmacro{postnote}]}
 
+%
+%   定义upcite命令
+%   20180604，v1.0l，hzz
+%   方法:对supercite增加[]
+\DeclareCiteCommand{\upcite}[\mkbibsuperscript]
+  {[\usebibmacro{cite:init}%]
+   \let\multicitedelim=\supercitedelim
+   \iffieldundef{prenote}
+     {}
+     {\BibliographyWarning{Ignoring prenote argument}}%
+   \iffieldundef{postnote}
+     {}
+     {\BibliographyWarning{Ignoring postnote argument}}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:comp}}
+  {}
+  {\usebibmacro{cite:dump}]}
 
 %
 %   新定义pagescite命令，以满足标签带页码的国标要求

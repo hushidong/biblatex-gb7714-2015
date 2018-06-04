@@ -250,9 +250,9 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 \subsubsection{新增选项}\label{sec:added:opt}
 样式包新增了一些选项，用于标签对齐方式、出版项缺省处理、责任者(作者)缺省处理等功能的控制，其使用方式与biblatex宏包选项完全相同:
 \begin{description}
-  \item[gbalign]=right，left，gb7714-2015. \hfill default is right
+  \item[gbalign]=right，left，center，gb7714-2015. \hfill default is right
 
-  为顺序编码制增加的选项，用于选择参考文献表序号标签的对齐方式。gbalign=right 默认的list环境中的标签右对齐; gbalign=left是list环境中的标签左对齐; gbalign=center 是list环境中的等宽标签，数字在[]内局中; gbalign=gb7714-2015 是项对齐方式，即段落环境中标签使用原始宽度，标签与条目内容等间距。对于作者年制该选项无效。
+  为顺序编码制增加的选项，用于选择参考文献表序号标签的对齐方式。gbalign=right 默认的list环境中的标签右对齐; gbalign=left是list环境中的标签左对齐; gbalign=center 是list环境中的等宽标签，数字在[]内居中; gbalign=gb7714-2015 是项对齐方式，即段落环境中标签使用原始宽度，标签与条目内容等间距。对于作者年制该选项无效。
   顺序编码制序号标签三种对齐方式测试，
   右对齐见:
   \href{run:./example/testalignright.tex}{testalignright.tex}，
@@ -282,15 +282,16 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   \href{run:./example/testgbnoauthorfalseay.tex}{testgbnoauthorfalseay.tex}，
   %\href{run:./example/eggbnoauthorfalseay.pdf}{eggbnoauthorfalseay.pdf}。
 
-  \item[gbnamefmt]=uppercase，lowercase，none，pinyin. \hfill default is uppercase
+  \item[gbnamefmt]=uppercase，lowercase，givenahead，familyahead，pinyin. \hfill default is uppercase
 
-  为姓名大小写格式控制增加的选项。默认选择gbnamefmt=uppercase，大小写符合GB/T 7714-2015 的要求。gbnamefmt=lowercase 时，大小写由输入信息确定不做改变。gbnamefmt=none时，姓名的格式与biblatex标准样式的given-family格式一致，即名在前姓在后，类似于ieee的样式。gbnamefmt=apa时，姓名的格式与biblatex 标准样式的family-given格式一致，即姓在前名在后，类似于APA的样式。gbnamefmt=pinyin 时，姓名的格式采用一种常见的中文拼音方式，比如对于 Zhao, Yu Xin 或 Yu Xin Zhao 这个姓名拼音格式化为ZHAO Yu-xin。\emph{需注意当使用pinyin选项时，姓名中应给出完整的名而不是名的缩写，否则出来的效果未必令人满意}。
-  测试结果，lowercase 情况见：
-  \href{run:./example/testgbnamefmta.tex}{testgbnamefmta.tex}，
-  %\href{run:./example/eggbnamefmta.pdf}{eggbnamefmta.pdf}。
-  none 情况：
-  \href{run:./example/testgbnamefmtb.tex}{testgbnamefmtb.tex}，
-  %\href{run:./example/eggbnamefmtb.pdf}{eggbnamefmtb.pdf}。
+  为姓名大小写格式控制增加的选项。默认选择gbnamefmt=uppercase，大小写符合GB/T 7714-2015 的要求。gbnamefmt=lowercase 时，大小写由输入信息确定不做改变。gbnamefmt=givenahead时，姓名的格式与biblatex标准样式的given-family格式一致，即名在前姓在后，类似于ieee的样式。gbnamefmt=familyahead时，姓名的格式与biblatex 标准样式的family-given格式一致，即姓在前名在后，类似于APA的样式。gbnamefmt=pinyin 时，姓名的格式采用一种常见的中文拼音方式，比如对于 Zhao, Yu Xin 或 Yu Xin Zhao 这个姓名拼音格式化为ZHAO Yu-xin。
+  这一选项还可以根据具体条目设置，要在一个文献表中实现英文文献是givenahead 的格式，而拼音的文献是pinyin风格，那么可以设置拼音文献的nameformat域为pinyin，而gbnamefmt设置为givenahead。注意条目中的nameformat局部设置优先于gbnamefmt的全局设置。
+  \emph{需注意当使用pinyin选项时，姓名中应给出完整的名而不是名的缩写，否则出来的效果未必令人满意}。
+  测试结果见：
+  \href{run:./example/testgbnamefmt.tex}{testgbnamefmta.tex}，
+  \href{run:./example/testcitenum.tex}{testcitenum.tex}，
+  \href{run:./example/testciteay.tex}{testciteay.tex}。
+
 
   \item[gbtype]=true，false. \hfill default is true
 
@@ -669,12 +670,14 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 %顺序编码制的标注样式文件大体使用标准引用样式numeric-comp的内容
 \paragraph{顺序编码制的标注样式} 大体使用标准标注样式numeric，仅对cite等部分命令做了修改。为满足GB/T 7714-2015第10.1.3节的要求，增加了pagescite命令。为方便在同一文章中同时使用上标和非上标的标注方式，仅将cite命令修改为上标模式，而parencite保留标准样式提供的非上标模式。为使用户免于输入文献作者来作为句子主语，完善了textcite命令并增加了authornumcite命令以同时输出作者和顺序编码。
 使用方式如例\ref{eg:citefornumeric}所示。
-测试文档见\href{run:example/testtextcite.tex}{testtextcite.tex}。
+测试文档见\href{run:example/testtextcite.tex}{testtextcite.tex}，
+\href{run:example/testcitenum.tex}{testcitenum.tex}。
 
 \begin{example}{顺序编码制cbx样式命令使用说明}{eg:citefornumeric}
 \begin{texlist}
 不带页码的引用(上标，方括号包围):
-    \cite{Peebles2001-100-100}
+    \cite{Peebles2001-100-100}\upcite{Peebles2001-100-100}
+    \supercite{Peebles2001-100-100}
 不带页码的引用(非上标，方括号包围):
     \parencite{Miroslav2004--}
 带页码的引用:
@@ -697,7 +700,9 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 %作者年制的标注样式文件大体使用标准引用样式authoryear的内容。
 \paragraph{作者年制的标注样式} 情况类似。对cite，parencite进行了修改，将引用标签用圆括号括起来。为满足GB/T 7714-2015第10.2.4节的要求，增加了pagescite命令。为满足GB/T 7714-2015第10.2.1节的要求，增加了yearpagescite，yearcite命令用于处理文中已有作者信息只需要年份和页码的情况(为兼容性考虑，顺序编码制也给出该命令，但作用与pagescite命令相同)，也完善了textcite命令为句子提供主语。
 使用方式如例\ref{eg:citeforauthoryear}所示。
-测试文档见\href{run:example/testtextciteay.tex}{testtextciteay.tex}。
+测试文档见\href{run:example/testtextciteay.tex}{testtextciteay.tex}，
+\href{run:example/testciteay.tex}{testciteay.tex}。
+
 
 \begin{example}{作者年制cbx样式命令使用说明}{eg:citeforauthoryear}
 \begin{texlist}

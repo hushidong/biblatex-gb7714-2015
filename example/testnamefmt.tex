@@ -1,0 +1,237 @@
+\documentclass[twoside]{article}
+\usepackage[heading]{ctex}
+\usepackage{geometry}
+\geometry{paperwidth=21cm,paperheight=29cm,top=1.5cm, bottom=1.5cm, left=2.54cm,right=2.54cm}
+\ctexset{
+section = {
+beforeskip ={0pt},
+afterskip={0pt} },
+subsection = {
+beforeskip ={0pt},
+afterskip={0pt} }
+}
+\usepackage{xcolor}
+\usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=blue]{hyperref}
+\usepackage[backend=biber,style=gb7714-2015,gbpub=true]{biblatex}%align=gb7714-2015,gbnamefmt=lowercase
+\renewcommand{\bibfont}{\zihao{-5}}
+\setlength{\bibitemsep}{0pt}
+\defbibheading{bibliography}[\refname]{%
+\subsection*{#1}}
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+    @Article{Zhang2007-500-503,
+      Title                    = {The design and experimental investigations of supersonic length shorted nozzle},
+      Author                   = {Zhang, Min-li and Yi, Shi-he and Zhao, Yu-xin},
+      Journal                  = {ACTA AERODYNAMICA SINICA},
+      Number                   = {4},
+      Pages                    = {500-503},
+      Volume                   = {25},
+      Year                     = {2007}
+    }
+
+    @Book{Yi2013--,
+      Title                    = {Supersonic and hypersonic nozzle design},
+      Address                  = {Beijing},
+      Author                   = {Yi, Shi he and Zhao, Yu xin and He, Lin and Zhang, Min li},
+      Publisher                = {National Defense Industry Press},
+      Year                     = {2013}
+    }
+
+    @Book{LIAO2012--,
+      Title                    = {Electronic countermeasure techniques for missile penetration},
+      Address                  = {Beijing},
+      Author                   = {LIAO, ping and JIANG, qin bo},
+      Publisher                = {National Defense Industry Press},
+      Year                     = {2013}
+    }
+
+    @Book{LIU2003--,
+      Title                    = {Introduction of Ballistic Misille Techniques},
+      Address                  = {Beijing},
+      Author                   = {LIU, shi Qiu},
+      Publisher                = {China Astronautic Publishing House},
+      Year                     = {2003}
+    }
+    
+    @Article{lZhang2007-500-503,
+      Title                    = {The design and experimental investigations of supersonic length shorted nozzle},
+      Author                   = {Zhang, Min-li and Yi, Shi-he and Zhao, Yu-xin},
+      Journal                  = {ACTA AERODYNAMICA SINICA},
+      Number                   = {4},
+      Pages                    = {500-503},
+      Volume                   = {25},
+      nameformat={lowercase},
+      Year                     = {2007}
+    }
+
+    @Book{lYi2013--,
+      Title                    = {Supersonic and hypersonic nozzle design},
+      Address                  = {Beijing},
+      Author                   = {Yi, Shi he and Zhao, Yu xin and He, Lin and Zhang, Min li},
+      Publisher                = {National Defense Industry Press},
+      nameformat={lowercase},
+      Year                     = {2013}
+    }
+
+    @Book{lLIAO2012--,
+      Title                    = {Electronic countermeasure techniques for missile penetration},
+      Address                  = {Beijing},
+      Author                   = {LIAO, ping and JIANG, qin bo},
+      Publisher                = {National Defense Industry Press},
+      nameformat={lowercase},
+      Year                     = {2013}
+    }
+
+    @Book{lLIU2003--,
+      Title                    = {Introduction of Ballistic Misille Techniques},
+      Address                  = {Beijing},
+      Author                   = {LIU, shi Qiu},
+      Publisher                = {China Astronautic Publishing House},
+      nameformat={lowercase},
+      Year                     = {2003}
+    }
+    
+    @Article{gZhang2007-500-503,
+      Title                    = {The design and experimental investigations of supersonic length shorted nozzle},
+      Author                   = {Zhang, Min-li and Yi, Shi-he and Zhao, Yu-xin},
+      Journal                  = {ACTA AERODYNAMICA SINICA},
+      Number                   = {4},
+      Pages                    = {500-503},
+      Volume                   = {25},
+      nameformat={givenahead},
+      Year                     = {2007}
+    }
+
+    @Book{gYi2013--,
+      Title                    = {Supersonic and hypersonic nozzle design},
+      Address                  = {Beijing},
+      Author                   = {Yi, Shi he and Zhao, Yu xin and He, Lin and Zhang, Min li},
+      Publisher                = {National Defense Industry Press},
+      nameformat={givenahead},
+      Year                     = {2013}
+    }
+
+    @Book{gLIAO2012--,
+      Title                    = {Electronic countermeasure techniques for missile penetration},
+      Address                  = {Beijing},
+      Author                   = {LIAO, ping and JIANG, qin bo},
+      Publisher                = {National Defense Industry Press},
+      nameformat={givenahead},
+      Year                     = {2013}
+    }
+
+    @Book{gLIU2003--,
+      Title                    = {Introduction of Ballistic Misille Techniques},
+      Address                  = {Beijing},
+      Author                   = {LIU, shi Qiu},
+      Publisher                = {China Astronautic Publishing House},
+      nameformat={givenahead},
+      Year                     = {2003}
+    }
+    
+    @Article{fZhang2007-500-503,
+      Title                    = {The design and experimental investigations of supersonic length shorted nozzle},
+      Author                   = {Zhang, Min-li and Yi, Shi-he and Zhao, Yu-xin},
+      Journal                  = {ACTA AERODYNAMICA SINICA},
+      Number                   = {4},
+      Pages                    = {500-503},
+      Volume                   = {25},
+      nameformat={familyahead},
+      Year                     = {2007}
+    }
+
+    @Book{fYi2013--,
+      Title                    = {Supersonic and hypersonic nozzle design},
+      Address                  = {Beijing},
+      Author                   = {Yi, Shi he and Zhao, Yu xin and He, Lin and Zhang, Min li},
+      Publisher                = {National Defense Industry Press},
+      nameformat={familyahead},
+      Year                     = {2013}
+    }
+
+    @Book{fLIAO2012--,
+      Title                    = {Electronic countermeasure techniques for missile penetration},
+      Address                  = {Beijing},
+      Author                   = {LIAO, ping and JIANG, qin bo},
+      Publisher                = {National Defense Industry Press},
+      nameformat={familyahead},
+      Year                     = {2013}
+    }
+
+    @Book{fLIU2003--,
+      Title                    = {Introduction of Ballistic Misille Techniques},
+      Address                  = {Beijing},
+      Author                   = {LIU, shi Qiu},
+      Publisher                = {China Astronautic Publishing House},
+      nameformat={familyahead},
+      Year                     = {2003}
+    }
+    
+    @Article{pZhang2007-500-503,
+      Title                    = {The design and experimental investigations of supersonic length shorted nozzle},
+      Author                   = {Zhang, Min-li and Yi, Shi-he and Zhao, Yu-xin},
+      Journal                  = {ACTA AERODYNAMICA SINICA},
+      Number                   = {4},
+      Pages                    = {500-503},
+      Volume                   = {25},
+      nameformat={pinyin},
+      Year                     = {2007}
+    }
+
+    @Book{pYi2013--,
+      Title                    = {Supersonic and hypersonic nozzle design},
+      Address                  = {Beijing},
+      Author                   = {Yi, Shi he and Zhao, Yu xin and He, Lin and Zhang, Min li},
+      Publisher                = {National Defense Industry Press},
+      nameformat={pinyin},
+      Year                     = {2013}
+    }
+
+    @Book{pLIAO2012--,
+      Title                    = {Electronic countermeasure techniques for missile penetration},
+      Address                  = {Beijing},
+      Author                   = {LIAO, ping and JIANG, qin bo},
+      Publisher                = {National Defense Industry Press},
+      nameformat={pinyin},
+      Year                     = {2013}
+    }
+
+    @Book{pLIU2003--,
+      Title                    = {Introduction of Ballistic Misille Techniques},
+      Address                  = {Beijing},
+      Author                   = {LIU, shi Qiu},
+      Publisher                = {China Astronautic Publishing House},
+      nameformat={pinyin},
+      Year                     = {2003}
+    }
+\end{filecontents}
+\addbibresource{\jobname.bib}
+
+\defbibcheck{uppercase}{%
+\iffieldundef{nameformat}{}{\skipentry}}
+
+\defbibcheck{lowercase}{%
+\iffieldequalstr{nameformat}{lowercase}{}{\skipentry}}
+
+\defbibcheck{givenahead}{%
+\iffieldequalstr{nameformat}{givenahead}{}{\skipentry}}
+
+\defbibcheck{familyahead}{%
+\iffieldequalstr{nameformat}{familyahead}{}{\skipentry}}
+
+\defbibcheck{pinyin}{%
+\iffieldequalstr{nameformat}{pinyin}{}{\skipentry}}
+
+\begin{document}
+
+\section*{五种不同的姓名格式}
+\nocite{*}
+
+\printbibliography[check=uppercase,title=国标风格-全大写]
+\printbibliography[check=lowercase,title=国标风格-大小写不变]
+\printbibliography[check=pinyin,title=中文常见风格-拼音]
+\printbibliography[check=givenahead,title=biblatex标准风格-名在前]
+\printbibliography[check=familyahead,title=biblatex标准风格-姓在前]
+
+
+\end{document} 
