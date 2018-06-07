@@ -5,6 +5,14 @@
 \let\kaiti=\kaishu
 \usepackage{xeCJKfntef}
 
+\usepackage{xcolor}
+\definecolor{gbsteelblue}{RGB}{70,130,180}
+\definecolor{gborange}{RGB}{255,138,88}
+\definecolor{gbblue}{RGB}{23,74,117}
+\definecolor{gbforestgreen}{RGB}{21,122,81}
+\definecolor{gbyellow}{RGB}{255,185,88}
+\definecolor{gbgrey}{RGB}{200,200,200}
+
 %一些字符串格式化命令
 \newcommand*{\verbatimfont}{\ttfamily}
 \newrobustcmd*{\cnt}[1]{\mbox{\verbatimfont#1}}
@@ -22,7 +30,8 @@
 ]{geometry}%定义版面showframe,
 
 \usepackage[colorlinks=true,%
-pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}  %书签功能，选项去掉链接红色方框
+pdfstartview=FitH,allcolors=blue]{hyperref}  %书签功能，选项去掉链接红色方框
+%linkcolor=gbblue,anchorcolor=gbblue,citecolor=gbblue
 %linkcolor=black,linkcolor=green,blue,red,cyan, magenta,
 %yellow, black, gray,white, darkgray, lightgray, brown,
 %lime, olive, orange, red,purple, teal, violet.
@@ -40,7 +49,7 @@ pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
 \titlespacing*{\subsubsection}{0pt}{0.5\baselineskip}{0pt}
 \titlespacing{\paragraph}{2em}{0.5\baselineskip}{1em}
 
-\setlength{\bibitemsep}{2pt}
+\setlength{\bibitemsep}{1pt}
 %\defbibheading{bibliography}[\bibname]{%
 %%\phantomsection%解决链接指引出错的问题，相当于加入了一个引导点
 %%\addcontentsline{toc}{subsection}{#1}
@@ -137,7 +146,6 @@ pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
 %\renewcommand{\cfttabafterpnum}{\color{red}$\infty$} %页码后内容
 
 \usepackage{listings}
-\usepackage{color,xcolor}
 \usepackage{tikz,pgf}
 \usetikzlibrary{calc}
 \colorlet{examplefill}{yellow!80!black}
@@ -154,7 +162,7 @@ pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
 \setlength{\leftmargin}{0pt}%
 \setlength{\itemindent}{0pt}%
 %\renewcommand*{\makelabel}[1]{\hss\llap{\footnotesize\color{orange}\bfseries##1}}
-}\item[\footnotesize\color{orange}\bfseries#1]\relax}
+}\item[\footnotesize\color{gbblue}\bfseries#1]\relax}
 {\endlist}
 
 
@@ -173,12 +181,12 @@ boxpos=t,
 rulesep=0pt,
 frame=tb,
 framesep=0pt,
-rulecolor=\color{orange},
+rulecolor=\color{gbblue},
 fontadjust=true,
 language=[LaTeX]TeX,
 %backgroundcolor=\color{yellow}, %背景颜色
 numbers=left,
-numberstyle=\tiny\color{red},
+numberstyle=\tiny\color{gbblue},
 basicstyle=\footnotesize\ttfamily, % print whole listing small
 keywordstyle=\color{blue}\bfseries,%\underbar,
 % underlined bold black keywords
@@ -189,25 +197,34 @@ showstringspaces=false}% no special string spaces
 }
 {}
 
-\usepackage[listings,theorems]{tcolorbox}
+\usepackage[listings,theorems,most]{tcolorbox}
 \tcbuselibrary{breakable}
 \newcounter{myprop}\def\themyprop{\arabic{myprop}}
 %序号如果带章节的话可以改为比如:\thesection.\arabic{myprop}
 \tcbmaketheorem{property}{方法}
-{separator sign={\ $\blacktriangleright$},breakable,
-theorem style=plain,fonttitle=\bfseries\upshape, fontupper=\slshape,boxrule=0mm,arc=0mm, %
-coltitle=black,colback=green!50!yellow!15!white,colframe=blue!50,%
-description delimiters={}{},
-terminator sign={\ }}{myprop}{pp}
+{enhanced jigsaw,breakable,pad at break*=1mm,left=2em,boxsep=0pt,
+ colback=black!5,colframe=gborange,coltitle=gborange,
+ theorem style=plain,fonttitle=\bfseries,arc=0mm,
+%separator sign={\ $\blacktriangleright$},breakable,
+%theorem style=plain,fonttitle=\bfseries\upshape, fontupper=\slshape,boxrule=0mm,arc=0mm, %
+%coltitle=black,colback=green!50!yellow!15!white,colframe=blue!50,%
+%description delimiters={}{},
+%terminator sign={\ }
+}{myprop}{pp}
 %最后一个必须参数是prefix用来做label比如这里是pp:加上给出的标签名
 
 \newtcbtheorem[]{refentry}{条目类型}
-{separator sign={\ $\blacktriangleright$},breakable,
-theorem style=plain,fonttitle=\bfseries,
-fontupper=\normalsize,boxrule=0mm,arc=0mm,
-coltitle=green!35!black,colbacktitle=green!15!white,
-colback=green!50!yellow!15!white,terminator sign={\ }}{rfeg}
+{breakable,pad at break*=1mm,enhanced jigsaw,left=2em,boxsep=0pt,
+ colback=yellow!10!white,boxrule=0pt,frame hidden,
+ borderline west={1.5mm}{-2mm}{gbforestgreen},
+separator sign={\ $\blacktriangleright$},terminator sign={\ },
+theorem style=plain,fonttitle=\bfseries,coltitle=gbforestgreen
+%fontupper=\normalsize,boxrule=0mm,arc=0mm,breakable,
+%coltitle=green!35!black,colbacktitle=green!15!white,
+%colback=green!50!yellow!15!white,terminator sign={\ }
+}{rfeg}
 %最后一个必须参数是prefix用来做label比如这里是eg:加上给出的标签名
+\newcommand{\bibliofmt}[1]{\medskip\textcolor{gbforestgreen}{\heiti#1}}
 
 \newcommand{\titleformanual}[1]{\def\biaotiudf{#1}}
 \newcommand{\authorformanual}[1]{\def\zuozheudf{#1}}
@@ -229,11 +246,11 @@ colback=green!50!yellow!15!white,terminator sign={\ }}{rfeg}
 
 %--------------列表环境---------------------------------------------
 \usepackage[inline]{enumitem} %重设list环境
-\setlist[enumerate]{label=\bfseries\textcolor{violet}{(\arabic*)},topsep=2pt,partopsep=0pt,parsep=0pt,%
+\setlist[enumerate]{label=\bfseries\textcolor{gbblue}{(\arabic*)},topsep=2pt,partopsep=0pt,parsep=0pt,%
 align=left,leftmargin=0em,itemsep=0.5em,labelwidth=0.1em,itemindent=2.6em,listparindent=2em}%label=$\triangleright$,itemindent=1em
 \setlist[itemize]{topsep=2pt,partopsep=0pt,parsep=0pt,%
-leftmargin=4.5em,itemindent=0em}
-\setlist[description]{font=\bfseries\textcolor{violet},align=right,topsep=5pt,partopsep=0pt,parsep=0pt,%
+leftmargin=3em,itemindent=0em}
+\setlist[description]{font=\bfseries\textcolor{gbblue},align=right,topsep=5pt,partopsep=0pt,parsep=0pt,%
 itemsep=0pt,leftmargin=2em,itemindent=0em}%注意，font或format中的最后一个命令自动提取标签为其参数
 
 
@@ -241,27 +258,27 @@ itemsep=0pt,leftmargin=2em,itemindent=0em}%注意，font或format中的最后一
 
 \usepackage{amssymb}
 \newcommand{\HandRight}{$\bigstar$}
-\newcommand{\zhongdian}[1]{\textcolor{violet}{\HandRight\heiti#1}}
+\newcommand{\zhongdian}[1]{\textcolor{gbblue}{\HandRight\heiti#1}}
 \newcommand{\pz}[1]{%定义pz为旁注命令
-\marginpar[\flushright\youyuan\color{violet}\footnotesize #1]{\youyuan\color{red}\small #1}}
+\marginpar[\flushright\youyuan\color{gbblue}\footnotesize #1]{\youyuan\color{gbblue}\small #1}}
 \newcommand{\PZ}[1]{%定义pz为旁注命令
-\marginpar[\flushright\youyuan\color{violet}\footnotesize  #1]{\youyuan\color{red}\small #1}}
+\marginpar[\flushright\youyuan\color{gbblue}\footnotesize  #1]{\youyuan\color{gbblue}\small #1}}
 \newcommand{\qd}[1]{%定义qd为强调命令
 \begin{quote}
-  \fangsong\color{violet}#1%blue!50!black
+  \fangsong\color{gbblue}#1%blue!50!black
 \end{quote}}
 \newcommand{\QD}[1]{%定义qd为强调命令
 \begin{quote}
-  \fangsong\color{violet}#1
+  \fangsong\color{gbblue}#1
 \end{quote}}
 \newcommand{\bc}[1]{%定义补充信息
-{\kaiti\color{violet}#1}} %orange，brown，purple，teal，violet，olive，cyan
+{\kaiti\color{gbblue}#1}} %orange，brown，purple，teal，gbblue，olive，cyan
 \newcommand{\BC}[1]{%定义补充信息
-{\kaiti\color{violet}#1}}
+{\kaiti\color{gbblue}#1}}
 \newcommand{\zd}[1]{%定义补充信息
-{\heiti\color{violet}#1}} %orange，brown，purple，teal，violet，olive，cyan
+{\heiti\color{gbblue}#1}} %orange，brown，purple，teal，gbblue，olive，cyan
 \newcommand{\ZD}[1]{%定义补充信息
-{\heiti\color{violet}#1}}
+{\heiti\color{gbblue}#1}}
 
 
 
@@ -279,7 +296,7 @@ itemsep=0pt,leftmargin=2em,itemindent=0em}%注意，font或format中的最后一
 \makeatletter
 \newcommand{\updateinfo}[2][\@empty]{%
 \par\small\addvspace{2ex plus 1ex}%
-\noindent{\color{orange}\rule{\linewidth}{2pt}}
+\noindent{\color{gbblue}\rule{\linewidth}{2pt}}
 \vskip -\parskip
 \ifx\@empty#1 \begin{marglist} \item #2\end{marglist}
 \else \begin{marglist} \item[#1] #2\end{marglist} \fi}
@@ -289,7 +306,7 @@ itemsep=0pt,leftmargin=2em,itemindent=0em}%注意，font或format中的最后一
 \begin{filecontents}{example/egspecialchar.bib}
 @Inproceedings{ref-replace-char,
   Title                    = {Cognitive Radio and Cooperative Strategies for Power Saving in Multi-Standard Wireless Devices},
-  Address                  = { Florence, Italy},
+  Address                  = {Florence, Italy},
   Author                   = {Rodriguez, J. and P. Marques and A. Radwan and K. Moessner and R. Tafazolli and others},
   Booktitle                = {Future % Network & Mobile # Summit 2010},
   Date                     = {June 2010}

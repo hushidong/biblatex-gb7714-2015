@@ -841,7 +841,7 @@
                 }
                 \map{%默认情况下将空缺作者设置为佚名
                     \step[fieldsource=userb,match={en},final]
-                    \step[fieldset=author, fieldvalue={NOAUTHOR}]
+                    \step[fieldset=author, fieldvalue={A{non}}]%noauthor换成Anon，同时为避免大写还加了{}
                 }
             }
         }
@@ -2345,11 +2345,11 @@ test{\iftoggle{iftlnine}}
   \newunit\newblock
   \printfield{type}%
   \setunit*{\addspace}%
-  %\printfield{number}%
+  %\printfield{number}%%已放到patenttitle中处理
   \iflistundef{location}
     {}
     {\setunit*{\addspace}%
-     \printtext[parens]{%
+     \printtext{%[parens]
        \printlist[][-\value{listtotal}]{location}}}%
   \newunit\newblock
   \usebibmacro{byholder}%

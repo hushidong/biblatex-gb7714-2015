@@ -68,7 +68,7 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
         `\usepackage[backend=biber,style=gb7714-2015,gbcodegbk=false]{biblatex}`
 		
-	- add an option `gbstrict` to control the output of some unnecessary fields for GB/T7714-2015. If want to output them as the standard styles, it should be `gbstrict=false`. defaulty the option is set with `true`. This option is also for author year style.
+	- add an option `gbstrict` to control the output of some unnecessary fields for GB/T7714-2015. If want to output them as the standard styles, it should be `gbstrict=false`. defaultly the option is set with `true`. This option is also for author year style.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbstrict=true]{biblatex}`
 		
@@ -515,11 +515,11 @@ biber -l zh__stroke jobname
 ### 5. Examples/著录和标注结果示例
 * 顺序编码制
 
-![示例a](example/egaligngb7714-2015.tif)
+![示例a](example/egaligngb7714-2015.png)
 	
 * 作者年制
 
-![示例b](example/egaligngb7714-2015ay.tif)
+![示例b](example/egaligngb7714-2015ay.png)
 
 
 * 姓名的格式更改
@@ -560,7 +560,7 @@ biber -l zh__stroke jobname
       Year                     = {2003}
     }
 
-![示例c](example/eggbnamefmt.tif)
+![示例c](example/eggbnamefmt.png)
 
 ---------------------------------------------------------
 

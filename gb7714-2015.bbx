@@ -2272,11 +2272,11 @@ test{\iftoggle{iftlnine}}
   \newunit\newblock
   \printfield{type}%
   \setunit*{\addspace}%
-  %\printfield{number}%
+  %\printfield{number}%已放到patenttitle中处理
   \iflistundef{location}
     {}
     {\setunit*{\addspace}%
-     \printtext[parens]{%
+     \printtext{%[parens]
        \printlist[][-\value{listtotal}]{location}}}%
   \newunit\newblock
   \usebibmacro{byholder}%
