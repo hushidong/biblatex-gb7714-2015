@@ -96,7 +96,8 @@
             {\def\multinumberfirst{#1}\def\multinumbersecond{}}%
     }
 
-
+    %    对没有分隔符环境命令的低版本biblatex做增补，避免报错
+    %
     \iftoggle{iftlfive}{
 
     \def\blx@inf@delimdeclare#1#2{%
@@ -194,7 +195,7 @@
 %   数据模型定义
 %=====================================================================
 %定义类型和载体标识，从gb内容看载体基本属于介质。
-%为与lee zeping的bst的样式统一，使用mark和medium这一域名
+%为与lee zeping的bst的样式统一，使用mark和medium这两域名
 \DeclareDatamodelFields[type=field,datatype=literal]{mark}
 \DeclareDatamodelFields[type=field,datatype=literal]{medium}
 \DeclareDatamodelFields[type=field,datatype=literal]{nameformat}
@@ -1111,7 +1112,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
   \usebibmacro{withothers}}
 
 %
-%   下面一段没有作用，但从中可以看到当地化字符串格式的引用前的代码处理
+%   下面一段没有用，但从中可以看到当地化字符串格式的引用前的代码处理
 %   比如生成cotranslator等用于调用cotranslator所代表的当地化字符串
 %   \renewbibmacro*{bytranslator+othersstrg}{%
 
@@ -1144,7 +1145,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \renewbibmacro*{title}{%
   \ifboolexpr{%
     test{\iffieldundef{title}}%
-    and%
+    and
     test{\iffieldundef{subtitle}}%
   }%
     {}%
@@ -1176,17 +1177,29 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \iffieldundef{namefmtid}{}%
 {\defcounter{namefmtcase}{\thefield{namefmtid}}}%
 \ifcase\value{namefmtcase}%
-\usebibmacro{name:gbuppercase}
+  \ifgiveninits
+    {\usebibmacro{name:gbuppercase}
       {\namepartfamily}
       {\namepartgiveni}
       {\namepartprefix}
-      {\namepartsuffix}%
+      {\namepartsuffix}}
+    {\usebibmacro{name:gbuppercase}
+      {\namepartfamily}
+      {\namepartgiven}
+      {\namepartprefix}
+      {\namepartsuffix}}%
 \or
-\usebibmacro{name:gblowercase}
+  \ifgiveninits
+    {\usebibmacro{name:gblowercase}
       {\namepartfamily}
       {\namepartgiveni}
       {\namepartprefix}
-      {\namepartsuffix}%
+      {\namepartsuffix}}
+    {\usebibmacro{name:gblowercase}
+      {\namepartfamily}
+      {\namepartgiven}
+      {\namepartprefix}
+      {\namepartsuffix}}%
 \or
   \ifgiveninits
     {\usebibmacro{name:given-family}
@@ -1408,9 +1421,13 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     \iffieldundef{namefmtid}{}%
     {\defcounter{namefmtcase}{\thefield{namefmtid}}}%
     \ifcase\value{namefmtcase}%
-        \usebibmacro{name:gbuppercase}{#1}{#4}{#5}{#7}%
+       \iffirstinits
+       {\usebibmacro{name:gbuppercase}{#1}{#4}{#5}{#7}}
+       {\usebibmacro{name:gbuppercase}{#1}{#3}{#5}{#7}}%
     \or
-        \usebibmacro{name:gblowercase}{#1}{#4}{#5}{#7}%
+       \iffirstinits
+       {\usebibmacro{name:gblowercase}{#1}{#4}{#5}{#7}}
+       {\usebibmacro{name:gblowercase}{#1}{#3}{#5}{#7}}%
     \or
         \iffirstinits
        {\usebibmacro{name:last-first}{#1}{#4}{#5}{#7}}
