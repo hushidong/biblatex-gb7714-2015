@@ -963,13 +963,20 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %=====================================================================
 %参考文献列表环境
 %=====================================================================
-  \defbibenvironment{bibliography}%修改参考文献列表环境，不要缩进
+
+%
+%   列表格式
+%
+%   增加一个\bibitemindent尺寸用于控制list环境的itemindent
+%   v1.0l，20180615，hzz
+\setlength{\bibhang}{1em}
+\newlength{\bibitemindent}
+\setlength{\bibitemindent}{-\bibhang}
+  \defbibenvironment{bibliography}
   {\list
      {}
-     {%\setlength{\leftmargin}{\bibhang}%
-      %\setlength{\itemindent}{-\leftmargin}%
-      \setlength{\leftmargin}{1em}%
-      \setlength{\itemindent}{-1em}%
+     {\setlength{\leftmargin}{\bibhang}%
+      \setlength{\itemindent}{\bibitemindent}%
       \setlength{\itemsep}{\bibitemsep}%
       \setlength{\parsep}{\bibparsep}}}
   {\endlist}
@@ -1043,7 +1050,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \def\UrlFont{\rmfamily}%设置url字体为roman字体%\ttfamily
 \setcounter{biburlnumpenalty}{100} %让url可以在数字后断行
 \setcounter{biburlucpenalty}{100} %让url可以在大写字母后断行
-%\setcounter{biburllcpenalty}{100} %让url可以在小写字母后断行
+\setcounter{biburllcpenalty}{100} %让url可以在小写字母后断行
 %
 %   标题的字母大小写格式修改
 %

@@ -325,8 +325,8 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
     \item gbtype=true，根据GB/T 7714-2015 要求输出标识符，例如“在线的期刊析出文献题名[J/OL]”。
     \item gbtype=false，则不输出标识符，例如“在线的期刊析出文献题名”。
   \end{itemize}
-  
-  
+
+
 
   \item[gbpunctin]=\textbf{true}，false. \hfill default is true
 
@@ -338,7 +338,7 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   \lstinline!\DefineBibliographyStrings{english}{in={}}!。
   \end{itemize}
 
-  
+
 
   \item[gbcodegbk]=true，\textbf{false}. \hfill default is false
 
@@ -358,7 +358,7 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
     \item gbstrict=true，即默认不输出。
     \item gbstrict=false，需要还原标准样式的输出情况时使用。
   \end{itemize}
-   
+
 
   \item[gbfieldstd]=true，\textbf{false}. \hfill default is false
 
@@ -716,6 +716,14 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 \setlength{\bibitemsep}{0ex}
 \setlength{\bibnamesep}{0ex}
 \setlength{\bibinitsep}{0ex}
+
+% 文献表各项缩进控制
+% bibitemindent表示各个项中第一行相对后面各行的缩进
+%\setlength{\bibitemindent}{0em}
+% 作者年制中bibhang表示的各行起始位置到页边的距离
+% 顺序编码制中bibhang+labelnumberwidth表示各行起始位置到页边的距离
+%\setlength{\bibhang}{0pt}
+
 
 % 标点类型的控制（全局字体能控制标点的字体）
 \end{texlist}
@@ -1663,9 +1671,9 @@ beamer类中的参考文献测试，参见:
   %\item shorthand的问题没有遇到，其应用可能需要进一步理解。，主要是获取参考文献的部分信息进行统计和打印。该问题已经解决，参见biblatex-solution-to-latex-bibliography(20180525)。
 
   \item 当专著同时存在作者和编者的时候，GB/T 7714-2015没有明确的规定，所以目前样式文件中以biblatex标准样式的方式处理，这种处理因为与本地化相关，直接应用可能不好看的，也许需要修改。
-      
+
   \item 在各类文献的著录格式中，GB/T 7714-2015 对于出版项给出的就是出版地和出版者，但习惯上不同的类型还是存在差异的，比如专利文献出版项还应该再明确，比如在线资源常用organization表示而无出版地。这些有待进一步明确。
-      
+
   \item 当作者不明时，GB/T 7714-2015 给出的说法是用佚名和其它语言相应的词代替。英文给了一个例子是Anon，似乎是anonymity的缩写。这也有待进一步明确。v1.0l版后将之前用的noauthor换成Anon。
 
   %\item 因为GB/T 7714-2015中给出的了一些著录格式，如果把这些著录格式作为一个严格标准，那么条目中只能出现其中规定的域，而往往在bib文件中可能存在一些另外的信息比如chapter等，而且从标准样式修改的驱动中也仍然带有这些域的处理，如果为了标准化规范化考虑，可以去掉国标中没有提到的域的信息，可能使得内容更为标准，这可以通过修改增加数据模型，数据源动态修改，驱动修改(驱动中目前存在较多的似乎用不到的域，而且意义不是非常明确，这个等到biblatex说明文档中文版完成后再结合它全面的进行梳理)三条路子做到，需要的话，可以在下一步实现(2017-0226)。添加了gbstrict选项后，该问题基本已经解决(20180525)。

@@ -591,6 +591,10 @@ biber -l zh__stroke jobname
 
 date of update: 2018-06-01 to version v1.0l
 
+* 增加\bibitemindent尺寸配合\bibhang设置基于list的文献表环境的缩进。(20180615)
+
+add a length \bibitemindent to control the item indent of bibliography based on list env with \bibhang。
+
 * 增加upcite命令为兼容一些老的文档，顺序编码制中同supercite，作者年制中同yearcite。(20180604)
 
 add upcite to be compatible with some old doc，it behaves like supercite in numerical style and yearcite in author year style. 

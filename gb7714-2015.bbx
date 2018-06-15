@@ -900,9 +900,29 @@
 %=====================================================================
 
 %
-%   默认的参考文献列表格式，放这里作为参考
+%   列表格式
 %
-%\defbibenvironment{bibliography}
+%   增加一个\bibitemindent尺寸用于控制list环境的itemindent
+%   v1.0l，20180615，hzz
+\newlength{\bibitemindent}
+\setlength{\bibitemindent}{0pt}
+\setlength{\bibhang}{\biblabelsep}%
+
+\defbibenvironment{bibliography}
+  {\list
+     {\printtext[labelnumberwidth]{%
+        \printfield{labelprefix}%
+        \printfield{labelnumber}}}
+     {\setlength{\labelwidth}{\labelnumberwidth}%
+      \setlength{\labelsep}{\biblabelsep}%
+      \setlength{\leftmargin}{\bibhang}%
+      \addtolength{\leftmargin}{\labelnumberwidth}%
+      \setlength{\itemindent}{\bibitemindent}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}}%
+      \renewcommand*{\makelabel}[1]{\hss##1}}
+  {\endlist}
+  {\item}
 
 %
 %   顺序编码制标签对齐方式处理
@@ -1038,7 +1058,7 @@
 \def\UrlFont{\rmfamily}%设置url字体为roman字体%\ttfamily
 \setcounter{biburlnumpenalty}{100} %让url可以在数字后断行
 \setcounter{biburlucpenalty}{100} %让url可以在大写字母后断行
-%\setcounter{biburllcpenalty}{100} %让url可以在小写字母后断行
+\setcounter{biburllcpenalty}{100} %让url可以在小写字母后断行
 %
 %   标题的字母大小写格式修改
 %
