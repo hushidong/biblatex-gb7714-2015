@@ -568,6 +568,7 @@ biber -l zh__stroke jobname
     * special characters in all fields?
     * entry without author: the delimiter between title and year?
 	* TEST FOR texlive 2015,2016
+	* [1]，(1)，1.，box{1}，superscript，compress，noncompress
 
 ---------------------------------------------------------
 

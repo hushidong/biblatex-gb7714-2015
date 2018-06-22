@@ -14,6 +14,7 @@
 \ProvidesFile{gb7714-2015.bbx}[2018/06/01 v1.0l biblatex bibliography style]
 \def\versionofgbtstyle{2018/06/01 v1.0l}
 \def\versionofbiblatex{\abx@version}
+\RequireBiber[3]%显式指定用biber后端
 
 %=====================================================================
 %   加载标准样式
@@ -1056,6 +1057,7 @@
   {title}{#1}%\nopunct\unspace
 \DeclareFieldFormat{url}{\url{#1}} %%url相关输出，url域修改如本行，源来自biblatex.def
 \def\UrlFont{\rmfamily}%设置url字体为roman字体%\ttfamily
+%\urlstyle{rm} %使用这句也一样
 \setcounter{biburlnumpenalty}{100} %让url可以在数字后断行
 \setcounter{biburlucpenalty}{100} %让url可以在大写字母后断行
 \setcounter{biburllcpenalty}{100} %让url可以在小写字母后断行
