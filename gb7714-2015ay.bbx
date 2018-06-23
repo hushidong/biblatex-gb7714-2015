@@ -318,6 +318,8 @@
       maxbibnames=3, %将文献列表和引用中最大名字数量区分开
       minbibnames=3,
       isbn=false,
+      sorting=gb7714-2015,
+      sortlocale=zh__pinyin,
     }
 
     %为姓名格式选择增加的计数器
@@ -330,6 +332,12 @@
 %   针对biblatex<3.3版本的选项设置，比如texlive2015中的3.0版
 %
 \defversion{3.0}{opt}{
+    %
+    %   增加序号标签格式处理选项，作者年制不做处理，给出只为兼容选项考虑
+    %   v1.0l，20180623，hzz
+    %
+    \DeclareBibliographyOption{gbbiblabel}[bracket]{}
+
     %
     %   增加姓名大小写格式处理选项
     %
@@ -365,6 +373,12 @@
 %   针对3.3<=biblatex<3.5版本的选项设置，比如texlive2016中的3.4版
 %
 \defversion{3.4}{opt}{
+    %
+    %   增加序号标签格式处理选项，作者年制不做处理，给出只为兼容选项考虑
+    %   v1.0l，20180623，hzz
+    %
+    \DeclareBibliographyOption[string]{gbbiblabel}[bracket]{}
+
     %
     %   增加姓名大小写格式处理选项
     %
@@ -402,6 +416,12 @@
 %
 \defversion{3.7}{opt}{
     %
+    %   增加序号标签格式处理选项，作者年制不做处理，给出只为兼容选项考虑
+    %   v1.0l，20180623，hzz
+    %
+    \DeclareBibliographyOption[string]{gbbiblabel}[bracket]{}
+
+    %
     %   增加姓名大小写格式处理选项
     %
     \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
@@ -438,6 +458,12 @@
 %   针对3.10<=biblatex版本的选项设置，比如texlive2018中的3.11版
 %
     \defversion{3.10}{opt}{
+    %
+    %   增加序号标签格式处理选项，作者年制不做处理，给出只为兼容选项考虑
+    %   v1.0l，20180623，hzz
+    %
+    \DeclareBibliographyOption[string]{gbbiblabel}[bracket]{}
+
     %
     %   增加姓名大小写格式处理选项
     %
@@ -856,7 +882,7 @@
 %   排序格式，用降序，及userb域，针对biblatex3.7及以下版本
 %
 \defversion{3.7}{sort}{%这是3.4版的，3.7版略有差异，但不大，后面有注释
-    \DeclareSortingScheme{nyt}{
+    \DeclareSortingScheme{gb7714-2015}{
       \sort{
         \field{presort}
       }
@@ -899,7 +925,7 @@
 %   排序格式，用降序，及userb域，针对biblatex3.8及以上版本
 %
 \defversion{3.8}{sort}{
-    \DeclareSortingTemplate{nyt}{
+    \DeclareSortingTemplate{gb7714-2015}{
       \sort{
         \field{presort}
       }

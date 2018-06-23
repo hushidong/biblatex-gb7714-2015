@@ -5,7 +5,8 @@
     \usepackage{lipsum}
     \usepackage[top=10pt,bottom=10pt,left=1cm,right=1cm,showframe,showcrop]{geometry}
 
-\usepackage[backend=biber,style=gb7714-2015,gbalign=center]{biblatex}
+\usepackage[backend=biber,style=gb7714-2015ay,gbalign=gb7714-2015,gbbiblabel=bracket]{biblatex}
+%\usepackage[backend=biber,style=gb7714-2015,gbalign=gb7714-2015,gbbiblabel=bracket]{biblatex}
 %\setlength{\bibhang}{0pt}
 %\setlength{\bibitemindent}{0em}
 
@@ -647,6 +648,10 @@
 
     \begin{document}
     \section{set title}
+    
+    \framebox{1}
+    \textcircled{12}
+    
     created with biblatex v\versionofbiblatex, last revised at \today;\\ \hspace*{1.5em} Style Files (gb7714-2015*.*) have version number: \versionofgbtstyle.
 
 	文献\nocite{*}

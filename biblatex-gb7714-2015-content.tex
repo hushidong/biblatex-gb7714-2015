@@ -287,6 +287,18 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   \href{run:./example/testgbpubfalse.tex}{testgbpubfalse.tex}，
   %\href{run:./example/eggbpubfalse.pdf}{eggbpubfalse.pdf}。
 
+  \item[gbbiblabel]=\textbf{bracket}，parens，plain，dot，box，circle. \hfill default is bracket
+
+  为顺序编码制增加的选项，用于选择参考文献表序号数字的格式。
+  \begin{itemize}
+    \item gbbiblabel=bracket，序号数字由方括号包围，比如[1]；
+    \item gbbiblabel=parens，序号数字由圆括号包围，比如(1)；
+    \item gbbiblabel=dot，序号数字数字后面加点，比如1.；
+    \item gbbiblabel=plain，序号数字无装饰，比如1；
+    \item gbbiblabel=box，序号数字由方框包围，比如\framebox{1}；
+    \item gbbiblabel=circle，序号数字由圆圈包围，比如\textcircled{1}。
+  \end{itemize}
+
   \item[gbnoauthor]=true，\textbf{false}. \hfill default is false
 
   为作者年制增加的选项，用于控制责任者缺失时的处理。

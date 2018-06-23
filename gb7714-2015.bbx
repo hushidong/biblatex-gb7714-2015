@@ -336,12 +336,32 @@
     \newcounter{namefmtcase}
     \def\thenamefmtcase{\the\c@namefmtcase}
 
+    %为数字标签格式选择增加的计数器
+    \newcounter{bibnumlabel}
+    \def\thebibnumlabel{\the\c@bibnumlabel}
+    \newcounter{alignlabel}
+    \def\thealignlabel{\the\c@alignlabel}
+
 
 
 %
 %   针对biblatex<3.3版本的选项设置，比如texlive2015中的3.0版
 %
 \defversion{3.0}{opt}{
+    %
+    %   增加序号标签格式处理选项
+    %   v1.0l，20180623，hzz
+    %
+    \DeclareBibliographyOption{gbbiblabel}[bracket]{%
+        \ifstrequal{##1}{bracket}{\setcounter{bibnumlabel}{0}}{}%
+        \ifstrequal{##1}{parens}{\setcounter{bibnumlabel}{1}}{}%
+        \ifstrequal{##1}{dot}{\setcounter{bibnumlabel}{2}}{}%
+        \ifstrequal{##1}{plain}{\setcounter{bibnumlabel}{3}}{}
+        \ifstrequal{##1}{box}{\setcounter{bibnumlabel}{4}}{}%
+        \ifstrequal{##1}{circle}{\setcounter{bibnumlabel}{5}}{}%
+    }
+    \ExecuteBibliographyOptions{gbbiblabel}
+
     %
     %   增加姓名大小写格式处理选项
     %
@@ -361,9 +381,9 @@
     %   因为在这种biblatex低版本中，舍弃了list类环境后，会出错。
     %   注意:texlive2015中的3.0版中的DeclareBibliographyOption选项没有类型说明
     \DeclareBibliographyOption{gbalign}[right]{%
-        \ifstrequal{##1}{right}{}{}
-        \ifstrequal{##1}{left}{\setalignleft}{}
-        \ifstrequal{##1}{center}{\setaligncenter}{}
+        \ifstrequal{##1}{right}{\setcounter{alignlabel}{0}}{}
+        \ifstrequal{##1}{left}{\setcounter{alignlabel}{1}}{}
+        \ifstrequal{##1}{center}{\setcounter{alignlabel}{2}}{}
         \ifstrequal{##1}{gb7714-2015}{}{}
     }
 
@@ -381,6 +401,20 @@
 %
 \defversion{3.4}{opt}{
     %
+    %   增加序号标签格式处理选项
+    %   v1.0l，20180623，hzz
+    %
+    \DeclareBibliographyOption[string]{gbbiblabel}[bracket]{%
+        \ifstrequal{##1}{bracket}{\setcounter{bibnumlabel}{0}}{}%
+        \ifstrequal{##1}{parens}{\setcounter{bibnumlabel}{1}}{}%
+        \ifstrequal{##1}{dot}{\setcounter{bibnumlabel}{2}}{}%
+        \ifstrequal{##1}{plain}{\setcounter{bibnumlabel}{3}}{}
+        \ifstrequal{##1}{box}{\setcounter{bibnumlabel}{4}}{}%
+        \ifstrequal{##1}{circle}{\setcounter{bibnumlabel}{5}}{}%
+    }
+    \ExecuteBibliographyOptions{gbbiblabel}
+
+    %
     %   增加姓名大小写格式处理选项
     %
     \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
@@ -397,8 +431,9 @@
     %
     %   right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
     \DeclareBibliographyOption[string]{gbalign}[right]{%
-        \ifstrequal{##1}{left}{\setalignleft}{}
-        \ifstrequal{##1}{center}{\setaligncenter}{}
+        \ifstrequal{##1}{right}{\setcounter{alignlabel}{0}}{}
+        \ifstrequal{##1}{left}{\setcounter{alignlabel}{1}}{}
+        \ifstrequal{##1}{center}{\setcounter{alignlabel}{2}}{}
         \ifstrequal{##1}{gb7714-2015}{\setaligngbstyle}{}
     }
 
@@ -416,6 +451,20 @@
 %
 \defversion{3.7}{opt}{
     %
+    %   增加序号标签格式处理选项
+    %   v1.0l，20180623，hzz
+    %
+    \DeclareBibliographyOption[string]{gbbiblabel}[bracket]{%
+        \ifstrequal{##1}{bracket}{\setcounter{bibnumlabel}{0}}{}%
+        \ifstrequal{##1}{parens}{\setcounter{bibnumlabel}{1}}{}%
+        \ifstrequal{##1}{dot}{\setcounter{bibnumlabel}{2}}{}%
+        \ifstrequal{##1}{plain}{\setcounter{bibnumlabel}{3}}{}
+        \ifstrequal{##1}{box}{\setcounter{bibnumlabel}{4}}{}%
+        \ifstrequal{##1}{circle}{\setcounter{bibnumlabel}{5}}{}%
+    }
+    \ExecuteBibliographyOptions{gbbiblabel}
+
+    %
     %   增加姓名大小写格式处理选项
     %
     \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
@@ -432,8 +481,9 @@
     %
     %   right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
     \DeclareBibliographyOption[string]{gbalign}[right]{%
-        \ifstrequal{##1}{left}{\setalignleft}{}
-        \ifstrequal{##1}{center}{\setaligncenter}{}
+        \ifstrequal{##1}{right}{\setcounter{alignlabel}{0}}{}
+        \ifstrequal{##1}{left}{\setcounter{alignlabel}{1}}{}
+        \ifstrequal{##1}{center}{\setcounter{alignlabel}{2}}{}
         \ifstrequal{##1}{gb7714-2015}{\setaligngbstyle}{}
     }
 
@@ -452,6 +502,20 @@
 %
 \defversion{3.10}{opt}{
     %
+    %   增加序号标签格式处理选项
+    %   v1.0l，20180623，hzz
+    %
+    \DeclareBibliographyOption[string]{gbbiblabel}[bracket]{%
+        \ifstrequal{##1}{bracket}{\setcounter{bibnumlabel}{0}}{}%
+        \ifstrequal{##1}{parens}{\setcounter{bibnumlabel}{1}}{}%
+        \ifstrequal{##1}{dot}{\setcounter{bibnumlabel}{2}}{}%
+        \ifstrequal{##1}{plain}{\setcounter{bibnumlabel}{3}}{}
+        \ifstrequal{##1}{box}{\setcounter{bibnumlabel}{4}}{}%
+        \ifstrequal{##1}{circle}{\setcounter{bibnumlabel}{5}}{}%
+    }
+    \ExecuteBibliographyOptions{gbbiblabel}
+
+    %
     %   增加姓名大小写格式处理选项
     %
     \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
@@ -468,8 +532,9 @@
     %
     %   right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
     \DeclareBibliographyOption[string]{gbalign}[right]{%
-        \ifstrequal{##1}{left}{\setalignleft}{}
-        \ifstrequal{##1}{center}{\setaligncenter}{}
+        \ifstrequal{##1}{right}{\setcounter{alignlabel}{0}}{}
+        \ifstrequal{##1}{left}{\setcounter{alignlabel}{1}}{}
+        \ifstrequal{##1}{center}{\setcounter{alignlabel}{2}}{}
         \ifstrequal{##1}{gb7714-2015}{\setaligngbstyle}{}
     }
 
@@ -926,22 +991,62 @@
   {\item}
 
 %
-%   顺序编码制标签对齐方式处理
+%   顺序编码制-标签对齐方式处理
 %
-%   原理方法:修改序号标签格式为左对齐,注意各参考文献内容还是对齐的，
-%   这样就会使得序号标签与参考文献内容的间隔增大，这个问题是没有办法解决的
-%   因为采用list做具有一定宽度的序号标签，\labelwidth只能设置一个，且是最宽的标签的宽度
-%   但总的来说参考文献内容对齐是合理和漂亮的，
-%   而标签则只能对齐一个方向，要么左对齐要么右对齐，看个人选择了。
+%   原理方法:利用选项提供的计数器数值做选择
+%   左对齐，右对齐为list环境下的处理，此时list环境的\labelwidth只能设置一个，是最宽标签的宽度
+%   项对齐则是在段落环境下做的处理。
+%   左对齐时，参考文献各项内容对齐，序号标签与参考文献项内容的间距可变
+%   右对齐时，参考文献各项内容对齐，序号标签与参考文献项内容的间距相等，标签与页边距离可变
+%   项对齐时，序号标签贴在页边，序号标签与参考文献项内容的间距相等
+%   修改序号标签格式为:
 %   \DeclareFieldFormat{shorthandwidth}{\mkbibbrackets{#1}} %源来自numeric.BBX
 %   \DeclareFieldFormat{labelnumberwidth}{\ttfamily\mkbibbrackets{#1}\hfill}
-%   \iftoggle{alignleft}{\DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{#1}\hfill}}{}%这种方式无效是因为加载时就已经展开了。
-%
-%   修改序号标签格式为序号数字居于[]中间
-\def\setaligncenter{\DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{\hfill##1\hfill}}}
-%
-%   修改序号标签格式为左对齐
-\def\setalignleft{\DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{##1}\hfill}}
+\DeclareFieldFormat{labelnumberwidth}{%
+\ifcase\value{alignlabel}%右对齐，整个标签为右对齐
+    \ifcase\value{bibnumlabel}
+    \mkbibbrackets{#1}%
+    \or
+    \mkbibparens{#1}%
+    \or
+    {#1\adddot}%
+    \or
+    {#1}%
+    \or
+    \framebox{#1}%
+    \or
+    {\textcircled{#1}}%
+    \fi
+\or%左对齐，整个标签为左对齐
+    \ifcase\value{bibnumlabel}
+    \mkbibbrackets{#1}\hfill%
+    \or
+    \mkbibparens{#1}\hfill%
+    \or
+    {#1\adddot\hfill}%
+    \or
+    {#1\hfill}%
+    \or
+    \framebox{#1}\hfill%
+    \or
+    {\textcircled{#1}\hfill}%
+    \fi
+\or%中间对齐，比如：序号数字居于[]中间
+    \ifcase\value{bibnumlabel}
+    \mkbibbrackets{\hfill#1\hfill}%
+    \or
+    \mkbibparens{\hfill#1\hfill}%
+    \or
+    {\hfill#1\adddot\hfill}%
+    \or
+    {\hfill#1\hfill}%
+    \or
+    {\hfill\framebox{#1}\hfill}%
+    \or
+    {\hfill\textcircled{#1}\hfill}%
+    \fi
+\fi}
+
 %
 %   修改序号标签格式为以各条参文献为基础进行对齐的方式，即序号与条目内容间隔相等的方式。
 \def\setaligngbstyle{%
@@ -977,14 +1082,39 @@
 \newlength{\lengthid}
 \newlength{\lengthlw}
 \newcommand{\itemcmd}{%
-\settowidth{\lengthid}{[\printfield{labelnumber}]}
+\settowidth{\lengthid}{%
+    \ifcase\value{bibnumlabel}
+    \mkbibbrackets{\printfield{labelnumber}}%
+    \or
+    \mkbibparens{\printfield{labelnumber}}%
+    \or
+    {\printfield{labelnumber}\adddot}%
+    \or
+    {\printfield{labelnumber}}%
+    \or
+    \framebox{\printfield{labelnumber}}%
+    \or
+    \textcircled{\printfield{labelnumber}}%
+    \fi}
 \addtolength{\lengthid}{\biblabelsep}
 \setlength{\lengthlw}{\textwidth}
 \addtolength{\lengthlw}{-\lengthid}
 \addvspace{\bibitemsep}%恢复\bibitemsep的作用
 %\parshape 2 0em \textwidth \lengthid \lengthlw
 \hangindent\lengthid
-[\printfield{labelnumber}]\hspace{\biblabelsep}}
+\ifcase\value{bibnumlabel}%
+    \mkbibbrackets{\printfield{labelnumber}}%
+    \or
+    \mkbibparens{\printfield{labelnumber}}%
+    \or
+    {\printfield{labelnumber}\adddot}%
+    \or
+    {\printfield{labelnumber}}%
+    \or
+    \framebox{\printfield{labelnumber}}%
+    \or
+    \textcircled{\printfield{labelnumber}}%
+    \fi\hspace{\biblabelsep}}
 \defbibenvironment{bibliography}
 {\begingroup\setlength{\parindent}{0em}}
 {\endgroup}
