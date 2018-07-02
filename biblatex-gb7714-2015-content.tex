@@ -357,13 +357,13 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
     \item gbctexset=true，参考文献标题内容可以通过重定义 bibname 或 refname 宏设置。比如利用ctex宏包进行设置：
         \lstinline[breaklines]!\ctexset{bibname={title you want}}!
     \item gbctexset=false，参考文献标题内容可以通过重定义本地字符串设置，比如：
-        
-  \lstinline[breaklines=true]!\DefineBibliographyStrings{english}{bibliography={title you want}}! 
-  
+
+  \lstinline[breaklines=true]!\DefineBibliographyStrings{english}{bibliography={title you want}}!
+
   \lstinline[breaklines=true]!\DefineBibliographyStrings{english}{references={title you want}}!。
   \end{itemize}
   当然除此之外，利用 printbibliography 命令的 title 选项进行设置依然是有效方式之一。比如:
-  
+
   \lstinline[breaklines=true]!\printbibliography[title=title you want]!。
 
 
@@ -717,11 +717,11 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 %上一段2016-1114更新，下面是以前的说法。
 %\qd{根据文种文献集中的要求，修改了nyt排序格式，增加了userb作为name前的排序域，当有需求进行多文种分集且有特殊顺序时，在bib文件中给相应文种的文献设置适合排序的字符串。比如中文文献设置为cn，英文文献设置为en，法文文献设置为fr，那么排序中，相应的中文文献排在最前面，英文文献在中间，法文文献最后，因为升序情况下字母顺序是c然后e然后f。}
 
-\paragraph{文献表内容字体控制} 为方便用户改变文献表内容的字体和颜色等，在biblatex提供的bibfont命令基础上，增加了bibauthorfont、bibtitlefont、bibpubfont 等用于控制文献不同部分的信息，比如作者，标题，出版项等。
+\paragraph{文献表字体、颜色、间距、缩进控制} 为方便用户改变文献表内容的字体和颜色等，在biblatex提供的bibfont命令基础上，增加了bibauthorfont、bibtitlefont、bibpubfont 等命令用于控制文献不同部分的格式，比如作者，标题，出版项等。增加了尺寸bibitemindent 用于控制参考文献条目在文献表中的缩进，其意义与 list 环境中 itemindent 相同。
 用法具体见例\ref{eg:biblist:fontset}，
 测试用例见\href{run:example/testfontinbiblio.tex}{testfontinbiblio.tex}。
 
-\begin{example}{文献表字体、颜色、间距控制}{eg:biblist:fontset}
+\begin{example}{文献表字体、颜色、间距、缩进控制}{eg:biblist:fontset}
 \begin{texlist}
 % 换行的控制
 %
@@ -744,12 +744,9 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 \setlength{\bibnamesep}{0ex}
 \setlength{\bibinitsep}{0ex}
 
-% 文献表各项缩进控制
-% bibitemindent表示各个项中第一行相对后面各行的缩进
-%\setlength{\bibitemindent}{0em}
-% 作者年制中bibhang表示的各行起始位置到页边的距离
-% 顺序编码制中bibhang+labelnumberwidth表示各行起始位置到页边的距离
-%\setlength{\bibhang}{0pt}
+% 文献表中各条文献的缩进控制
+%\setlength{\bibitemindent}{0em} % bibitemindent表示一条文献中第一行相对后面各行的缩进
+%\setlength{\bibhang}{0pt} % 作者年制中 bibhang 表示的各行起始位置到页边的距离，顺序编码制中 bibhang+labelnumberwidth 表示各行起始位置到页边的距离
 
 
 % 标点类型的控制（全局字体能控制标点的字体）

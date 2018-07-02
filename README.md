@@ -72,23 +72,23 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
         `\usepackage[backend=biber,style=gb7714-2015,gbbiblabel=bracket]{biblatex}`
 		
-	- add an option `gbtype` for dealing the reference type and carrier identifier like a [J/OL] for an on-line article, option value = `true` for gb7714 style or `false` for none identifier, e.g. An article title followed by empty string instead of the [J/OL]. This option is also for author year style.
+	- add an option `gbtype` to control the output of the reference type and carrier identifier like [J/OL], option value = `true` for gb7714 style, print a title like: `an on-line article [J/OL]`,  option value = `false` for none identifier, print a title like: `an on-line article`. This option is also for author year style.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbtype=true]{biblatex}`
 		
-	- add an option `gbpunctin` to control the output of `//` before bookauthor for entrytypes like inbook/incollection/inproceedings. `gbpunctin=true` to output `//`, `gbpunctin=false` to output the bibstring for English is IN:, If want to eliminate it at all, please add a cmd `\DefineBibliographyStrings{english}{in={}}` in the preamble. This option is also for author year style.
+	- add an option `gbpunctin` to control the output of `//` before bookauthor for entrytypes like inbook/incollection/inproceedings. `gbpunctin=true` to output `//`, `gbpunctin=false` to output a bibstring, for English it is `IN:`, If you want to eliminate it at all, please redefine the bibstring like `\DefineBibliographyStrings{english}{in={}}` in the preamble. This option is also for author year style.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbpunctin=true]{biblatex}`
 		
-	- add an option `gbctexset` to set the bibliography title's control method. default is `gbctexset=true` with the title can be set by `\bibname` or `\refname` and the printbibliography option `title=title you want`,if `gbpunctin=false`, the title can be set by bibstring like `\DefineBibliographyStrings{english}{bibliography={title you want}}` or `\DefineBibliographyStrings{english}{references={title you want}}` and the printbibliography option `title=title you want`.This option is also for author year style.
+	- add an option `gbctexset` to control the bibliography title's setting method. default is `gbctexset=true` with the title can be set by `\bibname` or `\refname` and the printbibliography option `title=title you want`, if `gbpunctin=false`, the title can be set by bibstring like `\DefineBibliographyStrings{english}{bibliography={title you want}}` or `\DefineBibliographyStrings{english}{references={title you want}}` and the printbibliography option `title=title you want`. This option is also for author year style.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbctexset=true]{biblatex}`
 		
-	- add an option `gbcodegbk` to deal tex file encoded with GBK. if want to compile GBK file with pdflatex or latex，set `gbcodegbk=true` is needed. if compile with xelatex, it should be none or `gbcodegbk=false`. This option is also for author year style.
+	- add an option `gbcodegbk` to deal the tex source file encoded with GBK. if you want to compile GBK file with pdflatex or latex，set `gbcodegbk=true` is needed. if compile with xelatex, it should be none or `gbcodegbk=false`. This option is also for author year style.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbcodegbk=false]{biblatex}`
 		
-	- add an option `gbstrict` to control the output of some unnecessary fields for GB/T7714-2015. If want to output them as the standard styles, it should be `gbstrict=false`. default is `gbstrict=true`. This option is also for author year style.
+	- add an option `gbstrict` to control the output of some unnecessary fields for GB/T7714-2015. If you want to output them as the standard styles, it should be `gbstrict=false`. default is `gbstrict=true`. This option is also for author year style.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbstrict=true]{biblatex}`
 		
@@ -628,9 +628,9 @@ biber -l zh__stroke jobname
 date of update: 2018-06-01 to version v1.0l
 
 
-* 增加gbctexset选项设置参考文献标题内容的控制方式，即，除了相同的printbibliography选项方式外，选择是通过 bibname 或 refname 控制还是通过定义本地化字符串 bibliography 或 references 控制。 (20180702)
+* 增加gbctexset选项控制参考文献标题内容的设置方式，即，除了相同的printbibliography选项方式外，选择是通过 bibname 或 refname 控制还是通过定义本地化字符串 bibliography 或 references 控制。 (20180702)
 
-add an option `gbctexset` to set the bibliography title's control method, i.e. besides the same printbibliography option method, two methods: control by \bibname or \refname and control by DefineBibliographyStrings is selected by this option.
+add an option `gbctexset` to control the bibliography title's setting method, i.e. besides the same printbibliography option method, two methods: control by \bibname or \refname and control by DefineBibliographyStrings is selected by this option.
 
 
 * 增加gbbiblabel选项来控制顺序编码制文献表序号标签的格式，即用方括号、圆括号、点、方框、圆圈等来装饰序号数字。(20180623)
