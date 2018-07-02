@@ -26,39 +26,43 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
     - add an option `gbalign` to control the align style of the numerical label：
 	
-		`gbalign=right`  for the label ragged left in a list environment
+		`gbalign=right`  for the label ragged left in a list environment, this is the default setting.
 		
-		`gbalign=center` for the same width label in a list environment with the number centered in the bracket
+		`gbalign=center` for the same width label in a list environment with the number centered in a wrapper like bracket []
 		
 		`gbalign=left`   for the label ragged right in list environment
 		
-		`gbalign=gb7714-2015` for the label in paragraph with same separator space between label and entry content
+		`gbalign=gb7714-2015` for the label in paragraph with same separation space between label and content of the reference entry 
 
         `\usepackage[backend=biber,style=gb7714-2015,gbalign=gb7714-2015]{biblatex}`
 
-    - add an option `gbpub` for dealing publishing items, option value = `true` for gb7714 style or `false` for standard style. This option is also for author year style.
-
+    - add an option `gbpub` for dealing publishing items (This option is also for author-year style):
+	
+		`gbpub = true` for gb7714 style, to print `[出版者不详]` and the like when publisher or address is absent, this is the default setting.
+		
+		`gbpub = false` for standard style, not to print the additional infomation. 
+		
         `\usepackage[backend=biber,style=gb7714-2015,gbpub=true]{biblatex}`
         
-    - add an option `gbnamefmt` for dealing name's letter case(this option is also for author year style):
+    - add an option `gbnamefmt` for dealing author name's letter case (This option is also for author-year style):
 
-        `gbnamefmt = uppercase` for gb7714 style 
+        `gbnamefmt = uppercase` for gb7714 style, to capitalize all the letters of the name, like: ZHANG M L, this is the default setting.
 		
-        `gbnamefmt = lowercase` for gb7714 style with no case switch of names 
+        `gbnamefmt = lowercase` for gb7714 style, do no case switch of the name, like: Zhang M L
 		
-        `gbnamefmt = givenahead` for standard style, given-family style, like ieee style
+        `gbnamefmt = givenahead` for standard style, given-family style, like: M. L. Zhang  as the ieee style
 		
-		`gbnamefmt = familyahead` for standard style, family-given style, like apa style. 
+		`gbnamefmt = familyahead` for standard style, family-given style, like: Zhang, M. L. as the apa style. 
 		
         `gbnamefmt = pinyin` for a common Chinese style, like: ZHANG Min-li, YI Shi-he and so on. 
 		
-		the name format can be set per-entry using a field：`nameformat`=`pinyin` or others. This option is also for author year style.
+		the name format can be set per-entry using a field `nameformat`, add this field such as `nameformat={pinyin}` to an entry in the bib file to set the entry's name format.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbnamefmt=uppercase]{biblatex}`
 		
 	- add an option `gbbiblabel` to control the format of the numerical label：
 	
-		`gbbiblabel=bracket`  for the numerical number in the label wrapped by bracket
+		`gbbiblabel=bracket`  for the numerical number in the label wrapped by bracket, this is the default setting.
 		
 		`gbbiblabel=parens`   for the numerical number in the label wrapped by parenthesis
 		
@@ -72,31 +76,61 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
         `\usepackage[backend=biber,style=gb7714-2015,gbbiblabel=bracket]{biblatex}`
 		
-	- add an option `gbtype` to control the output of the reference type and carrier identifier like [J/OL], option value = `true` for gb7714 style, print a title like: `an on-line article [J/OL]`,  option value = `false` for none identifier, print a title like: `an on-line article`. This option is also for author year style.
+	- add an option `gbtype` to control the output of the reference type and carrier identifier like [J/OL] (This option is also for author year style): 
+	
+		`gbtype = true` for gb7714 style, print a title with the identifier, like: `an on-line article [J/OL]`, this is the default setting.
+		
+		`gbtype = false` for none identifier, print a title without identifier, like: `an on-line article`
 
         `\usepackage[backend=biber,style=gb7714-2015,gbtype=true]{biblatex}`
 		
-	- add an option `gbpunctin` to control the output of `//` before bookauthor for entrytypes like inbook/incollection/inproceedings. `gbpunctin=true` to output `//`, `gbpunctin=false` to output a bibstring, for English it is `IN:`, If you want to eliminate it at all, please redefine the bibstring like `\DefineBibliographyStrings{english}{in={}}` in the preamble. This option is also for author year style.
+	- add an option `gbpunctin` to control the output of `//` before bookauthor for entrytypes like inbook/incollection/inproceedings(This option is also for author year style):
+
+		`gbpunctin=true` for gb7714 style, to output `//`, this is the default setting
+		
+		`gbpunctin=false` for standard style, to output a bibstring, for English it is `IN:`, If you want to eliminate it at all, please redefine the bibstring like `\DefineBibliographyStrings{english}{in={}}` in the preamble.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbpunctin=true]{biblatex}`
 		
-	- add an option `gbctexset` to control the bibliography title's setting method. default is `gbctexset=true` with the title can be set by `\bibname` or `\refname` and the printbibliography option `title=title you want`, if `gbpunctin=false`, the title can be set by bibstring like `\DefineBibliographyStrings{english}{bibliography={title you want}}` or `\DefineBibliographyStrings{english}{references={title you want}}` and the printbibliography option `title=title you want`. This option is also for author year style.
+	- add an option `gbctexset` to control the bibliography title's setting method (This option is also for author year style):
+	
+		`gbctexset=true` , the bibliography title can be set by `\bibname` or `\refname`, this is the default setting.
+	
+		`gbpunctin=false`, the title can be set by bibstring like `\DefineBibliographyStrings{english}{bibliography={title you want}}` or `\DefineBibliographyStrings{english}{references={title you want}}` 
+	
+		in  addition, it can also be set with the printbibliography option `title`, like `printbibliography[title=title you want]`. 
 
         `\usepackage[backend=biber,style=gb7714-2015,gbctexset=true]{biblatex}`
 		
-	- add an option `gbcodegbk` to deal the tex source file encoded with GBK. if you want to compile GBK file with pdflatex or latex，set `gbcodegbk=true` is needed. if compile with xelatex, it should be none or `gbcodegbk=false`. This option is also for author year style.
+	- add an option `gbcodegbk` to deal the tex source file encoded with GBK (This option is also for author year style): 
+	
+		`gbcodegbk=true` , if you want to compile GBK file with pdflatex or latex
+		
+		`gbcodegbk=false`, if you want to compile utf-8 file with xelatex, this is the default setting.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbcodegbk=false]{biblatex}`
 		
-	- add an option `gbstrict` to control the output of some unnecessary fields for GB/T7714-2015. If you want to output them as the standard styles, it should be `gbstrict=false`. default is `gbstrict=true`. This option is also for author year style.
-
+	- add an option `gbstrict` to control the output of some unnecessary fields for GB/T7714-2015 (This option is also for author year style). 
+	
+		`gbstrict=true`,  not to print those fields like language, this is the default setting.
+	
+		`gbstrict=false`, to output them as the standard styles
+	
         `\usepackage[backend=biber,style=gb7714-2015,gbstrict=true]{biblatex}`
 		
-	- add an option `gbfieldstd` to control the format of some fields such as title, url and pages. option value = `false` for gb7714 style or `true` for standard style. This option is also for author year style.
+	- add an option `gbfieldstd` to control the format of some fields such as title, url and pages (This option is also for author year style): 
+	
+		`gbfieldstd = false` for gb7714 style, format of the fields follows the GB/T7714-2015, this is the default setting.
+		
+		`gbfieldstd = true` for standard style. 
 	
         `\usepackage[backend=biber,style=gb7714-2015,gbfieldstd=false]{biblatex}`
 		
-	- add an option `gbtitlelink` to control the hyperlink of title field. option value = `false` with none link or `true` to set the hyperlink. This option is also for author year style.
+	- add an option `gbtitlelink` to control the hyperlink of title field (This option is also for author year style):
+	
+		`gbtitlelink = false` not to add hyperlink, this is the default setting.
+		
+		`gbtitlelink = true` to set the title as a hyperlink.
 	
         `\usepackage[backend=biber,style=gb7714-2015,gbtitlelink=true]{biblatex}`
 
@@ -104,7 +138,11 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
     `\usepackage[backend=biber,style=gb7714-2015ay,gbpub=true]{biblatex}`
 
-    - add an option `gbnoauthor` for dealing undefined author, option value = `true` for gb7714 style or `false` for standard style. 
+    - add an option `gbnoauthor` for dealing undefined author:
+	
+		`gbnoauthor = true` for gb7714 style, to print `佚名` or `Anon` when the author of the entry is absent.
+		
+		`gbnoauthor = false` for standard style, this is the default setting.
 
         `\usepackage[backend=biber,style=gb7714-2015ay,gbnoauthor=true]{biblatex}`
 	
@@ -169,53 +207,59 @@ citestyle=gb7714-2015%,backref=true%%其中后端backend使用biber
 
 \addbibresource[location=local]{example.bib}%biblatex宏包的参考文献数据源加载方式
 
-
 \begin{document}%正文区开始:
 
 %正文内容，引用参考文献
 
 1. 不带页码的引用(顺序编码制上标，方括号包围；作者年制行内，括号包围):
-\cite{Peebles2001-100-100}\upcite{Peebles2001-100-100}\supercite{Peebles2001-100-100}
+	\cite{Peebles2001-100-100}
+	\upcite{Peebles2001-100-100}
+	\supercite{Peebles2001-100-100}
 
 2. 不带页码的引用(顺序编码制非上标，方括号包围；作者年制行内，括号包围):
-\parencite{Miroslav2004--}
+
+	\parencite{Miroslav2004--}
 
 3. 带页码的引用(标准命令，默认样式; 增加命令，GB/T 7714-2015样式):
-\cite[见][49页]{蔡敏2006--}  \parencite[见][49页]{Miroslav2004--}
-\pagescite{Peebles2001-100-100}  \pagescite[][201-301]{Peebles2001-100-100}
+
+	\cite[见][49页]{蔡敏2006--}  
+	\parencite[见][49页]{Miroslav2004--}
+	\pagescite{Peebles2001-100-100}  
+	\pagescite[201-301]{Peebles2001-100-100}
 
 4. 顺序编码制中同时输出作者和顺序编码标签，比如：
-（一）直接的方法：见\citeauthor{refb}\cite{refb},\citeauthor{refc}\cite{refc}
-（二）定义新的标注命令：见\authornumcite{refb,refc}
-（三）用textcite但没有上标：见\textcite{refb,refc}
+	\citeauthor{蔡敏2006--}\cite{蔡敏2006--}
+	\authornumcite{蔡敏2006--}
+	\textcite{蔡敏2006--} (顺序编码标签不上标)
 
 5. 作者年制文中已有作者还需要年份和页码(顺序编码制与pagescite作用相同，作者年制年份行内页码上标):
-见赵耀东\yearpagescite[][205]{赵耀东1998--}和Simon\yearpagescite[][15]{Simon2001--}
+	见赵耀东\yearpagescite[][205]{赵耀东1998--}和Simon\yearpagescite[][15]{Simon2001--}
 
 6. 作者年制文中已有作者只需要年份(顺序编码制与pagescite作用相同，作者年制年份行内):
-见赵耀东\yearcite{赵耀东1998--}
-见赵耀东(\cite*{赵耀东1998--})
-见赵耀东(\citeyear{赵耀东1998--})
+	见赵耀东\yearcite{赵耀东1998--}
+	见赵耀东(\cite*{赵耀东1998--})
+	见赵耀东(\citeyear{赵耀东1998--})
 
 7. 作者年制中由标注命令给出作者年份信息，作者以主语方式作为正文内容：
-\textcite{赵耀东1998--}
+	\textcite{赵耀东1998--}
 
 8. 在页脚中引用和打印文献表:
-\footnote{在脚注中引用\footcite{赵学功2001--}}  \footfullcite{赵学功2001--}
+	\footnote{在脚注中引用\footcite{赵学功2001--}}  
+	\footfullcite{赵学功2001--}
 
 
 %打印参考文献表
-\printbibliography[heading=bibliography,title=参考文献]
+	\printbibliography[heading=bibliography,title=参考文献]
 \end{document}
 ```
 
 ### 2. Compile method/文档编译方式
 
 ```
-xelatex jobname.tex
-biber jobname
-xelatex jobname.tex
-xelatex jobname.tex
+	xelatex jobname.tex
+	biber jobname
+	xelatex jobname.tex
+	xelatex jobname.tex
 ```
 
 ### 3. Recommended environment/推荐使用环境
