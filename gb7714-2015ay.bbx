@@ -195,12 +195,11 @@
 %=====================================================================
 %   数据模型定义
 %=====================================================================
-%定义类型和载体标识，从gb内容看载体基本属于介质。
-%为与lee zeping的bst的样式统一，使用mark和medium这两域名
-\DeclareDatamodelFields[type=field,datatype=literal]{mark}
-\DeclareDatamodelFields[type=field,datatype=literal]{medium}
-\DeclareDatamodelFields[type=field,datatype=literal]{nameformat}
-\DeclareDatamodelFields[type=field,datatype=integer]{namefmtid}
+    %定义类型和载体标识，从gb内容看载体基本属于介质。
+    %为与lee zeping的bst的样式统一，使用mark和medium这两域名
+    %为单个条目的姓名格式控制增加nameformat和namefmtid两个域
+    \DeclareDatamodelFields[type=field,datatype=literal]{mark,medium,nameformat}
+    \DeclareDatamodelFields[type=field,datatype=integer]{namefmtid}
 
 
 
@@ -277,6 +276,29 @@
       \settoggle{bbx:titlelink}{#1}}
     \ExecuteBibliographyOptions{gbtitlelink}
 
+    %
+    %   增加一个控制参考文献标题是否能够被ctex宏包设置的选项
+    %   v1.0l, 2018.07.02, by hzz
+    %
+    %   原理方法:
+    %   重定义biblatex的宏，去除使用本地化字符串的方式，是的可以利用ctexset进行设置
+    \newtoggle{bbx:ctexset}
+    \DeclareBibliographyOption{gbctexset}[true]{%
+      \settoggle{bbx:ctexset}{#1}}
+    \ExecuteBibliographyOptions{gbctexset}
+
+    \AtEndOfPackage{%
+	\iftoggle{bbx:ctexset}{%
+        \def\blx@defbibstrings#1#2{%
+          \def\do##1{\csundef{abx@lstr@##1}\csundef{abx@sstr@##1}}%
+          \abx@dostrings
+          \csuse{abx@strings@#1}%
+          \setkeys{blx@lbx}{#2}%
+          \let\do\blx@defbibstrings@i
+          \csxdef{abx@strings@#1}{\abx@dostrings}%
+        }
+	}{}}
+
 
     %
     %   增加一个恢复域格式为标准样式的控制选项
@@ -322,16 +344,62 @@
       sortlocale=zh__pinyin,
     }
 
+    %
+    %为日期相关选项增加选项值gb7714-2015
+    %
+    \csdef{mkdaterangegb7714-2015}#1{%
+      \begingroup
+        \blx@metadateinfo{#1}%
+        \iffieldundef{#1year}
+          {}
+          {\printtext[#1date]{%
+             \blx@gbdate{#1}{}}}%
+      \endgroup}
+
+    \newrobustcmd*{\blx@gbdate}[3][]{%
+      \dateeraprintpre{#2#3year}%
+      \blx@imc@forcezerosy{\thefield{#2#3year}}\ifblank{#1}{}{\printfield{#1}}%
+        \iffieldundef{#2#3month}{}{\hyphen\blx@imc@forcezerosmdt{\thefield{#2#3month}}}%
+         \iffieldundef{#2#3day}{}{\hyphen\blx@imc@forcezerosmdt{\thefield{#2#3day}}}}
+
     %为姓名格式选择增加的计数器
     \newcounter{namefmtcase}
     \def\thenamefmtcase{\the\c@namefmtcase}
 
 
+\@ifpackagelater{biblatex}{2016/03/27}
+  {
+    %
+    %   增加序号标签格式处理选项，作者年制不做处理，给出只为兼容选项考虑
+    %   v1.0l，20180623，hzz
+    %
+    \DeclareBibliographyOption[string]{gbbiblabel}[bracket]{}
 
-%
-%   针对biblatex<3.3版本的选项设置，比如texlive2015中的3.0版
-%
-\defversion{3.0}{opt}{
+    %
+    %   增加姓名大小写格式处理选项
+    %
+    \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
+        \ifstrequal{#1}{uppercase}{\setcounter{namefmtcase}{0}}{}%
+        \ifstrequal{#1}{lowercase}{\setcounter{namefmtcase}{1}}{}%
+        \ifstrequal{#1}{givenahead}{\setcounter{namefmtcase}{2}}{}%given-family
+        \ifstrequal{#1}{familyahead}{\setcounter{namefmtcase}{3}}{}
+        \ifstrequal{#1}{pinyin}{\setcounter{namefmtcase}{4}}{}%family-given
+    }
+    \ExecuteBibliographyOptions{gbnamefmt}
+
+    %
+    %   增加标签对齐选项
+    %
+
+    %因为在作者年制中，不需要使用，这里也增加，为了与顺序编码制的兼容性考虑。
+    \DeclareBibliographyOption[string]{gbalign}[right]{}%
+
+    %增加一个处理佚名或noauthor的控制选项
+    \DeclareBibliographyOption{gbnoauthor}[true]{%
+      \ifstrequal{#1}{false}{}{\dealnoathor}}
+    %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能用宏包加载时给出的选项。
+  }
+  {
     %
     %   增加序号标签格式处理选项，作者年制不做处理，给出只为兼容选项考虑
     %   v1.0l，20180623，hzz
@@ -342,11 +410,11 @@
     %   增加姓名大小写格式处理选项
     %
     \DeclareBibliographyOption{gbnamefmt}[uppercase]{%
-        \ifstrequal{##1}{uppercase}{\setcounter{namefmtcase}{0}}{}%
-        \ifstrequal{##1}{lowercase}{\setcounter{namefmtcase}{1}}{}%
-        \ifstrequal{##1}{givenahead}{\setcounter{namefmtcase}{2}}{}%given-family
-        \ifstrequal{##1}{familyahead}{\setcounter{namefmtcase}{3}}{}
-        \ifstrequal{##1}{pinyin}{\setcounter{namefmtcase}{4}}{}%family-given
+        \ifstrequal{#1}{uppercase}{\setcounter{namefmtcase}{0}}{}%
+        \ifstrequal{#1}{lowercase}{\setcounter{namefmtcase}{1}}{}%
+        \ifstrequal{#1}{givenahead}{\setcounter{namefmtcase}{2}}{}%given-family
+        \ifstrequal{#1}{familyahead}{\setcounter{namefmtcase}{3}}{}
+        \ifstrequal{#1}{pinyin}{\setcounter{namefmtcase}{4}}{}%family-given
     }
     \ExecuteBibliographyOptions{gbnamefmt}
 
@@ -358,142 +426,45 @@
 
     %增加一个处理佚名或noauthor的控制选项
     \DeclareBibliographyOption{gbnoauthor}[true]{%
-      \ifstrequal{##1}{false}{}{\dealnoathor}}
+      \ifstrequal{#1}{false}{}{\dealnoathor}}
     %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能用宏包加载时给出的选项。
+  }
 
-    %
-    %   选项设置
-    %
+
+%
+%   针对biblatex<3.3版本的选项设置，比如texlive2015中的3.0版
+%
+\defversion{3.0}{opt}{
     \ExecuteBibliographyOptions{
       firstinits = true,    %名字有缩写，参考3.1.2.3 Internal
     }
 }
-
 %
 %   针对3.3<=biblatex<3.5版本的选项设置，比如texlive2016中的3.4版
 %
 \defversion{3.4}{opt}{
-    %
-    %   增加序号标签格式处理选项，作者年制不做处理，给出只为兼容选项考虑
-    %   v1.0l，20180623，hzz
-    %
-    \DeclareBibliographyOption[string]{gbbiblabel}[bracket]{}
-
-    %
-    %   增加姓名大小写格式处理选项
-    %
-    \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
-        \ifstrequal{##1}{uppercase}{\setcounter{namefmtcase}{0}}{}%
-        \ifstrequal{##1}{lowercase}{\setcounter{namefmtcase}{1}}{}%
-        \ifstrequal{##1}{givenahead}{\setcounter{namefmtcase}{2}}{}%given-family
-        \ifstrequal{##1}{familyahead}{\setcounter{namefmtcase}{3}}{}
-        \ifstrequal{##1}{pinyin}{\setcounter{namefmtcase}{4}}{}%family-given
-    }
-    \ExecuteBibliographyOptions{gbnamefmt}
-
-    %
-    %   增加标签对齐选项
-    %
-
-    %因为在作者年制中，不需要使用，这里也增加，为了与顺序编码制的兼容性考虑。
-    \DeclareBibliographyOption[string]{gbalign}[right]{}%
-
-    %增加一个处理佚名或noauthor的控制选项
-    \DeclareBibliographyOption{gbnoauthor}[true]{%
-      \ifstrequal{##1}{false}{}{\dealnoathor}}
-    %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能用宏包加载时给出的选项。
-
-    %
-    %   选项设置
-    %
     \ExecuteBibliographyOptions{
       giveninits = true,
     }
 }
-
 %
 %   针对3.7<=biblatex<=3.9版本的选项设置，比如texlive2017中的3.7版
 %
 \defversion{3.7}{opt}{
-    %
-    %   增加序号标签格式处理选项，作者年制不做处理，给出只为兼容选项考虑
-    %   v1.0l，20180623，hzz
-    %
-    \DeclareBibliographyOption[string]{gbbiblabel}[bracket]{}
-
-    %
-    %   增加姓名大小写格式处理选项
-    %
-    \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
-        \ifstrequal{##1}{uppercase}{\setcounter{namefmtcase}{0}}{}%
-        \ifstrequal{##1}{lowercase}{\setcounter{namefmtcase}{1}}{}%
-        \ifstrequal{##1}{givenahead}{\setcounter{namefmtcase}{2}}{}%given-family
-        \ifstrequal{##1}{familyahead}{\setcounter{namefmtcase}{3}}{}
-        \ifstrequal{##1}{pinyin}{\setcounter{namefmtcase}{4}}{}%family-given
-    }
-    \ExecuteBibliographyOptions{gbnamefmt}
-
-    %
-    %   增加标签对齐选项
-    %
-    %因为在作者年制中，不需要使用，这里也增加，为了与顺序编码制的兼容性考虑。
-    \DeclareBibliographyOption[string]{gbalign}[right]{}%
-
-    %增加一个处理佚名或noauthor的控制选项
-    \DeclareBibliographyOption{gbnoauthor}[true]{%
-      \ifstrequal{##1}{false}{}{\dealnoathor}}
-    %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能用宏包加载时给出的选项。
-
-    %
-    %   选项设置
-    %
     \ExecuteBibliographyOptions{
       giveninits = true,
       urldate =edtf,
       eventdate =edtf,
     }
 }
-
 %
 %   针对3.10<=biblatex版本的选项设置，比如texlive2018中的3.11版
 %
-    \defversion{3.10}{opt}{
-    %
-    %   增加序号标签格式处理选项，作者年制不做处理，给出只为兼容选项考虑
-    %   v1.0l，20180623，hzz
-    %
-    \DeclareBibliographyOption[string]{gbbiblabel}[bracket]{}
-
-    %
-    %   增加姓名大小写格式处理选项
-    %
-    \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
-        \ifstrequal{##1}{uppercase}{\setcounter{namefmtcase}{0}}{}%
-        \ifstrequal{##1}{lowercase}{\setcounter{namefmtcase}{1}}{}%
-        \ifstrequal{##1}{givenahead}{\setcounter{namefmtcase}{2}}{}%given-family
-        \ifstrequal{##1}{familyahead}{\setcounter{namefmtcase}{3}}{}
-        \ifstrequal{##1}{pinyin}{\setcounter{namefmtcase}{4}}{}%family-given
-    }
-    \ExecuteBibliographyOptions{gbnamefmt}
-
-    %
-    %   增加标签对齐选项
-    %
-    %   原理方法:因为在作者年制中，不需要使用，这里也增加，为了与顺序编码制的兼容性考虑。
-    \DeclareBibliographyOption[string]{gbalign}[right]{}%
-
-    %增加一个处理佚名或noauthor的控制选项
-    \DeclareBibliographyOption{gbnoauthor}[true]{%
-      \ifstrequal{##1}{false}{}{\dealnoathor}}
-    %\ExecuteBibliographyOptions{gbnoauthor=true}%对于需要展开较早(展开层级优先)的选项，这一执行无效，只能用宏包加载时给出的选项。
-
-    %
-    %   选项设置
-    %
+\defversion{3.10}{opt}{
     \ExecuteBibliographyOptions{
       giveninits = true,
-      urldate =iso,
-      eventdate =iso,
+      urldate =gb7714-2015,%iso
+      eventdate =gb7714-2015,%iso
     }
 }
 
@@ -517,8 +488,6 @@
     %   新建当地化字符串，用来记录“等”字符
     %
     \NewBibliographyString{andotherscn}
-    \NewBibliographyString{noaddress}
-    \NewBibliographyString{nopublisher}
 
     %
     %   修改一些当地化字符串
@@ -526,15 +495,13 @@
     %   原理方法:直接利用当地化格式english修改出一些中文的格式，具体修改内容参考english.lbx文件
     %   当然也可以增加比如上面定义的andotherscn
     %   注意:在lbx文件和bbx文件中定义本地字符串的不同语法，两个参数和一个参数的区别
-\DefineBibliographyStrings{english}{
+    \DefineBibliographyStrings{english}{
         bibliography     = {\str@bibliography},
         references       = {\str@references},
-    bytranslator= {\addcomma\ \str@bytranslator\adddot}, %将trans. by 改成 译
-    and         = {\addcomma},%将第2和3人名见的and符号改成 逗号，用\finalnamedelim命令也可以定义，参见3.9.1节
-    %andothers   = {et al.},        %将超过3个人名的省略，et al.改成为 等
+        bytranslator= {\addcomma\ \str@bytranslator\adddot}, %将trans. by 改成 译
+        and         = {\addcomma},%将第2和3人名见的and符号改成 逗号，用\finalnamedelim命令也可以定义，参见3.9.1节
+        %andothers   = {et al.},        %将超过3个人名的省略，et al.改成为 等
         andotherscn   = {\str@andotherscn},     %将超过3个人名的省略，et al.改成为 等
-    noaddress = {[S.l.]},
-    nopublisher = {[s.n.]},
         backrefpage = {\str@backrefpage:},
         backrefpages = {\str@backrefpages:},
         in={in\intitlepunct},
@@ -1574,7 +1541,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     %   原理方法:加上printtext避免破坏异步标点机制
     %
     \newbibmacro*{newsdate}{%%
-    \printtext{\blx@isodate{}{}}%%
+    \printtext{\blx@gbdate{}{}}%%
     }
 
     \newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示电子资源的更新和修改日期，而公告日期则按日期格式
@@ -1582,7 +1549,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
                 \iffieldundef{endyear}{\iffieldundef{eventyear}{}{\printtext{(}\printeventdate\printtext{)}}}%
                 {\printtext{(}\printenddate\printtext{)}}%
         }{\iffieldequalstr{year}{}{%因为year存在，但为空
-            }{\printtext{(}\blx@isodate{}{}\printtext{)}}%
+            }{\printtext{(}\blx@gbdate{}{}\printtext{)}}%
          }%
     }%
 }

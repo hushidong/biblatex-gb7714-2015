@@ -1,19 +1,95 @@
 \documentclass[twoside]{article}
     \usepackage{ctex}
     \usepackage{xcolor}
+    \usepackage{toolbox}
     \usepackage{hyperref}
     \usepackage{lipsum}
     \usepackage[top=10pt,bottom=10pt,left=1cm,right=1cm,showframe,showcrop]{geometry}
 
-\usepackage[backend=biber,style=gb7714-2015ay,gbalign=gb7714-2015,gbbiblabel=bracket]{biblatex}
-%\usepackage[backend=biber,style=gb7714-2015,gbalign=gb7714-2015,gbbiblabel=bracket]{biblatex}
+%\usepackage[backend=biber,style=chem-biochem]{biblatex}
+%\usepackage[backend=biber,style=gb7714-2015ay,gbalign=gb7714-2015,gbbiblabel=bracket]{biblatex}
+\usepackage[backend=biber,style=gb7714-2015,gbalign=center,gbbiblabel=bracket]{biblatex}
 %\setlength{\bibhang}{0pt}
 %\setlength{\bibitemindent}{0em}
 
 %\usepackage[backend=biber,style=numeric-comp,giveninits=false]{biblatex}%giveninits=false
 
+%\csdef{mkdaterangegb7714-2015}#1{#1}
+
 \usepackage{filecontents}
 \begin{filecontents}{\jobname.bib}
+
+
+
+
+@patent{IEEEexample:jppat,
+  author        = "U. Hideki",
+  title         = "Quadrature Modulation Circuit",
+  type          = "patentjp",
+  number        = "152932/92",
+  year          = "1992-05-20"
+}
+
+@patent{IEEEexample:frenchpatreq,
+  author        = "F. Kowalik and M. Isard",
+  title         = "Estimateur d'un D{\'e}faut de Fonctionnement
+                   d'un Modulateur en Quadrature et {\'E}tage de Modulation
+                   l'Utilisant",
+  language      = "french",
+  type          = "French Patent Request",
+  number        = "9500261",
+  year          = "1995-01-11"
+}
+
+@patent{IEEEexample:uspat,
+  author        = "Ronald E. Sorace and Victor S. Reinhardt and
+                   Steven A. Vaughn",
+  holder        = "Hughes Aircraft Company",
+  location      = "Los Angeles, CA",
+  title         = "High-Speed Digital-to-{RF} Converter",
+  type          = "patentus",
+  number        = "5668842",
+  yearfiled     = "1995-02-28",
+  year          = "1997-09-16",
+}
+
+
+@inbook{IEEEexample:repeatedauthorone,
+  author    = "W. Dai and H. V. Pham and O. Milenkovic",
+  title     = "Distortion-rate functions for quantized compressive sensing",
+  booktitle =
+    "IEEE Information Theory Workshop on Networking and Information Theory",
+  year      = "2009"
+}
+
+@inbook{IEEEexample:repeatedauthortwo,
+  author    = "W. Dai and H. V. Pham and O. Milenkovic",
+  title     = "comparative study of quantized compressive sensing schemes",
+  booktitle =
+    "IEEE Information Theory Workshop on Networking and Information Theory",
+  year      = "2009"
+}
+
+
+@thesis{IEEEexample:masterstype,
+  author        = "A. Karnik",
+  title         = "Performance of {TCP} Congestion Control with Rate
+                   Feedback: {TCP/ABR} and Rate Adaptive {TCP/IP}",
+  institution   = "Indian Institute of Science",
+  type          = "M. Eng. thesis",
+  location      = "Bangalore, India",
+  year          = "1999-01"
+}
+
+@unpublished{IEEEexample:unpublished,
+  author        = "T. J. Ott and N. Aggarwal",
+  title         = "{TCP} over {ATM}: {ABR} or {UBR}",
+  howpublished  = "Unpublished"
+}
+
+
+
+
 @database{databaseeg,
   AUTHOR = {Zhang, San},
   DATE = {2007},
@@ -648,13 +724,22 @@
 
     \begin{document}
     \section{set title}
-    
+
     \framebox{1}
     \textcircled{12}
-    
+
+    \meaning\mkgbnumlabel
+
+    %\csuse{mkdaterangegb7714-2015}{abc}
+
     created with biblatex v\versionofbiblatex, last revised at \today;\\ \hspace*{1.5em} Style Files (gb7714-2015*.*) have version number: \versionofgbtstyle.
 
 	文献\nocite{*}
+    文献\cite{zhang2009china,abx2007-500-503,丁文祥2000--,Yi2013--,张伯伟2002--,国家环境保护局科技标准司1996-2-3,中国职工教育研究会1985--,白书农1998-146-163,adam2011house,韩吉人1985-90-99,FOURNEY1971-17-38,贾东琴2011-45-52,李强2012-05-03--,张凯军2012-04-05--,AAAS1883--,中华医学会湖北分会1984--,ROSENTHALL1963--,雷光春2012--,WHO1970--,汤万金2013-09-30--,CALMS1965--,马欢2011-27-27}
+    
+    \cite{IEEEexample:jppat,IEEEexample:frenchpatreq,IEEEexample:uspat,
+IEEEexample:repeatedauthorone,IEEEexample:repeatedauthortwo,
+IEEEexample:masterstype,IEEEexample:unpublished}
 
     \printbibliography
 

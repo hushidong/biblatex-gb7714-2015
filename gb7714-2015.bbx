@@ -32,21 +32,15 @@
     %   20180405，v1.0k，为兼容biblatexv3.11增加toggle:iftlnine，HU zhenzhen
     %
     %   原理方法:当版本继续更新时，增加一个新的toggle用以处理新的旧版，最新版和未判断出来的版本永远用iftlatest
-    \providetoggle{iftlfive}%用于处理biblatex3.2之前的版本
-    \providetoggle{iftlsix}%用于处理biblatex3.3开始改变的新的姓名机制后版本
-    \providetoggle{iftlseven}%用于处理biblatex3.7的兼容性
-    \providetoggle{iftleight}%用于处理biblatex3.8到3.9的兼容性
-    \providetoggle{iftlnine}%用于处理biblatex10的兼容性
-    \providetoggle{iftlatest}%用于最新版biblatex，目前是biblatex3.11，20180402
+    \providetoggle{iftlfive}\togglefalse{iftlfive}%用于处理biblatex3.2之前的版本
+    \providetoggle{iftlsix}\togglefalse{iftlsix}%用于处理biblatex3.3开始改变的新的姓名机制后版本
+    \providetoggle{iftlseven}\togglefalse{iftlseven}%用于处理biblatex3.7的兼容性
+    \providetoggle{iftleight}\togglefalse{iftleight}%用于处理biblatex3.8到3.9的兼容性
+    \providetoggle{iftlnine}\togglefalse{iftlnine}%用于处理biblatex10的兼容性
+    \providetoggle{iftlatest}\toggletrue{iftlatest}%假设是最新版biblatex
     \StrBefore{\abx@version}{.}[\numinteger]%以点区分整数和小数
     \StrBehind{\abx@version}{.}[\numdigital]%小数部分可能带字母所以需将其去掉，见下一行代码
     \IfInteger{\numdigital}{}{\StrGobbleRight{\numdigital}{1}[\numdigital]}
-    \togglefalse{iftlfive}
-    \togglefalse{iftlsix}
-    \togglefalse{iftlseven}
-    \togglefalse{iftleight}
-    \togglefalse{iftlnine}
-    \toggletrue{iftlatest}
     \ifnumcomp{\numinteger}{=}{3}{
         \ifnumcomp{\numdigital}{=}{10}{\toggletrue{iftlnine}\togglefalse{iftlatest}}{}%3.10版本
         \ifnumcomp{\numdigital}{<}{10}{\ifnumcomp{\numdigital}{>}{7}{\toggletrue{iftleight}\togglefalse{iftlatest}}{}}{}%>3.8版本用iftleight=true表示
@@ -198,12 +192,11 @@
 %=====================================================================
 %   数据模型定义
 %=====================================================================
-%定义类型和载体标识，从gb内容看载体基本属于介质。
-%为与lee zeping的bst的样式统一，使用mark和medium这两域名
-\DeclareDatamodelFields[type=field,datatype=literal]{mark}
-\DeclareDatamodelFields[type=field,datatype=literal]{medium}
-\DeclareDatamodelFields[type=field,datatype=literal]{nameformat}
-\DeclareDatamodelFields[type=field,datatype=integer]{namefmtid}
+    %定义类型和载体标识，从gb内容看载体基本属于介质。
+    %为与lee zeping的bst的样式统一，使用mark和medium这两域名
+    %为单个条目的姓名格式控制增加nameformat和namefmtid两个域
+    \DeclareDatamodelFields[type=field,datatype=literal]{mark,medium,nameformat}
+    \DeclareDatamodelFields[type=field,datatype=integer]{namefmtid}
 
 
 
@@ -280,6 +273,30 @@
       \settoggle{bbx:titlelink}{#1}}
     \ExecuteBibliographyOptions{gbtitlelink}
 
+    %
+    %   增加一个控制参考文献标题是否能够被ctex宏包设置的选项
+    %   v1.0l, 2018.07.02, by hzz
+    %
+    %   原理方法:
+    %   重定义biblatex的宏，去除使用本地化字符串的方式，是的可以利用ctexset进行设置
+    \newtoggle{bbx:ctexset}
+    \DeclareBibliographyOption{gbctexset}[true]{%
+      \settoggle{bbx:ctexset}{#1}}
+    \ExecuteBibliographyOptions{gbctexset}
+
+    \AtEndOfPackage{%
+	\iftoggle{bbx:ctexset}{%
+        \def\blx@defbibstrings#1#2{%
+          \def\do##1{\csundef{abx@lstr@##1}\csundef{abx@sstr@##1}}%
+          \abx@dostrings
+          \csuse{abx@strings@#1}%
+          \setkeys{blx@lbx}{#2}%
+          \let\do\blx@defbibstrings@i
+          \csxdef{abx@strings@#1}{\abx@dostrings}%
+        }
+	}{}}
+
+
 
     %
     %   增加一个恢复域格式为标准样式的控制选项
@@ -332,33 +349,83 @@
       isbn=false,
     }
 
+    %
+    %为日期相关选项增加选项值gb7714-2015
+    %
+    \csdef{mkdaterangegb7714-2015}#1{%
+      \begingroup
+        \blx@metadateinfo{#1}%
+        \iffieldundef{#1year}
+          {}
+          {\printtext[#1date]{%
+             \blx@gbdate{#1}{}}}%
+      \endgroup}
+
+    \newrobustcmd*{\blx@gbdate}[3][]{%
+      \dateeraprintpre{#2#3year}%
+      \blx@imc@forcezerosy{\thefield{#2#3year}}\ifblank{#1}{}{\printfield{#1}}%
+        \iffieldundef{#2#3month}{}{\hyphen\blx@imc@forcezerosmdt{\thefield{#2#3month}}}%
+         \iffieldundef{#2#3day}{}{\hyphen\blx@imc@forcezerosmdt{\thefield{#2#3day}}}}
+
+
     %为姓名格式选择增加的计数器
     \newcounter{namefmtcase}
     \def\thenamefmtcase{\the\c@namefmtcase}
 
-    %为数字标签格式选择增加的计数器
-    \newcounter{bibnumlabel}
-    \def\thebibnumlabel{\the\c@bibnumlabel}
+    %为数字标签格式选择增加的计数器/命令
+    %\newcounter{bibnumlabel}
+    %\def\thebibnumlabel{\the\c@bibnumlabel}
+    \newcommand{\mkgbnumlabel}[1]{\mkbibbrackets{#1}}
+    \def\gbbiblabelopt@bracket{\renewcommand{\mkgbnumlabel}[1]{\mkbibbrackets{##1}}}
+    \def\gbbiblabelopt@parens{\renewcommand{\mkgbnumlabel}[1]{\mkbibparens{##1}}}
+    \def\gbbiblabelopt@dot{\renewcommand{\mkgbnumlabel}[1]{##1\adddot}}
+    \def\gbbiblabelopt@plain{\renewcommand{\mkgbnumlabel}[1]{##1}}
+    \def\gbbiblabelopt@box{\renewcommand{\mkgbnumlabel}[1]{\framebox{##1}}}
+    \def\gbbiblabelopt@circle{\renewcommand{\mkgbnumlabel}[1]{\textcircled{##1}}}
     \newcounter{alignlabel}
     \def\thealignlabel{\the\c@alignlabel}
 
 
+\@ifpackagelater{biblatex}{2016/03/27}
+  { % 针对biblatex>=3.3版本的选项设置
+    %   增加序号标签格式处理选项
+    %   v1.0l，20180623，hzz
+    %
+    \DeclareBibliographyOption[string]{gbbiblabel}[bracket]{%
+        \csuse{gbbiblabelopt@#1}
+    }
+    \ExecuteBibliographyOptions{gbbiblabel}
 
-%
-%   针对biblatex<3.3版本的选项设置，比如texlive2015中的3.0版
-%
-\defversion{3.0}{opt}{
+    %
+    %   增加姓名大小写格式处理选项
+    %
+    \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
+        \ifstrequal{#1}{uppercase}{\setcounter{namefmtcase}{0}}{}%
+        \ifstrequal{#1}{lowercase}{\setcounter{namefmtcase}{1}}{}%
+        \ifstrequal{#1}{givenahead}{\setcounter{namefmtcase}{2}}{}%given-family
+        \ifstrequal{#1}{familyahead}{\setcounter{namefmtcase}{3}}{}
+        \ifstrequal{#1}{pinyin}{\setcounter{namefmtcase}{4}}{}%family-given
+    }
+    \ExecuteBibliographyOptions{gbnamefmt}
+
+    %
+    %   增加标签对齐选项
+    %
+    %   right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
+    \DeclareBibliographyOption[string]{gbalign}[right]{%
+        \ifstrequal{#1}{right}{\setcounter{alignlabel}{0}}{}
+        \ifstrequal{#1}{left}{\setcounter{alignlabel}{1}}{}
+        \ifstrequal{#1}{center}{\setcounter{alignlabel}{2}}{}
+        \ifstrequal{#1}{gb7714-2015}{\setaligngbstyle}{}
+    }
+  }
+  {% 针对biblatex<3.3版本的选项设置
     %
     %   增加序号标签格式处理选项
     %   v1.0l，20180623，hzz
     %
     \DeclareBibliographyOption{gbbiblabel}[bracket]{%
-        \ifstrequal{##1}{bracket}{\setcounter{bibnumlabel}{0}}{}%
-        \ifstrequal{##1}{parens}{\setcounter{bibnumlabel}{1}}{}%
-        \ifstrequal{##1}{dot}{\setcounter{bibnumlabel}{2}}{}%
-        \ifstrequal{##1}{plain}{\setcounter{bibnumlabel}{3}}{}
-        \ifstrequal{##1}{box}{\setcounter{bibnumlabel}{4}}{}%
-        \ifstrequal{##1}{circle}{\setcounter{bibnumlabel}{5}}{}%
+        \csuse{gbbiblabelopt@#1}
     }
     \ExecuteBibliographyOptions{gbbiblabel}
 
@@ -366,11 +433,11 @@
     %   增加姓名大小写格式处理选项
     %
     \DeclareBibliographyOption{gbnamefmt}[uppercase]{%
-        \ifstrequal{##1}{uppercase}{\setcounter{namefmtcase}{0}}{}%
-        \ifstrequal{##1}{lowercase}{\setcounter{namefmtcase}{1}}{}%
-        \ifstrequal{##1}{givenahead}{\setcounter{namefmtcase}{2}}{}%given-family
-        \ifstrequal{##1}{familyahead}{\setcounter{namefmtcase}{3}}{}
-        \ifstrequal{##1}{pinyin}{\setcounter{namefmtcase}{4}}{}%family-given
+        \ifstrequal{#1}{uppercase}{\setcounter{namefmtcase}{0}}{}%
+        \ifstrequal{#1}{lowercase}{\setcounter{namefmtcase}{1}}{}%
+        \ifstrequal{#1}{givenahead}{\setcounter{namefmtcase}{2}}{}%given-family
+        \ifstrequal{#1}{familyahead}{\setcounter{namefmtcase}{3}}{}
+        \ifstrequal{#1}{pinyin}{\setcounter{namefmtcase}{4}}{}%family-given
     }
     \ExecuteBibliographyOptions{gbnamefmt}
 
@@ -381,173 +448,50 @@
     %   因为在这种biblatex低版本中，舍弃了list类环境后，会出错。
     %   注意:texlive2015中的3.0版中的DeclareBibliographyOption选项没有类型说明
     \DeclareBibliographyOption{gbalign}[right]{%
-        \ifstrequal{##1}{right}{\setcounter{alignlabel}{0}}{}
-        \ifstrequal{##1}{left}{\setcounter{alignlabel}{1}}{}
-        \ifstrequal{##1}{center}{\setcounter{alignlabel}{2}}{}
-        \ifstrequal{##1}{gb7714-2015}{}{}
+        \ifstrequal{#1}{right}{\setcounter{alignlabel}{0}}{}
+        \ifstrequal{#1}{left}{\setcounter{alignlabel}{1}}{}
+        \ifstrequal{#1}{center}{\setcounter{alignlabel}{2}}{}
+        \ifstrequal{#1}{gb7714-2015}{}{}
     }
+  }
 
-    %
-    %   选项设置
-    %
+
+%
+%   针对biblatex<3.3版本的选项设置，比如texlive2015中的3.0版
+%
+\defversion{3.0}{opt}{
     \ExecuteBibliographyOptions{
       firstinits=true, %名字有缩写，参考3.1.2.3 Internal
     }
 }
-
-
 %
 %   针对3.3<=biblatex<3.5版本的选项设置，比如texlive2016中的3.4版
 %
 \defversion{3.4}{opt}{
-    %
-    %   增加序号标签格式处理选项
-    %   v1.0l，20180623，hzz
-    %
-    \DeclareBibliographyOption[string]{gbbiblabel}[bracket]{%
-        \ifstrequal{##1}{bracket}{\setcounter{bibnumlabel}{0}}{}%
-        \ifstrequal{##1}{parens}{\setcounter{bibnumlabel}{1}}{}%
-        \ifstrequal{##1}{dot}{\setcounter{bibnumlabel}{2}}{}%
-        \ifstrequal{##1}{plain}{\setcounter{bibnumlabel}{3}}{}
-        \ifstrequal{##1}{box}{\setcounter{bibnumlabel}{4}}{}%
-        \ifstrequal{##1}{circle}{\setcounter{bibnumlabel}{5}}{}%
-    }
-    \ExecuteBibliographyOptions{gbbiblabel}
-
-    %
-    %   增加姓名大小写格式处理选项
-    %
-    \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
-        \ifstrequal{##1}{uppercase}{\setcounter{namefmtcase}{0}}{}%
-        \ifstrequal{##1}{lowercase}{\setcounter{namefmtcase}{1}}{}%
-        \ifstrequal{##1}{givenahead}{\setcounter{namefmtcase}{2}}{}%given-family
-        \ifstrequal{##1}{familyahead}{\setcounter{namefmtcase}{3}}{}
-        \ifstrequal{##1}{pinyin}{\setcounter{namefmtcase}{4}}{}%family-given
-    }
-    \ExecuteBibliographyOptions{gbnamefmt}
-
-    %
-    %   增加标签对齐选项
-    %
-    %   right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
-    \DeclareBibliographyOption[string]{gbalign}[right]{%
-        \ifstrequal{##1}{right}{\setcounter{alignlabel}{0}}{}
-        \ifstrequal{##1}{left}{\setcounter{alignlabel}{1}}{}
-        \ifstrequal{##1}{center}{\setcounter{alignlabel}{2}}{}
-        \ifstrequal{##1}{gb7714-2015}{\setaligngbstyle}{}
-    }
-
-    %
-    %   选项设置
-    %
     \ExecuteBibliographyOptions{
       giveninits=true, %名字有缩写，参考3.1.2.3 Internal
     }
 }
-
-
 %
 %   针对3.7<=biblatex<=3.9版本的选项设置，比如texlive2017中的3.7版
 %
 \defversion{3.7}{opt}{
-    %
-    %   增加序号标签格式处理选项
-    %   v1.0l，20180623，hzz
-    %
-    \DeclareBibliographyOption[string]{gbbiblabel}[bracket]{%
-        \ifstrequal{##1}{bracket}{\setcounter{bibnumlabel}{0}}{}%
-        \ifstrequal{##1}{parens}{\setcounter{bibnumlabel}{1}}{}%
-        \ifstrequal{##1}{dot}{\setcounter{bibnumlabel}{2}}{}%
-        \ifstrequal{##1}{plain}{\setcounter{bibnumlabel}{3}}{}
-        \ifstrequal{##1}{box}{\setcounter{bibnumlabel}{4}}{}%
-        \ifstrequal{##1}{circle}{\setcounter{bibnumlabel}{5}}{}%
-    }
-    \ExecuteBibliographyOptions{gbbiblabel}
-
-    %
-    %   增加姓名大小写格式处理选项
-    %
-    \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
-        \ifstrequal{##1}{uppercase}{\setcounter{namefmtcase}{0}}{}%
-        \ifstrequal{##1}{lowercase}{\setcounter{namefmtcase}{1}}{}%
-        \ifstrequal{##1}{givenahead}{\setcounter{namefmtcase}{2}}{}%given-family
-        \ifstrequal{##1}{familyahead}{\setcounter{namefmtcase}{3}}{}
-        \ifstrequal{##1}{pinyin}{\setcounter{namefmtcase}{4}}{}%family-given
-    }
-    \ExecuteBibliographyOptions{gbnamefmt}
-
-    %
-    %   增加标签对齐选项
-    %
-    %   right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
-    \DeclareBibliographyOption[string]{gbalign}[right]{%
-        \ifstrequal{##1}{right}{\setcounter{alignlabel}{0}}{}
-        \ifstrequal{##1}{left}{\setcounter{alignlabel}{1}}{}
-        \ifstrequal{##1}{center}{\setcounter{alignlabel}{2}}{}
-        \ifstrequal{##1}{gb7714-2015}{\setaligngbstyle}{}
-    }
-
-    %
-    %   选项设置
-    %
     \ExecuteBibliographyOptions{
       giveninits=true,
       urldate =edtf, %iso8601
       eventdate =edtf,
     }
 }
-
 %
 %   针对3.10<=biblatex版本的选项设置，比如texlive2018中的3.11版
 %
 \defversion{3.10}{opt}{
-    %
-    %   增加序号标签格式处理选项
-    %   v1.0l，20180623，hzz
-    %
-    \DeclareBibliographyOption[string]{gbbiblabel}[bracket]{%
-        \ifstrequal{##1}{bracket}{\setcounter{bibnumlabel}{0}}{}%
-        \ifstrequal{##1}{parens}{\setcounter{bibnumlabel}{1}}{}%
-        \ifstrequal{##1}{dot}{\setcounter{bibnumlabel}{2}}{}%
-        \ifstrequal{##1}{plain}{\setcounter{bibnumlabel}{3}}{}
-        \ifstrequal{##1}{box}{\setcounter{bibnumlabel}{4}}{}%
-        \ifstrequal{##1}{circle}{\setcounter{bibnumlabel}{5}}{}%
-    }
-    \ExecuteBibliographyOptions{gbbiblabel}
-
-    %
-    %   增加姓名大小写格式处理选项
-    %
-    \DeclareBibliographyOption[string]{gbnamefmt}[uppercase]{%
-        \ifstrequal{##1}{uppercase}{\setcounter{namefmtcase}{0}}{}%
-        \ifstrequal{##1}{lowercase}{\setcounter{namefmtcase}{1}}{}%
-        \ifstrequal{##1}{givenahead}{\setcounter{namefmtcase}{2}}{}%given-family
-        \ifstrequal{##1}{familyahead}{\setcounter{namefmtcase}{3}}{}
-        \ifstrequal{##1}{pinyin}{\setcounter{namefmtcase}{4}}{}%family-given
-    }
-    \ExecuteBibliographyOptions{gbnamefmt}
-
-    %
-    %   增加标签对齐选项
-    %
-    %   right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
-    \DeclareBibliographyOption[string]{gbalign}[right]{%
-        \ifstrequal{##1}{right}{\setcounter{alignlabel}{0}}{}
-        \ifstrequal{##1}{left}{\setcounter{alignlabel}{1}}{}
-        \ifstrequal{##1}{center}{\setcounter{alignlabel}{2}}{}
-        \ifstrequal{##1}{gb7714-2015}{\setaligngbstyle}{}
-    }
-
-    %
-    %   选项设置
-    %
     \ExecuteBibliographyOptions{
       giveninits=true,
-      urldate =iso, %iso8601，edtf
-      eventdate =iso,
+      urldate =gb7714-2015, %iso，iso8601，edtf
+      eventdate =gb7714-2015,
     }
 }
-
 
 %
 %   根据biblatex版本信息，选择选项设置
@@ -569,8 +513,6 @@
     %   新建当地化字符串，用来记录“等”字符
     %
     \NewBibliographyString{andotherscn}
-    \NewBibliographyString{noaddress}
-    \NewBibliographyString{nopublisher}
 
     %
     %   修改一些当地化字符串
@@ -587,8 +529,6 @@
         and         = {\addcomma},%将第2和3人名见的and符号改成 逗号，用\finalnamedelim命令也可以定义，参见3.9.1节
         %andothers   = {et al.},  %将超过3个人名的省略，et al.改成为 等
         andotherscn   = {\str@andotherscn},     %将超过3个人名的省略，et al.改成为 等
-        noaddress = {[S.l.]},
-        nopublisher = {[s.n.]},
         backrefpage = {\str@backrefpage:},
         backrefpages = {\str@backrefpages:},
         in={in\intitlepunct},
@@ -964,7 +904,6 @@
 %=====================================================================
 %   参考文献表环境
 %=====================================================================
-
 %
 %   列表格式
 %
@@ -1004,47 +943,11 @@
 %   \DeclareFieldFormat{labelnumberwidth}{\ttfamily\mkbibbrackets{#1}\hfill}
 \DeclareFieldFormat{labelnumberwidth}{%
 \ifcase\value{alignlabel}%右对齐，整个标签为右对齐
-    \ifcase\value{bibnumlabel}
-    \mkbibbrackets{#1}%
-    \or
-    \mkbibparens{#1}%
-    \or
-    {#1\adddot}%
-    \or
-    {#1}%
-    \or
-    \framebox{#1}%
-    \or
-    {\textcircled{#1}}%
-    \fi
+    \mkgbnumlabel{#1}%
 \or%左对齐，整个标签为左对齐
-    \ifcase\value{bibnumlabel}
-    \mkbibbrackets{#1}\hfill%
-    \or
-    \mkbibparens{#1}\hfill%
-    \or
-    {#1\adddot\hfill}%
-    \or
-    {#1\hfill}%
-    \or
-    \framebox{#1}\hfill%
-    \or
-    {\textcircled{#1}\hfill}%
-    \fi
+    \mkgbnumlabel{#1}\hfill%
 \or%中间对齐，比如：序号数字居于[]中间
-    \ifcase\value{bibnumlabel}
-    \mkbibbrackets{\hfill#1\hfill}%
-    \or
-    \mkbibparens{\hfill#1\hfill}%
-    \or
-    {\hfill#1\adddot\hfill}%
-    \or
-    {\hfill#1\hfill}%
-    \or
-    {\hfill\framebox{#1}\hfill}%
-    \or
-    {\hfill\textcircled{#1}\hfill}%
-    \fi
+    \hfil\mkgbnumlabel{\hfill#1\hfill}\hfil%
 \fi}
 
 %
@@ -1082,39 +985,17 @@
 \newlength{\lengthid}
 \newlength{\lengthlw}
 \newcommand{\itemcmd}{%
-\settowidth{\lengthid}{%
-    \ifcase\value{bibnumlabel}
-    \mkbibbrackets{\printfield{labelnumber}}%
-    \or
-    \mkbibparens{\printfield{labelnumber}}%
-    \or
-    {\printfield{labelnumber}\adddot}%
-    \or
-    {\printfield{labelnumber}}%
-    \or
-    \framebox{\printfield{labelnumber}}%
-    \or
-    \textcircled{\printfield{labelnumber}}%
-    \fi}
+\settowidth{\lengthid}{\mkgbnumlabel{\printfield{labelnumber}}}
 \addtolength{\lengthid}{\biblabelsep}
 \setlength{\lengthlw}{\textwidth}
 \addtolength{\lengthlw}{-\lengthid}
 \addvspace{\bibitemsep}%恢复\bibitemsep的作用
 %\parshape 2 0em \textwidth \lengthid \lengthlw
 \hangindent\lengthid
-\ifcase\value{bibnumlabel}%
-    \mkbibbrackets{\printfield{labelnumber}}%
-    \or
-    \mkbibparens{\printfield{labelnumber}}%
-    \or
-    {\printfield{labelnumber}\adddot}%
-    \or
-    {\printfield{labelnumber}}%
-    \or
-    \framebox{\printfield{labelnumber}}%
-    \or
-    \textcircled{\printfield{labelnumber}}%
-    \fi\hspace{\biblabelsep}}
+\mkgbnumlabel{\printfield{labelnumber}}%
+\hspace{\biblabelsep}}
+%
+%   简单的段落环境
 \defbibenvironment{bibliography}
 {\begingroup\setlength{\parindent}{0em}}
 {\endgroup}
@@ -1387,7 +1268,7 @@
 %\DeclareDelimFormat[textcite]{andothersdelim}{\addspace}%
 
 %GB/T 7714-2015 风格，全部大写
-\renewbibmacro*{name:gbuppercase}[4]{\bibauthorfont%
+\newbibmacro*{name:gbuppercase}[4]{\bibauthorfont%
 \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉
 \renewcommand*{\revsdnamepunct}{}%
   \ifuseprefix%
@@ -1415,7 +1296,7 @@
 }
 
 %GB/T 7714-2015 风格，大小写不变，根据bib文件内输入原样输出
-\renewbibmacro*{name:gblowercase}[4]{\bibauthorfont%
+\newbibmacro*{name:gblowercase}[4]{\bibauthorfont%
     \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉
     \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
   \ifuseprefix
@@ -1443,7 +1324,7 @@
 }
 
 %中文常见风格，汉语拼音全拼模式
-\renewbibmacro*{name:gbpinyin}[4]{\bibauthorfont%
+\newbibmacro*{name:gbpinyin}[4]{\bibauthorfont%
 \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
 \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
 \renewrobustcmd*{\bibnamedelima}{\mbox{-}}%
@@ -1604,6 +1485,8 @@
 \renewbibmacro*{url}{\printfield{url}}
 
 
+
+
 %
 %   日期信息的输出格式，针对biblatex<3.7版本
 %
@@ -1685,9 +1568,11 @@
     %   20180405，为biblatexv3.10版本，出现多出点bug做处理，Hu Zhenzhen
     %
     %   原理方法:加上printtext避免破坏异步标点机制
-    %
+    %   本可以用\printdate，但由于date选项设置为year，所以仅会给出年份
+    %   所以无法再用选项设置的方法，印象需要用底层的命令
+    %   这里可以用\blx@isodate，但用\blx@gbdate试图避免版本判断
     \newbibmacro*{newsdate}{%%
-    \printtext{\blx@isodate{}{}}%%
+    \printtext{\blx@gbdate{}{}}%%\blx@isodate{}{}%
     }
 
     \newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示电子资源的更新和修改日期，而公告日期则按日期格式
@@ -1695,7 +1580,7 @@
                 \iffieldundef{endyear}{\iffieldundef{eventyear}{}{\printtext{(}\printeventdate\printtext{)}}}%
                 {\printtext{(}\printenddate\printtext{)}}%
         }{\iffieldequalstr{year}{}{%因为year存在，但为空
-            }{\printtext{(}\blx@isodate{}{}\printtext{)}}%
+            }{\printtext{(}\blx@gbdate{}{}\printtext{)}}%
          }%
     }%
 }

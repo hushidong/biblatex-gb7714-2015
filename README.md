@@ -80,11 +80,15 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
         `\usepackage[backend=biber,style=gb7714-2015,gbpunctin=true]{biblatex}`
 		
+	- add an option `gbctexset` to set the bibliography title's control method. default is `gbctexset=true` with the title can be set by `\bibname` or `\refname` and the printbibliography option `title=title you want`,if `gbpunctin=false`, the title can be set by bibstring like `\DefineBibliographyStrings{english}{bibliography={title you want}}` or `\DefineBibliographyStrings{english}{references={title you want}}` and the printbibliography option `title=title you want`.This option is also for author year style.
+
+        `\usepackage[backend=biber,style=gb7714-2015,gbctexset=true]{biblatex}`
+		
 	- add an option `gbcodegbk` to deal tex file encoded with GBK. if want to compile GBK file with pdflatex or latex，set `gbcodegbk=true` is needed. if compile with xelatex, it should be none or `gbcodegbk=false`. This option is also for author year style.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbcodegbk=false]{biblatex}`
 		
-	- add an option `gbstrict` to control the output of some unnecessary fields for GB/T7714-2015. If want to output them as the standard styles, it should be `gbstrict=false`. defaultly the option is set with `true`. This option is also for author year style.
+	- add an option `gbstrict` to control the output of some unnecessary fields for GB/T7714-2015. If want to output them as the standard styles, it should be `gbstrict=false`. default is `gbstrict=true`. This option is also for author year style.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbstrict=true]{biblatex}`
 		
@@ -119,7 +123,6 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * [fduthesis(复旦大学论文模板)](https://github.com/Stone-Zeng/fduthesis)
 * [ECNU-Undergraduate-LaTeX(华东师范大学本科毕业论文模板)](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)
 * [UCASthesis(中国科学院大学学位论文模板**国科大新版标准**)](https://github.com/xiaoyao9933/UCASthesis)
-* [nuaathesis(南京航空航天大学(非官方)本科生学位 LaTeX 模板)](https://github.com/nuaatug/nuaathesis)
 * [Study-LaTeX(LaTeX学习笔记)](https://github.com/Zousiyu/Study-LaTeX)
 * [LaTeX-template(开箱即用的 LaTeX 模板)](https://github.com/tsai1993/LaTeX-template)
 * [Zhejiang University thesis(浙江大学毕业设计/论文模板)](https://github.com/TheNetAdmin/zjuthesis)
@@ -623,6 +626,12 @@ biber -l zh__stroke jobname
 ## Update history:
 
 date of update: 2018-06-01 to version v1.0l
+
+
+* 增加gbctexset选项设置参考文献标题内容的控制方式，即，除了相同的printbibliography选项方式外，选择是通过 bibname 或 refname 控制还是通过定义本地化字符串 bibliography 或 references 控制。 (20180702)
+
+add an option `gbctexset` to set the bibliography title's control method, i.e. besides the same printbibliography option method, two methods: control by \bibname or \refname and control by DefineBibliographyStrings is selected by this option.
+
 
 * 增加gbbiblabel选项来控制顺序编码制文献表序号标签的格式，即用方括号、圆括号、点、方框、圆圈等来装饰序号数字。(20180623)
 

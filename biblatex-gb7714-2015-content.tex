@@ -350,6 +350,21 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   \lstinline!\DefineBibliographyStrings{english}{in={}}!。
   \end{itemize}
 
+  \item[gbctexset]=\textbf{true}，false. \hfill default is true
+
+  为控制参考文献标题内容的设置方式增加的选项。
+  \begin{itemize}
+    \item gbctexset=true，参考文献标题内容可以通过重定义 bibname 或 refname 宏设置。比如利用ctex宏包进行设置：
+        \lstinline[breaklines]!\ctexset{bibname={title you want}}!
+    \item gbctexset=false，参考文献标题内容可以通过重定义本地字符串设置，比如：
+        
+  \lstinline[breaklines=true]!\DefineBibliographyStrings{english}{bibliography={title you want}}! 
+  
+  \lstinline[breaklines=true]!\DefineBibliographyStrings{english}{references={title you want}}!。
+  \end{itemize}
+  当然除此之外，利用 printbibliography 命令的 title 选项进行设置依然是有效方式之一。比如:
+  
+  \lstinline[breaklines=true]!\printbibliography[title=title you want]!。
 
 
   \item[gbcodegbk]=true，\textbf{false}. \hfill default is false
@@ -672,7 +687,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
   \item[medium] 不用输入，自动处理。也可以输入文献载体标识符比如MT, DK, CD, OL 等。
   \item[language] 不用输入，自动处理。也可以输入语言类型比如english, russian, french, japnese, korean, chinese等。
   \item[langid] 不用输入，自动处理。也可以输入语言名比如english, russian, french等，中日韩语一般用english。
-  \item[nameformat] 不用输入。特别需要调整当前条目的作者姓名的格式时，可以输入格式名：uppercase, lowercase, givenahead, familyahead, pinyin等。
+  \item[nameformat] 不用输入。当需要调整当前条目的作者姓名的格式时，可以输入格式名：uppercase, lowercase, givenahead, familyahead, pinyin等。
   \item[namefmtid] 不用输入。
 \end{description}
 
@@ -697,7 +712,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 %作者年制的参考文献样式则基于标准样式authoryear修改。
 \paragraph{作者年制样式}中各条参考文献条目以作者-年为标签以一定的顺序排列。作者年制的著录格式与顺序编码制基本相同(除了把年份提到了作者后面作为文献条目内的标签)。数据源bib文件中各条目的数据录入与顺序编码制完全一致。
 
-\qd{作者年制有分文种文献集中的要求，因此以nyt模板为基础进行排序，使用language作为name前的排序域。默认情况下，本样式文件将标题(或作者)为中文的文献的language域设置成chinese，英文的设置成enlish。这一设置过程，在biber处理时自动完成。当出现问题或者有更多文种分集且有特殊顺序时，可以在bib文件中为相应文种文献的language域手动设置适合排序的字符串。比如: 中文文献设置为chinese，英文文献设置为enlish，法文文献设置为french，那么排序中，相应的中文文献排在最前面，英文文献在中间，法文文献最后，因为升序情况下字母顺序是c然后e然后f。}
+\qd{作者年制有分文种文献集中的要求，因此gb7714-2015排序模板以nyt模板为基础，增加 language 作为 name 前的排序域。默认情况下，本样式文件将标题(或作者)为中文的文献的 language 域设置成 chinese，英文的设置成 enlish。这一设置过程，在biber 处理时自动完成。当出现问题或者有更多文种分集且有特殊顺序时，可以在bib文件中为相应文种文献的 language 域手动设置适合排序的字符串。比如: 中文文献设置为 chinese，英文文献设置为 enlish，法文文献设置为 french，那么排序中，相应的中文文献排在最前面，英文文献在中间，法文文献最后，因为升序情况下字母顺序是c然后e然后f。}
 
 %上一段2016-1114更新，下面是以前的说法。
 %\qd{根据文种文献集中的要求，修改了nyt排序格式，增加了userb作为name前的排序域，当有需求进行多文种分集且有特殊顺序时，在bib文件中给相应文种的文献设置适合排序的字符串。比如中文文献设置为cn，英文文献设置为en，法文文献设置为fr，那么排序中，相应的中文文献排在最前面，英文文献在中间，法文文献最后，因为升序情况下字母顺序是c然后e然后f。}
@@ -813,11 +828,11 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
   \item 当tex源文档采用UTF-8编码时，可以采用xelatex编译。当tex源文档为GBK 编码时，可以利用notepad++ 或notepad2 等编辑器将其转换为UTF-8编码，然后用xelatex编译，或者也可以直接利用pdflatex或latex进行编译，本样式已经做了支持。
       %增加了对GBK支持的说明，2018-05-11
 
-  \item 当顺序编码和作者年制切换，或者biblatex版本切换时，如果编译出错，可先清理一下辅助文件，完成后再重新编译。
+  \item 当顺序编码和作者年制切换，或者biblatex版本切换，或者不同样式切换时，如果编译出错，可先清理一下辅助文件，完成后再重新编译。
 
   \item 当bibtex键中含有中文的时候，texlive2015中的biblatex3.0版的对参考文献条目的超链接会出现问题，而texlive2016中的biblatex3.4或以后的版本则没有问题。
 
-  \item GB/T 7714-2015中的作者年制要求参考文献按文种集合，且中文在前英文在后。主要通过定义DeclareSortingScheme\{nyt\}(biblatex3.7 以前版本) 或DeclareSortingTemplate\{nyt\}(biblatex3.8以后版本)，利用自动设定的language 域实现排序。默认情况下，样式能基本正确的区分中文和英文文献并排序。当如果出现错误的情况，用户可以手动修改bib源文件，将language 域设置成合适的字符串，用于排序，详见\ref{sec:usage:bbx}节的说明。
+  \item GB/T 7714-2015中的作者年制要求参考文献按文种集合，且中文在前英文在后。主要通过定义DeclareSortingScheme\{gb7714-2015\} (biblatex3.7 以前版本) 或 DeclareSortingTemplate\{gb7714-2015\} (biblatex3.8以后版本)，利用自动设定的language 域实现排序。默认情况下，样式能基本正确的区分中文和英文文献并排序。当如果出现错误的情况，用户可以手动修改bib源文件，将language 域设置成合适的字符串，用于排序，详见\ref{sec:usage:bbx}节的说明。
 
 %上一段2016-1114更新，下面这段是旧的说法，
 %通过定义DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现中文在前英文在后但两个文种的文献各自也是降序的。还有一种变通的方法是，在录入bib文件时，在userb域填入用于排序的信息，比如需要排前面中文文献填cn，排后面的英文文献用en。这样因为修改后的排序格式nyt会在author域前先用userb进行排序，自然会把中文文献放在前面。

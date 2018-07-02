@@ -22,7 +22,7 @@
 \ExecuteBibliographyOptions{
   autocite  = superscript ,
   autopunct = true       ,
-  sorting   = none        ,
+  %sorting   = none        ,
   maxcitenames=1,
   mincitenames=1,
 }
@@ -30,26 +30,32 @@
 %textcite标注命令中的标点设置
 %\DeclareDelimFormat[textcite]{andothersdelim}{\addspace}%
 
+%
+%   定义一个上标方括号wrapper
+%
+\newcommand*\mkbibsuperbracket[1]{%
+  \mkbibsuperscript{\mkbibbrackets{#1}}%
+}
 
 %
 %   重定义cite命令
 %
 %   方法:\DeclareCiteCommand{\cite}[\mkbibparens]{precode}{loopcode}{sepcode}{postcode}
-\DeclareCiteCommand{\cite}[\mkbibsuperscript]
-  {[\usebibmacro{cite:init}%直接添加方括号
+\DeclareCiteCommand{\cite}[\mkbibsuperbracket]%利用mkbibsuperbracket添加方括号
+  {\usebibmacro{cite:init}
    \usebibmacro{prenote}}
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:comp}}
   {}
   {\usebibmacro{cite:dump}%
-   \usebibmacro{postnote}]}
+   \usebibmacro{postnote}}
 
 %
 %   定义upcite命令
 %   20180604，v1.0l，hzz
 %   方法:对supercite增加[]
-\DeclareCiteCommand{\upcite}[\mkbibsuperscript]
-  {[\usebibmacro{cite:init}%]
+\DeclareCiteCommand{\upcite}[\mkbibsuperbracket]
+  {\usebibmacro{cite:init}
    \let\multicitedelim=\supercitedelim
    \iffieldundef{prenote}
      {}
@@ -60,7 +66,7 @@
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:comp}}
   {}
-  {\usebibmacro{cite:dump}]}
+  {\usebibmacro{cite:dump}}
 
 %
 %   新定义pagescite命令，以满足标签带页码的国标要求
@@ -75,7 +81,7 @@
     {\printfield{postnote}}}
 %   3.新增\pagescite引用命令
 \DeclareCiteCommand{\pagescite}[\mkbibsuperscript]%\mkbibbrackets,仍然用上标
-  {[\usebibmacro{cite:init}%
+  {[\usebibmacro{cite:init}%]直接添加方括号
    \usebibmacro{prenote}%
    }
   {\usebibmacro{citeindex}%
@@ -88,7 +94,7 @@
 %   定义yearpagescite，为与ay样式兼容，等同于\pagescite
 %
 \DeclareCiteCommand{\yearpagescite}[\mkbibsuperscript]%\mkbibbrackets,仍然用上标
-  {[\usebibmacro{cite:init}%
+  {[\usebibmacro{cite:init}%]直接添加方括号
    \usebibmacro{prenote}%
    }
   {\usebibmacro{citeindex}%
@@ -102,7 +108,7 @@
 %
 %   原理方法:等同于\pagescite，但不要页码
 \DeclareCiteCommand{\yearcite}[\mkbibsuperscript]%\mkbibbrackets,仍然用上标
-  {[\usebibmacro{cite:init}%
+  {[\usebibmacro{cite:init}%]直接添加方括号
    \usebibmacro{prenote}%
    }
   {\usebibmacro{citeindex}%
