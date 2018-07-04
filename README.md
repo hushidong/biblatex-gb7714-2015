@@ -1,4 +1,4 @@
-<b>Date of last change: 2018-06-01 to version v1.0i</b>
+<b>Date of last change: 2018-06-01 to version v1.0l</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -670,6 +670,10 @@ biber -l zh__stroke jobname
 ## Update history:
 
 date of update: 2018-06-01 to version v1.0l
+
+* 根据的 Minyi Han 的建议，调整了issue域的输出，以及标注中作者和等之间的间隙。(20180704)
+
+adjust output of the field issue，and the separation space between author and 等 in citations which was suggested by Minyi Han.
 
 
 * 增加gbctexset选项控制参考文献标题内容的设置方式，即，除了相同的printbibliography选项方式外，选择是通过 bibname 或 refname 控制还是通过定义本地化字符串 bibliography 或 references 控制。 (20180702)

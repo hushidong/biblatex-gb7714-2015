@@ -1892,8 +1892,8 @@ test{\iftoggle{iftlnine}}
         {\iffieldequalstr{note}{news}{\usebibmacro{newsdate}}%判断是否为报纸
                                      {\usebibmacro{date}}%
       }}%
-      {\printfield{issue}%
-       \setunit*{\addspace}%
+      {\iftoggle{bbx:gbstrict}{}{\printfield{issue}%
+       \setunit*{\addspace}}%
        %\usebibmacro{date}
          \iffieldundef{note}{\usebibmacro{date}}%判断一下，是否是报纸
         {\iffieldequalstr{note}{news}{\usebibmacro{newsdate}}%判断是否为报纸

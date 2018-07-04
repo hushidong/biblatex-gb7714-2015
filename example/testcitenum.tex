@@ -177,24 +177,25 @@ calvo2006phoenix,bernanke1989agency,adam2011house,fazzari1993working}
 
     \begin{document}
     \section{作者姓名格式}
-    
+
  不带页码的引用(上标，方括号包围):
  \cite{FOURNEY1971-17-38}\cite{wang2006another}
- 
+
  不带页码的引用(非上标，方括号包围):
  \parencite{FOURNEY1971-17-38}\parencite{wang2006another}
  \upcite{FOURNEY1971-17-38}\upcite{wang2006another}
- 
+
  带页码的引用:
  \cite[见][49页]{FOURNEY1971-17-38} \parencite[见][49页]{wang2006another}
  \pagescite{FOURNEY1971-17-38}\pagescite[150]{wang2006another}
 
- 
+
  同时输出作者和顺序编码的三种引用方式：
- 
+
 （a）直接的方法：见\citeauthor{FOURNEY1971-17-38}\cite{FOURNEY1971-17-38}, \citeauthor{wang2006another}\cite{wang2006another}
 
-（b）定义新的标注命令：见\authornumcite{FOURNEY1971-17-38,wang2006another}
+（b）定义新的标注命令：见\authornumcite{FOURNEY1971-17-38,wang2006another}，
+\authornumcite{易仕和2013--,张2007-500-503}
 
 （c）用textcite但没有上标：见\textcite{FOURNEY1971-17-38,wang2006another}
 

@@ -132,7 +132,8 @@
 %见numeric.CBX，\DeclareCiteCommand{\cite},
 \DeclareCiteCommand{\authornumcite}%[\mkbibsuperscript]
   {\usebibmacro{prenote}}
-  {\renewcommand*{\andothersdelim}{\addspace}%
+  {\iffieldequalstr{userf}{cn}{\renewcommand*{\andothersdelim}{\addthinspace}}%\addthinspace
+  {\renewcommand*{\andothersdelim}{\addspace}}%
   \printnames{labelname}\mkbibsuperscript{\mkbibbrackets{\usebibmacro{citeindex}%
    \usebibmacro{cite}}}}
   {\multicitedelim}

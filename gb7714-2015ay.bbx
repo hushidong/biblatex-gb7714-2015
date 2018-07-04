@@ -1966,7 +1966,7 @@ test{\iftoggle{iftlnine}}
   \renewbibmacro*{issue+date}{%
     \iffieldundef{issue}%
       {}%
-      {\printtext[parens]{\printfield{issue}}\newunit}}
+      {\iftoggle{bbx:gbstrict}{}{\printtext[parens]{\printfield{issue}}\newunit}}}
 
 
 
