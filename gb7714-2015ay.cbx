@@ -66,9 +66,13 @@ or
 test {\iftoggle{iftlseven}}%3.7=biblatex
 }{\newbibmacro{cite:labeldate+extradate}{\usebibmacro{cite:labelyear+extrayear}}}{}%else: biblatex>3.7
 
-%textcite标注命令中的标点设置
+%textcite标注命令中的标点设置，注意只针对textcite命令。
 \DeclareDelimFormat[textcite]{nameyeardelim}{}%\addcomma\space
-\DeclareDelimFormat[textcite]{andothersdelim}{\addspace}%
+\DeclareDelimFormat[textcite]{andothersdelim}{\iffieldequalstr{userf}{cn}{\addthinspace}{\addspace}}%
+\AtEveryCitekey{%
+\iffieldequalstr{userf}{cn}{\renewcommand*{\andothersdelim}{\addthinspace}}%\addthinspace
+  {\renewcommand*{\andothersdelim}{\addspace}}%
+}
 
 
 

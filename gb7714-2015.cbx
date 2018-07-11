@@ -42,7 +42,7 @@
 %
 %   方法:\DeclareCiteCommand{\cite}[\mkbibparens]{precode}{loopcode}{sepcode}{postcode}
 \DeclareCiteCommand{\cite}[\mkbibsuperbracket]%利用mkbibsuperbracket添加方括号
-  {\usebibmacro{cite:init}
+  {\usebibmacro{cite:init}%
    \usebibmacro{prenote}}
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:comp}}
