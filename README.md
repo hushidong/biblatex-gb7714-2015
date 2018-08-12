@@ -644,6 +644,7 @@ biber -l zh__stroke jobname
 ---------------------------------------------------------
 
 ## Need to do:
+    * different style for references of different languages，like：gb7714-2015 for chinese refs and trad-unsrt for english refs。
     * special characters in all fields?
     * entry without author: the delimiter between title and year?
 	* TEST FOR texlive 2015,2016
