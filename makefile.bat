@@ -20,6 +20,21 @@ xelatex.exe --synctex=-1 biblatex-gb7714-2015.tex
 ::to do it again for backref 
 xelatex.exe --synctex=-1 biblatex-gb7714-2015.tex
 
+cd example
+
+call makeclear
+
+
+
+del *.bbx /Q
+
+
+del *.cbx /Q
+
+
+del *.def /Q
+
+
 :: clear aux files
 
 ::call makeclear

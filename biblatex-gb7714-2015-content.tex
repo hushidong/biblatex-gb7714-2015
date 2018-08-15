@@ -245,11 +245,23 @@ citestyle=gb7714-2015%,backref=true%
 \end{texlist}
 \end{example}
 
+\begin{example}{不同著录格式共存的样式(gb7714-2015ms)加载方式}{eg:gb7714ms}
+\begin{texlist}
+%默认方式，所有文献使用一种著录格式，即GB/T 7714-2015样式
+\usepackage[backend=biber,style=gb7714-2015ms]{biblatex}
+%设置gbstyle=false，则中文文献使用GB/T 7714-2015著录格式，而其它语言文献使用biblatex提供的标准样式
+\usepackage[backend=biber,style=gb7714-2015ms,gbstyle=false]{biblatex}
+\end{texlist}
+\end{example}
+
 \begin{example}{参考文献文本转换为bib文件perl脚本使用方式}{eg:transtobib}
 \begin{texlist}
 perl gb7714texttobib.pl in=textfilename out=bibfilename
 \end{texlist}
 \end{example}
+
+其中，v1.0m版本增加了gb7714-2015ms样式文件，主要是为了在一个文档中使用多种样式，比如中文文献使用GB/T 7714-2015规定的著录格式，而其它语言文献使用biblatex提供的标准样式。这种方式尽管不会很常用，但既然有需求提出，那么就做了实现。主要的实现原理是把所有的GB/T 7714-2015规定产生的格式修改局部化到每一条文献打印时处理，此时先判断gbstyle选项及文献的语言，当满足要求则使用这些局部化格式修改，否则使用默认的标准样式。这种实现为一篇文档内实现两种样式提供了思路，尽管目前其它语言文献的著录格式是标准样式，但只要对其做格式修改就可以形成符合某种格式规范的样式，比如像ieee，nature等样式都是可以实现的，因此存在中文使用GB/T 7714-2015著录格式，而英文文献使用ieee等著录格式的可能性。测试文档见：
+\href{run:./example/testmultistyle.tex}{testmultistyle.tex}。
 
 \subsubsection{新增选项}\label{sec:added:opt}
 样式包新增了一些选项，用于标签对齐方式、出版项缺省处理、责任者(作者)缺省处理等功能的控制，其使用方式与biblatex宏包选项完全相同:

@@ -1,4 +1,4 @@
-<b>Date of last change: 2018-06-01 to version v1.0l</b>
+<b>Date of last change: 2018-08-14 to version v1.0m</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -20,7 +20,7 @@ A biblatex implementation of the `GB/T 7714-2015` bibliography style for Chinese
 The biblatex-gb7714-2015 package provides an implementation of the bibliography style of the `GB/T 7714-2015` bibliography style. This implementation follows `GB/T 7714-2015` standard, and can be used simply by loading biblatex with the appropriate option
 
 ## Usage
-* for numerical sequence style
+* for numerical sequence style: gb7714-2015
 
     `\usepackage[backend=biber,style=gb7714-2015]{biblatex}`
 
@@ -133,8 +133,14 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 		`gbtitlelink = true` to set the title as a hyperlink.
 	
         `\usepackage[backend=biber,style=gb7714-2015,gbtitlelink=true]{biblatex}`
+		
+* for multi-style: gb7714-2015ms
 
-* for author year style
+	In order to use two styles in a tex file, add a style gb7714-2015ms. option `gbstyle` is added to control the using mode. `gbstyle=true` means all references are printed with GB/T7714-2015 style, and `gbstyle=false` means the chinese references are printed with GB/T7714-2015 style while the other references are printed with standard style shipped by biblatex, and `gbstyle=true` is the default set. all the options for numerical sequence style gb7714-2015 can also be used in gb7714-2015ms. 
+		
+		`\usepackage[backend=biber,style=gb7714-2015ms,gbstyle=false]{biblatex}`
+
+* for author year style: gb7714-2015ay
 
     `\usepackage[backend=biber,style=gb7714-2015ay,gbpub=true]{biblatex}`
 
@@ -666,49 +672,23 @@ biber -l zh__stroke jobname
 * 2018/01/20 v1.0j 
 * 2018/04/03 v1.0k
 * 2018/06/01 v1.0l
+* 2018/08/14 v1.0m,CTAN
 
 ---------------------------------------------------------
 ## Update history:
 
-date of update: 2018-06-01 to version v1.0l
 
-* 根据的 Minyi Han 的建议，调整了issue域的输出，以及标注中作者和等之间的间隙。(20180704)
-
-adjust output of the field issue，and the separation space between author and 等 in citations which was suggested by Minyi Han.
+date of update: 2018-08-14 to version v1.0m
 
 
-* 增加gbctexset选项控制参考文献标题内容的设置方式，即，除了相同的printbibliography选项方式外，选择是通过 bibname 或 refname 控制还是通过定义本地化字符串 bibliography 或 references 控制。 (20180702)
+* 增加一个gb7714-2015ms样式，可以在一篇文献中使用两种样式，一种是gb样式，一种是标准样式。(20180814)
 
-add an option `gbctexset` to control the bibliography title's setting method, i.e. besides the same printbibliography option method, two methods: control by \bibname or \refname and control by DefineBibliographyStrings is selected by this option.
+add a style gb7714-2015ms which allows two different styles used in a tex file, one is standard style, the other is gb7714 style.
 
 
-* 增加gbbiblabel选项来控制顺序编码制文献表序号标签的格式，即用方括号、圆括号、点、方框、圆圈等来装饰序号数字。(20180623)
+* 更正由于更新cbx文件引入的标注中的空格。(20180716)
 
-add an option gbbiblabel to control the format of the numerical label, i.e. the label number is wrapped by bracket, parenthesis,dot,box,circle and so on.
-
-* 增加\bibitemindent尺寸配合\bibhang设置基于list的文献表环境的缩进。(20180615)
-
-add a length \bibitemindent to control the item indent of bibliography based on list env with \bibhang。
-
-* 增加upcite命令为兼容一些老的文档，顺序编码制中同supercite，作者年制中同yearcite。(20180604)
-
-add upcite to be compatible with some old doc，it behaves like supercite in numerical style and yearcite in author year style. 
-
-* 为更合理的表述选项值的意义，修改了gbnamefmt选项的值。(20180604)
-
-modify the values of the option gbnamefmt for standardising option terminology. 
-
-* 为顺序编码样式gbalign增加了center选项值。(20180602)
-
-add a value: center of the gbalign option for numerical sequence style. 
-
-* 进一步完善了说明文档。(20180601)
-
-update the documentataion. 
-
-* 统一了url字体为roman字体。(20180601)
-
-font of url set to be same as the main text. 
+correct a bug which add an extra space in citations after the previous update.
 
 
 [update: tex](example/updatehistory.tex)
