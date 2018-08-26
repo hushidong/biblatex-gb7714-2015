@@ -1,4 +1,4 @@
-:: Copyright (c) 2012-2016 hzz
+:: Copyright (c) 2012-2018 hzz
 
 @echo off
 
@@ -6,6 +6,8 @@
 :: compile the tex file
 
 call makeclear
+
+cd 
 
 ::pause
 
@@ -24,15 +26,10 @@ cd example
 
 call makeclear
 
-
-
 del *.bbx /Q
-
-
 del *.cbx /Q
-
-
 del *.def /Q
+del *.pdf /Q
 
 
 :: clear aux files

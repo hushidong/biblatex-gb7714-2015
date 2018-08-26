@@ -4,10 +4,10 @@
 \geometry{paperwidth=21cm,paperheight=29cm,top=1.5cm, bottom=1.5cm, left=2.54cm,right=2.54cm}
 \usepackage{xcolor}
 \usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=blue]{hyperref}
-\usepackage[backend=biber,style=gb7714-2015,gbpub=true]{biblatex}%align=gb7714-2015
+\usepackage[backend=biber,style=gb7714-2015ay,gbnoauthor=false]{biblatex}%align=gb7714-2015
 %\addbibresource[location=local]{egtest.bib}
 \addbibresource[location=local]{example.bib}
-\addbibresource[location=local]{egspecialchar.bib}
+
 %\renewcommand{\bibfont}{\zihao{5}}
 %\setlength{\bibitemsep}{0ex}
 %\setlength{\bibnamesep}{0ex}
@@ -20,29 +20,29 @@
 %%%test file for author year style
 
 \section{文献表}
-\begin{refsection}
-\begin{enumerate}
-  \item 学位论文引用\cite{CALMS1965--,马欢2011-27-27,吴云芳2003--,张若凌2004--,张志祥1998--}
-\end{enumerate}
+文献
+\cite{1962-50-50,2009-155-155}
+
+\cite{olnoauthorcn}
+\cite{olnoauthoren}
+\cite{Allianceurlonly}
+
+%\cite{萧钰2001--}
+%\cite{李强2012-05-03--,Commonwealth--,HOPKINSON--,OCLC--}
+%\cite{傅刚2000--}
+%\cite{蔡敏2006--}
+%\cite{Saito2006-169-176}
+%\cite{CRAWFPRD1995--}\cite{Proakis2007--}
+%\cite{Giorgetti2005-1037-1042,Giorgetti2005-794-798}
+%\cite{Haemaelaeinen2002-1712-1721}
+%\cite{Oetiker2011--}
+%\cite{刘彻东1998-38-39}
+%\cite{Commonwealth--}
 
 {
-%\hyphenation{kurose-gawa}
+\hyphenation{kurose-gawa}
 %\hyphenpenalty=1000
 %\tolerance=500
 \printbibliography%[heading=subbibintoc,title=【参考文献】]
 }
-\end{refsection}
-\section{文献表}
-\begin{refsection}
-\begin{enumerate}
-  \item 专利引用\cite{KOSEKI2002--,TACHIBANA2002--,河北绿洲生态环境科技有限公司2001--,姜锡洲1989--,刘加林1993--,西安电子科技大学2002--,张凯军2012-04-05--}
-\end{enumerate}
-
-{
-%\hyphenation{kurose-gawa}
-%\hyphenpenalty=1000
-%\tolerance=500
-\printbibliography%[heading=subbibintoc,title=【参考文献】]
-}
-\end{refsection}
 \end{document} 

@@ -18,15 +18,20 @@ cd example
 
 call makefileeg
 
-::call makefiletest
-
-::call makefilegbk
-
 cd ..
 
 call makeclear
 
-call makefile
+echo biblatex-gb7714-2015.tex >> example/makerecord.dat
+
+xelatex.exe --synctex=-1 biblatex-gb7714-2015.tex
+
+biber biblatex-gb7714-2015
+
+xelatex.exe --synctex=-1 biblatex-gb7714-2015.tex
+
+::to do it again for backref 
+xelatex.exe --synctex=-1 biblatex-gb7714-2015.tex
 
 ::call makeclear
 

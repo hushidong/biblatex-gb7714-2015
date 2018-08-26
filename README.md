@@ -168,7 +168,6 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * [ECNU-Undergraduate-LaTeX(华东师范大学本科毕业论文模板)](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)
 * [UCASthesis(中国科学院大学学位论文模板**国科大新版标准**)](https://github.com/xiaoyao9933/UCASthesis)
 * [Study-LaTeX(LaTeX学习笔记)](https://github.com/Zousiyu/Study-LaTeX)
-* [LaTeX-template(开箱即用的 LaTeX 模板)](https://github.com/tsai1993/LaTeX-template)
 * [Zhejiang University thesis(浙江大学毕业设计/论文模板)](https://github.com/TheNetAdmin/zjuthesis)
 * [fjnu-bathesis (福建师范大学本科毕业论文LaTeX 模板)](https://github.com/fjnuer/fjnu-bathesis)
 * [...]
@@ -600,11 +599,11 @@ biber -l zh__stroke jobname
 ### 5. Examples/著录和标注结果示例
 * 顺序编码制
 
-![示例a](example/egaligngb7714-2015.png)
+![示例a](example/fig-style-numeric.png)
 	
 * 作者年制
 
-![示例b](example/egaligngb7714-2015ay.png)
+![示例b](example/fig-style-authoryear.png)
 
 
 * 姓名的格式更改
@@ -645,7 +644,7 @@ biber -l zh__stroke jobname
       Year                     = {2003}
     }
 
-![示例c](example/eggbnamefmt.png)
+![示例c](example/fig-nameformat.png)
 
 ---------------------------------------------------------
 

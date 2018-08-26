@@ -4,10 +4,10 @@
 \geometry{paperwidth=21cm,paperheight=29cm,top=1.5cm, bottom=1.5cm, left=2.54cm,right=2.54cm}
 \usepackage{xcolor}
 \usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=blue]{hyperref}
-\usepackage[backend=biber,style=gb7714-2015]{biblatex}%align=gb7714-2015
+\usepackage[backend=biber,style=gb7714-2015,gbpub=false]{biblatex}%align=gb7714-2015
 %\addbibresource[location=local]{egtest.bib}
 \addbibresource[location=local]{example.bib}
-\addbibresource[location=local]{egspecialchar.bib}
+
 %\renewcommand{\bibfont}{\zihao{5}}
 %\setlength{\bibitemsep}{0ex}
 %\setlength{\bibnamesep}{0ex}
@@ -16,18 +16,18 @@
 
 \begin{document}
 
-%%%²âÊÔ×÷ÕßÄê/biblatex°æ±¾¼æÈİĞÔµÄÎÄ¼ş
+%%%æµ‹è¯•ä½œè€…å¹´/biblatexç‰ˆæœ¬å…¼å®¹æ€§çš„æ–‡ä»¶
 %%%test file for author year style
 
-\section{ÎÄÏ×±í}
-ÎÄÏ×
+\section{æ–‡çŒ®è¡¨}
+æ–‡çŒ®
 \cite{Parsons2000noloc--,Parsons2000nopub--,booknolocation,booknopublisher}
-\cite{ÕÔÑ§¹¦2001--}\cite{ÅáÀöÉú1981-2-10,Nemec1997-209-214}
+\cite{èµµå­¦åŠŸ2001--}\cite{è£´ä¸½ç”Ÿ1981-2-10,Nemec1997-209-214}
 
 {
 %\hyphenation{kurose-gawa}
 %\hyphenpenalty=1000
 %\tolerance=500
-\printbibliography%[heading=subbibintoc,title=¡¾²Î¿¼ÎÄÏ×¡¿]
+\printbibliography%[heading=subbibintoc,title=ã€å‚è€ƒæ–‡çŒ®ã€‘]
 }
 \end{document} 

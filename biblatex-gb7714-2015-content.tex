@@ -261,7 +261,7 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 \end{example}
 
 其中，v1.0m版本增加了gb7714-2015ms样式文件，主要是为了在一个文档中使用多种样式，比如中文文献使用GB/T 7714-2015规定的著录格式，而其它语言文献使用biblatex提供的标准样式。这种方式尽管不会很常用，但既然有需求提出，那么就做了实现。主要的实现原理是把所有的GB/T 7714-2015规定产生的格式修改局部化到每一条文献打印时处理，此时先判断gbstyle选项及文献的语言，当满足要求则使用这些局部化格式修改，否则使用默认的标准样式。这种实现为一篇文档内实现两种样式提供了思路，尽管目前其它语言文献的著录格式是标准样式，但只要对其做格式修改就可以形成符合某种格式规范的样式，比如像ieee，nature等样式都是可以实现的，因此存在中文使用GB/T 7714-2015著录格式，而英文文献使用ieee等著录格式的可能性。测试文档见：
-\href{run:./example/testmultistyle.tex}{testmultistyle.tex}。
+\href{run:./example/opt-gbstyle.tex}{opt-gbstyle.tex}。
 
 \subsubsection{新增选项}\label{sec:added:opt}
 样式包新增了一些选项，用于标签对齐方式、出版项缺省处理、责任者(作者)缺省处理等功能的控制，其使用方式与biblatex宏包选项完全相同:
@@ -276,15 +276,13 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
     \item gbalign=gb7714-2015，是项对齐方式，即段落环境中标签使用原始宽度，标签与条目内容等间距。
   \end{itemize}
   该选项对作者年制无效。顺序编码制序号标签对齐方式测试，
-  右对齐见:
-  \href{run:./example/testalignright.tex}{testalignright.tex}，
-  %\href{run:./example/egalignright.pdf}{egalignright.pdf}。
-  左对齐见:
-  \href{run:./example/testalignleft.tex}{testalignleft.tex}，
-  %\href{run:./example/egalignleft.pdf}{egalignleft.pdf}。
-  项对齐见:
-  \href{run:./example/testaligngb7714-2015.tex}{testaligngb7714-2015.tex}。
-  %\href{run:./example/egaligngb7714-2015.pdf}{egaligngb7714-2015.pdf}。
+  数字在标签内居中见:
+  \href{run:./example/opt-gbalign-center.tex}{opt-gbalign-center.tex}，
+  标签左对齐见:
+  \href{run:./example/opt-gbalign-left.tex}{opt-gbalign-left.tex}，
+  项对齐(标签与内容等间距)见:
+  \href{run:./example/opt-gbalign-gb.tex}{opt-gbalign-gb.tex}。
+
 
   \item[gbpub]=\textbf{true}，false. \hfill default is true
 
@@ -294,10 +292,9 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
     \item gbpub=false 则取消自动处理，使用标准样式的方式取消相应项的输出。
   \end{itemize}
   顺序编码制测试（作者年制类似）见:
-  \href{run:./example/testgbpubtrue.tex}{testgbpubtrue.tex}，
-  %\href{run:./example/eggbpubtrue.pdf}{eggbpubtrue.pdf}。
-  \href{run:./example/testgbpubfalse.tex}{testgbpubfalse.tex}，
-  %\href{run:./example/eggbpubfalse.pdf}{eggbpubfalse.pdf}。
+  \href{run:./example/opt-gbpub-true.tex}{opt-gbpub-true.tex}，
+  \href{run:./example/opt-gbpub-false.tex}{opt-gbpub-false.tex}。
+
 
   \item[gbbiblabel]=\textbf{bracket}，parens，plain，dot，box，circle. \hfill default is bracket
 
@@ -319,10 +316,9 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
     \item gbnoauthor=true，则根据GB/T 7714-2015 的要求进行处理，中文文献使用佚名来代替author，英文文献用 NOAUTHOR 来代替author。
   \end{itemize}
   测试结果见:
-  \href{run:./example/testgbnoauthortrueay.tex}{testgbnoauthortrueay.tex}，
-  %\href{run:./example/eggbnoauthortrueay.pdf}{eggbnoauthortrueay.pdf}。
-  \href{run:./example/testgbnoauthorfalseay.tex}{testgbnoauthorfalseay.tex}，
-  %\href{run:./example/eggbnoauthorfalseay.pdf}{eggbnoauthorfalseay.pdf}。
+  \href{run:./example/opt-gbnoauthor-true.tex}{opt-gbnoauthor-true.tex}，
+  \href{run:./example/opt-gbnoauthor-false.tex}{opt-gbnoauthor-false.tex}。
+
 
   \item[gbnamefmt]=\textbf{uppercase}，lowercase，givenahead，familyahead，pinyin. \hfill default is uppercase
 
@@ -337,9 +333,8 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   \bc{注意：还可以利用 nameformat 域为某一具体条目设置该条目的姓名格式，比如：要在一个文献表中实现英文文献是givenahead 格式，而拼音的文献是pinyin风格，那么可以设置拼音文献的 nameformat 域为pinyin，而gbnamefmt设置为givenahead。条目中nameformat 域的局部设置优先于gbnamefmt的全局设置。}\par
   \emph{注意：使用pinyin选项时，bib文件中文献的作者应给出完整的名而不是缩写，否则出来的效果未必令人满意}。
   测试结果见：
-  \href{run:./example/testgbnamefmt.tex}{testgbnamefmta.tex}，
-  \href{run:./example/testcitenum.tex}{testcitenum.tex}，
-  \href{run:./example/testciteay.tex}{testciteay.tex}。
+  \href{run:./example/opt-gbnamefmt.tex}{opt-gbnamefmt.tex}，
+  \href{run:./example/opt-gbnamefmt-default.tex}{opt-gbnamefmt-default.tex}。
 
 
   \item[gbtype]=\textbf{true}，false. \hfill default is true
@@ -387,8 +382,7 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
     \item gbcodegbk=true，为利用pdflatex/latex编译GBK编码文档时使用。
   \end{itemize}
   当在源文档前面增加 XeTeX 原语：\lstinline!\XeTeXinputencoding "GBK"! 后，GBK编码的文档也可以使用xelatex编译，这时应设置为false或不给出该选项。测试文件见：
-  \href{run:example/filecodegbkeg.tex}{filecodegbkeg.tex}，
-  \href{run:example/filecodeutfeg.tex}{filecodeutfeg.tex}。
+  \href{run:example/codeopt-gbcodegbk.tex}{codeopt-gbcodegbk.tex}。
 
   \item[gbstrict]=\textbf{true}，false. \hfill default is true
 
@@ -416,7 +410,7 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
     \item gbtitlelink=true，当文献存在url 域时为文献标题设置超链接。
   \end{itemize}
   测试文件见：
-  \href{run:example/testopttitlelink.tex}{testopttitlelink.tex}。
+  \href{run:example/opt-gbtitlelink.tex}{opt-gbtitlelink.tex}。
 
 \end{description}
 
@@ -771,8 +765,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 %顺序编码制的标注样式文件大体使用标准引用样式numeric-comp的内容
 \paragraph{顺序编码制的标注样式} 大体使用标准标注样式numeric，仅对cite等部分命令做了修改。为满足GB/T 7714-2015第10.1.3节的要求，增加了pagescite命令。为方便在同一文章中同时使用上标和非上标的标注方式，仅将cite命令修改为上标模式，而parencite保留标准样式提供的非上标模式。为使用户免于输入文献作者来作为句子主语，完善了textcite命令并增加了authornumcite命令以同时输出作者和顺序编码。
 使用方式如例\ref{eg:citefornumeric}所示。
-测试文档见\href{run:example/testtextcite.tex}{testtextcite.tex}，
-\href{run:example/testcitenum.tex}{testcitenum.tex}。
+测试文档见\href{run:example/testallformat.tex}{testallformat.tex}。
 
 \begin{example}{顺序编码制cbx样式命令使用说明}{eg:citefornumeric}
 \begin{texlist}
@@ -801,8 +794,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 %作者年制的标注样式文件大体使用标准引用样式authoryear的内容。
 \paragraph{作者年制的标注样式} 情况类似。对cite，parencite进行了修改，将引用标签用圆括号括起来。为满足GB/T 7714-2015第10.2.4节的要求，增加了pagescite命令。为满足GB/T 7714-2015第10.2.1节的要求，增加了yearpagescite，yearcite命令用于处理文中已有作者信息只需要年份和页码的情况(为兼容性考虑，顺序编码制也给出该命令，但作用与pagescite命令相同)，也完善了textcite命令为句子提供主语。
 使用方式如例\ref{eg:citeforauthoryear}所示。
-测试文档见\href{run:example/testtextciteay.tex}{testtextciteay.tex}，
-\href{run:example/testciteay.tex}{testciteay.tex}。
+测试文档见\href{run:example/testallformat.tex}{testallformat.tex}。
 
 
 \begin{example}{作者年制cbx样式命令使用说明}{eg:citeforauthoryear}
@@ -826,7 +818,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
     \end{texlist}
 \end{example}
 
-各引用命令的效果见\ref{sec:test:book}节。%\ref{sec:cite:cmd:test}
+%各引用命令的效果见\ref{sec:test:book}节。%\ref{sec:cite:cmd:test}
 
 \subsubsection{样式使用的注意事项}
 
@@ -892,8 +884,10 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 \end{enumerate}
 
 本样式做了中日韩英俄法六种语言的测试，详细内容见：
-\href{run:example/testmultilan.tex}{testmultilan.tex}，
-\href{run:example/testmultilanay.tex}{testmultilanay.tex}。
+\href{run:example/opt-eg-multilan.tex}{opt-eg-multilan.tex}，
+\href{run:example/opt-autolang-multilan.tex}{opt-autolang-multilan.tex}。
+
+
 
 
 \subsubsection{多语言对照文献表}
@@ -911,7 +905,9 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 \end{texlist}
 \end{example}
 
-得到的参考文献打印结果见\ref{sec:test:book}节。\bc{在biblatex v3.8及以上版本中，因为set条目类型除了子条目关键词信息外，并无其他信息，因此它的标注标签通常会是空的。这个问题目前的解决方法是设置一个指定格式和内容中间无空格无英文逗号的关键字，用它来作为标签。这个问题与biblatex版本升级有关，biblatex v3.7及之前版本没有这个问题，因为这些版本中 set 中带有第一个子条目的信息}。比如:
+测试见文档\href{run:example/testallformat.tex}{testallformat.tex}。
+
+\bc{在biblatex v3.8及以上版本中，因为set条目类型除了子条目关键词信息外，并无其他信息，因此它的标注标签通常会是空的。这个问题目前的解决方法是设置一个指定格式和内容中间无空格无英文逗号的关键字，用它来作为标签。这个问题与biblatex版本升级有关，biblatex v3.7及之前版本没有这个问题，因为这些版本中 set 中带有第一个子条目的信息}。比如:
 \begin{example}{设置set条目集用于双语文献动态方法}{eg:setforbilangentry}
 \begin{texlist}
 \defbibentryset{易仕和，等，2013}{易仕和2013--,Yi2013--}
@@ -997,8 +993,7 @@ language={chinese}
 {biblatex-solution-to-latex-bibliography}。
 
 双语对照文献的两种动态方法基于set和related的方法测试，参见:
-\href{run:./example/testaligngb7714-2015ay.tex}{testaligngb7714-2015ay.tex}，
-%\href{run:./example/egaligngb7714-2015ay.pdf}{egaligngb7714-2015ay.pdf}。
+\href{run:./example/opt-eg-authoryear.tex}{opt-eg-authoryear.tex}。
 
 \section{GB/T 7714-2015 标准说明与实现}
 
@@ -1013,7 +1008,7 @@ GB/T 7714-2015规定采用顺序编码制组织参考文献时，各篇文献应
 
 同一处引用多篇文献，各篇序号间用逗号隔开，遇连续序号，起讫序号用短横线连接。
 
-多次引用同一著者的同一文献时，可在序号的方括号外著录该文献引文页码，这一要求与引用(标注)样式无关，需要作者在写文档时使用相应的引用命令并在需要时输入页码信息。针对这一要求，在cite等常用命令基础上，新定义了一个引用命令pagescite，其使用方式详见第\ref{sec:cbx:usage}节。其标注效果见第\ref{sec:test:book}节。标注样式更详细要求参考GB/T 7714-2015 第10.1节。
+多次引用同一著者的同一文献时，可在序号的方括号外著录该文献引文页码，这一要求与引用(标注)样式无关，需要作者在写文档时使用相应的引用命令并在需要时输入页码信息。针对这一要求，在cite等常用命令基础上，新定义了一个引用命令pagescite，其使用方式详见第\ref{sec:cbx:usage}节。标注样式更详细要求参考GB/T 7714-2015 第10.1节。
 
 如果顺序编码制采用脚注方式，则序号由计算机自动生成圈码。多次引用同一著者的同一文献时，若采用脚注方式应重复著录参考文献(这里可以理解为，采用该方式，同一文献的不同页码的引文就相当于一篇新的引文)，只是在参考文献列表中可以简化(当然不进行简化，简单复制后录入对于latex的参考文献处理其实更方便)。事实上对于顺序编码用脚注方式，GB/T 7714-2015并没有详细说明脚注方式到底是什么？从举例看只是序号用类似于脚注的标签，那么对于参考文献样式来说，与非脚注方式的差别仅在于引用和参考文献条目的序号标签的差别，如此是容易通过修改样式文件得到的，但实际使用中除非有特殊要求，否则使用意义不大，因此本样式没有实现该功能。
 
@@ -1474,205 +1469,50 @@ and keyword=standard
 \printbibliography[heading=subbibliography,type=online,title=【A10-电子资源-著录格式示例】]
 \end{refsection}
 
-\subsection{测试:专著book和专著中的析出文献inbook及标准standard文献}\label{sec:test:book}
-
-专著book和专著中的析出文献inbook及标准standard文献测试，参见:
-
-顺序编码制:
-\href{run:./example/testbooks.tex}{testbooks.tex}，
-%\href{run:./example/egbooks.pdf}{egbooks.pdf}。
-
-作者年制:
-\href{run:./example/testbooksay.tex}{testbooksay.tex}，
-%\href{run:./example/egbooksay.pdf}{egbooksay.pdf}。
-
-
-\subsection{测试:连续出版物periodical和连续出版物中的析出文献article}
-连续出版物periodical和连续出版物中的析出文献article文献测试，参见:
-
-顺序编码制:
-\href{run:./example/testjournal.tex}{testjournal.tex}，
-%\href{run:./example/egjournal.pdf}{egjournal.pdf}。
-
-作者年制:
-\href{run:./example/testjournalay.tex}{testjournalay.tex}，
-%\href{run:./example/egjournalay.pdf}{egjournalay.pdf}。
-
-\subsection{测试:电子资源或在线资源online}
-在线资源online文献测试，参见:
-
-顺序编码制:
-\href{run:./example/testonline.tex}{testonline.tex}，
-%\href{run:./example/egonline.pdf}{egonline.pdf}。
-
-作者年制:
-\href{run:./example/testonlineay.tex}{testonlineay.tex}，
-%\href{run:./example/egonlineay.pdf}{egonlineay.pdf}。
-
-\qd{注意:对于作者年制，这里有4篇文献都是noauthor，有两篇有年份可以轻易分开，还有两篇没有年份存在歧义，所以在标注中用了[n.d.]加a和b分开，但在参考文献表中，各个版本的biblatex表现是不同的，其中3.4版因为进行newbibmacro*\{date+extrayear\}的定义时候，首先判断iffieldundef\{\textbackslash thefield\{datelabelsource\}year\}，当不存在datelabelsource的值+year的域时，就不再添加了。如果需要加extrayear也可以修改出来，但其实并无必要。这与标注中用的newbibmacro*\{cite:labelyear+extrayear\}(在authoryear.cbx文件中)的定义是不一样的。}
-
-
-\subsection{测试:学位论文thesis、专利文献patent}
-学位论文thesis文献专利文献patent文献测试，参见:
-
-顺序编码制:
-\href{run:./example/testthesispatent.tex}{testthesispatent.tex}，
-%\href{run:./example/egthesispatent.pdf}{egthesispatent.pdf}。
-
-作者年制:
-\href{run:./example/testthesispatentay.tex}{testthesispatentay.tex}，
-%\href{run:./example/egthesispatentay.pdf}{egthesispatentay.pdf}。
-
-\qd{注意:专利文献\{刘加林1993--\}的location定义了中国，但从GB/T 7714-2015中给出的示例看其实并不需要该域，但这里并没有去掉。因为GB/T 7714-2015中给出的著录格式包括了出版项但没有示例，尽管这里的location是专利地域，但也可以作为出版项来考虑。未来国标完善后再做处理。}
-
-
-\subsection{测试:报告report、手册manual和档案、未出版物unpublished}
-报告report、手册manual和档案、未出版物unpublished文献测试，参见:
-
-顺序编码制:
-\href{run:./example/testreport.tex}{testreport.tex}，
-%\href{run:./example/egreport.pdf}{egreport.pdf}。
-
-作者年制:
-\href{run:./example/testreportay.tex}{testreportay.tex}，
-%\href{run:./example/egreportay.pdf}{egreportay.pdf}。
-
-
-\subsection{测试:会议文集proceedings和会议文集中析出的文献inproceedings}
-
-proceedings和inproceedings及collection和incollection文献测试，参见:
-
-顺序编码制:
-\href{run:./example/testproceedings.tex}{testproceedings.tex}，
-%\href{run:./example/egprcdorinprcd.pdf}{egprcdorinprcd.pdf}。
-
-作者年制:
-\href{run:./example/testproceedingsay.tex}{testproceedingsay.tex}，
-%\href{run:./example/egprcdorinprcday.pdf}{egprcdorinprcday.pdf}。
-
-
-\subsection{测试:汇编collection和汇编中的析出文献incollection}
-
-proceedings和inproceedings及collection和incollection文献测试，参见:
-
-顺序编码制:
-\href{run:./example/testcollection.tex}{testcollection.tex}，
-%\href{run:./example/egprcdorinprcd.pdf}{egprcdorinprcd.pdf}。
-
-作者年制:
-\href{run:./example/testcollectionay.tex}{testcollectionay.tex}，
-%\href{run:./example/egprcdorinprcday.pdf}{egprcdorinprcday.pdf}。
-
-
-
-
-\subsection{测试: online条目仅存url信息}
-\label{sec:opt:noauthor}
-online条目信息严重缺失问题测试参见:
-
-顺序编码制:\href{run:./example/testonlyurl.tex}{testonlyurl.tex}，
-%\href{run:./example/eggbnoauthortrue.pdf}{eggbnoauthortrue.pdf}。
-
-作者年制:\href{run:./example/testonlyurlay.tex}{testonlyurlay.tex}，
-%\href{run:./example/eggbnoauthorfalse.pdf}{eggbnoauthorfalse.pdf}。
-
-
-\subsection{测试: beamer类}
+\subsection{beamer类中的应用}
 
 beamer类中的参考文献测试，参见:
 
 顺序编码制:
-\href{run:./example/egbeamer.tex}{egbeamer.tex}，
-\href{run:./example/egbeamer.pdf}{egbeamer.pdf}。
+\href{run:./example/egbeamer.tex}{cls-beamer.tex}，
 
 作者年制:
-\href{run:./example/egbeameray.tex}{egbeameray.tex}，
-\href{run:./example/egbeameray.pdf}{egbeameray.pdf}。
+\href{run:./example/egbeameray.tex}{cls-beameray.tex}，
 
-%\subsection{测试: 上标和非上标等不同的标注格式}\label{sec:cite:cmd:test}
-%\begin{refsection}
-%不带页码的引用(顺序编码制上标，方括号包围；作者年制行内，括号包围):
-%\begin{itemize}
-%  \item 见文献\cite{Peebles2001-100-100}。
-%\end{itemize}
-%
-%不带页码的引用(顺序编码制非上标，方括号包围；作者年制行内，括号包围):
-%\begin{itemize}
-%  \item 在文献\parencite{Miroslav2004--}中。
-%\end{itemize}
-%
-%带页码的引用(标准命令，默认样式; 增加命令，GB/T 7714-2015样式):
-%\begin{itemize}
-%  \item \cite[见][49页]{蔡敏2006--}\parencite[见][49页]{Miroslav2004--}。
-%  \item \pagescite{Peebles2001-100-100}\pagescite[][201-301]{Peebles2001-100-100}
-%\end{itemize}
-%
-%已有作者只需要年份和页码的情况(命令yearpagescite)，作者年制(上标)，顺序编码制(与pagescite作用相同);
-%已有作者只需要年份的情况(命令yearcite):
-%\begin{itemize}
-%  \item 见赵耀东\yearpagescite[][205]{赵耀东1998--}和Simon\yearpagescite[][15]{Simon2001--}的文献。
-%  \item 见赵耀东\yearcite{赵耀东1998--}
-%  \item 见赵耀东(\cite*{赵耀东1998--})
-%  \item 见赵耀东(\citeyear{赵耀东1998--})
-%\end{itemize}
-%
-%\printbibliography[heading=subbibliography,title=【gb7714-2015顺序编码制上标和非上标标注测试】]
-%\end{refsection}
-
-\subsection{测试: 传统和新增条目类型的兼容性}
-\label{sec:entrytype:compatibility}
-\begin{refsection}
-测试某些bib文件给出的mastersthsis，phdthsis，www，electronic，standard，techreport，conference条目类型，测试本样式增加的newspaper类型。更多条目类型的测试见：
-\href{run:/example/testentrytypes.tex}{testentrytypes.tex}。
+\subsection{更多测试}
 
 \begin{itemize}
-  \item newspaper:\cite{张田勤2000--}
-  \item standard:\cite{全国文献工作标准化委员会第七分委员会1986--,国家标准局信息分类编码研究所1988-59-92}
-  \item conference:\cite{Li2004-21-24}
-  \item www:\cite{萧钰2001--}
-  \item electronic:\cite{OMG2003--}
-  \item techreport:\cite{Humphrey1971--}
-  \item mastersthsis:\cite{张志祥1998--}
-  \item phdthsis:\cite{张若凌2004--}
+
+  \item 测试:专著book和专著中的析出文献inbook及标准standard文献
+
+  \item 测试:连续出版物periodical和连续出版物中的析出文献article
+
+  \item 测试:电子资源或在线资源online
+
+  \item 测试:学位论文thesis、专利文献patent
+
+  \item 测试:报告report、手册manual和档案、未出版物unpublished
+
+  \item 测试:会议文集proceedings和会议文集中析出的文献inproceedings
+
+  \item 测试:汇编collection和汇编中的析出文献incollection
+
+  \item 测试: online条目仅存url信息
+
+  \item 测试: 传统和新增条目类型的兼容性
+
+  \item 测试: 中英文判断信息中存在编组时的处理
+
+  \item 测试: 处理参考文献信息中\&等特殊字符
+
+  \item 测试: 处理作者年制article中卷信息缺省的标点
+
+  \item 测试: 标题中有\textbackslash LaTeX\{\}等名称时的情况
+
 \end{itemize}
 
-\printbibliography[heading=subbibliography,title=【兼容phdthsis等条目类型】]
-\end{refsection}
-
-\subsection{测试: 中英文判断信息中存在编组时的处理}
-\begin{refsection}
-当责任者等需要判断中英文的信息中存在编组时的处理
-\cite{IFLAI1977b--,IFLAI1977--}
-\cite{r27-BenHadjAlaya-FekiA.2008-1-5,中国企业投资协会2014--,中国企业投资协会2015--}
-
-\printbibliography[heading=subbibliography,title=【中英文判断信息中存在编组的测试】]
-\end{refsection}
-
-
-
-\subsection{测试: 处理参考文献信息中\&等特殊字符}
-\label{sec:entrytype:compatibility}
-\begin{refsection}
-文献中\cite{ref-replace-char}的booktitle域中含有\%，\&，\#符号，样式文件自动处理使其符合tex代码规则。
-\printbibliography[heading=subbibliography,title=【处理参考文献信息中\&等特殊字符】]
-\end{refsection}
-
-\subsection{测试: 处理作者年制article中卷信息缺省的标点}
-\label{sec:article:novol}
-\begin{refsection}
-文献\cite{刘彻东1998-38-39}\cite{亚洲地质图编目组1978-194-208}
-\cite{高光明1998-60-65}
-
-\printbibliography[heading=subbibliography,title=【author-year style: article without volume】]
-\end{refsection}
-
-\subsection{测试: 标题中有\textbackslash LaTeX\{\}等名称时的情况}\label{sec:with:latex}
-\begin{refsection}
-文献\cite{Peebles2001-100-100}\cite{赵凯华1995--}\cite{蒋有绪1998--}
-
-\printbibliography[heading=subbibliography,title=【title with \textbackslash LaTeX\{\}】]
-\end{refsection}
-
+测试文件，参见:
+\href{run:./example/testallformat.tex}{testallformat.tex}。
 
 \section{总结与致谢}
 

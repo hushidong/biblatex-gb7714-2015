@@ -9,12 +9,10 @@ cd example
 
 call makeclear
 
-
-
 del *.bbx /Q
-
 
 del *.cbx /Q
 
-
 del *.def /Q
+
+del *.pdf /Q
