@@ -9,6 +9,7 @@ call makeclear
 
 cd 
 
+
 ::pause
 
 echo biblatex-gb7714-2015.tex >> example/makecompilerec.dat
@@ -30,6 +31,8 @@ del *.bbx /Q
 del *.cbx /Q
 del *.def /Q
 del *.pdf /Q
+
+cd ..
 
 
 :: clear aux files

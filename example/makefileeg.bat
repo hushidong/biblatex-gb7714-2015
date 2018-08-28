@@ -6,6 +6,8 @@ copy ..\gb7714-2015.bbx . /y
 copy ..\gb7714-2015.cbx . /y
 copy ..\gb7714-2015ay.bbx . /y
 copy ..\gb7714-2015ay.cbx . /y
+copy ..\gb7714-2015ms.bbx . /y
+copy ..\gb7714-2015ms.cbx . /y
 copy ..\gb7714-2015-gbk.def . /y
 )
 
@@ -72,12 +74,16 @@ pdflatex.exe --synctex=-1 !jobfile!
 )
 setlocal DISABLEDELAYEDEXPANSION
 
-call makeclear
+::call makeclear
 
 
 del *.bbx /Q
 del *.cbx /Q
 del *.def /Q
+del opt*.bib /Q
+del code*.bib /Q
+del test*.bib /Q
+
 
 
 ::pause

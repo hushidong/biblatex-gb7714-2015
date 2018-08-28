@@ -1,8 +1,20 @@
 compiled files info: 
-egbeamer.tex 
-egbeameray.tex 
-egtest.tex 
-biblatex-gb7714-2015.tex 
-biblatex-gb7714-2015.tex 
-biblatex-gb7714-2015.tex 
+testallformat.tex 
+cls-beamer.tex 
+cls-beameray.tex 
+opt-autolang-multilan.tex 
+opt-eg-authoryear.tex 
+opt-eg-multilan.tex 
+opt-gbalign-center.tex 
+opt-gbalign-gb.tex 
+opt-gbalign-left.tex 
+opt-gbnamefmt-default.tex 
+opt-gbnamefmt.tex 
+opt-gbnoauthor-false.tex 
+opt-gbnoauthor-true.tex 
+opt-gbpub-false.tex 
+opt-gbpub-true.tex 
+opt-gbstyle.tex 
+opt-gbtitlelink.tex 
+codeopt-gbcodegbk.tex 
 biblatex-gb7714-2015.tex 

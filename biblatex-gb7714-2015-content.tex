@@ -313,7 +313,7 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   为作者年制增加的选项，用于控制责任者缺失时的处理。
   \begin{itemize}
     \item gbnoauthor=false，当作者信息缺失时默认不做处理，使用标准样式的处理方式；
-    \item gbnoauthor=true，则根据GB/T 7714-2015 的要求进行处理，中文文献使用佚名来代替author，英文文献用 NOAUTHOR 来代替author。
+    \item gbnoauthor=true，则根据GB/T 7714-2015 的要求进行处理，中文文献使用佚名来代替author，英文文献用 Anon 来代替author。
   \end{itemize}
   测试结果见:
   \href{run:./example/opt-gbnoauthor-true.tex}{opt-gbnoauthor-true.tex}，
@@ -1035,7 +1035,7 @@ GB/T 7714-2015规定采用作者年制组织时，各篇文献首先按文种组
 
 标注要求具体参考GB/T 7714-2015第10.2节。
 
-\qd{一般情况下，当文献作者缺省时，作者年制就没有作者可以用，因此文献题名用来生成标签，这样会导致文献表中文献题名后的文献类型标识/文献载体标识消失(这是因为题名用于生成标签后，题名域会被清除，自然也就不输出题名相关的信息了，见后面的示例文献“\hyperlink{entrystdwithoutauthor}{Information and documentation-the Dublin core metadata element set}”)。此时可以用佚名替代缺省作者的方式避免这个问题，即可以使用样式文件提供的选项gbnoauthor=true，一旦设置该选项为true，则缺省的作者会根据文献语种填充为佚名或NOAUTHOR。默认情况下，不进行这种处理，即相当于设置选项gbnoauthor=false。而顺序编码制因为标签是数字序号，所以不存在这个问题。}
+\qd{一般情况下，当文献作者缺省时，作者年制就没有作者可以用，因此文献题名用来生成标签，这样会导致文献表中文献题名后的文献类型标识/文献载体标识消失(这是因为题名用于生成标签后，题名域会被清除，自然也就不输出题名相关的信息了，见后面的示例文献“\hyperlink{entrystdwithoutauthor}{Information and documentation-the Dublin core metadata element set}”)。此时可以用佚名替代缺省作者的方式避免这个问题，即可以使用样式文件提供的选项gbnoauthor=true，一旦设置该选项为true，则缺省的作者会根据文献语种填充为佚名或Anon。默认情况下，不进行这种处理，即相当于设置选项gbnoauthor=false。而顺序编码制因为标签是数字序号，所以不存在这个问题。}
 
 %本样式文件默认情况下采用佚名方式，如果不需要使用佚名，那么需要在样式文件中注释掉一段代码，这段代码在本文档末尾2016-11-14的更新历史中有说明，见\pageref{up:20161114}页。}
 

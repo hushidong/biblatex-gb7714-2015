@@ -831,11 +831,11 @@
         \DeclareStyleSourcemap{
             \maps[datatype=bibtex]{
                 \map{%默认情况下将空缺作者设置为佚名
-                    \step[fieldsource=userb,match={cn},final]
+                    \step[fieldsource=language,match={chinese},final]
                     \step[fieldset=author, fieldvalue={佚名}]
                 }
                 \map{%默认情况下将空缺作者设置为佚名
-                    \step[fieldsource=userb,match={en},final]
+                    \step[fieldsource=language,match={english},final]
                     \step[fieldset=author, fieldvalue={A{non}}]%noauthor换成Anon，同时为避免大写还加了{}
                 }
             }
