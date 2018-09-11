@@ -468,7 +468,20 @@ biber -l zh__stroke jobname
 		
 ```\usepackage[backend=biber,bibstyle=gb7714-2015,doi=false]{biblatex}```
 		
+
 		
+* <b>如果对当前文献中的url或doi显示效果(包括间距和断行)不满意，能否进行调整？</b>
+	
+> 能，可以通过设置三个计数器的值来调整，取值范围0到9999，计数器的值越大则越容易在相应的内容后断行:
+		
+```
+\setcounter{biburlnumpenalty}{100}%大于0允许在数字后面断行
+\setcounter{biburlucpenalty}{100}%大于0允许在大写字母后面断行
+\setcounter{biburllcpenalty}{100}%大于0允许在小写字母后面断行
+
+```
+
+
 		
 * <b>当参考文献没有作者时，希望用佚名或Anon代替作者时，请问该怎么处理？</b>
 	
@@ -483,6 +496,18 @@ biber -l zh__stroke jobname
 > 可通过设置选项maxbibnames，minbibnames实现，比如下面的设置用于显示5个作者:
 		
 ```\usepackage[backend=biber,bibstyle=gb7714-2015,maxbibnames=5,minbibnames=5]{biblatex}```
+
+
+* <b>请问如何将作者之间的分隔符调整为and而不是用逗号？</b>
+	
+> 可以通过重设两个分隔符来实现，分别是multinamedelim和finalnamedelim。低版本的biblatex直接重定义命令`\multinamedelim`和`\finalnamedelim`，高版本的biblatex可以使用分隔符环境，这样可以在标注、文献表等不同位置直接使用不同的分隔符，而不像低版本biblatex那样只能在不同的位置修改局部定义。比如:
+		
+```
+\DeclareDelimFormat[bib]{multinamedelim}{\addspace and \addspace}
+\DeclareDelimFormat[bib]{finalnamedelim}{\addspace and \addspace}
+\DeclareDelimFormat[cite]{multinamedelim}{\addcomma\addspace}
+\DeclareDelimFormat[cite]{finalnamedelim}{\addcomma\addspace}
+```
 	
 	
 	
@@ -593,6 +618,80 @@ biber -l zh__stroke jobname
 > 可通过设置选项uniquelist=false, uniquename=false实现，该设置标签中的作者只会是指定的1个且只用该作者的姓:
 
 ```\usepackage[backend=biber,style=gb7714-2015ay,uniquelist=false,uniquename=false]{biblatex}```
+
+
+
+
+* <b>请问上标的标注(引用)标签过长导致行溢出，该怎么处理？</b>
+	
+> 上标的标注与行内的标注不一样，因此采用了上标的处理，所以上标的标注无法自动断行，因此在页边附近的长标注很有可能会溢出。由于上标标注的断行国标中并没有什么明确要求和说明，因此只能按照自己的方式进行处理，通常是将一个长标注手动分成两个短的标注，比如将:
+
+```\cite{key1,key2,key3,key4,key5,key6,key7}```
+
+变换成:
+
+```\cite{key1,key2,key3}\linebreak\cite{key4,key5,key6,key7}```
+
+如果两个cite之间还需要增加一个上标的逗号，那么可以手动处理比如增加`\textsuperscript{,}`
+
+
+
+* <b>在顺序编码制标签中，希望数字编码从两个连续编码就开始压缩，比如[1,2]压缩成[1-2]，该怎么处理？</b>
+	
+> biblatex中处理顺序数字编码压缩的代码默认从3个连续编码开始压缩，比如[1,2,3]压缩成[1-3]。如果要修改为从2个连续编码开始压缩，只需要做一个很简单的修改即可:
+
+```
+%该宏的目的是抛弃压缩内部的编号，而仅输出最后一个编号，主要通过cbx@tempcnta来控制
+%一般情况下cbx@tempcnta为0，所以该宏不输出任何内容。当cbx@tempcnta在cite:comp:comp宏中更改变大后
+%说明开始进入需要压缩的范围，当到压缩终点时，cbx@tempcnta必然大于1，则输出内容。
+%修改第二行的数字1为0即可将默认的3个开始压缩变为2个开始压缩。
+\renewbibmacro*{cite:dump}{
+  \ifnumgreater{\value{cbx@tempcnta}}{0}
+    {\ifnumgreater{\value{cbx@tempcnta}}{1}%1改为0，可以将压缩起始3个编号改为2个编号
+       {\bibrangedash}
+       {\multicitedelim}%
+     \bibhyperref[\cbx@lastkey]{%
+       \ifdef\cbx@lastprefix
+         {\printtext[labelprefix]{\cbx@lastprefix}}
+         {}%
+       \printtext[labelnumber]{\cbx@lastnumber}}}
+    {}%
+  \setcounter{cbx@tempcnta}{0}%
+  \global\undef\cbx@lastprefix}
+```
+
+
+
+* <b>在正文中的某一部分，希望取消顺序编码标签中的压缩，而其他部分保持这种压缩，该怎么处理？</b>
+	
+> 顺序数字编码压缩的代码，主要有cite:comp:comp宏控制，因此需要局部取消压缩，可以局部的修改该宏。修改很简单，只需要注释掉其中的一行，在需要取消压缩的环境中，重定义该宏，比如:
+
+```
+\renewbibmacro*{cite:comp:comp}{%
+  \ifboolexpr{
+    ( test {\iffieldundef{labelprefix}} and test {\ifundef\cbx@lastprefix} )
+    or
+    test {\iffieldequals{labelprefix}{\cbx@lastprefix}}
+  }
+    {\ifnumequal{\thefield{labelnumber}}{\value{cbx@tempcntb}}
+       {\savefield{entrykey}{\cbx@lastkey}%
+        \savefield{labelnumber}{\cbx@lastnumber}%
+        \addtocounter{cbx@tempcnta}{1}}
+       {\ifnumequal{\thefield{labelnumber}}{\value{cbx@tempcntb}-1}
+          {}
+          {\usebibmacro{cite:dump}%
+           \ifnumgreater{\value{cbx@tempcntb}}{-1}
+             {\multicitedelim}
+             {}%
+           \printtext[bibhyperref]{%
+             \printfield{labelprefix}%
+             \printfield{labelnumber}}}}}
+    {\usebibmacro{cite:comp:end}}%
+  %\setcounter{cbx@tempcntb}{\thefield{labelnumber}}%%注释该行，以取消压缩
+  \savefield{labelprefix}{\cbx@lastprefix}}
+```
+
+
 	
 	
 	

@@ -80,6 +80,7 @@ setlocal DISABLEDELAYEDEXPANSION
 del *.bbx /Q
 del *.cbx /Q
 del *.def /Q
+del cls-*.bib /Q
 del opt*.bib /Q
 del code*.bib /Q
 del test*.bib /Q
