@@ -761,7 +761,10 @@ gbnamefmt=familyahead,sorting=nyt]{biblatex}%
 \end{filecontents}
 
 \addbibresource{\jobname.bib}
-\defdoublelangentry{易仕和2013--}{Yi2013--}
+
+\makeatletter
+\@ifpackagelater{biblatex}{2017/04/01}{\defdoublelangentry{易仕和2013--}{Yi2013--}}{}
+\makeatother
 
 
 

@@ -67,10 +67,10 @@ echo %%a
 echo !jobfile!
 echo !jobname!
 echo !jobfile! >> makerecord.dat
-pdflatex.exe --synctex=-1 !jobfile!
+pdflatex.exe !jobfile!
 biber !jobname!
-pdflatex.exe --synctex=-1 !jobfile!
-pdflatex.exe --synctex=-1 !jobfile!
+pdflatex.exe !jobfile!
+pdflatex.exe !jobfile!
 )
 setlocal DISABLEDELAYEDEXPANSION
 

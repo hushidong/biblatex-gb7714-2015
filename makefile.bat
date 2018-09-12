@@ -12,7 +12,7 @@ cd
 
 ::pause
 
-echo biblatex-gb7714-2015.tex >> example/makecompilerec.dat
+echo biblatex-gb7714-2015.tex >> example/makerecord.dat
 
 xelatex.exe --synctex=-1 biblatex-gb7714-2015.tex
 

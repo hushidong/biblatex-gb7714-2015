@@ -1686,7 +1686,7 @@ test{\iftoggle{iftlnine}}
 %
 %   原理方法:因为增加了begrelateddelim钩子，所以不需要重定义related输出宏
 \defversion{3.11}{related}{
-\renewcommand{\begrelateddelim}{\adddot\newline\nobreak}
+\providecommand{\begrelateddelim}{\adddot\newline\nobreak}
 }
 
 \iftoggle{iftlfive}{\switchversion{3.4}{date}}{}%biblatex<=3.2
@@ -1737,18 +1737,18 @@ test{\iftoggle{iftlnine}}
 %   新增一个样式用于输出连续出版物的地址，单位，时间，%类似\newbibmacro*{publisher+location+date}
 \newbibmacro*{location+institution+date}{\bibpubfont%
 \iftoggle{bbx:gbpub}%
-{\testCJKfirst{userd}
+{\testCJKfirst{userd}%
+\ifboolexpr{%
+test {\iflistundef{location}} and test {\iflistundef{institution}}%
+}{\iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress}\space :\space\str@nopublisher]}%
+{\printtext{[S.l.\space :\space s.n.\adddot]}}%
+}{%
 \iflistundef{location}{\iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress]}}{\printtext{[S.l.\adddot]}}}%
   {\printlist{location}}%
-%  \iflistundef{institution}
-%    {\setunit*{\addcomma\space}}
-%    {\setunit*{\addcolon\space}}%
-%  \printlist{institution}%
-%  \setunit*{\addcomma\space}%
 \addcolon\addspace%
 \iflistundef{institution}{%
-\iftoggle{ifCJKforgbt}{\printtext{[\str@nopublisher]}}{\printtext{\mkbibbrackets{s.n.}}}}% \bibstring{nopublisher}%[s.n.\adddot]
-{\printlist{institution}}%
+\iftoggle{ifCJKforgbt}{\printtext{[\str@nopublisher]}}{\printtext{\mkbibbrackets{s.n.}}}}%
+{\printlist{institution}}}%
 \setunit{\addcomma\addspace}%
   %\usebibmacro{date}%
   \printfield{year}%
@@ -1769,6 +1769,11 @@ test{\iftoggle{iftlnine}}
 \renewbibmacro*{publisher+location+date}{\bibpubfont%
 \iftoggle{bbx:gbpub}%
 {\testCJKfirst{userd}%
+\ifboolexpr{%
+test {\iflistundef{location}} and test {\iflistundef{publisher}}%
+}{\iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress}\space :\space\str@nopublisher]}%
+{\printtext{[S.l.\space :\space s.n.\adddot]}}%
+}{%
 \iflistundef{location}{%\adddot
 \iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准第19页看到，标准存在出版项时输出，没有时完全省略。
 \iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress]}\addcolon\addspace}{\printtext{[S.l.\adddot]}\addcolon\addspace}%
@@ -1780,8 +1785,8 @@ test{\iftoggle{iftlnine}}
 \iftoggle{ifCJKforgbt}{\printtext{[\str@nopublisher]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
 {\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
 }}%
-{\printlist{publisher}\setunit*{\addcomma\addspace}}%
-%\addcomma\addspace%
+{\printlist{publisher}}}%
+\setunit*{\addcomma\addspace}%\addcomma\addspace%
 \usebibmacro{date}%
 %\newunit %去掉这个标点
 }%

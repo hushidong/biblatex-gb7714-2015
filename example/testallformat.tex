@@ -760,7 +760,10 @@
 \end{filecontents}
 
 \addbibresource{\jobname.bib}
-\defdoublelangentry{易仕和2013--}{Yi2013--}
+
+\makeatletter
+\@ifpackagelater{biblatex}{2017/04/01}{\defdoublelangentry{易仕和2013--}{Yi2013--}}{}
+\makeatother
 
 \addbibresource[location=local]{example.bib}
 
@@ -1035,12 +1038,12 @@
     \end{refsection}
 
 
-    
+
     \section{测试：传统条目类型的兼容性}
     \begin{refsection}
-    
+
     包括：mastersthsis，phdthsis，www，electronic，standard，techreport，conference条目类型，本样式增加的newspaper类型：
-    
+
     \begin{itemize}
       \item newspaper:\cite{张田勤2000--}
       \item standard:\cite{全国文献工作标准化委员会第七分委员会1986--,国家标准局信息分类编码研究所1988-59-92}
@@ -1054,10 +1057,10 @@
 
     \printbibliography[heading=subbibliography,title=【兼容phdthsis等条目类型】]
 \end{refsection}
-    
-    
 
-    
+
+
+
     \section{测试：中文文献}
     \begin{refsection}
     中文文献测试，主要检查GB/T 7714-2015标准要的中文格式是否实现：
@@ -1277,7 +1280,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 \begin{refsection}
 \begin{enumerate}
   \item 专利引用\cite{KOSEKI2002--,TACHIBANA2002--,河北绿洲生态环境科技有限公司2001--,姜锡洲1989--,刘加林1993--,西安电子科技大学2002--,张凯军2012-04-05--}
-      
+
   \item 注意:专利文献\{刘加林1993--\}的location定义了中国，但从GB/T 7714-2015中给出的示例看其实并不需要该域，但这里并没有去掉。因为GB/T 7714-2015中给出的著录格式包括了出版项但没有示例，尽管这里的location是专利地域，但也可以作为出版项来考虑。未来国标完善后再做处理。
 \end{enumerate}
 
@@ -1289,7 +1292,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 }
 \end{refsection}
 
-    
+
     \section{测试: 中英文判断信息中存在编组时的情况}
 \begin{refsection}
 当责任者等需要判断中英文的信息中存在编组时的处理
@@ -1298,8 +1301,8 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 
 \printbibliography[heading=subbibliography,title=【中英文判断信息中存在编组的测试】]
 \end{refsection}
-    
-    
+
+
     \section{测试: 参考文献信息中存在\&等特殊字符的情况}
 \begin{refsection}
 文献中\cite{ref-replace-char}的booktitle域中含有\%，\&，\#符号，样式文件自动处理使其符合tex代码规则。
@@ -1322,7 +1325,7 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
 \printbibliography[heading=subbibliography,title=【title with \textbackslash LaTeX\{\}】]
 \end{refsection}
 
-    
-    
-    
+
+
+
     \end{document} 
