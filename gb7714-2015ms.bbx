@@ -1029,7 +1029,8 @@
     %   关联文献块前的分隔符，针对biblatex>3.11
     %
     %   原理方法:因为增加了begrelateddelim钩子，所以不需要重定义related输出宏
-    \providecommand{\begrelateddelim}{\adddot\newline\nobreak}
+    \ifdef{\begrelateddelim}{\renewcommand{\begrelateddelim}{\adddot\newline\nobreak}}{}
+
 
 
 %
