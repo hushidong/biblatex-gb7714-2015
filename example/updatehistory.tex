@@ -1,135 +1,22 @@
 
 %更新历史仅给出更新针对的问题，相应的处理代码和解释不在此给出，详见提示对应的说明文档内容
 
+
+date of update: 2018-10-18 to version v1.0n
+
+* 调整代码，适应biblatex v3.12版本后去除xstring包的情况。
+
+code modified to adapt to biblatex v3.12 without loading xstring package.
+
 %============================
-\updateinfo[2018-08-14]{date of update: 2018-08-14 to version v1.0m}\label{up:180814}
+\updateinfo[2018-10-18]{date of update: 2018-10-18 to version v1.0n}\label{up:181018}
 \begin{enumerate}
 
-\item 增加一个gb7714-2015ms样式，可以在一篇文献中使用两种样式，一种是gb样式，一种是标准样式。(20180814)
+\item 调整代码，适应biblatex v3.12版本后去除xstring包的情况。
 
-add a style gb7714-2015ms which allows two different styles used in a tex file, one is standard style, the other is gb7714 style.
+code modified to adapt to biblatex v3.12 without loading xstring package.
 
-
-\item 更正由于更新cbx文件引入的标注中的空格。(20180716)
-
-correct a bug which add an extra space in citations after the previous update.
 
 \end{enumerate}
 
-
-%============================
-\updateinfo[2018-06-01]{date of update: 2018-06-01 to version v1.0l}\label{up:180601}
-\begin{enumerate}
-
-\item 根据的 Minyi Han 的建议，调整了issue域的输出，以及标注中作者和等之间的间隙。(20180704)
-
-adjust output of the field issue，and the separation space between author and 等 in citations which was suggested by Minyi Han.
-
-
-\item 增加gbctexset选项设置参考文献标题内容的控制方式，即，除了相同的printbibliography选项方式外，选择是通过 bibname 或 refname 控制还是通过定义本地化字符串 bibliography 或 references 控制。 (20180702)
-
-add an option gbctexset to set the bibliography title's control method, i.e. besides the same printbibliography option method, two methods: control by bibname or refname and control by DefineBibliographyStrings is selected by this option.
-
-\item 增加gbbiblabel选项来控制顺序编码制文献表序号标签的格式，即用方括号、圆括号、点、方框、圆圈等来装饰序号数字。(20180623)
-
-add an option gbbiblabel to control the format of the numerical label, i.e. the label number is wrapped by bracket, parenthesis,dot,box,circle and so on.
-
-\item 增加 bibitemindent 尺寸配合 bibhang 设置基于list的文献表环境中项的缩进。(20180615)
-
-add a length bibitemindent to control the item indent of bibliography based on list env with bibhang。
-
-\item 增加upcite命令为兼容一些老的文档，顺序编码制中同supercite，作者年制中同yearcite。(20180604)
-
-add upcite to be compatible with some old doc，it behaves like supercite in numerical style and yearcite in author year style.
-
-\item 为更合理的表述选项值的意义，修改了gbnamefmt选项的值。同时为方便在一个文献表中实现不同姓名格式，增加了nameformat域来为每一个条目设置姓名的格式。(20180604)
-
-modify the values of the option gbnamefmt for standardising option terminology. add a nameformat to control the name format of each entry，in order to implement multiple name format in on bibliography.
-
-\item 为顺序编码样式gbalign增加了center选项值。(20180602)
-
-add a value: center of the gbalign option for numerical sequence style.
-
-\item 统一了url字体为roman字体。(20180601)
-
-font of url set to be same as the main text.
-
-
-\item 进一步完善了文档。(20180601)
-
-update the documentataion.
-\end{enumerate}
-
-
-%============================
-\updateinfo[2018-04-03]{date of update: 2018-04-03 to version v1.0k}\label{up:180403}
-\begin{enumerate}
-\item 重新设计了语言排序机制，更好支持英/俄/法/日/韩/中等多语言。(20180524)
-
-sorting mechanism for different languages was redesigned to improve the support of languages like english/Russian/french/japanese/korean.
-
-\item 增加了一个gbtitlelink选项，用于设置文献表标题的超链接。(20180524)
-
-add an option gbtitlelink to set hyperlink for the reference title.
-
-\item 根据 liuhui 等的建议，修改textcite命令中的标点，去掉等/et al前面和后面的逗号。(20180523)
-
-del the comma before and after 等/et al in the cite label for command textcite，suggested by liuhui and others.
-
-\item 增加对数据库，数据集，软件，舆图等条目类型的处理，增加mark，medium域以更好的实现标准的要求，条目类型和域命名与Lee zeping的gbt7714宏包一致以兼容bib文件。 （20180520）
-
-add entry types：database, dataset, software, map, archive and fields: mark, medium to meet GB/T 7714-2015 betterly. the nomenclature of added entry types and fields is in keep with Pkg gbt7714 developed by Lee zeping to be compatible with bib files.
-
-\item 增加了选项gbfieldstd，用于控制一些域如标题，网址，卷等格式。 （20180515）
-
-add an option gbfieldstd to control the format of some fields like title, url, volume.
-
-\item 增加了选项gbcodegbk，用于兼容GBK编码的文件，方法源自biblatex-caspervector。 （20180509）
-
-add an option gbcodegbk to deal tex file encoded with GBK, the solution originated from biblatex-caspervector.
-
-\item 增加了选项gbstrict，用于控制bib文件中一些多余的域的输出，目的是为了兼容一些bib文件。 （20180509）
-
-add an option gbstrict to control the output of some unnecessary fields, in order to be compatible with some bib file.
-
-\item 增加了字体控制命令bibauthorfont，bibtitlefont，bibpubfont，用于控制文献表中作者、标题、出版项的字体和颜色。（20180427）
-
-add 3 font set cmds：bibauthorfont，bibtitlefont，bibpubfont to control the font and color of author，title，and publication items.
-
-\item 增加了标注命令authornumcite，用于在标注标签中同时输出作者和顺序编码。（20180427）
-
-add a citation cmd：authornumcite to print author and numeric number at the same time.
-
-\item 增加了gbpunctin选项，用于控制inbook等类型是否输出析出来源文献前的//符号，主要是为方便用户定制。
-
-add an option gbpunctin to control the output of // before bookauthor for entry types like inbook.
-
-\item 修正了析出文献来源的作者为editor是出现两次的问题，这个很简单的问题如果用bookauthor就不会出现问题，所以以前一直没有发现，才由杨志红提出来，感谢。
-
-correct a bug that the editor appears twice for the entry with booktitle's bookauthor is editor, which is reported by Yang zhihong,3ks!
-
-\item 完善了github上的wiki。
-
-WIKI on github was accomplished.
-
-\item 修正了gbnamefmt中的一些小错误。
-
-correct some flaws for gbnamefmt option.
-
-\item 修改了代码用于兼容3.11版本
-
-change the separator before related block for v3.11.
-
-\item 页码范围的间隔符从en dash改为hyphen
-
-change the pages range separator from en dash to hyphen.
-	
-\item 修正了v3.7以上版本中专利文献中公告日期后多出点的问题，该bug是由于输入公告日期没有使用printtext导致异步标点机制破坏所致。
-
-correct a bug of newsdate in patent for biblatex >v3.7, which added an additional dot before urldate caused by broken asynchronous punctuation .
-
-\item 修正了texlive2017以上版本中beamer类中标题后面多出点的问题，由于beamer会对bibmacro\{title\}做patch导致其输出不同于普通文档类，该bug是由于beamer升级后patch的内容发生变化导致。
-
-correct a bug of punctuation after title with beamer for >texlive2017, the bug is caused by the update of beamer.
-\end{enumerate}
 

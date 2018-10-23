@@ -1,4 +1,4 @@
-<b>Date of last change: 2018-08-14 to version v1.0m</b>
+<b>Date of last change: 2018-10-18 to version v1.0n</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -319,6 +319,27 @@ citestyle=gb7714-2015%,backref=true%%其中后端backend使用biber
 > 由于ctex2.9套装多年未更新，其中的biblatex宏包过于陈旧，所以需要更新 biblatex。
 	
 	
+    
+* <b>请问除了利用xelatex进行编译外，能不能用pdflatex进行编译？</b>
+	
+> 能用pdflatex进行编译，但要注意的是因为某些样式比如authoryear等使用了xstring宏包中的一些命令，所以会产生错误，但numeric类样式通常没有问题。这一问题在biblatex更新到3.12版本后取消xstring宏包后得以解决。
+
+> 中文用户需要注意一些编码的问题。utf-8编码的文档，采用xelatex编译没有任何注意事项，但使用pdflatex编译时，需要给ctex宏包加载UTF8选项，比如`\usepackage[UTF8]{ctex}`或者在文档类加载时给出也可以比如`\documentclass[[UTF8]{article}`,同时引用文献时使用的引用关键词应使用英文。当文档使用其他编码时，xelatex编译通常需要指定一个文档编码，比如windows环境下的GB2312编码的文档需要指定`\XeTeXinputencoding "GBK"`， 否则显示乱码。使用pdflatex进行编译，如果biblatex不能正确的处理编码问题，那么需要为其明确的指定texencoding和bibencoding选项。比如windows环境下的GB2312编码的文档，需要指定`\usepackge[texencoding=GBK]{biblatex}`。
+
+
+* <b>请问使用backref=true选项后，某个反向超链接总是链接到封面页是怎么回事？</b>
+	
+> 对页码进行正确超链接需要一个前提是，当前链接的页码是唯一的。当有两页具有相同的页码时，超链接总是链接到第一各具有该页码的页面上。比如封面页页码是1，正文第一页页码也是1，那么到正文第一页的反向超链接总会链接到封面页上。解决该问题就是要解决页码的唯一性问题。当页码的表示形式不是同一种时，那么也会得到正确的区分。比如封面页用罗马字母I表示，而正文第一页用阿拉伯数字1表示，那么就能得到正确的反向超链接。类似于:
+```
+\pagenumbering{roman}
+\title{title}
+\maketitle
+\clearpage
+
+\pagenumbering{arabic}
+\section{文献表}
+```
+    
 	
 * <b>我希望参考文献表中的文献不是按引用顺序而是以文献作者的字母顺序排序，怎么实现？</b>
 		
@@ -771,26 +792,14 @@ biber -l zh__stroke jobname
 * 2018/04/03 v1.0k
 * 2018/06/01 v1.0l
 * 2018/08/14 v1.0m,CTAN
+* 2018/10/18 v1.0n
 
 ---------------------------------------------------------
 ## Update history:
 
-
-date of update: 2018-08-14 to version v1.0m
-
-
-* 增加一个gb7714-2015ms样式，可以在一篇文献中使用两种样式，一种是gb样式，一种是标准样式。(20180814)
-
-add a style gb7714-2015ms which allows two different styles used in a tex file, one is standard style, the other is gb7714 style.
-
-
-* 更正由于更新cbx文件引入的标注中的空格。(20180716)
-
-correct a bug which add an extra space in citations after the previous update.
-
-
 [update: tex](example/updatehistory.tex)
 
-[update: md](example/updatehistoryold.md)
+[update: tex](example/updatehistoryold.tex)
+
 
 

@@ -2,7 +2,7 @@
 \usepackage{ctex}
 \usepackage{xcolor}
 \usepackage{toolbox}
-\usepackage{hyperref}
+\usepackage[colorlinks]{hyperref}
 \usepackage{lipsum}
 \usepackage[top=10pt,bottom=10pt,left=1cm,right=1cm,showframe,showcrop]{geometry}
 \usepackage{xltxtra,mflogo,texnames}
@@ -761,14 +761,24 @@
 
 \addbibresource{\jobname.bib}
 
+%biblatex 3.7及以上版本可以使用多个stylesourcemap
 \makeatletter
-\@ifpackagelater{biblatex}{2017/04/01}{\defdoublelangentry{易仕和2013--}{Yi2013--}}{}
+\@ifpackagelater{biblatex}{2016/12/01}{\defdoublelangentry{易仕和2013--}{Yi2013--}}{}
 \makeatother
 
 \addbibresource[location=local]{example.bib}
 
 
     \begin{document}
+
+    \section{测试：根据biblatex版本判断texlive年份}
+
+\iftoggle{iftlfive}{tl2015}{}%处理biblatex3.2之前版本，时间2016-03-01前
+\iftoggle{iftlsix}{tl2016}{}%处理biblatex3.3开始改变姓名机制后版本，时间2016-03-01及以后
+\iftoggle{iftlseven}{tl2017}{}%处理biblatex3.7的兼容性，时间2016-12-01后
+\iftoggle{iftleight}{blx3.8-3.9}{}%处理biblatex3.8到3.9的兼容性，时间2017-11-01后到2017-12-01前
+\iftoggle{iftlnine}{blx3.10}{}%处理biblatex10的兼容性，时间2017-12-01后
+\iftoggle{iftlatest}%假设是最新版biblatex
 
     \section{测试：间距字体颜色控制}
     \begin{refsection}
@@ -895,7 +905,7 @@
     \textcite{徐伟康2010对}提到。\textcite{FOURNEY1971-17-38}提到。(use textcite)\par
     \authornumcite{徐伟康2010对}提到。\authornumcite{FOURNEY1971-17-38}提到。
     (use authornumcite)\par
-    \textcite{徐伟康2011对}提到。(use textcite)
+    \textcite{徐伟康2010对}提到。(use textcite)
 
 \bigskip
     GB/T 7714-2015 标准 10.1.2 节，引用多篇文献：
@@ -1108,7 +1118,7 @@
 
 
     set动态方法\cite{张敏莉，等，2007};\par
-    related动态方法\cite{易仕和2013--}
+    related动态方法\cite{易仕和2013--}(biblatex 3.7及以上版本可以使用多个stylesourcemap，进而可以动态的定义related)。
 
     \printbibliography
     \end{refsection}

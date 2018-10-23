@@ -28,38 +28,26 @@
     %
     %   biblatex版本判断
     %   20180405，v1.0k，为兼容biblatexv3.11增加toggle:iftlnine，HU zhenzhen
+    %   20181020，v1.0n，为不再使用xstring宏包做的修改，hzz
     %
     %   原理方法:当版本继续更新时，增加一个新的toggle用以处理新的旧版，最新版和未判断出来的版本永远用iftlatest
-    \providetoggle{iftlfive}%用于处理biblatex3.2之前的版本
-    \providetoggle{iftlsix}%用于处理biblatex3.3开始改变的新的姓名机制后版本
-    \providetoggle{iftlseven}%用于处理biblatex3.7的兼容性
-    \providetoggle{iftleight}%用于处理biblatex3.8到3.9的兼容性
-    \providetoggle{iftlnine}%用于处理biblatex10的兼容性
-    \providetoggle{iftlatest}%用于最新版biblatex，目前是biblatex3.11，20180402
-    \StrBefore{\abx@version}{.}[\numinteger]%以点区分整数和小数
-    \StrBehind{\abx@version}{.}[\numdigital]%小数部分可能带字母所以需将其去掉，见下一行代码
-    \IfInteger{\numdigital}{}{\StrGobbleRight{\numdigital}{1}[\numdigital]}
-    \togglefalse{iftlfive}
-    \togglefalse{iftlsix}
-    \togglefalse{iftlseven}
-    \togglefalse{iftleight}
-    \togglefalse{iftlnine}
-    \toggletrue{iftlatest}
-    \ifnumcomp{\numinteger}{=}{3}{
-        \ifnumcomp{\numdigital}{=}{10}{\toggletrue{iftlnine}\togglefalse{iftlatest}}{}%3.10版本
-        \ifnumcomp{\numdigital}{<}{10}{\ifnumcomp{\numdigital}{>}{7}{\toggletrue{iftleight}\togglefalse{iftlatest}}{}}{}%>3.8版本用iftleight=true表示
-        \ifnumcomp{\numdigital}{=}{7}{\toggletrue{iftlseven}\togglefalse{iftlatest}}{}%3.7版本用iftlseven=true表示
-        \ifnumcomp{\numdigital}{<}{7}{\ifnumcomp{\numdigital}{>}{2}{\toggletrue{iftlsix}\togglefalse{iftlatest}}{}}{}%3.3-3.6版本用iftlsix=true表示
-        \ifnumcomp{\numdigital}{<}{3}{\toggletrue{iftlfive}\togglefalse{iftlatest}}{}%3.0-3.2版本用iftlfive=true表示
-    }{\ifnumcomp{\numinteger}{>}{3}{
-       \blx@warning@noline{%
-       biblatex version is >= 4.x.\MessageBreak
-       if errors raised，Please contact biblatex-gb7714-2015 pkg author.}%
-    }{ \toggletrue{iftlfive}\togglefalse{iftlatest}%2.x版本统一用iftlfive=true表示
-       \blx@warning@noline{%
-       biblatex version is <= 2.x.\MessageBreak
-       if errors raised，Please contact biblatex-gb7714-2015 pkg author.}%
-    }}
+    \providetoggle{iftlfive}\togglefalse{iftlfive}  %处理biblatex3.2之前版本，时间2016-03-01前
+    \providetoggle{iftlsix}\togglefalse{iftlsix}    %处理biblatex3.3开始改变姓名机制后版本，时间2016-03-01及以后
+    \providetoggle{iftlseven}\togglefalse{iftlseven}%处理biblatex3.7的兼容性，时间2016-12-01后
+    \providetoggle{iftleight}\togglefalse{iftleight}%处理biblatex3.8到3.9的兼容性，时间2017-11-01后到2017-12-01前
+    \providetoggle{iftlnine}\togglefalse{iftlnine}  %处理biblatex10的兼容性，时间2017-12-01后
+    \providetoggle{iftlatest}\toggletrue{iftlatest} %假设是最新版biblatex
+    \@ifpackagelater{biblatex}{2016/03/01}{
+        \@ifpackagelater{biblatex}{2016/12/01}{
+        \@ifpackagelater{biblatex}{2017/11/01}{
+        \@ifpackagelater{biblatex}{2017/12/01}{
+        \@ifpackagelater{biblatex}{2018/02/19}{}
+        {\toggletrue{iftlnine}\togglefalse{iftlatest}}}
+        {\toggletrue{iftleight}\togglefalse{iftlatest}}}
+        {\toggletrue{iftlseven}\togglefalse{iftlatest}}}
+        {\toggletrue{iftlsix}\togglefalse{iftlatest}}}
+        {\toggletrue{iftlfive}\togglefalse{iftlatest}}
+
     \newcommand\defversion[2]{\csdef{codeversion#1#2}}%定义不同版本的命令
     \newcommand\switchversion[2]{\csuse{codeversion#1#2}}%使用不同版本的命令
 

@@ -102,7 +102,7 @@ biblatex-gb7714-2015宏包除了提供严格遵守GB/T 7714-2015标准的格式�
 笔者从最初开始学习latex时利用 thebibliography 环境生成参考文献，到对格式化有更多需求后开始寻求利用参考文献宏包，再到最后选择使用biblatex宏包，越发感觉到biblatex 在生成参考文献方面的巨大潜力。经过大量实践，总结其优点如下:
 %[也由于对bibtex语言不熟悉，偷懒不想学$( \hat{} \bot \hat{} )$]
 \begin{enumerate}
-\item 使用简单。样式随宏包加载，参考文献源bib文件利用addbibresource加载，打印文献表利用printbibliography命令可以在文档任意位置打印。参考文献只需三步编译，第一遍xelatex，第二遍biber，第三遍xelatex，当然如果需要反向超链接，除设置backref 选项外，还需要第四遍xelatex。例\ref{eg:compile:cmd} 给出编译命令，其中--synctex=-1 选项也可以是-synctex=1。而且这四步命令可以用一条命令latexmk -xelatex jobname.tex 代替。
+\item 使用简单。样式随宏包加载，参考文献源bib文件利用addbibresource加载，打印文献表利用printbibliography命令可以在文档任意位置打印。参考文献只需三步编译，第一遍xelatex，第二遍biber，第三遍xelatex，当然如果需要反向超链接，除设置backref 选项外，还需要第四遍xelatex。例\ref{eg:compile:cmd} 给出编译命令，其中--synctex=-1 选项也可以是-synctex=1。而且这四步命令可以用一条命令latexmk -xelatex jobname.tex 代替。除使用xelatex进行编译外，也可以使用pdflatex进行编译，但要注意的是pdflatex编译可能因为某些样式比如authoryear，使用了xstring宏包中的一些命令而导致错误，但numeric类样式通常没有问题。该问题在biblatex更新到3.12版本后取消xstring宏包后得以解决。中文用户编译还需要注意编码问题。utf-8编码的文档，采用xelatex编译没有任何注意事项，但使用pdflatex编译时，需要给ctex宏包加载UTF8选项，比如\verb|\usepackage[UTF8]{ctex}|，该选项在文档类加载时给出也可，比如\verb|\documentclass[[UTF8]{article}|，同时引用文献时使用的引用关键词应使用英文。当文档使用其他编码时，xelatex编译通常需要制定一个文档编码，比如windows环境下的GB2312编码的文档需要指定\verb|\XeTeXinputencoding "GBK"|，否则会显示乱码。使用pdflatex进行编译时，如果biblatex不能正确的处理编码问题，那么需要为其明确的指定texencoding和bibencoding选项。比如windows环境下的GB2312编码的文档，需要指定\verb|\usepackge[texencoding=GBK]{biblatex}|。
 
     \begin{example}{使用biblatex宏包的文档编译命令}{eg:compile:cmd}
     \begin{texlist}
@@ -826,7 +826,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
   \item 本样式包的设计与实现方法以及设计到的一些biblatex功能介绍，以项目示例的形式总结在
   \href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}{\LaTeX 文档中文参考文献的biblatex解决方案}中，本文档不再重复给出，有需要了解的用户可以参见其中的第3.1节。
 
-  \item 当tex源文档采用UTF-8编码时，可以采用xelatex编译。当tex源文档为GBK 编码时，可以利用notepad++ 或notepad2 等编辑器将其转换为UTF-8编码，然后用xelatex编译，或者也可以直接利用pdflatex或latex进行编译，本样式已经做了支持。
+  \item 当tex源文档采用UTF-8编码时，可以采用xelatex编译。当tex源文档为GBK 编码时，可以利用notepad++ 或notepad2 等编辑器将其转换为UTF-8编码，然后用xelatex编译，或者也可以直接利用pdflatex或latex进行编译，本样式已经做了支持。编译时需要的一些特殊处理见前述的编译命令介绍内容。
       %增加了对GBK支持的说明，2018-05-11
 
   \item 当顺序编码和作者年制切换，或者biblatex版本切换，或者不同样式切换时，如果编译出错，可先清理一下辅助文件，完成后再重新编译。

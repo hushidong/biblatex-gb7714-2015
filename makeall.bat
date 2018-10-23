@@ -18,6 +18,8 @@ cd example
 
 call makefileeg
 
+call makefileegstyle.bat
+
 cd ..
 
 echo biblatex-gb7714-2015.tex >> example/makerecord.dat
