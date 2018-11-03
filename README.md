@@ -1,4 +1,4 @@
-<b>Date of last change: 2018-10-18 to version v1.0n</b>
+<b>Date of last change: 2018-11-04 to version v1.0n</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -212,47 +212,67 @@ linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}%加载hyperref宏
 citestyle=gb7714-2015%,backref=true%%其中后端backend使用biber
 ]{biblatex}%标注(引用)样式citestyle，著录样式bibstyle都采用gb7714-2015样式
 
-\addbibresource[location=local]{example.bib}%biblatex宏包的参考文献数据源加载方式
+\usepackage{filecontents}
+\begin{filecontents}{egbibdata.bib}
+@Book{Peebles2001-100-100,
+  Title                    = {Probability, random variable, and random signal Principles and \LaTeX{}},
+  Address                  = {New York},
+  Author                   = {von Peebles, Jr., P. Z.},
+  Edition                  = {4},
+  Pages                    = {100},
+  Publisher                = {McGraw-Hill},
+  Year                     = {2001}
+}
+
+@Book{蔡敏2006--,
+  Title                    = {UML基础和Rose建模教程},
+  Address                  = {北京},
+  Author                   = {蔡敏 and 徐慧慧 and 黄柄强},
+  Publisher                = {人民邮电出版社},
+  Year                     = {2006},
+  Month                    = {1}
+}
+\end{filecontents}
+
+\addbibresource[location=local]{egbibdata.bib}%biblatex宏包的参考文献数据源加载方式
 
 \begin{document}%正文区开始:
 
 %正文内容，引用参考文献
 
-1. 不带页码的引用(顺序编码制上标，方括号包围；作者年制行内，括号包围):
-	\cite{Peebles2001-100-100}
-	\upcite{Peebles2001-100-100}
-	\supercite{Peebles2001-100-100}
+1. 不带页码的引用(顺序编码制上标，方括号包围；作者年制行内，括号包围):\\
+	见文献\cite{Peebles2001-100-100}\\
+	见文献\upcite{Peebles2001-100-100}\\
+	见文献\supercite{Peebles2001-100-100}
 
-2. 不带页码的引用(顺序编码制非上标，方括号包围；作者年制行内，括号包围):
+2. 不带页码的引用(顺序编码制非上标，方括号包围；作者年制行内，括号包围):\\
+	见文献\parencite{Peebles2001-100-100}
 
-	\parencite{Miroslav2004--}
+3. 带页码的引用(标准命令，默认样式; 增加命令，GB/T 7714-2015样式):\\
+	见文献\cite[见][49页]{蔡敏2006--}\\
+	见文献\parencite[见][49页]{Peebles2001-100-100}\\
+	见文献\pagescite{Peebles2001-100-100}\\
+	见文献\pagescite[201-301]{Peebles2001-100-100}
 
-3. 带页码的引用(标准命令，默认样式; 增加命令，GB/T 7714-2015样式):
+4. 顺序编码制中同时输出作者和顺序编码标签，比如：\\
+	见\citeauthor{蔡敏2006--}\cite{蔡敏2006--}\\
+	见\authornumcite{蔡敏2006--}\\
+	见\textcite{蔡敏2006--} (顺序编码标签不上标)
 
-	\cite[见][49页]{蔡敏2006--}  
-	\parencite[见][49页]{Miroslav2004--}
-	\pagescite{Peebles2001-100-100}  
-	\pagescite[201-301]{Peebles2001-100-100}
+5. 作者年制文中已有作者还需要年份和页码(顺序编码制与pagescite作用相同，作者年制年份行内页码上标):\\
+	见蔡敏\yearpagescite[][205]{蔡敏2006--}和Peebles\yearpagescite[][15]{Peebles2001-100-100}
 
-4. 顺序编码制中同时输出作者和顺序编码标签，比如：
-	\citeauthor{蔡敏2006--}\cite{蔡敏2006--}
-	\authornumcite{蔡敏2006--}
-	\textcite{蔡敏2006--} (顺序编码标签不上标)
+6. 作者年制文中已有作者只需要年份(顺序编码制与pagescite作用相同，作者年制年份行内):\\
+	见赵耀东\yearcite{蔡敏2006--}\\
+	见赵耀东(\cite*{蔡敏2006--})\\
+	见赵耀东(\citeyear{蔡敏2006--})
 
-5. 作者年制文中已有作者还需要年份和页码(顺序编码制与pagescite作用相同，作者年制年份行内页码上标):
-	见赵耀东\yearpagescite[][205]{赵耀东1998--}和Simon\yearpagescite[][15]{Simon2001--}
+7. 作者年制中由标注命令给出作者年份信息，作者以主语方式作为正文内容：\\
+	见\textcite{蔡敏2006--}
 
-6. 作者年制文中已有作者只需要年份(顺序编码制与pagescite作用相同，作者年制年份行内):
-	见赵耀东\yearcite{赵耀东1998--}
-	见赵耀东(\cite*{赵耀东1998--})
-	见赵耀东(\citeyear{赵耀东1998--})
-
-7. 作者年制中由标注命令给出作者年份信息，作者以主语方式作为正文内容：
-	\textcite{赵耀东1998--}
-
-8. 在页脚中引用和打印文献表:
-	\footnote{在脚注中引用\footcite{赵学功2001--}}  
-	\footfullcite{赵学功2001--}
+8. 在页脚中引用和打印文献表:\\
+	见文献\footnote{在脚注中引用\footcite{蔡敏2006--}}\\
+	见文献\footfullcite{蔡敏2006--}
 
 
 %打印参考文献表
@@ -269,10 +289,19 @@ citestyle=gb7714-2015%,backref=true%%其中后端backend使用biber
 	xelatex jobname.tex
 ```
 
+或者
+
+```
+	latexmk -xelatex jobname.tex
+```
+
+
 ### 3. Recommended environment/推荐使用环境
     
 - Texlive+Winedt
 - Texlive+Texstudio
+- texlive及其它发行版安装见[安装指南](https://github.com/sjtug/SJTUThesis/wiki/%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97)
+	
 	
 ### 4. Common questions/常见问题
 
@@ -794,7 +823,7 @@ biber -l zh__stroke jobname
 * 2018/04/03 v1.0k
 * 2018/06/01 v1.0l
 * 2018/08/14 v1.0m,CTAN
-* 2018/10/18 v1.0n
+* 2018/11/04 v1.0n
 
 ---------------------------------------------------------
 ## Update history:
