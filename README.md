@@ -12,6 +12,8 @@ Maintainer: huzhenzhen <hzzmail@163.com>
 
 Homepage: <https://github.com/hushidong/biblatex-gb7714-2015>
 
+ctan-pkg: <https://www.ctan.org/pkg/biblatex-gb7714-2015>
+
 License: LaTeX Project Public License 1.3 or later
 
 
