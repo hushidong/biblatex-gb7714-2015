@@ -171,6 +171,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * [Zhejiang University thesis(浙江大学毕业设计/论文模板)](https://github.com/TheNetAdmin/zjuthesis)
 * [fjnu-bathesis (福建师范大学本科毕业论文LaTeX 模板)](https://github.com/fjnuer/fjnu-bathesis)
 * [Thesis-Template-for-XJTU (西安交大毕业设计模板)](https://github.com/DXie123/Thesis-Template-for-XJTU)
+* [CAUTemplate(中国农业大学课程论文模板)](https://github.com/Cdmium/CAUTemplate)
 * [...]
 
 
