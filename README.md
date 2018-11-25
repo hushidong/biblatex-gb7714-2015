@@ -190,7 +190,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * [biblatex-caspervector: caspervector 设计的中文参考文献样式](https://github.com/CasperVector/biblatex-caspervector)
 * [gbt7714-bibtex-style: GB/T7714-2015 标准的bst实现版本](https://github.com/zepinglee/gbt7714-bibtex-style)
 * [LaTeX学习网站](http://www.latexstudio.net/)
-* [LaTeX交流论坛](http://bbs.ctex.org/)
+* [LaTeX交流论坛](http://www.ctex.org/)
 
 ---------------------------------------------------------
 
