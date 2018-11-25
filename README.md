@@ -58,7 +58,7 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 		
         `gbnamefmt = pinyin` for a common Chinese style, like: ZHANG Min-li, YI Shi-he and so on. 
 		
-		the name format can be set per-entry using a field `nameformat`, add this field such as `nameformat={pinyin}` to an entry in the bib file to set the entry's name format.
+		the name format can be set per-entry using a field `nameformat`, add this field like `nameformat={pinyin}` to an entry in the bib file to set the entry's name format.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbnamefmt=uppercase]{biblatex}`
 		
@@ -112,6 +112,14 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
         `\usepackage[backend=biber,style=gb7714-2015,gbcodegbk=true]{biblatex}`
 		
+	- add an option `gbtitlelink` to control the hyperlink of title field (This option is also for author year style):
+	
+		`gbtitlelink = false` not to add hyperlink, this is the default setting.
+		
+		`gbtitlelink = true` to set the title as a hyperlink.
+	
+        `\usepackage[backend=biber,style=gb7714-2015,gbtitlelink=true]{biblatex}`
+		
 	- add an option `gbstrict` to control the output of some unnecessary fields for GB/T7714-2015 (This option is also for author year style). 
 	
 		`gbstrict=true`,  not to print those fields such as language, eprint, this is the default setting.
@@ -128,13 +136,7 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 	
         `\usepackage[backend=biber,style=gb7714-2015,gbfieldstd=true]{biblatex}`
 		
-	- add an option `gbtitlelink` to control the hyperlink of title field (This option is also for author year style):
-	
-		`gbtitlelink = false` not to add hyperlink, this is the default setting.
-		
-		`gbtitlelink = true` to set the title as a hyperlink.
-	
-        `\usepackage[backend=biber,style=gb7714-2015,gbtitlelink=true]{biblatex}`
+
 		
 * for multi-style: gb7714-2015ms
 

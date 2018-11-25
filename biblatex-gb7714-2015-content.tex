@@ -102,7 +102,7 @@ biblatex-gb7714-2015宏包除了提供严格遵守GB/T 7714-2015标准的格式�
 笔者从最初开始学习latex时利用 thebibliography 环境生成参考文献，到对格式化有更多需求后开始寻求利用参考文献宏包，再到最后选择使用biblatex宏包，越发感觉到biblatex 在生成参考文献方面的巨大潜力。经过大量实践，总结其优点如下:
 %[也由于对bibtex语言不熟悉，偷懒不想学$( \hat{} \bot \hat{} )$]
 \begin{enumerate}
-\item 使用简单。样式随宏包加载，参考文献源bib文件利用addbibresource加载，打印文献表利用printbibliography命令可以在文档任意位置打印。参考文献只需三步编译，第一遍xelatex，第二遍biber，第三遍xelatex，当然如果需要反向超链接，除设置backref 选项外，还需要第四遍xelatex。例\ref{eg:compile:cmd} 给出编译命令，其中--synctex=-1 选项也可以是-synctex=1。而且这四步命令可以用一条命令latexmk -xelatex jobname.tex 代替。除使用xelatex进行编译外，也可以使用pdflatex进行编译，但要注意的是pdflatex编译可能因为某些样式比如authoryear，使用了xstring宏包中的一些命令而导致错误，但numeric类样式通常没有问题。该问题在biblatex更新到3.12版本后取消xstring宏包后得以解决。中文用户编译还需要注意编码问题。utf-8编码的文档，采用xelatex编译没有任何注意事项，但使用pdflatex编译时，需要给ctex宏包加载UTF8选项，比如\verb|\usepackage[UTF8]{ctex}|，该选项在文档类加载时给出也可，比如\verb|\documentclass[[UTF8]{article}|，同时引用文献时使用的引用关键词应使用英文。当文档使用其他编码时，xelatex编译通常需要制定一个文档编码，比如windows环境下的GB2312编码的文档需要指定\verb|\XeTeXinputencoding "GBK"|，否则会显示乱码。使用pdflatex进行编译时，如果biblatex不能正确的处理编码问题，那么需要为其明确的指定texencoding和bibencoding选项。比如windows环境下的GB2312编码的文档，需要指定\verb|\usepackge[texencoding=GBK]{biblatex}|。
+\item 使用简单。样式随宏包加载，参考文献源bib文件利用addbibresource加载，打印文献表利用printbibliography命令可以在文档任意位置打印。参考文献只需三步编译，第一遍xelatex，第二遍biber，第三遍xelatex，当然如果需要反向超链接，除设置backref 选项外，还需要第四遍xelatex。例\ref{eg:compile:cmd} 给出编译命令，其中--synctex=-1 选项也可以是-synctex=1。而且这四步命令可以用一条命令latexmk -xelatex jobname.tex 代替。除使用xelatex进行编译外，也可以使用pdflatex进行编译，但要注意的是pdflatex编译可能因为某些样式比如authoryear，使用了xstring宏包中的一些命令而导致错误，但numeric类样式通常没有问题。该问题在biblatex更新到3.12版本后取消xstring宏包后得以解决。中文用户编译还需要注意编码问题。utf-8编码的文档，采用xelatex编译没有任何注意事项，但使用pdflatex编译时，需要给ctex宏包加载UTF8选项，比如\verb|\usepackage[UTF8]{ctex}|，该选项在文档类加载时给出也可，比如\verb|\documentclass[[UTF8]{article}|，同时引用文献时使用的引用关键词应使用英文。当文档使用其他编码时，xelatex编译通常需要指定一个文档编码，比如windows环境下的GB2312编码的文档需要指定\verb|\XeTeXinputencoding "GBK"|，否则会显示乱码。使用pdflatex进行编译时，如果biblatex不能正确的处理编码问题，那么需要为其明确的指定texencoding和bibencoding选项。比如windows环境下的GB2312编码的文档，需要指定\verb|\usepackge[texencoding=GBK]{biblatex}|。
 
     \begin{example}{使用biblatex宏包的文档编译命令}{eg:compile:cmd}
     \begin{texlist}
@@ -630,7 +630,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
   \end{tabular}
 \end{table}
 
-需要注意的是，note域在本样式中也做特殊用途，即在book类型的note域中输入standard表示标准，在aritcle类型的note域中输入news表示报纸，当然也可以不做特殊用，而只是表示杂项信息，因为标准和报纸可以用standard和newspaper类型表示，尽管这两种类型不是biblatex原生的条目类型。而usera域用于表示参考文献类型和载体标识符（为兼容Lee zeping的bst样式使用的bib文件也可以用mark和medium表示）。一般情况下usera，mark，medium这些域不用在bib文件中输入，而由样式文件自动处理得到，既为了使bib文件更纯粹，也为了兼容不同的样式。想象一下如果在bib文件中给出usera域，但另一样式需要使用usera域且用途不同，那么就会有兼容性问题。不用手动输入更重要的目的是为用户减负，因为用户可以直接使用从网络（各种学术）导出参考文献信息而不用再额外添加一个参考文献类型和载体标识符。本宏包自动判断语言而不使用一个表示语言的域比如language来标记文献的语言类型也出于同样的考虑，当然也有一种情况即一篇文献中存在多中语言是无法用一个language标识的，比如一本英文著作被翻译为中文，那么原作者是英文，而译者则是中文，这时标记language的意义不大。标记language更多的是用在多种语言混合的文档中，可以用language来标记英语、中文、日语、法语和德语等用于分语言排序。
+需要注意的是，note域在本样式中也做特殊用途，即在book类型的note域中输入standard表示标准，在aritcle类型的note域中输入news表示报纸，当然也可以不做特殊用，而只是表示杂项信息，因为标准和报纸可以用standard和newspaper类型表示，尽管这两种类型不是biblatex原生的条目类型。而usera域用于表示参考文献类型和载体标识符（为兼容Lee zeping的bst样式使用的bib文件也可以用mark和medium表示）。一般情况下usera，mark，medium这些域不用在bib文件中输入，而由样式文件自动处理得到，既为了使bib文件更纯粹，也为了兼容不同的样式。想象一下如果在bib文件中给出usera域，但另一样式需要使用usera域且用途不同，那么就会有兼容性问题。不用手动输入更重要的目的是为用户减负，因为用户可以直接使用从网络（各种学术）导出参考文献信息而不用再额外添加一个参考文献类型和载体标识符。本宏包自动判断语言而不使用一个表示语言的域比如language来标记文献的语言类型也出于同样的考虑，当然也有一种情况即一篇文献中存在多种语言是无法用一个language标识的，比如一本英文著作被翻译为中文，那么原作者是英文，而译者则是中文，这时标记language的意义不大。标记language更多的是用在多种语言混合的文档中，可以用language来标记英语、中文、日语、法语和德语等用于分语言排序。
 
 各个数据域的录入应符合bib文件规范。\bc{需要注意: 有时直接从网络获取的参考文献信息中可能带有一些特殊字符比如\%，\&等，这些字符在 tex 中通常需要做转义处理，本样式中对像title，journal等常见域中出现的特殊字符已经做了转义，但是一些不常见的域比如 abstract 等没有考虑，所以用户需要手动处理，例如把\%改为\textbackslash \%，否则可能导致出错}。下面详细介绍本样式中使用的域及其数据录入方式:
 
@@ -691,9 +691,9 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
   \item[version] 用于report和manual的版本信息，直接输入需要打印的内容。
   \item[mark/usera] 不用输入，自动处理。也可以输入文献类型标识符比如M, J, DB, CP等。
   \item[medium] 不用输入，自动处理。也可以输入文献载体标识符比如MT, DK, CD, OL 等。
-  \item[language] 不用输入，自动处理。也可以输入语言类型比如english, russian, french, japnese, korean, chinese等。
-  \item[langid] 不用输入，自动处理。也可以输入语言名比如english, russian, french等，中日韩语一般用english。
-  \item[nameformat] 不用输入。当需要调整当前条目的作者姓名的格式时，可以输入格式名：uppercase, lowercase, givenahead, familyahead, pinyin等。
+  \item[language] 不用输入，自动处理。也可以输入语言类型比如english, russian, french, japnese, korean, chinese等。主要用来标识文献的语言类型，用法详见\ref{sec:multilan:combine}节。
+  \item[langid] 不用输入，自动处理。也可以输入语言名比如english, russian, french等，中日韩语一般用english。主要用于配合babel等宏包进行文献的本地化字符串处理，用法详见\ref{sec:multilan:combine}节。
+  \item[nameformat] 不用输入。当需要调整当前条目的作者姓名的格式时，可以输入格式名：uppercase, lowercase, givenahead, familyahead, pinyin等。详见\ref{sec:added:opt}节。
   \item[namefmtid] 不用输入。
 \end{description}
 
@@ -718,7 +718,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 %作者年制的参考文献样式则基于标准样式authoryear修改。
 \paragraph{作者年制样式}中各条参考文献条目以作者-年为标签以一定的顺序排列。作者年制的著录格式与顺序编码制基本相同(除了把年份提到了作者后面作为文献条目内的标签)。数据源bib文件中各条目的数据录入与顺序编码制完全一致。
 
-\qd{作者年制有分文种文献集中的要求，因此gb7714-2015排序模板以nyt模板为基础，增加 language 作为 name 前的排序域。默认情况下，本样式文件将标题(或作者)为中文的文献的 language 域设置成 chinese，英文的设置成 enlish。这一设置过程，在biber 处理时自动完成。当出现问题或者有更多文种分集且有特殊顺序时，可以在bib文件中为相应文种文献的 language 域手动设置适合排序的字符串。比如: 中文文献设置为 chinese，英文文献设置为 enlish，法文文献设置为 french，那么排序中，相应的中文文献排在最前面，英文文献在中间，法文文献最后，因为升序情况下字母顺序是c然后e然后f。}
+\qd{作者年制有分文种文献集中的要求，因此gb7714-2015排序模板以nyt模板为基础，增加 language 作为 name 前的排序域。默认情况下，本样式文件将标题(或作者)为中文的文献的 language 域设置成 chinese，英文的设置成 english。这一设置过程，在biber 处理时自动完成。当出现问题或者有更多文种分集且有特殊顺序时，可以在bib文件中为相应文种文献的 language 域手动设置适合排序的字符串。比如: 中文文献设置为 chinese，英文文献设置为 enlish，法文文献设置为 french，那么排序中，相应的中文文献排在最前面，英文文献在中间，法文文献最后，因为升序情况下字母顺序是c然后e然后f。}
 
 %上一段2016-1114更新，下面是以前的说法。
 %\qd{根据文种文献集中的要求，修改了nyt排序格式，增加了userb作为name前的排序域，当有需求进行多文种分集且有特殊顺序时，在bib文件中给相应文种的文献设置适合排序的字符串。比如中文文献设置为cn，英文文献设置为en，法文文献设置为fr，那么排序中，相应的中文文献排在最前面，英文文献在中间，法文文献最后，因为升序情况下字母顺序是c然后e然后f。}
@@ -869,7 +869,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
 \subsection{gb7714-2015样式的多语言支持}\label{sec:multilan:implement}
 
-\subsubsection{多语言混合文献}
+\subsubsection{多语言混合文献}\label{sec:multilan:combine}
 
 一般情况中，在国内不太会超过两种语言混合的情况，比如中英文混合的情况。但有时可能也会存在多种语言，比如存在中/英/日/俄这种多语言环境。
 
