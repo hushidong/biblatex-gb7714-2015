@@ -1,0 +1,43 @@
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage[backend=biber,style=gb7714-2015,gbpunctin=false,gbpub=false,gbnamefmt=lowercase]{biblatex}%
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+@Inproceedings{ref-replace-char,
+  Title                    = {Cognitive Radio and Cooperative Strategies for Power Saving in Multi-Standard Wireless Devices},
+  Address                  = {Florence, Italy},
+  Author                   = {Rodriguez, J. and P. Marques and A. Radwan and K. Moessner and R. Tafazolli and others},
+  Booktitle                = {Future % Network \& Mobile # Summit 2010},
+  Date                     = {June 2010}
+}
+
+@Inproceedings{FOURNEY1971-17-38,
+  Title                    = {Advances in holographic photoelasticity},
+  Author                   = {M E FOURNEY},
+  Booktitle                = {Symposium on Applications of Holography in Mechanics, August 23-25, 1971, University of Southern California, Los Angeles, California},
+  Date                     = {1971},
+  Pages                    = {17-38},
+  Publisher                = {ASME},
+  Location                 = {New York}
+}
+
+@Inproceedings{裴丽生1981-2-10,
+  Title                    = {在中国科协技术期刊编辑工作经验交流会上的讲话},
+  Author                   = {裴丽生},
+  Booktitle                = {中国科协学术期刊编辑工作经验交流会资料选},
+  Date                     = {1981},
+  Pages                    = {2-10},
+  Institution              = {中国科学技术协会学会工作部},
+  Location                 = {北京}
+}
+
+\end{filecontents}
+    \addbibresource{\jobname.bib}
+
+    \begin{document}
+    \section{Inproceedings references}
+
+    \nocite{*}
+    \printbibliography
+
+    \end{document} 
