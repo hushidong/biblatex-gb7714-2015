@@ -113,7 +113,26 @@
   howpublished  = "Unpublished"
 }
 
+@misc{gom,
+howpublished={\url{http://www.gom.com/metrology-systems/aramis.html}},
+note={Accessed July 2, 2018},
+title={gom},
+author={Gom}
+}
 
+@misc{gom1,
+url={http://www.gom.com/metrology-systems/aramis.html},
+note={Accessed July 2, 2018},
+title={gom},
+author={Gom}
+}
+
+@online{gom2,
+url={http://www.gom.com/metrology-systems/aramis.html},
+note={Accessed July 2, 2018},
+title={gom},
+author={Gom}
+}
 
 
 @database{databaseeg,
@@ -771,16 +790,22 @@
 
     \begin{document}
 
-    \section{测试：根据biblatex版本判断texlive年份}
+\section{测试：根据biblatex版本判断texlive年份}
 
-\iftoggle{iftlfive}{tl2015}{}%处理biblatex3.2之前版本，时间2016-03-01前
-\iftoggle{iftlsix}{tl2016}{}%处理biblatex3.3开始改变姓名机制后版本，时间2016-03-01及以后
-\iftoggle{iftlseven}{tl2017}{}%处理biblatex3.7的兼容性，时间2016-12-01后
-\iftoggle{iftleight}{blx3.8-3.9}{}%处理biblatex3.8到3.9的兼容性，时间2017-11-01后到2017-12-01前
-\iftoggle{iftlnine}{blx3.10}{}%处理biblatex10的兼容性，时间2017-12-01后
-\iftoggle{iftlatest}%假设是最新版biblatex
+judged environment:
+\iftoggle{iftlfive}{biblatex<=3.2 maybe texlive<=2015 }{}%处理biblatex3.2之前版本，时间2016-03-01前
+\iftoggle{iftlsix}{3.3<=biblatex<=3.6 maybe texlive2016 }{}%处理biblatex3.3开始改变姓名机制后版本，时间2016-03-01及以后
+\iftoggle{iftlseven}{biblatex 3.7 maybe texlive 2017 }{}%处理biblatex3.7的兼容性，时间2016-12-01后
+\iftoggle{iftleight}{biblatex 3.8-3.9 maybe texlive 2017 }{}%处理biblatex3.8到3.9的兼容性，时间2017-11-01后到2017-12-01前
+\iftoggle{iftlnine}{biblatex 3.10 maybe texlive 2017 }{}%处理biblatex10的兼容性，时间2017-12-01后
+\iftoggle{iftlatest}{biblatex >=3.11 maybe texlive 2018 }{}%假设是最新版biblatex
 
-    \section{测试：间距字体颜色控制}
+biblatex version: \versionofbiblatex
+
+biblatex-gb7714-2015 version: \versionofgbtstyle
+
+
+\section{测试：间距字体颜色控制}
     \begin{refsection}
     {
 
@@ -1292,6 +1317,20 @@ Chiani2004-1312-1318b,Chiani2003-840-845,Chiani2009-231-254}
   \item 专利引用\cite{KOSEKI2002--,TACHIBANA2002--,河北绿洲生态环境科技有限公司2001--,姜锡洲1989--,刘加林1993--,西安电子科技大学2002--,张凯军2012-04-05--}
 
   \item 注意:专利文献\{刘加林1993--\}的location定义了中国，但从GB/T 7714-2015中给出的示例看其实并不需要该域，但这里并没有去掉。因为GB/T 7714-2015中给出的著录格式包括了出版项但没有示例，尽管这里的location是专利地域，但也可以作为出版项来考虑。未来国标完善后再做处理。
+\end{enumerate}
+
+{
+%\hyphenation{kurose-gawa}
+%\hyphenpenalty=1000
+%\tolerance=500
+\printbibliography%[heading=subbibintoc,title=【参考文献】]
+}
+\end{refsection}
+
+\section{测试：其它类型}
+\begin{refsection}
+\begin{enumerate}
+  \item 其它类型文献引用\cite{gom,gom1,gom2}
 \end{enumerate}
 
 {

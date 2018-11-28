@@ -422,6 +422,11 @@
             \step[fieldset=usera, fieldvalue={A}]%没有专门的驱动，定义一个usera域，方便映射后使用
             }
         \map{
+            \pertype{misc}%当misc类型带有网址时，将其转换为online类型
+            \step[fieldsource=url,final]
+            \step[typesource=misc,typetarget=online]
+            }
+        \map{
             \pertype{misc}%对应增加的一个备选类型misc
             \step[fieldset=usera, fieldvalue={Z}]%没有专门的驱动，定义一个usera域，方便映射后使用
             }
@@ -634,11 +639,11 @@
     }
 
 \DeclareBibliographyAlias{newspaper}{article}%定义驱动别名，尝试以替代驱动层映射，实践表明是可行的。
-\DeclareBibliographyAlias{unpublished}{misc}
-\DeclareBibliographyAlias{database}{misc}
-\DeclareBibliographyAlias{dataset}{misc}
-\DeclareBibliographyAlias{software}{misc}
-\DeclareBibliographyAlias{map}{misc}
+\DeclareBibliographyAlias{unpublished}{manual}
+\DeclareBibliographyAlias{database}{manual}
+\DeclareBibliographyAlias{dataset}{manual}
+\DeclareBibliographyAlias{software}{manual}
+\DeclareBibliographyAlias{map}{manual}
 \DeclareBibliographyAlias{archive}{manual}
 
 
@@ -1988,40 +1993,33 @@ test {\iflistundef{location}} and test {\iflistundef{publisher}}%
 %
 %   备选类型驱动
 %
-%   直接利用report做misc
+%   利用biblatex的misc驱动
 \csdef{blx@bbx@misc}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
-  \usebibmacro{author}%
-  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{author/editor+others/translator+others}%
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
-  \iftoggle{bbx:gbstrict}{}{%
-  \newunit%
+\iftoggle{bbx:gbstrict}{}{%
+  \newunit
   \printlist{language}%
   \newunit\newblock
-  \usebibmacro{byauthor}}%
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}}%
+  \newunit\newblock
+  \printfield{howpublished}%
   \newunit\newblock
   \printfield{type}%
-  \setunit*{\addspace}%
-  \printfield{number}%
-  \newunit\newblock
+  \newunit
   \printfield{version}%
   \newunit
   \printfield{note}%
   \newunit\newblock
-  \usebibmacro{institution+location+date}%
+  \usebibmacro{organization+location+date}%
   %\newunit\newblock
-  \usebibmacro{chapter+pages}%
   \usebibmacro{doi+eprint+url}%
-  \newunit
-  \printfield{pagetotal}%
   \newunit\newblock
-  \iftoggle{bbx:isbn}
-    {\printfield{isrn}}
-    {}%
-  \newunit\newblock
-%  \usebibmacro{doi+eprint+url}%
-%  \newunit\newblock
   \usebibmacro{addendum+pubstate}%
   \setunit{\bibpagerefpunct}\newblock
   \usebibmacro{pageref}%

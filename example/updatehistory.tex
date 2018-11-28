@@ -6,6 +6,11 @@
 \updateinfo[2018-11-04]{date of update: 2018-11-04 to version v1.0n}\label{up:181104}
 \begin{enumerate}
 
+\item 对misc类型文献做调整，当misc文献带有url时，将其转换为online处理，同时misc类型驱动使用biblatex的原版，而不再使用类report格式。
+
+code for misc changed, the misc type is changed to online for the reference with field url, and the driver of misc is modified to the origin driver in standard.bbx shipped by biblatex other than the report like driver.
+
+
 \item 调整代码，适应biblatex v3.12版本后去除xstring包的情况。
 
 code modified to adapt to biblatex v3.12 without loading xstring package.
