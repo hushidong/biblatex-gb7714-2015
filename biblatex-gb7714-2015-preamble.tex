@@ -6,31 +6,70 @@
 \usepackage{xeCJKfntef}
 
 \usepackage{xcolor}
+\colorlet{examplefill}{yellow!80!black}
+\definecolor{graphicbackground}{rgb}{0.96,0.96,0.8}
+\definecolor{codebackground}{rgb}{0.9,0.9,1}
 \definecolor{gbsteelblue}{RGB}{70,130,180}
 \definecolor{gborange}{RGB}{255,138,88}
 \definecolor{gbblue}{RGB}{23,74,117}
 \definecolor{gbforestgreen}{RGB}{21,122,81}
 \definecolor{gbyellow}{RGB}{255,185,88}
 \definecolor{gbgrey}{RGB}{200,200,200}
+\colorlet{gblabelcolor}{violet}
+\colorlet{gbemphcolor}{blue!60!black}
 
-%一些字符串格式化命令
-\newcommand*{\verbatimfont}{\ttfamily}
-\newrobustcmd*{\cnt}[1]{\mbox{\verbatimfont#1}}
-\newrobustcmd*{\bibfield}[1]{\mbox{\verbatimfont#1}}
-\newrobustcmd*{\opt}[1]{\mbox{\verbatimfont#1}}
-\newrobustcmd*{\prm}[1]{%
-  \ifblank{#1}
-    {}
-    {\mbox{%
-       \ensuremath\langle
-       \normalfont\textit{#1}%
-       \ensuremath\rangle}}}
+%定义版面，showframe,
+\usepackage[paperwidth=210mm,paperheight=290mm,left=30mm,right=25mm,top=25mm, bottom=20mm,showcrop]{geometry}%,showframe
+\renewcommand{\baselinestretch}{1.35}
+%页面布局的标尺
+\usepackage[type=none]{fgruler}
+%[unit=cm,type=lowerleft,showframe=true,hshift=3cm,vshift=2cm]
+\rulerparams{}{}{gray!50}{}{0.4pt}
+\fgrulerdefnum{}\fgrulercaptioncm{}%fgruler加数字后，导致基线对齐出现问题，所以这里去掉
 
-\usepackage[paperwidth=210mm,paperheight=290mm,left=20mm,right=20mm,top=25mm, bottom=15mm,showcrop
-]{geometry}%定义版面showframe,
+\newlength{\skipheadrule}
+\deflength{\skipheadrule}{3.5pt}
+\newlength{\skipfootrule}
+\deflength{\skipfootrule}{5.5pt}
+\newlength{\ruletotalen}
+\deflength{\ruletotalen}{\textheight}
+\newlength{\ruleraised}
+\deflength{\ruleraised}{\headsep+\textheight}
+\usepackage{fancyhdr}
+\fancyhf{}
+\fancyhead[L]{%
+\raisebox{-\skipheadrule}{%
+\raisebox{-\headsep}[0pt][0pt]{\makebox[0pt][l]{\ruler{rightup}{\linewidth}}}%
+\raisebox{-\ruleraised}[0pt][0pt]{\makebox[0pt][r]{\ruler{upleft}{\ruletotalen}}}%
+}HEAD LEFT%
+}
+\fancyhead[R]{%
+HEAD RIGHT%
+\raisebox{-\skipheadrule}{%
+\hfill\makebox[0pt][l]{\raisebox{-\ruleraised}[0pt][0pt]{\ruler{downright}{\ruletotalen}}\hss}%
+}}
+\fancyhead[C]{%
+HEAD CENTER
+}
+\fancyfoot[L]{%
+\raisebox{-\skipfootrule}{%
+\raisebox{\footskip}[0pt][0pt]{\makebox[0pt][l]{\ruler{rightdown}{\linewidth}}}
+}FOOT LEFT
+}
+\fancyfoot[C]{%
+\thepage%FOOT CENTER
+}
+\fancyfoot[R]{%
+FOOT RIGHT
+}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\pagestyle{fancy}
 
+
+%超链接书签功能，选项去掉链接红色方框
 \usepackage[colorlinks=true,%
-pdfstartview=FitH,allcolors=blue]{hyperref}  %书签功能，选项去掉链接红色方框
+pdfstartview=FitH,allcolors=gbemphcolor]{hyperref}
 %linkcolor=gbblue,anchorcolor=gbblue,citecolor=gbblue
 %linkcolor=black,linkcolor=green,blue,red,cyan, magenta,
 %yellow, black, gray,white, darkgray, lightgray, brown,
@@ -38,10 +77,7 @@ pdfstartview=FitH,allcolors=blue]{hyperref}  %书签功能，选项去掉链接�
 %CJKbookmarks,bookmarksnumbered=true,
 \usepackage{titleref} %标题引用
 
-
-%\usepackage[unit=cm,type=lowerleft,showframe=true,hshift=2cm,vshift=1.5cm]{fgruler}
-
-
+%标题格式设置
 \usepackage{titlesec}
 %\titlespacing*{hcommandi}{hlefti}{hbefore-sepi}{hafter-sepi}[hright-sepi]
 \titlespacing*{\section}{0pt}{\baselineskip}{0.5\baselineskip}
@@ -49,25 +85,24 @@ pdfstartview=FitH,allcolors=blue]{hyperref}  %书签功能，选项去掉链接�
 \titlespacing*{\subsubsection}{0pt}{0.5\baselineskip}{0pt}
 \titlespacing{\paragraph}{2em}{0.5\baselineskip}{1em}
 
+%参考文献
+\usepackage[backend=biber,style=gb7714-2015,gbalign=center%,gbtype=true%
+]{biblatex}%,backref=true%
+\addbibresource[location=local]{example/example.bib}
 \setlength{\bibitemsep}{1pt}
 %\defbibheading{bibliography}[\bibname]{%
 %%\phantomsection%解决链接指引出错的问题，相当于加入了一个引导点
 %%\addcontentsline{toc}{subsection}{#1}
 %	\centering\subsubsection*{#1}}%
 
-%自定义下划红线和背景颜色
-\usepackage{ulem}
-\newcommand\yellowback{\bgroup\markoverwith
-{\textcolor{yellow}{\rule[-0.5ex]{2pt}{2.5ex}}}\ULon}
-\newcommand\reduline{\bgroup\markoverwith
-{\textcolor{red}{\rule[-0.5ex]{2pt}{0.4pt}}}\ULon}
 
+%目录，图/表/例目录，图表题注
 \usepackage{subfigure}
 \usepackage[subfigure]{tocloft} %注意其与titletoc共用时分页会有问题
 \usepackage{ccaption}
 \captiondelim{. } %图序图题中间的间隔符号
 \captionnamefont{\zihao{-5}\heiti} %图序样式
-\captiontitlefont{\zihao{-5}} %图题样式
+\captiontitlefont{\zihao{-5}\heiti} %图题样式
 \captionwidth{0.8\linewidth} %标题宽度
 \changecaptionwidth
 \captionstyle{\centering} %\captionstyle{<style>} style are: \centering, \raggedleft or \raggedright
@@ -77,8 +112,8 @@ pdfstartview=FitH,allcolors=blue]{hyperref}  %书签功能，选项去掉链接�
 \setlength{\abovecaptionskip}{0pt}
 %\setlength{\abovelegendskip}{0pt} %设置legend上下间距
 %\setlength{\belowlegendskip}{0pt}
-%新的浮动体设置
-\newcommand{\listegcodename}{\centerline{示~~例}}%listegcodename，新环境目录的标题
+%新的浮动体设置，\centerline{}
+\newcommand{\listegcodename}{示~~例\thispagestyle{plain}}%listegcodename，新环境目录的标题
 \newcommand{\egcodename}{例}%egcodename，新环境标题的图序
 \newfloatlist{egcode}{loc}{\listegcodename}{\egcodename}%loc，写入条目的文件的扩展名
 \newfixedcaption{\codecaption}{egcode}%egcode，环境名
@@ -93,26 +128,26 @@ pdfstartview=FitH,allcolors=blue]{hyperref}  %书签功能，选项去掉链接�
 \setlength{\cftbeforeloctitleskip}{\baselineskip}
 \setlength{\cftafterloctitleskip}{0.5\baselineskip}
 %\renewcommand\contentsname{\hfill 目~~ 录 \hfill \hspace{1cm}} %用这一句也是一样的。
-\renewcommand{\cfttoctitlefont}{\zihao{-3}\heiti}
+\renewcommand{\cfttoctitlefont}{\heiti}
 \renewcommand{\cftaftertoctitle}{}
-\renewcommand{\cftloftitlefont}{\zihao{-3}\heiti}
+\renewcommand{\cftloftitlefont}{\heiti}
 \renewcommand{\cftafterloftitle}{}
-\renewcommand{\cftlottitlefont}{\zihao{-3}\heiti}
+\renewcommand{\cftlottitlefont}{\heiti}
 \renewcommand{\cftafterlottitle}{}
-\renewcommand{\cftloctitlefont}{\zihao{-3}\heiti}
+\renewcommand{\cftloctitlefont}{\heiti}
 \renewcommand{\cftafterloctitle}{}
-\renewcommand{\contentsname}{\centerline{目~~录}}
-\renewcommand{\listfigurename}{\centerline{图~~片}}
-\renewcommand{\listtablename}{\centerline{表~~格}}
+\renewcommand{\contentsname}{\zihao{-3}目~~录}
+\renewcommand{\listfigurename}{\zihao{-3}图~~片}
+\renewcommand{\listtablename}{\zihao{-3}表~~格}
 \renewcommand{\cftsecfont}{\zihao{5}\heiti} %条目样式
-\renewcommand{\cftsubsecfont}{\zihao{5}\fangsong} %条目样式
-\renewcommand{\cftsubsubsecfont}{\zihao{-5}\songti} %条目样式
+\renewcommand{\cftsubsecfont}{\zihao{-5}\songti} %条目样式\fangsong
+\renewcommand{\cftsubsubsecfont}{\zihao{-5}\kaiti} %条目样式
 %−−−−−−−−−−设置egcode条目样式−−−−−−−−−−−−−−−−−−−−−−
 %\renewcommand{\cftegcodeleader}{\leaders\hbox to 1em{\hss.\hss}\hfill}
 \setlength{\cftbeforeegcodeskip}{0.1ex} %条目前的间距
 \setlength{\cftegcodeindent}{0em} %条目缩进
 \setlength{\cftegcodenumwidth}{2.5em} %条目标签宽度
-\renewcommand{\cftegcodefont}{\color{blue}\fangsong} %条目样式
+\renewcommand{\cftegcodefont}{\color{gbemphcolor}\zihao{-5}}%条目样式\fangsong
 \renewcommand{\cftegcodepresnum}{例}
 \renewcommand{\cftegcodeaftersnum}{.}
 \renewcommand{\cftegcodeaftersnumb}{~}
@@ -123,7 +158,7 @@ pdfstartview=FitH,allcolors=blue]{hyperref}  %书签功能，选项去掉链接�
 \setlength{\cftbeforefigskip}{0.1ex} %条目前的间距
 \setlength{\cftfigindent}{0em} %条目缩进
 \setlength{\cftfignumwidth}{2.5em} %条目标签宽度
-\renewcommand{\cftfigfont}{\color{blue}\fangsong} %条目样式
+\renewcommand{\cftfigfont}{\color{gbemphcolor}\zihao{-5}} %条目样式\heiti
 \renewcommand{\cftfigpresnum}{图} %条目数字前的内容
 \renewcommand{\cftfigaftersnum}{.} %条目数字后的内容
 \renewcommand{\cftfigaftersnumb}{~} %条目数字后的第二个内容
@@ -136,7 +171,7 @@ pdfstartview=FitH,allcolors=blue]{hyperref}  %书签功能，选项去掉链接�
 \setlength{\cftbeforetabskip}{0.1ex} %条目前的间距
 \setlength{\cfttabindent}{0em} %条目缩进
 \setlength{\cfttabnumwidth}{2.5em} %条目标签宽度
-\renewcommand{\cfttabfont}{\color{blue}\fangsong} %条目样式
+\renewcommand{\cfttabfont}{\color{gbemphcolor}\zihao{-5}} %条目样式
 \renewcommand{\cfttabpresnum}{表} %条目数字前的内容
 \renewcommand{\cfttabaftersnum}{.} %条目数字后的内容
 \renewcommand{\cfttabaftersnumb}{~} %条目数字后的第二个内容
@@ -145,13 +180,12 @@ pdfstartview=FitH,allcolors=blue]{hyperref}  %书签功能，选项去掉链接�
 %\renewcommand{\cfttabpagefont}{\color{red}\zihao{-5}$\infty$\itshape} %页码的样式
 %\renewcommand{\cfttabafterpnum}{\color{red}$\infty$} %页码后内容
 
+
+
+%代码环境设置
 \usepackage{listings}
 \usepackage{tikz,pgf}
 \usetikzlibrary{calc}
-\colorlet{examplefill}{yellow!80!black}
-\definecolor{graphicbackground}{rgb}{0.96,0.96,0.8}
-\definecolor{codebackground}{rgb}{0.9,0.9,1}
-
 
 \newenvironment{example}[3][代码]%
 {\list{}{\begingroup\codecaption{#2}\label{#3}\endgroup
@@ -162,9 +196,8 @@ pdfstartview=FitH,allcolors=blue]{hyperref}  %书签功能，选项去掉链接�
 \setlength{\leftmargin}{0pt}%
 \setlength{\itemindent}{0pt}%
 %\renewcommand*{\makelabel}[1]{\hss\llap{\footnotesize\color{orange}\bfseries##1}}
-}\item[\footnotesize\color{gbblue}\bfseries#1]\relax}
+}\item[\footnotesize\color{gblabelcolor}\bfseries#1]\relax}
 {\endlist}
-
 
 \lstnewenvironment{texlist}%
 {\lstset{% general command to set parameter(s)
@@ -181,25 +214,29 @@ boxpos=t,
 rulesep=0pt,
 frame=tb,
 framesep=0pt,
-rulecolor=\color{gbblue},
+rulecolor=\color{gblabelcolor},
 fontadjust=true,
 language=[LaTeX]TeX,
-%backgroundcolor=\color{yellow}, %背景颜色
+backgroundcolor=\color{gbyellow!3},%\color{yellow}, %背景颜色
 numbers=left,
-numberstyle=\tiny\color{gbblue},
+numberstyle=\tiny\color{gblabelcolor},
 basicstyle=\footnotesize\ttfamily, % print whole listing small
-keywordstyle=\color{blue}\bfseries,%\underbar,
+keywordstyle=\bfseries\color{gbemphcolor},%\underbar,
 % underlined bold black keywords
 identifierstyle=, % nothing happens
-commentstyle=\color{green!50!black}, % white comments
-stringstyle=\ttfamily, % typewriter type for strings
+commentstyle=\color{green!40!gray}, % white comments
+stringstyle=\ttfamily\color{purple!50}, % typewriter type for strings
 showstringspaces=false}% no special string spaces
 }
 {}
 
+%定理环境设置
 \usepackage[listings,theorems,most]{tcolorbox}
 \tcbuselibrary{breakable}
 \newcounter{myprop}\def\themyprop{\arabic{myprop}}
+%一个强调显示
+\newcommand{\bibliofmt}[1]{\medskip\textcolor{gbforestgreen}{\heiti#1}}
+
 %序号如果带章节的话可以改为比如:\thesection.\arabic{myprop}
 \tcbmaketheorem{property}{方法}
 {enhanced jigsaw,breakable,pad at break*=1mm,left=2em,boxsep=0pt,
@@ -223,9 +260,10 @@ theorem style=plain,fonttitle=\bfseries,coltitle=gbforestgreen
 %coltitle=green!35!black,colbacktitle=green!15!white,
 %colback=green!50!yellow!15!white,terminator sign={\ }
 }{rfeg}
-%最后一个必须参数是prefix用来做label比如这里是eg:加上给出的标签名
-\newcommand{\bibliofmt}[1]{\medskip\textcolor{gbforestgreen}{\heiti#1}}
+%最后一个必须参数是prefix用来做label比如这里是rfeg:加上给出的标签名
 
+
+%标题区命令设置
 \newcommand{\titleformanual}[1]{\def\biaotiudf{#1}}
 \newcommand{\authorformanual}[1]{\def\zuozheudf{#1}}
 \newcommand{\dateformanual}[1]{\def\riqiudf{#1}}
@@ -241,46 +279,65 @@ theorem style=plain,fonttitle=\bfseries,coltitle=gbforestgreen
 {\songti{\zihao{-4}{\riqiudf}}\par}
 \end{center}
 }
-
+%脚注的数字带圈
 \renewcommand{\thefootnote}{\textcircled{\tiny\arabic{footnote}}}
+
 
 %--------------列表环境---------------------------------------------
 \usepackage[inline]{enumitem} %重设list环境
-\setlist[enumerate]{label=\bfseries\textcolor{gbblue}{(\arabic*)},topsep=2pt,partopsep=0pt,parsep=0pt,%
+\setlist[enumerate]{label=\bfseries\textcolor{gbemphcolor}{(\arabic*)},topsep=2pt,partopsep=0pt,parsep=0pt,%
 align=left,leftmargin=0em,itemsep=0.5em,labelwidth=0.1em,itemindent=2.6em,listparindent=2em}%label=$\triangleright$,itemindent=1em
 \setlist[itemize]{topsep=2pt,partopsep=0pt,parsep=0pt,%
 leftmargin=3em,itemindent=0em}
-\setlist[description]{font=\bfseries\textcolor{gbblue},align=right,topsep=5pt,partopsep=0pt,parsep=0pt,%
-itemsep=0pt,leftmargin=2em,itemindent=0em}%注意，font或format中的最后一个命令自动提取标签为其参数
-
+\setlist[description]{font=\bfseries\textcolor{gbemphcolor},align=right,topsep=5pt,partopsep=0pt,parsep=0pt,%
+itemsep=0pt,leftmargin=0em,itemindent=0em}%注意，font或format中的最后一个命令自动提取标签为其参数
 
 \usepackage{longtable}
 
+%自定义下划红线和背景颜色
+\usepackage{ulem}
+\newcommand\yellowback{\bgroup\markoverwith
+{\textcolor{yellow}{\rule[-0.5ex]{2pt}{2.5ex}}}\ULon}
+\newcommand\reduline{\bgroup\markoverwith
+{\textcolor{red}{\rule[-0.5ex]{2pt}{0.4pt}}}\ULon}
+
+%一些字符串格式化命令
+\newcommand*{\verbatimfont}{\ttfamily}
+\newrobustcmd*{\cnt}[1]{\mbox{\verbatimfont#1}}
+\newrobustcmd*{\bibfield}[1]{\mbox{\verbatimfont#1}}
+\newrobustcmd*{\opt}[1]{\mbox{\verbatimfont#1}}
+\newrobustcmd*{\prm}[1]{%
+  \ifblank{#1}
+    {}
+    {\mbox{%
+       \ensuremath\langle
+       \normalfont\textit{#1}%
+       \ensuremath\rangle}}}
+
 \usepackage{amssymb}
+
 \newcommand{\HandRight}{$\bigstar$}
-\newcommand{\zhongdian}[1]{\textcolor{gbblue}{\HandRight\heiti#1}}
+\newcommand{\zhongdian}[1]{\textcolor{gbemphcolor}{\HandRight\small\heiti#1}}
 \newcommand{\pz}[1]{%定义pz为旁注命令
-\marginpar[\flushright\youyuan\color{gbblue}\footnotesize #1]{\youyuan\color{gbblue}\small #1}}
+\marginpar[\flushright\small\youyuan\color{gbemphcolor}\footnotesize #1]{\youyuan\color{gbemphcolor}\small #1}}
 \newcommand{\PZ}[1]{%定义pz为旁注命令
-\marginpar[\flushright\youyuan\color{gbblue}\footnotesize  #1]{\youyuan\color{gbblue}\small #1}}
+\marginpar[\flushright\small\youyuan\color{gbemphcolor}\footnotesize  #1]{\small\youyuan\color{gbemphcolor}\small #1}}
 \newcommand{\qd}[1]{%定义qd为强调命令
 \begin{quote}
-  \fangsong\color{gbblue}#1%blue!50!black
+  \small\youyuan\color{gbemphcolor}#1%blue!50!black\fangsong
 \end{quote}}
 \newcommand{\QD}[1]{%定义qd为强调命令
 \begin{quote}
-  \fangsong\color{gbblue}#1
+  \small\youyuan\color{gbemphcolor}#1
 \end{quote}}
 \newcommand{\bc}[1]{%定义补充信息
-{\kaiti\color{gbblue}#1}} %orange，brown，purple，teal，gbblue，olive，cyan
+{\small\youyuan\color{gbemphcolor}#1}} %orange，brown，purple，teal，gbblue，olive，cyan
 \newcommand{\BC}[1]{%定义补充信息
-{\kaiti\color{gbblue}#1}}
+{\small\youyuan\color{gbemphcolor}#1}}
 \newcommand{\zd}[1]{%定义补充信息
-{\heiti\color{gbblue}#1}} %orange，brown，purple，teal，gbblue，olive，cyan
+{\small\youyuan\color{gbemphcolor}#1}} %orange，brown，purple，teal，gbblue，olive，cyan
 \newcommand{\ZD}[1]{%定义补充信息
-{\heiti\color{gbblue}#1}}
-
-
+{\small\youyuan\color{gbemphcolor}#1}}
 
 
 \newenvironment*{marglist}
@@ -296,7 +353,7 @@ itemsep=0pt,leftmargin=2em,itemindent=0em}%注意，font或format中的最后一
 \makeatletter
 \newcommand{\updateinfo}[2][\@empty]{%
 \par\small\addvspace{2ex plus 1ex}%
-\noindent{\color{gbblue}\rule{\linewidth}{2pt}}
+\noindent{\color{gbemphcolor}\rule{\linewidth}{2pt}}
 \vskip -\parskip
 \ifx\@empty#1 \begin{marglist} \item #2\end{marglist}
 \else \begin{marglist} \item[#1] #2\end{marglist} \fi}

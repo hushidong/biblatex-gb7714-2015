@@ -1,4 +1,4 @@
-<b>Date of last change: 2018-11-04 to version v1.0n</b>
+<b>Date of last change: 2018-12-22 to version v1.0o</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -176,6 +176,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * [fjnu-bathesis (福建师范大学本科毕业论文LaTeX 模板)](https://github.com/fjnuer/fjnu-bathesis)
 * [Thesis-Template-for-XJTU (西安交大毕业设计模板)](https://github.com/DXie123/Thesis-Template-for-XJTU)
 * [CAUTemplate(中国农业大学课程论文模板)](https://github.com/Cdmium/CAUTemplate)
+* [Yet anoter BUPT Thesis LaTeX class (北邮研究生学位设计的LaTeX文档类)](https://github.com/qcts33/BUPTthesis-ctex)
 * [...]
 
 
@@ -828,6 +829,7 @@ biber -l zh__stroke jobname
 * 2018/06/01 v1.0l
 * 2018/08/14 v1.0m,CTAN
 * 2018/11/04 v1.0n
+* 2018/12/22 v1.0o
 
 ---------------------------------------------------------
 ## Update history:

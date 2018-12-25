@@ -2619,6 +2619,7 @@ test {\iflistundef{location}} and test {\iflistundef{publisher}}%
   \newunit\newblock
 %  \usebibmacro{byeditor+others}%
 %  \newunit\newblock
+\iftoggle{bbx:gbstrict}{}{%
   \iffieldundef{maintitle}
     {\printfield{volume}%
      \printfield{part}}
@@ -2626,7 +2627,6 @@ test {\iflistundef{location}} and test {\iflistundef{publisher}}%
   \newunit
   \printfield{volumes}%
   \newunit\newblock
-  \iftoggle{bbx:gbstrict}{}{%
   \usebibmacro{series+number}%
   \newunit\newblock
   \printfield{note}%
