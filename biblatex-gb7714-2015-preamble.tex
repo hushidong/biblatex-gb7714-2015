@@ -19,7 +19,7 @@
 \colorlet{gbemphcolor}{blue!60!black}
 
 %定义版面，showframe,
-\usepackage[paperwidth=210mm,paperheight=290mm,left=30mm,right=25mm,top=25mm, bottom=20mm,showcrop]{geometry}%,showframe
+\usepackage[paperwidth=210mm,paperheight=290mm,left=25mm,right=25mm,top=25mm, bottom=20mm,showcrop]{geometry}%,showframe
 \renewcommand{\baselinestretch}{1.35}
 %页面布局的标尺
 \usepackage[type=none]{fgruler}
@@ -37,30 +37,41 @@
 \deflength{\ruleraised}{\headsep+\textheight}
 \usepackage{fancyhdr}
 \fancyhf{}
-\fancyhead[L]{%
+\fancyhead[LO]{%
 \raisebox{-\skipheadrule}{%
 \raisebox{-\headsep}[0pt][0pt]{\makebox[0pt][l]{\ruler{rightup}{\linewidth}}}%
 \raisebox{-\ruleraised}[0pt][0pt]{\makebox[0pt][r]{\ruler{upleft}{\ruletotalen}}}%
-}HEAD LEFT%
+}%HEAD LEFT%
 }
-\fancyhead[R]{%
-HEAD RIGHT%
+\fancyhead[LE]{%
+\raisebox{-\skipheadrule}{%
+\raisebox{-\headsep}[0pt][0pt]{\makebox[0pt][l]{\ruler{rightup}{\linewidth}}}%
+\raisebox{-\ruleraised}[0pt][0pt]{\makebox[0pt][r]{\ruler{upleft}{\ruletotalen}}}%
+}\leftmark%HEAD LEFT%
+}
+\fancyhead[RO]{%
+%HEAD RIGHT%
 \raisebox{-\skipheadrule}{%
 \hfill\makebox[0pt][l]{\raisebox{-\ruleraised}[0pt][0pt]{\ruler{downright}{\ruletotalen}}\hss}%
 }}
-\fancyhead[C]{%
-HEAD CENTER
+\fancyhead[RE]{%
+\rightmark%HEAD RIGHT%
+\raisebox{-\skipheadrule}{%
+\hfill\makebox[0pt][l]{\raisebox{-\ruleraised}[0pt][0pt]{\ruler{downright}{\ruletotalen}}\hss}%
+}}
+\fancyhead[CO]{%
+符合GB/T 7714-2015标准的biblatex参考文献样式%HEAD CENTER
 }
 \fancyfoot[L]{%
 \raisebox{-\skipfootrule}{%
 \raisebox{\footskip}[0pt][0pt]{\makebox[0pt][l]{\ruler{rightdown}{\linewidth}}}
-}FOOT LEFT
+}%FOOT LEFT
 }
 \fancyfoot[C]{%
 \thepage%FOOT CENTER
 }
 \fancyfoot[R]{%
-FOOT RIGHT
+%FOOT RIGHT
 }
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0pt}
@@ -113,7 +124,7 @@ pdfstartview=FitH,allcolors=gbemphcolor]{hyperref}
 %\setlength{\abovelegendskip}{0pt} %设置legend上下间距
 %\setlength{\belowlegendskip}{0pt}
 %新的浮动体设置，\centerline{}
-\newcommand{\listegcodename}{示~~例\thispagestyle{plain}}%listegcodename，新环境目录的标题
+\newcommand{\listegcodename}{\zihao{4}示~~例\thispagestyle{plain}}%listegcodename，新环境目录的标题
 \newcommand{\egcodename}{例}%egcodename，新环境标题的图序
 \newfloatlist{egcode}{loc}{\listegcodename}{\egcodename}%loc，写入条目的文件的扩展名
 \newfixedcaption{\codecaption}{egcode}%egcode，环境名
@@ -136,9 +147,9 @@ pdfstartview=FitH,allcolors=gbemphcolor]{hyperref}
 \renewcommand{\cftafterlottitle}{}
 \renewcommand{\cftloctitlefont}{\heiti}
 \renewcommand{\cftafterloctitle}{}
-\renewcommand{\contentsname}{\zihao{-3}目~~录}
-\renewcommand{\listfigurename}{\zihao{-3}图~~片}
-\renewcommand{\listtablename}{\zihao{-3}表~~格}
+\renewcommand{\contentsname}{\zihao{4}目~~录}
+\renewcommand{\listfigurename}{\zihao{4}图~~片}
+\renewcommand{\listtablename}{\zihao{4}表~~格}
 \renewcommand{\cftsecfont}{\zihao{5}\heiti} %条目样式
 \renewcommand{\cftsubsecfont}{\zihao{-5}\songti} %条目样式\fangsong
 \renewcommand{\cftsubsubsecfont}{\zihao{-5}\kaiti} %条目样式
@@ -149,7 +160,7 @@ pdfstartview=FitH,allcolors=gbemphcolor]{hyperref}
 \setlength{\cftegcodenumwidth}{2.5em} %条目标签宽度
 \renewcommand{\cftegcodefont}{\color{gbemphcolor}\zihao{-5}}%条目样式\fangsong
 \renewcommand{\cftegcodepresnum}{例}
-\renewcommand{\cftegcodeaftersnum}{.}
+\renewcommand{\cftegcodeaftersnum}{ }
 \renewcommand{\cftegcodeaftersnumb}{~}
 %\cftsetindents{egcode}{0em}{3em}
 %\renewcommand{\cftegcodepagefont}{\bfseries}
@@ -160,7 +171,7 @@ pdfstartview=FitH,allcolors=gbemphcolor]{hyperref}
 \setlength{\cftfignumwidth}{2.5em} %条目标签宽度
 \renewcommand{\cftfigfont}{\color{gbemphcolor}\zihao{-5}} %条目样式\heiti
 \renewcommand{\cftfigpresnum}{图} %条目数字前的内容
-\renewcommand{\cftfigaftersnum}{.} %条目数字后的内容
+\renewcommand{\cftfigaftersnum}{ } %条目数字后的内容
 \renewcommand{\cftfigaftersnumb}{~} %条目数字后的第二个内容
 %\renewcommand{\cftfigdotsep}{\cftdotsep} %连接符之间的宽度
 %\renewcommand{\cftfigleader}{\bfseries\cftfigfill} %连接符粘连团
@@ -173,14 +184,14 @@ pdfstartview=FitH,allcolors=gbemphcolor]{hyperref}
 \setlength{\cfttabnumwidth}{2.5em} %条目标签宽度
 \renewcommand{\cfttabfont}{\color{gbemphcolor}\zihao{-5}} %条目样式
 \renewcommand{\cfttabpresnum}{表} %条目数字前的内容
-\renewcommand{\cfttabaftersnum}{.} %条目数字后的内容
+\renewcommand{\cfttabaftersnum}{ } %条目数字后的内容
 \renewcommand{\cfttabaftersnumb}{~} %条目数字后的第二个内容
 %\renewcommand{\cfttabdotsep}{\cftdotsep} %连接符之间的宽度
 %\renewcommand{\cfttableader}{\bfseries\cfttabfill} %连接符粘连团
 %\renewcommand{\cfttabpagefont}{\color{red}\zihao{-5}$\infty$\itshape} %页码的样式
 %\renewcommand{\cfttabafterpnum}{\color{red}$\infty$} %页码后内容
 
-
+\graphicspath{{egfigure/}{example/}}
 
 %代码环境设置
 \usepackage{listings}

@@ -1,0 +1,71 @@
+\documentclass{article}
+\usepackage{ctex}
+\usepackage[english,russian,french]{babel}
+\usepackage{fontspec}
+\setmainfont{CMU Serif}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{lipsum}
+\usepackage[paperwidth=14cm,paperheight=8.5cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
+\usepackage[backend=biber,style=gb7714-2015,autolang=other,gbpub=false,gbnamefmt=familyahead]{biblatex}
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+
+@INPROCEEDINGS{frenchref,
+  AUTHOR = {Beneton Philippe and Touchard Jean and Beton Philippe and Betin Philippe},
+  BOOKTITLE = {Revue française de science politique},
+  DATE = {1968},
+  PAGES = {19--46},
+  TITLE = {ôçLes interprétations de la crise de mai-juinŕł},
+}
+
+@ARTICLE{greenwood1988,
+  AUTHOR = {Greenwood, Jeremy and Hercowitz, Zvi and Huffman, Gregory W and Williams, Joedge},
+  PUBLISHER = {JSTOR},
+  DATE = {1988},
+  JOURNALTITLE = {The American Economic Review},
+  KEYWORDS = {greenwood1988investment},
+  PAGES = {402--417},
+  TITLE = {Investment, capacity utilization, and the real business cycle},
+}
+%langid={english}
+
+@BOOK{russainref,
+  AUTHOR = {Кузнецов, А. В. and Кузнецов, C. В. and Кузнецов, D. В. and Кузнецов, E. В.},
+  TITLE = {Русский язык и языковая личность},
+  LOCATION = {М.},
+  PUBLISHER = {Диалог МГУ},
+  DATE = {1998},
+  PAGES = {28},
+}
+%langid={russian}
+
+@ARTICLE{刘凤良2017,
+  AUTHOR = {刘凤良 and 章潇萌 and 于泽 and 黄晓},
+  DATE = {2017},
+  JOURNALTITLE = {金融研究},
+  KEYWORDS = {刘凤良2017},
+  NUMBER = {2},
+  PAGES = {54--69},
+  TITLE = {高投资、结构失衡与价格指数二元分化},
+}%  langid={english}
+
+@BOOK{青木昌彦1996--,
+  AUTHOR = {青木昌彦 and 青木昌一 and 青木昌二 and 青木昌三},
+  PUBLISHER = {東洋経済新報社},
+  DATE = {1996},
+  PAGES = {288},
+  TITLE = {メインバンク ・ システムのモニタリング機能としての特徴},
+}
+
+\end{filecontents}
+    \addbibresource{\jobname.bib}
+    %
+    \begin{document}
+
+	\nocite{*}
+
+    \printbibliography[title=参考文献]
+
+    \end{document} 

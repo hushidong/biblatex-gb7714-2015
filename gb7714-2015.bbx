@@ -11,9 +11,9 @@
 %
 %   版本和时间信息
 %
-\ProvidesFile{gb7714-2015.bbx}[2018/11/04 v1.0n biblatex bibliography style]
-\def\versionofgbtstyle{2018/11/04 v1.0n}
+\def\versionofgbtstyle{2018/12/22 v1.0o}
 \def\versionofbiblatex{\abx@version}
+\ProvidesFile{gb7714-2015.bbx}[\versionofgbtstyle biblatex bibliography style]
 \RequireBiber[3]%显式指定用biber后端
 
 %=====================================================================
@@ -2112,9 +2112,9 @@ test {\iflistundef{location}} and test {\iflistundef{publisher}}%
 \usebibmacro{byauthor}%
 \newunit\newblock}%
 \usebibmacro{byeditor+others}%
-\newunit\newblock%
+\newunit
 \printfield{edition}%
-\newunit%
+\newunit\newblock%%
 \iffieldundef{maintitle}%
 {\printfield{volume}%
 \printfield{part}}%
