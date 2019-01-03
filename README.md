@@ -120,6 +120,16 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 	
         `\usepackage[backend=biber,style=gb7714-2015,gbtitlelink=true]{biblatex}`
 		
+	- add options `gbcitelocal` `gbbiblocal` to control the local strings in citation and bibliography respectively, the `gblocal` set the both options (These options are also for author year style):
+	
+		`gbcitelocal = gb7714-2015` to output local strings according to the reference's language, this is the default setting.
+		
+		`gbcitelocal = chinese` to output local strings with chinese language word like "等".
+		
+		`gbcitelocal = english` to output local strings with western language word like "et al.".
+	
+        `\usepackage[backend=biber,style=gb7714-2015,gbcitelocal = chinese]{biblatex}`
+		
 	- add an option `gbstrict` to control the output of some unnecessary fields for GB/T7714-2015 (This option is also for author year style). 
 	
 		`gbstrict=true`,  not to print those fields such as language, eprint, this is the default setting.
@@ -630,7 +640,7 @@ biber -l zh__stroke jobname
 
 > 宏包加载时使用:
 
-```\usepackage[backend=biber,style=gb7714-2015ay,sortcite,sorting=ynt]{biblatex}```
+```\usepackage[backend=biber,style=gb7714-2015ay,sortcites,sorting=ynt]{biblatex}```
 
 > 正文中引用:
 
@@ -651,6 +661,12 @@ biber -l zh__stroke jobname
 ```\cite{refb2008,refc2009,refa2010}```
 
 > 参考:[issue:citation的顺序和bibliography的顺序如何不关联](https://github.com/hushidong/biblatex-gb7714-2015/issues/30)
+
+
+
+* <b>在使用作者年制时，我希望文献表同一位置引用同一作者的不同的文献实现作者姓名的压缩，该怎么操作？</b>
+
+> 可以通过将gb7714-2015ay.cbx 中的引用的基础样式authoryear更换成authoryear-comp。
 
 
 		

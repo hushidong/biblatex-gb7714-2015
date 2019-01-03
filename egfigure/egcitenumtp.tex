@@ -4,9 +4,9 @@
 \usepackage{toolbox}
 \usepackage[colorlinks]{hyperref}
 \usepackage{lipsum}
-\usepackage[paperwidth=14cm,paperheight=13cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
+\usepackage[paperwidth=13cm,paperheight=3.5cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
 \usepackage{xltxtra,mflogo,texnames}
-\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}%sorting=nyt
+\usepackage[backend=biber,style=gb7714-2015,natbib]{biblatex}%sorting=nyt
 
 \usepackage{filecontents}
 \begin{filecontents}{\jobname.bib}
@@ -66,24 +66,6 @@
   Month                    = {1}
 }
 
-@Book{蔡敏2006a--,
-  Title                    = {UML基础和Rose建模教程-练习册一},
-  Address                  = {北京},
-  Author                   = {蔡敏},
-  Publisher                = {人民邮电出版社},
-  Year                     = {2006},
-  Month                    = {1}
-}
-
-@Book{蔡敏2006b--,
-  Title                    = {UML基础和Rose建模教程-练习册二},
-  Address                  = {北京},
-  Author                   = {蔡敏},
-  Publisher                = {人民邮电出版社},
-  Year                     = {2006},
-  Month                    = {1}
-}
-
 @Book{Miroslav2004--,
   Title                    = {信号处理滤波器设计-基于matlab和mathematica的设计方法},
   Address                  = {北京},
@@ -111,39 +93,18 @@
 
 \begin{document}
 
-%\small
-
-不带页码的引用:
-\cite{Peebles2001-100-100} \parencite{Miroslav2004--}\par
-带页码的引用:
-\cite[见][49页]{蔡敏2006--} \parencite[见][49页]{Miroslav2004--}\par
-\pagescite{Peebles2001-100-100}\pagescite[150]{Peebles2001-100-100}
-\pagescite[][201-301]{Peebles2001-100-100}\par
-作者年制文中已有作者只需给出年份和页码的引用:
-见赵学功\yearpagescite[][205]{赵学功2001--}和Miroslav\yearpagescite[][15]{Miroslav2004--}\par
-作者年制文中已有作者只需给出年份的引用，三种方式:\par
-见赵学功\yearcite{赵学功2001--};见赵学功(\cite*{赵学功2001--});
-见赵学功(\citeyear{赵学功2001--})\par
-作者年制文中无作者需要标注命令给出作者作为主语的引用：
-见\textcite{赵学功2001--}\par
-在页脚中引用和打印文献表:
-\footnote{在脚注中引用\footcite{赵学功2001--}} \footfullcite{赵学功2001--}
-
 \noindent\fbox{
 \parbox{\textwidth}{
 国标示例：\par
- 引用文献文中无作者信息：文献\cite{Peebles2001-100-100}，文献\cite{赵学功2001--}\par
- 引用文献文中有作者信息：文献Peebles\yearcite{Peebles2001-100-100}
- ，文献蔡敏\yearcite{赵学功2001--}\par
- 引用多作者文献：中文文献\cite{蔡敏2006--}，英文文献\cite{Miroslav2004--}\par
- 引用同一作者同一年份文献：文献\cite{蔡敏2006a--}，文献\cite{蔡敏2006b--}\par
- 同一处引用多篇文献：文献\cite{Peebles2001-100-100,Miroslav2004--}，
- 文献\cite{蔡敏2006--,Miroslav2004--,赵学功2001--}\par
+ 引用单篇文献：文献\citet{Peebles2001-100-100}\citep{赵学功2001--}\par
+ 同一处引用多篇文献：文献\citet{Peebles2001-100-100,Miroslav2004--}，
+ 文献\citep{蔡敏2006--,Miroslav2004--,赵学功2001--}\par
  多次引用同一作者的同一文献：
- 文献\pagescite[100-108]{蔡敏2006--}，
- 文献\pagescite[205-208]{蔡敏2006--}。
+ 文献\citet[100-108]{蔡敏2006--}，
+ 文献\citep[205-208]{蔡敏2006--}。
 }}
 
-%\printbibliography
+
+ %\printbibliography
 
 \end{document} 

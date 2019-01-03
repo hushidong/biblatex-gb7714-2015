@@ -241,12 +241,14 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 
 \subsection{文献引用及其标注格式}\label{sec:cbx:usage}
 
-要生成参考文献，第一步就是在正文中引用参考文献。引用参考文献在正文中所形成标注的格式称为参考文献标注样式也称引用样式或引用标签样式，分为两类: 顺序编码制和作者年制。引用文献的基本命令\verb|\cite|，但为了一篇文档中实现不同的标签格式，通常还需要使用其它命令。
+要生成参考文献，第一步就是在正文中引用参考文献。引用参考文献在正文中所形成标注的格式称为参考文献标注样式也称引用样式或引用标签样式，分为两类: 顺序编码制和作者年制。引用文献的基本命令\verb|\cite|，但为了一篇文档中实现不同的标签格式，通常还需要使用其它命令，比如\verb|\parencite|, \verb|\parencite|, \verb|\pagescite|等。习惯natbib的用户也可以在加载natbib选项后,
+使用\verb|\citet|, \verb|\citep|命令。
 
 %顺序编码制的标注样式文件大体使用标准引用样式numeric-comp的内容
 \paragraph{顺序编码制的标注样式}
 
-\verb|\cite| 命令为上标模式，\verb|\parencite|保留非上标模式。为满足GB/T 7714-2015第10.1.3节的要求，增加了 \verb|\pagescite| 命令。为使用户免于输入文献作者来作为句子主语，完善了\verb|textcite|命令格式，并增加了\verb|\authornumcite|命令以同时输出作者和顺序编码。
+\verb|\cite| 命令为上标模式，\verb|\parencite|保留非上标模式。为满足GB/T 7714-2015第10.1.3节的要求，增加了 \verb|\pagescite| 命令。为使用户免于输入文献作者来作为句子主语，完善了\verb|textcite|命令格式，
+并增加了\verb|\authornumcite|命令以同时输出作者和顺序编码。
 各命令使用方式如例\ref{eg:citefornumeric}所示。
 各引用命令的效果如图\ref{fig:cite:num}所示。
 测试文档见\href{run:example/testallformat.tex}{testallformat.tex}。
@@ -428,6 +430,21 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \caption{文献表条目著录格式示例二}\label{fig:content:fmtb}
 \end{figure}
 
+图\ref{fig:content:fmtc}给出了选项设置为 style=gb7714-2015ay, maxcitenames=2, mincitenames=1, gbbiblocal, gbcitelocal=chinese, sortcites, sorting=gbyntd 时的引用标注和文献表，可以看到引用标注和文献表中的不同本地化字符串输出效果。
+
+\begin{figure}[!htb]
+\centering
+\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
+width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
+\deflength{\textparwd}{\linewidth-1cm}
+\parbox{\textparwd}{
+\includegraphics{egcontentfmtc.pdf}
+}
+\end{tcolorbox}
+\caption{文献表条目著录格式示例三}\label{fig:content:fmtc}
+\end{figure}
+
 \subsubsection{新增选项}\label{sec:added:opt}
 样式包新增了一些选项，用于标签对齐方式、出版项缺省处理、责任者(作者)缺省处理等功能的控制，其使用方式与biblatex宏包选项完全相同:
 \begin{description}
@@ -586,6 +603,20 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \end{itemize}
 
   该选项的实现原理是把所有国标格式设置局部化到每一条文献打印时，处理时首先判断gbstyle 选项及文献的语言，当满足要求则使用这些局部化格式，否则使用默认的标准样式。这种实现为一篇文档内实现两种样式提供解决思路，尽管目前非中文语言文献的著录格式是标准样式，但只要对标准样式做进一步的修改就可以形成符合某种格式规范的样式，比如像ieee，nature等的样式。因此存在中文使用GB/T 7714-2015 著录格式，而英文文献使用ieee等著录格式的可能性。测试文档见：\href{run:./example/opt-gbstyle.tex}{opt-gbstyle.tex}。
+
+  \item[gblocal]=\textbf{gb7714-2015}，chinese，english. \hfill default is gb7714-2015
+  \item[gbcitelocal]=\textbf{gb7714-2015}，chinese，english. \hfill default is gb7714-2015
+  \item[gbbiblocal]=\textbf{gb7714-2015}，chinese，english. \hfill default is gb7714-2015
+
+  为设置引用标注标签和文献表中的本地化字符串而增加的选项。其中gbcitelocal 用于控制标注中的本地化字符串，而gbbiblocal用于控制文献表中的本地化字符串，gblocal选项等价于同时设置gbcitelocal 和 gbbiblocal。
+  配合\lstinline[breaklines=true]!\DefineBibliographyStrings!命令对本地化字符串进行设置可以实现一些特殊的效果。图\ref{fig:content:fmtc}就是该选项的一个使用示例。
+  \begin{itemize}
+    \item gblocal=gb7714-2015，即默认区分中英文，不同语言采用不同的字符串比如中文使用“等”“和”，而英文使用“etal”“and”。
+    \item gblocal=chinese，强制设置所有的本地化字符串使用中文。
+    \item gblocal=english，强制设置所有的本地化字符串使用英文。
+  \end{itemize}
+  测试文件见：
+  \href{run:egfigure/egcontentfmtc.tex}{egcontentfmtc.tex}。
 
 \end{description}
 
@@ -757,7 +788,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{enumerate}
 
 本样式做了中日韩英俄法六种语言的测试，详细内容见：
-\href{run:example/opt-eg-multilan.tex}{opt-eg-multilan.tex}，
+\href{run:example/opt-eg-multilan.tex}{opt-eg-multilan.tex}， 
 \href{run:example/opt-autolang-multilan.tex}{opt-autolang-multilan.tex}。
 
 

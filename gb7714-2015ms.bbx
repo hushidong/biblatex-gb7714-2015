@@ -14,7 +14,6 @@
 \def\versionofgbtstyle{2018/12/22 v1.0o}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015ms.bbx}[\versionofgbtstyle biblatex bibliography style]
-
 \RequireBiber[3]%显式指定用biber后端
 
 %=====================================================================
@@ -22,7 +21,7 @@
 %=====================================================================
 \RequireBibliographyStyle{numeric-comp}
 \RequireBibliographyStyle{standard}
-
+\RequirePackage{xstring}%解决texlive2015的biblatex3.0不加载xstring包的问题
 
 %=====================================================================
 %   功能函数
@@ -81,6 +80,7 @@
     %定义类型和载体标识，从gb内容看载体基本属于介质。
     %为与lee zeping的bst的样式统一，使用mark和medium这两域名
     %为单个条目的姓名格式控制增加nameformat和namefmtid两个域
+    %为缩略信息文献表增加了shortbooktitle域
     \DeclareDatamodelFields[type=field,datatype=literal]{mark,medium,nameformat}
     \DeclareDatamodelFields[type=field,datatype=integer]{namefmtid}
     \DeclareDatamodelFields[type=field,datatype=literal]{shortbooktitle}
@@ -244,8 +244,6 @@
     \def\thenamefmtcase{\the\c@namefmtcase}
 
     %为数字标签格式选择增加的计数器/命令
-    %\newcounter{bibnumlabel}
-    %\def\thebibnumlabel{\the\c@bibnumlabel}
     \newcommand{\mkgbnumlabel}[1]{\mkbibbrackets{#1}}
     \def\gbbiblabelopt@bracket{\renewcommand{\mkgbnumlabel}[1]{\mkbibbrackets{##1}}}
     \def\gbbiblabelopt@parens{\renewcommand{\mkgbnumlabel}[1]{\mkbibparens{##1}}}
@@ -253,8 +251,38 @@
     \def\gbbiblabelopt@plain{\renewcommand{\mkgbnumlabel}[1]{##1}}
     \def\gbbiblabelopt@box{\renewcommand{\mkgbnumlabel}[1]{\framebox{##1}}}
     \def\gbbiblabelopt@circle{\renewcommand{\mkgbnumlabel}[1]{\textcircled{##1}}}
-    \newcounter{alignlabel}
-    \def\thealignlabel{\the\c@alignlabel}
+    %为文献表中数字标签对齐方式选择增加的计数器/命令
+    \newcounter{gbalignlabel}
+    \def\thegbalignlabel{\the\c@gbalignlabel}
+    %为引用标签标注/文献表中本地化字符串中英文选择增加的计数器/命令
+    \newcounter{gbcitelocalcase}
+    \newcounter{gbbiblocalcase}
+    \def\thegbcitelocalcase{\the\c@gbcitelocalcase}
+    \def\thegbbiblocalcase{\the\c@gbbiblocalcase}
+
+    %
+    %   增加本地化字符串的中英文切换选项
+    %   gbcitelocal指标注中的本地化字符串
+    %   gbbiblocal 指文献表中的本地化字符串
+    %   gblocal 指设置文献表和标注中的本地化字符串
+    %   v1.0o，20190103，hzz
+    %
+    \DeclareBibliographyOption[string]{gbcitelocal}[gb7714-2015]{%
+        \ifstrequal{#1}{gb7714-2015}{\setcounter{gbcitelocalcase}{0}}{}%
+        \ifstrequal{#1}{chinese}{\setcounter{gbcitelocalcase}{1}}{}%
+        \ifstrequal{#1}{english}{\setcounter{gbcitelocalcase}{2}}{}%
+    }
+
+    \DeclareBibliographyOption[string]{gbbiblocal}[gb7714-2015]{%
+        \ifstrequal{#1}{gb7714-2015}{\setcounter{gbbiblocalcase}{0}}{}%
+        \ifstrequal{#1}{chinese}{\setcounter{gbbiblocalcase}{1}}{}%
+        \ifstrequal{#1}{english}{\setcounter{gbbiblocalcase}{2}}{}%
+    }
+
+    \DeclareBibliographyOption[string]{gblocal}[gb7714-2015]{%
+        \ExecuteBibliographyOptions{gbbiblocal=#1}%
+        \ExecuteBibliographyOptions{gbcitelocal=#1}%
+    }
 
     %
     %   增加序号标签格式处理选项
@@ -281,9 +309,9 @@
     %
     %   right是默认的右对齐，left是左对齐，gb7714-2015是项对齐方式
     \DeclareBibliographyOption[string]{gbalign}[right]{%
-        \ifstrequal{#1}{right}{\setcounter{alignlabel}{0}}{}
-        \ifstrequal{#1}{left}{\setcounter{alignlabel}{1}}{}
-        \ifstrequal{#1}{center}{\setcounter{alignlabel}{2}}{}
+        \ifstrequal{#1}{right}{\setcounter{gbalignlabel}{0}}{}
+        \ifstrequal{#1}{left}{\setcounter{gbalignlabel}{1}}{}
+        \ifstrequal{#1}{center}{\setcounter{gbalignlabel}{2}}{}
         \ifstrequal{#1}{gb7714-2015}{\setaligngbstyle}{}
     }
 
@@ -316,6 +344,7 @@
       %eventdate =edtf,%针对3.7<=biblatex<=3.9版本的选项设置，比如texlive2017中的3.7版
       urldate =gb7714-2015, %iso，针对3.10<=biblatex版本的选项设置，比如texlive2018中的3.11版
       eventdate =gb7714-2015,
+      gblocal=gb7714-2015,
     }
 
 
@@ -323,9 +352,12 @@
 %   设置本地化字符串
 %=====================================================================
     %
-    %   新建当地化字符串，用来记录“等”字符
+    %   新建当地化字符串，用来记录“等”字符、“和”字符
     %
     \NewBibliographyString{andotherscn}
+    \NewBibliographyString{andcn}
+    \NewBibliographyString{andincitecn}
+    \NewBibliographyString{andincite}
 
     %
     %   修改一些当地化字符串
@@ -336,9 +368,11 @@
     \DefineBibliographyStrings{english}{
         bibliography     = {\str@bibliography},
         references       = {\str@references},
-        %bytranslator= {\addcomma\ 译\adddot}, %将trans. by 改成 译
-        bytranslator= {\addcomma\ \str@bytranslator},%\addperiod
+        bytranslator= {\addcomma\ \str@bytranslator},%\addperiod %将trans. by 改成 译
         and         = {\addcomma},%将第2和3人名见的and符号改成 逗号，用\finalnamedelim命令也可以定义，参见3.9.1节
+        andcn       = {\addcomma},%and本地化字符串的中文对应词
+        andincitecn = {\addcomma},%将标注中的分开，便于与文献表中的区分
+        andincite   = {\addcomma},
         %andothers   = {et al.},  %将超过3个人名的省略，et al.改成为 等
         andotherscn   = {\str@andotherscn},     %将超过3个人名的省略，et al.改成为 等
         backrefpage = {\str@backrefpage:},
@@ -689,7 +723,7 @@
 %   \DeclareFieldFormat{shorthandwidth}{\mkbibbrackets{#1}} %源来自numeric.BBX
 %   \DeclareFieldFormat{labelnumberwidth}{\ttfamily\mkbibbrackets{#1}\hfill}
 \DeclareFieldFormat{labelnumberwidth}{%
-\ifcase\value{alignlabel}%右对齐，整个标签为右对齐
+\ifcase\value{gbalignlabel}%右对齐，整个标签为右对齐
     \mkgbnumlabel{#1}%
 \or%左对齐，整个标签为左对齐
     \mkgbnumlabel{#1}\hfill%
@@ -1134,22 +1168,82 @@ togl{bbx:gbstyle} or test {\iffieldequalstr{userd}{cn}}
 
 %
 %   修改作者数量超过限定值，做省略时的处理格式
+%   v1.0,20160701,hzz
+%   v1.0O,20190103,hzz,修改利用新定义的一个分隔符strandothersdelim
 %
-%   原理方法:判断作者或译者是否中文，若中文用字符等，否则用etcl。
+%   原理方法:判断作者或译者是否中文，若中文用字符等，否则用et al. 。
 \renewbibmacro*{name:andothers}{%
   \ifboolexpr{
     test {\ifnumequal{\value{listcount}}{\value{liststop}}}
     and
     test \ifmorenames
-  }{%这里做一个判断是在处理author还是translator用于两者是不同语言的情况
-    \ifcurrentname{translator}{\testCJKfirst{usere}}{\testCJKfirst{userf}}%
-    %这句判断如果放到\andothersdelim后面会在等或etc.前增加一个空格，所以放前面
-    \ifnumgreater{\value{liststop}}{1}
+  }{\ifnumgreater{\value{liststop}}{1}
        {\finalandcomma}%
        {}%biblatex作者要区别单作者加等的情况，这里为符合gbt7714-2015第7.2节的要求加上了逗号。
-\printdelim{andothersdelim}\iftoggle{ifCJKforgbt}{\bibstring{andotherscn}}{\bibstring{andothers}}%
-%\andothersdelim\bibstring{andotherscn}
+\printdelim{andothersdelim}\printdelim{strandothersdelim}%
 }{}}
+
+%
+%   修改省略作者后的本地化字符串，比如et al.
+%   v1.0o,20190103,hzz
+%
+%   原理方法:默认情况下判断作者或译者是否中文，若中文用字符andotherscn=“等”，否则用andothers=“et al.”。
+%   非默认情况，根据选项信息，选择选择强制中文或英文
+%   首先设置全局的，然后设置文献表中的，这一等价于将所有的cite命令环境都设置过了
+%   而不用对每一个引用命令单独设置，比如cite，parancite，textcite都设置
+\DeclareDelimFormat{strandothersdelim}{%
+  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
+  \addspace%%做一个判断是在处理author还是translator，用于两者是不同语言的情况
+  \ifcurrentname{translator}{\testCJKfirst{usere}}{\testCJKfirst{userf}}%
+  \ifcase\value{gbcitelocalcase}%
+  \iftoggle{ifCJKforgbt}{\bibstring{andotherscn}}{\bibstring{andothers}}\space%
+  \or%
+  \bibstring{andotherscn}\space%
+  \or%
+  \bibstring{andothers}\space%
+  \fi}
+\DeclareDelimFormat[bib,biblist]{strandothersdelim}{%
+  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
+  \addspace%
+  \ifcurrentname{translator}{\testCJKfirst{usere}}{\testCJKfirst{userf}}%
+  \ifcase\value{gbbiblocalcase}%
+  \iftoggle{ifCJKforgbt}{\bibstring{andotherscn}}{\bibstring{andothers}}\space%
+  \or%
+  \bibstring{andotherscn}\space%
+  \or%
+  \bibstring{andothers}\space%
+  \fi}
+
+%
+%   修改最后一个作者前的字符串，比如 and
+%   v1.0o,20190103,hzz
+%
+%   原理方法:默认情况下判断作者或译者是否中文，若中文用字符andcn=“和”，否则用and=“and”。
+%   非默认情况，根据选项信息，选择选择强制中文或英文
+%   首先设置全局的，然后设置文献表中的，这一等价于将所有的cite命令环境都设置过了
+%   而不用对每一个引用命令单独设置，比如cite，parancite，textcite都设置
+\DeclareDelimFormat{finalnamedelim}{%
+  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
+  \addspace%
+  \ifcurrentname{translator}{\testCJKfirst{usere}}{\testCJKfirst{userf}}%
+  \ifcase\value{gbcitelocalcase}%
+  \iftoggle{ifCJKforgbt}{\bibstring{andincitecn}}{\bibstring{andincite}}\space%
+  \or%
+  \bibstring{andincitecn}\space%
+  \or%
+  \bibstring{andincite}\space%
+  \fi}
+\DeclareDelimFormat[bib,biblist]{finalnamedelim}{%
+  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
+  \addspace%
+  \ifcurrentname{translator}{\testCJKfirst{usere}}{\testCJKfirst{userf}}%
+  \ifcase\value{gbbiblocalcase}%
+  \iftoggle{ifCJKforgbt}{\bibstring{andcn}}{\bibstring{and}}\space%
+  \or%
+  \bibstring{andcn}\space%
+  \or%
+  \bibstring{and}\space%
+  \fi}
 
     %
     %   url和url日期格式

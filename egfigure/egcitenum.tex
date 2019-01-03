@@ -4,7 +4,7 @@
 \usepackage{toolbox}
 \usepackage[colorlinks]{hyperref}
 \usepackage{lipsum}
-\usepackage[paperwidth=13cm,paperheight=8cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
+\usepackage[paperwidth=13cm,paperheight=9cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
 \usepackage{xltxtra,mflogo,texnames}
 \usepackage[backend=biber,style=gb7714-2015]{biblatex}%sorting=nyt
 
@@ -89,6 +89,7 @@
 \end{filecontents}
 
 \addbibresource{\jobname.bib}
+\renewcommand{\thefootnote}{\textcircled{\tiny\arabic{footnote}}}
 
 \begin{document}
 
@@ -107,6 +108,18 @@
  （ c）用textcite但没有上标：见\textcite{蔡敏2006--,Miroslav2004--}\par
  在页脚中引用和打印文献表:
  \footnote{在脚注中引用\footcite{赵学功2001--}} \footfullcite{赵学功2001--}
+
+\noindent\fbox{
+\parbox{\textwidth}{
+国标示例：\par
+ 引用单篇文献：文献\cite{Peebles2001-100-100}\par
+ 同一处引用多篇文献：文献\cite{Peebles2001-100-100,Miroslav2004--}，
+ 文献\cite{蔡敏2006--,Miroslav2004--,赵学功2001--}\par
+ 多次引用同一作者的同一文献：
+ 文献\pagescite[100-108]{蔡敏2006--}，
+ 文献\pagescite[205-208]{蔡敏2006--}。
+}}
+ 
 
  %\printbibliography
 
