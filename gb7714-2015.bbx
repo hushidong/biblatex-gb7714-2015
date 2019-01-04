@@ -543,6 +543,8 @@
     %   新建当地化字符串，用来记录“等”字符、“和”字符
     %
     \NewBibliographyString{andotherscn}
+    \NewBibliographyString{andothersincitecn}
+    \NewBibliographyString{andothersincite}
     \NewBibliographyString{andcn}
     \NewBibliographyString{andincitecn}
     \NewBibliographyString{andincite}
@@ -564,6 +566,8 @@
         andincite   = {\addcomma},
         %andothers   = {et al.},%将超过3个人名的省略，et al.改成为 等
         andotherscn   = {\str@andotherscn},%将超过3个人名的省略，et al.改成为 等
+        andothersincitecn={\str@andotherscn},%将标注中的分开，便于与文献表中的区分
+        andothersincite={et al.},
         backrefpage = {\str@backrefpage:},
         backrefpages = {\str@backrefpages:},
         in={in\intitlepunct},
@@ -1215,11 +1219,11 @@
   \addspace%%做一个判断是在处理author还是translator，用于两者是不同语言的情况
   \ifcurrentname{translator}{\testCJKfirst{usere}}{\testCJKfirst{userf}}%
   \ifcase\value{gbcitelocalcase}%
-  \iftoggle{ifCJKforgbt}{\bibstring{andotherscn}}{\bibstring{andothers}}\space%
+  \iftoggle{ifCJKforgbt}{\bibstring{andothersincitecn}}{\bibstring{andothersincite}}\space%
   \or%
-  \bibstring{andotherscn}\space%
+  \bibstring{andothersincitecn}\space%
   \or%
-  \bibstring{andothers}\space%
+  \bibstring{andothersincite}\space%
   \fi}
 \DeclareDelimFormat[bib,biblist]{strandothersdelim}{%
   \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
@@ -2185,7 +2189,7 @@ test {\iflistundef{location}} and test {\iflistundef{publisher}}%
 %
 %   原理方法:使用bibmacro{in:}改变了以前在driver中直接输出//的方式，同时也简化了标点控制。
 \renewbibmacro*{in:}{%
- \iftoggle{bbx:gbpunctin}{\printtext{\texttt{//}\addthinspace}}%
+ \iftoggle{bbx:gbpunctin}{\printtext{\texttt{//}\allowbreak}}%\addthinspace
                          {\setunit{\adddot\addspace}\printtext{\bibstring{in}}}}%\newunit\newblock\intitlepunct
 
 

@@ -430,7 +430,21 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \caption{文献表条目著录格式示例二}\label{fig:content:fmtb}
 \end{figure}
 
-图\ref{fig:content:fmtc}给出了选项设置为 style=gb7714-2015ay, maxcitenames=2, mincitenames=1, gbbiblocal, gbcitelocal=chinese, sortcites, sorting=gbyntd 时的引用标注和文献表，可以看到引用标注和文献表中的不同本地化字符串输出效果。
+图\ref{fig:content:fmtc}为选项和本地化字符串如例\ref{eg:localstr:diff}设置时的引用标注和文献表，注意其中引用标注和文献表中的不同本地化字符串输出效果，引用标注中英文作者和中文作者缩略词的不同。这是中科院大学资环类学位论文的要求格式，可以看到尽管有些特殊，但通过选项设置和本地化字符串设置也能实现。
+
+\begin{example}{作者年制标注和文献表不同本地字符串效果}{eg:localstr:diff}
+\begin{texlist}
+\usepackage[backend=biber,style=gb7714-2015ay,gbnamefmt=lowercase,maxcitenames=2,mincitenames=1,
+gbbiblocal,sortcites,sorting=gbyntd]{biblatex}
+\DefineBibliographyStrings{english}{
+        andincite         = {和},
+        andincitecn       = {和},
+        andothersincitecn = {等},
+        andothersincite   = {等{\adddot}},%adddot才能避开标点追踪
+}
+\end{texlist}
+\end{example}
+
 
 \begin{figure}[!htb]
 \centering
@@ -788,7 +802,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{enumerate}
 
 本样式做了中日韩英俄法六种语言的测试，详细内容见：
-\href{run:example/opt-eg-multilan.tex}{opt-eg-multilan.tex}， 
+\href{run:example/opt-eg-multilan.tex}{opt-eg-multilan.tex}，
 \href{run:example/opt-autolang-multilan.tex}{opt-autolang-multilan.tex}。
 
 

@@ -23,3 +23,20 @@ del *.pdf /Q
 
 
 cd ..
+
+cd egfigure
+
+call makeclear
+
+
+del *.bbx /Q
+
+del *.cbx /Q
+
+del *.def /Q
+
+
+del *.pdf /Q
+
+
+cd ..

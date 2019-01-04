@@ -8,11 +8,13 @@
 \usepackage{xltxtra,mflogo,texnames}
 %\usepackage[backend=biber,style=gb7714-2015,gbnamefmt=givenahead,
 %gbpub=false,gbbiblabel=box,gbtitlelink=true]{biblatex}%sorting=nyt
-\usepackage[backend=biber,style=gb7714-2015ay,maxcitenames=2,mincitenames=1,
-gbbiblocal,gbcitelocal=chinese,sortcites,sorting=gbyntd]{biblatex}
+\usepackage[backend=biber,style=gb7714-2015ay,gbnamefmt=lowercase,maxcitenames=2,mincitenames=1,
+gbbiblocal,sortcites,sorting=gbyntd]{biblatex}
 \DefineBibliographyStrings{english}{
-        andincite         = {and},
+        andincite         = {和},
         andincitecn       = {和},
+        andothersincitecn = {等},
+        andothersincite   = {等{\adddot}},%adddot才能避开标点追踪
 }
 \renewcommand{\bibfont}{\small}
 \usepackage{filecontents}
