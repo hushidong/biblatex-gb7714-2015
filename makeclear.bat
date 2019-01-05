@@ -22,6 +22,8 @@ del *.def /Q
 del *.pdf /Q
 
 
+del *.bib /Q
+
 cd ..
 
 cd egfigure
@@ -37,6 +39,8 @@ del *.def /Q
 
 
 del *.pdf /Q
+
+del *.bib /Q
 
 
 cd ..

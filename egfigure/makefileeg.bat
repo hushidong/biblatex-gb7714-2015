@@ -2,6 +2,7 @@
 
 
 IF NOT EXIST gb7714-2015.bbx (
+copy ..\example.bib . /y
 copy ..\gb7714-2015.bbx . /y
 copy ..\gb7714-2015.cbx . /y
 copy ..\gb7714-2015ay.bbx . /y

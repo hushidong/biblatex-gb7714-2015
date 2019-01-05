@@ -17,3 +17,6 @@
     \def\str@noaddress{出版地不详}
     \def\str@nopublisher{出版者不详}
     \def\str@edition{版}
+    \def\str@volumecn{卷}
+    \def\str@numbercn{册}
+    \def\str@serialcn{第}

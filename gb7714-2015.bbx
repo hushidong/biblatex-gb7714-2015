@@ -241,6 +241,9 @@
     \def\str@noaddress{出版地不详}
     \def\str@nopublisher{出版者不详}
     \def\str@edition{版}
+    \def\str@volumecn{卷}
+    \def\str@numbercn{册}
+    \def\str@serialcn{第}
 
     \AtEndOfPackage{%
 	\iftoggle{bbx:codegbk}{%
@@ -548,6 +551,9 @@
     \NewBibliographyString{andcn}
     \NewBibliographyString{andincitecn}
     \NewBibliographyString{andincite}
+    \NewBibliographyString{volumecn}
+    \NewBibliographyString{numbercn}
+    \NewBibliographyString{serialcn}
 
     %
     %   修改一些当地化字符串
@@ -571,6 +577,9 @@
         backrefpage = {\str@backrefpage:},
         backrefpages = {\str@backrefpages:},
         in={in\intitlepunct},
+        volumecn={\str@volumecn},
+        numbercn={\str@numbercn},
+        serialcn={\str@serialcn}
     }
 
 
@@ -632,22 +641,32 @@
         \map{
             \pertype{database}%对应增加的一个数据库类型database
             \step[fieldset=usera, fieldvalue={DB}]%没有专门的驱动，定义一个usera域，方便映射后使用
+            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后避免该问题
+            \step[fieldset=institution, origfieldval]
             }
         \map{
             \pertype{dataset}%对应增加的一个数据集类型dataset
             \step[fieldset=usera, fieldvalue={DS}]%没有专门的驱动，定义一个usera域，方便映射后使用
+            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后避免该问题
+            \step[fieldset=institution, origfieldval]
             }
         \map{
             \pertype{software}%对应增加的一个软件类型software
             \step[fieldset=usera, fieldvalue={CP}]%没有专门的驱动，定义一个usera域，方便映射后使用
+            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后避免该问题
+            \step[fieldset=institution, origfieldval]
             }
         \map{
             \pertype{map}%对应增加的一个舆图类型map
             \step[fieldset=usera, fieldvalue={CM}]%没有专门的驱动，定义一个usera域，方便映射后使用
+            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后避免该问题
+            \step[fieldset=institution, origfieldval]
             }
         \map{
             \pertype{archive}%对应增加的一个档案类型archive
             \step[fieldset=usera, fieldvalue={A}]%没有专门的驱动，定义一个usera域，方便映射后使用
+            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后避免该问题
+            \step[fieldset=institution, origfieldval]
             }
         \map{
             \pertype{misc}%当misc类型带有网址时，将其转换为online类型
@@ -703,6 +722,8 @@
             \pertype{mastersthesis}%兼容老的mastersthesis和phdthesis类型
             \pertype{phdthesis}
             \step[fieldset=usera, fieldvalue={D}]
+            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后避免该问题
+            \step[fieldset=institution, origfieldval]
             }
         \map{
             \pertype{online}
@@ -715,12 +736,16 @@
             \step[fieldset=usera, fieldvalue={A}]
             \step[fieldsource=edition] %有时会把version和edition混淆，处理后避免该问题，可以直接用version
             \step[fieldset=version, origfieldval]
+            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后避免该问题
+            \step[fieldset=institution, origfieldval]
             \step[fieldsource=organization]%因为用的report的驱动，所以需要institution域，把organization转成它以增强兼容性
             \step[fieldset=institution, origfieldval]
             }
         \map{
             \pertype{incollection}
             \step[fieldset=usera, fieldvalue={G}]
+            \step[fieldsource=editor] %%有的时候可能只填写了编者，没有author，把它复制一下
+            \step[fieldset=bookauthor, origfieldval]
             }
         \map{
             \pertype{collection}
@@ -1906,6 +1931,31 @@ test {\iflistundef{location}} and test {\iflistundef{publisher}}%
 }
 
 %
+%   对volume卷信息格式做出修改
+%   v1.0o,20190105,hzz
+%
+\DeclareFieldFormat{volume}{%
+\testCJKfirst{userd}%
+\iftoggle{ifCJKforgbt}%
+{\bibstring{serialcn}#1\bibstring{volumecn}}%
+{\bibstring{volume}~#1}%
+}% volume of a book
+\DeclareFieldFormat[article,periodical]{volume}{#1}% volume of a journal
+
+%
+%   对number册信息格式做出修改
+%   v1.0o,20190105,hzz
+%
+\DeclareFieldFormat{number}{#1}%
+\DeclareFieldFormat[book,collection,inbook,%
+incollection,proceedings,inproceedings]{number}{%
+\testCJKfirst{userd}%
+\iftoggle{ifCJKforgbt}%
+{\bibstring{serialcn}#1\bibstring{numbercn}}%
+{#1}%
+}%
+
+%
 %   对edition版本信息格式做出修改
 %
 \DeclareFieldFormat{edition}{%源来自biblatex.DEF
@@ -2220,11 +2270,11 @@ test {\iflistundef{location}} and test {\iflistundef{publisher}}%
 \newunit
 \printfield{edition}%
 \newunit\newblock%%
+\iftoggle{bbx:gbstrict}{}{%
 \iffieldundef{maintitle}%
 {\printfield{volume}%
 \printfield{part}}%
 {}%
-\iftoggle{bbx:gbstrict}{}{%
 \newunit%
 \printfield{volumes}%
 \newunit\newblock%
@@ -2280,20 +2330,22 @@ test {\iflistundef{location}} and test {\iflistundef{publisher}}%
 \ifnameundef{bookauthor}{}{\newunit}%替换下一句
   %\newunit\newblock
   \usebibmacro{maintitle+booktitle}%
+  \setunit{\addcolon}\printfield{volume}\printfield{number}%增加卷和册信息
   \newunit\newblock
 %  \usebibmacro{byeditor+others}%
 %  \newunit\newblock
   \printfield{edition}%
   \newunit
-  \iffieldundef{maintitle}
-    {\printfield{volume}%
-     \printfield{part}}
-    {}%
-  \newunit
+\iftoggle{bbx:gbstrict}{}{%
+%  \iffieldundef{maintitle}
+%    {\printfield{volume}%
+%     \printfield{part}}
+%    {}%
+%  \newunit
   \printfield{volumes}%
   \newunit\newblock
   \usebibmacro{series+number}%
-  \newunit\newblock
+  \newunit\newblock}
   %\printfield{note}%
   %\newunit\newblock
   \usebibmacro{publisher+location+date}%
@@ -2698,17 +2750,18 @@ test {\iflistundef{location}} and test {\iflistundef{publisher}}%
  \ifnameundef{bookauthor}{}{\newunit}%替换下一句
   %\newunit\newblock
   \usebibmacro{maintitle+booktitle}%
+  \setunit{\addcolon}\printfield{volume}\printfield{number}%增加卷和册信息
   \newunit\newblock
   \usebibmacro{event+venue+date}%
   \newunit\newblock
 %  \usebibmacro{byeditor+others}%
 %  \newunit\newblock
 \iftoggle{bbx:gbstrict}{}{%
-  \iffieldundef{maintitle}
-    {\printfield{volume}%
-     \printfield{part}}
-    {}%
-  \newunit
+%  \iffieldundef{maintitle}
+%    {\printfield{volume}%
+%     \printfield{part}}
+%    {}%
+%  \newunit
   \printfield{volumes}%
   \newunit\newblock
   \usebibmacro{series+number}%
@@ -2814,17 +2867,18 @@ test {\iflistundef{location}} and test {\iflistundef{publisher}}%
 \ifnameundef{bookauthor}{}{\newunit}%替换下一句\newblock
 %\newunit\newblock
 \usebibmacro{maintitle+booktitle}%}%
+  \setunit{\addcolon}\printfield{volume}\printfield{number}%增加卷和册信息
   \newunit\newblock
 %  \usebibmacro{byeditor+others}%
 %  \newunit\newblock
   \printfield{edition}%
   \newunit
-  \iffieldundef{maintitle}
-    {\printfield{volume}%
-     \printfield{part}}
-    {}%
   \iftoggle{bbx:gbstrict}{}{%
-  \newunit
+%  \iffieldundef{maintitle}
+%    {\printfield{volume}%
+%     \printfield{part}}
+%    {}%
+%  \newunit
   \printfield{volumes}%
   \newunit\newblock
   \usebibmacro{series+number}}%
