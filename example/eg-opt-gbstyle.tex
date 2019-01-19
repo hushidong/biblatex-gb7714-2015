@@ -1,3 +1,8 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015ms样式，是否能够在一篇文档中使用两种样式的格式设置
+% 即中文文献以GB格式设置，英文文献以biblatex标准样式设置。
+
 \documentclass[twoside]{article}
 \usepackage{ctex}
 \usepackage{xcolor}
@@ -769,7 +774,7 @@ gbnamefmt=familyahead,sorting=nyt]{biblatex}%
 
 
     \begin{document}
-    \section{测试：中文文献}
+    \section{测试gb7714-2015ms样式中英文不同样式：中文文献}
     \begin{refsection}
     中文文献\cite{中华医学会湖北分会1984--,中国职工教育研究会1985--,abx2007-500-503,张凯军2012-04-05--,张成思2010长期均衡,张伯伟2002--,杨汝岱2015中国制造,杨洪升2013-56-75,杨光2015经济波动,徐伟康2010对,王文甫2010价格粘性,王国静2014金融冲击,汤万金2013-09-30--,马欢2011-27-27,罗德明2012要素市场扭曲,吕捷2015cpi,楼继伟2016改革,刘凤良2017,李晓西1994转轨过程中的结构性通货膨胀,李强2012-05-03--,雷光春2012--,贾东琴2011-45-52,韩吉人1985-90-99,国家环境保护局科技标准司1996-2-3,方军雄2007所有制,丁文祥2000--,白书农1998-146-163}
 
@@ -777,7 +782,7 @@ gbnamefmt=familyahead,sorting=nyt]{biblatex}%
     \end{refsection}
 
 
-    \section{测试：英文文献}
+    \section{测试gb7714-2015ms样式中英文不同样式：英文文献}
     \begin{refsection}
     英文文献\cite{dataseteg,Misceg,zhang2009china,databaseeg,mapeg,aritileeg,
     softwareeg,    archiveeg,Yi2013--,Yi2014--,xu2012role,wang2006another,IEEEexample:uspat,
@@ -793,7 +798,7 @@ gbnamefmt=familyahead,sorting=nyt]{biblatex}%
     \printbibliography
     \end{refsection}
 
-    \section{测试：中英文对照文献}
+    \section{测试gb7714-2015ms样式中英文不同样式：中英文对照文献}
     \begin{refsection}
     \defbibentryset{张敏莉，等，2007}{张敏莉2007-500-503,Zhang2007-500-503}
 
@@ -807,7 +812,7 @@ gbnamefmt=familyahead,sorting=nyt]{biblatex}%
     \printbibliography
     \end{refsection}
 
-    \section{测试：标注命令}
+    \section{测试gb7714-2015ms样式中英文不同样式：标注命令}
     \begin{refsection}
      不带页码的引用(上标，方括号包围):
      \cite{FOURNEY1971-17-38}\cite{wang2006another}

@@ -1,3 +1,6 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015样式，实现GB/T 7714-2015 标准说明中给出的著者年份制示例
 \documentclass{article}
 \usepackage{ctex}
 \usepackage{xcolor}
@@ -6,7 +9,7 @@
 \usepackage{lipsum}
 \usepackage[paperwidth=21cm,paperheight=29cm,top=3cm,bottom=2cm,left=1.5cm,right=1.5cm]{geometry}
 \usepackage{xltxtra,mflogo,texnames}
-\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}%sorting=nyt
+\usepackage[backend=biber,style=gb7714-2015ay,gbnoauthor]{biblatex}%sorting=nyt
 
 %\usepackage{filecontents}
 %\begin{filecontents}{\jobname.bib}
@@ -21,6 +24,11 @@
 
 \section*{GB/T 7714-2015 中的著者年份制示例}
 
+\subsection*{8.1.3 缺省著者}
+\begin{refsection}
+\nocite{anon1981-628}
+\printbibliography[heading=subbibliography]
+\end{refsection}
 
 \subsection*{9.2 文献表}
 \begin{refsection}

@@ -1,17 +1,111 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015样式，实现GB/T 7714-2015 标准说明中给出的顺序编码制示例
 \documentclass{article}
 \usepackage{ctex}
+\usepackage[russian,french,english]{babel}
+\usepackage{fontspec}
+ \setmainfont{CMU Serif}
+ \setCJKmainfont{SourceHanSerifSC-Regular.otf}
 \usepackage{xcolor}
 \usepackage{toolbox}
 \usepackage[colorlinks]{hyperref}
 \usepackage{lipsum}
 \usepackage[paperwidth=21cm,paperheight=29cm,top=3cm,bottom=2cm,left=1.5cm,right=1.5cm]{geometry}
 \usepackage{xltxtra,mflogo,texnames}
-\usepackage[backend=biber,style=gb7714-2015]{biblatex}%sorting=nyt
+%%注意:这里使用other*来使得babel切换环境时忽略空白，使得条目集中各文献间的标点正确
+\usepackage[backend=biber,style=gb7714-2015,autolang=other*]{biblatex}%sorting=nyt
 
-%\usepackage{filecontents}
-%\begin{filecontents}{\jobname.bib}
-%
-%\end{filecontents}
+
+
+% printbiblist命令需要一个与其参数同名的文献输出驱动，详见92-bibliographylists.tex
+\DeclareBibliographyDriver{authorexample}{%
+%\usebibmacro{begentry}%
+\begingroup
+\usebibmacro{author/editor+others/translator+others}\par
+%\usebibmacro{finentry}
+\endgroup
+}
+
+
+\DeclareFieldFormat{titlea}{#1}
+
+\renewbibmacro*{titlea}{%
+  \ifboolexpr{%
+    test{\iffieldundef{title}}%
+    and
+    test{\iffieldundef{subtitle}}%
+  }%
+    {}%
+    {\printtext[titlea]{\bibtitlefont%增加字体控制命令
+       \printfield[titlecase]{title}%
+       \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
+       {}{\setunit{\subtitlepunct}%
+       \printfield[titlecase]{subtitle}}%
+       \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
+        {\setunit{\subtitlepunct}\printfield{titleaddon}}%
+}}}
+
+\DeclareBibliographyDriver{titlexamplea}{%
+\usebibmacro{begentry}%
+\iffieldundef{title}{\usebibmacro{journal}}{\usebibmacro{titlea}}
+\usebibmacro{finentry}
+}
+
+
+\DeclareBibliographyDriver{titlexample}{%
+\usebibmacro{begentry}%
+\iffieldundef{title}{\usebibmacro{journal+issuetitle}}{\usebibmacro{title}}
+\usebibmacro{finentry}
+}
+
+\DeclareBibliographyDriver{editionexample}{%
+%\usebibmacro{begentry}%
+\begingroup
+\printfield{edition}\par
+%\usebibmacro{finentry}
+\endgroup
+}
+
+\DeclareBibliographyDriver{pubexample}{%
+\usebibmacro{begentry}%
+\ifentrytype{online}{\usebibmacro{institution+location+date}}{\usebibmacro{publisher+location+date}}%\par
+\usebibmacro{chapter+pages}%
+\usebibmacro{doi+eprint+url}%从下面移动到上面来，因为gbt2015的url需直接放在页码后面。
+\usebibmacro{finentry}
+}
+
+\DeclareBibliographyDriver{dateexample}{%
+\usebibmacro{begentry}%
+\ifentrytype{online}{\usebibmacro{modifydate}}{%
+\ifkeyword{news}{\usebibmacro{newsdate}}{\usebibmacro{institution+location+date}}}%\par
+\usebibmacro{chapter+pages}%
+\usebibmacro{doi+eprint+url}%从下面移动到上面来，因为gbt2015的url需直接放在页码后面。
+\usebibmacro{finentry}
+}
+
+\DeclareBibliographyDriver{dvnpexample}{%
+\usebibmacro{issue+date}%
+\iffieldundef{volume}{}{\setunit{\addcomma\space}}%
+\usebibmacro{volume+number+eid}%把卷期放到年份后面
+\usebibmacro{note+pages}\par%
+}
+
+\defbibenvironment{exampleenv}
+  {\list
+     {示例\printfield{labelnumber}:\space}
+     {\setlength{\labelwidth}{1cm}%
+      \setlength{\leftmargin}{\labelwidth}%
+      \setlength{\labelsep}{\biblabelsep}%
+      \addtolength{\leftmargin}{\labelsep}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}%
+      \renewcommand*{\makelabel}[1]{##1\hss}}}
+  {\endlist}
+  {\item}
+
+\defbibheading{biblist}[\bibname]{%
+\paragraph*{#1}}
 
 \addbibresource{example.bib}
 \renewcommand{\thefootnote}{\textcircled{\tiny\arabic{footnote}}}
@@ -20,6 +114,8 @@
 \begin{document}
 
 \section*{GB/T 7714-2015 中的著录标准和顺序编码制示例}
+
+\section*{4 著录项目和著录格式}
 
 \subsection*{4.1 专著}
 \begin{refsection}
@@ -37,13 +133,13 @@
 赵学功2001--,
 同济大学土木工程防灾国家重点实验室2011-5-6,
 中国造纸学会2003--,
-Peebles2001--,
+PEEBLES2001--,
 Yufin2000--,
 Baldock2011-105-105,
 Fan2013-25-26
 }
 
-\printbibliography[heading=subbibliography]
+\printbibliography[heading=subbibliography,title={示例:}]
 \end{refsection}
 
 \subsection*{4.2 专著中的析出文献}
@@ -59,7 +155,7 @@ Weinstein1974-745-772,
 Roberson2011-1-36
 }
 
-\printbibliography[heading=subbibliography]
+\printbibliography[heading=subbibliography,title={示例:}]
 \end{refsection}
 
 \subsection*{4.3 连续出版物}
@@ -71,7 +167,7 @@ Roberson2011-1-36
 AAAS1883----,
 }
 
-\printbibliography[heading=subbibliography]
+\printbibliography[heading=subbibliography,title={示例:}]
 \end{refsection}
 
 \subsection*{4.4 连续出版物中的析出文献}
@@ -88,7 +184,7 @@ Frese2013-378-398,
 Myburg2014-356-362
 }
 
-\printbibliography[heading=subbibliography]
+\printbibliography[heading=subbibliography,title={示例:}]
 \end{refsection}
 
 \subsection*{4.5 专利文献}
@@ -98,7 +194,11 @@ Myburg2014-356-362
 西安电子科技大学2002--,
 Tachibana2005--}
 
-\printbibliography[heading=subbibliography]
+{
+ \hyphenpenalty=100 %断词阈值，值越大越不容易出现断词
+ \tolerance=5000 %丑度，10000为最大无溢出盒子，参考the texbook 第6章
+\printbibliography[heading=subbibliography,title={示例:}]
+}
 \end{refsection}
 
 \subsection*{4.6 电子资源}
@@ -111,7 +211,245 @@ OCLC--,
 Hopkinson2009--
 }
 
-\printbibliography[heading=subbibliography]
+{
+ \hyphenpenalty=100 %断词阈值，值越大越不容易出现断词
+ \tolerance=5000 %丑度，10000为最大无溢出盒子，参考the texbook 第6章
+\printbibliography[heading=subbibliography,title={示例:}]
+}
+\end{refsection}
+
+\section*{6 著录用文字}
+\section*{示例1}
+\begin{refsection}
+\nocite{周鲁卫2011--}
+\nocite{常森2013--}
+\nocite{kereanrefa}
+\nocite{japaneserefc}
+\nocite{RUDDOCK2009--}
+\nocite{russianrefc}
+\printbibliography[heading=subbibliography,title={用原语种著录参考文献}]
+\end{refsection}
+
+\section*{示例2}
+\begin{refsection}
+\defbibentryset{李炳穆set}{kereanrefb,李炳穆2005--}
+\defbibentryset{图书馆信息政策set}{kereanrefc,图书馆信息政策委员会2007--}
+\nocite{李炳穆set}
+\nocite{图书馆信息政策set}
+\printbibliography[heading=subbibliography,title={用韩中2种语言著录文献}]
+\end{refsection}
+
+\section*{示例3}
+\begin{refsection}
+\defbibentryset{熊平set}{熊平2005--,xiong2005--}
+\defbibentryset{食品药品监督set}{上海市食品药品监督管理局课题组2008--,Rgsfda2008--}
+\nocite{熊平set}
+\nocite{食品药品监督set}
+\printbibliography[heading=subbibliography,title={用中英2种语言著录文献}]
+\end{refsection}
+
+
+\section*{7 著录用符号}
+
+\begin{refsection}
+\nocite{GPS1988--}
+\nocite{李约瑟1991--}
+\nocite{武丽丽2008-8-9}
+\printbibliography[heading=subbibliography,title={符号.示例}]
+\end{refsection}
+
+\begin{refsection}
+\nocite{WHO1970--}
+\nocite{刘彻东1998-38-39}
+\nocite{邓一刚2006--}
+\printbibliography[heading=subbibliography,title={符号:示例}]
+\end{refsection}
+
+\begin{refsection}
+\nocite{罗杰斯2011-15-16}
+\nocite{袁训来2012-3219-3219}
+\printbibliography[heading=subbibliography,title={符号,示例}]
+\end{refsection}
+
+\begin{refsection}
+\nocite{编者1964--}
+\printbibliography[heading=subbibliography,title={符号;示例}]
+\end{refsection}
+
+\begin{refsection}
+\nocite{李约瑟1991--}
+\nocite{张忠智1997-33-34}
+\printbibliography[heading=subbibliography,title={符号//示例}]
+\end{refsection}
+
+\begin{refsection}
+\nocite{DUBAR2013--}
+\nocite{余建斌2013--}
+\nocite{Bawden2008--}
+\printbibliography[heading=subbibliography,title={符号()示例}]
+\end{refsection}
+
+\begin{refsection}
+\nocite{DUBAR2013--}
+\printbibliography[heading=subbibliography,title={符号{[}{]}示例}]
+\end{refsection}
+
+\begin{refsection}
+\nocite{Dowler1995-5-26}
+\nocite{DUBAR2013--}
+\printbibliography[heading=subbibliography,title={符号/示例}]
+\end{refsection}
+
+\begin{refsection}
+\nocite{Dowler1995-5-26}
+\nocite{DUBAR2013--}
+\printbibliography[heading=subbibliography,title={符号-示例}]
+\end{refsection}
+
+
+\section*{8.1 责任者}
+\subsection*{8.1.1 个人著者}
+\begin{refsection}
+注意其中“昂温”文献的情况，姓名是中英文混合的情况是比较特殊的，因为存在中文，所以判定为中文，但为了输出的形式保持英文中姓和名之间的空格，因此bib文件中的输入以\{\}进行保护。
+\nocite{李时珍--}
+\nocite{乔纳斯--}
+\nocite{昂温1988--}
+\nocite{GPS1988--}
+\nocite{丸山敏秋--}
+\nocite{凯西尔--}
+\nocite{Einstein--}
+\nocite{Williams-ellis--}
+\nocite{morgan--}
+\nocite{lijianning--a}
+\nocite{lijianning--b}
+\printbiblist[title={作者姓名示例},env=exampleenv]{authorexample}
+\end{refsection}
+
+\subsection*{8.1.2 多位著者}
+\begin{refsection}
+\nocite{钱学森--}
+\nocite{李四光--}
+\nocite{印森林--}
+\nocite{fordham--}
+\printbiblist[title={作者姓名示例},env=exampleenv]{authorexample}
+\end{refsection}
+
+\subsection*{8.1.3 缺省著者}
+\begin{refsection}
+\nocite{anon1981-628}
+\printbibliography[heading=subbibliography,title={作者姓名示例}]
+\end{refsection}
+
+\subsection*{8.1.4 团体著者}
+\begin{refsection}
+\nocite{中国科学院物理研究所--}
+\nocite{贵州省土穰普查办公室--}
+\nocite{AmericanChemicalSociety--}
+\nocite{StanfordUniversity--}
+\printbiblist[title={作者姓名示例},env=exampleenv]{authorexample}
+\end{refsection}
+
+\section*{8.2 题名}
+\begin{refsection}
+\nocite{王夫之的诠释--}
+\nocite{张子正蒙注--}
+\nocite{化学动力学和反应器原理--}
+\nocite{袖珍神学--}
+\nocite{北京师范大学学报--}
+\nocite{Gasesinsea--}
+\nocite{jmath--}
+\printbiblist[title={题名示例},env=exampleenv]{titlexamplea}
+\end{refsection}
+
+\subsection*{8.2.1 合订题名}
+\begin{refsection}
+\nocite{为人民服务--}
+\nocite{大趋势--}
+\printbiblist[title={题名示例},env=exampleenv]{titlexamplea}
+\end{refsection}
+
+
+\subsection*{8.2.3/8.2.4 标识符和其它题名信息}
+\begin{refsection}
+\nocite{地壳运动--}
+\nocite{三松堂--}
+\nocite{世界出版业--}
+\nocite{ECL集成电路--}
+\nocite{中国科学技术史--}
+\nocite{商鞅战秋菊--}
+\nocite{中国科学--}
+\nocite{信息与文献--}
+\nocite{中子反射--}
+\nocite{AsianPacificjournal--}
+\printbiblist[title={题名示例},env=exampleenv]{titlexample}
+\end{refsection}
+
+\section*{8.3 版本}
+\begin{refsection}
+\nocite{egbookeda--}
+\nocite{egbookedb--}
+\nocite{egbookedc--}
+\nocite{egbookedd--}
+\nocite{egbookede--}
+\printbiblist[title={版本示例},env=exampleenv]{editionexample}
+\end{refsection}
+
+\section*{8.4 出版项}
+\begin{refsection}
+\nocite{egbookpuba--}
+\nocite{egbookpubb--}
+\printbiblist[title={出版项示例},env=exampleenv]{pubexample}
+\end{refsection}
+
+\subsection*{8.4.1 出版地}
+\begin{refsection}
+\nocite{egbookpubaddressa--}
+\nocite{egbookpubaddressb--}
+\nocite{egbookpubaddressc--}
+\nocite{egbookpubaddressd--}
+\nocite{egbookpubaddresse--}
+\nocite{egbookpubaddressf--}
+\nocite{egbookpubaddressg--}
+\printbiblist[title={出版地示例},env=exampleenv]{pubexample}
+\end{refsection}
+
+
+\subsection*{8.4.2 出版者}
+\begin{refsection}
+\nocite{egbookpubpublishera--}
+\nocite{egbookpubpublisherb--}
+\nocite{egbookpubpublisherc--}
+\nocite{egbookpubpublisherd--}
+\nocite{egbookpubpublishere--}
+\nocite{egbookpubpublisherf--}
+\printbiblist[title={出版者示例},env=exampleenv]{pubexample}
+\end{refsection}
+
+\subsection*{8.4.3 出版日期}
+\begin{refsection}
+\nocite{egbookpubdatea--}
+\nocite{egbookpubdateb--}
+\nocite{egbookpubdatec--}
+\nocite{egbookpubdated--}
+\nocite{egbookpubdatee--}
+\nocite{egbookpubdatef--}
+\printbiblist[title={出版日期示例},env=exampleenv]{dateexample}
+\end{refsection}
+
+\subsection*{8.4.4 公告更新引用日期}
+\begin{refsection}
+\nocite{egbookpubdateg--}
+\printbiblist[title={公告更新引用日期示例},env=exampleenv]{dateexample}
+\end{refsection}
+
+\section*{8.5 页码}
+\begin{refsection}
+\nocite{曹凌2011-19-}
+\nocite{钱学森2001--}
+\nocite{冯友兰2008--}
+\nocite{李约瑟1991--}
+\nocite{DUBAR2013--}
+\printbibliography[heading=subbibliography,title=页码示例]
 \end{refsection}
 
 
@@ -127,8 +465,28 @@ Hopkinson2009--
 \begin{refsection}
 
 \nocite{刘乃安2000-17-18,Deverell2013-21-22}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\subsection*{8.8 析出文献}
+
+\subsection*{8.8.1 析出关系表示}
+\begin{refsection}
+
+\nocite{姚中秋2009--,关立哲2014--,TENOPIR1987--}
 
 \printbibliography[heading=subbibliography]
+\end{refsection}
+
+\subsection*{8.8.2-5 年卷期页码}
+\begin{refsection}
+
+\nocite{egdatevolnumpagea--,egdatevolnumpageb--,%
+egdatevolnumpagec--,egdatevolnumpaged--,%
+egdatevolnumpagee--,egdatevolnumpagef--,%
+egdatevolnumpageg--}
+
+\printbiblist[title={年卷期页码},env=exampleenv]{dvnpexample}
 \end{refsection}
 
 \subsection*{9.2 文献表}
@@ -136,7 +494,7 @@ Hopkinson2009--
 
 \nocite{Baker1995--,Chernik1982--,尼葛洛庞帝1996--,汪冰1997-16-16,杨宗英1996-24-29,Dowler1995-5-26}
 
-\printbibliography[heading=subbibliography]
+\printbibliography[heading=subbibliography,title={示例}]
 \end{refsection}
 
 \subsection*{10.1.1 一处引用一篇文献}
@@ -163,7 +521,7 @@ Hopkinson2009--
 裴伟提出\cite{Humphrey1971--,CRANE1972--}......
 
 莫拉德对稳定区的研究
-\cite{CRANE1972--,WEINSTEIN1974-745-772,KENNEDY1975-311-386}......
+\cite{CRANE1972--,Weinstein1974-745-772,KENNEDY1975-311-386}......
 
 
 \end{refsection}

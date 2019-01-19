@@ -1,0 +1,30 @@
+
+
+
+    \section{测试：中英文对照文献}
+    \begin{refsection}
+    \defbibentryset{张敏莉，等，2007}{张敏莉2007-500-503,Zhang2007-500-503}
+
+    双语文献对照测试，主要检查:条目集方法和关联条目方法是否能实现对照，
+    条目集方法是否使用默认样式，关联条目方法是否使用语言判断后选择的样式。
+
+
+    set动态方法\cite{张敏莉，等，2007};\par
+
+    %related动态方法\cite{易仕和2013--}(biblatex 3.7及以上版本可以使用多个stylesourcemap，进而可以动态的定义related)。
+
+    \printbibliography
+    \end{refsection}
+
+    \section{测试：中英文混合的文献表}
+    \begin{refsection}
+    中英文混合的文献表测试，主要检查多语言混合时的格式处理：
+
+    \cite{张敏莉2007-500-503}
+    \cite{丁文祥2000--,CALMS1965--,白书农1998-146-163,FOURNEY1971-17-38}
+
+    \printbibliography
+    \end{refsection}
+
+
+

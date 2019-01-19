@@ -1,10 +1,15 @@
+
+% !Mode:: "TeX:GBK"
+% 用于测试gb7714-2015、ay样式，对于GBK编码的兼容性
+% 用于测试gbcodegbk选项
+% 文档请使用pdflatex+biber编译
 \documentclass[twoside]{article}
     \usepackage{ctex}
     \usepackage{xcolor}
     \usepackage{hyperref}
     \usepackage{lipsum}
     %\usepackage[backend=biber,style=caspervector,gbk]{biblatex}
-    \usepackage[backend=biber,style=gb7714-2015ay,gbcodegbk=true]{biblatex}
+    \usepackage[backend=biber,style=gb7714-2015,gbcodegbk=true]{biblatex}
     \usepackage{filecontents}
     \begin{filecontents}{\jobname.bib}
     @Book{Yi2014--,
@@ -32,8 +37,8 @@
       Volume                   = {25},
       language                 = {chinese}
     }
-    
-    
+
+
     @BOOK{zbw2002--,
   AUTHOR = {张伯伟},
   LOCATION = {南京},
@@ -198,7 +203,7 @@
     %
 
     \begin{document}
-    \section{set title}
+    \section{测试gb7714-2015样式对于GBK编码文档的兼容性}
 
 	文献\nocite{*}
 

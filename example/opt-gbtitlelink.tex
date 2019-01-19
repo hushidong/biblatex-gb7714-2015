@@ -1,9 +1,13 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015样式，当文献存在url时对文献标题做超链接
+% 测试gbtitlelink选项
 \documentclass[twoside]{article}
 \usepackage{ctex}
 \usepackage{fontspec}
 %\setmainfont{CMU Serif}
 \usepackage{xcolor}
-\usepackage{hyperref}
+\usepackage[colorlinks=true]{hyperref}
 \usepackage{lipsum}
 \usepackage[top=10pt,bottom=10pt,left=10pt,right=10pt]{geometry}
 \usepackage[backend=biber,style=gb7714-2015,gbpub=false,gbtitlelink=true]{biblatex}
@@ -42,10 +46,10 @@
     %\renewcommand{\bibtitlefont}{\kaishu}
 
     \begin{document}
-    \section{set title}
-    created with biblatex v\versionofbiblatex, last revised at \today;\\ \hspace*{1.5em} Style Files (gb7714-2015*.*) have version number: \versionofgbtstyle.
+    \section{测试gb7714-2015样式当文献存在url时对文献标题做超链接}
+    created with biblatex v\versionofbiblatex, last revised at 2019-01-19;\\ \hspace*{1.5em} Style Files (gb7714-2015*.*) have version number: \versionofgbtstyle.
 
-	refs\nocite{*}
+	\nocite{*}
 
     \printbibliography
 

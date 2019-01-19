@@ -1,0 +1,141 @@
+
+
+    \section{测试：标注命令}
+    \begin{refsection}
+     不带页码的引用(上标，方括号包围):
+     \cite{FOURNEY1971-17-38}\cite{wang2006another}
+
+     不带页码的引用(非上标，方括号包围):
+     \parencite{FOURNEY1971-17-38}\parencite{wang2006another}
+     \upcite{FOURNEY1971-17-38}\upcite{wang2006another}
+
+     带页码的引用:
+     \cite[见][49页]{FOURNEY1971-17-38} \parencite[见][49页]{wang2006another}
+     \pagescite{FOURNEY1971-17-38}\pagescite[150]{wang2006another}
+
+     带页码的引用，使用pagescite命令。
+\pagescite{Peebles2001-100-100}\pagescite[][201-301]{Peebles2001-100-100}
+\parencite[见][49页]{Miroslav2004--}\cite[见][49页]{蔡敏2006--}
+
+     同时输出作者和顺序编码的三种引用方式：
+
+    （a）直接的方法：见\citeauthor{FOURNEY1971-17-38}\cite{FOURNEY1971-17-38}, \citeauthor{wang2006another}\cite{wang2006another}
+
+    （b）定义新的标注命令：见\authornumcite{FOURNEY1971-17-38,wang2006another}
+
+    （c）用textcite但没有上标：见\textcite{FOURNEY1971-17-38,wang2006another}
+
+
+作者年制文中已有作者只需给出年份和页码的引用:
+见赵耀东\yearpagescite[][205]{FOURNEY1971-17-38}和Simon\yearpagescite[][15]{wang2006another}。
+
+作者年制文中已有作者只需给出年份的引用，三种方式:
+
+见赵耀东\yearcite{FOURNEY1971-17-38}，赵耀东\yearcite{wang2006another}
+
+见赵耀东(\cite*{FOURNEY1971-17-38})，赵耀东(\cite*{wang2006another})
+
+见赵耀东(\citeyear{FOURNEY1971-17-38})，赵耀东(\citeyear{wang2006another})
+
+作者年制文中无作者需要标注命令给出作者作为主语的引用：
+见\textcite{FOURNEY1971-17-38}，\textcite{wang2006another}
+
+     在页脚中引用和打印文献表:
+
+     \footnote{在脚注中引用\footcite{FOURNEY1971-17-38}} \footfullcite{FOURNEY1971-17-38}
+     \footnote{在脚注中引用\footcite{wang2006another}} \footfullcite{wang2006another}
+
+     页脚中引用和打印文献表\footnote{参考文献在脚注中引用\footcite{赵学功2001--}}  \footfullcite{赵学功2001--}
+
+    \printbibliography
+    \end{refsection}
+
+    \section{测试：顺序编码制引用多篇文献的标注}
+    \begin{refsection}
+     GB/T 7714-2015 标准 10.1.1 节，引用单篇文献：
+
+    文献\cite{徐伟康2010对}提到。文献\cite{FOURNEY1971-17-38}提到。(use cite)\par
+    文献\parencite{徐伟康2010对}提到。文献\parencite{FOURNEY1971-17-38}提到。(use parencite)\par
+    \textcite{徐伟康2010对}提到。\textcite{FOURNEY1971-17-38}提到。(use textcite)\par
+    \authornumcite{徐伟康2010对}提到。\authornumcite{FOURNEY1971-17-38}提到。
+    (use authornumcite)\par
+    \textcite{徐伟康2010对}提到。(use textcite)
+
+\bigskip
+    GB/T 7714-2015 标准 10.1.2 节，引用多篇文献：
+
+    文献\cite{杨光2015经济波动,Yi2013--}提到。(use cite)\par
+    文献\parencite{杨光2015经济波动,Yi2013--}提到。(use parencite)\par
+    \textcite{杨光2015经济波动,Yi2013--}提到。(use textcite)\par
+    \authornumcite{杨光2015经济波动,Yi2013--}提到。(use authornumcite)\par
+
+
+\bigskip
+    GB/T 7714-2015 标准 10.1.3 节，多次引用文献：
+
+    文献\pagescite[16]{杨光2015经济波动}提到。
+    文献\pagescite[16]{徐伟康2010对}提到。
+    文献\pagescite[16]{Yi2013--}提到。
+    文献\pagescite[16]{FOURNEY1971-17-38}提到。(use pagescite)\par
+    \authornumcite{杨光2015经济波动}提到。
+    \authornumcite{徐伟康2010对}提到。
+    \authornumcite{Yi2013--}提到。
+    \authornumcite{FOURNEY1971-17-38}提到。(use authornumcite)\par
+
+\bigskip
+    其它用法：
+
+    文献\cite[见][49页]{杨光2015经济波动}。
+    文献\parencite[见][49页]{杨光2015经济波动}。
+    见\citeauthor{杨光2015经济波动}\cite{杨光2015经济波动}。
+    文献\footnote{脚注中引用文献\footcite{杨光2015经济波动}。}。
+    文献\footfullcite{杨光2015经济波动}。
+
+
+    \printbibliography
+    \end{refsection}
+
+    \section{测试：著者年份制引用多篇文献的标注}
+    \begin{refsection}
+        GB/T 7714-2015 标准 10.2.1 节，引用单篇文献：
+
+    文献\cite{徐伟康2010对}提到。文献\cite{FOURNEY1971-17-38}提到。(use cite)\par
+    文献\parencite{徐伟康2010对}提到。文献\parencite{FOURNEY1971-17-38}提到。(use parencite)\par
+    徐伟康\yearcite{徐伟康2010对}提到。FOURNEY\yearcite[18]{FOURNEY1971-17-38}提到。(use yearcite)\par
+    \textcite{徐伟康2010对}提到。\textcite{FOURNEY1971-17-38}提到。(use textcite)\par
+
+\bigskip
+    GB/T 7714-2015 标准 10.2.2 节，引用单篇文献(多个作者的情况)：
+
+    文献\cite{杨光2015经济波动}提到。文献\cite{Yi2013--}提到。(use cite)\par
+    文献\parencite{杨光2015经济波动}提到。文献\parencite{Yi2013--}提到。(use parencite)\par
+    杨光\ 等\yearcite{杨光2015经济波动}提到。Yi et al. \yearcite{Yi2013--}提到。(use yearcite)\par
+    \textcite{杨光2015经济波动}提到。\textcite{Yi2013--}提到。(use textcite)\par
+
+
+\bigskip
+    GB/T 7714-2015 标准 10.2.4 节，多次引用文献：
+
+    文献\pagescite[16]{杨光2015经济波动}提到。
+    文献\pagescite[16]{徐伟康2010对}提到。
+    文献\pagescite[16]{Yi2013--}提到。
+    文献\pagescite[16]{FOURNEY1971-17-38}提到。(use pagescite)\par
+    杨光\yearpagescite[17]{杨光2015经济波动}提到。
+    徐伟康\yearpagescite[16]{徐伟康2010对}提到。Yi\yearpagescite[17]{Yi2013--}提到。FOURNEY\yearpagescite[17]{FOURNEY1971-17-38}提到。(use yearpagescite)\par
+
+\bigskip
+    其它用法：
+
+    文献\cite[见][49页]{杨光2015经济波动}。
+    文献\parencite[见][49页]{杨光2015经济波动}。
+    见赵耀东(\cite*{杨光2015经济波动})。
+    见赵耀东(\citeyear{杨光2015经济波动})。
+    文献\footnote{脚注中引用文献\footcite{杨光2015经济波动}。}。
+    文献\footfullcite{杨光2015经济波动}。
+
+
+    \printbibliography
+    \end{refsection}
+
+
+

@@ -2,13 +2,16 @@
 
 @echo off
 
+title %date% %time% makefile
 
 :: compile the tex file
 
-call makeclear
 
-cd 
+del /q *.aux *.bbl *.blg *.log *.out *.toc *.bcf *.xml *.synctex *.nlo *.nls *.bak *.ind *.idx *.ilg *.lof *.lot *.ent-x *.tmp *.ltx *.los *.lol *.loc *.listing *.gz *.synctex(busy)
 
+
+
+del /q *.nav *.snm *.vrb *.fls *.xdv *.fdb_latexmk
 
 ::pause
 
@@ -22,17 +25,6 @@ xelatex.exe --synctex=-1 biblatex-gb7714-2015.tex
 
 ::to do it again for backref 
 xelatex.exe --synctex=-1 biblatex-gb7714-2015.tex
-
-cd example
-
-call makeclear
-
-del *.bbx /Q
-del *.cbx /Q
-del *.def /Q
-del *.pdf /Q
-
-cd ..
 
 
 :: clear aux files

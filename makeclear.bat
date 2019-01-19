@@ -19,9 +19,6 @@ del *.cbx /Q
 del *.def /Q
 
 
-del *.pdf /Q
-
-
 del *.bib /Q
 
 cd ..
@@ -36,9 +33,6 @@ del *.bbx /Q
 del *.cbx /Q
 
 del *.def /Q
-
-
-del *.pdf /Q
 
 del *.bib /Q
 

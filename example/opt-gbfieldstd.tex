@@ -1,0 +1,40 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015样式，是否通过一个gbfiledstd选项将
+% 一些文献内容项格式还原为biblatex标准样式的格式
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage{geometry}
+\geometry{paperwidth=21cm,paperheight=29cm,top=2cm, bottom=2cm, left=2cm,right=2cm}
+\usepackage{xcolor}
+\usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=blue]{hyperref}
+\usepackage[backend=biber,style=gb7714-2015,gbfieldstd=true]{biblatex}
+\addbibresource[location=local]{example.bib}
+%\renewcommand{\bibfont}{\zihao{5}}
+%\setlength{\bibitemsep}{0ex}
+%\setlength{\bibnamesep}{0ex}
+%\setlength{\bibinitsep}{0ex}
+
+\iftoggle{iftleight}{\defdoublelangentry{易仕和2013--}{Yi2013--}}{}
+\iftoggle{iftlnine}{\defdoublelangentry{易仕和2013--}{Yi2013--}}{}
+\iftoggle{iftlatest}{\defdoublelangentry{易仕和2013--}{Yi2013--}}{}
+
+\begin{document}
+
+\section{测试gb7714-2015样式通过gbfiledstd选项还原默认格式}
+\defbibentryset{张敏莉，等，2007}{张敏莉2007-500-503,Zhang2007-500-503}
+双语文献:set动态方法\cite{张敏莉，等，2007};
+\iftoggle{iftleight}{related动态方法\cite{易仕和2013--}}{}
+\iftoggle{iftlnine}{related动态方法\cite{易仕和2013--}}{}
+\iftoggle{iftlatest}{related动态方法\cite{易仕和2013--}}{}
+
+文献\cite{王夫之1845--}\cite{陈建军2010-93-93};
+文献\parencite{张田勤2000--}\parencite{吴云芳2003--};
+文献\pagescite[][300]{汤万金2013-09-30--}\pagescite[][100-107]{张凯军2012-04-05--};
+文献:萧钰\yearpagescite{萧钰2001--}，
+国家环境保护局科技标准司\yearpagescite{国家环境保护局科技标准司1996-2-3};
+其它\cite{Calkin2011-8-9,CRAWFPRD1995--,
+Babu2014--,CALMS1965--,DESMARAIS1992-605-609}
+
+\printbibliography[heading=subbibintoc,title=【参考文献】]
+\end{document} 

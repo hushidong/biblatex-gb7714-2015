@@ -1,9 +1,13 @@
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015样式，是否支持多语言混合的文献表
+% 测试不使用利用babel进行本地化字符串自动切换的情况
+% 测试不使用biblatex的autolang选项。
 \documentclass[twoside]{article}
 \usepackage{ctex}
 %\usepackage[english,russian,french]{babel}
 \usepackage{fontspec}
-
 \setmainfont{CMU Serif}
+ \setCJKmainfont {SourceHanSerifSC-Regular.otf}
 \usepackage{xcolor}
 \usepackage{hyperref}
 \usepackage{lipsum}
@@ -70,20 +74,71 @@
   TITLE = {해저 저질과 환경 하중을 고려한 침몰 선체 인양 시뮬레이션},
 }
 
+@book{kereanrefa,
+  AUTHOR = {김세훈 and others},
+  TITLE = { 도서판및특서진흥업 개정안 연구},
+  DATE = {2003},
+  address={서울},
+  PAGES = {15},
+  publisher = {한국운화관팡정책연구원},
+}
+%%김세훈, 외.   도서판및특서진흥업 개정안 연구〔M〕, 서울; 한국운화관팡정책연구원,2003: 15.
+
+
+@book{kereanrefb,
+  AUTHOR = {이냉목 },
+  TITLE = { 도서관꺾규총람: 세 1 권},
+  DATE = {2005},
+  address={서울},
+  PAGES = {67-68},
+  publisher = {구미무역 출판부},
+}
+%%이냉목     도서관꺾규총람: 세 1 권[M〕. 서울: 구미무역 출판부,2005: 67-68.
+%%
+
+@article{kereanrefc,
+  DATE = {2007},
+  volume={48},
+  number={7},
+  PAGES = {11-12},
+  journaltitle={ 圖書館文化},
+  TITLE = {도서관 정보정책위원회 설립식 및 도서관 정보정책기획단신성},
+}
+
+%%도서관 정보정책위원회 설립식 및 도서관 정보정책기획단신성.  圖書館文化,2007 ,48(7): 11-12.
+
+@book{japaneserefc,
+  AUTHOR = {図書館用語辞典編集委員会},
+  TITLE = { 最新図書館用語大辞典},
+  DATE = {2004},
+  address={東京},
+  PAGES = {154},
+  publisher = {柏書房株式会社},
+}
+%%
+%%図書館用語辞典編集委員会．最新図書館用語大辞典[M］.東京：柏書房株式会社，2004:154.
+%%
+
+@article{russianrefc,
+ author={Кочекоs, А Я},
+  TITLE = {Молибден-медно-эолотопорфиооое месторождение Рябиноосе},
+  DATE = {1993},
+  number={7},
+  PAGES = {50-58-12},
+  journaltitle={ Отечестsенная гелогия}
+}
+%%Кочекоs А Я. Молибден-медно-эолотопорфиооое месторождение Рябиноосе[J/ОL]. ,1993(7):50-58
+
+
 \end{filecontents}
     \addbibresource{\jobname.bib}
     %
-    \makeatletter
-    \def\versionofgbtstyle{2018/04/03 v1.0k}
-    \def\versionofbiblatex{\abx@version}
-    \makeatother
-    %\renewcommand{\bibtitlefont}{\kaishu}
 
     \begin{document}
-    \section{set title}
-    created with biblatex v\versionofbiblatex, last revised at \today;\\ \hspace*{1.5em} Style Files (gb7714-2015*.*) have version number: \versionofgbtstyle.
+    \section{测试gb7714-2015样式多语言混合文献表：不使用babel}
+    created with biblatex v\versionofbiblatex, last revised at 2019-01-19;\\ \hspace*{1.5em} Style Files (gb7714-2015*.*) have version number: \versionofgbtstyle.
 
-	refs\nocite{*}
+	\nocite{*}
 
     \printbibliography
 

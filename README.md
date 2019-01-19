@@ -1,4 +1,4 @@
-<b>Date of last change: 2018-12-22 to version v1.0o</b>
+<b>Date of last change: 2019-01-19 to version v1.0p</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -846,6 +846,7 @@ biber -l zh__stroke jobname
 * 2018/08/14 v1.0m,CTAN
 * 2018/11/04 v1.0n
 * 2018/12/22 v1.0o
+* 2019/01/19 v1.0p
 
 ---------------------------------------------------------
 ## Update history:

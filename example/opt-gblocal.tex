@@ -1,0 +1,172 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015样式，能否对本地化字符串做强制语言的设置
+% 或者不同语言的设置
+% 测试标注和文献表中的不同设置
+% 测试gblocal及相关选项
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{xcolor}
+\usepackage{toolbox}
+\usepackage[colorlinks]{hyperref}
+\usepackage{lipsum}
+\usepackage[paperwidth=15cm,paperheight=11.5cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
+\usepackage{xltxtra,mflogo,texnames}
+%\usepackage[backend=biber,style=gb7714-2015,gbnamefmt=givenahead,
+%gbpub=false,gbbiblabel=box,gbtitlelink=true]{biblatex}%sorting=nyt
+\usepackage[backend=biber,style=gb7714-2015ay,gbnamefmt=lowercase,maxcitenames=2,mincitenames=1,
+gblocal=english,sortcites,sorting=gbyntd]{biblatex}
+%默认的中英文区分的设置gblocal=gb7714-2015
+%全部用中文的字符串，则为gblocal=chinese
+%全部用英文的字符串，则为gblocal=english
+\DefineBibliographyStrings{english}{
+        andincite         = {and},
+        andincitecn       = {和},
+        andothersincitecn = {等},
+        %andothersincite   = {等{\adddot}},%adddot才能避开标点追踪
+        %andothersincite   = {等.},%
+        andothersincite   = {et al{\adddot}},%adddot才能避开标点追踪
+}
+\renewcommand{\bibfont}{\small}
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+
+@Book{易仕和2013--,
+  Title                    = {超声速和高超声速喷管设计},
+  Address                  = {北京},
+  Author                   = {易仕和 and 赵玉新 and 何霖 and 张敏莉},
+  Publisher                = {国防工业出版社},
+  Year                     = {2013}
+}
+
+@Book{Yi2013--,
+  Title                    = {Supersonic and hypersonic nozzle design},
+  Address                  = {Beijing},
+  Author                   = {Yi, Shi He and Zhao, Yu Xin and He, Lin and Zhang, Min Li},
+  Publisher                = {National Defense Industry Press},
+  Year                     = {2013}
+}
+
+@Article{张敏莉2007-500-503,
+  Title                    = {超声速短化喷管的设计和试验研究},
+  Author                   = {张敏莉 and 易仕和 and 赵玉新},
+  Journal                  = {空气动力学报},
+  Number                   = {4},
+  Pages                    = {500-503},
+  Volume                   = {25},
+  Year                     = {2007}
+}
+
+@Article{Zhang2007-500-503,
+  Title                    = {The design and experimental investigations of supersonic length shorted nozzle},
+  Author                   = {Zhang, Min-li and Yi, Shi-he and Zhao, Yu-xin},
+  Journal                  = {ACTA AERODYNAMICA SINICA},
+  Number                   = {4},
+  Pages                    = {500-503},
+  Volume                   = {25},
+  Year                     = {2007}
+}
+
+@Book{Peebles2001-100-100,
+  Title                    = {Probability, random variable, and random signal Principles and \LaTeX{}},
+  Address                  = {New York},
+  Author                   = {von Peebles, Jr., P. Z.},
+  Edition                  = {4},
+  Pages                    = {100},
+  Publisher                = {McGraw-Hill},
+  Year                     = {2001}
+}
+
+@Book{蔡敏2006--,
+  Title                    = {UML基础和Rose建模教程},
+  Address                  = {北京},
+  Author                   = {蔡敏 and 徐慧慧 and 黄柄强},
+  Publisher                = {人民邮电出版社},
+  Year                     = {2006},
+  Month                    = {1}
+}
+
+@Book{Miroslav2004--,
+  Title                    = {信号处理滤波器设计-基于matlab和mathematica的设计方法},
+  Address                  = {北京},
+  Author                   = {Miroslav, D. L. and Dejan, V. T. and Brian, L. E.},
+  Publisher                = {电子工业出版社},
+  Translator               = {朱义胜 and 董辉},
+  Year                     = {2004},
+  Month                    = {1}
+}
+
+@Book{赵学功2001--,
+  Title                    = {当代美国外交},
+  Author                   = {赵学功},
+  Publisher                = {社会科学文献出版社},
+  Url                      = {http://www.baidu.com},
+  Urldate                  = {2014-06-11},
+  Year                     = {2001}
+}
+
+@patent{IEEEexample:frenchpatreq,
+  author        = "F. Kowalik and M. Isard",
+  title         = "Estimateur d'un D{\'e}faut de Fonctionnement
+                   d'un Modulateur en Quadrature et {\'E}tage de Modulation
+                   l'Utilisant",
+  language      = "french",
+  type          = "French Patent Request",
+  number        = "9500261",
+  year          = "1995-01-11"
+}
+
+@ARTICLE{吕捷2015cpi,
+  AUTHOR = {吕捷 and 王高望},
+  DATE = {2015},
+  JOURNALTITLE = {经济研究},
+  KEYWORDS = {吕捷2015cpi},
+  PAGES = {011},
+  TITLE = {CPI 与 PPI “背离” 的结构性解释},
+  VOLUME = {4},
+}
+
+@patent{IEEEexample:uspat,
+  author        = "Ronald E. Sorace and Victor S. Reinhardt and
+                   Steven A. Vaughn",
+  holder        = "Hughes Aircraft Company",
+  location      = "Los Angeles, CA",
+  title         = "High-Speed Digital-to-{RF} Converter",
+  type          = "patentus",
+  number        = "5668842",
+  yearfiled     = "1995-02-28",
+  year          = "1997-09-16",
+}
+
+@ARTICLE{杨光2015经济波动,
+  AUTHOR = {杨光 and 孙浦阳 and 龚刚},
+  DATE = {2015},
+  JOURNALTITLE = {经济研究},
+  KEYWORDS = {杨光2015经济波动},
+  NUMBER = {2},
+  PAGES = {47--60},
+  TITLE = {经济波动, 成本约束与资源配置},
+  VOLUME = {50},
+}
+
+
+\end{filecontents}
+
+\addbibresource{\jobname.bib}
+
+\begin{document}
+
+\section{测试gb7714-2015样式利用gblocal选择本地化字符串设置方式}
+
+\small
+
+\cite{IEEEexample:frenchpatreq,吕捷2015cpi,IEEEexample:uspat,杨光2015经济波动}
+
+\cite{Miroslav2004--,蔡敏2006--,赵学功2001--,易仕和2013--}
+
+\cite{Peebles2001-100-100,Yi2013--}
+
+\printbibliography[heading=subbibliography]
+
+
+\end{document} 

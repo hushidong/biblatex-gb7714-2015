@@ -11,7 +11,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2018/12/22 v1.0o}
+\def\versionofgbtstyle{2019/01/19 v1.0p}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015.bbx}[\versionofgbtstyle biblatex bibliography style]
 \RequireBiber[3]%显式指定用biber后端
@@ -20,7 +20,6 @@
 %   加载标准样式
 %=====================================================================
 \RequireBibliographyStyle{numeric-comp}
-\RequireBibliographyStyle{standard}
 \RequirePackage{xstring}%解决texlive2015的biblatex3.0不加载xstring包的问题
 
 
@@ -70,7 +69,7 @@
     \providetoggle{ifCJKforgbt}
     \def\testCJKfirst#1{%
         \iffieldundef{#1}{\togglefalse{ifCJKforgbt}}{%
-        \iffieldequalstr{#1}{cn}{\toggletrue{ifCJKforgbt}}{\togglefalse{ifCJKforgbt}}}}
+        \iffieldequalstr{#1}{chinese}{\toggletrue{ifCJKforgbt}}{\togglefalse{ifCJKforgbt}}}}
 
     %
     %   2个卷的解析函数，用于连续出版物
@@ -203,6 +202,14 @@
 %=====================================================================
 %   设置宏包选项
 %=====================================================================
+    %
+    %   增加一个选项，用于控制gb7714的使用范围，即英文文献和中文文献使用不同的样式
+    %   20180814，v1.0m，hzz
+    %   原理方法:
+    %   只为兼容性考虑不做任何处理
+    \DeclareBibliographyOption{gbstyle}[true]{%biblatex低版本
+      }
+
     %
     %   增加一个控制是否输出文献类型和载体标识的选项
     %
@@ -349,6 +356,8 @@
       date    = year,  %日期仅写到年
       maxbibnames     = 3,%设置名字最大数量
       minbibnames     = 3, %设置缩减后的名字最小数量
+      maxitems     = 1,%设置列表最大数量
+      minitems     = 1, %设置缩减后的列表最小数量
       isbn=false,
     }
 
@@ -420,7 +429,7 @@
     }
     %\ExecuteBibliographyOptions{gblocal} %默认值已经通过两个相关选项设置
 
-
+    %
     %   增加序号标签格式处理选项
     %   v1.0l，20180623，hzz
     %
@@ -549,6 +558,10 @@
     \NewBibliographyString{andothersincitecn}
     \NewBibliographyString{andothersincite}
     \NewBibliographyString{andcn}
+    \NewBibliographyString{andothersjp}
+    \NewBibliographyString{andotherskr}
+    \NewBibliographyString{andjp}
+    \NewBibliographyString{andkr}
     \NewBibliographyString{andincitecn}
     \NewBibliographyString{andincite}
     \NewBibliographyString{volumecn}
@@ -579,115 +592,183 @@
         in={in\intitlepunct},
         volumecn={\str@volumecn},
         numbercn={\str@numbercn},
-        serialcn={\str@serialcn}
-    }
-
+        serialcn={\str@serialcn},
+       andothersjp={他},
+       andotherskr={외},
+       andjp={和},
+       andkr={和},
+}
 
 
 %=====================================================================
-%   动态数据修改，修改输入的源文件数据，用于中文判断等
+%   动态数据修改
 %=====================================================================
 %
-%   修改输入的参考文献数据，源文件层的操作
+%   各层次的数据映射和动态修改
 %
-%   原理方法:增加文献标识符如[M],[J]等
-%   把作者和译者信息准确的记录到userf，usere中，用于后面判断是否是cjk字符。
-%   注意:这里用userf，usere而不是namee，namef，是因为只有把name列表转成域，才能有效读取姓名中的字符，
-%   如果用namee，namef，name信息会自动解析，所以就不能为cjk判断提供需要的信息
-%   注意\DeclareSourcemap命令对于biblatex3.11以下版本只能出现一次，3.11版开始支持多个
+%   原理方法:
+%   1. 进行语言包括中英文判断，并设置和记录，比如记录到userf，usere中
+%   2. 增加文献标识符如[M],[J]等，对一些容易混淆的域进行设置以增强兼容性
+%   3. \DeclareSourcemap命令对于biblatex3.11以下版本只能出现一次，3.11版开始支持多个
+%   4. \DeclarestyleSourcemap在biblatex v3.7版开始可以支持出现多次
+%   5. 把作者和译者信息准确的记录到userf，usere中，用于后面判断是否是cjk字符。
+%      注意:这里用userf，usere而不是namee，namef，是因为只有把name列表转成域，才能有效读取姓名中的字符，
+%      如果用namee，namef，name信息会自动解析，所以就不能为cjk判断提供需要的信息
+%
+%   不同的文献类型使用相同的驱动输出可以有5种方法：
+%   1. 是数据源层的映射，将其它类型转换为某一要使用驱动的类型
+%   2. 是样式层映射，也是将其它类型转换为某一要使用驱动的类型
+%   3. 是驱动层映射，也是将其它类型转换为某一要使用驱动的类型
+%   4. 定义驱动类型别名DeclareBibliographyAlias，将其它类型定义为某一要使用驱动的类型的别名
+%      驱动别名定义本质上是做了驱动层映射
+%   5. 直接定义不同的类型的驱动，但驱动内容相同。
+%
+%   关于数据映射和驱动使用的考虑如下：
+%   1. 为避免利用biber输出bib文件时的数据变动，尽量不在数据源层映射做类型转换
+%   2. 为减少代码量，尽量少做内容相同的不同类型驱动
+%   3. 因此类型相关的处理主要在样式层映射、驱动层映射、驱动别名
+%   4. 由于biblatex默认做的驱动别名处理可能增加一些信息比如masterthesis转thesis时增加的type
+%      可以在样式层映射做某些需要避免这种默认处置的转换
+%   5. 当没有避免默认行为的需求时，全部采用驱动别名的方式处理，等价于驱动层的映射
+%
+%   文献类型和驱动考虑如下：
+%   1. 连续出版物及析出文献有其特殊性，因此考虑两类periodical和article
+%      newpaper映射为article，并以note域做区分特殊处理
+%   2. 专著和专著中的析出文献是主要的类型，因此考虑book和inbook
+%      standard映射为book或inbook，并以note域做区分特殊处理
+%      collection和proceedings基本与book类似，因此做book驱动别名处理
+%      incollection和inproceedings基本与inbook类似，因此做inbook驱动别名处理
+%   3. 专利类型有其特殊性，考虑patent类型
+%   4. 电子资源类型有其特殊性，考虑online类型
+%   5. 报告类型与book有点类似，出版项处理与book一样，但有时又要有修改和更新日期
+%      因此考虑用一种类型来输出，使用report类型
+%   6. 手册/学位论文等类型与book有点类似，但对于出版项处理时，有缺省时，直接省略，
+%      同时有version和edition的区别，因此考虑用一种类型来输出，使用manual类型
+%   7. 包括报告，学位论文在内的其它所有的类型，都做一个判断，当没有出版项时，
+%      且存在网址信息时，将其转换为online类型输出，否则都做为manual类型输出。
+
 \DeclareSourcemap{
 \maps[datatype=bibtex]{%
+        \map{
+        \pernottype{inbook}
+        \pernottype{inproceedings}
+        \pernottype{incollection}
+        \step[notfield=author]%当author不存在，将editor复制给author
+        \step[fieldsource=editor,fieldtarget=author]%并删除editor
+        }
+         \map{
+         \pernottype{inbook}
+        \pernottype{inproceedings}
+        \pernottype{incollection}
+        \step[notfield=author]%当author不存在，将translator复制给author
+        \step[fieldsource=translator,fieldtarget=author]%并删除translator
+        }
+         \map{
+        \step[notfield=address]%当address和location同步
+        \step[fieldsource=location,final]
+        \step[fieldset=address,origfieldval]
+        }
+        \map{
+        \step[notfield=location]%当address和location同步
+        \step[fieldsource=address,final]
+        \step[fieldset=location,origfieldval]
+        }
         \map[overwrite]{%用于处理zotero从cnki导出中文文献姓名中存在逗号的情况
                 \step[fieldsource={author}, match=\regexp{([\x{2FF0}-\x{9FA5}])\,\s*}, replace=\regexp{$1}]
-                }
-        \map{%
+                }%\perdatasource{examples.bib}
+        \map{%处理在bib文件用mark标记文献类型标识符的情况
             \step[fieldsource=mark,final]
             \step[fieldset=usera, origfieldval]
             }
-        \map{%
+        \map{%处理在bib文件中直接给出文献的姓名格式为lowercase的情况
             \step[fieldsource=nameformat,match=lowercase,final]
             \step[fieldset=namefmtid,fieldvalue={1}]
             }
-        \map{%
+        \map{%处理在bib文件中直接给出文献的姓名格式为givenahead的情况
             \step[fieldsource=nameformat,match=givenahead,final]
             \step[fieldset=namefmtid,fieldvalue={2}]
             }
-        \map{%
+        \map{%处理在bib文件中直接给出文献的姓名格式为familyahead的情况
             \step[fieldsource=nameformat,match=familyahead,final]
             \step[fieldset=namefmtid,fieldvalue={3}]
             }
-        \map{%
+        \map{%处理在bib文件中直接给出文献的姓名格式为pinyin的情况
             \step[fieldsource=nameformat,match=pinyin,final]
             \step[fieldset=namefmtid,fieldvalue={4}]
             }
-        \map{%
-            %\perdatasource{examples.bib}
+        \map{%根据article确定文献类型标识符
             \pertype{article}
             \step[fieldset=usera, fieldvalue={J}]
             }
-        \map{
+        \map{%根据periodical确定文献类型标识符
             \pertype{periodical}
             \step[fieldset=usera, fieldvalue={J}]
-            \step[fieldsource=author] %有时会把author和editor混淆，处理后避免该问题
+            \step[fieldsource=author] %有时会把author和editor混淆，处理后使用editor
             \step[fieldset=editor, origfieldval]
-            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后避免该问题
+            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后使用institution
             \step[fieldset=institution, origfieldval]
             }
-        \map{
-            \pertype{newspaper}%增加一个新闻报纸的类型newspaper
-            \step[fieldset=usera, fieldvalue={N}]%因为没有专门的驱动，这句的目的是定义一个usera域，方便映射为article后判断
-            \step[fieldset=note, fieldvalue=news]
+        \map{%根据增加一个新闻报纸的类型newspaper确定文献类型标识符
+            \pertype{newspaper}
+            \step[fieldset=usera, fieldvalue={N}]
+            \step[fieldset=note, fieldvalue=news]%因为没有专门的驱动，记录note方便映射为article后判断
             }
-        \map{
-            \pertype{database}%对应增加的一个数据库类型database
-            \step[fieldset=usera, fieldvalue={DB}]%没有专门的驱动，定义一个usera域，方便映射后使用
-            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后避免该问题
+        \map{%对应增加的一个数据库类型database确定文献类型标识符
+            \pertype{database}
+            \step[fieldset=usera, fieldvalue={DB}]
+            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后使用institution
             \step[fieldset=institution, origfieldval]
             }
-        \map{
-            \pertype{dataset}%对应增加的一个数据集类型dataset
-            \step[fieldset=usera, fieldvalue={DS}]%没有专门的驱动，定义一个usera域，方便映射后使用
-            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后避免该问题
+        \map{%对应增加的一个数据集类型dataset确定文献类型标识符
+            \pertype{dataset}
+            \step[fieldset=usera, fieldvalue={DS}]%
+            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后使用institution
             \step[fieldset=institution, origfieldval]
             }
-        \map{
-            \pertype{software}%对应增加的一个软件类型software
-            \step[fieldset=usera, fieldvalue={CP}]%没有专门的驱动，定义一个usera域，方便映射后使用
-            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后避免该问题
+        \map{%对应增加的一个软件类型software确定文献类型标识符
+            \pertype{software}
+            \step[fieldset=usera, fieldvalue={CP}]
+            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后使用institution
             \step[fieldset=institution, origfieldval]
             }
-        \map{
-            \pertype{map}%对应增加的一个舆图类型map
-            \step[fieldset=usera, fieldvalue={CM}]%没有专门的驱动，定义一个usera域，方便映射后使用
-            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后避免该问题
+        \map{%对应增加的一个舆图类型map确定文献类型标识符
+            \pertype{map}
+            \step[fieldset=usera, fieldvalue={CM}]%
+            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后使用institution
             \step[fieldset=institution, origfieldval]
             }
-        \map{
-            \pertype{archive}%对应增加的一个档案类型archive
-            \step[fieldset=usera, fieldvalue={A}]%没有专门的驱动，定义一个usera域，方便映射后使用
-            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后避免该问题
+        \map{%对应增加的一个档案类型archive确定文献类型标识符
+            \pertype{archive}
+            \step[fieldset=usera, fieldvalue={A}]
+            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后使用institution
             \step[fieldset=institution, origfieldval]
             }
-        \map{
-            \pertype{misc}%当misc类型带有网址时，将其转换为online类型
+        \map{%因为misc类型本身就是没有类型，而不像其它文献有明确的类型，所以
+             %当misc类型带有网址时，直接将其转换为online类型
+            \pertype{misc}
             \step[fieldsource=url,final]
             \step[typesource=misc,typetarget=online]
             }
-        \map{
-            \pertype{misc}%对应增加的一个备选类型misc
-            \step[fieldset=usera, fieldvalue={Z}]%没有专门的驱动，定义一个usera域，方便映射后使用
+        \map{%对应增加的一个备选类型misc确定文献类型标识符
+            \pertype{misc}
+            \step[fieldset=usera, fieldvalue={Z}]%
             }
         \map{
             \pertype{book}
             \pertype{inbook}
             \step[fieldset=usera, fieldvalue={M}]
-            \step[fieldsource=version] %有时会把version和edition混淆，处理后避免该问题，可以直接用version
+            \step[fieldsource=version] %有时会把version和edition混淆，处理后直接用edition
             \step[fieldset=edition, origfieldval]
             }
         \map{
-            \pertype{standard}%兼容老的standard类型
-            \step[fieldset=usera, fieldvalue={S}]%因为没有专门的驱动，这句的目的是定义一个usera域，方便映射为book和inbook后判断
-            \step[fieldset=note, fieldvalue=standard]
+            \pertype{inbook}
+            \step[fieldsource=editor]%有时会把editor和bookauthor混淆，处理后使用bookauthor
+            \step[fieldset=bookauthor, origfieldval]
+            }
+        \map{%兼容老的standard类型，确定文献类型标识符
+            \pertype{standard}
+            \step[fieldset=usera, fieldvalue={S}]
+            \step[fieldset=note, fieldvalue=standard]%因为没有专门的驱动，记录note方便映射为book和inbook后判断
             }
         \map{
             \pertype{patent}
@@ -697,32 +778,44 @@
             \pertype{inproceedings}
             \pertype{conference}%兼容老的conference类型
             \step[fieldset=usera, fieldvalue={C}]
-            \step[fieldsource=institution] %有时会把publisher和institution混淆，处理后避免该问题
+            \step[fieldsource=institution]%有时会把publisher和institution混淆，处理后使用institution
             \step[fieldset=publisher, origfieldval]
-            \step[fieldsource=editor] %
+            \step[fieldsource=editor]%%有时会把editor和bookauthor混淆，处理后使用bookauthor
             \step[fieldset=bookauthor, origfieldval]
             }
         \map{
             \pertype{proceedings}
             \step[fieldset=usera, fieldvalue={C}]
-            \step[fieldsource=institution] %有时会把publisher和institution混淆，这里处理后就没有这个问题
+            \step[fieldsource=institution]%有时会把publisher和institution混淆，处理后使用publisher
             \step[fieldset=publisher, origfieldval]
-            \step[fieldsource=editor] %有的时候可能只填写了编者，没有author，把它复制一下
-            \step[fieldset=author, origfieldval]
+            }
+        \map{
+            \pertype{incollection}
+            \step[fieldset=usera, fieldvalue={G}]
+            \step[fieldsource=institution]%有时会把publisher和institution混淆，处理后使用institution
+            \step[fieldset=publisher, origfieldval]
+            \step[fieldsource=editor]%%有时会把editor和bookauthor混淆，处理后使用bookauthor
+            \step[fieldset=bookauthor, origfieldval]
+            }
+        \map{
+            \pertype{collection}
+            \step[fieldset=usera, fieldvalue={G}]
+            \step[fieldsource=institution]%有时会把publisher和institution混淆，处理后使用publisher
+            \step[fieldset=publisher, origfieldval]
             }
         \map{
             \pertype{report}
             \pertype{techreport}%兼容老的techreport类型
             \step[fieldset=usera, fieldvalue={R}]
-            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后避免该问题
-            \step[fieldset=institution, origfieldval]
+            \step[fieldsource=institution]%有时会把publisher和institution混淆，处理后使用publisher
+            \step[fieldset=publisher, origfieldval]
             }
         \map{
             \pertype{thesis}
             \pertype{mastersthesis}%兼容老的mastersthesis和phdthesis类型
             \pertype{phdthesis}
             \step[fieldset=usera, fieldvalue={D}]
-            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后避免该问题
+            \step[fieldsource=publisher]%有时会把publisher和institution混淆，处理后使用institution
             \step[fieldset=institution, origfieldval]
             }
         \map{
@@ -730,40 +823,36 @@
             \pertype{electronic}%兼容老的electronic类型
             \pertype{www}%兼容老的www类型
             \step[fieldset=usera, fieldvalue={EB}]
+            \step[fieldsource=publisher]%有时会把publisher和institution混淆，处理后使用institution
+            \step[fieldset=institution, origfieldval]%因为online的出版项处理类似手册
+            \step[fieldsource=organization]%有时会把organization和institution混淆，处理后使用institution，以增强兼容性
+            \step[fieldset=institution, origfieldval]
             }
         \map{
             \pertype{manual}
             \step[fieldset=usera, fieldvalue={A}]
-            \step[fieldsource=edition] %有时会把version和edition混淆，处理后避免该问题，可以直接用version
+            \step[fieldsource=edition]%有时会把version和edition混淆，处理后使用version
             \step[fieldset=version, origfieldval]
-            \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后避免该问题
+            \step[fieldsource=publisher]%有时会把publisher和institution混淆，处理后使用institution
             \step[fieldset=institution, origfieldval]
-            \step[fieldsource=organization]%因为用的report的驱动，所以需要institution域，把organization转成它以增强兼容性
+            \step[fieldsource=organization]%有时会把organization和institution混淆，处理后使用institution，以增强兼容性
             \step[fieldset=institution, origfieldval]
-            }
-        \map{
-            \pertype{incollection}
-            \step[fieldset=usera, fieldvalue={G}]
-            \step[fieldsource=editor] %%有的时候可能只填写了编者，没有author，把它复制一下
-            \step[fieldset=bookauthor, origfieldval]
-            }
-        \map{
-            \pertype{collection}
-            \step[fieldset=usera, fieldvalue={G}]
-            \step[fieldsource=editor] %%有的时候可能只填写了编者，没有author，把它复制一下
-            \step[fieldset=author, origfieldval]
             }
         \map{
             \pertype{unpublished}
             \step[fieldset=usera, fieldvalue={Z}]
             }
-        \map{
+        \map{%作者的中文判断
 	        \step[fieldsource=author, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
-            \step[fieldset=userf, fieldvalue={cn}]
+            \step[fieldset=userf, fieldvalue={chinese}]
             }
-	   \map{
+	   \map{%译者的中文判断
             \step[fieldsource=translator, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
-            \step[fieldset=usere, fieldvalue={cn}]
+            \step[fieldset=usere, fieldvalue={chinese}]
+            }
+       \map{%编者的中文判断
+	        \step[fieldsource=editor, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
+            \step[fieldset=userc, fieldvalue={chinese}]
             }
         \map{%处理一些用year表示date的情况
              %这样处理将会设置date域，并使得labeldatesource变为空，因为date的前缀为空(如果是urldate，那么labeldatesource就是url)。
@@ -771,20 +860,15 @@
             \step[fieldsource=year]
             \step[fieldset=date, origfieldval]
             }
-        \map{%将title信息保存到userd中避免因为标签生成原因导致title域被清除
-            \step[fieldsource=title, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]%}
-            \step[fieldset=userd, fieldvalue={cn}]
+        \map{%文献题名的中文判断，将信息保存到userd中，避免因为标签生成原因导致title域被清除而产生问题
+            \step[fieldsource=title, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]%
+            \step[fieldset=userd, fieldvalue={chinese}]
             }
-        \map{%将entrykey放入keywords中用于后期的使用
+        \map{%将entrykey放入keywords中用于后期使用
             \step[fieldsource=entrykey]
             \step[fieldset=keywords, origfieldval]
             }
-        \map[overwrite]{%这里还必须有overwrite，注意不同版本存在差异，比如texlive2015变16后biber有变化(20161207修改正确)
-            \step[fieldsource=note, final]%将note域信息复制给keywords，用于输出时容易区分标准和报纸
-            \step[fieldset=keywords, fieldvalue={,}, append]
-            \step[fieldset=keywords, origfieldval, append]
-            }
-	    \map{%
+	    \map{%当文献给出language域时，设置文献要使用的本地化字符串的语言
             \step[fieldsource=language,match=english,final]
             \step[fieldset=langid,fieldvalue={english}]
             }
@@ -808,7 +892,8 @@
             \step[fieldsource=language,match=korean,final]
             \step[fieldset=langid,fieldvalue={english}]
             }
-        \map{%把语言信息设置language域内，而不再用userb域(20180525)
+        \map{%当没有language域信息给出时，根据title域来自动判断语言并设置本地化字符串语言
+             %把语言信息设置language域内，而不再用userb域(20180525)
              %接着根据信息域字符的unicode码判断
             \step[fieldsource=title,match=\regexp{[\x{0100}-\x{017F}]},final]%\x80-\xFF
             \step[fieldset=language,fieldvalue={french}]%法语,0080开始到00ff的字符没法匹配有点奇怪
@@ -845,6 +930,9 @@
             \step[fieldset=language,fieldvalue={english}]
             \step[fieldset=langid,fieldvalue={english}]
             }
+	\map{%将非中文的语言放入userd中，以便进行多语言处理
+            \step[fieldsource=language,fieldtarget=userd,final]
+            }
 }
 }
 
@@ -856,28 +944,86 @@
 \defversion{3.0}{map}{
     \DeclareStyleSourcemap{
         \maps[datatype=bibtex]{
-    %        \map{%尝试未定义数据模型的newspaper类型映射为article，newspaper完全是针对gb7714的新类型，在biblatex中完全没有定义
-    %             %但从实践看，并没有什么影响，映射过来就可以了。
-    %        \step[typesource=newspaper, typetarget=article, final]
-    %        }
-            \map{%尝试未定义数据模型的standard类型映射为book，standard类型在blx-dm中有出现，但仅定义了类型，域和约束等都没有定义
+            \map{%尝试未定义数据模型的standard类型映射为其他类型book或inbook，
+                 %standard类型在blx-dm中有出现，但仅定义了类型，域和约束等都没有定义
+                 %因为可能要映射两种类型，所以不能在驱动层处理，因为要做判断
             \step[fieldsource=booktitle,final]%当存在booktitle域是映射为inbook
             \step[typesource=standard, typetarget=inbook, final]
             }
-            \map{%尝试未定义数据模型的standard类型映射为book，standard类型在blx-dm中有出现，但仅定义了类型，域和约束等都没有定义
-            \step[typesource=standard, typetarget=book, final]%当不存在booktitle域是映射为book
+            \map{%剩下的全部映射为book
+            \step[typesource=standard, typetarget=book, final]
             }
-            \map{%先于标准样式的driver层映射，将其先映射过来，并取消type设置
+            \map{%先于标准样式的driver层映射，以取消type设置
             \step[typesource=mastersthesis, typetarget=thesis, final]
             %\step[fieldset=type, fieldvalue=mathesis]
             }
-            \map{%先于标准样式的driver层映射，将其先映射过来，并取消type设置
+            \map{%先于标准样式的driver层映射，以取消type设置
             \step[typesource=phdthesis, typetarget=thesis, final]
             %\step[fieldset=type, fieldvalue=phdthesis]
             }
-            \map{%先于标准样式的driver层映射，将其先映射过来，并取消type设置
+            \map{%先于标准样式的driver层映射，以取消type设置
             \step[typesource=techreport, typetarget=report, final]
             %\step[fieldset=type, fieldvalue=techreport]
+            }
+            \map{%
+            \pertype{report}
+            \step[notfield=address,final]%当address不存在则继续
+            \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
+            \step[typesource=report,typetarget=online]
+            \step[fieldset=note,fieldvalue={report}]
+            }
+            \map{%
+            \pertype{thesis}
+            \step[notfield=address,final]%当address不存在则继续
+            \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
+            \step[typesource=thesis,typetarget=online]
+            }
+            \map{%
+            \pertype{manual}
+            \step[notfield=address,final]%当address不存在则继续
+            \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
+            \step[typesource=manual,typetarget=online]
+            }
+            \map{%
+            \pertype{unpublished}
+            \step[notfield=address,final]%当address不存在则继续
+            \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
+            \step[typesource=unpublished,typetarget=online]
+            }
+            \map{%
+            \pertype{database}
+            \step[notfield=address,final]%当address不存在则继续
+            \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
+            \step[typesource=databasetypetarget=online]
+            }
+            \map{%
+            \pertype{dataset}
+            \step[notfield=address,final]%当address不存在则继续
+            \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
+            \step[typesource=dataset,typetarget=online]
+            }
+            \map{%
+            \pertype{software}
+            \step[notfield=address,final]%当address不存在则继续
+            \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
+            \step[typesource=software,typetarget=online]
+            }
+            \map{%
+            \pertype{map}
+            \step[notfield=address,final]%当address不存在则继续
+            \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
+            \step[typesource=map,typetarget=online]
+            }
+            \map{%
+            \pertype{archive}
+            \step[notfield=address,final]%当address不存在则继续
+            \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
+            \step[typesource=archive,typetarget=online]
+            }
+            \map[overwrite]{%这里还必须有overwrite，注意不同版本存在差异，比如texlive2015变16后biber有变化(20161207修改正确)
+            \step[fieldsource=note, final]%将note域信息复制给keywords，用于输出时容易区分标准和报纸
+            \step[fieldset=keywords, fieldvalue={,}, append]
+            \step[fieldset=keywords, origfieldval, append]
             }
             \map[overwrite]{%title,booktitle,journaltitle,journal,publisher,address,location,institution,organization
             \step[fieldsource={title}, match=\regexp{([^\\])\x26}, replace=\regexp{$1\\\x26}]
@@ -920,28 +1066,86 @@
 \defversion{3.4}{map}{
     \DeclareStyleSourcemap{
         \maps[datatype=bibtex]{
-    %        \map{%尝试未定义数据模型的newspaper类型映射为article，newspaper完全是针对gb7714的新类型，在biblatex中完全没有定义
-    %             %但从实践看，并没有什么影响，映射过来就可以了。
-    %        \step[typesource=newspaper, typetarget=article, final]
-    %        }
-            \map{%尝试未定义数据模型的standard类型映射为book，standard类型在blx-dm中有出现，但仅定义了类型，域和约束等都没有定义
+            \map{%尝试未定义数据模型的standard类型映射为其他类型book或inbook，
+                 %standard类型在blx-dm中有出现，但仅定义了类型，域和约束等都没有定义
+                 %因为可能要映射两种类型，所以不能在驱动层处理，因为要做判断
             \step[fieldsource=booktitle,final]%当存在booktitle域是映射为inbook
             \step[typesource=standard, typetarget=inbook, final]
             }
-            \map{%尝试未定义数据模型的standard类型映射为book，standard类型在blx-dm中有出现，但仅定义了类型，域和约束等都没有定义
-            \step[typesource=standard, typetarget=book, final]%当不存在booktitle域是映射为book
+            \map{%剩下的全部映射为book
+            \step[typesource=standard, typetarget=book, final]
             }
-            \map{%先于标准样式的driver层映射，将其先映射过来，并取消type设置
+            \map{%先于标准样式的driver层映射，以取消type设置
             \step[typesource=mastersthesis, typetarget=thesis, final]
             %\step[fieldset=type, fieldvalue=mathesis]
             }
-            \map{%先于标准样式的driver层映射，将其先映射过来，并取消type设置
+            \map{%先于标准样式的driver层映射，以取消type设置
             \step[typesource=phdthesis, typetarget=thesis, final]
             %\step[fieldset=type, fieldvalue=phdthesis]
             }
-            \map{%先于标准样式的driver层映射，将其先映射过来，并取消type设置
+            \map{%先于标准样式的driver层映射，以取消type设置
             \step[typesource=techreport, typetarget=report, final]
             %\step[fieldset=type, fieldvalue=techreport]
+            }
+            \map{%
+            \pertype{report}
+            \step[notfield=address,final]%当address不存在则继续
+            \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
+            \step[typesource=report,typetarget=online]
+            \step[fieldset=note,fieldvalue={report}]
+            }
+            \map{%
+            \pertype{thesis}
+            \step[notfield=address,final]%当address不存在则继续
+            \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
+            \step[typesource=thesis,typetarget=online]
+            }
+            \map{%
+            \pertype{manual}
+            \step[notfield=address,final]%当address不存在则继续
+            \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
+            \step[typesource=manual,typetarget=online]
+            }
+            \map{%
+            \pertype{unpublished}
+            \step[notfield=address,final]%当address不存在则继续
+            \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
+            \step[typesource=unpublished,typetarget=online]
+            }
+            \map{%
+            \pertype{database}
+            \step[notfield=address,final]%当address不存在则继续
+            \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
+            \step[typesource=databasetypetarget=online]
+            }
+            \map{%
+            \pertype{dataset}
+            \step[notfield=address,final]%当address不存在则继续
+            \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
+            \step[typesource=dataset,typetarget=online]
+            }
+            \map{%
+            \pertype{software}
+            \step[notfield=address,final]%当address不存在则继续
+            \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
+            \step[typesource=software,typetarget=online]
+            }
+            \map{%
+            \pertype{map}
+            \step[notfield=address,final]%当address不存在则继续
+            \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
+            \step[typesource=map,typetarget=online]
+            }
+            \map{%
+            \pertype{archive}
+            \step[notfield=address,final]%当address不存在则继续
+            \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
+            \step[typesource=archive,typetarget=online]
+            }
+            \map[overwrite]{%这里还必须有overwrite，注意不同版本存在差异，比如texlive2015变16后biber有变化(20161207修改正确)
+            \step[fieldsource=note, final]%将note域信息复制给keywords，用于输出时容易区分标准和报纸
+            \step[fieldset=keywords, fieldvalue={,}, append]
+            \step[fieldset=keywords, origfieldval, append]
             }
             \map[overwrite, foreach={title,booktitle,journaltitle,journal,publisher,address,location,institution,organization}]{
                 \step[fieldsource=\regexp{$MAPLOOP}, match=\regexp{([^\\])\#}, replace=\regexp{$1\\\#}]
@@ -961,13 +1165,23 @@
     {\switchversion{3.0}{map}}%%当采用biblatex<=3.2版本时
     {\switchversion{3.4}{map}}%%当采用3.3<=biblatex版本时
 
-\DeclareBibliographyAlias{newspaper}{article}%定义驱动别名，尝试以替代驱动层映射，实践表明是可行的。
-\DeclareBibliographyAlias{unpublished}{manual}
+%
+%驱动别名等价于驱动层映射
+%
+\DeclareBibliographyAlias{newspaper}{article}%
+\DeclareBibliographyAlias{inproceedings}{inbook}%会议论文文献类型驱动
+\DeclareBibliographyAlias{conference}{inbook}%会议论文文献类型驱动
+\DeclareBibliographyAlias{incollection}{inbook}%文集中析出文献类型驱动
+\DeclareBibliographyAlias{collection}{book}%%文集类型驱动
+\DeclareBibliographyAlias{proceedings}{book}%会议论文集文献类型驱动
+\DeclareBibliographyAlias{thesis}{manual}%学位论文驱动
+\DeclareBibliographyAlias{unpublished}{manual}%其它类型驱动
 \DeclareBibliographyAlias{database}{manual}
 \DeclareBibliographyAlias{dataset}{manual}
 \DeclareBibliographyAlias{software}{manual}
 \DeclareBibliographyAlias{map}{manual}
 \DeclareBibliographyAlias{archive}{manual}
+
 
 
 %=====================================================================
@@ -978,9 +1192,10 @@
 %
 %   增加一个\bibitemindent尺寸用于控制list环境的itemindent
 %   v1.0l，20180615，hzz
+\setlength{\bibhang}{\biblabelsep}%
 \newlength{\bibitemindent}
 \setlength{\bibitemindent}{0pt}
-\setlength{\bibhang}{\biblabelsep}%
+
 
 \defbibenvironment{bibliography}
   {\list
@@ -1075,7 +1290,7 @@
 %   设置单元或块等的标点
 %=====================================================================
 \renewrobustcmd*{\bibinithyphendelim}{\addhighpenspace}%用于处理姓名中名部分存在-的情况，比如ZHANG Yu-xin
-\renewcommand*{\subtitlepunct}{\addcolon\space} %修改标题和其它标题信息间的标点，来源biblatex.def，
+\renewcommand*{\subtitlepunct}{\addcolon\addspace} %修改标题和其它标题信息间的标点，来源biblatex.def，
 %
 %   利用set实现的多语言文献不同语言间的分隔符
 %   20170411，双语之间用newline替换par，避免采用gb7714-2015的项对齐方式第二语言间分段导致没有缩进
@@ -1084,13 +1299,16 @@
 %   这里调整一下两种语言参考文献的间隔，源来自biblatex.def
 \renewcommand*{\entrysetpunct}{\adddot\newline\nobreak}
 \renewcommand*{\bibpagespunct}{\addcolon\addthinspace}%%页码引用格式的修改，修改为用冒号
-
+%\renewcommand{\relateddelim}{}%\par
 
 %=====================================================================
 %   修改域的格式，重定义域的输出宏
 %=====================================================================
 %
 %   新增文献类型标识符的格式
+%   []前的nobreak，从GB4.1节的例子看不应该加，所以去掉
+%   但因为考虑到cjk字符和[]之间可能添加空格，所以仍然加上
+%   而[]中间的内容，从4.6.2节的例子看也是可以分割的，因此内部的nobreak也可以去掉
 %
 \DeclareFieldFormat{gbtypeflag}{%
 \iftoggle{bbx:url}{\iffieldundef{url}%当存在url时，增加一个OL标识符
@@ -1141,6 +1359,11 @@
 \setcounter{biburlnumpenalty}{100} %让url可以在数字后断行
 \setcounter{biburlucpenalty}{100} %让url可以在大写字母后断行
 \setcounter{biburllcpenalty}{100} %让url可以在小写字母后断行
+\DeclareFieldFormat{doi}{%
+  \rmfamily{DOI}\addcolon\space
+  \ifhyperref
+    {\href{https://doi.org/#1}{\nolinkurl{#1}}}
+    {\nolinkurl{#1}}}
 %
 %   标题的字母大小写格式修改
 %
@@ -1203,15 +1426,12 @@
      %\setunit{\addspace}%
      \printnames[bytranslator]{translator}%
      \clearname{translator}%
+     %从macro*{bytranslator+othersstrg}%中可以看到当地化字符串格式的引用前的代码处理
+     %比如生成cotranslator等用于调用cotranslator所代表的当地化字符串
      \usebibmacro{bytranslator+othersstrg}%“译”的位置换到下面来，即放到译者后面。
      \setunit*{\addspace}%
      \newunit}%
   \usebibmacro{withothers}}
-
-%
-%   下面一段没有用，但从中可以看到当地化字符串格式的引用前的代码处理
-%   比如生成cotranslator等用于调用cotranslator所代表的当地化字符串
-%\renewbibmacro*{bytranslator+othersstrg}{%
 
 %
 %   修改作者数量超过限定值，做省略时的处理格式
@@ -1241,21 +1461,17 @@
 %   而不用对每一个引用命令单独设置，比如cite，parancite，textcite都设置
 \DeclareDelimFormat{strandothersdelim}{%
   \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
-  \addspace%%做一个判断是在处理author还是translator，用于两者是不同语言的情况
-  \ifcurrentname{translator}{\testCJKfirst{usere}}{\testCJKfirst{userf}}%
-  \ifcase\value{gbcitelocalcase}%
-  \iftoggle{ifCJKforgbt}{\bibstring{andothersincitecn}}{\bibstring{andothersincite}}\space%
-  \or%
-  \bibstring{andothersincitecn}\space%
-  \or%
-  \bibstring{andothersincite}\space%
-  \fi}
-\DeclareDelimFormat[bib,biblist]{strandothersdelim}{%
-  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
   \addspace%
   \ifcurrentname{translator}{\testCJKfirst{usere}}{\testCJKfirst{userf}}%
+    \ifcurrentname{editor}{\testCJKfirst{userc}}{\testCJKfirst{userf}}%
   \ifcase\value{gbbiblocalcase}%
-  \iftoggle{ifCJKforgbt}{\bibstring{andotherscn}}{\bibstring{andothers}}\space%
+  \iftoggle{ifCJKforgbt}{\bibstring{andotherscn}}{%
+  \iffieldequalstr{userd}{korean}{\bibstring{andotherskr}}{}%
+\iffieldequalstr{userd}{japnese}{\bibstring{andothersjp}}{}%
+\iffieldequalstr{userd}{english}{\bibstring{andothers}}{}%
+\iffieldequalstr{userd}{french}{\bibstring{andothers}}{}%
+\iffieldequalstr{userd}{russian}{\bibstring{andothers}}{}%
+}\space%
   \or%
   \bibstring{andotherscn}\space%
   \or%
@@ -1274,19 +1490,15 @@
   \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
   \addspace%
   \ifcurrentname{translator}{\testCJKfirst{usere}}{\testCJKfirst{userf}}%
-  \ifcase\value{gbcitelocalcase}%
-  \iftoggle{ifCJKforgbt}{\bibstring{andincitecn}}{\bibstring{andincite}}\space%
-  \or%
-  \bibstring{andincitecn}\space%
-  \or%
-  \bibstring{andincite}\space%
-  \fi}
-\DeclareDelimFormat[bib,biblist]{finalnamedelim}{%
-  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
-  \addspace%
-  \ifcurrentname{translator}{\testCJKfirst{usere}}{\testCJKfirst{userf}}%
+    \ifcurrentname{editor}{\testCJKfirst{userc}}{\testCJKfirst{userf}}%
   \ifcase\value{gbbiblocalcase}%
-  \iftoggle{ifCJKforgbt}{\bibstring{andcn}}{\bibstring{and}}\space%
+  \iftoggle{ifCJKforgbt}{\bibstring{andcn}}{%
+\iffieldequalstr{userd}{korean}{\bibstring{andkr}}{}%
+\iffieldequalstr{userd}{japnese}{\bibstring{andjp}}{}%
+\iffieldequalstr{userd}{english}{\bibstring{and}}{}%
+\iffieldequalstr{userd}{french}{\bibstring{and}}{}%
+\iffieldequalstr{userd}{russian}{\bibstring{and}}{}%
+}\space%
   \or%
   \bibstring{andcn}\space%
   \or%
@@ -1411,7 +1623,7 @@
        \ifprefchar{}{\bibnamedelimc}}%
      \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeUppercase{#1}}}\isdot%
      \ifdefvoid{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{\MakeUppercase{#2}}\isdot}%\MakeCapital
-     \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}%
+     \ifdefvoid{#4}{}{\addcomma\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}%后缀前加逗号
     {\usebibmacro{name:delim}{#1}%
      \usebibmacro{name:hook}{#1}%
      \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeUppercase{#1}}}\isdot%
@@ -1422,7 +1634,7 @@
        {}{\revsdnamepunct}%
      \ifdefvoid{#2}{}{\bibnamedelimd\mkbibnamegiven{\MakeUppercase{#2}}\isdot}%\MakeCapital
      \ifdefvoid{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}%
-     \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}%
+     \ifdefvoid{#4}{}{\addcomma\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}%%后缀前加逗号
 }
 
 %GB/T 7714-2015 风格，大小写不变，根据bib文件内输入原样输出
@@ -1439,7 +1651,7 @@
        \ifprefchar{}{\bibnamedelimc}}%
      \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{{#1}}}\isdot%
      \ifdefvoid{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{{#2}}\isdot}%\MakeCapital
-     \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}
+     \ifdefvoid{#4}{}{\addcomma\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}%后缀前加逗号
     {\usebibmacro{name:delim}{#1}%
      \usebibmacro{name:hook}{#1}%
      \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{{#1}}}\isdot%
@@ -1450,7 +1662,7 @@
        {}{\revsdnamepunct}%
      \ifdefvoid{#2}{}{\bibnamedelimd\mkbibnamegiven{{#2}}\isdot}%\MakeCapital
      \ifdefvoid{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}
-     \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}%
+     \ifdefvoid{#4}{}{\addcomma\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}%%后缀前加逗号
 }
 
 %中文常见风格，汉语拼音全拼模式
@@ -1505,7 +1717,7 @@
          %\mkbibnamelast{\MakeUppercase{#1}}\isdot
          %\ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}%这句放到后面
          \ifblank{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamefirst{\MakeUppercase{#2}}\isdot}%
-         \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}}
+         \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}}%后缀前加逗号
         {\usebibmacro{name:delim}{#1}%
          \usebibmacro{name:hook}{#1}%
          %\mkbibnamelast{#1}\isdot  %3.9.1 Generic Commands and Hooks，对姓重新处理，如下句: %\mkbibnamelast{\MakeUppercase{#1}}
@@ -1516,7 +1728,7 @@
          \ifblank{#2}{}{\bibnamedelimd\mkbibnamefirst{\MakeUppercase{#2}}\isdot}%
          \ifblank{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}%
          \addcomma\addspace%
-         \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}%
+         \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}%%后缀前加逗号
          }%
      }
 
@@ -1534,7 +1746,7 @@
            \ifpunctmark{'}{}{\bibnamedelimc}}%
          \ifblank{#2}{\MakeCapital#1}{\mkbibnamelast{{#1}}}\isdot%\MakeUppercase %\mkbibnamelast{\MakeUppercase{#1}} %\MakeSentenceCase
          \ifblank{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamefirst{{#2}}\isdot}%
-         \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}}
+         \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}}%后缀前加逗号
         {\usebibmacro{name:delim}{#1}%
          \usebibmacro{name:hook}{#1}%
          \ifblank{#2}{\MakeCapital#1}{\mkbibnamelast{{#1}}}\isdot  %大写，参考4.6.4 Miscellaneous Commands，\MakeUppercase %\MakeSentenceCase
@@ -1542,7 +1754,7 @@
          \ifblank{#2}{}{\bibnamedelimd\mkbibnamefirst{{#2}}\isdot}%
          \ifblank{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}%
          \addcomma\addspace%
-         \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}%
+         \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}%%后缀前加逗号
          }%
      }
 
@@ -1626,14 +1838,18 @@
     \iffieldundef{urlmonth}{}{\bibrangedash\printfield{urlmonth}}%
     \iffieldundef{urlday}{}{\bibrangedash\printfield{urlday}}\printtext{]}}
 
-    \newbibmacro*{newsdate}{%%新增加一个新闻日期
+    \newbibmacro*{newsdate}{%%新增加一个公告日期，公开日期或新闻日期
     \iffieldundef{year}{}{\printfield{year}%
     \iffieldundef{month}{}{\bibrangedash\printtext{\thefield{month}}%
     \iffieldundef{day}{}{\bibrangedash\printfield{day}}}}%
     }
 
     \newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示电子资源的更新和修改日期，而公告日期则按日期格式
-        \iffieldequalstr{year}{}{%替换\iffieldundef{year}，因为year总是存在，但为空
+        \ifboolexpr{%
+        test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{eventday}}%
+        }%
+        {}%更新或修改日期通常有day信息
+        {\iffieldequalstr{year}{}{%替换\iffieldundef{year}，因为year总是存在，但为空
             \iffieldundef{endyear}{%
                 \iffieldundef{eventyear}{}{\printtext{\mkbibparens{\printtext{\printfield{eventyear}}%
                 \iffieldundef{eventmonth}{}{\bibrangedash\thefield{eventmonth}}%
@@ -1652,7 +1868,7 @@
             \iffieldundef{day}{}{\bibrangedash\printfield{day}}}}%
             }%
         }%
-    }%
+    }}%
 }
 
 %
@@ -1675,13 +1891,17 @@
     }
 
     \newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示电子资源的更新和修改日期，而公告日期则按日期格式
-        \iffieldundef{year}{%
+        \ifboolexpr{%
+        test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{eventday}}%
+        }%
+        {}%更新或修改日期通常有day信息
+        {\iffieldundef{year}{%
                 \iffieldundef{endyear}{\iffieldundef{eventyear}{}{\printtext{(}\printeventdate\printtext{)}}}%
                 {\printtext{(}\printenddate\printtext{)}}%
         }{\iffieldequalstr{year}{}{%因为year存在，但为空
             }{\printtext{(}\blx@edtfdate{}{}\printtext{)}}%
          }%
-    }%
+    }}%
 }
 
 %
@@ -1706,13 +1926,17 @@
     }
 
     \newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示电子资源的更新和修改日期，而公告日期则按日期格式
-        \iffieldundef{year}{%
+        \ifboolexpr{%
+        test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{eventday}}%
+        }%
+        {}%更新或修改日期通常有day信息
+        {\iffieldundef{year}{%
                 \iffieldundef{endyear}{\iffieldundef{eventyear}{}{\printtext{(}\printeventdate\printtext{)}}}%
                 {\printtext{(}\printenddate\printtext{)}}%
         }{\iffieldequalstr{year}{}{%因为year存在，但为空
             }{\printtext{(}\blx@gbdate{}{}\printtext{)}}%
          }%
-    }%
+    }}%
 }
 
 %
@@ -1858,12 +2082,19 @@ test{\iftoggle{iftlnine}}
 }
 
 %
-%   出版社和地址的处理
+% 当location等出版项超过maxitem缩减后不再输出etal
+%
+\DeclareListFormat{location}{%
+  \usebibmacro{list:delim}{#1}%
+  #1\isdot}
+\DeclareListAlias{institution}{location}
+\DeclareListAlias{publisher}{location}
+
+%   新增一个样式用于输出连续出版物的地址，单位，时间，
+%   用于periodical连续出版物的出版社和地址的处理
 %
 %   v1.0k，20180425，为出版信息增加字体控制命令，hzz
-%   原理方法:当没有出版社地址时，直接判断title的信息是否是中文，若为中文，则写出版地不详，否则用英文的字符表示。
-%   事实上title对于每个文献来说是必须的，所以用它判断是最快的，而且一般标题和出版社的语言是一样的。
-%   新增一个样式用于输出连续出版物的地址，单位，时间，%类似\newbibmacro*{publisher+location+date}
+%   %类似\newbibmacro*{publisher+location+date}
 \newbibmacro*{location+institution+date}{\bibpubfont%
 \iftoggle{bbx:gbpub}%
 {\testCJKfirst{userd}%
@@ -1894,30 +2125,27 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
   \newunit}%
 }
 %
+%   通用的出版社和地址的处理
 %
+%   原理方法:当没有出版社地址时，直接判断title的信息是否是中文，若为中文，则写出版地不详，否则用英文的字符表示。
+%   事实上title对于每个文献来说是必须的，所以用它判断是最快的，而且一般标题和出版社的语言是一样的。
+%   注意标准standard类型，因为当没有出版项时直接省略，所以做特殊处理
 \renewbibmacro*{publisher+location+date}{\bibpubfont%
 \iftoggle{bbx:gbpub}%
 {\testCJKfirst{userd}%
-\ifboolexpr{%
-test {\iflistundef{location}} and test {\iflistundef{publisher}}%
-}{\iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress}\space :\space\str@nopublisher]}%
-{\printtext{[S.l.\space :\space s.n.\adddot]}}%
-}{%
-\iflistundef{location}{%\adddot
-\iffieldequalstr{note}{standard}{}{%从gbt7714-2015标准第19页看到，标准存在出版项时输出，没有时完全省略。
-\iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress]}\addcolon\addspace}{\printtext{[S.l.\adddot]}\addcolon\addspace}%
-}}%  \bibstring{noaddress}
-{\printlist{location}\addcolon\addspace}%
-%\addcolon\addspace%
-\iflistundef{publisher}{%
-\iffieldequalstr{note}{standard}{}{%
-\iftoggle{ifCJKforgbt}{\printtext{[\str@nopublisher]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
-{\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
-}}%
-{\printlist{publisher}}}%
+    \ifboolexpr{ test {\iflistundef{location}} and test {\iflistundef{publisher}} }%
+    {\iffieldequalstr{note}{standard}{}{\iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress}\space :\space\str@nopublisher]}{\printtext{[S.l.\space :\space s.n.\adddot]}}}}%
+    {\iflistundef{location}{%\adddot
+        \iffieldequalstr{note}{standard}{}%%从gbt7714-2015标准第19页看到，标准存在出版项时输出，没有时完全省略。
+        {\iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress]}\addcolon\addspace}{\printtext{[S.l.\adddot]}\addcolon\addspace}}}%  \bibstring{noaddress}
+        {\printlist{location}\addcolon\addspace}%%\addcolon\addspace%
+    \iflistundef{publisher}{%
+        \iffieldequalstr{note}{standard}{}%
+        {\iftoggle{ifCJKforgbt}{\printtext{[\str@nopublisher]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
+        {\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}}}%
+        {\printlist{publisher}}}%
 \setunit*{\addcomma\addspace}%\addcomma\addspace%
-\usebibmacro{date}%
-%\newunit %去掉这个标点
+\usebibmacro{date}%%\newunit %去掉这个标点
 }%
 {\printlist{location}%
   \iflistundef{publisher}
@@ -1925,10 +2153,25 @@ test {\iflistundef{location}} and test {\iflistundef{publisher}}%
     {\setunit*{\addcolon\space}}%
   \printlist{publisher}%
   \setunit*{\addcomma\space}%
-  \usebibmacro{date}%
-  %\newunit
+  \usebibmacro{date}%%\newunit
   }%
 }
+
+%
+%   修改了一个institution+location+date用于manual、report、thesis等类型
+%
+%   20180425，v1.0k，增加了字体控制命令，hzz
+%   20190105，v1.0o，加了一个编组避免\usebibmacro{date}把month和day信息去掉
+\renewbibmacro*{institution+location+date}{\bibpubfont%当没有institution时不处理。
+{\printlist{location}%%加了一个编组避免\usebibmacro{date}把month和day信息去掉
+  \iflistundef{institution}
+    {\setunit*{\addcomma\space}}
+    {\setunit*{\addcolon\space}}%
+  \printlist{institution}%
+  \setunit*{\addcomma\space}%
+  \usebibmacro{date}%
+  %\newunit
+  }}
 
 %
 %   对volume卷信息格式做出修改
@@ -2097,8 +2340,8 @@ incollection,proceedings,inproceedings]{number}{%
 \renewbibmacro*{editorstrg}{%源来自biblatex.DEF
   \printtext[editortype]{%
     \iffieldundef{editortype}
-      {
-%      \ifboolexpr{ %这一段去掉
+      {%
+%      \ifboolexpr{ %这一段去掉，未定义编者类型情况下不处理
 %         test {\ifnumgreater{\value{editor}}{1}}
 %         or
 %         test {\ifandothers{editor}}
@@ -2106,7 +2349,7 @@ incollection,proceedings,inproceedings]{number}{%
 %         {\bibstring{editors}}
 %         {\bibstring{editor}}
          }
-      {\ifbibxstring{\thefield{editortype}}
+      {\ifbibxstring{\thefield{editortype}} %定义编者类型情况下处理，以后根据需要修改
          {\ifboolexpr{
             test {\ifnumgreater{\value{editor}}{1}}
             or
@@ -2114,7 +2357,8 @@ incollection,proceedings,inproceedings]{number}{%
           }
             {\bibstring{\thefield{editortype}s}}
             {\bibstring{\thefield{editortype}}}}
-         {\thefield{editortype}}}}}
+         {\thefield{editortype}}}%
+         }}
 
 %
 %   修改期刊的标题
@@ -2128,11 +2372,11 @@ incollection,proceedings,inproceedings]{number}{%
        \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
        {}{\setunit{\subtitlepunct}
        \printfield[titlecase]{subtitle}}%
-       %
-       %\iffieldundef{usera}{}{}%在标题后直接给出文献标识字母
-       \iftoggle{bbx:gbtype}{\printfield[gbtypeflag]{usera}}{}%
-       }%把编组结束移到这里
-       }%
+       %}%把编组结束移到后面去
+       \iftoggle{bbx:gbtype}{%
+       \iffieldundef{usera}{}{%在标题后直接给出文献标识字母
+        \printfield[gbtypeflag]{usera}}}{}
+       }}
        }
 
 %
@@ -2217,21 +2461,7 @@ incollection,proceedings,inproceedings]{number}{%
 }%
 }
 
-%
-%   修改了一个institution+location+date用于report等类型
-%
-%   20180425，v1.0k，增加了字体控制命令，hzz
-\renewbibmacro*{institution+location+date}{\bibpubfont%当没有institution时不处理。
-  \printlist{location}%
-  \iflistundef{institution}
-    {\setunit*{\addcomma\space}}
-    {\setunit*{\addcolon\space}}%
-  \printlist{institution}%
-  \setunit*{\addcomma\space}%
-  \usebibmacro{date}%
-  %\usebibmacro{modifydate}%
-  %\newunit
-  }
+
 
 %
 %   修改in:用于inbook、incollection、inproceedings等类型
@@ -2253,12 +2483,7 @@ incollection,proceedings,inproceedings]{number}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
 \usebibmacro{author/editor+others/translator+others}%
-\ifnameundef{author}{%这一段用于去除作者不存在时多出的标点
-\ifnameundef{editor}{%
-\ifnameundef{translator}{\relax}%
-{\setunit{\labelnamepunct}\newblock}}%
-{\setunit{\labelnamepunct}\newblock}}%
-{\setunit{\labelnamepunct}\newblock}%这个注释去除标题前空格
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
 \usebibmacro{maintitle+title}%
 \iftoggle{bbx:gbstrict}{}{%
 \newunit
@@ -2287,7 +2512,6 @@ incollection,proceedings,inproceedings]{number}{%
 \usebibmacro{chapter+pages}%
 \usebibmacro{doi+eprint+url}%从下面移动到上面来，因为gbt2015的url需直接放在页码后面。
   \newunit\newblock%
-  %\newunit
   \printfield{pagetotal}%
   \newunit\newblock%
   \iftoggle{bbx:isbn}
@@ -2306,71 +2530,6 @@ incollection,proceedings,inproceedings]{number}{%
     {}%
   \usebibmacro{finentry}}
 
-%
-%   文集中析出文献类型驱动
-%
-
-
-%   直接利用inbook做incollection
-\DeclareBibliographyDriver{incollection}{%
-  \usebibmacro{bibindex}%
-  \usebibmacro{begentry}%
-  \usebibmacro{author/translator+others}%
-\ifnameundef{author}{%这一段用于去除作者不存在时多出的标点
-\ifnameundef{editor}{%
-\ifnameundef{translator}{\relax}%
-{\setunit{\labelnamepunct}\newblock}}%
-{\setunit{\labelnamepunct}\newblock}}%
-{\setunit{\labelnamepunct}\newblock}%
-%\setunit{\labelnamepunct}\newblock
-\usebibmacro{title}%
-\usebibmacro{in:}%
-%\printtext{\texttt{//}\addthinspace}%
-\usebibmacro{bybookauthor}%
-\ifnameundef{bookauthor}{}{\newunit}%替换下一句
-  %\newunit\newblock
-  \usebibmacro{maintitle+booktitle}%
-  \setunit{\addcolon}\printfield{volume}\printfield{number}%增加卷和册信息
-  \newunit\newblock
-%  \usebibmacro{byeditor+others}%
-%  \newunit\newblock
-  \printfield{edition}%
-  \newunit
-\iftoggle{bbx:gbstrict}{}{%
-%  \iffieldundef{maintitle}
-%    {\printfield{volume}%
-%     \printfield{part}}
-%    {}%
-%  \newunit
-  \printfield{volumes}%
-  \newunit\newblock
-  \usebibmacro{series+number}%
-  \newunit\newblock}
-  %\printfield{note}%
-  %\newunit\newblock
-  \usebibmacro{publisher+location+date}%
-  %\newunit\newblock
-  \usebibmacro{chapter+pages}%
-  %\newunit\newblock
-  \usebibmacro{doi+eprint+url}%
-  \newunit\newblock
-  \iftoggle{bbx:isbn}
-    {\printfield{isbn}}
-    {}%
-  \newunit\newblock
-%  \usebibmacro{doi+eprint+url}%
-%  \newunit\newblock
-  \usebibmacro{addendum+pubstate}%
-  \setunit{\bibpagerefpunct}\newblock
-  \usebibmacro{pageref}%
-  \newunit\newblock
-  \iftoggle{bbx:related}
-    {\usebibmacro{related:init}%
-     \usebibmacro{related}}
-    {}%
-  \usebibmacro{finentry}}
-
-
 
 %
 %   期刊文章，连续出版物中的析出文献的格式
@@ -2379,7 +2538,7 @@ incollection,proceedings,inproceedings]{number}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
-  \setunit{\labelnamepunct}\newblock
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
   \usebibmacro{title}%
   \iftoggle{bbx:gbstrict}{}{%
   \newunit%
@@ -2397,6 +2556,7 @@ incollection,proceedings,inproceedings]{number}{%
 %  \usebibmacro{byeditor+others}%
 %  \newunit
   \usebibmacro{note+pages}%
+  \iffieldequalstr{note}{news}{}{\usebibmacro{modifydate}}%带括号的修改或更新日期，当是新闻时不输出
   \usebibmacro{doi+eprint+url}%从后面移上来，调整url和页码之间的位置
   \newunit\newblock
   \iftoggle{bbx:isbn}
@@ -2460,7 +2620,7 @@ incollection,proceedings,inproceedings]{number}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author}%
-  \setunit{\labelnamepunct}\newblock
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
   %\usebibmacro{title}%
   \usebibmacro{patenttitle}%给出专利专用的标题输出
   \iftoggle{bbx:gbstrict}{}{%
@@ -2504,13 +2664,7 @@ incollection,proceedings,inproceedings]{number}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/editor+others/translator+others}%
-  \ifnameundef{author}{%这一段用于去除作者不存在时多出的标点
-\ifnameundef{editor}{%
-\ifnameundef{translator}{\relax}%
-{\setunit{\labelnamepunct}\newblock}}%
-{\setunit{\labelnamepunct}\newblock}}%
-{\setunit{\labelnamepunct}\newblock}%
-  %\setunit{\labelnamepunct}\newblock
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
   \usebibmacro{title}%
   \iftoggle{bbx:gbstrict}{}{%
   \newunit%
@@ -2518,16 +2672,17 @@ incollection,proceedings,inproceedings]{number}{%
   \newunit\newblock
   \usebibmacro{byauthor}%
   \newunit\newblock
-  \usebibmacro{byeditor+others}}%
+  \usebibmacro{byeditor+others}%
   \newunit\newblock
-  \printfield{version}%
+  \printfield{note}}%
   \newunit
-  \printfield{note}%
+  \printfield{version}%
   \newunit\newblock
-  \printlist{organization}%
+  %\printlist{organization}%
+  \printlist{institution}%
   \newunit\newblock
   %\usebibmacro{date}%
-  \usebibmacro{modifydate}%修改为带括号的时间
+  \usebibmacro{modifydate}%修改或更新日期，为带括号的时间
   \usebibmacro{url+urldate}%从下面移上来
   \newunit\newblock
   \iftoggle{bbx:eprint}
@@ -2547,58 +2702,15 @@ incollection,proceedings,inproceedings]{number}{%
   \usebibmacro{finentry}}
 
 
-
-%
-%   学位论文修改
-%
-  \DeclareBibliographyDriver{thesis}{%源来自standard.BBX
-  \usebibmacro{bibindex}%
-  \usebibmacro{begentry}%
-  \usebibmacro{author}%
-  \setunit{\labelnamepunct}\newblock
-  \usebibmacro{title}%
-  \iftoggle{bbx:gbstrict}{}{%
-  \newunit%
-  \printlist{language}%
-  \newunit\newblock
-  \usebibmacro{byauthor}%
-  \newunit\newblock
-  \printfield{note}%
-  \newunit\newblock
-  \printfield{type}}%
-  \newunit\newblock
-  \usebibmacro{institution+location+date}%
-  %\newunit\newblock
-  \usebibmacro{chapter+pages}%
-  \usebibmacro{doi+eprint+url}%
-  \newunit
-  \printfield{pagetotal}%
-  \newunit\newblock
-  \iftoggle{bbx:isbn}
-    {\printfield{isbn}}
-    {}%
-  \newunit\newblock
-%  \usebibmacro{doi+eprint+url}%
-%  \newunit\newblock
-  \usebibmacro{addendum+pubstate}%
-  \setunit{\bibpagerefpunct}\newblock
-  \usebibmacro{pageref}%
-  \newunit\newblock
-  \iftoggle{bbx:related}
-    {\usebibmacro{related:init}%
-     \usebibmacro{related}}
-    {}%
-  \usebibmacro{finentry}}
-
 %
 %   报告类型驱动
-%   2016-11-11，增加了译者信息
+%   当有网址无出版项时，用online输出
 %
 \DeclareBibliographyDriver{report}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author}%
-  \setunit{\labelnamepunct}\newblock
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
   \usebibmacro{title}%
   \iftoggle{bbx:gbstrict}{}{%
   \newunit%
@@ -2616,7 +2728,7 @@ incollection,proceedings,inproceedings]{number}{%
   \newunit
   \printfield{note}%
   \newunit\newblock
-  \usebibmacro{institution+location+date}%
+  \usebibmacro{publisher+location+date}%
   %\newunit\newblock
   \usebibmacro{chapter+pages}%
   \usebibmacro{doi+eprint+url}%
@@ -2640,15 +2752,14 @@ incollection,proceedings,inproceedings]{number}{%
   \usebibmacro{finentry}}
 
 %
-%   手册类型驱动
+%   论文、手册类型驱动
 %   2016-11-11，增加了译者信息
 %
-%   直接利用report做manual
 \DeclareBibliographyDriver{manual}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author}%
-  \setunit{\labelnamepunct}\newblock
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
   \usebibmacro{title}%
   \iftoggle{bbx:gbstrict}{}{%
   \newunit%
@@ -2669,6 +2780,7 @@ incollection,proceedings,inproceedings]{number}{%
   \usebibmacro{institution+location+date}%
   %\newunit\newblock
   \usebibmacro{chapter+pages}%
+  \usebibmacro{modifydate}%修改或更新日期，为带括号的时间
   \usebibmacro{doi+eprint+url}%
   \newunit
   \printfield{pagetotal}%
@@ -2697,7 +2809,7 @@ incollection,proceedings,inproceedings]{number}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/editor+others/translator+others}%
-  \setunit{\printdelim{nametitledelim}}\newblock
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
   \usebibmacro{title}%
 \iftoggle{bbx:gbstrict}{}{%
   \newunit
@@ -2730,121 +2842,6 @@ incollection,proceedings,inproceedings]{number}{%
     {}%
   \usebibmacro{finentry}}
 
-%
-%   会议论文文献类型驱动
-%
-  \DeclareBibliographyDriver{inproceedings}{%源来自standard.BBX
-  \usebibmacro{bibindex}%
-  \usebibmacro{begentry}%
-  \usebibmacro{author/translator+others}%
-  \setunit{\labelnamepunct}\newblock
-  \usebibmacro{title}%
-%  \newunit
-%  \printlist{language}%
-%  \newunit\newblock
-%  \usebibmacro{byauthor}%
-%  \newunit\newblock
-\usebibmacro{in:}%
-%\printtext{\texttt{//}\addthinspace}%
-  \usebibmacro{bybookauthor}%用类似inbook的方式处理
- \ifnameundef{bookauthor}{}{\newunit}%替换下一句
-  %\newunit\newblock
-  \usebibmacro{maintitle+booktitle}%
-  \setunit{\addcolon}\printfield{volume}\printfield{number}%增加卷和册信息
-  \newunit\newblock
-  \usebibmacro{event+venue+date}%
-  \newunit\newblock
-%  \usebibmacro{byeditor+others}%
-%  \newunit\newblock
-\iftoggle{bbx:gbstrict}{}{%
-%  \iffieldundef{maintitle}
-%    {\printfield{volume}%
-%     \printfield{part}}
-%    {}%
-%  \newunit
-  \printfield{volumes}%
-  \newunit\newblock
-  \usebibmacro{series+number}%
-  \newunit\newblock
-  \printfield{note}%
-  \newunit\newblock
-  \printlist{organization}%
-  \newunit}
-  \usebibmacro{publisher+location+date}%
-  %\newunit\newblock
-  \usebibmacro{chapter+pages}%
-  \newunit\newblock
-  \iftoggle{bbx:isbn}
-    {\printfield{isbn}}
-    {}%
-  \newunit\newblock
-  \usebibmacro{doi+eprint+url}%
-  \newunit\newblock
-  \usebibmacro{addendum+pubstate}%
-  \setunit{\bibpagerefpunct}\newblock
-  \usebibmacro{pageref}%
-  \newunit\newblock
-  \iftoggle{bbx:related}
-    {\usebibmacro{related:init}%
-     \usebibmacro{related}}
-    {}%
-  \usebibmacro{finentry}}
-
-%
-%   会议论文集文献类型驱动
-%
-\DeclareBibliographyDriver{proceedings}{%源来自standard.BBX
-  \usebibmacro{bibindex}%
-  \usebibmacro{begentry}%
-  %\usebibmacro{editor+others}%
-  \usebibmacro{author/translator+others}%
-  \setunit{\labelnamepunct}\newblock
-  \usebibmacro{maintitle+title}%
-  \iftoggle{bbx:gbstrict}{}{%
-  \newunit%
-  \printlist{language}}%
-  \newunit\newblock
-  \usebibmacro{event+venue+date}%
-  \newunit\newblock
-%  \usebibmacro{byeditor+others}%
-%  \newunit\newblock
-  \iffieldundef{maintitle}
-    {\printfield{volume}%
-     \printfield{part}}
-    {}%
-  \newunit
-  \printfield{volumes}%
-  \newunit\newblock
-  \iftoggle{bbx:gbstrict}{}{%
-  \usebibmacro{series+number}%
-  \newunit\newblock
-  \printfield{note}%
-  \newunit\newblock
-  \printlist{organization}%
-  \newunit}
-  \usebibmacro{publisher+location+date}%
-  %\newunit\newblock
-  \usebibmacro{chapter+pages}%
-  \usebibmacro{doi+eprint+url}%从下面移上来
-  \newunit
-  \printfield{pagetotal}%
-  \newunit\newblock
-  \iftoggle{bbx:isbn}
-    {\printfield{isbn}}
-    {}%
-  \newunit\newblock
-%  \usebibmacro{doi+eprint+url}%
-%  \newunit\newblock
-  \usebibmacro{addendum+pubstate}%
-  \setunit{\bibpagerefpunct}\newblock
-  \usebibmacro{pageref}%
-  \newunit\newblock
-  \iftoggle{bbx:related}
-    {\usebibmacro{related:init}%
-     \usebibmacro{related}}
-    {}%
-  \usebibmacro{finentry}}
-
 
 %
 %   专著中的析出文献的格式修改
@@ -2853,22 +2850,16 @@ incollection,proceedings,inproceedings]{number}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
-\ifnameundef{author}{%这一段用于去除作者不存在时多出的标点
-\ifnameundef{editor}{%
-\ifnameundef{translator}{\relax}%
-{\setunit{\labelnamepunct}\newblock}}%
-{\setunit{\labelnamepunct}\newblock}}%
-{\setunit{\labelnamepunct}\newblock}%
-%\setunit{\labelnamepunct}\newblock
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
 \usebibmacro{title}%
 \usebibmacro{in:}%
-%\printtext{\texttt{//}\addthinspace}%%\texttt{//}\addnbthinspace
-\usebibmacro{bybookauthor}%
-\ifnameundef{bookauthor}{}{\newunit}%替换下一句\newblock
-%\newunit\newblock
-\usebibmacro{maintitle+booktitle}%}%
+%\printtext{\texttt{//}\addthinspace}%
+  \usebibmacro{bybookauthor}%
+  \ifnameundef{bookauthor}{}{\newunit}%替换下一句
+  %\newunit\newblock
+  \usebibmacro{maintitle+booktitle}%
   \setunit{\addcolon}\printfield{volume}\printfield{number}%增加卷和册信息
-  \newunit\newblock
+  \newunit\newblock%
 %  \usebibmacro{byeditor+others}%
 %  \newunit\newblock
   \printfield{edition}%
@@ -2886,7 +2877,7 @@ incollection,proceedings,inproceedings]{number}{%
   %\printfield{note}%
   %\newunit\newblock
   \usebibmacro{publisher+location+date}%
-%\newunit\newblock
+  %\newunit\newblock
   \usebibmacro{chapter+pages}%
   %\newunit\newblock
   \usebibmacro{doi+eprint+url}%移到上面来
@@ -2895,69 +2886,8 @@ incollection,proceedings,inproceedings]{number}{%
     {\printfield{isbn}}
     {}%
   \newunit\newblock
-  %\usebibmacro{doi+eprint+url}%
+%  \usebibmacro{doi+eprint+url}%
 %  \newunit\newblock
-  \usebibmacro{addendum+pubstate}%
-  \setunit{\bibpagerefpunct}\newblock
-  \usebibmacro{pageref}%
-  \newunit\newblock
-  \iftoggle{bbx:related}
-    {\usebibmacro{related:init}%
-     \usebibmacro{related}}
-    {}%
-  \usebibmacro{finentry}}
-
-
-%
-%
-%   文集类型驱动
-%
-%   直接利用book做collection
-  \DeclareBibliographyDriver{collection}{%
-  \usebibmacro{bibindex}%
-  \usebibmacro{begentry}%
-\usebibmacro{author/editor+others/translator+others}
-\ifnameundef{author}{%这一段用于去除作者不存在时多出的标点
-    \ifnameundef{editor}{%
-        \ifnameundef{translator}{\relax}%
-            {\setunit{\labelnamepunct}\newblock}}%
-        {\setunit{\labelnamepunct}\newblock}}%
-    {\setunit{\labelnamepunct}\newblock}%
-  \usebibmacro{maintitle+title}
-  \iftoggle{bbx:gbstrict}{}{%
-  \newunit%
-  \printlist{language}%
-  \newunit\newblock
-  \usebibmacro{byauthor}}%
-  \newunit\newblock
-  \usebibmacro{byeditor+others}%
-  \newunit\newblock
-  \printfield{edition}%
-  \newunit
-  \iffieldundef{maintitle}
-    {\printfield{volume}%
-     \printfield{part}}
-    {}%
-  \newunit
-  \printfield{volumes}%
-  \newunit\newblock
-  \usebibmacro{series+number}%
-  \newunit\newblock
-  %\printfield{note}%
-  %\newunit\newblock
-  \usebibmacro{publisher+location+date}%
-  %\newunit\newblock %这里标点去掉
-  \usebibmacro{chapter+pages}%
-  \usebibmacro{doi+eprint+url}%从下面移动到上面来，因为gbt2015的url需直接放在页码后面。
-  \newunit\newblock
-  \printfield{pagetotal}%
-  \newunit\newblock
-  \iftoggle{bbx:isbn}
-    {\printfield{isbn}}
-    {}%
-  \newunit\newblock
-  %\usebibmacro{doi+eprint+url}%
-  %\newunit\newblock
   \usebibmacro{addendum+pubstate}%
   \setunit{\bibpagerefpunct}\newblock
   \usebibmacro{pageref}%

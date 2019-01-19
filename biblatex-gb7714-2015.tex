@@ -789,23 +789,22 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \caption{多语言混合文献表}\label{fig:multi:lan}
 \end{figure}
 
-使用xelatex编译时下，由于其原生支持unicode的特性，在tex文档内实现多语言混合比较容易实现，要正确显示关键在于合适的字体设置。一般情况下中/日/韩语利用ctex宏包可以解决。而西文如英/法/俄可以利用fontspec宏包选择合适的字体来解决。
+使用xelatex编译时下，由于其原生支持unicode的特性，在tex文档内实现多语言混合比较容易实现，要正确显示关键在于合适的字体设置。一般情况下中/日/韩语利用ctex宏包可以解决。而西文如英/法/俄可以利用fontspec宏包选择合适的字体来解决。注意要正确的显示中/日/韩语也需要字体字体，windows下常见的中文字体可能不支持日/韩字符，而思源宋体是一个不多的选择。本文中的多语言示例编译中，需要使用思源宋体常规(SourceHanSerifSC-Regular.otf)，请从其官网下载，
 
 对于参考文献来说还有一个更重要的问题是本地化字符串问题。中英文情况下，中文利用在英文本地化文件基础上新增本地化字符串加以解决。但其它语言需要自己的解决方案。
 
-如第\ref{sec:usage:bbx}节所述，本样式使用language域来区分文献的语言类型，默认情况下该域不需要人工输入，可由biber根据文献信息自动判断，但也可以手动输入来人工指定。根据 biblatex 提供的多语言解决方案，还需要利用langid/langidopt域，以及babel/polyglossia宏包的支持。
+如第\ref{sec:usage:bbx}节所述，本样式使用language域来区分文献的语言类型，默认情况下该域不需要人工输入，可由biber根据文献信息自动判断，但也可以手动输入来人工指定。根据 biblatex 提供的多语言解决方案，还需要利用langid/langidopt域，以及babel/polyglossia宏包的支持。对于是否在标注和文献表中采用多语言处理方案，则需要设置language选项，等于autobib时仅在文献表中设置，等于 autocite 时仅在标注中设置,等于 auto时则同时在文献表和标注中设置。对于不同语言的文献需要将langid域设置成文献所用的语言，然后设置 autolang选项，等于none则不做多语言处理，等于hyphen则仅做不同语言的断词处理，等于other或other*则处理不同语言的断词和本地化字符串，other*选项等价于使用babel的otherlanguage*环境，与other的差别在于不忽略环境后的空白。从实践看，当要使用条目集时，使用other*选项更为合适。
 
 目前的解决方案做如下的考虑：
 \begin{enumerate}
-  \item 日韩语采用类似中文的方式处理，即通过在英语本地化文件基础上处理。因此langid通常设为english。对于日文通常作者这种信息都是用的汉字，因此用中文的字符串。韩语暂没有考虑它自身的字符串，而使用英文的字符串。当不存在除英文外的其它西语时，langid也不需要处理。注意：默认情况下 langid 都是自动处理的，用户无需过多关注。
-  \item 如俄语/法语这样的西方语言，通过biblatex提供的方案解决。即：使用babel/polyglossia宏包和langid/langidopt域。这时如果存在中日韩语，那么相应文献也需要设置langid。因此，需要在tex文档内加入babel宏包以及需要使用的语言，需要使用本地化字符串的西语都要加入，否则无法自动切换。然后在加载biblatex宏包时使用 autolang=other 选项。
+  \item 如俄语/法语这样的西方语言，通过biblatex提供的方案解决。即：使用babel/polyglossia宏包和langid/langidopt域。这时如果存在中日韩语，那么相应文献也需要设置langid。使用时需要在tex文档内加入babel宏包以及需要使用的语言，需要使用本地化字符串的西语都要加入，否则无法自动切换。然后在加载biblatex宏包时使用 autolang=other 选项。bib文件中的文献数据按文献本身的语言录入，不用特殊的处理，语言类型由gb7714-2015样式自动判断.
+  \item 日韩语采用类似中文的方式处理，即通过在英语本地化文件基础上处理，因此langid通常设为english。在输出本地化字符串的宏中，当做英文处理，但内部存在区分逻辑。当判断语言为中文时，则使用中文的本地化字符串比如andcn，andotherscn等， 当不是时，则判断不同的语言，是日文则输出本地化字符串如andjp，andothersjp，若是韩文则输出本地化字符串如andkr，andotherskr，对于其他西文则输出本地化字符串比如and，andothers，由babel自动切换对应语言的字符串。由于日文通常作者这种信息都是用的汉字，因此常常判断为中文，所以可以使用符合中文习惯的字符串，如果对日文有精确的判断，那么会输出符合日文习惯的字符串。韩语由于大量使用表音的字符，所以要使用专门的本地化字符串。中日韩语文献数据录入也不要特殊的他处理，language和langid 域均能由gb7714-2015样式自动处理，用户无需过多关注。
+
 \end{enumerate}
 
 本样式做了中日韩英俄法六种语言的测试，详细内容见：
 \href{run:example/opt-eg-multilan.tex}{opt-eg-multilan.tex}，
 \href{run:example/opt-autolang-multilan.tex}{opt-autolang-multilan.tex}。
-
-
 
 
 \subsection{多语言对照的文献表}\label{sec:multilan:implement}
@@ -861,7 +860,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{texlist}
 \end{example}
 
-\qd{注意到“易仕和，等，2013”中的逗号是中文全角逗号，这样使得“易仕和，等，2013”以一个整体字符串当作关键字，而不会被分开解析。但是这种解决方案中的中文全角逗号与其它标签的英文逗号的差异使得该问题并没有完美解决。这可以用静态方法手动添加标签来解决，对于biblatex v3.8及以上版本还可以利用后面介绍的关联(related)方法来解决。}
+\qd{注意到“易仕和，等，2013”中的逗号是中文全角逗号，这样使得“易仕和，等，2013”以一个整体字符串当作关键字，而不会被分开解析。但是这种解决方案中的中文全角逗号与其它标签的英文逗号的差异使得该问题并没有完美解决。这可以用静态方法手动添加标签来解决，对于biblatex v3.8 及以上版本还可以利用后面介绍的关联(related)方法来解决。}
 
 静态方法是在bib源文件中给出条目集(set)并使用biber后端进行解析，条目的域信息采用如下方法定义:
 %当使用bibtex后端时，则需要进一步设置，具体参考biblatex宏包说明文档。
@@ -1171,7 +1170,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
       比如:2001-05-06/2001-08-01
 
-      其中第一个年-月-日会解析并存储到year，month，day域中，第二个会解析并存储到endyear，endmonth，endday域中。更多细节参考biblatex手册的Table 8: Date Interface。
+      \emph{特别要注意起止日期之间的分隔符为/而不是- ，因为年月日之间已经存在分隔符- }，其中第一个年- 月- 日会解析并存储到year，month，day域中，第二个会解析并存储到endyear，endmonth，endday域中。更多细节参考biblatex 手册的Table 8: Date Interface。
 
   \item[year] year域的输入与date域类似，为了兼容一些老的bib文件，把year 直接用map 转换成date，所以在本样式的使用中输入year域与date域相同。
 
@@ -1210,142 +1209,32 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 \end{itemize}
 
 
-
-
-
-
-
-\section{参考文献著录格式示例}
+\section{参考文献著录格式示例}\label{sec:eg:gb77142015}
 
 %\subsection{GB/T 7714-2015 中的著录标准和顺序编码制示例}
 
-\includepdf[pages={1-5}]{egfigure/eggbcitation.pdf}
+%\includepdf[pages={1-5}]{egfigure/eggbcitation.pdf}
+
 
 %\subsection{GB/T 7714-2015 中的著者年份制示例}
 
-\includepdf[pages={1-2}]{egfigure/eggbcitationay.pdf}
+%\includepdf[pages={1-2}]{egfigure/eggbcitationay.pdf}
 
-\subsection{GB/T 7714-2015 中的附录参考文献示例}\label{sec:eg:gb77142015}
+%\subsection{GB/T 7714-2015 中的附录参考文献示例}
 
-\begin{refsection}
-普通图书(book)
-\cite{张伯伟2002--}
-\cite{2009-155-155}
-\cite{胡承正2010-112-112}
-\cite{美国妇产科医师学会2010-38-39}
-\cite{1962-50-50}
-\cite{汪昂1881--}
-\cite{蒋有绪1998--}
-\cite{中国企业投资协会2013--}
-\cite{罗斯基2009--}
-\cite{库恩2012--}
-\cite{候文顺2010-119-119}
-\cite{CRAWFPRD1995--}
-\cite{IFLAI1977--}
-\cite{OBRIEN1994--}
-\cite{Kinchy2012-50-50}
-\cite{Praetzellis2011-13-13}
-
-论文集(collection)、会议录(proceedings)
-\cite{中国职工教育研究会1985--}
-\cite{中国社会科学院台湾史研究中心2012--}
-\cite{雷光春2012--}
-\cite{陈志勇2011--}
-\cite{Babu2014--}
-
-报告(report)
-\cite{中华人民共和国国务院新闻办公室2013-04-16--}
-\cite{汤万金2013-09-30--}
-\cite{Calkin2011-8-9}
-\cite{DTFHA1990--}
-\cite{WHO1970--}
-
-学位论文(thesis)
-\cite{马欢2011-27-27}
-\cite{吴云芳2003--}
-\cite{CALMS1965--}
-
-专利文献(patent)
-\cite{张凯军2012-04-05--}
-\cite{河北绿洲生态环境科技有限公司2001--}
-\cite{KOSEKI2002--}
-
-标准文献(book,inbook,note=standard)
-\cite{全国信息文献标准化技术委员会2010-3-3}
-\cite{全国广播电视标准化技术委员会2007-1-1}
-\cite{国家环境保护局科技标准司1996-2-3}
-\cite{standardinfoiso158}
-
-专著中析出的文献(inbook)
-\cite{1988-590-590}
-\cite{白书农1998-146-163}
-\cite{汪学军2002-22-25}
-\cite{国家标准局信息分类编码研究所1988-59-92}
-\cite{1977-49-49}
-\cite{楼梦麟2011-11-12}
-\cite{BUSECK1980-117-211}
-\cite{FOURNEY1971-17-38}
-
-期刊中析出的文献(article)
-\cite{杨洪升2013-56-75}
-\cite{李炳穆2000-5-8}
-\cite{于潇2012-1518-1523}
-\cite{陈建军2010-93-93}
-\cite{DESMARAIS1992-605-609}
-\cite{Saito2006-169-176}
-\cite{Walls2013-399-418}
-\cite{Franz2013-1053-1062}
-\cite{Park2010-696-715}
-
-报纸中析出的文献(article,note=news)
-\cite{丁文祥2000--}
-\cite{张田勤2000--}
-\cite{傅刚2000--}
-\cite{刘裕国2013-01-12--}
-
-电子资源(online)
-\cite{萧钰2001--}
-\cite{李强2012-05-03--}
-\cite{Commonwealth--}
-\cite{Dublin2012-06-14--}
+%\includepdf[pages={1-4}]{egfigure/eggbbiblio.pdf}
 
 
-\printbibliography[heading=subbibliography,type=book,notkeyword=standard,title=【A1- 普通图书-著录格式示例】]%subbibintoc
-\defbibfilter{collections}{%
-type=collection
-or type=proceedings
-or type=incollection
-or type=inproceedings
-}
-\printbibliography[heading=subbibliography,filter=collections,title=【A2-论文集、会议录-著录格式示例】]
-\printbibliography[heading=subbibliography,type=report,title=【A3-报告-著录格式示例】]
-\printbibliography[heading=subbibliography,type=thesis,title=【A4-学位论文-著录格式示例】]
-\printbibliography[heading=subbibliography,type=patent,title=【A5-专利-著录格式示例】]
-\defbibfilter{standard}{%
-( type=book or type=inbook )
-and keyword=standard
-}
-\printbibliography[heading=subbibliography,filter=standard,title=【A6-标准文献-著录格式示例】]
-\hypertarget{entrystdwithoutauthor}{注意:这里最后一篇标准文献没有责任者，所以作者年制默认情况下无法给出文献标识符。}
-\printbibliography[heading=subbibliography,type=inbook,notkeyword=standard,title=【A7- 专著中析出的文献-著录格式示例】]
-\printbibliography[heading=subbibliography,type=article,notkeyword=news,title=【A8- 期刊中析出的文献-著录格式示例】]
-\printbibliography[heading=subbibliography,keyword=news,title=【A9-报纸析出的文献-著录格式示例】]%type=article,有时type是newspaper所以不指定type为article
-\printbibliography[heading=subbibliography,type=online,title=【A10-电子资源-著录格式示例】]
-\end{refsection}
 
-\subsection{beamer类中的应用示例}
+\subsection{GB/T 7714-2015 标准示例}
 
-beamer类中的参考文献示例，参见:
-
-顺序编码制:
-\href{run:./example/egbeamer.tex}{cls-beamer.tex}，
-
-作者年制:
-\href{run:./example/egbeameray.tex}{cls-beameray.tex}，
+详见文档：\href{run:./stdGBT7714-2015.pdf}{GBT7714-2015std}
 
 \subsection{更多示例}
 
 \begin{itemize}
+
+  \item 示例: beamer类中的参考文献示例
 
   \item 示例: 专著book和专著中的析出文献inbook及标准standard文献
 
@@ -1375,8 +1264,14 @@ beamer类中的参考文献示例，参见:
 
 \end{itemize}
 
-示例文件，参见:
+beamer类示例，参见: \href{run:./example/egbeamer.tex}{顺序编码制}；
+\href{run:./example/egbeameray.tex}{作者年制}。
+
+其它示例，参见:
 \href{run:./example/testallformat.tex}{testallformat.tex}。
+
+详见文档:
+\href{run:./example/stdGBT7714-2015eg.pdf}{GBT7714-2015egstd}。
 
 \section{GB/T 7714-2015 标准说明与实现}
 
@@ -1441,18 +1336,16 @@ author.title[usera].translator.edition.location:publisher,date或year:pages[urld
 
 其中标题相关的附加信息除了可以直接在title域中录入外，还可以在subtitle或titleaddon域中添加，后面出现的booktitle，journaltitle，也有类似情况，可以在booktitleaddon或者journalsubtitle中附加信息。其中出版地用location域表示，也可以用传统的address表示，biblatex将address作为location的别名处理，使用两者中的任何一个都可以表示出版地信息。\bc{特别强调: usera域不用录入，该域内容由bbx样式文件根据条目类型自动处理得到。}
 
-\qd{由于biblatex不支持standard条目类型，所以“标准”类型可以用book或inbook替代，但使用note域等于standard作为一个区分，当note域数据存在且内容等于standard时，就将其作为“标准”文献进行处理，其文献类型标识用S表示。这里为什么使用note域而不是type域和keywords域，是因为考虑到note域一般情况没有什么特殊意义，使用它不会导致冲突，而type域在biblatex标准样式中没有被book和article条目类型当作支持的域，对于支持该域的条目比如thesis，type域又有特殊的意义，是用来区分master和doctor的，而keywords域倒是可以使用，只是该域一般很少在jabref之类软件的默认域中，需要进一步设置，而且可能带来不通用的问题。}
+\qd{由于biblatex不支持standard条目类型，所以“标准”类型可以用book或inbook替代，但使用note域等于standard作为一个区分，当note域数据存在且内容等于standard时，就将其作为“标准”文献进行处理，其文献类型标识用S表示。这里为什么使用note域而不是type域和keywords域，是因为考虑到note域一般情况下没有什么特殊意义，使用它不会导致冲突，而type域在biblatex标准样式中没有被book和article条目类型当作支持的域，对于支持该域的条目比如thesis，type域又有特殊的意义，是用来区分master和doctor的，而keywords域倒是可以使用，只是该域一般很少在jabref之类软件的默认域中，需要进一步设置，而且可能带来不通用的问题。}
 
 \subsubsection{标准/standard}\label{sec:standard}
-“标准”(standard)作为一种文献条目类型biblatex并不支持，因此可以如上一小节所述，直接利用book或inbook类型加note域代替。
-或者使用本节下面给出的方式。
-
-因为在一些bib文件中可能存在standard类型，为兼容性考虑，本样式对standard条目类型做了支持。著录格式的处理原理与前一节所述相同，只是利用动态数据将standard类型转换为book/inbook类型。因此在bib文件中可以直接使用standard类型，但要注意使用其它样式时可能存在移植障碍，因为其它样式可能不支持standard类型，为样式移植性考虑最好使用上一节的方式。
+“标准”(standard)作为一种文献条目类型biblatex并不支持，因此直接利用book或inbook类型加note域等于standard代替。当然为了兼容传统BIBTeX格式存在standard类型的情况，也可以直接使用standard类型。
+为此本样式对standard条目类型做了特别支持。著录格式的处理原理与前一节所述相同，只是利用动态数据将standard类型转换为book/inbook类型。在bib文件中直接使用standard类型时注意使用其它biblatex样式时可能存在移植障碍，因为其它样式可能不支持standard类型。
 
 \begin{refentry}{}{}
 标准对应的biblatex的entrytype为: standard。文献类型标识用S表示。
 
-\bibliofmt{其著录格式为}(与book和inbook类型类似，其中圆括号内是与inbook类似时存在的内容，同时当出版地和出版者不存在时直接忽略，这是与book和inbook不同的地方。):\\
+\bibliofmt{其著录格式为}(与book和inbook类型类似，其中圆括号内是与inbook类似时存在的内容，此外当出版地和出版者不存在时直接忽略，这是与book和inbook不同的地方。):\\
 主要责任者.文献题名[文献类型标识/文献载体标识].其他责任者(//所在文献集主要责任者.文献集题名:其他题名信息).版本项.出版地:出版者,出版年:文献的页码[引用日期].获取和访问路径.数字对象唯一标识符.
 \end{refentry}
 
@@ -1463,7 +1356,7 @@ author.title[usera](//bookauthor.booktitle).edition.location:publisher,date或ye
 \end{texlist}
 \end{example}
 
-需要注意的是: 根据GB/T 7714-2015标准第19页的标准文献示例，当标准不存在出版项时，直接省略。
+\emph{需要注意的是: 根据GB/T 7714-2015标准第19页的标准文献示例，当标准不存在出版项时，直接省略}。
 
 
 \subsubsection{专著中的析出文献/inbook}
@@ -1517,9 +1410,7 @@ author.title[usera].journaltitle或journal,year,volume(number):pages[urldate].ur
 \qd{由于biblatex不支持newspaper 条目类型，所以条目类型报纸析出的文献用article表示，但使用note域等于news作为一个区分，当note域数据存在且内容等于news时，就将其作为报纸的析出文献进行处理。报纸文献类型标识用N表示，报纸的版次用number域描述。}
 
 \subsubsection{报纸析出的文献/newspaper}\label{sec:standard}
-biblatex没有将报纸的析出文献(newspaper)作为一种文献条目类型，因此可以如上一小节所述，直接利用article类型加note域代替。或者使用本节下面给出的方式。
-
-因为报纸析出的文献的文献标识码比较特殊不是J而是N，所以可以把报纸析出的文献独立出来进行处理。为方便使用考虑，本样式增加了对一个全新的类型newspaper的支持，这种支持通过类似于standard类型的方式实现，没有对数据模型进行改动或增加，而完全利用动态数据修改将newspaper类型转换为article类型。因此在bib文件中可以直接使用newspaper类型，但要注意使用其它样式时可能存在移植障碍，因为其它样式可能不支持newspaper类型，为样式移植性考虑最好使用上一节的方式。
+biblatex没有将报纸的析出文献(newspaper)作为一种文献条目类型，因此可以直接利用article类型加note域等于news代替，或者也可以直接使用newspaper类型。为方便使用考虑，本样式增加了对新条目类型newspaper的支持，这种支持通过类似于standard类型的方式实现，没有对数据模型进行改动或增加，而完全利用动态数据修改将newspaper类型转换为article类型。在bib文件中直接使用newspaper类型时需要注意可能存在移植障碍，因为其它biblatex样式可能不支持newspaper类型。
 
 \begin{refentry}{}{}
 报纸析出的文献对应一个新的entrytype为: newspaper。文献类型标识用N表示。
@@ -1534,6 +1425,8 @@ biblatex没有将报纸的析出文献(newspaper)作为一种文献条目类型�
 author.title[usera].journaltitle或journal,date(number)[urldate].url.doi
 \end{texlist}
 \end{example}
+
+\qd{newspaper类型与article类型的差别主要是(1)文献标识码不是J而是N；(2)报纸的日期需要表示到日。}
 
 \subsubsection{专利/patent}
 \begin{refentry}{}{}%[break at=3cm/0pt]
@@ -1550,9 +1443,12 @@ author.title:number[usera].date或year[urldate].url.doi
 \end{texlist}
 \end{example}
 
+\qd{需要注意：公告日期或公开日期需要表示到日。}
+
 \subsubsection{电子资源/online}
 \begin{refentry}{}{}%[break at=0.4cm/0pt]
-电子资源对应的biblatex的entrytype为: online或electronic或者www。文献类型标识用EB表示。\bc{(注意: biblatex将electronic或www作为online条目类型的别名，对于标准样式来说这两者出现在bib文件中等同于online，但这种等同标准样式是在驱动层进行处理的，而gb7714-2015样式还需要处理文献类型标识，本样式文件做了进一步支持。因此bib文件中也可以直接使用electronic和www。)}
+电子资源对应的biblatex的entrytype为: online或electronic或者www。文献类型标识用EB表示。
+\bc{(注意: biblatex将electronic或www作为online条目类型的别名，对于标准样式来说这两者出现在bib文件中等同于online，但这种等同标准样式是在驱动层进行处理的，而gb7714-2015样式还需要处理文献类型标识，本样式文件做了进一步支持。因此bib文件中也可以直接使用electronic和www。)}
 
 \bibliofmt{其著录格式为}(参考GB/T 7714-2015第4.6节):\\
 主要责任者.题名:其他题名信息[文献类型标识/文献载体标识].出版地:出版者,出版年:引文页码(更新或修改日期)[引用日期].获取和访问路径.数字对象唯一标识符.
@@ -1565,7 +1461,7 @@ author.title[usera].organization,date或year:pages(date/enddate/eventdate)[urlda
 \end{texlist}
 \end{example}
 
-\qd{尽管GB/T 7714-2015中给出的著录格式包含出版地和出版者，但通常情况下具有出版地和出版者的文献会归类到其它条目类型中，至于存在的url信息，只要标识文献载体即可，即一般情况下(出版地:出版者,出版年:引文页码)这些信息很少出现在online[EB]条目中。因此默认情况下，gb7714-2015样式只处理出现organization中的出版项信息，此外用date表示更新或修改日期，urldate表示引用(访问)日期。如果出现复杂情况，更新或修改日期还可以利用enddate/eventdate表示。}
+\qd{尽管GB/T 7714-2015中给出的著录格式包含出版地和出版者，但通常情况下具有出版地和出版者的文献会归类到其它条目类型中，至于存在的url信息，只要标识文献载体即可，即一般情况下(出版地:出版者,出版年:引文页码)这些信息很少出现在online[EB]条目中。因此默认情况下，gb7714-2015样式只处理出现organization中的出版项信息，此外用date表示更新或修改日期，urldate表示引用(访问)日期。如果出现复杂情况，更新或修改日期还可以利用enddate/eventdate表示。注意修改日期需要表示到日}
 
 以上是GB/T 7714-2015直接给出著录格式的条目类型，还有一些类型并没有给出具体格式，但在例子中也有所体现，本样式文件根据这些例子，给出了著录格式。
 
@@ -1593,28 +1489,12 @@ author.title[usera].organization,date或year:pages(date/enddate/eventdate)[urlda
 
 \subsubsection{会议文集中析出的文献/inproceedings}
 \begin{refentry}{}{}
-会议文集中析出的文献对应的biblatex的entrytype为:inproceedings。文献类型标识用C表示。\bc{(注意: biblatex将conference作为inproceedings条目类型的别名，对于标准样式来说conference出现在bib文件中等同于inproceedings，但这种等同标准样式是在驱动层进行处理的，而gb7714-2015样式还需要处理文献类型标识，本样式文件做了进一步支持。因此bib文件中也可以直接使用conference。)}
+会议文集中析出的文献对应的biblatex的entrytype为:inproceedings。文献类型标识用C表示。
+\bc{(注意: biblatex将conference作为inproceedings条目类型的别名，对于标准样式来说conference出现在bib文件中等同于inproceedings，但这种等同标准样式是在驱动层进行处理的，而gb7714-2015样式还需要处理文献类型标识，本样式文件做了进一步支持。因此bib文件中也可以直接使用conference。)}
 
 \bibliofmt{其著录格式为} 采用与inbook类似的格式。
 \end{refentry}
 
-\subsubsection{学位论文/thesis}
-\begin{refentry}{}{}
-学位论文对应的biblatex的entrytype为: thesis。文献类型标识用D表示。\bc{(注意:biblatex将mastersthesis或phdthesis作为thesis条目类型的别名，对于标准样式来说这两者出现在bib文件中基本等同于thesis，但却会增加type信息。但这种等同，标准样式是在驱动层进行处理的，而gb7714-2015样式还需要处理文献类型标识并且不需要type信息，本样式文件做了进一步支持。因此bib文件中也可以使用mastersthesis和phdthesis)。}
-
-\bibliofmt{其著录格式为} 由biblatex的标准thesis格式修改得到。
-
-主要责任者.题名:其他题名信息[文献类型标识/文献载体标识].其他责任者.出版地:出版者,出版年:引文页码[引用日期].获取和访问路径.数字对象唯一标识符.
-\end{refentry}
-
-其对应的biblatex数据域为:
-\begin{example}{学位论文/thesis/mastersthesis/phdthesis条目的域格式}{eg:thesisfieldfmt}
-\begin{texlist}
-author.title[usera].translator.location:institution,date或year:pages[urldate].url.doi
-\end{texlist}
-\end{example}
-
- \bc{thesis和后面report及manual的出版者用institution域表示，体现的是机构而不是一般的出版社。}
 
 \subsubsection{报告/report}
 \begin{refentry}{}{}
@@ -1632,13 +1512,31 @@ author.title[usera].translator.type number.version.location:institution,date 或
 \end{texlist}
 \end{example}
 
-\qd{因为有的报告文献可能存在类型和报告号信息，比如AIAA 9076或AD 730029等，所以著录格式需要有所体现，而这两个数据体现在type和number两个域中，或者在version域中体现也可，而对于标题中的出现的报告号，可以直接在标题或子标题或者附加标题中体现。report和后面manual的版本信息放在version域中，而不是book等条目的edition域中。}
+\qd{因为有的报告文献可能存在类型和报告号信息，比如AIAA 9076或AD 730029等，所以著录格式需要有所体现，而这两个数据体现在type和number两个域中，或者在version域中体现也可，而对于标题中的出现的报告号，可以直接在标题或子标题或者附加标题中体现。report的版本信息放在version域中，而不是book等条目的edition域中。出版项处理与book一样，但当出版项缺省时，且存在网址时，直接省略出版项，且加上修改和更新日期，类似于online类型的处理。}
+
+\subsubsection{学位论文/thesis}
+\begin{refentry}{}{}
+学位论文对应的biblatex的entrytype为: thesis。文献类型标识用D表示。\bc{(注意:biblatex将mastersthesis或phdthesis作为thesis条目类型的别名，对于标准样式来说这两者出现在bib文件中基本等同于thesis，但却会增加type信息。但这种等同，标准样式是在驱动层进行处理的，而gb7714-2015样式还需要处理文献类型标识并且不需要type信息，本样式文件做了进一步支持。因此bib文件中也可以使用mastersthesis和phdthesis)。}
+
+\bibliofmt{其著录格式为} 由biblatex的标准thesis格式修改得到。
+
+主要责任者.题名:其他题名信息[文献类型标识/文献载体标识].其他责任者.出版地:出版者,出版年:引文页码[引用日期].获取和访问路径.数字对象唯一标识符.
+\end{refentry}
+
+其对应的biblatex数据域为:
+\begin{example}{学位论文/thesis/mastersthesis/phdthesis条目的域格式}{eg:thesisfieldfmt}
+\begin{texlist}
+author.title[usera].translator.location:institution,date或year:pages[urldate].url.doi
+\end{texlist}
+\end{example}
+
+ \bc{thesis出版者用institution域表示，体现的是机构而不是一般的出版社。注意：thesis类型的出版项缺失时直接省略。}
 
 \subsubsection{手册或档案/manual/archive}
 \begin{refentry}{}{}
 手册和档案采用一种格式，对应的biblatex的entrytype为: manual或archive。文献类型标识用A表示。
 
-\bibliofmt{其著录格式为} 借用report格式处理，而不是标准样式中的manual格式，这种方式下，当没有出版地和出版者时，完全省略，因为GB/T 7714-2015并没有明确这种情况怎么处理。
+\bibliofmt{其著录格式为} 借用thesis格式处理，而不是标准样式中的manual格式，这种方式下，当没有出版地和出版者时，完全省略。
 \end{refentry}
 
 
@@ -1646,16 +1544,18 @@ author.title[usera].translator.type number.version.location:institution,date 或
 \begin{refentry}{}{}
 未出版物，对应的biblatex的entrytype为: unpublished。文献类型标识用Z表示。
 
-\bibliofmt{其著录格式为} 借用report格式处理。
+\bibliofmt{其著录格式为} 借用thesis格式处理。
 \end{refentry}
 
 \subsubsection{更多类型}
 \begin{refentry}{}{}
 数据库（database）、数据集（dataset）、软件（software）、舆图（map）、其它（misc）分别使用自己的数据类型和类型标识符。
 
-\bibliofmt{其著录格式为} 借用report格式处理。
+\bibliofmt{其著录格式为} 借用thesis格式处理。
 \end{refentry}
 
+
+\qd{注意：从report类开始的这些类型，当不存在出版项，且存在网址时，都转换为采用online的格式处理。}
 
 
 \subsection{标准的其它细节要求}
@@ -1691,7 +1591,7 @@ author.title[usera].translator.type number.version.location:institution,date 或
 \begin{property}{}{}
 用户给bib源文件录入引文的责任者信息时，当责任者为多级机关团体时，用户填入auther数据信息时，应按照GB/T 7714-2015第8.1.4节要求，用英文句点.号分隔。
 
-当责任者是个人英文名，且具有名、姓、前缀和后缀，应按照第\ref{sec:bib:bibtex}节给出姓名录入方式处理才能才能正确解析，比如：von Peebles, Jr., P. Z.，其中von为姓前的前缀，Jr.为姓后的后缀，P. Z.为缩写名(包括first name 和middle name)。
+当责任者是个人英文名，且具有名、姓、前缀和后缀，应按照第\ref{sec:bib:bibtex}节给出姓名录入方式处理才能才能正确解析，比如：von Peebles, Jr., P. Z.，其中von为姓前的前缀，Jr.为姓后的后缀，P. Z. 为缩写名(包括first name 和middle name)。
 
 本样式实现了GB/T 7714-2015第8.1节要求的责任者样式，能自动判断责任者是中文还是英文，并分别处理。并且设置了全局选项useprefix=true，可以使用前缀。
 \end{property}
@@ -1701,7 +1601,7 @@ author.title[usera].translator.type number.version.location:institution,date 或
 \begin{property}{}{}
 用户在给bib源文件录入引文题名信息时，不需要给出文献类型标识/文献载体标识。同一责任者的合订题名，应用户根据GB/T 7714-2015 第8.2.1节的要求，在多个题名间用英文分号分隔，并整体录入到title数据域中。而分卷号，卷次，册次等信息时，除了专利号用number域录入外，其它可以直接在title数据域或者subtitle/titleaddon等数据域中给出。
 
-本样式实现了符合GB/T 7714-2015第8.2节要求的格式，能根据条目信息确定文献类型标识/文献载体标识，并在各类参考文献条目驱动中直接使用。各不同类型文献的类型标识/文献载体标识，参考GB/T 7714-2015表B.1和B.2。
+本样式实现了符合GB/T 7714-2015第8.2节要求的格式，能根据条目信息确定文献类型标识/文献载体标识，并在各类参考文献条目驱动中直接使用。各不同类型文献的类型标识/文献载体标识，参考GB/T 7714-2015 表B.1和B.2。
 \end{property}
 
 \subsubsection{版次}\label{sec:fmt:edition}

@@ -1,6 +1,15 @@
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015样式，对于洗出文献的//符号的控制和选项
+% 测试gbpunctin=false选项
+% 测试本地化字符串in的设置
 \documentclass[twoside]{article}
 \usepackage{ctex}
 \usepackage[backend=biber,style=gb7714-2015,gbpunctin=false,gbpub=false,gbnamefmt=lowercase]{biblatex}%
+
+\DefineBibliographyStrings{english}{
+in={源自:\ }
+}
+
 \usepackage{filecontents}
 \begin{filecontents}{\jobname.bib}
 @Inproceedings{ref-replace-char,
@@ -35,7 +44,7 @@
     \addbibresource{\jobname.bib}
 
     \begin{document}
-    \section{Inproceedings references}
+    \section{测试gb7714-2015样式对于析出文献的//符号的控制和选项}
 
     \nocite{*}
     \printbibliography
