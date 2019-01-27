@@ -26,7 +26,7 @@ cd ..
 
 cd egfigure
 
-call makefileeg.bat
+call makecompilefig.bat
 
 cd ..
 

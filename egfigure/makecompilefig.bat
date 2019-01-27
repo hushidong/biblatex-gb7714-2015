@@ -29,7 +29,7 @@ setlocal DISABLEDELAYEDEXPANSION
 
 
 
-call makeclear
+call makeclearfig
 
 
 del *.bbx /Q

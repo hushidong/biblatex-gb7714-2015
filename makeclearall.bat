@@ -7,9 +7,11 @@ del /q *.aux *.bbl *.blg *.log *.out *.toc *.bcf *.xml *.synctex *.nlo *.nls *.b
 del /q *.nav *.snm *.vrb *.fls *.xdv *.fdb_latexmk
 
 
+del /q *.gitignore
+
 cd example
 
-call makeclear
+call makecleareg
 
 
 del *.bbx /Q
@@ -25,7 +27,7 @@ cd ..
 
 cd egfigure
 
-call makeclear
+call makeclearfig
 
 
 del *.bbx /Q

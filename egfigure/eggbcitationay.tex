@@ -56,6 +56,8 @@ the notion of an invisible college has been explored in thesciences\cite{CRANE19
 
 
 \printbibliography[heading=subbibliography]
+
+注意：由于biblatex在进行姓名列表非歧义处理时，通常会将作者列表截短后形成的etal考虑在内，所以王临慧这两篇文献的作者列表认为是不同的。但biblatex3.13(biber2.13)引入了一个新的选项，用于在非歧义处理中忽略etal，所以会将两篇文献的列表认为相同，所以会添加a，b以区分。
 \end{refsection}
 
 \subsection*{10.2.4 多次引用同一著者的同一文献}

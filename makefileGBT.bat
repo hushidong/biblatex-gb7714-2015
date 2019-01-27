@@ -6,7 +6,7 @@ title %date% %time% makefileGBT
 
 cd egfigure
 
-call makefileGBT.bat
+call makecompileGBT.bat
 
 cd ..
 
