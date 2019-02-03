@@ -1,0 +1,168 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015样式，能否对实现国标要求的脚注文献表
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{xcolor}
+\usepackage{toolbox}
+\usepackage[colorlinks]{hyperref}
+\usepackage{lipsum}
+\usepackage[paperwidth=15cm,paperheight=11.5cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
+\usepackage{xltxtra,mflogo,texnames}
+\usepackage[backend=biber,style=gb7714-2015]{biblatex}
+
+\renewcommand{\bibfont}{\small}
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+
+@Book{易仕和2013--,
+  Title                    = {超声速和高超声速喷管设计},
+  Address                  = {北京},
+  Author                   = {易仕和 and 赵玉新 and 何霖 and 张敏莉},
+  Publisher                = {国防工业出版社},
+  Year                     = {2013}
+}
+
+@Book{Yi2013--,
+  Title                    = {Supersonic and hypersonic nozzle design},
+  Address                  = {Beijing},
+  Author                   = {Yi, Shi He and Zhao, Yu Xin and He, Lin and Zhang, Min Li},
+  Publisher                = {National Defense Industry Press},
+  Year                     = {2013}
+}
+
+@Article{张敏莉2007-500-503,
+  Title                    = {超声速短化喷管的设计和试验研究},
+  Author                   = {张敏莉 and 易仕和 and 赵玉新},
+  Journal                  = {空气动力学报},
+  Number                   = {4},
+  Pages                    = {500-503},
+  Volume                   = {25},
+  Year                     = {2007}
+}
+
+@Article{Zhang2007-500-503,
+  Title                    = {The design and experimental investigations of supersonic length shorted nozzle},
+  Author                   = {Zhang, Min-li and Yi, Shi-he and Zhao, Yu-xin},
+  Journal                  = {ACTA AERODYNAMICA SINICA},
+  Number                   = {4},
+  Pages                    = {500-503},
+  Volume                   = {25},
+  Year                     = {2007}
+}
+
+@Book{Peebles2001-100-100,
+  Title                    = {Probability, random variable, and random signal Principles and \LaTeX{}},
+  Address                  = {New York},
+  Author                   = {von Peebles, Jr., P. Z.},
+  Edition                  = {4},
+  Pages                    = {100},
+  Publisher                = {McGraw-Hill},
+  Year                     = {2001}
+}
+
+@Book{蔡敏2006--,
+  Title                    = {UML基础和Rose建模教程},
+  Address                  = {北京},
+  Author                   = {蔡敏 and 徐慧慧 and 黄柄强},
+  Publisher                = {人民邮电出版社},
+  Year                     = {2006},
+  Month                    = {1}
+}
+
+@Book{Miroslav2004--,
+  Title                    = {信号处理滤波器设计-基于matlab和mathematica的设计方法},
+  Address                  = {北京},
+  Author                   = {Miroslav, D. L. and Dejan, V. T. and Brian, L. E.},
+  Publisher                = {电子工业出版社},
+  Translator               = {朱义胜 and 董辉},
+  Year                     = {2004},
+  Month                    = {1}
+}
+
+@Book{赵学功2001--,
+  Title                    = {当代美国外交},
+  Author                   = {赵学功},
+  Publisher                = {社会科学文献出版社},
+  Url                      = {http://www.baidu.com},
+  Urldate                  = {2014-06-11},
+  Year                     = {2001}
+}
+
+@patent{IEEEexample:frenchpatreq,
+  author        = "F. Kowalik and M. Isard",
+  title         = "Estimateur d'un D{\'e}faut de Fonctionnement
+                   d'un Modulateur en Quadrature et {\'E}tage de Modulation
+                   l'Utilisant",
+  language      = "french",
+  type          = "French Patent Request",
+  number        = "9500261",
+  year          = "1995-01-11"
+}
+
+@ARTICLE{吕捷2015cpi,
+  AUTHOR = {吕捷 and 王高望},
+  DATE = {2015},
+  JOURNALTITLE = {经济研究},
+  KEYWORDS = {吕捷2015cpi},
+  PAGES = {011},
+  TITLE = {CPI 与 PPI “背离” 的结构性解释},
+  VOLUME = {4},
+}
+
+@patent{IEEEexample:uspat,
+  author        = "Ronald E. Sorace and Victor S. Reinhardt and
+                   Steven A. Vaughn",
+  holder        = "Hughes Aircraft Company",
+  location      = "Los Angeles, CA",
+  title         = "High-Speed Digital-to-{RF} Converter",
+  type          = "patentus",
+  number        = "5668842",
+  yearfiled     = "1995-02-28",
+  year          = "1997-09-16",
+}
+
+@ARTICLE{杨光2015经济波动,
+  AUTHOR = {杨光 and 孙浦阳 and 龚刚},
+  DATE = {2015},
+  JOURNALTITLE = {经济研究},
+  KEYWORDS = {杨光2015经济波动},
+  NUMBER = {2},
+  PAGES = {47--60},
+  TITLE = {经济波动, 成本约束与资源配置},
+  VOLUME = {50},
+}
+
+
+\end{filecontents}
+
+\addbibresource{\jobname.bib}
+
+\begin{document}
+
+\section{测试利用footfullcite实现国标格式的脚注文献表}
+\begin{refsection}
+
+古希腊对轴心时代思想真正的贡献不是来自对民主的赞扬\footfullcite[12-16]{蔡敏2006--}，
+改变社会规范也可能存在类似的“二阶囚徒困境”问题\footfullcite{Miroslav2004--}，
+但个人理性选择使得没有人愿意率先违反旧的规范\footfullcite[250]{蔡敏2006--}。
+
+
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\newpage
+
+\begin{refsection}
+……事实上，古希腊对轴心时代思想真正的贡献不是来自对民主的赞扬，
+《\fullcite{吕捷2015cpi}》。
+而是来自对民主制度的批评，苏格拉底、柏拉图和亚里士多德3位贤圣
+都是民主制度的坚决反对者\footfullcite[20]{Zhang2007-500-503}。
+……改变社会规范也可能存在类似的“二阶囚徒困境”问题：尽管改变旧的规范对所有人都好，但个人理性选择使得没有人愿意率先违反旧的规范
+\footfullcite{吕捷2015cpi}。
+……据《唐会要》记载，当时拆毁的寺院有4 600余所，招提、兰若等佛教建筑4万余所，没收寺产，并强迫僧尼还俗达260 500人。
+佛教受到极大的打击\footfullcite[326-329]{Zhang2007-500-503}。
+\end{refsection}
+
+
+\end{document} 

@@ -636,6 +636,20 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   测试文件见：
   \href{run:egfigure/egcontentfmtc.tex}{egcontentfmtc.tex}。
 
+
+  \item[gbfootbib]=\textbf{true}，false. \hfill default is true
+
+  为实现国标样式的脚注文献表格式而增加的选项。
+  \begin{itemize}
+    \item gbstyle=true，即默认做处理使脚注文献表满足国标要求。
+    \item gbstyle=false，不做任何附加处理。
+  \end{itemize}
+
+  该选项的实现主要是两个方面：一是实现国标要求的脚注标签和段落格式，利用对
+  \verb|\@makefnmark|重定义实现正文脚注标签带圈上标，
+  利用对\verb|\@makefntext|做patch局部化重设\verb|\@makefnmark|使得脚注中的标签不上标，利用footmisc宏包实现对脚注的悬挂对齐；二是实现国标要求的相同的文献不输出，而是简化输出，比如同\textcircled{4}等，主要利用citetracker选项实现对文献引用的追踪，然后利用ifciteseen判断和对footfullcite命令做修改实现。
+  测试文档见：\href{run:./example/opt-gbfootbib.tex}{opt-gbfootbib.tex}。
+
 \end{description}
 
 
@@ -1197,7 +1211,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
   \item[mark/usera] 不用输入，自动处理。也可以输入文献类型标识符比如M, J, DB, CP等。
   \item[medium] 不用输入，自动处理。也可以输入文献载体标识符比如MT, DK, CD, OL 等。
   \item[language] 不用输入，自动处理。也可以输入语言类型比如english, russian, french, japnese, korean, chinese等。主要用来标识文献的语言类型，用法详见\ref{sec:multilan:combine}节。
-  \item[langid] 不用输入，自动处理。也可以输入语言名比如english, russian, french等，中日韩语一般用english。主要用于配合babel等宏包进行文献的本地化字符串处理，用法详见\ref{sec:multilan:combine}节。
+  \item[langid] 不用输入，自动处理。也可以输入语言名比如english, russian, french 等，中日韩语一般用english。主要用于配合babel等宏包进行文献的本地化字符串处理，用法详见\ref{sec:multilan:combine}节。
   \item[nameformat] 不用输入。当需要调整当前条目的作者姓名的格式时，可以输入格式名：uppercase, lowercase, givenahead, familyahead, pinyin等。详见\ref{sec:added:opt}节。
   \item[namefmtid] 不用输入。
 \end{description}
@@ -1292,7 +1306,27 @@ GB/T 7714-2015规定采用顺序编码制组织参考文献时，各篇文献应
 
 多次引用同一著者的同一文献时，可在序号的方括号外著录该文献引文页码，这一要求与引用(标注)样式无关，需要作者在写文档时使用相应的引用命令并在需要时输入页码信息。针对这一要求，在cite等常用命令基础上，新定义了一个引用命令pagescite，其使用方式详见第\ref{sec:cbx:usage}节。标注样式更详细要求参考GB/T 7714-2015 第10.1节。
 
-如果顺序编码制采用脚注方式，则序号由计算机自动生成圈码。多次引用同一著者的同一文献时，若采用脚注方式应重复著录参考文献(这里可以理解为，采用该方式，同一文献的不同页码的引文就相当于一篇新的引文)，只是在参考文献列表中可以简化(当然不进行简化，简单复制后录入对于latex的参考文献处理其实更方便)。事实上对于顺序编码用脚注方式，GB/T 7714-2015并没有详细说明脚注方式到底是什么？从举例看只是序号用类似于脚注的标签，那么对于参考文献样式来说，与非脚注方式的差别仅在于引用和参考文献条目的序号标签的差别，如此是容易通过修改样式文件得到的，但实际使用中除非有特殊要求，否则使用意义不大，因此本样式没有实现该功能。
+如果顺序编码制采用脚注方式，则序号由计算机自动生成圈码。多次引用同一著者的同一文献时，若采用脚注方式应重复著录参考文献，但在参考文献列表中的著录项目可以简化文献序号和页码。
+
+脚注方式的顺序编码制与一般的顺序编码制的主要差别在于：
+一、正文每个文献需要引用均生成脚注文献，因此一个引用命令只能带一个文献引用关键字。且正文中引用的标注标签格式不同，是带圈的上标数字而不是[]包围的数字。
+二、脚注中的文献表即便是遇到相同文献也需要重复输出，但可以简化为序号和页码。
+
+事实上如果不进行简化而只是简单重复输出，对于biblatex来说处理其实更方便，但为了与GB/T 7714-2015 标准给出的示例一致，biblatex-gb7714-2015也做了实现，注意：需要在脚注中输出文献表的引用命令为\verb|\footfullcite|。GB/T 7714-2015 标准中示例实现如图\ref{fig:numeric:footnote}所示：
+
+\begin{figure}[!htb]
+\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
+width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
+\centering
+\deflength{\textparwd}{\linewidth-1cm}
+\parbox{\textparwd}{
+\includegraphics{eggbfootstyle.pdf}
+}
+\end{tcolorbox}
+\caption{顺序编码制的脚注方式}\label{fig:numeric:footnote}
+\end{figure}
+
 
 \subsection{作者年制}
 
@@ -1689,7 +1723,9 @@ gb7714-2015实现了GB/T 7714-2015第8.8节要求的析出文献相关格式。
 \subsection{下一步工作}
 
 \begin{enumerate}
-  \item 到目前，无论是基本功能还是附加功能，biblatex-gb7714-2015样式包已经基本够用，剩下的问题可能是一些特殊情况时带来的适应性问题，这需要经过大量的测试来发现问题。如果在使用过程中发现什么问题，请邮件联系作者，非常感谢!
+  \item  到1.0p版本，已经完全实现GB/T 7714-2015样式要求格式，并增加了更多的功能，剩下的问题主要是用户一些特殊需求实现以及可能存在的兼容性问题，需要广大用户发现和建议，非常感谢！
+
+    %到目前，无论是基本功能还是附加功能，biblatex-gb7714-2015样式包已经基本够用，剩下的问题可能是一些特殊情况时带来的适应性问题，这需要经过大量的测试来发现问题。如果在使用过程中发现什么问题，请邮件联系作者，非常感谢!
 
       % 到1.0i版为止，进一步完善了: GB7714风格的文献表标签项对齐设计，编组内信息的中英文判断，特殊或老的bibtex 条目类型支持，改善空格设计以满足断行要求，支持了宏包选项(url等)应用，增加了宏包选项用于GB7714风格实现控制(gbpub 等)，重新设计了版本兼容方式，以后的版本中将更容易兼容biblatex的升级。
 

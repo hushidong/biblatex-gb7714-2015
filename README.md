@@ -21,6 +21,22 @@ A biblatex implementation of the `GB/T 7714-2015` bibliography style for Chinese
 
 The biblatex-gb7714-2015 package provides an implementation of the bibliography style of the `GB/T 7714-2015` bibliography style. This implementation follows `GB/T 7714-2015` standard, and can be used simply by loading biblatex with the appropriate option
 
+
+---------------------------------------------------------
+
+## Need to do:
+
+1. beamer类中的国标要求的顺序编码的脚注方式
+2. 脚注样式的超链接问题 
+
+
+    * different style for references of different languages，like：gb7714-2015 for chinese refs and trad-unsrt for english refs。
+    * special characters in all fields?
+    * entry without author: the delimiter between title and year?
+	* TEST FOR texlive 2015,2016
+	* [1]，(1)，1.，box{1}，superscript，compress，noncompress
+	
+
 ## Usage
 * for numerical sequence style: gb7714-2015
 
@@ -117,6 +133,14 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 		`gbtitlelink = false` not to add hyperlink, this is the default setting.
 		
 		`gbtitlelink = true` to set the title as a hyperlink.
+	
+        `\usepackage[backend=biber,style=gb7714-2015,gbtitlelink=true]{biblatex}`
+		
+	- add an option `gbfootbib` to control the bibliography in footnote (This option is also for author year style):
+	
+		`gbfootbib = true` make patches to match the standard, this is the default setting.
+		
+		`gbfootbib = false` not to patch.
 	
         `\usepackage[backend=biber,style=gb7714-2015,gbtitlelink=true]{biblatex}`
 		
@@ -818,14 +842,7 @@ biber -l zh__stroke jobname
 
 ![示例c](example/fig-nameformat.png)
 
----------------------------------------------------------
 
-## Need to do:
-    * different style for references of different languages，like：gb7714-2015 for chinese refs and trad-unsrt for english refs。
-    * special characters in all fields?
-    * entry without author: the delimiter between title and year?
-	* TEST FOR texlive 2015,2016
-	* [1]，(1)，1.，box{1}，superscript，compress，noncompress
 
 ---------------------------------------------------------
 
