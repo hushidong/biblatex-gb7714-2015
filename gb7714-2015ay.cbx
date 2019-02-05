@@ -86,12 +86,22 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
 %   重定义cite命令
 %
 %   方法:\DeclareCiteCommand{\cite}[\mkbibparens]{precode}{loopcode}{sepcode}{postcode}
-\DeclareCiteCommand{\cite}[\mkbibparens]
-  {\usebibmacro{prenote}}
+%    v1.0p版后将cite的处理方式修改为类似pagescite，而不再使用biblatex的标准方式
+\DeclareCiteCommand{\cite}%[\mkbibparens]
+  {(\usebibmacro{prenote}%)
+  }%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite}}
   {\multicitedelim}
-  {\usebibmacro{postnote}}
+  {%(
+  )\mkbibsuperscript{\printfield{postnote}}}
+%   v1.0p 以前用的方式
+%\DeclareCiteCommand{\cite}[\mkbibparens]
+%  {\usebibmacro{prenote}}
+%  {\usebibmacro{citeindex}%
+%   \usebibmacro{cite}}
+%  {\multicitedelim}
+%  {\usebibmacro{postnote}}
 
 %
 %   定义upcite命令

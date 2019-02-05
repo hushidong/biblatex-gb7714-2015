@@ -92,7 +92,7 @@
 \end{filecontents}
 
 \addbibresource{\jobname.bib}
-\renewcommand{\thefootnote}{\textcircled{\tiny\arabic{footnote}}}
+%\renewcommand{\thefootnote}{\textcircled{\tiny\arabic{footnote}}}
 
 \begin{document}
 
@@ -102,7 +102,8 @@
  不带页码的引用(非上标，方括号包围):
  \parencite{Miroslav2004--}\par
  带页码的引用:
- \cite[见][49页]{蔡敏2006--} \parencite[见][49页]{Miroslav2004--}
+ %\cite[见][49]{蔡敏2006--} \parencite[见][49页]{Miroslav2004--}
+ \cite[49]{蔡敏2006--} \parencite[见][49页]{Miroslav2004--}
  \pagescite{Peebles2001-100-100}\pagescite[150]{Peebles2001-100-100}
  \pagescite[][201-301]{Peebles2001-100-100}\par
  同时输出作者和顺序编码的三种引用方式：\par
@@ -119,8 +120,8 @@
  同一处引用多篇文献：文献\cite{Peebles2001-100-100,Miroslav2004--}，
  文献\cite{蔡敏2006--,Miroslav2004--,赵学功2001--}\par
  多次引用同一作者的同一文献：
- 文献\pagescite[100-108]{蔡敏2006--}，
- 文献\pagescite[205-208]{蔡敏2006--}。
+  文献\cite[20]{Miroslav2004--}\pagescite[100-108]{蔡敏2006--}。
+ 文献\cite[55]{Miroslav2004--}\pagescite[205-208]{蔡敏2006--}。
 }}
 
 

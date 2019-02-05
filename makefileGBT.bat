@@ -13,5 +13,7 @@ cd ..
 
 xelatex.exe  GBT7714-2015.tex
 
+xelatex.exe  GBT7714-2015ms.tex
+
 ::call makeclear
 

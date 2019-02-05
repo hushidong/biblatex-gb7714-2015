@@ -17,11 +17,11 @@ del /q *.nav *.snm *.vrb *.fls *.xdv *.fdb_latexmk
 
 echo biblatex-gb7714-2015.tex >> example/makerecord.dat
 
-xelatex.exe --synctex=-1 biblatex-gb7714-2015.tex
+xelatex.exe -no-pdf biblatex-gb7714-2015.tex
 
 biber biblatex-gb7714-2015
 
-xelatex.exe --synctex=-1 biblatex-gb7714-2015.tex
+xelatex.exe -no-pdf biblatex-gb7714-2015.tex
 
 ::to do it again for backref 
 xelatex.exe --synctex=-1 biblatex-gb7714-2015.tex

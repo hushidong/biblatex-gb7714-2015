@@ -26,14 +26,13 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
 ## Need to do:
 
-1. beamer类中的国标要求的顺序编码的脚注方式
-2. 脚注样式的超链接问题 
+1. 王临慧, 2010a. 王临慧, 等, 2010b.需要等biblatex2.13更新后完成
 
+2. 脚注中文献表的截短应与正文的文献表一致
 
-    * different style for references of different languages，like：gb7714-2015 for chinese refs and trad-unsrt for english refs。
     * special characters in all fields?
     * entry without author: the delimiter between title and year?
-	* TEST FOR texlive 2015,2016
+	* TEST FOR texlive 2015,2016,2017
 	* [1]，(1)，1.，box{1}，superscript，compress，noncompress
 	
 

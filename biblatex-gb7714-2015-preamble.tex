@@ -283,18 +283,23 @@ theorem style=plain,fonttitle=\bfseries,coltitle=gbforestgreen
 \newcommand{\dateformanual}[1]{\def\riqiudf{#1}}
 %\ifthenelse{\equal{\youwuudf}{\temp}}{true}{false}
 \def\temp{}
+\makeatletter
 \newcommand{\titleandauthor}{
 \begin{center}
-{\renewcommand{\thefootnote}{\fnsymbol{footnote}}\setlength{\baselineskip}{30pt}\heiti{\zihao{-2}{\biaotiudf}}\par}
+\def\@makefnmark{\hbox{\@textsuperscript{\small\@thefnmark}}}
+{\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\setlength{\baselineskip}{30pt}\heiti{\zihao{-2}{\biaotiudf}}\par}
 %注意这里\par要放在花括号内才有效
 \vspace*{0.3cm}
-{\renewcommand{\thefootnote}{\arabic{footnote}}\kaishu{\zihao{4}{\zuozheudf}}\par}
+{\renewcommand{\thefootnote}{\arabic{footnote}}
+\kaishu{\zihao{4}{\zuozheudf}}\par}
 \vspace*{0.2cm}
 {\songti{\zihao{-4}{\riqiudf}}\par}
 \end{center}
 }
-%脚注的数字带圈
-\renewcommand{\thefootnote}{\textcircled{\tiny\arabic{footnote}}}
+\makeatother
+%脚注的数字带圈使用gb7714-2015中的重定义实现
+%\renewcommand{\thefootnote}{\textcircled{\tiny\arabic{footnote}}}
 
 
 %--------------列表环境---------------------------------------------

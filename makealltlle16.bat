@@ -20,8 +20,6 @@ cd example
 
 call makefileeg
 
-call makefileegstyle.bat
-
 cd ..
 
 cd egfigure

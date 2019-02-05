@@ -1,0 +1,30 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015样式，能否对实现国标要求的脚注文献表
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{xcolor}
+\usepackage{toolbox}
+\usepackage[colorlinks]{hyperref}
+\usepackage{lipsum}
+\usepackage[paperwidth=15cm,paperheight=6.5cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
+\usepackage{xltxtra,mflogo,texnames}
+\usepackage[backend=biber,style=gb7714-2015]{biblatex}
+
+\addbibresource{example.bib}
+
+\begin{document}
+
+\begin{refsection}
+示例2：多次引用同一著者的同一文献的脚注序号
+
+……但个人理性选择使得没有人愿意率先违反旧的规范
+\footfullcite{Sunstein1996-903-903}。
+……事实上，都是民主制度的坚决反对者\footfullcite[20]{Morri2010--}。
+……一切后世的思想都是一系列为柏拉图思想所作的脚注\footfullcite{罗杰斯2011-15-16}。
+……佛教受到极大的打击\footfullcite[326-329]{Morri2010--}。
+……以上谓等威之辨，尊卑之序，由于饮食荣辱。\footfullcite{陈登原2000-29-29}
+\end{refsection}
+
+
+\end{document} 

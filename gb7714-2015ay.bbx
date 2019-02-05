@@ -209,14 +209,19 @@
       \settoggle{bbx:gbfootbib}{#1}}
     \ExecuteBibliographyOptions{gbfootbib}
 
-\@ifclassloaded{beamer}{}{%beamer类因为其本身做了特殊处理，所以为避免冲突不做实现。
-\iftoggle{bbx:gbfootbib}%
+    %%
+    \iftoggle{bbx:gbfootbib}%
     {%
     %开启引用跟踪计数器，为使用\ifciteseen等测试命令
     \ExecuteBibliographyOptions{citetracker=true}
     %
     %利用footmisc宏包来实现脚注文献的悬挂对齐
-    \RequirePackage[perpage,hang]{footmisc}
+    \@ifclassloaded{beamer}{}{
+    %beamer类因为其特殊性，为避免冲突不调footmisc。
+    %同时footmisc与hyperref宏包也不兼容，所以使用footmisc时会破坏脚注的超链接
+    %如果要实现超链接可以将下句注释掉，这里留着主要是实现悬挂对齐。
+    \RequirePackage[perpage,hang]{footmisc}%
+    }
     %
     %使脚注标记加圈并设置数字的字体为tiny，不使用修改thefootnote的方式
     \def\@makefnmark{\hbox{\@textsuperscript{\textcircled{\tiny\@thefnmark}}}}
@@ -248,12 +253,12 @@
       {\usebibmacro{prenote}}%
       {\usebibmacro{citesavefn}%
           \ifcsdef{labelsec\arabic{refsection}et\thefield{entrykey}}%
-          {\csuse{labelsec\arabic{refsection}et\thefield{entrykey}}}%
+          {\csuse{labelsec\arabic{refsection}et\thefield{entrykey}}\nopunct}%
           {\usedriver{\DeclareNameAlias{sortname}{default}}{\thefield{entrytype}}}%
       }%
       {\multicitedelim}%
-      {\usebibmacro{postnote}}
-    }{}}
+      {\addcolon\usebibmacro{postnote}}
+    }{}
 
     %
     %   增加一个选项，用于控制gb7714的使用范围，即英文文献和中文文献使用不同的样式
@@ -605,7 +610,7 @@
     \DefineBibliographyStrings{english}{
         bibliography     = {\str@bibliography},
         references       = {\str@references},
-        bytranslator= {\addcomma\ \str@bytranslator\adddot}, %将trans. by 改成 译
+        bytranslator= {\str@bytranslator\adddot}, %将trans. by 改成 译
         and         = {\addcomma},%将第2和3人名见的and符号改成 逗号，用\finalnamedelim命令也可以定义，参见3.9.1节
         andcn       = {\addcomma},%\str@andcn\ and本地化字符串的中文对应词
         andincitecn = {\addcomma},%将标注中的分开，便于与文献表中的区分
@@ -673,6 +678,19 @@
 %      同时有version和edition的区别，因此考虑用一种类型来输出，使用manual类型
 %   7. 包括报告，学位论文在内的其它所有的类型，都做一个判断，当没有出版项时，
 %      且存在网址信息时，将其转换为online类型输出，否则都做为manual类型输出。
+%  8. 备选类型misc当存在网址时直接转换为online，由于howpublished域可用于描述
+%      更多的信息，因此不存在网址时，独立做一个备选格式
+%  9. 出版项主要以如下方式处理：
+%     (a) location+institution+date 仅用于连续出版物
+%     (b)publisher+location+date 用于需要完整输出出版项的类型，比如book，collection，proceedings，in*，report
+%     (c)institution+location+date 用于出版项缺失时不输出的类型，包括manual，thesis，archive等其他类型
+%     (d)printlist{insitution} 用于电子资源，仅输出出版者或组织，为数据映射方便，本来默认的organization域转换为用insitution输出。
+%     (e) 不输出，主要用于连续出版物析出的文献
+% 10. 日期以如下方式处理：
+%     date 由于存在biblatex选项，因此通过选项控制，数据源为date解析数据或year
+%     urldate 由于存在biblatex选项，因此通过选项控制，输出到日，且用[]包围，数据源为urldate
+%     newsdate 用于公告日期，公开日期或新闻日期，输出到日，但无包围符号，数据源为date
+%     modifydate 用于更新或修改日期，输出到日，且用()包围，数据源为date或enddate或eventdate
 
 \DeclareSourcemap{
 \maps[datatype=bibtex]{
@@ -690,13 +708,14 @@
         %\step[notfield=author,final]%当author不存在，将translator复制给author
         \step[fieldsource=translator,fieldtarget=author]%并删除translator
         }
-         \map{
-        \step[notfield=address]%当address和location同步
+        \map{%让address和location同步，biblatex中address是location的别名
+        %因此输出的时候只有location信息，但处理过程中是可以存在address的。
+        %\step[notfield=address,final]
         \step[fieldsource=location,final]
         \step[fieldset=address,origfieldval]
         }
-        \map{
-        \step[notfield=location]%当address和location同步
+        \map{%让address和location同步
+        %\step[notfield=location,final]
         \step[fieldsource=address,final]
         \step[fieldset=location,origfieldval]
         }
@@ -958,10 +977,11 @@
             \step[fieldset=language,fieldvalue={english}]
             \step[fieldset=langid,fieldvalue={english}]
             }
-        \map{%将非中文的语言放入userd中，以便进行多语言处理
-            \step[fieldsource=language]%,notmatch={chinese},final
+       	\map{%将一条文献的主体语言放入userd中，以便进行多语言处理
+            %之所以这么说，是因为一条文献可能是混合语言的，比如作者用的是英文
+            \step[fieldsource=language]
             \step[fieldset=userd,origfieldval]
-         }%
+            }
         \map{%尝试未定义数据模型的standard类型映射为其他类型book或inbook，
                  %standard类型在blx-dm中有出现，但仅定义了类型，域和约束等都没有定义
                  %因为可能要映射两种类型，所以不能在驱动层处理，因为要做判断
@@ -985,56 +1005,92 @@
             }
             \map{%
             \pertype{report}
-            \step[notfield=address,final]%当address不存在则继续
+            %biblatex3.7以下版本用如下方式来替代，address和location已在sourcemap中同步
+            \step[fieldset=location,fieldvalue={}]
+            \step[fieldsource=location,notmatch=\regexp{.},final]%地址不存在且存在url那么转变为online
+            %3.7以上版本用notfield
+            %\step[notfield=address,final]%当address不存在则继续
             \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
             \step[typesource=report,typetarget=online]
             \step[fieldset=note,fieldvalue={report}]
             }
             \map{%
             \pertype{thesis}
-            \step[notfield=address,final]%当address不存在则继续
+            %biblatex3.7以下版本用如下方式来替代，address和location已在sourcemap中同步
+            \step[fieldset=location,fieldvalue={}]
+            \step[fieldsource=location,notmatch=\regexp{.},final]%地址不存在且存在url那么转变为online
+            %3.7以上版本用notfield
+            %\step[notfield=address,final]%当address不存在则继续
             \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
             \step[typesource=thesis,typetarget=online]
             }
             \map{%
             \pertype{manual}
-            \step[notfield=address,final]%当address不存在则继续
+            %biblatex3.7以下版本用如下方式来替代，address和location已在sourcemap中同步
+            \step[fieldset=location,fieldvalue={}]
+            \step[fieldsource=location,notmatch=\regexp{.},final]%地址不存在且存在url那么转变为online
+            %3.7以上版本用notfield
+            %\step[notfield=address,final]%当address不存在则继续
             \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
             \step[typesource=manual,typetarget=online]
             }
             \map{%
             \pertype{unpublished}
-            \step[notfield=address,final]%当address不存在则继续
+            %biblatex3.7以下版本用如下方式来替代，address和location已在sourcemap中同步
+            \step[fieldset=location,fieldvalue={}]
+            \step[fieldsource=location,notmatch=\regexp{.},final]%地址不存在且存在url那么转变为online
+            %3.7以上版本用notfield
+            %\step[notfield=address,final]%当address不存在则继续
             \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
             \step[typesource=unpublished,typetarget=online]
             }
             \map{%
             \pertype{database}
-            \step[notfield=address,final]%当address不存在则继续
+            %biblatex3.7以下版本用如下方式来替代，address和location已在sourcemap中同步
+            \step[fieldset=location,fieldvalue={}]
+            \step[fieldsource=location,notmatch=\regexp{.},final]%地址不存在且存在url那么转变为online
+            %3.7以上版本用notfield
+            %\step[notfield=address,final]%当address不存在则继续
             \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
             \step[typesource=databasetypetarget=online]
             }
             \map{%
             \pertype{dataset}
-            \step[notfield=address,final]%当address不存在则继续
+            %biblatex3.7以下版本用如下方式来替代，address和location已在sourcemap中同步
+            \step[fieldset=location,fieldvalue={}]
+            \step[fieldsource=location,notmatch=\regexp{.},final]%地址不存在且存在url那么转变为online
+            %3.7以上版本用notfield
+            %\step[notfield=address,final]%当address不存在则继续
             \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
             \step[typesource=dataset,typetarget=online]
             }
             \map{%
             \pertype{software}
-            \step[notfield=address,final]%当address不存在则继续
+            %biblatex3.7以下版本用如下方式来替代，address和location已在sourcemap中同步
+            \step[fieldset=location,fieldvalue={}]
+            \step[fieldsource=location,notmatch=\regexp{.},final]%地址不存在且存在url那么转变为online
+            %3.7以上版本用notfield
+            %\step[notfield=address,final]%当address不存在则继续
             \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
             \step[typesource=software,typetarget=online]
             }
             \map{%
             \pertype{map}
-            \step[notfield=address,final]%当address不存在则继续
+            %biblatex3.7以下版本用如下方式来替代，address和location已在sourcemap中同步
+            \step[fieldset=location,fieldvalue={}]
+            \step[fieldsource=location,notmatch=\regexp{.},final]%地址不存在且存在url那么转变为online
+            %3.7以上版本用notfield
+            %\step[notfield=address,final]%当address不存在则继续
             \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
             \step[typesource=map,typetarget=online]
             }
             \map{%
             \pertype{archive}
-            \step[notfield=address,final]%当address不存在则继续
+            %biblatex3.7以下版本用如下方式来替代，address和location已在sourcemap中同步
+            \step[fieldset=location,fieldvalue={}]
+            \step[fieldsource=location,notmatch=\regexp{.},final]%地址不存在且存在url那么转变为online
+            %3.7以上版本用notfield
+            %\step[notfield=address,final]%当address不存在则继续
             \step[fieldsource=url,final]%地址不存在且存在url那么转变为online
             \step[typesource=archive,typetarget=online]
             }
@@ -1592,7 +1648,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
      %从macro*{bytranslator+othersstrg}%中可以看到当地化字符串格式的引用前的代码处理
      %比如生成cotranslator等用于调用cotranslator所代表的当地化字符串
      \usebibmacro{bytranslator+othersstrg}%“译”的位置换到下面来，即放到译者后面。
-     \setunit{\addspace}%
+     %\setunit{\addspace}%
      \newunit}%
   \usebibmacro{withothers}}
 
@@ -1611,9 +1667,14 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     test \ifmorenames
   }{\ifnumgreater{\value{liststop}}{1}%
        {\finalandcomma}%
-       {}%\finalandcomma
+       {}%biblatex作者要区别单作者加等的情况，这里为符合gbt7714-2015第7.2节的要求加上了逗号。
 \printdelim{andothersdelim}\printdelim{strandothersdelim}%
-}{}}
+}{%当是译者的时候需要特殊处理：从7.2节看等，译前面加逗号，但从示例看等和译同时出现时，译前的逗号没有，比如：
+%袁训来, 陈哲, 肖书海, 等.
+%胡泳, 范海燕, 译.
+%潘惠霞, 魏婧, 杨艳, 等译.
+\ifcurrentname{translator}{\addcomma}{}%
+}}
 
 %   修改省略作者后的本地化字符串，比如et al.
 %   v1.0o,20190103,hzz
@@ -1634,11 +1695,11 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \iffieldequalstr{userd}{english}{\bibstring{andothersincite}}{}%
 \iffieldequalstr{userd}{french}{\bibstring{andothers}}{}%
 \iffieldequalstr{userd}{russian}{\bibstring{andothers}}{}%
-}\space%
+}%
   \or%
-  \bibstring{andothersincitecn}\space%
+  \bibstring{andothersincitecn}%
   \or%
-  \bibstring{andothersincite}\space%
+  \bibstring{andothersincite}%
   \fi}
 \DeclareDelimFormat[bib,biblist]{strandothersdelim}{%
   \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
@@ -1652,11 +1713,11 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \iffieldequalstr{userd}{english}{\bibstring{andothers}}{}%
 \iffieldequalstr{userd}{french}{\bibstring{andothers}}{}%
 \iffieldequalstr{userd}{russian}{\bibstring{andothers}}{}%
-}\space%
+}%
   \or%
-  \bibstring{andotherscn}\space%
+  \bibstring{andotherscn}%
   \or%
-  \bibstring{andothers}\space%
+  \bibstring{andothers}%
   \fi}
 
 %
@@ -2789,6 +2850,8 @@ incollection,proceedings,inproceedings]{number}{%
 \usebibmacro{publisher+location+date}%
 %\newunit\newblock %这里标点去掉
 \usebibmacro{chapter+pages}%
+  \iffieldundef{url}{}{%当没有网址时也不输出
+  \usebibmacro{modifydate}}%带括号的修改或更新日期，
 \usebibmacro{doi+eprint+url}%从下面移动到上面来，因为gbt2015的url需直接放在页码后面。
   \newunit\newblock%
   \printfield{pagetotal}%
@@ -2837,7 +2900,9 @@ incollection,proceedings,inproceedings]{number}{%
 %  \usebibmacro{byeditor+others}%
 %  \newunit
   \usebibmacro{note+pages}%
-  \iffieldequalstr{note}{news}{}{\usebibmacro{modifydate}}%带括号的修改或更新日期，当是新闻时不输出
+  \iffieldequalstr{note}{news}{}{%当是新闻时不输出修改或更新日期
+  \iffieldundef{url}{}{%当没有网址时也不输出
+  \usebibmacro{modifydate}}}%带括号的修改或更新日期，
   \usebibmacro{doi+eprint+url}%从后面移上来，调整url和页码之间的位置
   \newunit\newblock
   \iftoggle{bbx:isbn}
@@ -3062,7 +3127,8 @@ incollection,proceedings,inproceedings]{number}{%
   \usebibmacro{institution+location+date}%
   %\newunit\newblock
   \usebibmacro{chapter+pages}%
-  \usebibmacro{modifydate}%修改或更新日期，为带括号的时间
+  \iffieldundef{url}{}{%当没有网址时也不输出修改或更新日期
+  \usebibmacro{modifydate}}%修改或更新日期为带括号的时间
   \usebibmacro{doi+eprint+url}%
   \newunit
   \printfield{pagetotal}%

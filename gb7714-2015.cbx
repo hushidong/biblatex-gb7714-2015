@@ -37,18 +37,31 @@
   \mkbibsuperscript{\mkbibbrackets{#1}}%
 }
 
+%   修改postnote的输出格式
+\DeclareFieldFormat{postnote}{#1}
+
 %
 %   重定义cite命令
 %
 %   方法:\DeclareCiteCommand{\cite}[\mkbibparens]{precode}{loopcode}{sepcode}{postcode}
-\DeclareCiteCommand{\cite}[\mkbibsuperbracket]%利用mkbibsuperbracket添加方括号
-  {\usebibmacro{cite:init}%
+%    v1.0p版后将cite的处理方式修改为类似pagescite，而不再使用biblatex的标准方式
+\DeclareCiteCommand{\cite}[\mkbibsuperscript]%利用mkbibsuperbracket添加方括号
+  {[\usebibmacro{cite:init}%
    \usebibmacro{prenote}}
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:comp}}
   {}
-  {\usebibmacro{cite:dump}%
-   \usebibmacro{postnote}}
+  {\usebibmacro{cite:dump}]%
+   \printfield{postnote}}
+%   v1.0p 以前用的方式
+%\DeclareCiteCommand{\cite}[\mkbibsuperbracket]%利用mkbibsuperbracket添加方括号
+%  {\usebibmacro{cite:init}%
+%   \usebibmacro{prenote}}
+%  {\usebibmacro{citeindex}%
+%   \usebibmacro{cite:comp}}
+%  {}
+%  {\usebibmacro{cite:dump}%
+%   \usebibmacro{postnote}}
 
 %
 %   定义upcite命令
@@ -72,14 +85,12 @@
 %   新定义pagescite命令，以满足标签带页码的国标要求
 %
 %   原理方法:
-%   1.修改postnote的输出格式
-\DeclareFieldFormat{postnote}{#1}
-%   2.新增页码输出宏
+%   1.新增页码输出宏
 \newbibmacro*{postpages}{%
   \iffieldundef{postnote}
     {\printfield[postnote]{pages}}
     {\printfield{postnote}}}
-%   3.新增\pagescite引用命令
+%   2.新增\pagescite引用命令
 \DeclareCiteCommand{\pagescite}[\mkbibsuperscript]%\mkbibbrackets,仍然用上标
   {[\usebibmacro{cite:init}%]直接添加方括号
    \usebibmacro{prenote}%

@@ -14,9 +14,9 @@
 \usepackage[paperwidth=21cm,paperheight=29cm,top=3cm,bottom=2cm,left=1.5cm,right=1.5cm]{geometry}
 \usepackage{xltxtra,mflogo,texnames}
 %%注意:这里使用other*来使得babel切换环境时忽略空白，使得条目集中各文献间的标点正确
-\usepackage[backend=biber,style=gb7714-2015,gbalign=gb7714-2015,autolang=other*]{biblatex}%sorting=nyt
+\usepackage[backend=biber,style=gb7714-2015ms,gbalign=gb7714-2015,gbstyle=true,autolang=other*]{biblatex}%sorting=nyt
 
-
+\AtEveryLositem{\localsetchinesecode}
 
 % printbiblist命令需要一个与其参数同名的文献输出驱动，详见92-bibliographylists.tex
 \DeclareBibliographyDriver{authorexample}{%
@@ -27,6 +27,7 @@
 \endgroup
 }
 
+\AtEveryBiblistitem{authorexample}{\localsetchinesecode}
 
 \DeclareFieldFormat{titlea}{#1}
 
@@ -52,12 +53,16 @@
 \usebibmacro{finentry}
 }
 
+\AtEveryBiblistitem{titlexamplea}{\localsetchinesecode}
+
 
 \DeclareBibliographyDriver{titlexample}{%
 \usebibmacro{begentry}%
 \iffieldundef{title}{\usebibmacro{journal+issuetitle}}{\usebibmacro{title}}
 \usebibmacro{finentry}
 }
+
+\AtEveryBiblistitem{titlexample}{\localsetchinesecode}
 
 \DeclareBibliographyDriver{editionexample}{%
 %\usebibmacro{begentry}%
@@ -67,6 +72,8 @@
 \endgroup
 }
 
+\AtEveryBiblistitem{editionexample}{\localsetchinesecode}
+
 \DeclareBibliographyDriver{pubexample}{%
 \usebibmacro{begentry}%
 \ifentrytype{online}{\usebibmacro{institution+location+date}}{\usebibmacro{publisher+location+date}}%\par
@@ -74,6 +81,8 @@
 \usebibmacro{doi+eprint+url}%从下面移动到上面来，因为gbt2015的url需直接放在页码后面。
 \usebibmacro{finentry}
 }
+
+\AtEveryBiblistitem{pubexample}{\localsetchinesecode}
 
 \DeclareBibliographyDriver{dateexample}{%
 \usebibmacro{begentry}%
@@ -84,12 +93,16 @@
 \usebibmacro{finentry}
 }
 
+\AtEveryBiblistitem{dateexample}{\localsetchinesecode}
+
 \DeclareBibliographyDriver{dvnpexample}{%
 \usebibmacro{issue+date}%
 \iffieldundef{volume}{}{\setunit{\addcomma\space}}%
 \usebibmacro{volume+number+eid}%把卷期放到年份后面
 \usebibmacro{note+pages}\par%
 }
+
+\AtEveryBiblistitem{dvnpexample}{\localsetchinesecode}
 
 \defbibenvironment{exampleenv}
   {\list
@@ -536,8 +549,7 @@ egdatevolnumpageg--}
 \begin{refsection}
 示例1：多次引用同一著者的同一文献的序号
 
-……改变社会规范也可能存在类似的“二阶囚徒困境”问题：尽管改变旧的规范对所有人都好，
-但个人理性选择使得没有人愿意率先违反旧的规范\cite{Sunstein1996-903-903}。
+……改变社会规范也可能存在类似的“二阶囚徒困境”问题：尽管改变旧的规范对所有人都好，但个人理性选择使得没有人愿意率先违反旧的规范\cite{Sunstein1996-903-903}。
 ……事实上，古希腊对轴心时代思想真正的贡献不是来自对民主的赞扬，而是来自对民主制度的批评，苏格拉底、柏拉图和亚里士多德3位贤圣
 都是民主制度的坚决反对者\pagescite[260]{Morri2010--}。
 ……柏拉图在西方世界的影响力是如此之大以至于有学者评论说，一切后世的思想都是一系列为柏拉图思想所作的脚注\cite{罗杰斯2011-15-16}。
