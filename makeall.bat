@@ -40,11 +40,18 @@ biber biblatex-gb7714-2015
 xelatex.exe -no-pdf biblatex-gb7714-2015.tex
 
 ::to do it again for backref 
-xelatex.exe --synctex=-1 biblatex-gb7714-2015.tex
+xelatex.exe biblatex-gb7714-2015.tex
 
-xelatex.exe --synctex=-1 gbT7714-2015.tex
+xelatex.exe gbT7714-2015.tex
 
-xelatex.exe --synctex=-1 gbT7714-2015eg.tex
+xelatex.exe gbT7714-2015ms.tex
+
+
+xelatex.exe gbT7714-2015eg.tex
+
+xelatex.exe gbT7714-2015thesis.tex
+
+xelatex.exe gbT7714-2015thesis.tex
 
 ::call makeclear
 

@@ -1,0 +1,221 @@
+
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试ucasthesis中应用biblatex-gb7714-2015的情况
+%
+
+\documentclass[twoside]{article}
+    \usepackage{ctex}%[zihao=-4]
+    \usepackage{fontspec}
+\setmainfont{CMU Serif}
+\setCJKmainfont {SourceHanSerifSC-Regular.otf}
+    \usepackage{xcolor}
+    \usepackage{toolbox}
+    \usepackage[colorlinks,citecolor=blue]{hyperref}
+    \usepackage{lipsum}
+    \usepackage{geometry}%,showframe,showcrop
+\geometry{
+paper=a4paper,total={155mm,230mm},includehead,hcentering
+}
+\usepackage[backend=biber,style=gb7714-2015,gbnamefmt=familyahead,url=true,doi=false]{biblatex}%标注(引用)样式citestyle，著录样式bibstyle都采用gb7714-2015样式
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+%%
+%% This is file `example/bare_thesis.bib',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% install/buptgraduatethesis.dtx  (with options: `bare-thesis-bib')
+%%
+%% This file is a part of the example of BUPTGraduateThesis.
+%%
+
+@BUPTGraduateThesisBSTCTL{BSTcontrol,
+  CTLmaxnum_authors = "3",
+  CTLswitch_chs_punc = "no"
+}
+
+@BOOK{CITATION_BOOK,
+  author = "Lippman, Stanley B. and Lajoie, Jos{\'e}e",
+  title = "C++ Primer中文版",
+  translator = "王刚 and 杨巨烽",
+  edition = "5",
+  address = "中国",
+  publisher = "电子工业出版社",
+  year = "2013",
+  pages = "1-838",
+  language = "chs",
+  note = ""
+}
+
+@ARTICLE{CITATION_ARTICLE,
+  author = "Erik Dahlman and Bj{\"o}rn Gudmundson and Mats Nilsson and Johan Sk{\"o}ld",
+  title = "UMTS/IMT-2000 Based on Wideband CDMA",
+  booktitle = "IEEE Communications Magazine",
+  year = "1998",
+  volume = "36",
+  number = "9",
+  pages = "70-80",
+  multiseriesmsg = "year, volume, number and pages information for paper published in multi-series journals",
+  note = ""
+}
+
+@PROCEEDINGS{CITATION_PROCEEDINGS,
+  editor = "",
+  booktitle = "Proceedings of IEEE Global Communications Conference (GLOBECOM'2008)",
+  address = "New Orlean, USA",
+  publisher = "IEEE",
+  year = "2008",
+  pages = "",
+  note = ""
+}
+
+@INPROCEEDINGS{CITATION_INPROCEEDINGS,
+  author = "Jindal, Nihar and Andrews, Jeffrey G. and Weber, Steven",
+  title = "Rethinking MIMO for Wireless Networks: Linear Throughput Increases with Multiple Receive Antennas",
+  booktitle = "Proceedings of IEEE International Conference on Communications (ICC'2009)",
+  address = "Dresden, Germany",
+  publisher = "IEEE",
+  year = "2009",
+  pages = "1-6",
+  note = ""
+}
+
+@DISSERTATION{CITATION_DISSERTATION,
+  author = "Mitola, Joseph",
+  title = "Cognitive Radio: An Integrated Agent Architecture for Software Defined Radio",
+  address = "Stockholm, Sweden",
+  publisher = "Royal Institute of Technology",
+  year = "2000",
+  pages = "",
+  note = ""
+}
+
+@TECHREPORT{CITATION_TECHREPORT,
+  author = "Prasad, N. and Khojastepour, M. A. and Jiang, M. and Wang, X. and Rangarajan, S.",
+  title = "MU-MIMO: Demodulation at the Mobile Station",
+  address = "",
+  publisher = "IEEE 802.16 Broadband Wireless Access Working Group",
+  year = "2009",
+  pages = "1-11",
+  note = ""
+}
+
+@PATENT{CITATION_PATENT,
+  author = "Paulraj, Arogyaswami J. and Heath, Jr, Robert W. and Sebastian, Peroor K. and Gesbert, David J.",
+  title = "Spatial Multiplexing in a Cellular Network",
+  address = "USA",
+  number = "6067290",
+  date = "2000-05-23",
+}
+
+@STANDARD{CITATION_STANDARD,
+  author = "",
+  series = "TS 36.211 V10.5.0",
+  title = "Physical Channels and Modulation",
+  address = "Valbonne, France",
+  publisher = "3GPP",
+  year = "2012-06",
+  note = ""
+}
+
+@NEWSPAPER{CITATION_NEWSPAPER,
+  author = "吴刚",
+  title = "立陶宛进入欧元时代",
+  journaltitle = "人民日报",
+  date = "2015-01-02",
+  language = "chs",
+  note = ""
+}
+
+@ELECTRONIC{CITATION_ELECTRONIC,
+  author = "{百度百科}",
+  title = "香农公式",
+  etype = "EB",
+  ehowpublished = "OL",
+  url = "http://baike.baidu.com/view/747964.htm",
+  urldate = "2013-10-28",
+  language = "chs",
+  note = ""
+}
+
+@ELECTRONIC{CHANGBANPO,
+  author = "赵云 and 曹操 and 刘备 and 甘夫人 and 糜夫人",
+  title = "长坂坡",
+  etype = "EB",
+  ehowpublished = "OL",
+  url= "http://baike.baidu.com/subview/428389/5476054.htm",
+  language = "chs"
+}
+
+@BOOK{SANGUOYANYI,
+  author = "罗贯中",
+  title = "三国演义",
+  edition = "1",
+  address = "山西太原",
+  year = "元末明初",
+  language = "chs"
+}
+
+@ELECTRONIC{BUPT_Thesis_Format_2014,
+  title = "关于研究生学位论文格式的统一要求",
+  author = "北京邮电大学研究生院培养与学位办公室",
+  etype = "EB",
+  ehowpublished = "OL",
+  date = "2014-11",
+  url = "http://www.bupt.edu.cn/",
+  language = "chs"
+}
+
+@ELECTRONIC{BUPT_Thesis_Format_2004,
+  title = "关于研究生学位论文格式的统一要求",
+  author = "北京邮电大学研究生院培养与学位办公室",
+  etype = "EB",
+  ehowpublished = "OL",
+  date = "2004",
+  url = "http://www.bupt.edu.cn/",
+  language = "chs"
+}
+
+@ELECTRONIC{latex-bupt,
+  author = "王旭",
+  title = "latex-bupt: \LaTeX style for {BUPT} thesis",
+  year = "2007",
+  etype = "EB",
+  ehowpublished = "OL",
+  urldate = "2009-01-14",
+  url = "http://code.google.com/p/latex-bupt/",
+  language = "chs"
+}
+
+@ELECTRONIC{buptthesis,
+  author = "张煜",
+  title = "北京邮电大学研究生学位论文 \LaTeX{} 文档类",
+  year = "2009",
+  dhowpublished = "online",
+  urldate = "2013-07-06",
+  url = "http://code.google.com/p/buptthesis/",
+  language = "chs"
+}
+
+
+
+
+\end{filecontents}
+    \addbibresource{\jobname.bib}
+    %
+\def\cs#1{\textbackslash\texttt{#1}}
+    \begin{document}
+    \section*{BUPT}
+
+参考文献可以使用\cite{BUPT_Thesis_Format_2014}和\parencite{BUPT_Thesis_Format_2004}的表示方法。
+\nocite{SANGUOYANYI}
+\nocite{CHANGBANPO}
+\nocite{CITATION_BOOK,CITATION_ARTICLE,CITATION_PROCEEDINGS,CITATION_INPROCEEDINGS,
+CITATION_TECHREPORT,CITATION_STANDARD,CITATION_PATENT,CITATION_NEWSPAPER,CITATION_ELECTRONIC}。
+
+\printbibliography
+
+    \end{document} 

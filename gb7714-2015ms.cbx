@@ -7,7 +7,7 @@
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\def\versionofgbtstyle{2019/01/19 v1.0p}
+\def\versionofgbtstyle{2019/02/07 v1.0q}
 \ProvidesFile{gb7714-2015.cbx}[\versionofgbtstyle biblatex citation style]
 
 %
@@ -82,6 +82,19 @@
   {\usebibmacro{cite:dump}}
 
 %
+%   重定义parencite命令，以满足标签带页码的国标要求
+%
+\DeclareCiteCommand{\parencite}%[\mkbibbrackets]
+  {[\usebibmacro{cite:init}%]
+   \usebibmacro{prenote}}%
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:comp}}
+  {}
+  {%[
+  \usebibmacro{cite:dump}]%
+   \mkbibsuperscript{\printfield{postnote}}}
+
+%
 %   新定义pagescite命令，以满足标签带页码的国标要求
 %
 %   原理方法:
@@ -113,6 +126,8 @@
   {}
   {\usebibmacro{cite:dump}]%
    \usebibmacro{postpages}}
+
+
 
 %
 %   定义\yearcite命令，为与ay样式兼容，且提供不输出页码的标签格式，

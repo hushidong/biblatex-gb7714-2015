@@ -1,0 +1,250 @@
+
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试ucasthesis中应用biblatex-gb7714-2015的情况
+%
+
+\documentclass[twoside]{article}
+    \usepackage{ctex}
+    \usepackage{fontspec}
+\setmainfont{CMU Serif}
+\setCJKmainfont {SourceHanSerifSC-Regular.otf}
+    \usepackage{xcolor}
+    \usepackage{toolbox}
+    \usepackage[colorlinks,citecolor=blue]{hyperref}
+    \usepackage{lipsum}
+    \usepackage[top=0.5cm,bottom=0.5cm,left=3.5cm,right=3cm]{geometry}%,showframe,showcrop
+\usepackage[backend=biber, bibstyle=gb7714-2015,%nature,%%加载biblatex宏包，使用参考文献
+citestyle=gb7714-2015,%,backref=true%%其中后端backend使用biber
+gbnamefmt=lowercase,
+gbpub=false % 是否显示“未知出版商”等信息从而更加符合gb7714-2015样式
+]{biblatex}%标注(引用)样式citestyle，著录样式bibstyle都采用gb7714-2015样式
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+@book{IEEE-1363,
+  author={{IEEE Std 1363-2000}},
+  title={{IEEE} Standard Specifications for Public-Key Cryptography},
+  address={New York},
+  publisher={IEEE},
+  year={2000}
+}
+
+@inproceedings{kocher99,
+  author={C. Kocher and J. Jaffe and B. Jun},
+  title={Differential Power Analysis},
+  editor={M. Wiener},
+  booktitle={Advances in Cryptology ({CRYPTO}~'99)},
+  series={Lecture Notes in Computer Science},
+  volume={1666},
+  pages={388-397},
+  publisher={Springer-Verlag},
+  month=8,
+  year={1999}
+}
+
+
+@INCOLLECTION{Krasnogor2004e,
+  AUTHOR = {N. Krasnogor},
+  TITLE = {Towards robust memetic algorithms},
+  BOOKTITLE = {Recent Advances in Memetic Algorithms},
+  PUBLISHER = {Springer Berlin Heidelberg},
+  YEAR = {2004},
+  PAGES = {185-207},
+  EDITOR = {W.E. Hart and N. Krasnogor and J.E. Smith},
+  VOLUME = {166},
+  SERIES = {Studies in Fuzziness and Soft Computing},
+  ADDRESS = {New York},
+}
+
+@INCOLLECTION{zjsw,
+  AUTHOR = {班固},
+  TITLE = {苏武传},
+  BOOKTITLE = {传记散文英华},
+  PUBLISHER = {湖北人民出版社},
+  YEAR = {1998},
+  PAGES = {65-69},
+  EDITOR = {郑在瀛 and 汪超宏 and 周文复},
+  VOLUME = {2},
+  SERIES = {新古文观止丛书},
+  ADDRESS = {武汉},
+  lang = {zh},
+}
+
+
+@INBOOK{clzs,
+  AUTHOR = {阎真},
+  bookTITLE = {沧浪之水},
+  title = {大人物还是讲人情的},
+  PAGES = {185-207},
+  PUBLISHER = {人民文学出版社},
+  YEAR = {2001},
+  lang = {zh},
+}
+
+@Book{tex,
+ author    = "Donald E. Knuth",
+ title     = "The {\TeX} Book",
+ publisher = "Addison-Wesley Publishing Company",
+ address   = "Reading, MA",
+ year      = 1989,
+ edition   = "15th",
+}
+
+@Book{companion,
+ author    = "Michel Goosens and Frank Mittelbach and Alexander Samarin",
+ title     = "The {\LaTeX} Companion",
+ publisher = "Addison-Wesley Publishing Company",
+ address   = "Reading, MA",
+ PAGES = "112--125",
+ year      = 1994,
+}
+
+@ARTICLE{ELIDRISSI94,
+  AUTHOR =       "{Chafik El Idrissi}, M. and {Roney}, A. and {Frigon}, C. and
+                  {Larzilli{\`e}re}, M.",
+  TITLE =        "Measurements of total kinetic-energy released to the {$N=2$}
+                  dissociation limit of {H}$_2$ --- evidence of the dissociation
+                  of very high vibrational {R}ydberg states of {H}$_2$ by
+                  doubly-excited states",
+  JOURNAL =      "Chemical Physics Letters",
+  PAGES =        "260-266",
+  VOLUME =       224,
+  NUMBER =       10,
+  YEAR =         1994,
+}
+
+@ARTICLE{MELLINGER96,
+  AUTHOR =       "Mellinger, A. and Vidal, C. R. and Jungen, Ch.",
+  TITLE =        "Laser reduced fluorescence study of the carbon-monoxide nd
+                  triplet {R}ydberg series-experimental results and multichannel
+                  quantum-defect analysis",
+  JOURNAL =      "J. Chem. Phys.",
+  PAGES =        "8913-8921",
+  VOLUME =       104,
+  NUMBER =       5,
+  YEAR =         1996,
+}
+
+@ARTICLE{SHELL02,
+  AUTHOR =       "Michael Shell",
+  TITLE =        "How to Use the {IEEEtran \LaTeX} Class",
+  JOURNAL =      "Journal of {\LaTeX} Class Files",
+  YEAR =         2002,
+  VOLUME =       12,
+  NUMBER =       4,
+  PAGES =        "100--120"
+}
+
+@TechReport{NPB2,
+  title =        {The {NAS} Parallel Benchmarks 2.0},
+  author =       {Alex Woo and David Bailey and Maurice Yarrow and Wijngaart
+                  Wijngaart and Tim Harris and William Saphir},
+  year =         "1995",
+  month =        "12",
+  institution =  "The Pennsylvania State University CiteSeer Archives",
+  url =          "http://www.nasa.org/"
+}
+
+@INPROCEEDINGS{DPMG,
+  author =       {Kim, Sangbum and Woo, Namyoon and Yeom, Heon Y. and Park,
+                  Taesoon and Park, Hyoungwoo},
+  title =        {Design and {I}mplementation of {D}ynamic {P}rocess
+                  {M}anagement for {G}rid-enabled {MPICH}},
+  booktitle =    {the 10th European PVM/MPI Users' Group Conference},
+  year =         2003,
+  address =      {Venice, Italy},
+  month =        sep,
+}
+
+@INPROCEEDINGS{cnproceed,
+  author =       {王重阳 and 黄药师 and 欧阳峰 and 洪七公 and 段皇帝},
+  title =        {武林高手从入门到精通},
+  booktitle =    {第~$N$~次华山论剑},
+  year =         2006,
+  address =      {西安, 中国},
+  month =        sep,
+  lang =         "zh",
+}
+
+@ARTICLE{cnarticle,
+  AUTHOR =       "贾宝玉 and 林黛玉 and 薛宝钗 and 贾探春",
+  TITLE =        "论刘姥姥食量大如牛之现实意义",
+  JOURNAL =      "红楼梦杂谈",
+  PAGES =        "260--266",
+  VOLUME =       224,
+  YEAR =         1800,
+  LANG =         "zh",
+}
+
+@MastersThesis{zhubajie,
+  author =       {猪八戒},
+  title =        {论流体食物的持久保存},
+  school =       {广寒宫大学},
+  year =         2005,
+  address =      {北京},
+  lang =         "zh",
+}
+
+@PhdThesis{shaheshang,
+  author =       {沙和尚},
+  title =        {论流沙河的综合治理},
+  school =       {清华大学},
+  year =         2005,
+  address =      {北京},
+  lang =         "zh",
+}
+
+@MastersThesis{metamori2004,
+  author =       {Ashwin Raju Jeyakumar},
+  title =        {Metamori: A library for Incremental File Checkpointing},
+  school =       {Virgina Tech},
+  year =         2004,
+  month =        6,
+  address =      {Blacksburg},
+}
+
+@PHDTHESIS{FistSystem01,
+  AUTHOR =       "Erez Zadok",
+  TITLE =        "{FiST: A System for Stackable File System Code Generation}",
+  YEAR =         2001,
+  MONTH =        5,
+  SCHOOL =       "Computer Science Department, Columbia University",
+  ADDRESS =      "USA"
+}
+
+@BOOK{ColdSources,
+  AUTHOR =       {P. Gr{\"o}ning and L. Nilsson and P. Ruffieux and R.
+                  Clergereaux and O. Gr{\"o}ning},
+  TITLE =        {Encyclopedia of Nanoscience and Nanotechnology},
+  pages =        {547--579},
+  PUBLISHER =    {American Scientific Publishers},
+  YEAR =         "2004",
+  volume =       "1",
+}
+
+%---------------------------------------------------------------------------%
+
+\end{filecontents}
+    \addbibresource{\jobname.bib}
+    %
+
+    \begin{document}
+    \section*{UCASTHESIS-B}
+
+当然参考文献可以直接写 bibitem，虽然费点功夫，但是好控制，各种格式可以自己随意改
+写。
+
+本模板使用 Biber进行文献编译，基本符合2015国标的参考文献格式。默认情况下，按照国科大的指导标准，
+使用数字顺序的引用方式没有严格限制，这也是最方便的引用途径。 如果您一定要使用作者年份制引用，请参照参考文献模板
+的说明进行使用。
+看看这个例子，关于书的\cite{tex, companion, ColdSources}，
+还有这些\cite{Krasnogor2004e, clzs, zjsw}，关于杂志的\cite{ELIDRISSI94,
+  MELLINGER96, SHELL02}，硕士论文\cite{zhubajie, metamori2004}，博士论文
+\cite{shaheshang, FistSystem01}，标准文件\cite{IEEE-1363}，会议论文\cite{DPMG,kocher99}，技术报告\cite{NPB2}。中文参
+考文献\cite{cnarticle}应增加 \texttt{lang=``zh''} 字段，以便进行相应处理。更多参考文献
+模板使用方法请参照参考文献模板作者说明 \url{https://github.com/hushidong/biblatex-gb7714-2015}。
+
+    \printbibliography
+
+    \end{document} 

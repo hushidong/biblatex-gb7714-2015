@@ -7,15 +7,13 @@
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\def\versionofgbtstyle{2019/01/19 v1.0p}
+\def\versionofgbtstyle{2019/02/07 v1.0q}
 \ProvidesFile{gb7714-2015ay.cbx}[\versionofgbtstyle biblatex citation style]
 
 %
 %   加载标准样式
 %
-\RequireCitationStyle{authoryear}
-
-
+\RequireCitationStyle{authoryear-comp}
 
 \ExecuteBibliographyOptions{
   %autocite  = superscript ,
@@ -26,6 +24,7 @@
   uniquename=init,%因为使用了名字缩写选项，所以需要设置uniquename=init而不是full避免冲突
   uniquelist=minyear
 }
+
 %
 %   选项设置，针对3.7以下版本
 %
@@ -63,9 +62,9 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
 
 %textcite标注命令中的标点设置，注意只针对textcite命令。
 \DeclareDelimFormat[textcite]{nameyeardelim}{}%\addcomma\space
-\DeclareDelimFormat[textcite]{andothersdelim}{\iffieldequalstr{userf}{cn}{\addthinspace}{\addspace}}%
+\DeclareDelimFormat[textcite]{andothersdelim}{\iffieldequalstr{userf}{chinese}{\addthinspace}{\addspace}}%
 \AtEveryCitekey{%
-\iffieldequalstr{userf}{cn}{\renewcommand*{\andothersdelim}{\addthinspace}}%\addthinspace
+\iffieldequalstr{userf}{chinese}{\renewcommand*{\andothersdelim}{\addthinspace}}%\addthinspace
   {\renewcommand*{\andothersdelim}{\addspace}}%
 }
 
@@ -87,61 +86,67 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
 %
 %   方法:\DeclareCiteCommand{\cite}[\mkbibparens]{precode}{loopcode}{sepcode}{postcode}
 %    v1.0p版后将cite的处理方式修改为类似pagescite，而不再使用biblatex的标准方式
-\DeclareCiteCommand{\cite}%[\mkbibparens]
-  {(\usebibmacro{prenote}%)
-  }%
+\DeclareCiteCommand{\cite}
+  {\usebibmacro{cite:init}%
+  \renewbibmacro*{postnote}{%
+  \iffieldundef{postnote}%
+    {}%
+    {\thefield{postnote}}}%
+    (\usebibmacro{prenote}}%)
   {\usebibmacro{citeindex}%
    \usebibmacro{cite}}
-  {\multicitedelim}
+  {}
   {%(
-  )\mkbibsuperscript{\printfield{postnote}}}
-%   v1.0p 以前用的方式
-%\DeclareCiteCommand{\cite}[\mkbibparens]
-%  {\usebibmacro{prenote}}
-%  {\usebibmacro{citeindex}%
-%   \usebibmacro{cite}}
-%  {\multicitedelim}
-%  {\usebibmacro{postnote}}
+  )\mkbibsuperscript{\usebibmacro{postnote}}%\usebibmacro{postnote}
+  }
 
 %
 %   定义upcite命令
 %   20180604，v1.0l，hzz
 %   方法:与yearcite命令相同
-\DeclareCiteCommand{\upcite}
-  {\printtext{(}\usebibmacro{prenote}}
-  {\usebibmacro{cite:labeldate+extradate}}%
-  {\multicitedelim}
+\DeclareCiteCommand{\upcite}%仅输出年份，不要页码
+  {\usebibmacro{cite:init}%
+  \printtext{(}\usebibmacro{prenote}}%
+  {\usebibmacro{cite:labeldate+extradate}}%\printfield{year}\printfield{extrayear}
+  {\multicitedelim}%
   {\printtext{)}}
 
 %
 %   重定义parencite命令
 %
-\DeclareCiteCommand{\parencite}[\mkbibparens]
-  {\usebibmacro{prenote}}
-  {\usebibmacro{citeindex}%
-   \usebibmacro{cite}}
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
+%\DeclareCiteCommand{\parencite}
+%  {\usebibmacro{cite:init}%
+%  \renewbibmacro*{postnote}{%
+%  \iffieldundef{postnote}%
+%    {}%
+%    {\nopunct%
+%     \printfield{postnote}}}%
+%    (\usebibmacro{prenote}}%)
+%  {\usebibmacro{citeindex}%
+%   \usebibmacro{cite}}
+%  {}
+%  {%(
+%  )\mkbibsuperscript{\usebibmacro{postnote}}}
 
 
 %
 %   新定义pagescite命令，以满足标签带页码的国标要求
 %
 %   原理方法:
-%   1.修改postnote的输出格式
-\newbibmacro*{postpages}{%
-  \iffieldundef{postnote}
-    {\printfield{pages}}
-    {\printfield{postnote}}}
-%   2.新增页码输出宏(括号外的页码格式)
-\DeclareFieldFormat{postnote}{#1}
-%   3.新增\pagescite引用命令
+%   新增\pagescite引用命令
 \DeclareCiteCommand{\pagescite}
-  {\printtext{(}\usebibmacro{prenote}}
+  {\usebibmacro{cite:init}%
+  \renewbibmacro*{postnote}{%
+  \iffieldundef{postnote}%
+    {\thefield{pages}}%
+    {\thefield{postnote}}}%
+    (\usebibmacro{prenote}%)
+    }%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite}}
-  {\multicitedelim}
-  {\printtext{)}\textsuperscript{\usebibmacro{postpages}}}
+  {}
+  {%(
+  )\mkbibsuperscript{\usebibmacro{postnote}}}
 
 %
 %   定义yearpagescite，用于当文中作者已经存在，需要页码和年份的情况
@@ -149,28 +154,41 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
 %   原理:增加一个命令yearpagescite
 %   参考biblatex.DEF中的\DeclareCiteCommand*{\citeyear}命令
 \DeclareCiteCommand{\yearpagescite}
-  {\printtext{(}\usebibmacro{prenote}}
+  {\usebibmacro{cite:init}%
+  \renewbibmacro*{postnote}{%
+  \iffieldundef{postnote}%
+    {\thefield{pages}}%
+    {\thefield{postnote}}}%
+  \printtext{(}\usebibmacro{prenote}}%
   {\usebibmacro{cite:labeldate+extradate}}%\printfield{year}\printfield{extrayear}
-  {\multicitedelim}
-  {\printtext{)}\textsuperscript{\usebibmacro{postpages}}}
+  {\multicitedelim}%
+  {\printtext{)}\textsuperscript{\usebibmacro{postnote}}}
 
 %
 %   定义yearcite，用于当文中作者已经存在，仅需要年份的情况
 %
 %   原理:增加一个命令yearcite
 \DeclareCiteCommand{\yearcite}%仅输出年份，不要页码
-  {\printtext{(}\usebibmacro{prenote}}
+  {\usebibmacro{cite:init}%
+  \printtext{(}\usebibmacro{prenote}}%
   {\usebibmacro{cite:labeldate+extradate}}%\printfield{year}\printfield{extrayear}
-  {\multicitedelim}
+  {\multicitedelim}%
   {\printtext{)}}
 
 %
 %   定义\authornumcite命令，输出作者信息，然后在后面带上顺序编码
 %   20180427，v1.0k，增加，hzz
 %   为与顺序编码制兼容，增加了命令，定义与cite相同
-\DeclareCiteCommand{\authornumcite}[\mkbibparens]
-  {\usebibmacro{prenote}}
+\DeclareCiteCommand{\authornumcite}
+  {\usebibmacro{cite:init}%
+  \renewbibmacro*{postnote}{%
+  \iffieldundef{postnote}%
+    {}%
+    {\thefield{postnote}}}%
+    (\usebibmacro{prenote}}%)
   {\usebibmacro{citeindex}%
    \usebibmacro{cite}}
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
+  {}
+  {%(
+  )\mkbibsuperscript{\usebibmacro{postnote}}%\usebibmacro{postnote}
+  }

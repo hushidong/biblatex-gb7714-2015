@@ -1,0 +1,188 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015ay的标注样式，是否满足GB要求
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{xcolor}
+\usepackage{toolbox}
+\usepackage[colorlinks]{hyperref}
+\usepackage{lipsum}
+\usepackage[paperwidth=21cm,paperheight=12.5cm,top=10pt,bottom=10pt,left=0.5cm,right=1cm]{geometry}
+\usepackage{xltxtra,mflogo,texnames}
+\usepackage[backend=biber,style=gb7714-2015ay,gbfootbib=true]{biblatex}%sorting=nytgb7714-2015ay,gbfootbib=true
+\usepackage{tabularx}
+\usepackage{listings}
+
+%\DeclareFieldFormat{postnote}{#1}
+%
+%\DeclareCiteCommand{\cite}
+%  {\usebibmacro{cite:init}%
+%  \renewbibmacro*{postnote}{%
+%  \iffieldundef{postnote}%
+%    {}%
+%    {\nopunct%
+%     \printfield{postnote}}}%
+%    (\usebibmacro{prenote}}%)
+%  {\usebibmacro{citeindex}%
+%   \usebibmacro{cite}}
+%  {}
+%  {%(
+%  )\mkbibsuperscript{\usebibmacro{postnote}}}
+%
+%\DeclareCiteCommand{\parencite}
+%  {\usebibmacro{cite:init}%
+%  \renewbibmacro*{postnote}{%
+%  \iffieldundef{postnote}%
+%    {}%
+%    {\nopunct%
+%     \printfield{postnote}}}%
+%    (\usebibmacro{prenote}}%)
+%  {\usebibmacro{citeindex}%
+%   \usebibmacro{cite}}
+%  {}
+%  {%(
+%  )\mkbibsuperscript{\usebibmacro{postnote}}%
+%  }
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+
+@Book{易仕和2013--,
+  Title                    = {超声速和高超声速喷管设计},
+  Address                  = {北京},
+  Author                   = {易仕和 and 赵玉新 and 何霖 and 张敏莉},
+  Publisher                = {国防工业出版社},
+  Year                     = {2013}
+}
+
+@Book{Yi2013--,
+  Title                    = {Supersonic and hypersonic nozzle design},
+  Address                  = {Beijing},
+  Author                   = {Yi, Shi he and Zhao, Yu xin and He, Lin and Zhang, Min li},
+  Publisher                = {National Defense Industry Press},
+  Year                     = {2013}
+}
+
+@Article{张敏莉2007-500-503,
+  Title                    = {超声速短化喷管的设计和试验研究},
+  Author                   = {张敏莉 and 易仕和 and 赵玉新},
+  Journal                  = {空气动力学报},
+  Number                   = {4},
+  Pages                    = {500-503},
+  Volume                   = {25},
+  Year                     = {2007}
+}
+
+@Article{Zhang2007-500-503,
+  Title                    = {The design and experimental investigations of supersonic length shorted nozzle},
+  Author                   = {Zhang, Min-li and Yi, Shi-he and Zhao, Yu-xin},
+  Journal                  = {ACTA AERODYNAMICA SINICA},
+  Number                   = {4},
+  Pages                    = {500-503},
+  Volume                   = {25},
+  Year                     = {2007}
+}
+
+@Book{Peebles2001-100-100,
+  Title                    = {Probability, random variable, and random signal Principles and \LaTeX{}},
+  Address                  = {New York},
+  Author                   = {von Peebles, Jr., P. Z.},
+  Edition                  = {4},
+  Pages                    = {100},
+  Publisher                = {McGraw-Hill},
+  Year                     = {2001}
+}
+
+@Book{蔡敏2006--,
+  Title                    = {UML基础和Rose建模教程},
+  Address                  = {北京},
+  Author                   = {蔡敏 and 徐慧慧 and 黄柄强},
+  Publisher                = {人民邮电出版社},
+  Year                     = {2006},
+  Month                    = {1}
+}
+
+@Book{蔡敏2006a--,
+  Title                    = {UML基础和Rose建模教程-练习册一},
+  Address                  = {北京},
+  Author                   = {蔡敏},
+  Publisher                = {人民邮电出版社},
+  Year                     = {2006},
+  Month                    = {1}
+}
+
+@Book{蔡敏2006b--,
+  Title                    = {UML基础和Rose建模教程-练习册二},
+  Address                  = {北京},
+  Author                   = {蔡敏},
+  Publisher                = {人民邮电出版社},
+  Year                     = {2006},
+  Month                    = {1}
+}
+
+@Book{Miroslav2004--,
+  Title                    = {信号处理滤波器设计-基于matlab和mathematica的设计方法},
+  Address                  = {北京},
+  Author                   = {Miroslav, D. L. and Dejan, V. T. and Brian, L. E.},
+  Publisher                = {电子工业出版社},
+  Translator               = {朱义胜 and 董辉},
+  Year                     = {2004},
+  Month                    = {1}
+}
+
+@Book{赵学功2001--,
+  Title                    = {当代美国外交},
+  Author                   = {赵学功},
+  Publisher                = {社会科学文献出版社},
+  Url                      = {http://www.baidu.com},
+  Urldate                  = {2014-06-11},
+  Year                     = {2001}
+}
+
+
+\end{filecontents}
+
+\addbibresource{\jobname.bib}
+%\renewcommand{\thefootnote}{\textcircled{\tiny\arabic{footnote}}}
+
+\begin{document}
+
+\begin{refsection}
+
+\small
+%\begin{table}[!htb]
+%\centering
+%\caption{顺序编码制常用命令示例}\label{tab:cite:num}
+\small
+%命令 & 标注标签 & 说明
+\newcommand{\tabseplines}[3]{\parbox{7cm}{\texttt{#1}}\quad\parbox{3.5cm}{#3}$\Rightarrow$ #2\par}
+
+\tabseplines{\textbackslash cite\{Peebles2001-100-100\}}{\cite{Peebles2001-100-100}}{不带页码}
+\tabseplines{\textbackslash parencite\{Miroslav2004--\}}{\parencite{Miroslav2004--}  }{ 不带页码}
+\tabseplines{\textbackslash cite[49]\{蔡敏2006--\} }{\cite[49]{蔡敏2006--}   }{  带页码}
+\tabseplines{\textbackslash parencite[49]\{Miroslav2004--\}}{\parencite[49]{Miroslav2004--}   }{  带页码不上标}
+\tabseplines{\textbackslash pagescite\{Peebles2001-100-100\}}{\pagescite{Peebles2001-100-100}   }{  自动页码}
+\tabseplines{\textbackslash pagescite[150]\{Peebles2001-100-100\}}{\pagescite[150]{Peebles2001-100-100}   }{  设置页码}
+\tabseplines{\textbackslash textcite\{Miroslav2004--\} }{\textcite{Miroslav2004--}  }{  提供主语}
+\tabseplines{赵学功\textbackslash yearpagescite[205]\{赵学功2001--\} }{赵学功\yearpagescite[205]{赵学功2001--} }{ 已有主语提供年份和页码}
+\tabseplines{赵学功\textbackslash yearcite\{赵学功2001--\}}{赵学功\yearcite{赵学功2001--} }{ 已有主语提供年份}
+\tabseplines{赵学功(\textbackslash citeyear\{赵学功2001--\})}{赵学功(\citeyear{赵学功2001--}) }{ 已有主语提供年份}
+\tabseplines{赵学功(\textbackslash cite*\{赵学功2001--\}) }{赵学功(\cite*{赵学功2001--}) }{ 已有主语提供年份}
+\tabseplines{\textbackslash footfullcite\{Miroslav2004--\} }{\makebox[0.25em]{}\footfullcite{Miroslav2004--} }{ 脚注方式文献条目}
+\tabseplines{引用单篇文献：  }{文献\cite{赵学功2001--} }{ 国标示例：文中无作者}
+\tabseplines{引用单篇文献：  }{赵学功\yearcite{赵学功2001--} }{ 国标示例：文中有作者}
+\tabseplines{引用同一作者同一年份文献： }{文献\cite{蔡敏2006a--}，文献\cite{蔡敏2006b--} }{  国标示例}
+\tabseplines{同一处引用多篇文献： }{文献\cite{Peebles2001-100-100,Miroslav2004--} }{  国标示例}
+\tabseplines{同一处引用多篇文献： }{文献\cite{蔡敏2006--,Miroslav2004--,赵学功2001--} }{  国标示例：三篇以上}
+\tabseplines{同一处引用同一作者同一年份文献： }{文献\cite{蔡敏2006a--,蔡敏2006b--} }{压缩示例}
+\tabseplines{多次引用同一作者的同一文献： }{文献\cite[20-22]{Miroslav2004--}，
+ \cite[55-60]{Miroslav2004--} }{  国标示例}
+\tabseplines{多次引用同一作者的同一文献： }{文献\footfullcite[20-22]{Miroslav2004--}，
+ 文献\footfullcite[55-60]{Miroslav2004--} }{  国标示例：脚注方式}
+
+
+%\printbibliography
+
+\end{refsection}
+
+\end{document} 

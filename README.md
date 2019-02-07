@@ -1,4 +1,4 @@
-<b>Date of last change: 2019-01-19 to version v1.0p</b>
+<b>Date of last change: 2019-02-07 to version v1.0q</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -26,10 +26,7 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
 ## Need to do:
 
-1. 王临慧, 2010a. 王临慧, 等, 2010b.需要等biblatex2.13更新后完成
-
-2. 脚注中文献表的截短应与正文的文献表一致
-
+	* 王临慧, 2010a. 王临慧, 等, 2010b.需要等biblatex2.13更新后完成
     * special characters in all fields?
     * entry without author: the delimiter between title and year?
 	* TEST FOR texlive 2015,2016,2017
@@ -863,6 +860,8 @@ biber -l zh__stroke jobname
 * 2018/11/04 v1.0n
 * 2018/12/22 v1.0o
 * 2019/01/19 v1.0p
+* 2019/02/07 v1.0q
+
 
 ---------------------------------------------------------
 ## Update history:

@@ -9,10 +9,10 @@ del /q *.nav *.snm *.vrb *.fls *.xdv *.fdb_latexmk
 
 del /q *.gitignore
 
+
 cd example
 
 call makecleareg
-
 
 del *.bbx /Q
 
@@ -20,15 +20,32 @@ del *.cbx /Q
 
 del *.def /Q
 
-
 del *.bib /Q
 
 cd ..
+
+
 
 cd egfigure
 
 call makeclearfig
 
+del *.bbx /Q
+
+del *.cbx /Q
+
+del *.def /Q
+
+del *.bib /Q
+
+cd ..
+
+
+
+cd egthesis
+
+call makeclearthesis
+
 
 del *.bbx /Q
 
@@ -38,5 +55,5 @@ del *.def /Q
 
 del *.bib /Q
 
-
 cd ..
+

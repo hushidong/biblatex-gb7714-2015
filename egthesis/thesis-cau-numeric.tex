@@ -1,0 +1,79 @@
+
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试ucasthesis中应用biblatex-gb7714-2015的情况
+%
+
+\documentclass[twoside]{article}
+    \usepackage{ctex}%[zihao=-4]
+    \usepackage{fontspec}
+\setmainfont{CMU Serif}
+\setCJKmainfont {SourceHanSerifSC-Regular.otf}
+    \usepackage{xcolor}
+    \usepackage{toolbox}
+    \usepackage[colorlinks,citecolor=blue]{hyperref}
+    \usepackage{lipsum}
+    \usepackage{geometry}%,showframe,showcrop
+\geometry{left=2.5cm,right=2.5cm,top=3.5cm,bottom=2.5cm,footskip=0.8cm}
+\usepackage[backend=biber,%
+style=gb7714-2015]{biblatex}%biber
+\renewcommand{\bibfont}{\zihao{-5}\songti}
+\newcommand{\bibname}{参考文献}
+\setlength{\bibitemsep}{2pt}
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+@Online{Huzhenzhen2018,
+  Title                    = {\LaTeX{}文档中文参考文献的biblatex解决方案},
+  Author                   = {胡振震},
+  Volume                   = {},
+  Number                   = {},
+  Year                     = {2018},
+  Journaltitle             = {},
+  Pages                    = {},
+  Url                      = {https://github.com/hushidong/biblatex-solution-to-latex-bibliography}
+}
+@Book{王夫之1845--,
+  Title                    = {宋论},
+  Author                   = {王夫之},
+  Edition                  = {刻本},
+  Publisher                = {曾氏},
+  Location                 = {金陵},
+  Year                     = {1845(清同治四年)}
+}
+@Book{汪昂1881--,
+  Title                    = {增订本草备要:四卷},
+  Address                  = {京都},
+  Author                   = {汪昂},
+  Edition                  = {刻本},
+  Publisher                = {老二酉堂},
+  Location                 = {上海},
+  Year                     = {1881(清光绪七年)}
+}
+@Article{KENNEDY1975-339-360,
+  Title                    = {Morphology and genesis of nodular chalks and hardgrounds in the Upper
+ Cretacesous of southern England},
+  Author                   = {W. J. KENNEDY and R. E. GARRISON},
+  Date                     = {1975},
+  Journaltitle             = {Lethaia},
+  Pages                    = {339-360},
+  Volume                   = {8}
+}
+
+
+\end{filecontents}
+    \addbibresource{\jobname.bib}
+    %
+\def\cs#1{\textbackslash\texttt{#1}}
+    \begin{document}
+    \section*{CAU}
+
+    \subsection{参考文献}
+    \cite{Huzhenzhen2018}
+    \cite{王夫之1845--}\cite{KENNEDY1975-339-360}%使用\cite{}引用bib文件中的内容
+    \nocite{汪昂1881--}%使用\nocite{}引用但不会在文中显示[1]，最后参考文献会显示
+    %可以使用\nocite{*}一次引用所有内容
+
+\printbibliography
+
+    \end{document} 

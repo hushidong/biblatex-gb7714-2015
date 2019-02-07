@@ -1,0 +1,235 @@
+
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试ucasthesis中应用biblatex-gb7714-2015的情况
+%
+
+\documentclass[twoside]{article}
+    \usepackage{ctex}%[zihao=-4]
+    \usepackage{fontspec}
+\setmainfont{CMU Serif}
+\setCJKmainfont {SourceHanSerifSC-Regular.otf}
+    \usepackage{xcolor}
+    \usepackage{toolbox}
+    \usepackage[colorlinks,citecolor=blue]{hyperref}
+    \usepackage{lipsum}
+    \usepackage{geometry}%,showframe,showcrop
+\geometry{left=2.5cm,right=2.5cm,top=3.5cm,bottom=2.5cm,footskip=0.8cm}
+\usepackage[backend=biber,%
+style=gb7714-2015]{biblatex}%biber
+\renewcommand{\bibfont}{\zihao{-5}\songti}
+\newcommand{\bibname}{参考文献}
+\setlength{\bibitemsep}{2pt}
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+% !Mode:: "TeX:UTF-8"
+% UTF-8 编辑器
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%   LaTeX File for Doctor (Master) Thesis of Tsinghua University
+%   LaTeX + CJK     清华大学博士（硕士）论文模板
+%   Based on Wang Tianshu's Template for XJTU
+%   Version: 1.65
+%   Last Update: 2004-03-14
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   Copyright 2002-2004  by  Lei Wang (BaconChina)       (bcpub@sina.com)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%   LaTeX File for phd thesis of xi'an Jiao Tong University
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   Copyright 2002  by  Wang Tianshu    (tswang@asia.com)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%
+%The bibitems are sorted by pulication date and AUTHOR name.
+%
+
+@ARTICLE{Bayes63:classical,
+  AUTHOR =       "R. T. Bayes",
+  FULLAUTHOR =   "Reverend Thomas Bayes",
+  TITLE =        "Essay Towards Solving a Problem in the Doctrine of Chances",
+  JOURNAL =      "Philosophical Transactions of the Royal Society",
+  YEAR =         "1763",
+}
+
+@BOOK{BEZOS02,
+  AUTHOR =       "J. Bezos",
+  FULLAUTHOR =   "Javier Bezos",
+  TITLE =        "The TITLEsec and TITLEtoc Packages",
+  MONTH =        "March",
+  YEAR =         "2002",
+}
+
+@ARTICLE{ELIDRISSI94,
+  AUTHOR =       "Elidrissi, M.C. and Roney, A. and Frigon, C. and et al",
+  TITLE =        "Measurements of total kinetic-energy released to the {N=2}
+  dissociation limit of {H}$_2$ - evidence of the dissociation of very high vibrational
+  {R}ydberg states of {H}$_2$ by doubly-excited states",
+  JOURNAL =      "Chem. Phys. Lett.",
+  PAGES =         "260-266",
+  VOLUME =       "224",
+  YEAR =         "1994",
+}
+
+@ARTICLE{MELLINGER96,
+  AUTHOR =       "Mellinger, A. and Vidal, C.R. and Jungen, Ch.",
+  TITLE =        "Laser reduced fluorescence study of the carbon-monoxide nd triplet
+  {R}ydberg series - experimental results and multichannel quantum-defect analysis",
+  JOURNAL =      "J. Chem. Phys.",
+  PAGES =         "8913-8921",
+  VOLUME =       "104",
+  YEAR =         "1996",
+}
+
+@BOOK{OOSTRUM01,
+  AUTHOR =       "{P. Oostrum, ifuleyou@bbs.ctex.org~译}",
+  FULLAUTHOR =   "Piet van Oostrum",
+  TITLE =        "{\LaTeX}下的页面布局",
+  MONTH =        "August",
+  YEAR =         "2001",
+}
+
+@ARTICLE{SHELL02,
+  AUTHOR =       "Michael Shell",
+  TITLE =        "How to Use the {IEEEtran \LaTeX} Class",
+  JOURNAL =      "Journal of {\LaTeX} Class Files",
+  VOLUME =       "1",
+  NUMBER =       "11",
+  MONTH =        "November",
+  YEAR =         "2002",
+}
+
+@BOOK{TEXGURU99,
+  AUTHOR =       "{\TeX}Guru",
+  TITLE =        "{\LaTeX 2$\varepsilon$}用户手册",
+  YEAR =         "1999",
+}
+
+
+% English
+@ARTICLE{Joa1999,
+        AUTHOR= "Joa-Ng, M. and I-Tai Lu",
+        TITLE=  "A novel spread spectrum-based synchronization and location determination method for wireless system",
+        JOURNAL=    "IEEE Communications Letters",
+        YEAR=   "1999",
+        MONTH=  "Jun.",
+        VOLUME= "3",
+        NUMBER= "6",
+        PAGES=  "177-179",
+    }
+@ARTICLE{Fujinoki2001,
+        AUTHOR= "Fujinoki, Hiroshi and , PhD",
+        TITLE=  "Performance evaluation of multicast routing algorithms to trade-off path length and bandwidth consumption and of a protocol to reduce messaging overhead",
+        JOURNAL=    "UNIVERSITY OF SOUTH FLORIDA, 2001, 109 PAGES",
+        YEAR=   "2001",
+        MONTH=  " ",
+        VOLUME= " ",
+        NUMBER= " ",
+        PAGES=  " ",
+    }
+@CONFERENCE{Altman1997,
+        AUTHOR= "Altman, Eitan and Basar, Tamer",
+        TITLE=  "Multi-user rate-based flow control: Distributed game-theoretic algorithms",
+        BOOKTITLE=  "Proceedings of the IEEE Conference on Decision and Control",
+        YEAR=   "1997",
+        MONTH=  " ",
+        VOLUME= "3",
+        PAGES=  "2916-2921",
+    }
+@MANUAL{Hills,
+        AUTHOR= "Willoughby Hills",
+        TITLE=  "Reconfigurable Assembly Cell(RAC)",
+        NOTE=   "OH 44094",
+        YEAR=   " ",
+        MONTH=  " ",
+    }
+
+@MANUAL{Hills,
+        AUTHOR= "PATRICK W. DALY",
+        TITLE=  "Graphics and Colour with ",
+        NOTE=   " ",
+        YEAR=   "1998",
+        MONTH=  "4",
+    }
+
+@MANUAL{Hills,
+        AUTHOR= "PATRICK W. DALY",
+        TITLE=  "TexFriend/Graphics插件",
+        NOTE=   " ",
+        YEAR=   "2003",
+        MONTH=  "12",
+    }
+
+% Chinese
+@ARTICLE{Yang_Hy200215,
+        AUTHOR= "杨洪勇 and 宗广灯 and 武玉强",
+        TITLE=  "多输入多输出网络系统的拥塞控制方法",
+        JOURNAL=    "计算机工程与应用",
+        YEAR=   "2002",
+        MONTH=  " ",
+        VOLUME= " ",
+        NUMBER= "15",
+        PAGES=  "27-30",
+    }
+
+
+@BOOK{Zheng_wb200108,
+        AUTHOR= "郑文波",
+        TITLE=  "控制网络技术",
+        YEAR=   "2001",
+        MONTH=  "8",
+    }
+
+@BOOK{Xie_dy1997,
+        AUTHOR= "薛定宇",
+        TITLE=  "\LaTeX 科学文件处理软件入门(修订版)",
+        YEAR=   "1997",
+        MONTH=  "5",
+    }
+
+@BOOK{Deng_PC2001,
+        AUTHOR= "邓建松 and 彭冉冉 and 陈长松",
+        TITLE=  "\LaTeX 2e 科技排版指南",
+        YEAR=   "2001",
+        MONTH=  "9",
+    }
+
+@BOOK{Shang_dy2001,
+        AUTHOR= "桑大勇 and 王瑛",
+        TITLE=  "科技文献排版系统：\LaTeX 入门与提高",
+        YEAR=   "2001",
+        MONTH=  "5",
+    }
+
+
+@BOOK{Wang_2,
+        AUTHOR= "王 磊",
+        TITLE=  "LATEX2e 插图指南",
+    }
+
+
+
+\end{filecontents}
+    \addbibresource{\jobname.bib}
+    %
+\def\cs#1{\textbackslash\texttt{#1}}
+    \begin{document}
+    \section*{ECNU}
+
+\subsection{文献引用的演示}
+\par 本模板使用biblatex进行文献管理，这是一套相对较新的系统。另外，使用了hushidong制作的符合gb7714-2015标准的biblatex样式。在此对他的工作表示感谢，要完成这样的样式非常不容易。本模板中gb7714-2015.bbx与gb7714-2015.cbx即为他的作品，在这里打包发布以便使用。
+\par 默认的bib文件位于~/reference/thesis-ref.bib，内容是由Wang Tianshu制作，在此仅作演示之用。关于bib文件的编写与管理请自行查找相关教程。
+\par 下方的演示已经给出了正文中引用文献的基本方法，这与传统的cite命令是类似的。如有更多需求，请至\url{https://github.com/hushidong/biblatex-gb7714-2015}查找相关资料。
+\par 文献\parencite{Yang_Hy200215}中提到xxxxxxx。
+\par 文献\parencite{Joa1999}中提到yyyyyyy。
+\par 文献\parencite{Altman1997}中提到zzzzzzz。
+\par \textcolor{blue}{\textbf{\uline{本模板使用parencite而不是cite命令，因为这样能与脚注所产生编号进行区分。当然，如果你没有脚注或尾注，那么cite命令也是推荐使用的。}}}
+
+\printbibliography
+
+    \end{document} 

@@ -1,0 +1,375 @@
+
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试ucasthesis中应用biblatex-gb7714-2015的情况
+%
+
+\documentclass[twoside]{article}
+    \usepackage{ctex}
+    \usepackage{fontspec}
+\setmainfont{CMU Serif}
+\setCJKmainfont {SourceHanSerifSC-Regular.otf}
+    \usepackage{xcolor}
+    \usepackage{toolbox}
+    \usepackage[colorlinks,citecolor=blue]{hyperref}
+    \usepackage{lipsum}
+    \usepackage{geometry}%,showframe,showcrop
+\geometry{
+  paper      = a4paper,
+  top        = 3.5cm,
+  bottom     = 4.0cm,
+  left       = 3.3cm,
+  right      = 2.8cm,
+}
+\usepackage[backend=biber,style=gb7714-2015]{biblatex}%标注(引用)样式citestyle，著录样式bibstyle都采用gb7714-2015样式
+\usepackage{listings}
+\usepackage[inline]{enumitem}
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+%# -*- coding: utf-8-unix -*-
+
+@book{Meta_CN,
+  title = {电磁超介质及其应用},
+  address = {北京},
+  publisher = {国防工业出版社},
+  year = {2008},
+  author = {崔万照 and 马伟 and 邱乐德 and 张洪太}
+}
+
+@book{JohnD,
+  title = {Photonic Crystals: Molding the Flow of Light},
+  publisher = {Princeton University Press},
+  year = {2008},
+  author = {Joannopoulos, J. D. and Johnson, S. G. and Winn, J. N.}
+}
+
+@book{IEEE-1363,
+  author={{IEEE Std 1363-2000}},
+  title={IEEE Standard Specifications for Public-Key Cryptography},
+  address={New York},
+  publisher={IEEE},
+  year={2000}
+}
+
+@article{chen2007act,
+  author = {Chen, H. and Chan, C. T.},
+  title = {Acoustic cloaking in three dimensions using acoustic metamaterials},
+  journal = {Applied Physics Letters},
+  year = {2007},
+  volume = {91},
+  pages = {183518},
+  publisher = {AIP}
+}
+
+@article{chen2007ewi,
+  author = {Chen, H. and Wu, B. I. and Zhang, B. and Kong, J. A.},
+  title = {Electromagnetic Wave Interactions with a Metamaterial Cloak},
+  journal = {Physical Review Letters},
+  year = {2007},
+  volume = {99},
+  pages = {63903},
+  number = {6},
+  publisher = {APS}
+}
+
+@article{he1999,
+  title = {标准动态力发生装置国内外研究现状},
+  number = {2},
+  journal = {机电工程},
+  author = {何闻},
+  year = {1999},
+  pages = {47-49},
+}
+
+@inproceedings{kocher99,
+  author={C. Kocher and J. Jaffe and B. Jun},
+  title={Differential Power Analysis},
+  editor={M. Wiener},
+  booktitle={Advances in Cryptology ({CRYPTO}~'99)},
+  series={Lecture Notes in Computer Science},
+  volume={1666},
+  pages={388-397},
+  publisher={Springer-Verlag},
+  month={9},
+  year={1999}
+}
+
+@incollection{Krasnogor2004e,
+  AUTHOR = {N. Krasnogor},
+  TITLE = {Towards robust memetic algorithms},
+  BOOKTITLE = {Recent Advances in Memetic Algorithms},
+  PUBLISHER = {Springer Berlin Heidelberg},
+  YEAR = {2004},
+  PAGES = {185-207},
+  EDITOR = {W.E. Hart and N. Krasnogor and J.E. Smith},
+  VOLUME = {166},
+  SERIES = {Studies in Fuzziness and Soft Computing},
+  ADDRESS = {New York},
+}
+
+@incollection{zjsw,
+  AUTHOR = {班固},
+  TITLE = {苏武传},
+  BOOKTITLE = {传记散文英华},
+  PUBLISHER = {湖北人民出版社},
+  YEAR = {1998},
+  PAGES = {65-69},
+  EDITOR = {郑在瀛 and 汪超宏 and 周文复},
+  VOLUME = {2},
+  SERIES = {新古文观止丛书},
+  ADDRESS = {武汉},
+}
+
+
+@inbook{clzs,
+  AUTHOR = {阎真},
+  TITLE = {沧浪之水},
+  CHAPTER = {大人物还是讲人情的},
+  PAGES = {185-207},
+  PUBLISHER = {人民文学出版社},
+  YEAR = {2001},
+}
+
+@book{tex,
+ author    = {Donald E. Knuth},
+ title     = {The {\TeX} Book},
+ publisher = {Addison-Wesley Publishing Company},
+ address   = {Reading, MA},
+ year      = 1989,
+ edition   = {15th},
+}
+
+@book{companion,
+ author    = {Michel Goosens and Frank Mittelbach and Alexander Samarin},
+ title     = {The {\LaTeX} Companion},
+ publisher = {Addison-Wesley Publishing Company},
+ address   = {Reading, MA},
+ PAGES = {112--125},
+ year      = 1994,
+}
+
+@article{ELIDRISSI94,
+  AUTHOR =       {{Chafik El Idrissi}, M. and {Roney}, A. and {Frigon}, C. and
+                  {Larzilli{\`e}re}, M.},
+  TITLE =        {Measurements of total kinetic-energy released to the {$N=2$}
+                  dissociation limit of {H}$_2$ --- evidence of the dissociation
+                  of very high vibrational {R}ydberg states of {H}$_2$ by
+                  doubly-excited states},
+  JOURNAL =      {Chemical Physics Letters},
+  PAGES =        {260-266},
+  VOLUME =       224,
+  NUMBER =       10,
+  YEAR =         1994,
+}
+
+@ARTICLE{MELLINGER96,
+  AUTHOR =       {Mellinger, A. and Vidal, C. R. and Jungen, Ch.},
+  TITLE =        {Laser reduced fluorescence study of the carbon-monoxide nd
+                  triplet {R}ydberg series-experimental results and multichannel
+                  quantum-defect analysis},
+  JOURNAL =      {J. Chem. Phys.},
+  PAGES =        {8913-8921},
+  VOLUME =       104,
+  NUMBER =       5,
+  YEAR =         1996,
+}
+
+@ARTICLE{SHELL02,
+  AUTHOR =       {Michael Shell},
+  TITLE =        {How to Use the {IEEEtran \LaTeX} Class},
+  JOURNAL =      {Journal of {\LaTeX} Class Files},
+  YEAR =         2002,
+  VOLUME =       12,
+  NUMBER =       4,
+  PAGES =        {100--120}
+}
+
+@TechReport{NPB2,
+  title =        {The {NAS} Parallel Benchmarks 2.0},
+  author =       {Alex Woo and David Bailey and Maurice Yarrow and Wijngaart
+                  Wijngaart and Tim Harris and William Saphir},
+  year =         1995,
+  month =        12,
+  institution =  {The Pennsylvania State University CiteSeer Archives},
+  url =          {http://www.nasa.org/}
+}
+
+@INPROCEEDINGS{DPMG,
+  author =       {Kim, Sangbum and Woo, Namyoon and Yeom, Heon Y. and Park,
+                  Taesoon and Park, Hyoungwoo},
+  title =        {Design and {I}mplementation of {D}ynamic {P}rocess
+                  {M}anagement for {G}rid-enabled {MPICH}},
+  booktitle =    {the 10th European PVM/MPI Users' Group Conference},
+  year =         2003,
+  address =      {Venice, Italy},
+  month =        sep,
+}
+
+@INPROCEEDINGS{cnproceed,
+  author =       {王重阳 and 黄药师 and 欧阳峰 and 洪七公 and 段皇帝},
+  title =        {武林高手论文集},
+  booktitle =    {第~$N$~次华山论剑},
+  year =         2006,
+  address =      {西安, 中国},
+  publisher = {中国古籍出版社},
+  month =        sep,
+}
+
+@ARTICLE{cnarticle,
+  AUTHOR =       {贾宝玉 and 林黛玉 and 薛宝钗 and 贾探春},
+  TITLE =        {论刘姥姥食量大如牛之现实意义},
+  JOURNAL =      {红楼梦杂谈},
+  PAGES =        {260--266},
+  VOLUME =       224,
+  YEAR =         1800,
+}
+
+@thesis{zhubajie,
+  author =       {猪八戒},
+  title =        {论流体食物的持久保存},
+  school =       {广寒宫大学},
+  year =         2005,
+  address =      {北京},
+}
+
+@thesis{shaheshang,
+  title =        {论流沙河的综合治理},
+  author =       {沙和尚},
+  school =       {清华大学},
+  year =         2005,
+  address =      {北京},
+}
+
+@thesis{metamori2004,
+  author =       {Ashwin Raju Jeyakumar},
+  title =        {Metamori: A library for Incremental File Checkpointing},
+  school =       {Virgina Tech},
+  year =         2004,
+  month =        7,
+  address =      {Blacksburg},
+}
+
+@thesis{FistSystem01,
+  AUTHOR =       {Erez Zadok},
+  TITLE =        {FiST: A System for Stackable File System Code Generation},
+  YEAR =         2001,
+  MONTH =        {5},
+  SCHOOL =       {Computer Science Department, Columbia University},
+  ADDRESS =      {USA}
+}
+
+@INBOOK{ColdSources,
+  AUTHOR =       {P. Gr{\"o}ning and L. Nilsson and P. Ruffieux and R.
+                  Clergereaux and O. Gr{\"o}ning},
+  TITLE =        {Encyclopedia of Nanoscience and Nanotechnology},
+  pages =        {547--579},
+  PUBLISHER =    {American Scientific Publishers},
+  YEAR =         2004,
+  volume =       1,
+}
+
+@phdthesis{bai2008,
+	title={信用风险传染模型和信用衍生品的定价},
+	author={白云芬},
+	year={2008},
+	school={上海交通大学},
+	address={上海},
+}
+
+
+%萧钰.出版业信息化迈人快车道[EB/OL]. (2001-12-19)[2002-04-15]. http://www.creader.com/news/20011219/200112190019. html.
+@online{xiaoyu2001,
+  author =       {萧钰},
+  title =        {出版业信息化迈人快车道},
+  date =   {2001-12-19},
+  urldate =     {2002-04-15},
+  url =          {http://www.creader.com/news/20011219/200112190019.html},
+}
+
+% 在线析出文献
+@article{CHRISTINE1998,
+  author =       {Christine, Mlot},
+  title =        {Plant physiology: plant biology in the Genome Era},
+  journal =      {Science},
+  volume =       {281},
+  pages =        {331-332},
+  year =         {1998},
+  urldate =     {1998-09-23},
+  url =           {http://www.sciencemag.org/cgi/collection/anatmorp},
+}
+
+@book{RManual,
+        Address = {Vienna, Austria},
+        Author = {{R Core Team}},
+        Note = {{ISBN} 3-900051-07-0},
+        Organization = {R Foundation for Statistical Computing},
+        title = {R: A Language and Environment for Statistical Computing},
+        url = {http://www.R-project.org/},
+        Year = {2012},
+}
+
+
+\end{filecontents}
+    \addbibresource{\jobname.bib}
+    %
+
+    \begin{document}
+    \section*{SJTU}
+
+
+ \LaTeX 具有将参考文献内容和表现形式分开管理的能力，涉及三个要素：参考文献数据库、参考文献引用格式、在正文中引用参考文献。
+这样的流程需要多次编译：
+
+\begin{enumerate}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]
+\item 用户将论文中需要引用的参考文献条目，录入纯文本数据库文件(bib文件)。
+\item 调用xelatex对论文模板做第一次编译，扫描文中引用的参考文献，生成参考文献入口文件(aux)文件。
+\item 调用bibtex，以参考文献格式和入口文件为输入，生成格式化以后的参考文献条目文件(bib)。
+\item 再次调用xelatex编译模板，将格式化以后的参考文献条目插入正文。
+\end{enumerate}
+
+参考文献数据库(thesis.bib)的条目，可以从Google Scholar搜索引擎\footnote{\url{https://scholar.google.com}}、CiteSeerX搜索引擎\footnote{\url{http://citeseerx.ist.psu.edu}}中查找，文献管理软件Papers\footnote{\url{http://papersapp.com}}、Mendeley\footnote{\url{http://www.mendeley.com}}、JabRef\footnote{\url{http://jabref.sourceforge.net}} 也能够输出条目信息。
+
+下面是在Google Scholar上搜索到的一条文献信息，格式是纯文本：
+
+\begin{lstlisting}[caption={从Google Scholar找到的参考文献条目}, label=googlescholar, escapeinside="", numbers=none]
+    @phdthesis{"白2008信用风险传染模型和信用衍生品的定价",
+      title={"信用风险传染模型和信用衍生品的定价"},
+      author={"白云芬"},
+      year={2008},
+      school={"上海交通大学"}
+    }
+\end{lstlisting}
+
+推荐修改后在bib文件中的内容为：
+
+\begin{lstlisting}[caption={修改后的参考文献条目}, label=itemok, escapeinside="", numbers=none]
+  @phdthesis{bai2008,
+    title={"信用风险传染模型和信用衍生品的定价"},
+    author={"白云芬"},
+    date={2008},
+    address={"上海"},
+    school={"上海交通大学"}
+  }
+\end{lstlisting}
+
+按照教务处的要求，参考文献外观应符合国标GBT7714的要求\footnote{\url{http://www.cces.net.cn/guild/sites/tmxb/Files/19798_2.pdf}}。
+在模板中，表现形式的控制逻辑通过biblatex-gb7714-2015包实现\footnote{\url{https://www.ctan.org/pkg/biblatex-gb7714-2015}}，基于{Bib\LaTeX}管理文献。在目前的多数TeX发行版中，可能都没有默认包含biblatex-gb7714-2015，需要手动安装。
+
+正文中引用参考文献时，用\verb+\cite{key1,key2,key3...}+可以产生“上标引用的参考文献”，
+如\cite{Meta_CN,chen2007act,DPMG}。
+使用\verb+\parencite{key1,key2,key3...}+则可以产生水平引用的参考文献，例如\parencite{JohnD,zhubajie,IEEE-1363}。
+请看下面的例子，将会穿插使用水平的和上标的参考文献：关于书的\parencite{Meta_CN,JohnD,IEEE-1363}，关于期刊的\cite{chen2007act,chen2007ewi}，
+会议论文\parencite{DPMG,kocher99,cnproceed}，
+硕士学位论文\parencite{zhubajie,metamori2004}，博士学位论文\cite{shaheshang,FistSystem01,bai2008}，标准文件\parencite{IEEE-1363}，技术报告\cite{NPB2}，电子文献\parencite{xiaoyu2001, CHRISTINE1998}，用户手册\parencite{RManual}。
+
+总结一些注意事项：
+\begin{itemize}
+\item 参考文献只有在正文中被引用了，才会在最后的参考文献列表中出现；
+\item 参考文献“数据库文件”bib是纯文本文件，请使用UTF-8编码，不要使用GBK编码；
+\item 参考文献条目中默认通过date域输入时间。兼容使用year域时会产生编译warning，可忽略。
+\end{itemize}
+
+    \printbibliography
+
+    \end{document} 

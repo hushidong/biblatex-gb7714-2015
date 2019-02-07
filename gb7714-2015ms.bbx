@@ -11,7 +11,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2019/01/19 v1.0p}
+\def\versionofgbtstyle{2019/02/07 v1.0q}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015ms.bbx}[\versionofgbtstyle biblatex bibliography style]
 \RequireBiber[3]%显式指定用biber后端
@@ -94,24 +94,26 @@
     %   20190203，v1.0p，hzz
     %   原理方法:默认做patch，文献引用带圈上标数字表示，脚注中的文献用带圈非上标数字做标签
     %   当前面的脚注中已经存在当前文献，那么当前文献内容不再输出而用同(4)这样的方式
-    \newtoggle{bbx:gbfootbib}
-    \DeclareBibliographyOption{gbfootbib}[true]{%
-      \settoggle{bbx:gbfootbib}{#1}}
+    %   需要注意的是由于小页环境和表格中的脚注本身的问题，可能会有一些问题
+    \DeclareBibliographyOption{gbfootbib}[false]{%
+      \ifstrequal{#1}{false}{}{\execgbfootbib}}
     \ExecuteBibliographyOptions{gbfootbib}
 
     %%
-    \iftoggle{bbx:gbfootbib}%
+    \def\execgbfootbib%
     {%
     %开启引用跟踪计数器，为使用\ifciteseen等测试命令
     \ExecuteBibliographyOptions{citetracker=true}
     %
     %利用footmisc宏包来实现脚注文献的悬挂对齐
+    \AtEndPreamble{
     \@ifclassloaded{beamer}{}{
     %beamer类因为其特殊性，为避免冲突不调footmisc。
     %同时footmisc与hyperref宏包也不兼容，所以使用footmisc时会破坏脚注的超链接
     %如果要实现超链接可以将下句注释掉，这里留着主要是实现悬挂对齐。
-    \RequirePackage[perpage,hang]{footmisc}%
-    }
+    \PassOptionsToPackage{perpage,hang}{footmisc}
+    \RequirePackage{footmisc}}
+
     %
     %使脚注标记加圈并设置数字的字体为tiny，不使用修改thefootnote的方式
     \def\@makefnmark{\hbox{\@textsuperscript{\textcircled{\tiny\@thefnmark}}}}
@@ -121,6 +123,7 @@
     \hbox{\textcircled{\tiny\@thefnmark}}%
     }%
     }{}{}
+    }
 
     %
     %判断当前文献是否已经引用过且是做的footfullcite(即已经作为脚注输出文献内容)
@@ -140,7 +143,9 @@
     %
     %重定义\footfullcite使完成gb7714-2015的脚注文献要求
     \DeclareCiteCommand{\footfullcite}[\mkbibfootnote]%
-      {\usebibmacro{prenote}}%
+      {\defcounter{maxnames}{\blx@maxbibnames}%局部定义maxnames和minnames计数器
+       \defcounter{minnames}{\blx@minbibnames}%使footfullcite内的作者输出与正文文献表中的一致。
+       \usebibmacro{prenote}}%
       {\usebibmacro{citesavefn}%
           \ifcsdef{labelsec\arabic{refsection}et\thefield{entrykey}}%
           {\csuse{labelsec\arabic{refsection}et\thefield{entrykey}}\nopunct}%
@@ -148,7 +153,8 @@
       }%
       {\multicitedelim}%
       {\addcolon\usebibmacro{postnote}}
-    }{}
+
+    }
 
     %
     %   增加一个选项，用于控制gb7714的使用范围，即英文文献和中文文献使用不同的样式
@@ -1576,7 +1582,8 @@ togl{bbx:gbstyle} or test {\iffieldequalstr{userd}{chinese}}%
 %   调整页码的格式，即chapter+pages格式
 %
 \renewbibmacro*{chapter+pages}{%
-  \printfield{chapter}%
+\iftoggle{bbx:gbstrict}{}{%
+  \printfield{chapter}}%
   \iffieldundef{pages}{}{%这里增加一个判断，当没有页码时就不输出
   \setunit{\bibpagespunct}%
   \printfield{pages}}%
@@ -2110,8 +2117,10 @@ incollection,proceedings,inproceedings]{number}{%
 %\printlist{organization}%
   \printlist{institution}%
   \newunit\newblock
-  %\usebibmacro{date}%
-  \usebibmacro{modifydate}%修改或更新日期，为带括号的时间
+\ifboolexpr{%
+test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{eventday}}%
+}{\usebibmacro{date}}%
+{\usebibmacro{modifydate}}%修改或更新日期，为带括号的时间
   \usebibmacro{url+urldate}%从下面移上来
   \newunit\newblock
   \iftoggle{bbx:eprint}

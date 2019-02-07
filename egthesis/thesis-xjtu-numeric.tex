@@ -1,0 +1,108 @@
+% !Mode:: "TeX:UTF-8"
+% 用于测试ucasthesis中应用biblatex-gb7714-2015的情况
+%
+
+\documentclass[twoside]{article}
+    \usepackage{ctex}%[zihao=-4]
+    \usepackage{fontspec}
+\setmainfont{CMU Serif}
+\setCJKmainfont {SourceHanSerifSC-Regular.otf}
+    \usepackage{xcolor}
+    \usepackage{toolbox}
+    \usepackage[colorlinks,citecolor=blue]{hyperref}
+    \usepackage{lipsum}
+    \usepackage{geometry}%,showframe,showcrop
+\geometry{a4paper,top=3.0cm,bottom=2.5cm,left=2.6cm,right=2.6cm}
+\setlength{\headheight}{2cm} \setlength{\voffset}{-0.5in}
+\setlength{\headsep}{1cm} \setlength{\footskip}{0.75cm}
+\RequirePackage[backend=biber,style=gb7714-2015,seconds=true]{biblatex}
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+@book{冯慈璋2000工程电磁场导论,
+  title={工程电磁场导论},
+  author={冯慈璋 and 马西奎},
+  publisher={高等教育出版社},
+  location={陕西},
+  year={2000},
+ keywords={电磁场},
+ abstract={本书较好地处理了与物理学中电磁学相衔接的内容。删去了狭义相对论和各向异性媒质中电磁场的内容,增加了准静态电磁场和波导与谐振腔的相应内容,适当拓展了强电专业的电磁场知识范围。书中突出了电磁场理论在工程实际中的应用。},
+}
+
+@inproceedings{Xing2002Distance,
+  title={Distance metric learning, with application to clustering with side-information},
+  author={Xing, Eric P. and Ng, Andrew Y. and Jordan, Michael I. and Russell, Stuart},
+  booktitle={International Conference on Neural Information Processing Systems},
+  pages={521-528},
+  year={2002},
+ keywords={CiteSeerX;Eric P. Xing;Andrew Y. Ng;Michael I. Jordan;Stuart Russell},
+ abstract={ABSTRACT  Many algorithms rely critically on being given a good metric over their inputs. For instance, data can often be clustered in many "plausible" ways, and if a clustering algorithm such as K-means initially fails to find one that is meaningful to a user, the only recourse may be for the user to manually tweak the metric until sufficiently good clusters are found. For these and other applications requiring good metrics, it is desirable that we provide a more systematic way for users to indicate what they consider "similar." For instance, we may ask them to provide examples. In this paper, we present an algorithm that, given examples of similar (and, if desired, dissimilar) pairs of points in R , learns a distance metric over R that respects these relationships. Our method is based on posing metric learning as a convex optimization problem, which allows us to give efficient, local-optima-free algorithms. We also demonstrate empirically that the learned metrics can be used to significantly improve clustering performance.},
+}
+
+
+@book{成永红2001电力设备绝缘检测与诊断,
+  title={电力设备绝缘检测与诊断},
+  author={成永红},
+  publisher={中国电力出版社},
+  year={2001},
+ keywords={电力系统--电气设备--绝缘性能;电气设备--电力系统--绝缘性能;绝缘性能--电气设备--电力系统;绝缘--电力系统--电气设备},
+}
+
+@article{成永红2004气体绝缘系统中典型缺陷的超宽频带放电信号的分形分析,
+  title={气体绝缘系统中典型缺陷的超宽频带放电信号的分形分析},
+  author={成永红 and 谢小军 and 陈玉 and 胡学胜 and 朱哲蕾},
+  journal={中国电机工程学报},
+  volume={24},
+  number={8},
+  pages={99-102},
+  year={2004},
+ keywords={气体绝缘系统;超宽频带放电信号;分形分析;缺陷;全封闭组合电器;局部放电},
+ abstract={摘　要: 要提高气体绝缘系统(GIS)放电在线监测与诊断的准确性,需要研究其典型缺陷的超宽频带放电特征.但GIS中放电频率高、频带宽,基于IEC60270标准的常规低频局部放电统计分析方法难以对放电特征进行分析.文中提出应用基于小波提取技术的放电信号的分形分析方法,对GIS中典型缺陷放电的各频段信号进行分维数计算,用分维数来量化分析GIS中超宽频带局部放电的频谱特性,发现了GIS中不同金属性表面缺陷的超宽频带放电分形特征的明显差异,对进一步将超宽频带放电检测技术用于GIS局部放电在线监测具有重要意义.},
+}
+
+@article{吴锴2013纳米粒子改性聚乙烯直流电缆绝缘材料研究,
+  title={纳米粒子改性聚乙烯直流电缆绝缘材料研究(II)},
+  author={吴锴 and 陈曦 and 王霞 and 成永红 and 屠德民},
+  journal={高电压技术},
+  volume={39},
+  number={1},
+  pages={8-16},
+  year={2013},
+ keywords={纳米复合材料;视在迁移率;陷阱深度;温度;低密度聚乙烯;空间电荷},
+ abstract={在电缆聚乙烯材料中添加一种新型纳米粒子可以有效改善材料中的空间电荷积聚,提高其直流击穿强度和体积电阻率。为深入了解此纳米粒子作用机理,基于电声脉冲法(PEA)和充电-放电电流法,分别测量了在不同温度下、不同纳米含量时聚乙烯纳米复合材料的极化/去极化特性。用PEA方法得到不同温度下材料的平均电荷体密度、视在迁移率和陷阱深度,结果表明,20～40°C下,纯聚乙烯及聚乙烯纳米复合材料试样内的陷阱以浅陷阱分布为主;80°C下,当聚乙烯中纳米粒子质量分数3$\%$时,会增加复合材料陷阱深度。用充电-放电电流法计算得到材料的迁移率,可知在20～60°C内,不同试样迁移率的变化主要由纳米粒子和温度共同作用产生,而在60～80°C内,迁移率的变化则是温度起主要作用。分析认为,电荷输运受到陷阱与温度的影响是导致电阻率变化的主要原因,而在温度梯度场下,聚乙烯纳米复合材料电阻率的正温度系数趋势是抑制材料内空间电荷积聚的主要原因。},
+}
+
+@online{github,
+    title={Thesis-Template-for-XJTU},
+    author={DXie123},
+    year={2018},
+    url={https://github.com/DXie123/Thesis-Template-for-XJTU},
+}
+
+
+
+\end{filecontents}
+    \addbibresource{\jobname.bib}
+    %
+%\def\cs#1{\textbackslash\texttt{#1}}
+%
+%\def\BibTeX{\texttt{BibTex}}
+
+    \begin{document}
+    \section*{XJTU}
+
+
+
+\begin{itemize}
+  \item 引用中文参考文献\cite{冯慈璋2000工程电磁场导论}
+  \item 引用英文参考文献\cite{Xing2002Distance}
+  \item 引用多个参考文献\cite{成永红2001电力设备绝缘检测与诊断,成永红2004气体绝缘系统中典型缺陷的超宽频带放电信号的分形分析,吴锴2013纳米粒子改性聚乙烯直流电缆绝缘材料研究}
+  \item 引用在线资源\cite{github}
+\end{itemize}
+引用参考文献只需在正文中相应位置插入\verb|\cite{}|。 \\
+打印参考文献表可用\verb|\printbibliography[heading=bibliography,title=参考文献]|。
+
+
+\printbibliography
+
+\end{document}
