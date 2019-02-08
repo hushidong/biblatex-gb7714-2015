@@ -7,7 +7,7 @@
 \usepackage{toolbox}
 \usepackage[colorlinks]{hyperref}
 \usepackage{lipsum}
-\usepackage[paperwidth=21cm,paperheight=12.5cm,top=10pt,bottom=10pt,left=0.5cm,right=1cm]{geometry}
+\usepackage[paperwidth=21cm,paperheight=14.5cm,top=10pt,bottom=10pt,left=0.5cm,right=1cm]{geometry}
 \usepackage{xltxtra,mflogo,texnames}
 \usepackage[backend=biber,style=gb7714-2015ay,gbfootbib=true]{biblatex}%sorting=nytgb7714-2015ay,gbfootbib=true
 \usepackage{tabularx}
@@ -150,36 +150,35 @@
 \begin{refsection}
 
 \small
-%\begin{table}[!htb]
-%\centering
-%\caption{顺序编码制常用命令示例}\label{tab:cite:num}
+%\begin{table}[!htb]%由于要实现footfullcite效果，所以不能用tabular环境
 \small
-%命令 & 标注标签 & 说明
 \newcommand{\tabseplines}[3]{\parbox{7cm}{\texttt{#1}}\quad\parbox{3.5cm}{#3}$\Rightarrow$ #2\par}
-
-\tabseplines{\textbackslash cite\{Peebles2001-100-100\}}{\cite{Peebles2001-100-100}}{不带页码}
-\tabseplines{\textbackslash parencite\{Miroslav2004--\}}{\parencite{Miroslav2004--}  }{ 不带页码}
-\tabseplines{\textbackslash cite[49]\{蔡敏2006--\} }{\cite[49]{蔡敏2006--}   }{  带页码}
-\tabseplines{\textbackslash parencite[49]\{Miroslav2004--\}}{\parencite[49]{Miroslav2004--}   }{  带页码不上标}
-\tabseplines{\textbackslash pagescite\{Peebles2001-100-100\}}{\pagescite{Peebles2001-100-100}   }{  自动页码}
-\tabseplines{\textbackslash pagescite[150]\{Peebles2001-100-100\}}{\pagescite[150]{Peebles2001-100-100}   }{  设置页码}
-\tabseplines{\textbackslash textcite\{Miroslav2004--\} }{\textcite{Miroslav2004--}  }{  提供主语}
-\tabseplines{赵学功\textbackslash yearpagescite[205]\{赵学功2001--\} }{赵学功\yearpagescite[205]{赵学功2001--} }{ 已有主语提供年份和页码}
-\tabseplines{赵学功\textbackslash yearcite\{赵学功2001--\}}{赵学功\yearcite{赵学功2001--} }{ 已有主语提供年份}
-\tabseplines{赵学功(\textbackslash citeyear\{赵学功2001--\})}{赵学功(\citeyear{赵学功2001--}) }{ 已有主语提供年份}
-\tabseplines{赵学功(\textbackslash cite*\{赵学功2001--\}) }{赵学功(\cite*{赵学功2001--}) }{ 已有主语提供年份}
-\tabseplines{\textbackslash footfullcite\{Miroslav2004--\} }{\makebox[0.25em]{}\footfullcite{Miroslav2004--} }{ 脚注方式文献条目}
-\tabseplines{引用单篇文献：  }{文献\cite{赵学功2001--} }{ 国标示例：文中无作者}
-\tabseplines{引用单篇文献：  }{赵学功\yearcite{赵学功2001--} }{ 国标示例：文中有作者}
-\tabseplines{引用同一作者同一年份文献： }{文献\cite{蔡敏2006a--}，文献\cite{蔡敏2006b--} }{  国标示例}
-\tabseplines{同一处引用多篇文献： }{文献\cite{Peebles2001-100-100,Miroslav2004--} }{  国标示例}
-\tabseplines{同一处引用多篇文献： }{文献\cite{蔡敏2006--,Miroslav2004--,赵学功2001--} }{  国标示例：三篇以上}
-\tabseplines{同一处引用同一作者同一年份文献： }{文献\cite{蔡敏2006a--,蔡敏2006b--} }{压缩示例}
-\tabseplines{多次引用同一作者的同一文献： }{文献\cite[20-22]{Miroslav2004--}，
+\noindent\rule[0\baselineskip]{\linewidth}{0.8pt}\par
+\noindent\raisebox{0\baselineskip}{\tabseplines{命令}{标注标签}{说明}}\par
+\noindent\rule[0.3\baselineskip]{\linewidth}{0.8pt}\par\vspace{-0.3\baselineskip}
+\noindent\tabseplines{\textbackslash cite\{Peebles2001-100-100\}}{\cite{Peebles2001-100-100}}{不带页码}
+\noindent\tabseplines{\textbackslash parencite\{Miroslav2004--\}}{\parencite{Miroslav2004--}  }{ 不带页码}
+\noindent\tabseplines{\textbackslash cite[49]\{蔡敏2006--\} }{\cite[49]{蔡敏2006--}   }{  带页码}
+\noindent\tabseplines{\textbackslash parencite[49]\{Miroslav2004--\}}{\parencite[49]{Miroslav2004--}   }{  带页码不上标}
+\noindent\tabseplines{\textbackslash pagescite\{Peebles2001-100-100\}}{\pagescite{Peebles2001-100-100}   }{  自动页码}
+\noindent\tabseplines{\textbackslash pagescite[150]\{Peebles2001-100-100\}}{\pagescite[150]{Peebles2001-100-100}   }{  设置页码}
+\noindent\tabseplines{\textbackslash textcite\{Miroslav2004--\} }{\textcite{Miroslav2004--}  }{  提供主语}
+\noindent\tabseplines{赵学功\textbackslash yearpagescite[205]\{赵学功2001--\} }{赵学功\yearpagescite[205]{赵学功2001--} }{ 已有主语提供年份和页码}
+\noindent\tabseplines{赵学功\textbackslash yearcite\{赵学功2001--\}}{赵学功\yearcite{赵学功2001--} }{ 已有主语提供年份}
+\noindent\tabseplines{赵学功(\textbackslash citeyear\{赵学功2001--\})}{赵学功(\citeyear{赵学功2001--}) }{ 已有主语提供年份}
+\noindent\tabseplines{赵学功(\textbackslash cite*\{赵学功2001--\}) }{赵学功(\cite*{赵学功2001--}) }{ 已有主语提供年份}
+\noindent\tabseplines{\textbackslash footfullcite[45]\{Miroslav2004--\} }{\makebox[0.25em]{}\footfullcite[45]{Miroslav2004--} }{ 脚注方式文献条目}
+\noindent\tabseplines{引用单篇文献：  }{文献\cite{赵学功2001--} }{ 国标示例：文中无作者}
+\noindent\tabseplines{引用单篇文献：  }{赵学功\yearcite{赵学功2001--} }{ 国标示例：文中有作者}
+\noindent\tabseplines{引用同一作者同一年份文献： }{文献\cite{蔡敏2006a--}，文献\cite{蔡敏2006b--} }{  国标示例}
+\noindent\tabseplines{同一处引用多篇文献： }{文献\cite{Peebles2001-100-100,Miroslav2004--} }{  国标示例}
+\noindent\tabseplines{同一处引用多篇文献： }{文献\cite{蔡敏2006--,Miroslav2004--,赵学功2001--} }{  国标示例：三篇以上}
+\noindent\tabseplines{同一处引用同一作者同一年份文献： }{文献\cite{蔡敏2006a--,蔡敏2006b--} }{压缩示例}
+\noindent\tabseplines{多次引用同一作者的同一文献： }{文献\cite[20-22]{Miroslav2004--}，
  \cite[55-60]{Miroslav2004--} }{  国标示例}
-\tabseplines{多次引用同一作者的同一文献： }{文献\footfullcite[20-22]{Miroslav2004--}，
+\noindent\tabseplines{多次引用同一作者的同一文献： }{文献\footfullcite[20-22]{Miroslav2004--}，
  文献\footfullcite[55-60]{Miroslav2004--} }{  国标示例：脚注方式}
-
+\noindent\rule[0.2\baselineskip]{\linewidth}{0.8pt}\par
 
 %\printbibliography
 

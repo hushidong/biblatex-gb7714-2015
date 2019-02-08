@@ -255,14 +255,18 @@
     \DeclareCiteCommand{\footfullcite}[\mkbibfootnote]%
       {\defcounter{maxnames}{\blx@maxbibnames}%局部定义maxnames和minnames计数器
        \defcounter{minnames}{\blx@minbibnames}%使footfullcite内的作者输出与正文文献表中的一致。
-       \usebibmacro{prenote}}%
+       \usebibmacro{prenote}%
+       \renewbibmacro*{postnote}{%
+            \iffieldundef{postnote}%
+            {}{\setunit{\addcolon\addspace}\printtext{\thefield{postnote}}}}%由于ay样式中没有修改postnote域，此处因为格式需要不使用默认域格式
+       }%
       {\usebibmacro{citesavefn}%
           \ifcsdef{labelsec\arabic{refsection}et\thefield{entrykey}}%
           {\csuse{labelsec\arabic{refsection}et\thefield{entrykey}}\nopunct}%
           {\usedriver{\DeclareNameAlias{sortname}{default}}{\thefield{entrytype}}}%
       }%
       {\multicitedelim}%
-      {\addcolon\usebibmacro{postnote}}
+      {\usebibmacro{postnote}}
 
     }
 

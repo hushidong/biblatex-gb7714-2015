@@ -18,7 +18,7 @@ del /q *.gitignore
 
 del /q *.otf *.ttf *.ttc 
 
-del gbT*.pdf /Q
+del gbT*.pdf  std*.pdf/Q
 
 cd ..
 

@@ -23,6 +23,7 @@ echo !jobfile!
 echo !jobname!
 xelatex.exe -no-pdf !jobfile!
 biber !jobname!
+xelatex.exe -no-pdf !jobfile!
 xelatex.exe --synctex=-1 !jobfile!
 )
 setlocal DISABLEDELAYEDEXPANSION
