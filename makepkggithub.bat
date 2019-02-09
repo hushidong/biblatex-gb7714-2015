@@ -1,4 +1,4 @@
-title %date% %time% make-ctan-pkg
+title %date% %time% make-pkg-github
 
 cd ..
 
