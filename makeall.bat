@@ -30,6 +30,12 @@ call makecompilefig.bat
 
 cd ..
 
+cd egthesis
+
+call makecompilethesis.bat
+
+cd ..
+
 
 echo biblatex-gb7714-2015.tex >> example/makerecord.dat
 

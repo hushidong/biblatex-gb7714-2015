@@ -11,7 +11,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2019/02/07 v1.0q}
+\def\versionofgbtstyle{2019/02/11 v1.0q}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015ms.bbx}[\versionofgbtstyle biblatex bibliography style]
 \RequireBiber[3]%显式指定用biber后端
@@ -534,17 +534,19 @@
 %     newsdate 用于公告日期，公开日期或新闻日期，输出到日，但无包围符号，数据源为date
 %     modifydate 用于更新或修改日期，输出到日，且用()包围，数据源为date或enddate或eventdate
 
-\DeclareSourcemap{
+\DeclareSourcemap{%\perdatasource{examples.bib}
 \maps[datatype=bibtex]{%
-        \map{
-        \pernottype{inbook}
+        \map{%当没有作者时将editor转成author
+        \pernottype{inbook}%因为in系列中editor可能用来表示bookauthor，所以排除
         \pernottype{inproceedings}
         \pernottype{incollection}
+        \pernottype{periodical}%因为peridical直接使用editor，所以排除
+        %注意notfield在低版本biblatex中没有
         %\step[notfield=author,final]%当author不存在，将editor复制给author
         \step[fieldsource=editor,fieldtarget=author]%并删除editor
         }
-         \map{
-         \pernottype{inbook}
+        \map{%当没有作者时将translator转成author
+        \pernottype{inbook}
         \pernottype{inproceedings}
         \pernottype{incollection}
         %\step[notfield=author,final]%当author不存在，将translator复制给author
@@ -561,9 +563,6 @@
         \step[fieldsource=address,final]
         \step[fieldset=location,origfieldval]
         }
-        \map[overwrite]{%用于处理zotero从cnki导出中文文献姓名中存在逗号的情况
-                \step[fieldsource={author}, match=\regexp{([\x{2FF0}-\x{9FA5}])\,\s*}, replace=\regexp{$1}]
-                }%\perdatasource{examples.bib}
         \map{%处理在bib文件用mark标记文献类型标识符的情况
             \step[fieldsource=mark,final]
             \step[fieldset=usera, origfieldval]
@@ -730,33 +729,159 @@
             \pertype{unpublished}
             \step[fieldset=usera, fieldvalue={Z}]
             }
-        \map{%作者的中文判断
-	        \step[fieldsource=author, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
-            \step[fieldset=userf, fieldvalue={chinese}]
-            }
-	   \map{%译者的中文判断
-            \step[fieldsource=translator, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
-            \step[fieldset=usere, fieldvalue={chinese}]
-            }
-       \map{%编者的中文判断
-	        \step[fieldsource=editor, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
-            \step[fieldset=userc, fieldvalue={chinese}]
-            }
+        \map[overwrite]{%用于处理zotero从cnki导出中文文献姓名中存在逗号的情况
+                \step[fieldsource={author}, match=\regexp{([\x{2FF0}-\x{9FA5}])\,\s*}, replace=\regexp{$1}]
+                }
+        \map[overwrite]{%用于处理zotero从cnki导出中文文献姓名中存在逗号的情况
+                \step[fieldsource={editor}, match=\regexp{([\x{2FF0}-\x{9FA5}])\,\s*}, replace=\regexp{$1}]
+                }%
+        \map[overwrite]{%用于处理zotero从cnki导出中文文献姓名中存在逗号的情况
+                \step[fieldsource={translator}, match=\regexp{([\x{2FF0}-\x{9FA5}])\,\s*}, replace=\regexp{$1}]
+                }%
+        \map[overwrite]{%用于处理zotero从cnki导出中文文献姓名中存在逗号的情况
+                \step[fieldsource={bookauthor}, match=\regexp{([\x{2FF0}-\x{9FA5}])\,\s*}, replace=\regexp{$1}]
+                }%
         \map{%处理一些用year表示date的情况
              %这样处理将会设置date域，并使得labeldatesource变为空，因为date的前缀为空(如果是urldate，那么labeldatesource就是url)。
              %同时date域会被biblatex自动解析为year，month，day，并且覆盖原来的year信息
             \step[fieldsource=year]
             \step[fieldset=date, origfieldval]
             }
-        \map{%文献题名的中文判断，将信息保存到userd中，避免因为标签生成原因导致title域被清除而产生问题
-            \step[fieldsource=title, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]%
-            \step[fieldset=userd, fieldvalue={chinese}]
-            }
         \map{%将entrykey放入keywords中用于后期使用
             \step[fieldsource=entrykey]
             \step[fieldset=keywords, origfieldval]
             }
-	    \map{%当文献给出language域时，设置文献要使用的本地化字符串的语言
+        \map{%文献题名的中文判断，将信息保存到userd中，避免因为标签生成原因导致title域被清除而产生问题
+            \step[fieldsource=title, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]%
+            \step[fieldset=userd, fieldvalue={chinese}]
+            }
+        \map{\step[fieldsource=title,match=\regexp{[\x{0100}-\x{017F}]},final]%\x80-\xFF
+            \step[fieldset=userd,fieldvalue={french}]%法语,0080开始到00ff的字符没法匹配有点奇怪
+            }
+        \map{%
+            \step[fieldsource=title,match=\regexp{[\x{0400}-\x{052F}]},final]
+            \step[fieldset=userd,fieldvalue={russian}]%俄语
+            }
+        \map{%
+            \step[fieldsource=title,match=\regexp{[\x{3040}-\x{30FF}\x{31F0}-\x{31FF}]},final]
+            \step[fieldset=userd,fieldvalue={japanese}]%日语
+            }               %确定形式后可增加类似andotherscn这样的本地化字符串处理
+        \map{%
+            \step[fieldsource=title,match=\regexp{[\x{1100}-\x{11FF}\x{3130}-\x{318F}\x{AC00}-\x{D7AF}]},final]
+            \step[fieldset=userd,fieldvalue={korean}]%韩语
+            }
+        \map{%将没有设置userd，且存在title域的默认设置为英文
+            \step[fieldsource=title,final]
+            \step[fieldset=userd,fieldvalue={english}]
+            }
+       \map{%作者的中文判断
+	        \step[fieldsource=author, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
+            \step[fieldset=userf, fieldvalue={chinese}]
+            }
+       \map{\step[fieldsource=author,match=\regexp{[\x{0100}-\x{017F}]},final]%\x80-\xFF
+            \step[fieldset=userf,fieldvalue={french}]%法语,0080开始到00ff的字符没法匹配有点奇怪
+            }
+        \map{%
+            \step[fieldsource=author,match=\regexp{[\x{0400}-\x{052F}]},final]
+            \step[fieldset=userf,fieldvalue={russian}]%俄语
+            }
+        \map{%
+            \step[fieldsource=author,match=\regexp{[\x{3040}-\x{30FF}\x{31F0}-\x{31FF}]},final]
+            \step[fieldset=userf,fieldvalue={japanese}]%日语
+            }               %确定形式后可增加类似andotherscn这样的本地化字符串处理
+        \map{%
+            \step[fieldsource=author,match=\regexp{[\x{1100}-\x{11FF}\x{3130}-\x{318F}\x{AC00}-\x{D7AF}]},final]
+            \step[fieldset=userf,fieldvalue={korean}]%韩语
+            }
+        \map{%将没有设置userf，且存在author域的默认设置为英文
+            \step[fieldsource=author,final]
+            \step[fieldset=userf,fieldvalue={english}]
+            }
+	   \map{%译者的中文判断
+            \step[fieldsource=translator, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
+            \step[fieldset=usere, fieldvalue={chinese}]
+            }
+       \map{\step[fieldsource=translator,match=\regexp{[\x{0100}-\x{017F}]},final]%\x80-\xFF
+            \step[fieldset=usere,fieldvalue={french}]%法语,0080开始到00ff的字符没法匹配有点奇怪
+            }
+        \map{%
+            \step[fieldsource=translator,match=\regexp{[\x{0400}-\x{052F}]},final]
+            \step[fieldset=usere,fieldvalue={russian}]%俄语
+            }
+        \map{%
+            \step[fieldsource=translator,match=\regexp{[\x{3040}-\x{30FF}\x{31F0}-\x{31FF}]},final]
+            \step[fieldset=usere,fieldvalue={japanese}]%日语
+            }               %确定形式后可增加类似andotherscn这样的本地化字符串处理
+        \map{%
+            \step[fieldsource=translator,match=\regexp{[\x{1100}-\x{11FF}\x{3130}-\x{318F}\x{AC00}-\x{D7AF}]},final]
+            \step[fieldset=usere,fieldvalue={korean}]%韩语
+            }
+        \map{%将没有设置usere，且存在translator域的默认设置为英文
+            \step[fieldsource=translator,final]
+            \step[fieldset=usere,fieldvalue={english}]
+            }
+       \map{%编者的中文判断
+	        \step[fieldsource=editor, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]%直接匹配cjk字符，unicode编码位置从2FF0到9FA5
+            \step[fieldset=userc, fieldvalue={chinese}]
+            }
+       \map{\step[fieldsource=editor,match=\regexp{[\x{0100}-\x{017F}]},final]%\x80-\xFF
+            \step[fieldset=userc,fieldvalue={french}]%法语,0080开始到00ff的字符没法匹配有点奇怪
+            }
+        \map{%
+            \step[fieldsource=editor,match=\regexp{[\x{0400}-\x{052F}]},final]
+            \step[fieldset=userc,fieldvalue={russian}]%俄语
+            }
+        \map{%
+            \step[fieldsource=editor,match=\regexp{[\x{3040}-\x{30FF}\x{31F0}-\x{31FF}]},final]
+            \step[fieldset=userc,fieldvalue={japanese}]%日语
+            }               %确定形式后可增加类似andotherscn这样的本地化字符串处理
+        \map{%
+            \step[fieldsource=editor,match=\regexp{[\x{1100}-\x{11FF}\x{3130}-\x{318F}\x{AC00}-\x{D7AF}]},final]
+            \step[fieldset=userc,fieldvalue={korean}]%韩语
+            }
+        \map{%将没有设置userc，且存在editor域的默认设置为英文
+            \step[fieldsource=editor,final]
+            \step[fieldset=userc,fieldvalue={english}]
+            }
+        \map{%编者的中文判断
+	        \step[fieldsource=bookauthor, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]%直接匹配cjk字符，unicode编码位置从2FF0到9FA5
+            \step[fieldset=userb, fieldvalue={chinese}]
+            }
+       \map{\step[fieldsource=bookauthor,match=\regexp{[\x{0100}-\x{017F}]},final]%\x80-\xFF
+            \step[fieldset=userb,fieldvalue={french}]%法语,0080开始到00ff的字符没法匹配有点奇怪
+            }
+        \map{%
+            \step[fieldsource=bookauthor,match=\regexp{[\x{0400}-\x{052F}]},final]
+            \step[fieldset=userb,fieldvalue={russian}]%俄语
+            }
+        \map{%
+            \step[fieldsource=bookauthor,match=\regexp{[\x{3040}-\x{30FF}\x{31F0}-\x{31FF}]},final]
+            \step[fieldset=userb,fieldvalue={japanese}]%日语
+            }               %确定形式后可增加类似andotherscn这样的本地化字符串处理
+        \map{%
+            \step[fieldsource=bookauthor,match=\regexp{[\x{1100}-\x{11FF}\x{3130}-\x{318F}\x{AC00}-\x{D7AF}]},final]
+            \step[fieldset=userb,fieldvalue={korean}]%韩语
+            }
+        \map{%将没有设置userc，且存在editor域的默认设置为英文
+            \step[fieldsource=bookauthor,final]
+            \step[fieldset=userb,fieldvalue={english}]
+            }
+        \map{\step[fieldsource=userd,final]%userd存在则用根据标题的语言设定language
+            \step[fieldset=language,origfieldval]%本身language存在则不设定
+            }
+        \map{\step[fieldsource=userf,final]%userd不存在，而userf存在则根据author的语言设定language
+            \step[fieldset=language,origfieldval]
+            }%如果没有作者和标题，那么剩下的最可能有意义的只有网址了，而网址通常是英文的，因此不用再进一步对其它域进行判断了。
+        \map{%将没有设置的language设置成en，即认为不是中文的就是英文的。
+            \step[fieldset=language,fieldvalue={english}]
+            }
+	    \map{%一条文献的语言已经设定在language域中，由于出版项相关宏中使用userd判断，
+            %所以将一条文献的主体语言设定到userd中，本身前面userd已经设定，但没有处理无标题的情况，
+            %这里的处理等价于没有标题时，利用作者的语言设定userd，再没有作者，则默认用英文设定userd
+            \step[fieldsource=language]
+            \step[fieldset=userd,origfieldval]
+            }
+        \map{%当文献给出language域时，设置文献要使用的本地化字符串的语言
             \step[fieldsource=language,match=english,final]
             \step[fieldset=langid,fieldvalue={english}]
             }
@@ -769,59 +894,16 @@
             \step[fieldset=langid,fieldvalue={french}]
             }
         \map{%
-            \step[fieldsource=language,match=chinese,final]
+            \step[fieldsource=language,match=chinese,final]%中日韩语目前都用english，
             \step[fieldset=langid,fieldvalue={english}]
             }
         \map{%
-            \step[fieldsource=language,match=japnese,final]
+            \step[fieldsource=language,match=japnese,final]%中日韩语目前都用english，
             \step[fieldset=langid,fieldvalue={english}]
             }
         \map{%
-            \step[fieldsource=language,match=korean,final]
+            \step[fieldsource=language,match=korean,final]%中日韩语目前都用english，
             \step[fieldset=langid,fieldvalue={english}]
-            }
-        \map{%当没有language域信息给出时，根据title域来自动判断语言并设置本地化字符串语言
-             %把语言信息设置language域内，而不再用userb域(20180525)
-             %接着根据信息域字符的unicode码判断
-            \step[fieldsource=title,match=\regexp{[\x{0100}-\x{017F}]},final]%\x80-\xFF
-            \step[fieldset=language,fieldvalue={french}]%法语,0080开始到00ff的字符没法匹配有点奇怪
-            \step[fieldset=langid,fieldvalue={french}]
-            }
-        \map{%
-            \step[fieldsource=title,match=\regexp{[\x{0400}-\x{052F}]},final]
-            \step[fieldset=language,fieldvalue={russian}]%俄语
-            \step[fieldset=langid,fieldvalue={russian}]
-            }
-        \map{%
-            \step[fieldsource=title,match=\regexp{[\x{3040}-\x{30FF}\x{31F0}-\x{31FF}]},final]
-            \step[fieldset=language,fieldvalue={japanese}]%日语
-            \step[fieldset=langid,fieldvalue={english}]%中日韩语目前都用english，
-            }               %确定形式后可增加类似andotherscn这样的本地化字符串处理
-        \map{%
-            \step[fieldsource=title,match=\regexp{[\x{1100}-\x{11FF}\x{3130}-\x{318F}\x{AC00}-\x{D7AF}]},final]
-            \step[fieldset=language,fieldvalue={korean}]%韩语
-            \step[fieldset=langid,fieldvalue={english}]
-            }
-        \map{%因为无法进行cjk字符判断，所以用反的思路，判断没有英文字符，没有空格，没有逗号等字符情况下
-             %认为是中文的，将文献language设置成chinese，用于排序
-             %参考4.5.8 姓名首字母生成控制
-            %\step[fieldsource=author,match=\regexp{[^a-zA-Z\s\.\,\'\{\}\\\/\-\x22\x26\:0-9\p{IsP}\p{PosixPunct}\x{2bf}\x{2018}\xE9\p{IsASCII}]},final]
-            %对于带重音符号的字符似乎无法匹配。比如\'e
-            %最后选择直接匹配cjk字符，unicode编码位置从2FF0到9FA5
-            \step[fieldsource=author,match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
-            \step[fieldset=language,fieldvalue={chinese}]
-            }
-        \map{\step[fieldsource=title,match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
-            \step[fieldset=language,fieldvalue={chinese}]
-            }%如果没有作者和标题，那么剩下的最可能有意义的只有网址了，而网址通常是英文的，因此不用再进一步对其它域进行判断了。
-        \map{%将没有设置的language设置成en，即认为不是中文的就是英文的。
-            \step[fieldset=language,fieldvalue={english}]
-            \step[fieldset=langid,fieldvalue={english}]
-            }
-	\map{%将一条文献的主体语言放入userd中，以便进行多语言处理
-            %之所以这么说，是因为一条文献可能是混合语言的，比如作者用的是英文
-            \step[fieldsource=language]
-            \step[fieldset=userd,origfieldval]
             }
 }
 }
@@ -1474,16 +1556,18 @@ togl{bbx:gbstyle} or test {\iffieldequalstr{userd}{chinese}}%
 \DeclareDelimFormat{strandothersdelim}{%
   \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
   \addspace%
-  \ifcurrentname{translator}{\testCJKfirst{usere}}{\testCJKfirst{userf}}%
-  \ifcurrentname{editor}{\testCJKfirst{userc}}{\testCJKfirst{userf}}%
+  \edef\userfieldabcde{userd}%
+  \ifcurrentname{translator}{\edef\userfieldabcde{usere}}{}%
+  \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
+  \ifcurrentname{author}{\edef\userfieldabcde{userf}}{}%
+  \ifcurrentname{bookauthor}{\edef\userfieldabcde{userb}}{}%
   \ifcase\value{gbbiblocalcase}%
-  \iftoggle{ifCJKforgbt}{\bibstring{andotherscn}}{%
-\iffieldequalstr{userd}{korean}{\bibstring{andotherskr}}{}%
-\iffieldequalstr{userd}{japnese}{\bibstring{andothersjp}}{}%
-\iffieldequalstr{userd}{english}{\bibstring{andothers}}{}%
-\iffieldequalstr{userd}{french}{\bibstring{andothers}}{}%
-\iffieldequalstr{userd}{russian}{\bibstring{andothers}}{}%
-  }%
+    \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{andotherscn}}{}%
+    \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{andotherskr}}{}%
+    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{andothersjp}}{}%
+    \iffieldequalstr{\userfieldabcde}{english}{\bibstring{andothers}}{}%
+    \iffieldequalstr{\userfieldabcde}{french}{\bibstring{andothers}}{}%
+    \iffieldequalstr{\userfieldabcde}{russian}{\bibstring{andothers}}{}%
   \or%
   \bibstring{andotherscn}%
   \or%
@@ -1500,24 +1584,27 @@ togl{bbx:gbstyle} or test {\iffieldequalstr{userd}{chinese}}%
 \DeclareDelimFormat{finalnamedelim}{%
   \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
   \addspace%
-  \ifcurrentname{translator}{\testCJKfirst{usere}}{\testCJKfirst{userf}}%
-  \ifcurrentname{editor}{\testCJKfirst{userc}}{\testCJKfirst{userf}}%
+  \edef\userfieldabcde{userd}%
+  \ifcurrentname{translator}{\edef\userfieldabcde{usere}}{}%
+  \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
+  \ifcurrentname{author}{\edef\userfieldabcde{userf}}{}%
+  \ifcurrentname{bookauthor}{\edef\userfieldabcde{userb}}{}%
   \ifcase\value{gbbiblocalcase}%
-  \iftoggle{ifCJKforgbt}{\bibstring{andcn}}{%
-\iffieldequalstr{userd}{korean}{\bibstring{andkr}}{}%
-\iffieldequalstr{userd}{japnese}{\bibstring{andjp}}{}%
-\iffieldequalstr{userd}{english}{\bibstring{and}}{}%
-\iffieldequalstr{userd}{french}{\bibstring{and}}{}%
-\iffieldequalstr{userd}{russian}{\bibstring{and}}{}%
-  }\space%
+    \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{andcn}}{}%
+    \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{andkr}}{}%
+    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{andjp}}{}%
+    \iffieldequalstr{\userfieldabcde}{english}{\bibstring{and}}{}%
+    \iffieldequalstr{\userfieldabcde}{french}{\bibstring{and}}{}%
+    \iffieldequalstr{\userfieldabcde}{russian}{\bibstring{and}}{}%
+\space%
   \or%
   \bibstring{andcn}\space%
   \or%
   \bibstring{and}\space%
   \fi}%
-    %
-    %   url和url日期格式
-    %
+%
+%   url和url日期格式
+%
     \renewbibmacro*{url+urldate}{%
       %\usebibmacro{url}%%更换url的位置，放到下面
       \iffieldundef{urlyear}%
