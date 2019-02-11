@@ -52,6 +52,7 @@ xelatex.exe gbT7714-2015.tex
 
 xelatex.exe gbT7714-2015ms.tex
 
+xelatex.exe gbT7714-2015eg.tex
 
 xelatex.exe gbT7714-2015eg.tex
 
