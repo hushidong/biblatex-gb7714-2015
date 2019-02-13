@@ -1,0 +1,88 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015ay样式，实现一种特殊的文献表格式
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{xcolor}
+\usepackage[colorlinks]{hyperref}
+\usepackage[paperwidth=21cm,paperheight=29cm,top=1cm,bottom=1cm,left=1cm,right=1cm]{geometry}
+\usepackage{xltxtra,mflogo,texnames}
+\usepackage[backend=biber,style=gb7714-2015ay,gbfieldtype=true,gbpunctin=false]{biblatex}%sorting=nyt
+
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+@BOOK{Miroslav2003--,
+  AUTHOR = {Miroslav, D. L. and Dejan, V. T.},
+  TRANSLATOR = {朱义胜 and 董辉},
+  LANGUAGE = {chinese},
+  LOCATION = {北京},
+  PUBLISHER = {电子工业出版社},
+  DATE = {2003-01},
+  TITLE = {信号处理滤波器设计方法},
+}
+
+@ARTICLE{于潇2011-15-23,
+  AUTHOR = {于潇 and 刘义 and 柴跃廷 and others},
+  DATE = {2011},
+  JOURNALTITLE = {清华大学学报},
+  NUMBER = {11},
+  PAGES = {15--23},
+  TITLE = {互联网药品可信交易环境中主体资质审核备案模式},
+  VOLUME = {52},
+}
+
+@INBOOK{姚中秋2008--,
+  AUTHOR = {姚, 中秋},
+  BOOKAUTHOR = {罗, 卫东 and 姚, 中秋},
+  LOCATION = {杭州},
+  PUBLISHER = {浙江大学出版社},
+  BOOKTITLE = {中国转型的理论分析},
+  DATE = {2008},
+  PAGES = {44},
+  TITLE = {一种制度变迁模式},
+}
+
+@Newspaper{张田勤2000--,
+  Title                    = {犯罪DNA库与生命伦理学计划},
+  Author                   = {张田勤},
+  year                     = {{2000-11-12}},
+  Journaltitle             = {大众科技报},
+  Note                     = {news},
+  Number                   = {7}
+}
+
+@Www{萧钰2001--,
+  Title                    = {出版业信息化迈入快车道},
+  Author                   = {萧钰},
+  Url                      = {http://www.creader.com/news/20011219/200112190019.html},
+  Urldate                  = {2002-04-15},
+  Date                     = {2001-12-19}
+}
+@Patent{刘加林1993--,
+  Title                    = {多功能一次性压舌板},
+  Author                   = {刘加林},
+  year                     = {{1993-04-14}},
+  Number                   = {92214985.2},
+  Location                 = {中国发明专利}
+}
+
+@PhdThesis{张若凌2004--,
+  Title                    = {高超声速非平衡流动的计算和实验研究},
+  Author                   = {张若凌},
+  School                   = {中国空气动力研究与发展中心},
+  Year                     = {2004},
+  Location                 = {绵阳}
+}
+
+\end{filecontents}
+\addbibresource{\jobname.bib}
+
+
+
+\begin{document}
+
+\nocite{*}
+\printbibliography[heading=subbibliography,title={示例}]
+
+\end{document}

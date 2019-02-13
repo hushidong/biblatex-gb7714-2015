@@ -98,6 +98,15 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
         `\usepackage[backend=biber,style=gb7714-2015,gbtype=true]{biblatex}`
 		
+	- add an option `gbfieldtype` to control the output of field type:
+	
+		`gbfieldtype = true` to print type field, like the thesis type: `PHD thesis` or `博士学位论文`
+		
+		`gbfieldtype = false` not to print type field.
+
+        `\usepackage[backend=biber,style=gb7714-2015,gbfieldtype=true]{biblatex}`
+		
+		
 	- add an option `gbpunctin` to control the output of `//` before bookauthor for entrytypes like inbook/incollection/inproceedings(This option is also for author year style):
 
 		`gbpunctin=true` for gb7714 style, to output `//`, this is the default setting
@@ -185,6 +194,18 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 		`gbnoauthor = false` for standard style, not to pring anything, this is the default setting.
 
         `\usepackage[backend=biber,style=gb7714-2015ay,gbnoauthor=true]{biblatex}`
+	
+	- add an option value `mergedate=none` to control the date in bibliography:
+	
+		`mergedate=true` to output date only after author，like：LAMPORT L, (1986). Document Preparation System[M]. [S.l.]: Addison-Wesley Reading, MA.
+		
+		`mergedate=false` to output date after author and in publish items，like：LAMPORT L, (1986). Document Preparation System[M]. [S.l.]: Addison-Wesley Reading, MA, 1986.
+		
+		`mergedate=none` to output date only in publish items，like：LAMPORT L. Document Preparation System[M]. [S.l.]: Addison-Wesley Reading, MA, 1986.
+		
+		do not set mergedate output like：LAMPORT L, 1986. Document Preparation System[M]. [S.l.]: Addison-Wesley Reading, MA.
+		
+		`\usepackage[backend=biber,style=gb7714-2015ay,mergedate=none]{biblatex}`
 	
 * for perl script transformation tool(only for the numerical style)
 

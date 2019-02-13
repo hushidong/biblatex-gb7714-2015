@@ -647,8 +647,15 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbtype=true，根据GB/T 7714-2015 要求输出标识符，例如“在线的期刊析出文献题名[J/OL]”。
     \item gbtype=false，则不输出标识符，例如“在线的期刊析出文献题名”。
   \end{itemize}
+  
+  \item[gbfieldtype]=true，\textbf{false}. \hfill default is false
 
-
+  为控制是否输出type域而增加的选项。
+  \begin{itemize}
+    \item gbfieldtype=true，输出type域，例如学位论文的phdthesis或博士学位论文。输出该域时做中英文区分。
+    \item gbfieldtype=false，不输出type域。
+  \end{itemize}
+  
 
   \item[gbpunctin]=\textbf{true}，false. \hfill default is true
 
@@ -753,6 +760,15 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   利用对\verb|\@makefntext|做patch局部化重设\verb|\@makefnmark|使得脚注中的标签不上标，利用footmisc宏包实现对脚注的悬挂对齐，需要注意由于footmisc的问题，使用该宏包会导致脚注的超链接失效，如果不需要悬挂格式，那么可以在bbx文件中将footmisc注释掉，此外对于beamer类该包也并不兼容，所以当加载beamer类则直接注释掉；二是实现国标要求的相同的文献不输出，而是简化输出，比如同\textcircled{4} 等，主要利用citetracker 选项实现对文献引用的追踪，然后利用ifciteseen 判断和对footfullcite 命令做修改实现。
   测试文档见：\href{run:./example/opt-gbfootbib.tex}{opt-gbfootbib.tex}。
 
+
+  \item[mergedate]=\textbf{true}，false，none. \hfill default is true
+
+  为作者年制是否在文献表中作者后面输出日期信息而增加了选项值none。
+  \begin{itemize}
+    \item mergedate=true，作者年制文献表仅在作者后输出日期
+    \item mergedate=false，作者年制文献表在作者后和出版项中输出日期
+    \item mergedate=none，作者年制文献表仅在出版项中输出日期
+  \end{itemize}
 \end{description}
 
 

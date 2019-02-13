@@ -200,6 +200,14 @@
 %   设置宏包选项
 %=====================================================================
     %
+    %   增加一个控制是否输出type域的选项
+    %   20190212,v1,0q,hzz
+    \newtoggle{bbx:gbfieldtype}
+    \DeclareBibliographyOption{gbfieldtype}[false]{%biblatex低版本
+      \settoggle{bbx:gbfieldtype}{#1}}
+    \ExecuteBibliographyOptions{gbfieldtype}
+
+    %
     %   增加一个选项，用于控制是否实现GB/T 7714-2015标准的脚注文献表
     %   20190203，v1.0p，hzz
     %   原理方法:默认做patch，文献引用带圈上标数字表示，脚注中的文献用带圈非上标数字做标签
@@ -320,6 +328,9 @@
     \def\str@numbercn{册}
     \def\str@serialcn{第}
     \def\str@sameentry{同}
+    \def\str@incn{见}
+    \def\str@mathesiscn{硕士学位论文}
+    \def\str@phdthesiscn{博士学位论文}
 
     \AtEndOfPackage{%
 	\iftoggle{bbx:codegbk}{%
@@ -610,6 +621,9 @@
     \NewBibliographyString{volumecn}
     \NewBibliographyString{numbercn}
     \NewBibliographyString{serialcn}
+    \NewBibliographyString{incn}
+    \NewBibliographyString{mathesiscn}
+    \NewBibliographyString{phdthesiscn}
 
     %
     %   修改一些当地化字符串
@@ -639,6 +653,9 @@
        andotherskr={외},
        andjp={和},
        andkr={和},
+       incn={\str@incn\addcolon\addspace},
+       mathesiscn={\str@mathesiscn},
+       phdthesiscn={\str@phdthesiscn},
 }
 
 
@@ -1082,14 +1099,14 @@
             \map{%剩下的全部映射为book
             \step[typesource=standard, typetarget=book, final]
             }
-            \map{%先于标准样式的driver层映射，以取消type设置
-            \step[typesource=mastersthesis, typetarget=thesis, final]
-            %\step[fieldset=type, fieldvalue=mathesis]
-            }
-            \map{%先于标准样式的driver层映射，以取消type设置
-            \step[typesource=phdthesis, typetarget=thesis, final]
-            %\step[fieldset=type, fieldvalue=phdthesis]
-            }
+%            \map{%先于标准样式的driver层映射，以取消type设置
+%            \step[typesource=mastersthesis, typetarget=thesis, final]
+%            %\step[fieldset=type, fieldvalue=mathesis]
+%            }
+%            \map{%先于标准样式的driver层映射，以取消type设置
+%            \step[typesource=phdthesis, typetarget=thesis, final]
+%            %\step[fieldset=type, fieldvalue=phdthesis]
+%            }
             \map{%先于标准样式的driver层映射，以取消type设置
             \step[typesource=techreport, typetarget=report, final]
             %\step[fieldset=type, fieldvalue=techreport]
@@ -2666,7 +2683,39 @@ incollection,proceedings,inproceedings]{number}{%
          \iflabeldateisdate
            {\printdateextra}
            {\printlabeldateextra}}}}%
+
 }
+
+
+%
+%为mergedate增加选项none，即实现年份不提前到作者后面的标签中
+%也不打印用于区分同作者同年份文献的标识符如(a，b，c)
+%目的是实现一些特殊的文献表样式比如ucas的作者年制
+%v1.0q,20190212,hzz
+\def\bbx@opt@mergedate@none{%
+  \renewbibmacro*{date+extradate}{%
+    \iffieldundef{labelyear}
+      {}
+      {}}%[parens]\printtext{\printlabeldateextra}
+\renewbibmacro*{bbx:ifmergeddate}{\@secondoftwo}%
+\renewbibmacro*{issue+date}{%去掉括号
+\setunit{\addcomma\addspace}%
+  \printtext{%去掉了[parens]
+    \iffieldundef{issue}
+      {%\usebibmacro{date}
+        \iffieldundef{note}{\usebibmacro{date}}%判断一下，是否是报纸
+        {\iffieldequalstr{note}{news}{\usebibmacro{newsdate}}%判断是否为报纸
+                                     {\usebibmacro{date}}%
+      }}%
+      {\iftoggle{bbx:gbstrict}{}{\printfield{issue}%
+       \setunit*{\addspace}}%
+       %\usebibmacro{date}
+         \iffieldundef{note}{\usebibmacro{date}}%判断一下，是否是报纸
+        {\iffieldequalstr{note}{news}{\usebibmacro{newsdate}}%判断是否为报纸
+                                     {\usebibmacro{date}}%
+        }}}%
+  %\newunit
+  }}
 
 \iftoggle{iftlfive}{\switchversion{3.0}{dateextra}}{}%biblatex<=3.2
 \iftoggle{iftlsix}{\switchversion{3.4}{dateextra}}{}%3.3<=biblatex<=3.6
@@ -2912,12 +2961,26 @@ incollection,proceedings,inproceedings]{number}{%
 %
 %   修改in:用于inbook、incollection、inproceedings等类型
 %   2018.04.20,v1.0k,renewed marco，by hzz
+%   20190212,v1.0q,增加中英文区分，by hzz
 %
 %   原理方法:使用bibmacro{in:}改变了以前在driver中直接输出//的方式，同时也简化了标点控制。
 \renewbibmacro*{in:}{%
  \iftoggle{bbx:gbpunctin}{\printtext{\texttt{//}\allowbreak}}%\addthinspace
-                         {\setunit{\adddot\addspace}\printtext{\bibstring{in}}}}%\newunit\newblock\intitlepunct
+                         {\setunit{\adddot\addspace}%
+                         \iffieldequalstr{userd}{chinese}%
+                         {\printtext{\bibstring{incn}}}%
+                         {\printtext{\bibstring{in}}}%
+                         }}%\newunit\newblock\intitlepunct
 
+%
+%   修改type域的输出格式
+%   2019.02.12，v1.0q，byhzz
+%    使其可以区分中英文输出不同的格式，比如博士论文英文输出PHD thesis，中文则是博士学位论文
+\DeclareFieldFormat{type}%
+{\iffieldequalstr{userd}{chinese}%
+    {\ifbibxstring{#1cn}{\bibxstring{#1cn}}{#1}}%
+    {\ifbibstring{#1}{\bibstring{#1}}{#1}}%
+}
 
 %=====================================================================
 %设置驱动格式
@@ -3224,8 +3287,10 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
   \newunit\newblock
   \usebibmacro{byeditor+others}%增加的译者信息
   \newunit\newblock
-  \printfield{type}%
+  \iftoggle{bbx:gbfieldtype}{%
+ \printfield{type}%
   \setunit*{\addspace}%
+  }{}%
   \printfield{number}%
   \newunit\newblock
   \printfield{version}%

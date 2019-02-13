@@ -21,3 +21,6 @@
     \def\str@numbercn{册}
     \def\str@serialcn{第}
     \def\str@sameentry{同}
+    \def\str@incn{见}
+    \def\str@mathesiscn{硕士学位论文}
+    \def\str@phdthesiscn{博士学位论文}
