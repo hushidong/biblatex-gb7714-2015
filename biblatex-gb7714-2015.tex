@@ -647,15 +647,25 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbtype=true，根据GB/T 7714-2015 要求输出标识符，例如“在线的期刊析出文献题名[J/OL]”。
     \item gbtype=false，则不输出标识符，例如“在线的期刊析出文献题名”。
   \end{itemize}
-  
+
   \item[gbfieldtype]=true，\textbf{false}. \hfill default is false
 
   为控制是否输出type域而增加的选项。
   \begin{itemize}
     \item gbfieldtype=true，输出type域，例如学位论文的phdthesis或博士学位论文。输出该域时做中英文区分。
     \item gbfieldtype=false，不输出type域。
-  \end{itemize}
+    
+    要设置博士或硕士学位论文的输出，可以设置本地化字符串：
+     \lstinline!\DefineBibliographyStrings{english}{mathesis={str you want ma thesis}}!，
+     \lstinline!\DefineBibliographyStrings{english}{mathesiscn={硕士学位论文}}!，
+     \lstinline!\DefineBibliographyStrings{english}{phdthesis={str you want for phd thesis}}!，
+     \lstinline!\DefineBibliographyStrings{english}{phdthesiscn={博士学位论文}}!，
+  之所以用加cn的本地化字符串是为了某些样式需要区分中英文分别设置。
   
+  另一种设置方式是在bib文件直接设置type域为需要输出的字符，比如type={[博士学位论文]}。
+    
+  \end{itemize}
+
 
   \item[gbpunctin]=\textbf{true}，false. \hfill default is true
 
@@ -664,7 +674,8 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbpunctin=true，根据GB/T 7714-2015 要求输出\texttt{//}。
     \item gbpunctin=false，则输出默认的本地字符串，
     在英语中是\texttt{in:}，若要完全去掉该符号则可以在导言区增加命令
-  \lstinline!\DefineBibliographyStrings{english}{in={}}!。
+  \lstinline!\DefineBibliographyStrings{english}{in={}}!，\lstinline!\DefineBibliographyStrings{english}{incn={}}!。
+  之所以用加cn的本地化字符串是为了某些样式需要区分中英文分别设置。
   \end{itemize}
 
   \item[gbctexset]=\textbf{true}，false. \hfill default is true
@@ -761,13 +772,14 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   测试文档见：\href{run:./example/opt-gbfootbib.tex}{opt-gbfootbib.tex}。
 
 
-  \item[mergedate]=\textbf{true}，false，none. \hfill default is true
+  \item[mergedate]=true，false，none. 
 
   为作者年制是否在文献表中作者后面输出日期信息而增加了选项值none。
   \begin{itemize}
     \item mergedate=true，作者年制文献表仅在作者后输出日期
     \item mergedate=false，作者年制文献表在作者后和出版项中输出日期
-    \item mergedate=none，作者年制文献表仅在出版项中输出日期
+    \item mergedate=none，作者年制文献表仅在出版项中输出日期。该选项用于满足中科院大学的作者年制格式要求。
+    \item no mergedate，即不给出该选项，这是gb7714-2015ay默认的情况，仅在作者后输出日期且已经根据国标格式化。
   \end{itemize}
 \end{description}
 
