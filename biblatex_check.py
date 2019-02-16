@@ -69,7 +69,7 @@ requiredFields = {"article": ["author", "title", "journaltitle/journal", "year/d
                   }
 
 ####################################################################
-
+#import os
 import string
 import re
 import sys
@@ -137,24 +137,27 @@ if options.no_console:
 if options.htmlOutput:
     print("INFO: Will output HTML to '" + options.htmlOutput + "'"
         + (" and auto open in the default web browser" if options.view else ""))
+else:#output a default file if -o option is not provided
+    options.htmlOutput=options.bibFile.repalce('.bib','.html')
 
 # Filter by reference ID's that are used
 usedIds = set()
 if options.auxFile:
     print("INFO: Filtering by references found in '" + options.auxFile + "'")
     try:
-        fInAux = open(options.auxFile, 'r', encoding="utf8")
-        for line in fInAux:
-            if line.startswith("\\citation"):
-                ids = line.split("{")[1].rstrip("} \n").split(", ")
-                for id in ids:
-                    if (id != ""):
-                        usedIds.add(id)
-        fInAux.close()
+		fInAux = open(options.auxFile, 'r', encoding="utf8")
+		for line in fInAux:
+			if line.startswith("\\citation"):
+				ids = line.split("{")[1].rstrip("} \n").split(", ")
+				for id in ids:
+					if (id != ""):
+						usedIds.add(id)
+		fInAux.close()
     except IOError as e:
         print ("WARNING: Aux file '" + options.auxFile +
                "' doesn't exist -> not restricting entries")
-
+	
+    
 # Go through and check all references
 completeEntry = ""
 currentId = ""

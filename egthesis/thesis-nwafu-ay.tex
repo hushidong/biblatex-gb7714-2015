@@ -1,0 +1,733 @@
+\documentclass{ctexart}
+
+\usepackage{boxedminipage2e}
+\usepackage{csquotes}
+\usepackage{xltxtra,mflogo,texnames}
+\usepackage[left=1cm,right=1cm,top=2cm,bottom=1cm]{geometry}
+\usepackage[colorlinks]{hyperref}
+
+\usepackage[backend=biber,
+            style=gb7714-2015ay,
+            sortlocale=zh__pinyin,
+            gbtype=false,
+            maxbibnames=99,% 著录所有作者
+            maxcitenames=2,% 引用标注中最多显示2个作者
+            mincitenames=1,% 3个及3个以上的作者截断为1个作者
+            %gbnamefmt=lowercase,% 姓名大小写由输出定
+            %gbnamefmt=pinyin,
+            gbnamefmt=familyahead,
+            %url=false,
+            doi=false,
+            isbn=false,
+            gbfieldtype=true,
+            gbpunctin=false,
+           ]{biblatex}
+
+\makeatletter
+%\def\bibrangedash{$\sim$}% 表示范围的波浪线符号
+\DefineBibliographyExtras{english}{\renewcommand*{\bibrangedash}{$\sim$}}
+%\newcommand\nwafubibfont{\linespread{1.0}\zihao{-5}}% 字体
+\newcommand\nwafubibfont{\zihao{-5}}% 字体
+
+\renewcommand{\bibfont}{\nwafubibfont}% 全局字体设置
+
+\DeclareFieldFormat[article]{journaltitle}{\iffieldequalstr{userd}{chinese}{#1}{\textit{#1}}\isdot}% 英文刊名用斜体
+
+\renewcommand{\postnotedelim}{\addcolon\space}
+\renewcommand*{\nameyeardelim}{\addspace}
+\DeclareDelimFormat[bib,biblist]{nameyeardelim}{\addperiod\space}
+%\DeclareDelimFormat[textcite]{nameyeardelim}{\addspace}
+\DeclareFieldFormat{postnote}{#1}
+
+\DefineBibliographyStrings{english}{
+    %and         = {\addcomma},%将第2和3人名见的and符号改成 逗号，用\finalnamedelim命令也可以定义，参见3.9.1节
+    %andcn       = {\addcomma},%\str@andcn\ and本地化字符串的中文对应词
+    andincitecn = {和},%将标注中的分开，便于与文献表中的区分
+    andincite   = {and},
+    mathesiscn={[硕士学位论文]},
+    phdthesiscn={[博士学位论文]},
+    in={In:\addspace},
+    incn={见:\addspace},
+}
+
+% “和”与“and”前后的空格调整
+\DeclareDelimFormat{finalnamedelim}{%
+  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
+  %\addspace%
+  \edef\userfieldabcde{userd}%
+  \ifcurrentname{translator}{\edef\userfieldabcde{usere}}{}%
+  \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
+  \ifcurrentname{author}{\edef\userfieldabcde{userf}}{}%
+  \ifcurrentname{bookauthor}{\edef\userfieldabcde{userb}}{}%
+  \ifcase\value{gbcitelocalcase}%
+    \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{andincitecn}}{}%
+    \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{andkr}}{}%
+    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{andjp}}{}%
+    \iffieldequalstr{\userfieldabcde}{english}{\addspace\bibstring{andincite}\addspace}{}%
+    \iffieldequalstr{\userfieldabcde}{french}{\addspace\bibstring{and}\addspace}{}%
+    \iffieldequalstr{\userfieldabcde}{russian}{\addspace\bibstring{and}\addspace}{}%
+  \or%
+  \bibstring{andincitecn}%
+  \or%
+  \addspace\bibstring{andincite}\addspace%
+  \fi
+}
+
+%----------------------------------------------------------------------
+%
+%-new added  20190215
+% 去掉空格
+\DeclareDelimFormat{strandothersdelim}{%
+  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
+  %\addspace%
+  \edef\userfieldabcde{userd}%
+  \ifcurrentname{translator}{\edef\userfieldabcde{usere}}{}%
+  \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
+  \ifcurrentname{author}{\edef\userfieldabcde{userf}}{}%
+  \ifcurrentname{bookauthor}{\edef\userfieldabcde{userb}}{}%
+  \ifcase\value{gbcitelocalcase}%
+    \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{andothersincitecn}}{}%中文已经通过english本地化字符串定义
+    \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{andotherskr}}{}%韩语未定义，所以与bib中一致
+    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{andothersjp}}{}%日与同韩语
+    \iffieldequalstr{\userfieldabcde}{english}{\bibstring{andothersincite}}{}%英语已定义
+    \iffieldequalstr{\userfieldabcde}{french}{\bibstring{andothers}}{}%法语未定义，若要定义需要针对french本地化字符串定义
+    \iffieldequalstr{\userfieldabcde}{russian}{\bibstring{andothers}}{}%俄语未定义，若要定义需要针对russian本地化字符串定义
+  \or%
+  \bibstring{andothersincitecn}%
+  \or%
+  \bibstring{andothersincite}%
+  \fi}
+
+%之所以不用\DeclareDelimFormat{andothersdelim}{}这样的设置是因为gb7714-2015中为兼容老版本的biblatex做的处理就是这样的
+%所以用相同的方式
+\AtEveryCitekey{%
+\iffieldequalstr{userf}{chinese}{\renewcommand*{\andothersdelim}{}}%\addthinspace
+  {\renewcommand*{\andothersdelim}{\addspace}}%
+}
+
+%标注压缩时，直接用date+extradate代替extradate实现2006a，2006b的效果
+\newbibmacro*{cite:extradate}{%
+  \iffieldundef{extradate}
+    {}
+    {\printtext[bibhyperref]{\printlabeldateextra}}}%\printfield{extradate}
+
+%文献表中的日期格式
+
+  \renewbibmacro*{date+extradate}{%
+    \iffieldundef{labelyear}
+      {}%
+      {\ifboolexpr{%
+test {\ifentrytype{patent}}
+or
+(test {\ifentrytype{newspaper}} )%
+}%
+{\printtext{\blx@isodate{}{}}}%
+{\printtext{%
+         \iflabeldateisdate
+           {\printdateextra}
+           {\printlabeldateextra}}}%
+           }%
+}
+
+
+%
+%   url和url日期格式
+%
+\renewbibmacro*{url+urldate}{%
+  %\usebibmacro{url}%%更换url的位置，放到下面
+     \usebibmacro{url}%
+     \iffieldundef{urlyear}%
+    {}{%\setunit*{\addspace}%
+    \usebibmacro{urldate}}}
+
+\DeclareFieldFormat{addnumflag}{%
+\ifentrytype{newspaper}{\setunit{\addcomma\addspace}\printtext{#1}}
+{\nobreak\printtext{(}\nobreak #1\nobreak\printtext{)}}}
+
+%
+%   重设专利title的输出，将文献类型标识符输出出去
+%
+\newbibmacro*{patenttitle}{%原输出来自biblatex.def文件
+  \ifboolexpr{%
+    test{\iffieldundef{title}}%
+    and%
+    test{\iffieldundef{subtitle}}%
+  }%
+    {}%
+    {\printtext[title]{\bibtitlefont%
+       \printfield[titlecase]{title}%
+       \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
+       {}{\setunit{\subtitlepunct}%
+       \printfield[titlecase]{subtitle}}%
+       \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
+        {\setunit{\subtitlepunct}\printfield{titleaddon}}%
+        \setunit{\adddot\addspace}\printfield{number}%写专利号
+        \iftoggle{bbx:gbtype}{\printfield[gbtypeflag]{usera}}{}%
+     %\iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
+     %\newunit
+     }%
+}%
+}
+
+%
+%   在线文献驱动
+%
+\DeclareBibliographyDriver{online}{%源来自standard.BBX
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/editor+others/translator+others}%
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+  \usebibmacro{title}%
+  \iftoggle{bbx:gbstrict}{}{%
+  \newunit%
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}%
+  \newunit\newblock
+  \printfield{note}}%
+  \newunit
+  \printfield{version}%
+  \newunit\newblock
+% \printlist{organization}%
+ \printlist{institution}%
+  \newunit\newblock
+\ifboolexpr{%
+test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{eventday}}%
+}{\usebibmacro{date}}%
+%{\usebibmacro{modifydate}}%修改或更新日期，为带括号的时间
+  \usebibmacro{url+urldate}%从下面移上来
+  \newunit\newblock
+  \iftoggle{bbx:eprint}
+    {\usebibmacro{eprint}}
+    {}%
+  \newunit\newblock
+  %\usebibmacro{url+urldate}%
+  %\newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
+
+%
+%   专利文献驱动
+%
+  \DeclareBibliographyDriver{patent}{%源来自standard.BBX
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author}%
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+  %\usebibmacro{title}%
+  \usebibmacro{patenttitle}%给出专利专用的标题输出
+  \iftoggle{bbx:gbstrict}{}{%
+  \newunit%
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}}%
+  \newunit\newblock
+  \printfield{type}%
+  \setunit*{\addspace}%
+  %\printfield{number}%已放到patenttitle中处理
+  \iflistundef{location}
+    {}
+    {\setunit*{\addspace}%
+     \printtext{%[parens]
+       \printlist[][-\value{listtotal}]{location}}}%
+  \newunit\newblock
+  \usebibmacro{byholder}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  %\usebibmacro{newsdate}%
+  %\newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
+%----------------------------------------------------------------------
+
+\setlength{\bibitemsep}{2pt}%0ex
+\setlength{\bibnamesep}{0ex}
+\setlength{\bibinitsep}{0ex}
+%\setlength{\bibitemindent}{1.5\ccwd} % bibitemindent表示一条文献中第一行相对后面各行的缩进
+%\setlength{\bibhang}{0pt} % 作者年制中 bibhang 表示的各行起始位置到页
+                          % 边的距离,顺序编码制中
+                          % bibhang+labelnumberwidth 表示各行起始位置
+                          % 到页边的距离
+\makeatother
+
+
+% ==============LaTeX命令排版命令========================
+\newcommand\cs[1]{\texttt{\textbackslash#1}}
+\newcommand{\note}[1]{{%
+  \color{magenta}{\noindent\bfseries 注意：}\emph{#1}}}
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+%%
+%% bib file modified by bibmap.py
+%% 2019-02-16T21:07:03
+%%
+
+
+@article{r2,
+	author = {Zhang, Yulian and Yu, Dongliang and Gao, Mingqi and Li, Dongdong and Song, Ye and Jin, Rong and Ma, Weihua and Zhu, Xufei},
+	title = {Growth of anodic TiO2 nanotubes in mixed electrolytes and novel method to extend nanotube diameter},
+	journal = {ELECTROCHIMICA ACTA},
+	year = {2015},
+	volume = {160},
+	pages = {33--42},
+	month = {apr},
+	address = {THE BOULEVARD, LANGFORD LANE, KIDLINGTON, OXFORD OX5 1GB, ENGLAND},
+	author-email = {lidd@sari.ac.cn zhuxufei.njust@163.com},
+	doc-delivery-number = {CD5GL},
+	doi = {10.1016/j.electacta.2015.02.058},
+	eissn = {1873-3859},
+	issn = {0013-4686},
+	journal-iso = {Electrochim. Acta},
+	language = {English},
+	number-of-cited-references = {58},
+	orcid-numbers = {Li, Dongdong/0000-0003-3219-181X},
+	publisher = {PERGAMON-ELSEVIER SCIENCE LTD},
+	research-areas = {Electrochemistry},
+	researcherid-numbers = {Li, Dongdong/A-2703-2011},
+	times-cited = {2},
+	type = {Article},
+	unique-id = {ISI:000351115900006},
+	web-of-science-categories = {Electrochemistry},
+}
+
+@article{r3,
+	author = {Xue, Yujing and Sun, Yan and Wang, Guixin and Yan, Kangping and Zhao, Jingyong},
+	title = {Effect of NH4{F} concentration and controlled-charge consumption on the photocatalytic hydrogen generation of TiO2 nanotube arrays},
+	journal = {ELECTROCHIMICA ACTA},
+	year = {2015},
+	volume = {155},
+	pages = {312--320},
+	month = {feb},
+	address = {THE BOULEVARD, LANGFORD LANE, KIDLINGTON, OXFORD OX5 1GB, ENGLAND},
+	doc-delivery-number = {CB3RX},
+	doi = {10.1016/j.electacta.2014.12.134},
+	eissn = {1873-3859},
+	issn = {0013-4686},
+	journal-iso = {Electrochim. Acta},
+	language = {English},
+	number-of-cited-references = {50},
+	orcid-numbers = {Wang, Guixin wang/0000-0002-4850-9207},
+	publisher = {PERGAMON-ELSEVIER SCIENCE LTD},
+	research-areas = {Electrochemistry},
+	researcherid-numbers = {Wang, Guixin wang/I-8445-2014},
+	times-cited = {2},
+	type = {Article},
+	unique-id = {ISI:000349547100040},
+	web-of-science-categories = {Electrochemistry},
+}
+
+@inproceedings{r4,
+	author = {Mahshid, S. and Dolati, A. and Goodarzi, M. and Askari, M. and Ghahramaninezhad, A.},
+	title = {Self-organized Titanium Oxide Nanotubes Prepared in Phosphate Electrolytes: Effect of Voltage and Fluorine Concentration},
+	booktitle = {NANOTECHNOLOGY (GENERAL) - 217\textsuperscript{TH} ECS MEETING},
+	year = {2010},
+	editor = {Bock, C and Traversa, E},
+	volume = {28},
+	number = {7},
+	series = {ECS Transactions},
+	pages = {67--74},
+	address = {65 S MAIN ST, PENNINGTON, NJ 08534-2839 USA},
+	organization = {Electrochem Soc (ECS)},
+	publisher = {ELECTROCHEMICAL SOC INC},
+	doc-delivery-number = {BDU71},
+	doi = {10.1149/1.3491775},
+	isbn = {978-1-56677-833-6},
+	issn = {1938-5862},
+	language = {English},
+	number-of-cited-references = {12},
+	research-areas = {Electrochemistry; Science \& Technology - Other Topics},
+	times-cited = {3},
+	type = {Proceedings Paper},
+	unique-id = {ISI:000314958100009},
+	web-of-science-categories = {Electrochemistry; Nanoscience \& Nanotechnology},
+}
+
+@article{r6,
+	author = {Roy, Poulomi and Berger, Steffen and Schmuki, Patrik},
+	title = {TiO2~{N}anotubes: Synthesis and Applications},
+	journal = {ANGEWANDTE CHEMIE-INTERNATIONAL EDITION},
+	year = {2011},
+	volume = {50},
+	number = {13},
+	pages = {2904--2939},
+	address = {BOSCHSTRASSE 12, D-69469 WEINHEIM, GERMANY},
+	author-email = {schmuki@ww.uni-erlangen.de},
+	doc-delivery-number = {734KS},
+	doi = {10.1002/anie.201001374},
+	issn = {1433-7851},
+	journal-iso = {Angew. Chem.-Int. Edit.},
+	language = {English},
+	number-of-cited-references = {446},
+	publisher = {WILEY-V C H VERLAG GMBH},
+	research-areas = {Chemistry},
+	times-cited = {872},
+	type = {Review},
+	unique-id = {ISI:000288333600005},
+	web-of-science-categories = {Chemistry, Multidisciplinary},
+}
+
+@article{r9,
+	author = {LeClere, D. J. and Velota, A. and Skeldon, P. and Thompson, G. E. and Berger, S. and Kunze, J. and Schmuki, P. and Habazaki, H. and Nagata, S.},
+	title = {Tracer investigation of pore formation in anodic titania},
+	journal = {JOURNAL OF THE ELECTROCHEMICAL SOCIETY},
+	year = {2008},
+	volume = {155},
+	number = {9},
+	pages = {487--494},
+	address = {65 SOUTH MAIN STREET, PENNINGTON, NJ 08534 USA},
+	author-email = {p.skeldon@manchester.ac.uk},
+	doc-delivery-number = {331UT},
+	doi = {10.1149/1.2946727},
+	issn = {0013-4651},
+	journal-iso = {J. Electrochem. Soc.},
+	language = {English},
+	number-of-cited-references = {50},
+	orcid-numbers = {Habazaki, Hiroki/0000-0002-7172-8811 },
+	publisher = {ELECTROCHEMICAL SOC INC},
+	research-areas = {Electrochemistry; Materials Science},
+	researcherid-numbers = {Habazaki, Hiroki/C-5388-2012 Nagata, Shinji/A-1796-2015},
+	times-cited = {57},
+	type = {Article},
+	unique-id = {ISI:000258038800030},
+	web-of-science-categories = {Electrochemistry; Materials Science, Coatings \& Films},
+}
+
+@book{n21,
+	author = {哈里森·沃尔德伦},
+	translator = {谢远涛},
+	title = {经济数学与金融数学},
+	address = {北京},
+	publisher = {中国人民大学出版社},
+	year = {2012},
+	pages = {235--236},
+}
+
+@book{郭文彬2006--,
+	title = {通信原理--基于Matlab的计算机仿真},
+	address = {北京},
+	author = {郭文彬 and 桑林},
+	publisher = {北京邮电大学出版社},
+	year = {2006},
+}
+
+@book{蔡敏2006--,
+	title = {UML基础和Rose建模教程},
+	address = {北京},
+	author = {蔡敏 and 徐慧慧 and 黄柄强},
+	publisher = {人民邮电出版社},
+	year = {2006},
+	month = {1},
+}
+
+@book{蔡敏2006a--,
+	title = {UML基础和Rose建模教程-练习册一},
+	address = {北京},
+	author = {蔡敏},
+	publisher = {人民邮电出版社},
+	year = {2006},
+	month = {1},
+}
+
+@book{蔡敏2006b--,
+	title = {UML基础和Rose建模教程-练习册二},
+	address = {北京},
+	author = {蔡敏},
+	publisher = {人民邮电出版社},
+	year = {2006},
+	month = {1},
+}
+
+@article{Chiani2009-231-254,
+	title = {Coexistence between UWB and narrow-band wireless communication systems},
+	author = {Chiani, M. and Giorgetti, A.},
+	journal = {Proc. IEEE, Special Issue on UWB Technology and Emerging Applications},
+	number = {2},
+	pages = {231-254},
+	volume = {97},
+	year = {2009},
+}
+
+@article{fzx1962,
+	title = {細胞遗传学关于变異的理論},
+	author = {方宗熙},
+	journal = {生物学通报},
+	year = {1962},
+}
+
+@book{广西壮族自治区林业厅1993--,
+	title = {广西自然保护区},
+	author = {广西壮族自治区林业厅},
+	date = {1993},
+	publisher = {中国林业出版社},
+	location = {北京},
+}
+
+@patent{刘加林1993--,
+	title = {多功能一次性压舌板},
+	author = {刘加林},
+	date = {1993-04-14},
+	number = {中国发明专利, 92214985.2},
+}
+
+@book{赵耀东1998--,
+	title = {新时代的工业工程师},
+	author = {赵耀东},
+	publisher = {天下文化出版社},
+	url = {http://www.ie.nthu.edu.tw/info/ie.newie.htm(Big5)},
+	urldate = {1998-09-26},
+	location = {台北},
+	year = {1998},
+}
+
+@newspaper{张田勤2000--,
+	title = {犯罪DNA库与生命伦理学计划},
+	author = {张田勤},
+	date = {2000-11-12},
+	journaltitle = {大众科技报},
+	number = {7},
+}
+
+@www{萧钰2001--,
+	title = {出版业信息化迈入快车道},
+	author = {萧钰},
+	url = {http://www.creader.com/news/20011219/200112190019.html},
+	urldate = {2002-04-15},
+	date = {2001-12-19},
+}
+
+@phdthesis{张若凌2004--,
+	title = {高超声速非平衡流动的计算和实验研究},
+	author = {张若凌},
+	school = {中国空气动力研究与发展中心},
+	year = {2004},
+	location = {绵阳},
+}
+
+@book{Miroslav2004--,
+	title = {信号处理滤波器设计-基于matlab和mathematica的设计方法},
+	address = {北京},
+	author = {Miroslav, D. L. and Dejan, V. T. and Brian, L. E.},
+	publisher = {电子工业出版社},
+	translator = {朱义胜 and 董辉},
+	month = {1},
+	year = {2004},
+}
+
+@article{于潇2012-1518-1523,
+	title = {互联网药品可信交易环境中主体资质审核备案模式},
+	author = {于潇 and 刘义 and 柴跃廷 and others},
+	journal = {清华大学学报(自然科学版)},
+	number = {11},
+	pages = {1518-1523},
+	volume = {52},
+	year = {2012},
+}
+
+@inbook{马克思2013-302-302,
+	title = {政治经济学批判},
+	address = {北京},
+	author = {马克思},
+	bookauthor = {马克思 and 恩格斯},
+	booktitle = {马克思恩格斯全集:第35卷},
+	pages = {302},
+	publisher = {人民出版社},
+	year = {2013},
+}
+
+
+
+\end{filecontents}
+% biblatex宏包的参考文献数据源
+\addbibresource[location=local]{\jobname.bib}
+
+\begin{document}
+\section{参考文献著录说明}
+
+为了进一步规范本科毕业论文的写作，现就我院本科生毕业论文
+\enquote{参考文献}引用书写格式规定如下:参考文献的引用采用\enquote{著者-出版年}制。
+
+\subsection{正文中参考文献的标注}
+\paragraph{著者作为引用主语}
+文中提及著者，在被引用的著者姓名或外国著者姓氏之后用
+圆括号标注文献出版年，可使用\cs{textcite}、\cs{yearcite}
+命令或手动模式引用文献，如：
+
+\begin{center}
+  \begin{minipage}{0.45\textwidth}
+    \small
+    \verb|\textcite{赵耀东1998--}|指出...
+
+    赵耀东\verb|\yearcite{赵耀东1998--}|指出...
+
+    赵耀东\verb|(\cite*{赵耀东1998--})|指出...
+
+    赵耀东\verb|(\citeyear{赵耀东1998--})|指出...
+  \end{minipage}
+  \begin{boxedminipage}{0.45\textwidth}
+    \small
+    \textcite{赵耀东1998--}指出...
+
+    赵耀东\yearcite{赵耀东1998--}指出...
+
+    赵耀东(\cite*{赵耀东1998--})指出...
+
+    赵耀东(\citeyear{赵耀东1998--})指出...
+  \end{boxedminipage}
+\end{center}
+
+\note{手动模式使用\cs{cite*}或\cs{citeyear}命令时，需要在两端加上小括
+  号。}
+
+\paragraph{提及内容未提及著者}
+
+文中只提及所引用的资料内容而未提及著者，则在引文叙述
+文字之后用圆括号标注著者姓名或外国著者姓氏和出版年份，在著者
+和年份之间空一格，此时可以使用\cs{cite}命令引用文
+献，如：
+
+\begin{center}
+  \begin{minipage}{0.45\textwidth}
+    \small
+    孟德尔发现了一个很重要的现象，即红、白花豌豆杂交后的所结种子
+      第二年长出的植株的红白花比例为3:1\verb|\cite{fzx1962}|。%
+  \end{minipage}
+  \begin{boxedminipage}{0.45\textwidth}
+    \small
+    孟德尔发现了一个很重要的现象，即红、白花豌豆杂交后的所结种子
+      第二年长出的植株的红白花比例为3:1\cite{fzx1962}。%
+  \end{boxedminipage}
+\end{center}
+
+\paragraph{同一著者不同年份出版多篇文献}
+引用同一著者不同年份出版的多篇文献时，后者只注出版年；
+引用同一著者在同一年份出版的多篇文献时，无论正文还是文末，年
+份之后用英文小写字母 a、b、c 等加以区别。按年份递增顺序排列,
+不同文献之间用逗号隔开。此时可以使用\cs{cite}命令引用文
+献，如：
+
+\begin{center}
+  \begin{minipage}{0.45\textwidth}
+    \small
+    UML基础和Rose建模教程中给出了大量案例及案例分析\verb|\cite{蔡敏2006a--,蔡敏2006b--}|。%
+  \end{minipage}
+  \begin{boxedminipage}{0.45\textwidth}
+    \small
+    UML基础和Rose建模教程中给出了大量案例及案例分析\cite{蔡敏2006a--,蔡敏2006b--}。%
+  \end{boxedminipage}
+\end{center}
+
+
+\paragraph{两著者文献}
+
+引用两个著者的文献时,两个著者之间加\enquote{和}(中文)或
+\enquote{and}(英文)。此时可以使用\cs{cite}命令引用文
+献，如：
+
+\begin{center}
+  \begin{minipage}{0.45\textwidth}
+    \small
+    利用基于Matlab的计算机仿真\verb|\cite{郭文彬2006--}|，研究了UWB和窄带通讯中
+      的信号共存特性\verb|\cite{Chiani2009-231-254}|。%
+  \end{minipage}
+  \begin{boxedminipage}{0.45\textwidth}
+    \small
+    利用基于Matlab的计算机仿真\cite{郭文彬2006--}，研究了UWB和窄带通讯中
+      的信号共存特性\cite{Chiani2009-231-254}。%
+  \end{boxedminipage}
+\end{center}
+
+
+\paragraph{三个以上著者文献}
+
+引用三个以上著者时，只标注第一著者姓名，其后加\enquote{等}(中
+文)或\enquote{et al.}(英文)。此时可以使用\cs{cite}命令引用文
+献，如：
+
+\begin{center}
+  \begin{minipage}{0.45\textwidth}
+    \small
+    UML基础和Rose建模教程中详细说明了其基本方法和技巧\verb|\cite{蔡敏2006--}|。
+
+    你不好好学点\LaTeX{}基本命令还真不行\verb|\cite{r9}|。%
+  \end{minipage}
+  \begin{boxedminipage}{0.45\textwidth}
+    \small
+    UML基础和Rose建模教程中详细说明了其基本方法和技巧\cite{蔡敏2006--}。
+
+    你不好好学点\LaTeX{}基本命令还真不行\cite{r9}。%
+  \end{boxedminipage}
+\end{center}
+
+\paragraph{同一处引用多篇文献}
+
+同一处引用多篇文献时，按著者字母顺序排列，不同著者文
+献之间用分号隔开。此时可以使用\cs{cite}命令引用文
+献，注意用逗号分开\texttt{citeKey}就好，如：
+
+\begin{center}
+  \begin{minipage}{0.45\textwidth}
+    \small
+    同时引用多个文献\verb|\cite{r2,r3,r4,r6}|。%
+  \end{minipage}
+  \begin{boxedminipage}{0.45\textwidth}
+    \small
+    同时引用多个文献\cite{r2,r3,r4,r6}。%
+  \end{boxedminipage}
+\end{center}
+
+\paragraph{多次引用同一著者的同一文献}
+
+多次引用同一著者的同一文献,在正文中标注著者与出版年,
+并在\enquote{()}内以以冒号形式标注引文页码。此时可以使用\cs{parencite}命令引用文
+献，注意用可选参数指定引用页码，如：
+
+\begin{center}
+  \begin{minipage}{0.45\textwidth}
+    \small
+    在文献\verb|\parencite[20-22]{n21}|说了一， 在文献\verb|\parencite[55-60]{n21}|说了二。%
+  \end{minipage}
+  \begin{boxedminipage}{0.45\textwidth}
+    \small
+    在文献\parencite[20-22]{n21}说了一， 在文献\parencite[55-60]{n21}说了二。%
+  \end{boxedminipage}
+\end{center}
+
+\note{关于著者-出版年样式命令的详细说明可参见胡振震\enquote{符合 GB/T
+  7714-2015 标准的 biblatex 参考文献样式}说明中的例12。}
+
+\subsection{参考文献列表}
+
+参考文献列表的输出只需要使用命令\cs{printbibliography}进行输出即可，如：
+
+% 排版参考文献表
+\nocite{广西壮族自治区林业厅1993--,r4,张若凌2004--,Miroslav2004--,于潇2012-1518-1523,马克思2013-302-302,张田勤2000--,萧钰2001--,刘加林1993--}
+\printbibliography%
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

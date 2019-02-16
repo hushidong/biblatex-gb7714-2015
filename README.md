@@ -100,7 +100,9 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 		
 	- add an option `gbfieldtype` to control the output of field type:
 	
-		`gbfieldtype = true` to print type field, like the thesis type: `PHD thesis` or `博士学位论文`
+		`gbfieldtype = true` to print type field, like the thesis type: `PHD thesis` or `博士学位论文`。please use `\DefineBibliographyStrings{english}{mathesis={str you want}}`,`\DefineBibliographyStrings{english}{phdthesis={str you want}}`,
+		`\DefineBibliographyStrings{english}{mathesiscn={str you want}}`,`\DefineBibliographyStrings{english}{phdthesiscn={str you want}}` to 
+		define the output string, or set it in bibfile like: `type={str you want},`
 		
 		`gbfieldtype = false` not to print type field.
 
@@ -111,7 +113,7 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
 		`gbpunctin=true` for gb7714 style, to output `//`, this is the default setting
 		
-		`gbpunctin=false` for standard style, to output a bibstring, for English it is `IN:`, If you want to eliminate it at all, please redefine the bibstring like `\DefineBibliographyStrings{english}{in={}}` in the preamble.
+		`gbpunctin=false` for standard style, to output a bibstring, for English it is `IN:`, If you want to eliminate it at all, please redefine the bibstring like `\DefineBibliographyStrings{english}{in={}}` and `\DefineBibliographyStrings{english}{incn={}}`in the preamble.
 
         `\usepackage[backend=biber,style=gb7714-2015,gbpunctin=true]{biblatex}`
 		
@@ -239,6 +241,9 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * [Beamer 文档类](https://github.com/josephwright/beamer)
 * [biblatex 宏包中文手册 ](https://github.com/hushidong/biblatex-zh-cn)
 * [biblatex 简明使用手册](https://github.com/hushidong/biblatex-solution-to-latex-bibliography)
+* [biblatex-tutorial 摘译](https://github.com/hushidong/biblatex-tutorial-cn)
+* [biblatex-map bib文件修改工具](https://github.com/hushidong/biblatex-map/)
+* [biblatex-check bib文件检查工具](https://github.com/Pezmc/BibLatex-Check)
 * [biblatex-caspervector: caspervector 设计的中文参考文献样式](https://github.com/CasperVector/biblatex-caspervector)
 * [gbt7714-bibtex-style: GB/T7714-2015 标准的bst实现版本](https://github.com/zepinglee/gbt7714-bibtex-style)
 * [LaTeX学习网站](http://www.latexstudio.net/)
