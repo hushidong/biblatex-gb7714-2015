@@ -24,3 +24,4 @@
     \def\str@incn{见}
     \def\str@mathesiscn{硕士学位论文}
     \def\str@phdthesiscn{博士学位论文}
+    \def\str@editorcn{主编}

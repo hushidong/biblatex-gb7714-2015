@@ -654,16 +654,16 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \begin{itemize}
     \item gbfieldtype=true，输出type域，例如学位论文的phdthesis或博士学位论文。输出该域时做中英文区分。
     \item gbfieldtype=false，不输出type域。
-    
+
     要设置博士或硕士学位论文的输出，可以设置本地化字符串：
      \lstinline!\DefineBibliographyStrings{english}{mathesis={str you want ma thesis}}!，
      \lstinline!\DefineBibliographyStrings{english}{mathesiscn={硕士学位论文}}!，
      \lstinline!\DefineBibliographyStrings{english}{phdthesis={str you want for phd thesis}}!，
      \lstinline!\DefineBibliographyStrings{english}{phdthesiscn={博士学位论文}}!，
   之所以用加cn的本地化字符串是为了某些样式需要区分中英文分别设置。
-  
+
   另一种设置方式是在bib文件直接设置type域为需要输出的字符，比如type={[博士学位论文]}。
-    
+
   \end{itemize}
 
 
@@ -772,7 +772,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   测试文档见：\href{run:./example/opt-gbfootbib.tex}{opt-gbfootbib.tex}。
 
 
-  \item[mergedate]=true，false，none. 
+  \item[mergedate]=true，false，none.
 
   为作者年制是否在文献表中作者后面输出日期信息而增加了选项值none。
   \begin{itemize}
@@ -1221,7 +1221,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
   专著中的析出文献& inbook & M\\
   连续出版物& periodical& J\\
   连续出版物的析出文献& article& J\\
-  报纸析出的文献& newspaper/article with field note=standard& N\\
+  报纸析出的文献& newspaper/article with field note=news& N\\
   专利& patent& P\\
   电子资源或电子公告& online/www/electronic& EB\\
   会议录或会议文集& proceedings& C\\

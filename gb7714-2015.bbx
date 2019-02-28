@@ -334,6 +334,7 @@
     \def\str@incn{见}
     \def\str@mathesiscn{硕士学位论文}
     \def\str@phdthesiscn{博士学位论文}
+    \def\str@editorcn{主编}
 
     \AtEndOfPackage{%
 	\iftoggle{bbx:codegbk}{%
@@ -653,6 +654,8 @@
     \NewBibliographyString{incn}
     \NewBibliographyString{mathesiscn}
     \NewBibliographyString{phdthesiscn}
+    \NewBibliographyString{editorcn}
+    \NewBibliographyString{editorscn}
 
 
 
@@ -688,6 +691,8 @@
        incn={\str@incn\addcolon\addspace},
        mathesiscn={\str@mathesiscn},
        phdthesiscn={\str@phdthesiscn},
+       editorscn={\str@editorcn},
+       editorcn={\str@editorcn},
 }
 
 
@@ -1715,7 +1720,7 @@
 %袁训来, 陈哲, 肖书海, 等.
 %胡泳, 范海燕, 译.
 %潘惠霞, 魏婧, 杨艳, 等译.
-\ifcurrentname{translator}{\addcomma}{}%
+\ifcurrentname{translator}{\addcomma}{}%为了实现上述第二个示例情况做的处理
 }}
 
 

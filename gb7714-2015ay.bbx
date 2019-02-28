@@ -331,6 +331,7 @@
     \def\str@incn{见}
     \def\str@mathesiscn{硕士学位论文}
     \def\str@phdthesiscn{博士学位论文}
+    \def\str@editorcn{主编}
 
     \AtEndOfPackage{%
 	\iftoggle{bbx:codegbk}{%
@@ -624,6 +625,8 @@
     \NewBibliographyString{incn}
     \NewBibliographyString{mathesiscn}
     \NewBibliographyString{phdthesiscn}
+    \NewBibliographyString{editorcn}
+    \NewBibliographyString{editorscn}
 
     %
     %   修改一些当地化字符串
@@ -656,6 +659,8 @@
        incn={\str@incn\addcolon\addspace},
        mathesiscn={\str@mathesiscn},
        phdthesiscn={\str@phdthesiscn},
+       editorscn={\str@editorcn},
+       editorcn={\str@editorcn},
 }
 
 

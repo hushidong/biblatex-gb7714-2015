@@ -1,0 +1,762 @@
+\documentclass{ctexart}
+
+\usepackage{boxedminipage2e}
+\usepackage{csquotes}
+\usepackage{xltxtra,mflogo,texnames}
+\usepackage[left=1cm,right=1cm,top=2cm,bottom=1cm]{geometry}
+\usepackage[colorlinks]{hyperref}
+
+\usepackage[backend=biber,
+            style=gb7714-2015,
+            maxnames=3,
+            minnames=3,
+            %url=false,
+            doi=false,
+            gbfieldtype=true,
+            gbpunctin=false,
+            gbpub=false,
+            gbnamefmt=lowercase,
+           ]{biblatex}
+
+\makeatletter
+
+\DefineBibliographyStrings{english}{
+    mathesiscn={[硕士学位论文]},
+    phdthesiscn={[博士学位论文]},
+    in={In:\addthinspace},
+    incn={见:\addthinspace},
+}
+
+\renewcommand*{\bibpagespunct}{%
+\ifentrytype{article}{\addcolon\addthinspace}{\adddot\addthinspace}%
+}%
+
+
+%
+%   url和url日期格式
+%
+\renewbibmacro*{url+urldate}{%
+  \usebibmacro{url}%%更换url的位置，放到下面
+  \iffieldundef{urlyear}%
+    {}{%\setunit*{\addspace}%
+    \usebibmacro{urldate}}%
+     \setunit{\addperiod\addspace}%
+     }
+    \renewbibmacro*{urldate}{%
+    \setunit{\addcomma\addthinspace}\printtext{\printurldate}}%能用高层命令+选项尽量用命令(比如这里的\printurldate)，而不用\blx@edtfdate这种更底层的命令
+
+
+%
+%   修改作者数量超过限定值，做省略时的处理格式
+%   v1.0,20160701,hzz
+%   v1.0O,20190103,hzz,修改利用新定义的一个分隔符strandothersdelim
+%
+%   原理方法:判断作者或译者是否中文，若中文用字符等，否则用et al. 。
+\renewbibmacro*{name:andothers}{%
+  \ifboolexpr{
+    test {\ifnumequal{\value{listcount}}{\value{liststop}}}
+    and
+    test \ifmorenames
+  }{\ifnumgreater{\value{liststop}}{1}%
+       {\finalandcomma}%
+       {}%biblatex作者要区别单作者加等的情况，这里为符合gbt7714-2015第7.2节的要求加上了逗号。
+%\printdelim{andothersdelim}
+\printdelim{strandothersdelim}%
+}{%当是译者的时候需要特殊处理：从7.2节看等/译前面加逗号，但从示例看等和译同时出现时，译前的逗号没有，比如：
+%袁训来, 陈哲, 肖书海, 等.
+%胡泳, 范海燕, 译.
+%潘惠霞, 魏婧, 杨艳, 等译.
+%\ifcurrentname{translator}{\addcomma}{}%
+}}
+
+%
+%   修改省略作者后的本地化字符串，比如et al.
+%   v1.0o,20190103,hzz
+%
+%   原理方法:默认情况下判断作者或译者是否中文，若中文用字符andotherscn=“等”，否则用andothers=“et al.”。
+%   非默认情况，根据选项信息，选择选择强制中文或英文
+%   首先设置全局的，然后设置文献表中的，这一等价于将所有的cite命令环境都设置过了
+%   而不用对每一个引用命令单独设置，比如cite，parancite，textcite都设置
+\DeclareDelimFormat{strandothersdelim}{%
+  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
+  %\addspace%
+  \edef\userfieldabcde{userd}%
+  \ifcurrentname{translator}{\edef\userfieldabcde{usere}}{}%
+  \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
+  \ifcurrentname{author}{\edef\userfieldabcde{userf}}{}%
+  \ifcurrentname{bookauthor}{\edef\userfieldabcde{userb}}{}%
+  \ifcase\value{gbbiblocalcase}%
+    \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{andotherscn}}{}%
+    \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{andotherskr}}{}%
+    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{andothersjp}}{}%
+    \iffieldequalstr{\userfieldabcde}{english}{\bibstring{andothers}}{}%
+    \iffieldequalstr{\userfieldabcde}{french}{\bibstring{andothers}}{}%
+    \iffieldequalstr{\userfieldabcde}{russian}{\bibstring{andothers}}{}%
+  \or%
+  \bibstring{andotherscn}%
+  \or%
+  \bibstring{andothers}%
+  \fi}
+
+%
+%   重设专利title的输出，将文献类型标识符输出出去
+%
+\newbibmacro*{patenttitle}{%原输出来自biblatex.def文件
+  \ifboolexpr{%
+    test{\iffieldundef{title}}%
+    and%
+    test{\iffieldundef{subtitle}}%
+  }%
+    {}%
+    {\printtext[title]{\bibtitlefont%
+       \printfield[titlecase]{title}%
+       \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
+       {}{\setunit{\subtitlepunct}%
+       \printfield[titlecase]{subtitle}}%
+       \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
+        {\setunit{\subtitlepunct}\printfield{titleaddon}}%
+        \iftoggle{bbx:gbtype}{\printfield[gbtypeflag]{usera}}{}%
+     %\iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
+     %\newunit
+     }%
+}%
+}
+%
+%%
+%%   专利文献驱动
+%%
+  \DeclareBibliographyDriver{patent}{%源来自standard.BBX
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author}%
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+  %\usebibmacro{title}%
+  \usebibmacro{patenttitle}%给出专利专用的标题输出
+  \iftoggle{bbx:gbstrict}{}{%
+  \newunit%
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}}%
+  \newunit\newblock
+  \printfield{type}%
+  \setunit*{\addcomma\addspace}%
+  \printfield{number}%已放到patenttitle中处理
+  \iflistundef{location}
+    {}
+    {\setunit*{\addspace}%
+     \printtext{%[parens]
+       \printlist[][-\value{listtotal}]{location}}}%
+  \newunit\newblock
+  \usebibmacro{byholder}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{newsdate}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
+\DeclareFieldFormat%将thesis的标题格式重设
+  [thesis]
+  {title}{#1}%\mkbibquote{#1\isdot}
+
+\DeclareBibliographyDriver{thesis}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author}%
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}%增加的译者信息
+  \newunit\newblock
+  \iftoggle{bbx:gbfieldtype}{%
+  \setunit{\addcolon\addspace}
+  \printfield{type}%
+  \setunit*{\addspace}}{}%
+  \printfield{number}%
+  \newunit\newblock
+  \printfield{version}%
+  \newunit
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{institution+location+date}%
+  %\newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \iffieldundef{url}{}{%当没有网址时也不输出修改或更新日期
+  \usebibmacro{modifydate}}%修改或更新日期为带括号的时间
+  \usebibmacro{doi+eprint+url}%
+  \newunit
+  \printfield{pagetotal}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isrn}}
+    {}%
+  \newunit\newblock
+%  \usebibmacro{doi+eprint+url}%
+%  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
+%
+%   book条目类的驱动
+%
+  \DeclareBibliographyDriver{book}{%源来自standard.bbx文件
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+\usebibmacro{author/editor+others/translator+others}%
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+\usebibmacro{maintitle+title}%
+\iftoggle{bbx:gbstrict}{}{%
+\newunit
+\printlist{language}%
+\newunit\newblock%
+\usebibmacro{byauthor}%
+\newunit\newblock}%
+\printfield{edition}%
+\newunit
+\usebibmacro{byeditor+others}%
+\newunit\newblock%%
+\iftoggle{bbx:gbstrict}{}{%
+\iffieldundef{maintitle}%
+{\printfield{volume}%
+\printfield{part}}%
+{}%
+\newunit%
+\printfield{volumes}%
+\newunit\newblock%
+\usebibmacro{series+number}}%
+\newunit\newblock%
+%\printfield{note}%
+%\newunit\newblock%
+\usebibmacro{publisher+location+date}%
+%\newunit\newblock %这里标点去掉
+\usebibmacro{chapter+pages}%
+  \iffieldundef{url}{}{%当没有网址时也不输出
+  \usebibmacro{modifydate}}%带括号的修改或更新日期，
+\usebibmacro{doi+eprint+url}%从下面移动到上面来，因为gbt2015的url需直接放在页码后面。
+  \newunit\newblock%
+  \printfield{pagetotal}%
+  \newunit\newblock%
+  \iftoggle{bbx:isbn}
+    {\printfield{isbn}}
+    {}%
+  \newunit\newblock
+  %\usebibmacro{doi+eprint+url}%
+  %\newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
+%
+%   编者的符号修改一下
+%
+\renewbibmacro*{editor}{%源来自biblatex.DEF
+  \ifboolexpr{
+    test \ifuseeditor
+    and
+    not test {\ifnameundef{editor}}
+  }
+    {\printnames{editor}%
+    \iffieldundef{editortype}%增加一个类型判断，用于存在editortype的情况
+    {\setunit\addspace}%当没有editortype时，直接用句点
+    {\usebibmacro{editorstrg}}%
+     \clearname{editor}}%
+    {}}
+
+%
+%   编者类型做一修改
+%
+\renewbibmacro*{editorstrg}{%源来自biblatex.DEF
+  \printtext[editortype]{%
+    \iffieldundef{editortype}
+      {}%
+      {\ifbibxstring{\thefield{editortype}} %定义编者类型情况下处理，以后根据需要修改
+         {\ifboolexpr{
+            test {\ifnumgreater{\value{editor}}{1}}
+            or
+            test {\ifandothers{editor}}
+          }
+            {\printdelim{streditortypes}}
+            {\printdelim{streditortype}}}
+         {\thefield{editortype}}}%
+         }}
+
+\DeclareDelimFormat{streditortypes}{%
+  \edef\userfieldabcde{userd}%
+  \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
+  \ifcurrentname{bookauthor}{\edef\userfieldabcde{userb}}{}%
+  \ifcase\value{gbbiblocalcase}%
+    \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{\thefield{editortype}scn}}{}%
+    \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{\thefield{editortype}skr}}{}%
+    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{\thefield{editortype}sjp}}{}%
+    \iffieldequalstr{\userfieldabcde}{english}{\addcomma\addthinspace\bibstring{\thefield{editortype}s}}{}%
+    \iffieldequalstr{\userfieldabcde}{french}{\addcomma\addthinspace\bibstring{\thefield{editortype}s}}{}%
+    \iffieldequalstr{\userfieldabcde}{russian}{\addcomma\addthinspace\bibstring{\thefield{editortype}s}}{}%
+  \or%
+  \bibstring{\thefield{editortype}scn}%
+  \or%
+  \addcomma\addthinspace\bibstring{\thefield{editortype}s}%
+  \fi}
+
+\DeclareDelimFormat{streditortype}{%
+  \edef\userfieldabcde{userd}%
+  \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
+  \ifcurrentname{bookauthor}{\edef\userfieldabcde{userb}}{}%
+  \ifcase\value{gbbiblocalcase}%
+    \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{\thefield{editortype}cn}}{}%
+    \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{\thefield{editortype}kr}}{}%
+    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{\thefield{editortype}jp}}{}%
+    \iffieldequalstr{\userfieldabcde}{english}{\addcomma\addthinspace\bibstring{\thefield{editortype}}}{}%
+    \iffieldequalstr{\userfieldabcde}{french}{\addcomma\addthinspace\bibstring{\thefield{editortype}}}{}%
+    \iffieldequalstr{\userfieldabcde}{russian}{\addcomma\addthinspace\bibstring{\thefield{editortype}}}{}%
+  \or%
+  \bibstring{\thefield{editortype}cn}%
+  \or%
+  \addcomma\addthinspace\bibstring{\thefield{editortype}}%
+  \fi}
+
+\DeclareBibliographyDriver{inproceedings}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\printdelim{nametitledelim}}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{in:}%
+  \usebibmacro{editor}%
+  \newunit\newblock
+  \usebibmacro{maintitle+booktitle}%
+  \newunit\newblock
+  \newunit
+  \usebibmacro{publisher+location+date}%
+  \newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isbn}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
+\DeclareBibliographyAlias{conference}{inproceedings}%会议论文文献类型驱动
+\DeclareBibliographyAlias{incollection}{inproceedings}%文集中析出文献类型驱动
+
+%\setlength{\bibitemsep}{2pt}%0ex
+%\setlength{\bibnamesep}{0ex}
+%\setlength{\bibinitsep}{0ex}
+\makeatother
+
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+%%
+%% bib file modified by bibmap.py
+%% 2019-02-16T21:07:03
+%%
+
+
+
+@book{霍夫斯基主编1981,
+author={霍夫斯基主编},
+title={禽病学},
+subtitle={下册},
+edition={7},
+translator={胡祥壁 and others},
+date={1981},
+location={北京},
+publisher={农业出版社},
+pages={7-9},
+}
+
+@book{霍夫斯基主编1981a,
+editor={霍夫斯基},
+title={禽病学},
+translator={胡祥壁 and others},
+date={1981},
+location={北京},
+publisher={农业出版社},
+pages={7-9},
+}
+
+
+@inproceedings{张全福1991,
+	author = {张全福 and 王里青},
+	title = {“百家争鸣”与理工科学报编辑工作},
+	booktitle = {学报编论丛: 第2集},
+	year = {1991},
+	editor = {郑福寿主编},
+	pages = {1--4},
+	address = {南京},
+	publisher = {河海大学出版社},
+	doc-delivery-number = {BDU71},
+}
+
+@inproceedings{张全福1991a,
+	author = {张全福 and 王里青},
+	title = {“百家争鸣”与理工科学报编辑工作},
+	booktitle = {学报编论丛},
+	year = {1991},
+	editor = {郑福寿},
+    editortype={editor},
+	pages = {1--4},
+	address = {南京},
+	publisher = {河海大学出版社},
+}
+
+
+@inproceedings{Dupont1974,
+	author = {Dupont, B.},
+	title = {Bone marrow transplantation in severe combined inmunodeficiency},
+	booktitle = {Proc. of the 3rd Annual Meeting of Int Soc for Experimental Hematology (ISEH)},
+	year = {1974},
+	editor = {White, H. J. and Smith, R.},
+editortype={editor},
+	pages = {44-46},
+	address = {Houston},
+	publisher = {ISEH},
+}
+
+
+@book{Aho1986,
+author={Aho, A. V. and Sethi, R. and Ulhman, J. D.},
+title={Compilers Principles},
+date={1986},
+location={New York},
+publisher={Addison Wesley},
+pages={277-308},
+}
+
+@book{竺可桢1973,
+author={竺可桢},
+title={物理学},
+date={1973},
+location={北京},
+publisher={科学出版社},
+pages={1-3},
+}
+
+
+@article{高景德1987a,
+	author = {高景德 and 王祥珩},
+	title = {交流电机的多回路理论},
+	journal = {清华大学学报},
+	year = {1987},
+	volume = {27},
+    number={1},
+	pages = {1--8},
+}
+
+@article{高景德1987b,
+	author = {高景德 and 王祥珩},
+	title = {交流电机的多回路理论},
+	journal = {清华大学学报},
+	year = {1987},
+    number={1},
+	pages = {1--8},
+}
+
+
+@article{Chen1990,
+	author = {Chen, S. and Billing, S. A. and Cowan, C. F. and others},
+	title = {Practical identification of MARMAX models},
+	journal = {Int J Control},
+	year = {1990},
+    volume = {52},
+    number={6},
+	pages = {1327-1350},
+}
+
+
+@standard{全国文献工作标准化技术委员会1986,
+	author = {全国文献工作标准化技术委员会第六分委员会},
+	title = {GB6447—S6文摘编写规则},
+	address = {北京},
+	publisher = {中国标准出版社},
+	year = {1986},
+}
+
+@newspaper{谢希德1998--,
+	title = {创新学习的新思路},
+	author = {谢希德},
+	date = {1998-12-25},
+	journaltitle = {人民日报},
+	number = {10},
+}
+
+
+@newspaper{张田勤2000--,
+	title = {犯罪DNA库与生命伦理学计划},
+	author = {张田勤},
+	date = {2000-11-12},
+	journaltitle = {大众科技报},
+	number = {7},
+}
+
+@online{王明亮1998--,
+	title = {标准化数据库系统工程新进展},
+	author = {王明亮},
+	url = {http://www.cajcd.edu.cn/pub/980810-2.html},
+	urldate = {1998-08-16},
+}
+
+
+
+@database{万锦坤1996,
+  AUTHOR = {万锦坤},
+  DATE = {1996},
+  TITLE = {中国大学学报论文文摘(1983-1993)(英文版)},
+  medium={CD},
+  location={北京},
+  publisher={中国大百科全书出版社},
+}
+
+@www{萧钰2001--,
+	title = {出版业信息化迈入快车道},
+	author = {萧钰},
+	url = {http://www.creader.com/news/20011219/200112190019.html},
+	urldate = {2002-04-15},
+	date = {2001-12-19},
+}
+
+@phdthesis{张若凌2004--,
+	title = {高超声速非平衡流动的计算和实验研究},
+	author = {张若凌},
+	school = {中国空气动力研究与发展中心},
+	year = {2004},
+	location = {绵阳},
+}
+
+@mastersthesis{余勇1998--,
+	title = {劲性混凝土柱抗震性能的试验研究},
+	author = {余勇},
+	school = {东南大学土木工程学院},
+	year = {1998},
+	location = {南京},
+}
+
+@phdthesis{张竹生1983--,
+	title = {微分半动力系统的不变集},
+	author = {张竹生},
+	school = {北京大学数学系},
+	year = {1983},
+	location = {北京},
+}
+
+@patent{刘加林1993--,
+	title = {多功能一次性压舌板},
+	author = {刘加林},
+	date = {1993-04-14},
+	number = {中国专利, 92214985.2},
+}
+
+@Patent{姜锡洲1989--,
+  Title                    = {一种温热外敷药制备方案},
+  Author                   = {姜锡洲},
+  Date                     = {1989-07-26},
+  Number                   = {88105607.3},
+  type               = {中国专利}
+}
+
+@book{knuth,
+	author = {Donald Knuth},
+	title = {The \TeX{}book},
+	publisher = {Addison-Wesley},
+	year = {1986},
+}
+
+@book{mittlebach,
+	author = {Frank Mittlebach and Michel Goossens},
+	title = {The \LaTeX{} Companion},
+	edition = {2},
+	year = {2004},
+	publisher = {Addison-Wesley},
+}
+
+@article{komine2004fundamental,
+	title = {Fundamental analysis for visible-light communication system using {LED} lights},
+	author = {Komine, Toshihiko and Nakagawa, Masao},
+	journal = {Consumer Electronics, {IEEE} Transactions on},
+	volume = {50},
+	number = {1},
+	pages = {100--107},
+	year = {2004},
+	publisher = {{IEEE}},
+}
+
+@book{dimitrov2015principles,
+	title = {Principles of {LED} Light Communications: Towards Networked {Li-Fi}},
+	author = {Dimitrov, Svilen and Haas, Harald},
+	year = {2015},
+	publisher = {Cambridge University Press},
+}
+
+@inproceedings{fujimoto2014fastest,
+	title = {The fastest visible light transmissions of 662 Mb/s by a blue LED, 600 Mb/s by a red {LED},and 520 Mb/s by a green {LED} based on simple {OOK-NRZ} modulation of a commercially available {RGB}-typewhite {LED} using pre-emphasis and post-equalizing techniques},
+	author = {Fujimoto, Naoki and Yamamoto, Seiichi},
+	booktitle = {Optical Communication ({ECOC}), 2014 European Conference on},
+	pages = {1--3},
+	year = {2014},
+	organization = {{IEEE}},
+}
+
+@standard{ieee2012ieee,
+	title = {IEEE Standard for Information Technology-Telecommunications and Information Exchange BetweenSystems-Local and Metropolitan Area Networks-Specific Requirements---Part 11: Wireless LAN Medium Access Control(MAC) and Physical Layer (PHY) Specifications},
+	stdcode = {IEEE-802.11-2012},
+	author = {{IEEE Standards Association}},
+	year = {2012},
+	publisher = {IEEE},
+}
+
+@misc{irdawebsite,
+	title = {Infrared Data Association(IrDA)},
+	author = {},
+	year = {},
+	url = {http://www.irda.org/},
+}
+
+
+
+@newspaper{vlcnews,
+	title = {VLC demonstration at seu has a data rate  of 1Gbps},
+	author = {James Fan},
+	year = {2016},
+	journal = {Yangtze Daily},
+	number = {4},
+}
+
+@patent{pt,
+	author = {张三},
+	title = {一种新的室内定位技术},
+	type = {TP316, 中国专利},
+	number = {16XXXXX},
+	year = {2016},
+	language = {zh},
+}
+
+@mastersthesis{thesis:a,
+	author = {李四},
+	title = {LTE 下行链路传输与信道估计技术},
+	school = {东南大学信息学院},
+	address = {南京},
+	year = {2015},
+	language = {zh},
+}
+
+@phdthesis{thesis:b,
+	author = {王五},
+	title = {LTE MIMO检测技术},
+	school = {东南大学信息学院},
+	address = {南京},
+	year = {2015},
+	language = {zh},
+}
+
+
+\end{filecontents}
+% biblatex宏包的参考文献数据源
+\addbibresource[location=local]{\jobname.bib}
+
+\begin{document}
+\section{参考文献著录说明}
+
+1. 著录标准
+
+（1）排列次序：依在正文中被首次引用的先后次序列出各条参考文献。
+
+（2）具体要求：项目齐全，内容完整，顺序正确，标点无误。
+
+①只有3位及 3位以内作者的，其姓名全部列上，中外一律姓前名后；
+
+②共有3位以上作者的，只列前 3位，其后加“, 等”或“, et al.；
+
+③外文献中表示缩写的实心句点“．”一律略去；
+
+④原本就缺少某一项目时，可将该连同与其对应的标点符号起略去；
+
+⑤页码不可省略，起止间用“ “ -”相隔，不同的页码引用范围之间“，”相隔。
+
+⑥正文中参考献标引一律用上形式的方括号内数字表示，例如\textsuperscript{ [3] }，方括号和数字不必用粗体。
+
+2. 著 录范围 (共 8类，示例见表 1)
+
+（1）已在国内外公开出版的学术期刊上发表论文；
+
+（2）由国内外出版公司或社正式的学术著作 (有 ISBNISBN ISBN号)；
+
+（3）有 ISBN号的会议论文集及论文集中析出文献；
+
+（4）博士和硕学位论文；
+
+（5）专利文献；
+
+（6）国际标准、国家和部颁标准；
+
+（7）报纸文章；
+
+（8）电子文献。
+
+其他性质的资料可以作为正文随脚注。
+
+3. 文献示例
+
+{
+\small
+\begin{tabular}{|c|c|l|}
+  \hline
+  % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+序号 & 类型 & 示例 \\ \hline
+1 & 学术期刊 & \parbox[c][2cm][c]{16cm}{\fullcite[1 ][]{高景德1987a}\\\fullcite[2 ][]{高景德1987b}\\\fullcite[3 ][]{Chen1990}} \\ \hline
+2 & 学术著作 & \parbox[c][2cm][c]{16cm}{\fullcite[4 ][]{竺可桢1973}\\\fullcite[5 ][]{霍夫斯基主编1981}\\\fullcite[6 ][]{Aho1986}} \\ \hline
+3 & 论文集 & \parbox[c][2.5cm][c]{16cm}{\fullcite[7 ][]{张全福1991}\\\fullcite[8 ][]{Dupont1974}} \\ \hline
+4 & 学位论文 & \parbox[c][1.5cm][c]{16cm}{\fullcite[9 ][]{张竹生1983--}\\\fullcite[10 ][]{余勇1998--}} \\ \hline
+5 & 专利文献 & \parbox[c][0.8cm][c]{16cm}{\fullcite[11 ][]{姜锡洲1989--}} \\ \hline
+6 & 技术标准 & \parbox[c][0.8cm][c]{16cm}{\fullcite[12 ][]{全国文献工作标准化技术委员会1986}} \\ \hline
+7 & 报纸文献 & \parbox[c][0.8cm][c]{16cm}{\fullcite[13 ][]{谢希德1998--}} \\ \hline
+8 & 电子文献 & \parbox[c][1.5cm][c]{16cm}{\fullcite[14 ][]{王明亮1998--}\\\fullcite[15 ][]{万锦坤1996}} \\
+  \hline
+\end{tabular}
+
+}
+\nocite{*}
+
+
+\printbibliography%
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
