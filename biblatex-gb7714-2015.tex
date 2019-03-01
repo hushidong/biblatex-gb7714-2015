@@ -1253,7 +1253,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 \begin{tabular}{cl}
 \hline
   GB/T 7714-2015中的文献著录项目 &  biblatex中的域\\ \hline
-  责任者 & author\\
+  责任者 & author/editor\\
   题名 & title\\
   译者 & translator\\
   版本(主要用于出版物) & edition\\
@@ -1265,7 +1265,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
   日期 & date\\
   日期(不可解析的日期) & year\\
   页码 & pages\\
-  析出文献来源的责任者 & bookauthor\\
+  析出文献来源的责任者 & bookauthor/editor\\
   析出文献来源的标题 & booktitle\\
   连续出版物题名(期刊、报纸) & journal/journaltitle\\
   期刊的卷 & volume\\
@@ -1334,6 +1334,8 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
   \item[doi] 直接输入需要打印的DOI内容
   \item[note] 在本样式中note域有特殊功能，当其内容为standard或news 时，判断条目类型为标准和报纸析出的文献。
   \item[bookauthor] 用于析出文献时，作为析出文献来源文献的作者，其输入方式与author 相同。
+  \item[editor] editor有时直接作为文献的责任者，比如连续出版物(periodical)类型。有时因为author缺失，editor被当做责任者。还有的时候bookauthor缺失，editor也被当做bookauthor，即析出文献来源文献的责任者。editor的输入方式与author相同。
+  \item[editortype]  editortype作为editor的类型或角色说明域，可以用来在editor后面加上适当的表示角色的字符串，比如“主编”或“eds.”等。常见的角色包括：editor、compiler、founder、continuator, redactor、reviser 和collaborator等。当然这是西文环境中的情况，足够细分，中文情况下可以不用这么细分，而仅对editortype={editor}时的本地化字符串做设置，当然如果一篇文档中存在多种不同的角色editor文献的情况，也需要做细分。
   \item[booktitle] 用于析出文献时，作为析出文献来源文献的题名，其输入方式与title 相同。booktitleaddon域输入方式也相同。
   \item[volume] 连续出版物的卷，格式化输入用整数，当有范围时中间用短横线连接，比如:1-4。当无法解析时，输入内容被认为是需要完整打印的内容。
   \item[number] 连续出版物的期或报纸的版次，输入与volume类似。或者是专利等的号时，直接输入需要打印的内容。

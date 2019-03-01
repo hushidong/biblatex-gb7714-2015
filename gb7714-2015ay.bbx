@@ -13,7 +13,7 @@
 \def\versionofgbtstyle{2019/02/11 v1.0q}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015ay.bbx}[\versionofgbtstyle biblatex bibliography style]
-\RequireBiber[3]%显式指定用biber后端
+%\RequireBiber[3]%显式指定用biber后端，当用bibtex时会报错，但其实不会影响编译，只是采用bibtex后无法达成格式需求
 
 %=====================================================================
 %加载标准样式
@@ -837,11 +837,6 @@
             \step[fieldsource=version] %有时会把version和edition混淆，处理后直接用edition
             \step[fieldset=edition, origfieldval]
             }
-        \map{
-            \pertype{inbook}
-            \step[fieldsource=editor]%有时会把editor和bookauthor混淆，处理后使用bookauthor
-            \step[fieldset=bookauthor, origfieldval]
-            }
         \map{%兼容老的standard类型，确定文献类型标识符
             \pertype{standard}
             \step[fieldset=usera, fieldvalue={S}]
@@ -857,8 +852,6 @@
             \step[fieldset=usera, fieldvalue={C}]
             \step[fieldsource=institution]%有时会把publisher和institution混淆，处理后使用institution
             \step[fieldset=publisher, origfieldval]
-            \step[fieldsource=editor]%%有时会把editor和bookauthor混淆，处理后使用bookauthor
-            \step[fieldset=bookauthor, origfieldval]
             }
         \map{
             \pertype{proceedings}
@@ -871,8 +864,6 @@
             \step[fieldset=usera, fieldvalue={G}]
             \step[fieldsource=institution]%有时会把publisher和institution混淆，处理后使用institution
             \step[fieldset=publisher, origfieldval]
-            \step[fieldsource=editor]%%有时会把editor和bookauthor混淆，处理后使用bookauthor
-            \step[fieldset=bookauthor, origfieldval]
             }
         \map{
             \pertype{collection}
@@ -1645,28 +1636,42 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %   而[]中间的内容，从4.6.2节的例子看也是可以分割的，因此内部的nobreak也可以去掉
 %
 \DeclareFieldFormat{gbtypeflag}{%
-\iftoggle{bbx:url}{\iffieldundef{url}%当存在url时，增加一个OL标识符
-{\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}}%
-{\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\texttt{/}OL]}}%
-}{\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}}}
+\iftoggle{bbx:url}%
+    {\iffieldundef{url}%当存在url时，增加一个OL标识符
+        {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}}%
+        {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\texttt{/}OL]}}%
+    }%
+    {\ifentrytype{online}%
+        {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\texttt{/}OL]}}%
+        {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}}%
+    }%
+}
+
 
 %
 %   新增用于报纸的文献类型标识符的格式
 %
 \DeclareFieldFormat{gbtypeflagn}{%用于报纸newspaper
-\iftoggle{bbx:url}{\iffieldundef{url}%当存在url时，增加一个OL标识符
-{\nobreak\printtext{[}\nobreak N\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
-{\nobreak\printtext{[}\nobreak N\printtext{\texttt{/}OL]}\nobreak}%
-}{\nobreak\printtext{[}\nobreak N\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}}
+\iftoggle{bbx:url}%
+    {\iffieldundef{url}%当存在url时，增加一个OL标识符
+        {\nobreak\printtext{[}\nobreak N\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
+        {\nobreak\printtext{[}\nobreak N\printtext{\texttt{/}OL]}\nobreak}%
+    }%
+    {\nobreak\printtext{[}\nobreak N\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
+}
+
 
 %
 %   新增用于标准的文献类型标识符的格式
 %
 \DeclareFieldFormat{gbtypeflags}{%用于标准standard
-\iftoggle{bbx:url}{\iffieldundef{url}%当存在url时，增加一个OL标识符
-{\nobreak\printtext{[}\nobreak S\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
-{\nobreak\printtext{[}\nobreak S\printtext{\texttt{/}OL]}\nobreak}%
-}{\nobreak\printtext{[}\nobreak S\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}}
+\iftoggle{bbx:url}%
+    {\iffieldundef{url}%当存在url时，增加一个OL标识符
+        {\nobreak\printtext{[}\nobreak S\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
+        {\nobreak\printtext{[}\nobreak S\printtext{\texttt{/}OL]}\nobreak}%
+    }%
+    {\nobreak\printtext{[}\nobreak S\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
+}
 
 %
 %   重设title等参考文献信息的输出格式
@@ -1786,7 +1791,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %袁训来, 陈哲, 肖书海, 等.
 %胡泳, 范海燕, 译.
 %潘惠霞, 魏婧, 杨艳, 等译.
-\ifcurrentname{translator}{\addcomma}{}%
+\ifcurrentname{translator}{\addcomma}{}%为了实现上述第二个示例情况做的处理
 }}
 
 %   修改省略作者后的本地化字符串，比如et al.
@@ -2835,7 +2840,29 @@ incollection,proceedings,inproceedings]{number}{%
   }
 
 %
+%   编者的符号修改一下
+%   v1.0 2016-07-01
+%   v1.0q 2019-03-01 hzz 修改editortype前的标点
+%
+\renewbibmacro*{editor}{%源来自biblatex.DEF
+  \ifboolexpr{
+    test \ifuseeditor
+    and
+    not test {\ifnameundef{editor}}
+  }
+    {\printnames{editor}%
+    \iffieldundef{editortype}%增加一个类型判断，用于存在editortype的情况
+    {\setunit\addspace}%当没有editortype时，直接用句点
+    {%\setunit{\addcomma\space}%
+     \usebibmacro{editorstrg}}%
+     %\clearname{editor}
+     }%
+    {}}
+
+%
 %   编者类型做一修改
+%   v1.0 2016-07-01
+%   v1.0q 2019-03-01 hzz 修改editortype不同语言的不同本地化字符串
 %
 \renewbibmacro*{editorstrg}{%源来自biblatex.DEF
   \printtext[editortype]{%
@@ -2855,10 +2882,69 @@ incollection,proceedings,inproceedings]{number}{%
             or
             test {\ifandothers{editor}}
           }
-            {\bibstring{\thefield{editortype}s}}
-            {\bibstring{\thefield{editortype}}}}
+            {\printdelim{streditortypes}}
+            {\printdelim{streditortype}}}
          {\thefield{editortype}}}%
          }}
+
+%
+%   编者类型的本地化字符串输出
+%   v1.0q 2019-03-01 hzz
+%   能对不同条目类型作格式设置的域格式，能对不同环境做格式设置的分隔符
+%   能对不同文境作设置的包括排序，标签等
+%   这里因为考虑可能标注和文献表中存在不同，所以用分隔符来输出本地化字符串
+%
+\DeclareDelimFormat{streditortypes}{%
+  \edef\userfieldabcde{userd}%
+  \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
+  \ifcurrentname{bookauthor}{\edef\userfieldabcde{userb}}{}%
+  \ifcase\value{gbbiblocalcase}%
+    \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{\thefield{editortype}scn}}{}%
+    \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{\thefield{editortype}skr}}{}%
+    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{\thefield{editortype}sjp}}{}%
+    \iffieldequalstr{\userfieldabcde}{english}{\addcomma\addthinspace\bibstring{\thefield{editortype}s}}{}%
+    \iffieldequalstr{\userfieldabcde}{french}{\addcomma\addthinspace\bibstring{\thefield{editortype}s}}{}%
+    \iffieldequalstr{\userfieldabcde}{russian}{\addcomma\addthinspace\bibstring{\thefield{editortype}s}}{}%
+  \or%
+  \bibstring{\thefield{editortype}scn}%
+  \or%
+  \addcomma\addthinspace\bibstring{\thefield{editortype}s}%
+  \fi}
+%
+\DeclareDelimFormat{streditortype}{%
+  \edef\userfieldabcde{userd}%
+  \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
+  \ifcurrentname{bookauthor}{\edef\userfieldabcde{userb}}{}%
+  \ifcase\value{gbbiblocalcase}%
+    \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{\thefield{editortype}cn}}{}%
+    \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{\thefield{editortype}kr}}{}%
+    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{\thefield{editortype}jp}}{}%
+    \iffieldequalstr{\userfieldabcde}{english}{\addcomma\addthinspace\bibstring{\thefield{editortype}}}{}%
+    \iffieldequalstr{\userfieldabcde}{french}{\addcomma\addthinspace\bibstring{\thefield{editortype}}}{}%
+    \iffieldequalstr{\userfieldabcde}{russian}{\addcomma\addthinspace\bibstring{\thefield{editortype}}}{}%
+  \or%
+  \bibstring{\thefield{editortype}cn}%
+  \or%
+  \addcomma\addthinspace\bibstring{\thefield{editortype}}%
+  \fi}
+
+
+%
+%   bookauthor域的输出，
+%   v1.0q 2019-03-01 hzz
+% 不再对editor和bookauthor做sourcemap，而是下面的宏内逻辑代替，
+% 使得除使用bookauthor外也可以使用editor，便于在使用editor时使用editortype
+\renewbibmacro*{bybookauthor}{%
+    \ifnameundef{bookauthor}%
+        {\ifnameundef{editor}%
+            {}%
+            {\ifnamesequal{author}{editor}%
+                {}{\usebibmacro{editor}}}%
+        }%
+        {\ifnamesequal{author}{bookauthor}%
+            {}{\printnames{bookauthor}}%
+        }%
+}
 
 %
 %   修改期刊的标题
@@ -3384,7 +3470,9 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
 \usebibmacro{in:}%
 %\printtext{\texttt{//}\addthinspace}%
   \usebibmacro{bybookauthor}%
-  \ifnameundef{bookauthor}{}{\newunit}%替换下一句
+  \ifnameundef{bookauthor}{%
+  \ifnameundef{editor}{}{\newunit\newblock}%
+  }{\newunit\newblock}%替换下一句
   %\newunit\newblock
   \usebibmacro{maintitle+booktitle}%
   \setunit{\addcolon}\printfield{volume}\printfield{number}%增加卷和册信息
