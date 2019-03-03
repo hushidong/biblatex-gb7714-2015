@@ -14,7 +14,7 @@ copy ..\gb7714-2015-gbk.def . /y
 
 
 setlocal enabledelayedexpansion
-for  %%a in ( eggb*.tex ) do (
+for  %%a in ( tgb*.tex ) do (
 call makeclear
 set jobfile=%%a
 set jobname=!jobfile:~0,-4!

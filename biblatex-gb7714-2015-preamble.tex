@@ -1,6 +1,6 @@
 \usepackage{expl3,etoolbox,ifthen,xstring}
 \usepackage{xltxtra,mflogo,texnames}
-\usepackage[zihao=5]{ctex}
+\usepackage[zihao=-4]{ctex}
 \ctexset{today=old}
 \let\kaiti=\kaishu
 \usepackage{xeCJKfntef}
@@ -21,12 +21,12 @@
 \colorlet{gbemphcolor}{blue!60!black}
 
 %定义版面，showframe,
-\usepackage[paperwidth=210mm,paperheight=290mm,left=25mm,right=25mm,top=25mm, bottom=20mm,showcrop]{geometry}%,showframe
+\usepackage[paperwidth=210mm,paperheight=290mm,left=35mm,right=20mm,top=25mm, bottom=20mm,showcrop]{geometry}%,showframe
 \renewcommand{\baselinestretch}{1.35}
 %页面布局的标尺
 \usepackage[type=none]{fgruler}
 %[unit=cm,type=lowerleft,showframe=true,hshift=3cm,vshift=2cm]
-\rulerparams{}{}{gray!50}{}{0.4pt}
+\rulerparams{}{}{gray!10}{}{0.2pt}
 \fgrulerdefnum{}\fgrulercaptioncm{}%fgruler加数字后，导致基线对齐出现问题，所以这里去掉
 
 \newlength{\skipheadrule}
@@ -254,8 +254,10 @@ showstringspaces=false}% no special string spaces
 %序号如果带章节的话可以改为比如:\thesection.\arabic{myprop}
 \tcbmaketheorem{property}{方法}
 {enhanced jigsaw,breakable,pad at break*=1mm,left=2em,boxsep=0pt,
- colback=black!5,colframe=gborange,coltitle=gborange,
- theorem style=plain,fonttitle=\bfseries,arc=0mm,
+%colback=gray!5,colframe=gbforestgreen,
+ colback=gray!5,boxrule=0pt,frame hidden,coltitle=gborange,
+ borderline west={1.5mm}{-2mm}{gbforestgreen},
+ theorem style=plain,fonttitle=\bfseries\heiti,arc=0mm,
 %separator sign={\ $\blacktriangleright$},breakable,
 %theorem style=plain,fonttitle=\bfseries\upshape, fontupper=\slshape,boxrule=0mm,arc=0mm, %
 %coltitle=black,colback=green!50!yellow!15!white,colframe=blue!50,%
@@ -269,7 +271,7 @@ showstringspaces=false}% no special string spaces
  colback=yellow!10!white,boxrule=0pt,frame hidden,
  borderline west={1.5mm}{-2mm}{gbforestgreen},
 separator sign={\ $\blacktriangleright$},terminator sign={\ },
-theorem style=plain,fonttitle=\bfseries,coltitle=gbforestgreen
+theorem style=plain,fonttitle=\bfseries\heiti,coltitle=gbforestgreen
 %fontupper=\normalsize,boxrule=0mm,arc=0mm,breakable,
 %coltitle=green!35!black,colbacktitle=green!15!white,
 %colback=green!50!yellow!15!white,terminator sign={\ }

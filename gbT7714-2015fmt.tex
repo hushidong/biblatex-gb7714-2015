@@ -1,0 +1,13 @@
+\documentclass{article}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{pdfpages}%直接插入pdf文件页
+\graphicspath{{egfigure/}{example/}}
+
+\begin{document}
+
+
+\phantomsection
+%\addcontentsline{toc}{section}{testallformat}
+\includepdf[pages=-,addtotoc={1,section,1,allfmt,eg:allfmt}]{example/testallformat.pdf}
+
+\end{document}

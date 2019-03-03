@@ -1,4 +1,5 @@
-\documentclass{ctexart}
+\documentclass{article}
+\usepackage{ctex}
 
 \usepackage{boxedminipage2e}
 \usepackage{csquotes}
@@ -16,6 +17,7 @@
             gbpunctin=false,
             gbpub=false,
             gbnamefmt=lowercase,
+            gbbiblabel=dot,
            ]{biblatex}
 
 \makeatletter
@@ -689,7 +691,9 @@ pages={1-3},
 \addbibresource[location=local]{\jobname.bib}
 
 \begin{document}
-\section{参考文献著录说明}
+\section*{SEU}
+\stepcounter{section}
+\subsection{参考文献著录说明}
 
 1. 著录标准
 
@@ -712,21 +716,13 @@ pages={1-3},
 2. 著 录范围 (共 8类，示例见表 1)
 
 （1）已在国内外公开出版的学术期刊上发表论文；
-
 （2）由国内外出版公司或社正式的学术著作 (有 ISBNISBN ISBN号)；
-
 （3）有 ISBN号的会议论文集及论文集中析出文献；
-
 （4）博士和硕学位论文；
-
 （5）专利文献；
-
 （6）国际标准、国家和部颁标准；
-
 （7）报纸文章；
-
 （8）电子文献。
-
 其他性质的资料可以作为正文随脚注。
 
 3. 文献示例

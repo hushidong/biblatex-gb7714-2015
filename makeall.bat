@@ -28,6 +28,8 @@ cd egfigure
 
 call makecompilefig.bat
 
+call makecompileGBT.bat
+
 cd ..
 
 cd egthesis
@@ -55,6 +57,10 @@ xelatex.exe gbT7714-2015ms.tex
 xelatex.exe gbT7714-2015eg.tex
 
 xelatex.exe gbT7714-2015eg.tex
+
+xelatex.exe gbT7714-2015fmt.tex
+
+xelatex.exe gbT7714-2015fmt.tex
 
 xelatex.exe gbT7714-2015thesis.tex
 

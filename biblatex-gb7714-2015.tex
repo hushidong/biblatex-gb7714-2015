@@ -1,15 +1,17 @@
-\documentclass[twoside,11pt]{article} %用draft选项找到badbox的位置
+\documentclass[11pt]{article} %用draft选项找到badbox的位置 twoside,
 \input{biblatex-gb7714-2015-preamble} %宏包和一些格式设置
 \begin{document}
 
 %------------------------------------------------------------
 %  标题和目录
 %------------------------------------------------------------
+\pagestyle{plain}
 \pagenumbering{Roman}
 
 \titleformanual{符合GB/T 7714-2015标准的biblatex参考文献样式
 \footnote{This Manual was created with biblatex v\versionofbiblatex, last revised at \today;\\%
-Style Files (gb7714-2015*.*) have version number: \versionofgbtstyle.}}
+Style Files (gb7714-2015*.*) have version number: \versionofgbtstyle.}
+\footnote{repository address: \url{https://github.com/hushidong/biblatex-gb7714-2015}}}
 
 \authorformanual{胡振震\setcounter{footnote}{0}\footnote{Email: hzzmail@163.com}}
 
@@ -31,15 +33,16 @@ biblatex-gb7714-2015 宏包是为满足《GB/T 7714-2015~~信息与文献~~参�
 %\renewcommand{\numberline}[1]{#1~}
 %\phantomsection
 %\addcontentsline{toc}{section}{示例}
+
 \listoffigures
 \listoftables
 \listofegcode
 \newlength{\textparwd}
 %------------------------------------------------------------
 
-\thispagestyle{plain}
 \newpage
 \pagenumbering{arabic}
+\pagestyle{fancy}
 \section{概述}
 
 《GB/T 7714-2015~~信息与文献~~参考文献著录规则》是国内科技文档参考文献著录的一般标准，国内大多数期刊、大学、出版社对于期刊论文、学位论文、出版物参考文献的要求通常都基于该标准。对于\LaTeX{}用户来说，参考文献生成是典型的自动化应用，通常有两种方法，一是基于bibtex的传统方法，二基于biblatex的新方法。生成符合GB/T 7714标准要求的参考文献，这两条路子都已经实践多年。
@@ -394,7 +397,7 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 \begin{table}[!htb]
 \centering
 \caption{著者年份制常用命令示例}\label{tab:cite:authoryear}
-\includegraphics[scale=0.8]{egciteaytab.pdf}
+\includegraphics[scale=0.85]{egciteaytab.pdf}
 \end{table}
 
 
@@ -655,11 +658,11 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbfieldtype=true，输出type域，例如学位论文的phdthesis或博士学位论文。输出该域时做中英文区分。
     \item gbfieldtype=false，不输出type域。
 
-    要设置博士或硕士学位论文的输出，可以设置本地化字符串：
-     \lstinline!\DefineBibliographyStrings{english}{mathesis={str you want ma thesis}}!，
-     \lstinline!\DefineBibliographyStrings{english}{mathesiscn={硕士学位论文}}!，
-     \lstinline!\DefineBibliographyStrings{english}{phdthesis={str you want for phd thesis}}!，
-     \lstinline!\DefineBibliographyStrings{english}{phdthesiscn={博士学位论文}}!，
+    要设置博士或硕士学位论文的输出，可以设置本地化字符串： \\
+     \lstinline!\DefineBibliographyStrings{english}{mathesis={str you want ma thesis}}!， \\
+     \lstinline!\DefineBibliographyStrings{english}{mathesiscn={硕士学位论文}}!， \\
+     \lstinline!\DefineBibliographyStrings{english}{phdthesis={str you want for phd thesis}}!， \\
+     \lstinline!\DefineBibliographyStrings{english}{phdthesiscn={博士学位论文}}!， \\
   之所以用加cn的本地化字符串是为了某些样式需要区分中英文分别设置。
 
   另一种设置方式是在bib文件直接设置type域为需要输出的字符，比如type={[博士学位论文]}。
@@ -1217,11 +1220,11 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 \hline
   GB/T 7714-2015中的参考文献类型 &  biblatex中的条目类型 &  类型标识代码\\ \hline
   专著& book & M\\
-  标准& standard/book or inbook with field note=standard& S\\
+  标准& standard/book or inbook with note=standard& S\\
   专著中的析出文献& inbook & M\\
   连续出版物& periodical& J\\
   连续出版物的析出文献& article& J\\
-  报纸析出的文献& newspaper/article with field note=news& N\\
+  报纸析出的文献& newspaper/article with note=news& N\\
   专利& patent& P\\
   电子资源或电子公告& online/www/electronic& EB\\
   会议录或会议文集& proceedings& C\\

@@ -781,8 +781,9 @@ author={Gom}
 \addbibresource{\jobname.bib}
 
 %biblatex 3.7及以上版本可以使用多个stylesourcemap
+%3.7版及以下版本使用set没有问题，所以从3.8版开始使用related的方法
 \makeatletter
-\@ifpackagelater{biblatex}{2016/12/01}{\defdoublelangentry{易仕和2013--}{Yi2013--}}{}
+\@ifpackagelater{biblatex}{2016/12/06}{\defdoublelangentry{易仕和2013--}{Yi2013--}}{}
 \makeatother
 
 \addbibresource[location=local]{example.bib}

@@ -1,5 +1,5 @@
-\documentclass{ctexart}
-
+\documentclass{article}
+\usepackage{ctex}
 \usepackage{boxedminipage2e}
 \usepackage{csquotes}
 \usepackage{xltxtra,mflogo,texnames}
@@ -113,6 +113,8 @@
 
 %文献表中的日期格式
 
+\@ifpackagelater{biblatex}{2016/12/06}
+{
   \renewbibmacro*{date+extradate}{%
     \iffieldundef{labelyear}
       {}%
@@ -121,18 +123,42 @@ test {\ifentrytype{patent}}
 or
 (test {\ifentrytype{newspaper}} )%
 }%
-{\printtext{\blx@isodate{}{}}}%
+{\printtext{\blx@isodate{}{}}
+%\printtext{\blx@edtfdate{}{}}%
+}%
 {\printtext{%
          \iflabeldateisdate
+         %\iffieldsequal{year}{labelyear}%for biblatex<=3.7
            {\printdateextra}
            {\printlabeldateextra}}}%
            }%
-}
+}}
+{
+  \renewbibmacro*{date+extradate}{%
+    \iffieldundef{labelyear}
+      {}%
+      {\ifboolexpr{%
+test {\ifentrytype{patent}}
+or
+(test {\ifentrytype{newspaper}} )%
+}%
+{%\printtext{\blx@isodate{}{}}
+\printtext{\blx@edtfdate{}{}}%
+}%
+{\printtext{%
+         %\iflabeldateisdate
+         \iffieldsequal{year}{labelyear}%for biblatex<=3.7
+           {\printdateextra}
+           {\printlabeldateextra}}}%
+           }%
+}}
+
+
 
   \newbibmacro*{origdate+extradate}{%
   \printtext{\printorigdate}%
   }
-  
+
   %
 %   修改译者位置格式
 %
@@ -257,7 +283,7 @@ or
      }{\usebibmacro{date+extradate}}%
   {\usebibmacro{origdate+extradate}}%
   }
-  
+
 %
 %   book条目类的驱动
 %
@@ -721,8 +747,8 @@ pages={102},
 \addbibresource[location=local]{\jobname.bib}
 
 \begin{document}
-\section{参考文献著录说明}
-
+\section*{NWAFU}
+\stepcounter{section}
 为了进一步规范本科毕业论文的写作，现就我院本科生毕业论文
 \enquote{参考文献}引用书写格式规定如下:参考文献的引用采用\enquote{著者-出版年}制。
 

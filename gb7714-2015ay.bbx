@@ -1791,7 +1791,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %袁训来, 陈哲, 肖书海, 等.
 %胡泳, 范海燕, 译.
 %潘惠霞, 魏婧, 杨艳, 等译.
-\ifcurrentname{translator}{\addcomma}{}%为了实现上述第二个示例情况做的处理
+\ifcurrentname{translator}{\addcomma\addthinspace}{}%为了实现上述第二个示例情况做的处理
 }}
 
 %   修改省略作者后的本地化字符串，比如et al.
@@ -2633,6 +2633,7 @@ incollection,proceedings,inproceedings]{number}{%
                {\printdateextralabel}%
                {\printfield{labelyear}%
                 \printfield{extrayear}}}}}%
+	\newbibmacro{date+extradate}{\usebibmacro{date+extrayear}}
 }
 
 \defversion{3.4}{dateextra}{
@@ -2646,6 +2647,7 @@ incollection,proceedings,inproceedings]{number}{%
                {\printdateextralabel}%
                {\printfield{labelyear}%
                 \printfield{extrayear}}}}}%
+    \newbibmacro{date+extradate}{\usebibmacro{date+extrayear}}
 }
 \defversion{3.7}{dateextra}{
     \DeclareDelimFormat{nameyeardelim}{\addcomma\space}
@@ -2658,6 +2660,8 @@ incollection,proceedings,inproceedings]{number}{%
            {\printlabeldateextra}%
            {\printfield{labelyear}%
             \printfield{extrayear}}}}}%
+			
+\newbibmacro{date+extradate}{\usebibmacro{date+extrayear}}
 }
 \defversion{3.8}{dateextra}{
     \DeclareDelimFormat{nameyeardelim}{\addcomma\space}
@@ -2844,20 +2848,37 @@ incollection,proceedings,inproceedings]{number}{%
 %   v1.0 2016-07-01
 %   v1.0q 2019-03-01 hzz 修改editortype前的标点
 %
-\renewbibmacro*{editor}{%源来自biblatex.DEF
+\renewbibmacro*{editor}{%
   \ifboolexpr{
     test \ifuseeditor
     and
     not test {\ifnameundef{editor}}
   }
-    {\printnames{editor}%
-    \iffieldundef{editortype}%增加一个类型判断，用于存在editortype的情况
-    {\setunit\addspace}%当没有editortype时，直接用句点
-    {%\setunit{\addcomma\space}%
-     \usebibmacro{editorstrg}}%
-     %\clearname{editor}
-     }%
-    {}}
+    {\usebibmacro{bbx:dashcheck}
+       {%\bibnamedash
+       \printnames{editor}%
+       }
+       {\printnames{editor}%
+        %\setunit{\printdelim{editortypedelim}}%
+        %\usebibmacro{bbx:savehash}
+        }%
+     \usebibmacro{editorstrg}%
+     %\clearname{editor}%
+     \setunit{\printdelim{nameyeardelim}}}%
+    {\global\undef\bbx@lasthash
+     \usebibmacro{labeltitle}%
+     \setunit*{\printdelim{nonameyeardelim}}}%
+	 \ifboolexpr{%
+test {\ifentrytype{inbook}}
+or
+test {\ifentrytype{incollection}}
+or
+test {\ifentrytype{inproceedings}}
+or
+test {\ifentrytype{conference}}
+}%
+{}%
+{\usebibmacro{date+extradate}}}
 
 %
 %   编者类型做一修改
@@ -3471,8 +3492,8 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
 %\printtext{\texttt{//}\addthinspace}%
   \usebibmacro{bybookauthor}%
   \ifnameundef{bookauthor}{%
-  \ifnameundef{editor}{}{\newunit\newblock}%
-  }{\newunit\newblock}%替换下一句
+  \ifnameundef{editor}{}{\newunit}%
+  }{\newunit}%替换下一句
   %\newunit\newblock
   \usebibmacro{maintitle+booktitle}%
   \setunit{\addcolon}\printfield{volume}\printfield{number}%增加卷和册信息

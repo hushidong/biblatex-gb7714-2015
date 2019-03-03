@@ -1723,7 +1723,7 @@
 %袁训来, 陈哲, 肖书海, 等.
 %胡泳, 范海燕, 译.
 %潘惠霞, 魏婧, 杨艳, 等译.
-\ifcurrentname{translator}{\addcomma}{}%为了实现上述第二个示例情况做的处理
+\ifcurrentname{translator}{\addcomma\addthinspace}{}%为了实现上述第二个示例情况做的处理
 }}
 
 
@@ -3225,8 +3225,8 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
 %\printtext{\texttt{//}\addthinspace}%
   \usebibmacro{bybookauthor}%
   \ifnameundef{bookauthor}{%
-  \ifnameundef{editor}{}{\newunit\newblock}%
-  }{\newunit\newblock}%替换下一句
+  \ifnameundef{editor}{}{\newunit}%
+  }{\newunit}%替换下一句
   %\newunit\newblock
   \usebibmacro{maintitle+booktitle}%
   \setunit{\addcolon}\printfield{volume}\printfield{number}%增加卷和册信息

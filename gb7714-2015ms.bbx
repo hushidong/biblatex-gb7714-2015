@@ -1477,7 +1477,7 @@
 %
 %   重设专利title的输出，将文献类型标识符输出出去
 %
-\newbibmacro*{patenttitle}{%原输出来自biblatex.def文件
+\renewbibmacro*{patenttitle}{%原输出来自biblatex.def文件
   \ifboolexpr{%
     test{\iffieldundef{title}}%
     and%
@@ -1498,6 +1498,47 @@
      }%
 }%
 }
+
+%
+%   编者类型的本地化字符串输出
+%   v1.0q 2019-03-01 hzz
+%   能对不同条目类型作格式设置的域格式，能对不同环境做格式设置的分隔符
+%   能对不同文境作设置的包括排序，标签等
+%   这里因为考虑可能标注和文献表中存在不同，所以用分隔符来输出本地化字符串
+%
+\DeclareDelimFormat{streditortypes}{%
+  \edef\userfieldabcde{userd}%
+  \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
+  \ifcurrentname{bookauthor}{\edef\userfieldabcde{userb}}{}%
+  \ifcase\value{gbbiblocalcase}%
+    \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{\thefield{editortype}scn}}{}%
+    \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{\thefield{editortype}skr}}{}%
+    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{\thefield{editortype}sjp}}{}%
+    \iffieldequalstr{\userfieldabcde}{english}{\addcomma\addthinspace\bibstring{\thefield{editortype}s}}{}%
+    \iffieldequalstr{\userfieldabcde}{french}{\addcomma\addthinspace\bibstring{\thefield{editortype}s}}{}%
+    \iffieldequalstr{\userfieldabcde}{russian}{\addcomma\addthinspace\bibstring{\thefield{editortype}s}}{}%
+  \or%
+  \bibstring{\thefield{editortype}scn}%
+  \or%
+  \addcomma\addthinspace\bibstring{\thefield{editortype}s}%
+  \fi}%
+%
+\DeclareDelimFormat{streditortype}{%
+  \edef\userfieldabcde{userd}%
+  \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
+  \ifcurrentname{bookauthor}{\edef\userfieldabcde{userb}}{}%
+  \ifcase\value{gbbiblocalcase}%
+    \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{\thefield{editortype}cn}}{}%
+    \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{\thefield{editortype}kr}}{}%
+    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{\thefield{editortype}jp}}{}%
+    \iffieldequalstr{\userfieldabcde}{english}{\addcomma\addthinspace\bibstring{\thefield{editortype}}}{}%
+    \iffieldequalstr{\userfieldabcde}{french}{\addcomma\addthinspace\bibstring{\thefield{editortype}}}{}%
+    \iffieldequalstr{\userfieldabcde}{russian}{\addcomma\addthinspace\bibstring{\thefield{editortype}}}{}%
+  \or%
+  \bibstring{\thefield{editortype}cn}%
+  \or%
+  \addcomma\addthinspace\bibstring{\thefield{editortype}}%
+  \fi}%
 
 
 %=====================================================================
@@ -1570,7 +1611,7 @@ togl{bbx:gbstyle} or test {\iffieldequalstr{userd}{chinese}}%
 %袁训来, 陈哲, 肖书海, 等.
 %胡泳, 范海燕, 译.
 %潘惠霞, 魏婧, 杨艳, 等译.
-\ifcurrentname{translator}{\addcomma}{}%为了实现上述第二个示例情况做的处理
+\ifcurrentname{translator}{\addcomma\addthinspace}{}%为了实现上述第二个示例情况做的处理
 }}%
 %
 %   修改省略作者后的本地化字符串，比如et al.
@@ -1973,46 +2014,6 @@ incollection,proceedings,inproceedings]{number}{%
             {\printdelim{streditortype}}}%
          {\thefield{editortype}}}%
          }}%
-%
-%   编者类型的本地化字符串输出
-%   v1.0q 2019-03-01 hzz
-%   能对不同条目类型作格式设置的域格式，能对不同环境做格式设置的分隔符
-%   能对不同文境作设置的包括排序，标签等
-%   这里因为考虑可能标注和文献表中存在不同，所以用分隔符来输出本地化字符串
-%
-\DeclareDelimFormat{streditortypes}{%
-  \edef\userfieldabcde{userd}%
-  \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
-  \ifcurrentname{bookauthor}{\edef\userfieldabcde{userb}}{}%
-  \ifcase\value{gbbiblocalcase}%
-    \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{\thefield{editortype}scn}}{}%
-    \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{\thefield{editortype}skr}}{}%
-    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{\thefield{editortype}sjp}}{}%
-    \iffieldequalstr{\userfieldabcde}{english}{\addcomma\addthinspace\bibstring{\thefield{editortype}s}}{}%
-    \iffieldequalstr{\userfieldabcde}{french}{\addcomma\addthinspace\bibstring{\thefield{editortype}s}}{}%
-    \iffieldequalstr{\userfieldabcde}{russian}{\addcomma\addthinspace\bibstring{\thefield{editortype}s}}{}%
-  \or%
-  \bibstring{\thefield{editortype}scn}%
-  \or%
-  \addcomma\addthinspace\bibstring{\thefield{editortype}s}%
-  \fi}%
-%
-\DeclareDelimFormat{streditortype}{%
-  \edef\userfieldabcde{userd}%
-  \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
-  \ifcurrentname{bookauthor}{\edef\userfieldabcde{userb}}{}%
-  \ifcase\value{gbbiblocalcase}%
-    \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{\thefield{editortype}cn}}{}%
-    \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{\thefield{editortype}kr}}{}%
-    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{\thefield{editortype}jp}}{}%
-    \iffieldequalstr{\userfieldabcde}{english}{\addcomma\addthinspace\bibstring{\thefield{editortype}}}{}%
-    \iffieldequalstr{\userfieldabcde}{french}{\addcomma\addthinspace\bibstring{\thefield{editortype}}}{}%
-    \iffieldequalstr{\userfieldabcde}{russian}{\addcomma\addthinspace\bibstring{\thefield{editortype}}}{}%
-  \or%
-  \bibstring{\thefield{editortype}cn}%
-  \or%
-  \addcomma\addthinspace\bibstring{\thefield{editortype}}%
-  \fi}%
 %
 %   bookauthor域的输出，
 %   v1.0q 2019-03-01 hzz
@@ -2484,8 +2485,8 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
 %\printtext{\texttt{//}\addthinspace}%
   \usebibmacro{bybookauthor}%
   \ifnameundef{bookauthor}{%
-  \ifnameundef{editor}{}{\newunit\newblock}%
-  }{\newunit\newblock}%替换下一句
+  \ifnameundef{editor}{}{\newunit}%
+  }{\newunit}%替换下一句
   %\newunit\newblock
   \usebibmacro{maintitle+booktitle}%
   \setunit{\addcolon}\printfield{volume}\printfield{number}%增加卷和册信息

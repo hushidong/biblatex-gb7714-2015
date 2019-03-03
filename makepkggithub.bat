@@ -30,6 +30,8 @@ cd
 
 call makeclearpdf
 
+del stdbiblatex-gb7714-2015.pdf /Q
+
 cd 
 
 call makeclearfont

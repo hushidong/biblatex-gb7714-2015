@@ -661,21 +661,28 @@ fazzari1993working,FOURNEY1971-17-38,greenwood1988investment}
     \cite{王国静2014金融冲击,王文甫2010价格粘性,徐伟康2010对,杨光2015经济波动,杨洪升2013-56-75,杨汝岱2015中国制造,张伯伟2002--,张成思2010长期均衡,张凯军2012-04-05--,abx2007-500-503,中国职工教育研究会1985--,中华医学会湖北分会1984--}
     \end{refsegment}
     \end{frame}
-    \begin{frame}
-    \printbibliography[segment=1]
+    
+%可以利用allowframebreaks将文献表打印到不同的frame中
+    \begin{frame}[allowframebreaks]
+    \printbibliography
     \end{frame}
-    \begin{frame}
-    \printbibliography[segment=2]
-    \end{frame}
-    \begin{frame}
-    \printbibliography[segment=3]
-    \end{frame}
-    \begin{frame}
-    \printbibliography[segment=4]
-    \end{frame}
-    \begin{frame}
-    \printbibliography[segment=5]
-    \end{frame}
+
+%也可以利用不同的frame打印不同的segment来实现。
+%    \begin{frame}
+%    \printbibliography[segment=1]
+%    \end{frame}
+%    \begin{frame}
+%    \printbibliography[segment=2]
+%    \end{frame}
+%    \begin{frame}
+%    \printbibliography[segment=3]
+%    \end{frame}
+%    \begin{frame}
+%    \printbibliography[segment=4]
+%    \end{frame}
+%    \begin{frame}
+%    \printbibliography[segment=5]
+%    \end{frame}
 
 
 \end{document}
