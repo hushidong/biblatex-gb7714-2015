@@ -1804,16 +1804,16 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \DeclareDelimFormat{strandothersdelim}{%
   \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
   \addspace%
-  \edef\userfieldabcde{userd}%
-  \ifcurrentname{translator}{\edef\userfieldabcde{usere}}{}%
-  \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
-  \ifcurrentname{author}{\edef\userfieldabcde{userf}}{}%
-  \ifcurrentname{bookauthor}{\edef\userfieldabcde{userb}}{}%
+  \edef\userfieldabcde{userd}%这里使用\iffieldequalstr{labelnamesource}替代ifcurrentname因为标注中使用ifcurrentname无效
+  \iffieldequalstr{labelnamesource}{translator}{\edef\userfieldabcde{usere}}{}%
+  \iffieldequalstr{labelnamesource}{editor}{\edef\userfieldabcde{userc}}{}%
+  \iffieldequalstr{labelnamesource}{author}{\edef\userfieldabcde{userf}}{}%
+  \iffieldequalstr{labelnamesource}{bookauthor}{\edef\userfieldabcde{userb}}{}%
   \ifcase\value{gbcitelocalcase}%
-    \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{andothersincitecn}}{}%中文已经通过english本地化字符串定义
-    \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{andotherskr}}{}%韩语未定义，所以与bib中一致
-    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{andothersjp}}{}%日与同韩语
-    \iffieldequalstr{\userfieldabcde}{english}{\bibstring{andothersincite}}{}%英语已定义
+    \iffieldequalstr{\userfieldabcde}{chinese}{\ifbibstring{andothersincitecn}{\bibstring{andothersincitecn}}{\bibstring{andothers}}}{}%中文已经通过english本地化字符串定义
+    \iffieldequalstr{\userfieldabcde}{korean}{\ifbibstring{andotherskr}{\bibstring{andotherskr}}{\bibstring{andothers}}}{}%韩语未定义，所以与bib中一致
+    \iffieldequalstr{\userfieldabcde}{japnese}{\ifbibstring{andothersjp}{\bibstring{andothersjp}}{\bibstring{andothers}}}{}%日与同韩语
+    \iffieldequalstr{\userfieldabcde}{english}{\ifbibstring{andothersincite}{\bibstring{andothersincite}}{\bibstring{andothers}}}{}%英语已定义
     \iffieldequalstr{\userfieldabcde}{french}{\bibstring{andothers}}{}%法语未定义，若要定义需要针对french本地化字符串定义
     \iffieldequalstr{\userfieldabcde}{russian}{\bibstring{andothers}}{}%俄语未定义，若要定义需要针对russian本地化字符串定义
   \or%
