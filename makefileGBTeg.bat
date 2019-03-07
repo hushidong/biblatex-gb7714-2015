@@ -22,5 +22,9 @@ xelatex.exe  GBT7714-2015fmt.tex
 
 xelatex.exe  GBT7714-2015fmt.tex
 
+xelatex.exe  GBT7714-2015lan.tex
+
+xelatex.exe  GBT7714-2015lan.tex
+
 ::call makeclear
 

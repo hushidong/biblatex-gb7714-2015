@@ -193,9 +193,11 @@
     %为与lee zeping的bst的样式统一，使用mark和medium这两域名
     %为单个条目的姓名格式控制增加nameformat和namefmtid两个域
     %为缩略信息文献表增加了shortbooktitle域
+    %为多语言排序增加了lansortorder域
     \DeclareDatamodelFields[type=field,datatype=literal]{mark,medium,nameformat}
     \DeclareDatamodelFields[type=field,datatype=integer]{namefmtid}
     \DeclareDatamodelFields[type=field,datatype=literal]{shortbooktitle}
+    \DeclareDatamodelFields[type=field,datatype=literal]{lansortorder}
 
 
 
@@ -486,6 +488,12 @@
 
 \@ifpackagelater{biblatex}{2016/03/27}
   { % 针对biblatex>=3.3版本的选项设置
+    %   增加不同语言排序的切换选项
+    %   numeric样式，不使用该选项，这里给出仅为兼容性考虑
+    %   v1.0q，20190307，hzz
+    %
+    \DeclareBibliographyOption[string]{gblanorder}[chineseahead]{}
+
     %
     %   增加本地化字符串的中英文切换选项
     %   gbcitelocal指标注中的本地化字符串
@@ -546,6 +554,12 @@
     }
   }
   {% 针对biblatex<3.3版本的选项设置
+    %   增加不同语言排序的切换选项
+    %   numeric样式，不使用该选项，这里给出仅为兼容性考虑
+    %   v1.0q，20190307，hzz
+    %
+    \DeclareBibliographyOption{gblanorder}[chineseahead]{}
+
     %
     %   增加序号标签格式处理选项
     %   v1.0l，20180623，hzz
@@ -1112,7 +1126,7 @@
             \step[fieldset=langid,fieldvalue={english}]
             }
         \map{%
-            \step[fieldsource=language,match=japnese,final]%中日韩语目前都用english，
+            \step[fieldsource=language,match=japanese,final]%中日韩语目前都用english，
             \step[fieldset=langid,fieldvalue={english}]
             }
         \map{%
@@ -1746,7 +1760,7 @@
   \ifcase\value{gbbiblocalcase}%
     \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{andotherscn}}{}%
     \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{andotherskr}}{}%
-    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{andothersjp}}{}%
+    \iffieldequalstr{\userfieldabcde}{japanese}{\bibstring{andothersjp}}{}%
     \iffieldequalstr{\userfieldabcde}{english}{\bibstring{andothers}}{}%
     \iffieldequalstr{\userfieldabcde}{french}{\bibstring{andothers}}{}%
     \iffieldequalstr{\userfieldabcde}{russian}{\bibstring{andothers}}{}%
@@ -1775,7 +1789,7 @@
   \ifcase\value{gbbiblocalcase}%
     \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{andcn}}{}%
     \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{andkr}}{}%
-    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{andjp}}{}%
+    \iffieldequalstr{\userfieldabcde}{japanese}{\bibstring{andjp}}{}%
     \iffieldequalstr{\userfieldabcde}{english}{\bibstring{and}}{}%
     \iffieldequalstr{\userfieldabcde}{french}{\bibstring{and}}{}%
     \iffieldequalstr{\userfieldabcde}{russian}{\bibstring{and}}{}%
@@ -2662,7 +2676,7 @@ incollection,proceedings,inproceedings]{number}{%
   \ifcase\value{gbbiblocalcase}%
     \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{\thefield{editortype}scn}}{}%
     \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{\thefield{editortype}skr}}{}%
-    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{\thefield{editortype}sjp}}{}%
+    \iffieldequalstr{\userfieldabcde}{japanese}{\bibstring{\thefield{editortype}sjp}}{}%
     \iffieldequalstr{\userfieldabcde}{english}{\addcomma\addthinspace\bibstring{\thefield{editortype}s}}{}%
     \iffieldequalstr{\userfieldabcde}{french}{\addcomma\addthinspace\bibstring{\thefield{editortype}s}}{}%
     \iffieldequalstr{\userfieldabcde}{russian}{\addcomma\addthinspace\bibstring{\thefield{editortype}s}}{}%
@@ -2679,7 +2693,7 @@ incollection,proceedings,inproceedings]{number}{%
   \ifcase\value{gbbiblocalcase}%
     \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{\thefield{editortype}cn}}{}%
     \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{\thefield{editortype}kr}}{}%
-    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{\thefield{editortype}jp}}{}%
+    \iffieldequalstr{\userfieldabcde}{japanese}{\bibstring{\thefield{editortype}jp}}{}%
     \iffieldequalstr{\userfieldabcde}{english}{\addcomma\addthinspace\bibstring{\thefield{editortype}}}{}%
     \iffieldequalstr{\userfieldabcde}{french}{\addcomma\addthinspace\bibstring{\thefield{editortype}}}{}%
     \iffieldequalstr{\userfieldabcde}{russian}{\addcomma\addthinspace\bibstring{\thefield{editortype}}}{}%

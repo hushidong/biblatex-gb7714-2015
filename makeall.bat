@@ -62,6 +62,10 @@ xelatex.exe gbT7714-2015fmt.tex
 
 xelatex.exe gbT7714-2015fmt.tex
 
+xelatex.exe gbT7714-2015lan.tex
+
+xelatex.exe gbT7714-2015lan.tex
+
 xelatex.exe gbT7714-2015thesis.tex
 
 xelatex.exe gbT7714-2015thesis.tex

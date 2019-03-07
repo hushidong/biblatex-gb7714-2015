@@ -208,6 +208,16 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 		do not set mergedate output like：LAMPORT L, 1986. Document Preparation System[M]. [S.l.]: Addison-Wesley Reading, MA.
 		
 		`\usepackage[backend=biber,style=gb7714-2015ay,mergedate=none]{biblatex}`
+		
+	- add an option `gblanorder` to control sequence of reference groups of different languagesin the bibliography:
+		
+		`gblanorder=chineseahead` to set the sequence as: cn;jp;kr;en;fr;ru
+		
+		`gblanorder=englishahead` to set the sequence as: en;fr;ru;cn;jp;kr
+		
+		`gblanorder=user defined string like: cn;en;jp;kr;fr;ru` to set the sequence as: cn;en;jp;kr;fr;ru. 
+		
+		`\usepackage[backend=biber,style=gb7714-2015ay,gblanorder=cn;en;jp;fr;kr;ru]{biblatex}`
 	
 * for perl script transformation tool(only for the numerical style)
 
@@ -230,6 +240,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * [Thesis-Template-for-XJTU (西安交大毕业设计模板)](https://github.com/DXie123/Thesis-Template-for-XJTU)
 * [CAUTemplate(中国农业大学课程论文模板)](https://github.com/Cdmium/CAUTemplate)
 * [Yet anoter BUPT Thesis LaTeX class (北邮研究生学位设计的LaTeX文档类)](https://github.com/qcts33/BUPTthesis-ctex)
+* [neuthesis (东北大学博士学位论文Latex模板)](https://github.com/mervin0502/neuthesis)
 * [...]
 
 

@@ -784,6 +784,18 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item mergedate=none，作者年制文献表仅在出版项中输出日期。该选项用于满足中科院大学的作者年制格式要求。
     \item no mergedate，即不给出该选项，这是gb7714-2015ay默认的情况，仅在作者后输出日期且已经根据国标格式化。
   \end{itemize}
+  
+  \item[gblanorder]=\textbf{chineseahead}，englishahead，userdefinedstr like:cn;en;ru;fr;jp;kr . \hfill default is chineseahead
+
+  为作者年制文献不同语言分集排序而增加的选项。
+  \begin{itemize}
+    \item gblanorder=chineseahead，即默认做中文文献在前的排序，各语言顺序为: cn;jp;kr;en;fr;ru。
+    \item gblanorder=englishahead，做英文在前的排序，各语言顺序为: en;fr;ru;cn;jp;kr。
+    \item gblanorder=自定义字符串，比如cn;en;ru;fr;jp;kr。这是一个用分号分隔的语言缩写名构成的字符串，缩写的前后顺序表示文献表中语言分集的顺序。
+  \end{itemize}
+
+  测试文档见：\href{run:./example/opt-gblanorder.tex}{opt-gblanorder.tex}。
+  
 \end{description}
 
 

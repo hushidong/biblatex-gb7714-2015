@@ -2,6 +2,21 @@
 %更新历史仅给出更新针对的问题，相应的处理代码和解释不在此给出，详见提示对应的说明文档内容
 
 %============================
+%\updateinfo[2019-02-11]{date of update: 2019-02-11 to version v1.0q}\label{up:190211}
+\begin{enumerate}
+
+\item 增加了gblanorder选项，用于控制作者年制文献表中不同语言分集的排序。
+
+add an option gblanorder to sort the reference groups of different language for author year style.
+
+\item 修正了作者年制标注中姓名中的本地化字符串输出时的作者角色判断逻辑，因为标注中无法使用ifcurrentname，所以改用labelnamesource域判断。
+
+correct the author role judgement logic in the output of bibstrings in citations for author year style, because the  test ifcurrentname can not used in citations, so change to use labelnamesource field to judge.
+
+
+\end{enumerate}
+
+%============================
 \updateinfo[2019-02-11]{date of update: 2019-02-11 to version v1.0q}\label{up:190211}
 \begin{enumerate}
 

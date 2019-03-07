@@ -190,9 +190,11 @@
     %为与lee zeping的bst的样式统一，使用mark和medium这两域名
     %为单个条目的姓名格式控制增加nameformat和namefmtid两个域
     %为缩略信息文献表增加了shortbooktitle域
+    %为多语言排序增加了lansortorder域
     \DeclareDatamodelFields[type=field,datatype=literal]{mark,medium,nameformat}
     \DeclareDatamodelFields[type=field,datatype=integer]{namefmtid}
     \DeclareDatamodelFields[type=field,datatype=literal]{shortbooktitle}
+    \DeclareDatamodelFields[type=field,datatype=literal]{lansortorder}
 
 
 
@@ -470,6 +472,41 @@
 
 \@ifpackagelater{biblatex}{2016/03/27}
   { % 针对biblatex>=3.3版本的选项设置
+
+    %   增加不同语言排序的切换选项
+    %   gblanorder=chineseahead的顺序为cn，jp，kr，en，fr，ru
+    %   gblanorder=englishahead的顺序为en，fr，ru，cn，jp，kr
+    %   gblanorder=cn;en;ru;fr;jp;kr的顺序为指定的cn;en;ru;fr;jp;kr，自定义内容可以随意写以分号分隔
+    %   v1.0q，20190307，hzz
+    %
+    \DeclareBibliographyOption[string]{gblanorder}[chineseahead]{%
+        \ifstrequal{#1}{chineseahead}%%中文在前的顺序
+            {\gdef\lancnorder{1}\gdef\lanjporder{2}\gdef\lankrorder{3}%
+             \gdef\lanenorder{4}\gdef\lanfrorder{5}\gdef\lanruorder{6}}%
+            {%
+            \ifstrequal{#1}{englishahead}%
+                {\execlanodeah\dealsortlan}%
+                {\execlanodudf{#1}\dealsortlan}%
+            }%
+    }
+    \ExecuteBibliographyOptions{gblanorder}
+
+    \def\execlanodeah{%中文在后的顺序
+        \gdef\lancnorder{4}
+        \gdef\lanjporder{5}
+        \gdef\lankrorder{6}
+        \gdef\lanenorder{1}
+        \gdef\lanfrorder{2}
+        \gdef\lanruorder{3}}
+
+    \newcounter{lanordernum}
+    \newcommand{\execlanodudf}[1]{%like：cn;en;ru;fr;jp;kr
+        \setcounter{lanordernum}{0}
+        \DeclareListParser{\parsinglanorder}{;}
+        \renewcommand*{\do}[1]{\stepcounter{lanordernum}\csxdef{lan##1order}{\thelanordernum}}
+        \parsinglanorder{#1}
+    }
+
     %   增加本地化字符串的中英文切换选项
     %   gbcitelocal指标注中的本地化字符串
     %   gbbiblocal 指文献表中的本地化字符串
@@ -526,6 +563,13 @@
 
   }
   {
+    %   增加不同语言排序的切换选项
+    %   biblatex 3.4及以下版本不能使用多个stylesourcemap，所以不使用该选项
+    %   这里给出仅为兼容性考虑
+    %   v1.0q，20190307，hzz
+    %
+    \DeclareBibliographyOption[string]{gblanorder}[chineseahead]{}
+
     %
     %   增加序号标签格式处理选项，作者年制不做处理，给出只为兼容选项考虑
     %   v1.0l，20180623，hzz
@@ -1065,26 +1109,32 @@
         \map{%当文献给出language域时，设置文献要使用的本地化字符串的语言
             \step[fieldsource=language,match=english,final]
             \step[fieldset=langid,fieldvalue={english}]
+            \step[fieldset=lansortorder,fieldvalue=\lanenorder]
             }
         \map{
             \step[fieldsource=language,match=russian,final]
             \step[fieldset=langid,fieldvalue={russian}]
+            \step[fieldset=lansortorder,fieldvalue=\lanruorder]
             }
         \map{%
             \step[fieldsource=language,match=french,final]
             \step[fieldset=langid,fieldvalue={french}]
+            \step[fieldset=lansortorder,fieldvalue=\lanfrorder]
             }
         \map{%
             \step[fieldsource=language,match=chinese,final]%中日韩语目前都用english，
             \step[fieldset=langid,fieldvalue={english}]
+            \step[fieldset=lansortorder,fieldvalue=\lancnorder]
             }
         \map{%
-            \step[fieldsource=language,match=japnese,final]%中日韩语目前都用english，
+            \step[fieldsource=language,match=japanese,final]%中日韩语目前都用english，
             \step[fieldset=langid,fieldvalue={english}]
+            \step[fieldset=lansortorder,fieldvalue=\lanjporder]
             }
         \map{%
             \step[fieldsource=language,match=korean,final]%中日韩语目前都用english，
             \step[fieldset=langid,fieldvalue={english}]
+            \step[fieldset=lansortorder,fieldvalue=\lankrorder]
             }
         \map{%尝试未定义数据模型的standard类型映射为其他类型book或inbook，
                  %standard类型在blx-dm中有出现，但仅定义了类型，域和约束等都没有定义
@@ -1266,6 +1316,41 @@
         }
 }
 
+%
+%   不同语言分集调整的实现方式
+%
+%   原理方法:利用样式层的动态数据修改lansortorder域来实现排序
+\def\dealsortlan{
+    \DeclareStyleSourcemap{
+        \maps[datatype=bibtex]{
+        \map[overwrite]{%当文献给出language域时，设置文献要使用的本地化字符串的语言
+            \step[fieldsource=language,match=english,final]
+            \step[fieldset=lansortorder,fieldvalue=\lanenorder]
+            }
+        \map[overwrite]{
+            \step[fieldsource=language,match=russian,final]
+            \step[fieldset=lansortorder,fieldvalue=\lanruorder]
+            }
+        \map[overwrite]{%
+            \step[fieldsource=language,match=french,final]
+            \step[fieldset=lansortorder,fieldvalue=\lanfrorder]
+            }
+        \map[overwrite]{%
+            \step[fieldsource=language,match=chinese,final]%中日韩语目前都用english，
+            \step[fieldset=lansortorder,fieldvalue=\lancnorder]
+            }
+        \map[overwrite]{%
+            \step[fieldsource=language,match=japanese,final]%中日韩语目前都用english，
+            \step[fieldset=lansortorder,fieldvalue=\lanjporder]
+            }
+        \map[overwrite]{%
+            \step[fieldsource=language,match=korean,final]%中日韩语目前都用english，
+            \step[fieldset=lansortorder,fieldvalue=\lankrorder]
+            }
+        }
+    }
+}
+
 
 %
 %驱动别名等价于驱动层映射
@@ -1298,7 +1383,7 @@
         \field{sortkey}
       }
       \sort{
-    	\field{language}
+    	\field{lansortorder}%language
     	}
       \sort{%[direction=descending]
         \field{sortname}
@@ -1331,7 +1416,7 @@
         \field{sortkey}
       }
       \sort{
-    	\field{language}
+    	\field{lansortorder}%language
     	}
       \sort[direction=descending]{
         \field{sortname}
@@ -1364,7 +1449,7 @@
         \field{sortkey}
       }
       \sort{
-    	\field{language}
+    	\field{lansortorder}%language
     	}
       \sort[direction=descending]{
         \field{sortyear}
@@ -1397,7 +1482,7 @@
         \field{sortkey}
       }
       \sort{
-    	\field{language}
+    	\field{lansortorder}%language
     	}
       \sort{
         \field{sortyear}
@@ -1435,7 +1520,7 @@
         \field{sortkey}
       }
       \sort{
-    	\field{language}
+    	\field{lansortorder}%language
     	}
       \sort{%[direction=descending]
         \field{sortname}
@@ -1468,7 +1553,7 @@
         \field{sortkey}
       }
       \sort{
-    	\field{language}
+    	\field{lansortorder}%language
     	}
       \sort[direction=descending]{%
         \field{sortname}
@@ -1501,7 +1586,7 @@
         \field{sortkey}
       }
       \sort{
-    	\field{language}
+    	\field{lansortorder}%language
     	}
       \sort[direction=descending]{
         \field{sortyear}
@@ -1534,7 +1619,7 @@
         \field{sortkey}
       }
       \sort{
-    	\field{language}
+    	\field{lansortorder}%language
     	}
       \sort{%[direction=ascending]
         \field{sortyear}
@@ -1812,7 +1897,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
   \ifcase\value{gbcitelocalcase}%
     \iffieldequalstr{\userfieldabcde}{chinese}{\ifbibstring{andothersincitecn}{\bibstring{andothersincitecn}}{\bibstring{andothers}}}{}%中文已经通过english本地化字符串定义
     \iffieldequalstr{\userfieldabcde}{korean}{\ifbibstring{andotherskr}{\bibstring{andotherskr}}{\bibstring{andothers}}}{}%韩语未定义，所以与bib中一致
-    \iffieldequalstr{\userfieldabcde}{japnese}{\ifbibstring{andothersjp}{\bibstring{andothersjp}}{\bibstring{andothers}}}{}%日与同韩语
+    \iffieldequalstr{\userfieldabcde}{japanese}{\ifbibstring{andothersjp}{\bibstring{andothersjp}}{\bibstring{andothers}}}{}%日与同韩语
     \iffieldequalstr{\userfieldabcde}{english}{\ifbibstring{andothersincite}{\bibstring{andothersincite}}{\bibstring{andothers}}}{}%英语已定义
     \iffieldequalstr{\userfieldabcde}{french}{\bibstring{andothers}}{}%法语未定义，若要定义需要针对french本地化字符串定义
     \iffieldequalstr{\userfieldabcde}{russian}{\bibstring{andothers}}{}%俄语未定义，若要定义需要针对russian本地化字符串定义
@@ -1833,7 +1918,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
   \ifcase\value{gbbiblocalcase}%
     \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{andotherscn}}{}%
     \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{andotherskr}}{}%
-    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{andothersjp}}{}%
+    \iffieldequalstr{\userfieldabcde}{japanese}{\bibstring{andothersjp}}{}%
     \iffieldequalstr{\userfieldabcde}{english}{\bibstring{andothers}}{}%
     \iffieldequalstr{\userfieldabcde}{french}{\bibstring{andothers}}{}%
     \iffieldequalstr{\userfieldabcde}{russian}{\bibstring{andothers}}{}%
@@ -1863,7 +1948,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
   \ifcase\value{gbcitelocalcase}%
     \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{andincitecn}}{}%
     \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{andkr}}{}%
-    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{andjp}}{}%
+    \iffieldequalstr{\userfieldabcde}{japanese}{\bibstring{andjp}}{}%
     \iffieldequalstr{\userfieldabcde}{english}{\bibstring{andincite}}{}%
     \iffieldequalstr{\userfieldabcde}{french}{\bibstring{and}}{}%
     \iffieldequalstr{\userfieldabcde}{russian}{\bibstring{and}}{}%
@@ -1885,7 +1970,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
   \ifcase\value{gbbiblocalcase}%
     \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{andcn}}{}%
     \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{andkr}}{}%
-    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{andjp}}{}%
+    \iffieldequalstr{\userfieldabcde}{japanese}{\bibstring{andjp}}{}%
     \iffieldequalstr{\userfieldabcde}{english}{\bibstring{and}}{}%
     \iffieldequalstr{\userfieldabcde}{french}{\bibstring{and}}{}%
     \iffieldequalstr{\userfieldabcde}{russian}{\bibstring{and}}{}%
@@ -2922,7 +3007,7 @@ test {\ifentrytype{conference}}
   \ifcase\value{gbbiblocalcase}%
     \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{\thefield{editortype}scn}}{}%
     \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{\thefield{editortype}skr}}{}%
-    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{\thefield{editortype}sjp}}{}%
+    \iffieldequalstr{\userfieldabcde}{japanese}{\bibstring{\thefield{editortype}sjp}}{}%
     \iffieldequalstr{\userfieldabcde}{english}{\addcomma\addthinspace\bibstring{\thefield{editortype}s}}{}%
     \iffieldequalstr{\userfieldabcde}{french}{\addcomma\addthinspace\bibstring{\thefield{editortype}s}}{}%
     \iffieldequalstr{\userfieldabcde}{russian}{\addcomma\addthinspace\bibstring{\thefield{editortype}s}}{}%
@@ -2939,7 +3024,7 @@ test {\ifentrytype{conference}}
   \ifcase\value{gbbiblocalcase}%
     \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{\thefield{editortype}cn}}{}%
     \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{\thefield{editortype}kr}}{}%
-    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{\thefield{editortype}jp}}{}%
+    \iffieldequalstr{\userfieldabcde}{japanese}{\bibstring{\thefield{editortype}jp}}{}%
     \iffieldequalstr{\userfieldabcde}{english}{\addcomma\addthinspace\bibstring{\thefield{editortype}}}{}%
     \iffieldequalstr{\userfieldabcde}{french}{\addcomma\addthinspace\bibstring{\thefield{editortype}}}{}%
     \iffieldequalstr{\userfieldabcde}{russian}{\addcomma\addthinspace\bibstring{\thefield{editortype}}}{}%
