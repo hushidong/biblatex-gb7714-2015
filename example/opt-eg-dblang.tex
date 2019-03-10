@@ -1,0 +1,190 @@
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage{xcolor}
+\usepackage{toolbox}
+\usepackage[colorlinks]{hyperref}
+\usepackage{lipsum}
+\usepackage[top=10pt,bottom=10pt,left=1cm,right=1cm]{geometry}
+\usepackage{xltxtra,mflogo,texnames}
+\usepackage[backend=biber,style=gb7714-2015]{biblatex}%sorting=nyt
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+
+@Book{易仕和2013--,
+  Title                    = {超声速和高超声速喷管设计},
+  Address                  = {北京},
+  Author                   = {易仕和 and 赵玉新 and 何霖 and 张敏莉},
+  Publisher                = {国防工业出版社},
+  Year                     = {2013}
+}
+
+@Book{Yi2013--,
+  Title                    = {Supersonic and hypersonic nozzle design},
+  Address                  = {Beijing},
+  Author                   = {Yi, Shi he and Zhao, Yu xin and He, Lin and Zhang, Min li},
+  Publisher                = {National Defense Industry Press},
+  Year                     = {2013}
+}
+
+@Article{张敏莉2007-500-503,
+  Title                    = {超声速短化喷管的设计和试验研究},
+  Author                   = {张敏莉 and 易仕和 and 赵玉新},
+  Journal                  = {空气动力学报},
+  Number                   = {4},
+  Pages                    = {500-503},
+  Volume                   = {25},
+  Year                     = {2007}
+}
+
+@Article{Zhang2007-500-503,
+  Title                    = {The design and experimental investigations of supersonic length shorted nozzle},
+  Author                   = {Zhang, Min-li and Yi, Shi-he and Zhao, Yu-xin},
+  Journal                  = {ACTA AERODYNAMICA SINICA},
+  Number                   = {4},
+  Pages                    = {500-503},
+  Volume                   = {25},
+  Year                     = {2007}
+}
+
+
+
+
+@Inproceedings{FOURNEY1971-17-38,
+  Title                    = {Advances in holographic photoelasticity},
+  Author                   = {M E FOURNEY},
+  Booktitle                = {Symposium on Applications of Holography in Mechanics, August 23-25, 1971, University of Southern California, Los Angeles, California},
+  Date                     = {1971},
+  Pages                    = {17-38},
+  Publisher                = {ASME},
+  Location                 = {New York}
+}
+
+
+    @BOOK{张伯伟2002--,
+  AUTHOR = {张伯伟},
+  LOCATION = {南京},
+  PUBLISHER = {江苏古籍出版社},
+  DATE = {2002},
+  KEYWORDS = {张伯伟2002--},
+  PAGES = {288},
+  TITLE = {全唐五代诗格会考},
+  language = {chinese},
+        url={http://www.cnki.com},
+      urldate={2018-03-06}
+}
+
+@PROCEEDINGS{雷光春2012--,
+  AUTHOR = {雷光春},
+  LOCATION = {北京},
+  PUBLISHER = {海洋出版社},
+  DATE = {2012},
+  KEYWORDS = {雷光春2012--},
+  TITLE = {综合湿地管理:综合湿地管理国际研讨会论文集},
+  language = {chinese}
+}
+
+@REPORT{汤万金2013-09-30--,
+  AUTHOR = {汤万金 and 杨跃翔 and 刘文 and others},
+  URL = {http://www.nstrs.org.cn},
+  DATE = {2013-09-30},
+  KEYWORDS = {汤万金2013-09-30--},
+  TITLE = {人体安全重要技术标准研制最终报告:7178999X},
+  URLDATE = {2014-06-24},
+  language = {chinese}
+}
+
+@THESIS{马欢2011-27-27,
+  AUTHOR = {马欢},
+  INSTITUTION = {清华大学},
+  LOCATION = {北京},
+  URL = {http://www.cnki.net},
+  DATE = {2011},
+  KEYWORDS = {马欢2011-27-27},
+  PAGES = {27},
+  TITLE = {人类活动影响下海河流域典型区水循环变化分析},
+  URLDATE = {2013-10-14},
+  language = {chinese}
+}
+
+
+@INBOOK{白书农1998-146-163,
+  AUTHOR = {白书农},
+  BOOKAUTHOR = {李承森},
+  LOCATION = {北京},
+  PUBLISHER = {高等教育出版社},
+  BOOKTITLE = {植物科学进展},
+  DATE = {1998},
+  KEYWORDS = {白书农1998-146-163},
+  PAGES = {146--163},
+  TITLE = {植物开花研究},
+  language = {chinese}
+}
+
+
+
+@ARTICLE{丁文祥2000--,
+  AUTHOR = {丁文祥},
+  DATE = {2000-11-20},
+  JOURNALTITLE = {中国青年报},
+  KEYWORDS = {丁文祥2000--,news},
+  NOTE = {news},
+  NUMBER = {15},
+  TITLE = {数字革命与竞争国际化},
+  language = {chinese}
+}
+
+
+@ARTICLE{wang2006another,
+  AUTHOR = {Wang, Peng-fei and Wen, Yi},
+  PUBLISHER = {Elsevier},
+  DATE = {2006},
+  JOURNALTITLE = {Journal of Economic Dynamics and Control},
+  NUMBER = {12},
+  PAGES = {2533--2552},
+  TITLE = {Another look at sticky prices and output persistence},
+  VOLUME = {30},
+  nameformat={pinyin},
+}
+\end{filecontents}
+
+\addbibresource{\jobname.bib}
+
+%biblatex 3.7及以上版本可以使用多个stylesourcemap
+%3.7版及以下版本使用set没有问题，所以从3.8版开始使用related的方法
+\providetoggle{relateddblan}
+\makeatletter
+\@ifpackagelater{biblatex}{2016/12/06}{\defdoublelangentry{易仕和2013--}{Yi2013--}\toggletrue{relateddblan}}{}
+\makeatother
+
+\addbibresource[location=local]{example.bib}
+
+    \begin{document}
+    \section{测试：中英文对照文献}
+    \begin{refsection}
+    \defbibentryset{张敏莉，等，2007}{张敏莉2007-500-503,Zhang2007-500-503}
+
+    双语文献对照测试，主要检查:条目集方法和关联条目方法是否能实现对照，
+    条目集方法是否使用默认样式，关联条目方法是否使用语言判断后选择的样式。
+
+
+    set动态方法\cite{张敏莉，等，2007};\par
+
+    \iftoggle{relateddblan}{related动态方法\cite{易仕和2013--}}{}
+    %related动态方法\cite{易仕和2013--}(biblatex 3.7及以上版本可以使用多个stylesourcemap，进而可以动态的定义related)。
+
+    \printbibliography
+    \end{refsection}
+
+    \section{测试：中英文混合的文献表}
+    \begin{refsection}
+    中英文混合的文献表测试，主要检查多语言混合时的格式处理：
+
+    \cite{张敏莉2007-500-503}
+    \cite{丁文祥2000--,wang2006another,白书农1998-146-163,FOURNEY1971-17-38}
+
+    \printbibliography
+    \end{refsection}
+
+\end{document}
+

@@ -16,13 +16,20 @@
     \usepackage{geometry}%,showframe,showcrop
 \geometry{paper=a4paper,left=31.7mm,right=31.7mm,top=25.4mm,bottom=25.4mm}
 \usepackage[backend=biber,style=gb7714-2015ay,%citestyle=authoryear-comp,%
-maxcitenames=2,mincitenames=1,gbcitelocal=chinese,mergedate=none]{biblatex}%,sortcites=false
+maxcitenames=2,mincitenames=1,gbcitelocal=gb7714-2015,mergedate=none]{biblatex}%,sortcites=false
+
+%\DefineBibliographyStrings{english}{
+%        andincite         = {和},
+%        andincitecn       = {和},
+%        andothersincitecn = {等},
+%        andothersincite   = {等{\adddot}},%adddot才能避开标点追踪
+%}
 
 \DefineBibliographyStrings{english}{
-        andincite         = {和},
+        andincite         = {and},
         andincitecn       = {和},
-        andothersincitecn = {等},
-        andothersincite   = {等{\adddot}},%adddot才能避开标点追踪
+%        andothersincitecn = {等},
+%        andothersincite   = {等{\adddot}},%adddot才能避开标点追踪
 }
 
 \usepackage{filecontents}

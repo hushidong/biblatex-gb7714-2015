@@ -14,9 +14,9 @@
 \usepackage[paperwidth=21cm,paperheight=29cm,top=3cm,bottom=2cm,left=1.5cm,right=1.5cm]{geometry}
 \usepackage{xltxtra,mflogo,texnames}
 %%注意:这里使用other*来使得babel切换环境时忽略空白，使得条目集中各文献间的标点正确
-\usepackage[backend=biber,style=gb7714-2015ms,gbfootbib=true,gbalign=gb7714-2015,gbstyle=true,autolang=other*]{biblatex}%sorting=nyt
+\usepackage[backend=biber,style=gb7714-2015ms,gbfootbib=true,gbalign=gb7714-2015,autolang=other*]{biblatex}%sorting=nyt
 
-\AtEveryLositem{\localsetchinesecode}
+
 
 % printbiblist命令需要一个与其参数同名的文献输出驱动，详见92-bibliographylists.tex
 \DeclareBibliographyDriver{authorexample}{%
@@ -27,7 +27,6 @@
 \endgroup
 }
 
-\AtEveryBiblistitem{authorexample}{\localsetchinesecode}
 
 \DeclareFieldFormat{titlea}{#1}
 
@@ -53,16 +52,12 @@
 \usebibmacro{finentry}
 }
 
-\AtEveryBiblistitem{titlexamplea}{\localsetchinesecode}
-
 
 \DeclareBibliographyDriver{titlexample}{%
 \usebibmacro{begentry}%
 \iffieldundef{title}{\usebibmacro{journal+issuetitle}}{\usebibmacro{title}}
 \usebibmacro{finentry}
 }
-
-\AtEveryBiblistitem{titlexample}{\localsetchinesecode}
 
 \DeclareBibliographyDriver{editionexample}{%
 %\usebibmacro{begentry}%
@@ -72,8 +67,6 @@
 \endgroup
 }
 
-\AtEveryBiblistitem{editionexample}{\localsetchinesecode}
-
 \DeclareBibliographyDriver{pubexample}{%
 \usebibmacro{begentry}%
 \ifentrytype{online}{\usebibmacro{institution+location+date}}{\usebibmacro{publisher+location+date}}%\par
@@ -81,8 +74,6 @@
 \usebibmacro{doi+eprint+url}%从下面移动到上面来，因为gbt2015的url需直接放在页码后面。
 \usebibmacro{finentry}
 }
-
-\AtEveryBiblistitem{pubexample}{\localsetchinesecode}
 
 \DeclareBibliographyDriver{dateexample}{%
 \usebibmacro{begentry}%
@@ -93,16 +84,12 @@
 \usebibmacro{finentry}
 }
 
-\AtEveryBiblistitem{dateexample}{\localsetchinesecode}
-
 \DeclareBibliographyDriver{dvnpexample}{%
 \usebibmacro{issue+date}%
 \iffieldundef{volume}{}{\setunit{\addcomma\space}}%
 \usebibmacro{volume+number+eid}%把卷期放到年份后面
 \usebibmacro{note+pages}\par%
 }
-
-\AtEveryBiblistitem{dvnpexample}{\localsetchinesecode}
 
 \defbibenvironment{exampleenv}
   {\list
@@ -124,15 +111,20 @@
 
 \begin{document}
 
+
+
+
+\section*{GB/T 7714-2015 中的著录标准和顺序编码制示例}
+
 {\heiti\large\noindent 本文档用于gb7714-2015更新后与GB/T 7714-2015标准文档的内容进行比较，以确定更新没有引入样式方面的BUG，对比文档为stdgbT7714-2015.pdf，该文档经过多次比较，明确与GB/T 7714-2015中的示例完全一致。
 
 }
 
-\section*{GB/T 7714-2015 中的著录标准和顺序编码制示例}
+\setcounter{section}{3}
 
-\section*{4 著录项目和著录格式}
+\section{著录项目和著录格式}
 
-\subsection*{4.1 专著}
+\subsection{专著}
 \begin{refsection}
 
 \nocite{陈登原2000-29-29,
@@ -157,7 +149,7 @@ Fan2013-25-26
 \printbibliography[heading=subbibliography,title={示例:}]
 \end{refsection}
 
-\subsection*{4.2 专著中的析出文献}
+\subsection{专著中的析出文献}
 \begin{refsection}
 
 \nocite{
@@ -173,7 +165,7 @@ Roberson2011-1-36
 \printbibliography[heading=subbibliography,title={示例:}]
 \end{refsection}
 
-\subsection*{4.3 连续出版物}
+\subsection{连续出版物}
 \begin{refsection}
 
 \nocite{
@@ -185,7 +177,7 @@ AAAS1883----,
 \printbibliography[heading=subbibliography,title={示例:}]
 \end{refsection}
 
-\subsection*{4.4 连续出版物中的析出文献}
+\subsection{连续出版物中的析出文献}
 \begin{refsection}
 
 \nocite{袁训来2012-3219-3219,
@@ -202,7 +194,7 @@ Myburg2014-356-362
 \printbibliography[heading=subbibliography,title={示例:}]
 \end{refsection}
 
-\subsection*{4.5 专利文献}
+\subsection{专利文献}
 \begin{refsection}
 
 \nocite{邓一刚2006--,
@@ -216,7 +208,7 @@ Tachibana2005--}
 }
 \end{refsection}
 
-\subsection*{4.6 电子资源}
+\subsection{电子资源}
 \begin{refsection}
 
 \nocite{中国互联网络信息中心2012--,
@@ -233,8 +225,9 @@ Hopkinson2009--
 }
 \end{refsection}
 
-\section*{6 著录用文字}
-\section*{示例1}
+\stepcounter{section}
+\section{著录用文字}
+\subsection{示例1}
 \begin{refsection}
 \nocite{周鲁卫2011--}
 \nocite{常森2013--}
@@ -245,7 +238,7 @@ Hopkinson2009--
 \printbibliography[heading=subbibliography,title={用原语种著录参考文献}]
 \end{refsection}
 
-\section*{示例2}
+\subsection{示例2}
 \begin{refsection}
 \defbibentryset{李炳穆set}{kereanrefb,李炳穆2005--}
 \defbibentryset{图书馆信息政策set}{kereanrefc,图书馆信息政策委员会2007--}
@@ -254,7 +247,7 @@ Hopkinson2009--
 \printbibliography[heading=subbibliography,title={用韩中2种语言著录文献}]
 \end{refsection}
 
-\section*{示例3}
+\subsection{示例3}
 \begin{refsection}
 \defbibentryset{熊平set}{熊平2005--,xiong2005--}
 \defbibentryset{食品药品监督set}{上海市食品药品监督管理局课题组2008--,Rgsfda2008--}
@@ -264,7 +257,7 @@ Hopkinson2009--
 \end{refsection}
 
 
-\section*{7 著录用符号}
+\section{著录用符号}
 
 \begin{refsection}
 \nocite{GPS1988--}
@@ -324,9 +317,9 @@ Hopkinson2009--
 \printbibliography[heading=subbibliography,title={符号-示例}]
 \end{refsection}
 
-
-\section*{8.1 责任者}
-\subsection*{8.1.1 个人著者}
+\section{著录规则}
+\subsection{责任者}
+\subsubsection{个人著者}
 \begin{refsection}
 注意其中“昂温”文献的情况，姓名是中英文混合的情况是比较特殊的，因为存在中文，所以判定为中文，但为了输出的形式保持英文中姓和名之间的空格，因此bib文件中的输入以\{\}进行保护。
 \nocite{李时珍--}
@@ -343,7 +336,7 @@ Hopkinson2009--
 \printbiblist[title={作者姓名示例},env=exampleenv]{authorexample}
 \end{refsection}
 
-\subsection*{8.1.2 多位著者}
+\subsubsection{多位著者}
 \begin{refsection}
 \nocite{钱学森--}
 \nocite{李四光--}
@@ -352,13 +345,13 @@ Hopkinson2009--
 \printbiblist[title={作者姓名示例},env=exampleenv]{authorexample}
 \end{refsection}
 
-\subsection*{8.1.3 缺省著者}
+\subsubsection{缺省著者}
 \begin{refsection}
 \nocite{anon1981-628}
 \printbibliography[heading=subbibliography,title={作者姓名示例}]
 \end{refsection}
 
-\subsection*{8.1.4 团体著者}
+\subsubsection{团体著者}
 \begin{refsection}
 \nocite{中国科学院物理研究所--}
 \nocite{贵州省土穰普查办公室--}
@@ -367,7 +360,7 @@ Hopkinson2009--
 \printbiblist[title={作者姓名示例},env=exampleenv]{authorexample}
 \end{refsection}
 
-\section*{8.2 题名}
+\subsection{题名}
 \begin{refsection}
 \nocite{王夫之的诠释--}
 \nocite{张子正蒙注--}
@@ -379,7 +372,7 @@ Hopkinson2009--
 \printbiblist[title={题名示例},env=exampleenv]{titlexamplea}
 \end{refsection}
 
-\subsection*{8.2.1 合订题名}
+\subsubsection{合订题名}
 \begin{refsection}
 \nocite{为人民服务--}
 \nocite{大趋势--}
@@ -387,7 +380,7 @@ Hopkinson2009--
 \end{refsection}
 
 
-\subsection*{8.2.3/8.2.4 标识符和其它题名信息}
+\subsubsection{标识符和其它题名信息}
 \begin{refsection}
 \nocite{地壳运动--}
 \nocite{三松堂--}
@@ -402,7 +395,7 @@ Hopkinson2009--
 \printbiblist[title={题名示例},env=exampleenv]{titlexample}
 \end{refsection}
 
-\section*{8.3 版本}
+\subsection{版本}
 \begin{refsection}
 \nocite{egbookeda--}
 \nocite{egbookedb--}
@@ -412,14 +405,14 @@ Hopkinson2009--
 \printbiblist[title={版本示例},env=exampleenv]{editionexample}
 \end{refsection}
 
-\section*{8.4 出版项}
+\subsection{出版项}
 \begin{refsection}
 \nocite{egbookpuba--}
 \nocite{egbookpubb--}
 \printbiblist[title={出版项示例},env=exampleenv]{pubexample}
 \end{refsection}
 
-\subsection*{8.4.1 出版地}
+\subsubsection{出版地}
 \begin{refsection}
 \nocite{egbookpubaddressa--}
 \nocite{egbookpubaddressb--}
@@ -432,7 +425,7 @@ Hopkinson2009--
 \end{refsection}
 
 
-\subsection*{8.4.2 出版者}
+\subsubsection{出版者}
 \begin{refsection}
 \nocite{egbookpubpublishera--}
 \nocite{egbookpubpublisherb--}
@@ -443,7 +436,7 @@ Hopkinson2009--
 \printbiblist[title={出版者示例},env=exampleenv]{pubexample}
 \end{refsection}
 
-\subsection*{8.4.3 出版日期}
+\subsubsection{出版日期}
 \begin{refsection}
 \nocite{egbookpubdatea--}
 \nocite{egbookpubdateb--}
@@ -454,13 +447,13 @@ Hopkinson2009--
 \printbiblist[title={出版日期示例},env=exampleenv]{dateexample}
 \end{refsection}
 
-\subsection*{8.4.4 公告更新引用日期}
+\subsubsection{公告更新引用日期}
 \begin{refsection}
 \nocite{egbookpubdateg--}
 \printbiblist[title={公告更新引用日期示例},env=exampleenv]{dateexample}
 \end{refsection}
 
-\section*{8.5 页码}
+\subsection{页码}
 \begin{refsection}
 \nocite{曹凌2011-19-}
 \nocite{钱学森2001--}
@@ -471,7 +464,7 @@ Hopkinson2009--
 \end{refsection}
 
 
-\subsection*{8.6 获取和访问路径}
+\subsection{获取和访问路径}
 \begin{refsection}
 
 \nocite{储大同2010-721-724,weiner2010-38}
@@ -479,16 +472,16 @@ Hopkinson2009--
 \printbibliography[heading=subbibliography,title={示例}]
 \end{refsection}
 
-\subsection*{8.7 数字对象唯一识别符}
+\subsection{数字对象唯一识别符}
 \begin{refsection}
 
 \nocite{刘乃安2000-17-18,Deverell2013-21-22}
 \printbibliography[heading=subbibliography,title={示例}]
 \end{refsection}
 
-\subsection*{8.8 析出文献}
+\subsection{析出文献}
 
-\subsection*{8.8.1 析出关系表示}
+\subsubsection{析出关系表示}
 \begin{refsection}
 
 \nocite{姚中秋2009--,关立哲2014--,TENOPIR1987--}
@@ -496,7 +489,7 @@ Hopkinson2009--
 \printbibliography[heading=subbibliography,title={示例}]
 \end{refsection}
 
-\subsection*{8.8.2-5 年卷期页码}
+\subsubsection{年卷期页码}
 \begin{refsection}
 
 \nocite{egdatevolnumpagea--,egdatevolnumpageb--,%
@@ -507,7 +500,9 @@ egdatevolnumpageg--}
 \printbiblist[title={年卷期页码},env=exampleenv]{dvnpexample}
 \end{refsection}
 
-\subsection*{9.2 文献表}
+\section{参考文献表}
+
+\subsection{顺序编码制文献表}
 \begin{refsection}
 
 \nocite{Baker1995--,Chernik1982--,尼葛洛庞帝1996--,汪冰1997-16-16,杨宗英1996-24-29,Dowler1995-5-26}
@@ -515,7 +510,9 @@ egdatevolnumpageg--}
 \printbibliography[heading=subbibliography,title={示例}]
 \end{refsection}
 
-\subsection*{10.1.1 一处引用一篇文献}
+\section{参考文献标注法}
+\subsection{顺序编码制}
+\subsubsection{一处引用一篇文献}
 
 \begin{refsection}
 示例1：
@@ -535,7 +532,7 @@ egdatevolnumpageg--}
 
 \end{refsection}
 
-\subsection*{10.1.2 一处引用多篇文献}
+\subsubsection{一处引用多篇文献}
 \begin{refsection}
 
 裴伟提出\cite{Humphrey1971--,CRANE1972--}......
@@ -548,11 +545,12 @@ egdatevolnumpageg--}
 
 
 \newpage
-\subsection*{10.1.3 多次引用同一著者的同一文献}
+\subsubsection{多次引用同一著者的同一文献}
 \begin{refsection}
 示例1：多次引用同一著者的同一文献的序号
 
-……改变社会规范也可能存在类似的“二阶囚徒困境”问题：尽管改变旧的规范对所有人都好，但个人理性选择使得没有人愿意率先违反旧的规范\cite{Sunstein1996-903-903}。
+……改变社会规范也可能存在类似的“二阶囚徒困境”问题：尽管改变旧的规范对所有人都好，
+但个人理性选择使得没有人愿意率先违反旧的规范\cite{Sunstein1996-903-903}。
 ……事实上，古希腊对轴心时代思想真正的贡献不是来自对民主的赞扬，而是来自对民主制度的批评，苏格拉底、柏拉图和亚里士多德3位贤圣
 都是民主制度的坚决反对者\pagescite[260]{Morri2010--}。
 ……柏拉图在西方世界的影响力是如此之大以至于有学者评论说，一切后世的思想都是一系列为柏拉图思想所作的脚注\cite{罗杰斯2011-15-16}。

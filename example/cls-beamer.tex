@@ -629,16 +629,7 @@ Biblatex宏包使用和GB/T7714-2015参考文献样式}
 \footfullcite{丁文祥2000--}
 \footfullcite{李强2012-05-03--}
 \footfullcite{中华医学会湖北分会1984--}
-\end{frame}
 
-\begin{frame}{测试beamer中使用gb7714-2015样式-使用segment}
-
-%\noindent\setlength{\parindent}{0pt}
-\printbibliography[segment=0,heading=bibliography,title=参考文献]
-
-\end{frame}
-
-\begin{frame}
     \begin{refsegment}
 	文献\cite{adam2011house,AAAS1883--,bernanke1989agency,CALMS1965--,
 calvo2006phoenix,davis2005housing,enders2009international,
@@ -660,8 +651,16 @@ fazzari1993working,FOURNEY1971-17-38,greenwood1988investment}
     \begin{refsegment}
     \cite{王国静2014金融冲击,王文甫2010价格粘性,徐伟康2010对,杨光2015经济波动,杨洪升2013-56-75,杨汝岱2015中国制造,张伯伟2002--,张成思2010长期均衡,张凯军2012-04-05--,abx2007-500-503,中国职工教育研究会1985--,中华医学会湖北分会1984--}
     \end{refsegment}
-    \end{frame}
-    
+\end{frame}
+
+\begin{frame}{测试beamer中使用gb7714-2015样式-使用segment}
+
+%\noindent\setlength{\parindent}{0pt}
+\printbibliography[segment=0,heading=bibliography,title=参考文献]
+
+\end{frame}
+
+
 %可以利用allowframebreaks将文献表打印到不同的frame中
     \begin{frame}[allowframebreaks]
     \printbibliography

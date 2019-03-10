@@ -248,16 +248,22 @@
     %
     %判断当前文献是否已经引用过且是做的footfullcite(即已经作为脚注输出文献内容)
     %记录首次输出时的脚注号码，用于后面再次引用该文献时的输出，比如同(4)。
+    %v1.0q 20190309 区分使脚注标注适应minipage中的情况
     \newbibmacro*{citesavefn}{%
-        \ifciteseen%当被引用过，则为true
+        \ifciteseen%当被引用过为true
         {\ifcsdef{sec\arabic{refsection}et\thefield{entrykey}}%当已经定义过脚注序号信息
             {\csgdef{labelsec\arabic{refsection}et\thefield{entrykey}}{%
-             \str@sameentry\xdef\@thefnmark{\csuse{sec\arabic{refsection}et\thefield{entrykey}}}%
-             \@makefnmark}%
-             }%
-            {\csxdef{sec\arabic{refsection}et\thefield{entrykey}}{\arabic{footnote}}}%
+    \str@sameentry\gdef\@thefnmark{\csuse{sec\arabic{refsection}et\thefield{entrykey}}}%
+    \@makefnmark%
+            }}%
+            {\csxdef{sec\arabic{refsection}et\thefield{entrykey}}{%
+            \ifcsstring{@mpfn}{mpfootnote}{\@alph\c@mpfootnote}{\thefootnote}%
+            }}%
         }%
-        {\csxdef{sec\arabic{refsection}et\thefield{entrykey}}{\arabic{footnote}}}%
+        {\csxdef{sec\arabic{refsection}et\thefield{entrykey}}{%
+        \ifcsstring{@mpfn}{mpfootnote}{\@alph\c@mpfootnote}{\thefootnote}%
+        %判断在minipage中比较麻烦，这里使用\@mpfn的定义进行判断
+        }}%
     }
 
     %
@@ -1107,32 +1113,34 @@
             \step[fieldset=userd,origfieldval]
             }
         \map{%当文献给出language域时，设置文献要使用的本地化字符串的语言
-            \step[fieldsource=language,match=english,final]
+            %biblatex 3.11及以下版本仅有match是区分大小写的，而3.12版开始用matchi来区分大小，而match不区分
+            %这里为兼容3.11及以下版本，所以用一个复杂一点的正则表达式
+            \step[fieldsource=language,match=\regexp{(e|E)(n|N)(g|G)(l|L)(i|I)(s|S)(h|H)},final]
             \step[fieldset=langid,fieldvalue={english}]
             \step[fieldset=lansortorder,fieldvalue=\lanenorder]
             }
         \map{
-            \step[fieldsource=language,match=russian,final]
+            \step[fieldsource=language,match=\regexp{(r|R)(u|U)(s|S)(s|S)(i|I)(a|A)(n|N)},final]
             \step[fieldset=langid,fieldvalue={russian}]
             \step[fieldset=lansortorder,fieldvalue=\lanruorder]
             }
         \map{%
-            \step[fieldsource=language,match=french,final]
+            \step[fieldsource=language,match=\regexp{(f|F)(r|R)(e|E)(n|N)(c|C)(h|H)},final]
             \step[fieldset=langid,fieldvalue={french}]
             \step[fieldset=lansortorder,fieldvalue=\lanfrorder]
             }
         \map{%
-            \step[fieldsource=language,match=chinese,final]%中日韩语目前都用english，
+            \step[fieldsource=language,match=\regexp{(c|C)(h|H)(i|I)(n|N)(e|E)(s|S)(e|E)},final]%中日韩语目前都用english，
             \step[fieldset=langid,fieldvalue={english}]
             \step[fieldset=lansortorder,fieldvalue=\lancnorder]
             }
         \map{%
-            \step[fieldsource=language,match=japanese,final]%中日韩语目前都用english，
+            \step[fieldsource=language,match=\regexp{(j|J)(a|A)(p|P)(a|A)(n|N)(e|E)(s|S)(e|E)},final]%中日韩语目前都用english，
             \step[fieldset=langid,fieldvalue={english}]
             \step[fieldset=lansortorder,fieldvalue=\lanjporder]
             }
         \map{%
-            \step[fieldsource=language,match=korean,final]%中日韩语目前都用english，
+            \step[fieldsource=language,match=\regexp{(k|K)(o|O)(r|R)(e|E)(a|A)(n|N)},final]%中日韩语目前都用english，
             \step[fieldset=langid,fieldvalue={english}]
             \step[fieldset=lansortorder,fieldvalue=\lankrorder]
             }
@@ -1863,14 +1871,15 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %   v1.0O,20190103,hzz,修改利用新定义的一个分隔符strandothersdelim
 %
 %   原理方法:判断作者或译者是否中文，若中文用字符等，否则用et al. 。
+%   \printnames由start-stop控制项数，默认是1和maxnames/minnames
 \renewbibmacro*{name:andothers}{%
   \ifboolexpr{
     test {\ifnumequal{\value{listcount}}{\value{liststop}}}
     and
     test \ifmorenames
-  }{\ifnumgreater{\value{liststop}}{1}%
-       {\finalandcomma}%
-       {}%biblatex作者要区别单作者加等的情况，这里为符合gbt7714-2015第7.2节的要求加上了逗号。
+  }{\ifnumgreater{\value{liststop}}{1}%注意这里试图去区分姓名总数大于1的情况，当姓名总数大于1时，最后一个姓名后面先加入一个\finalandcomma
+       {\finalandcomma}%目前国标没有这样的区分要求，如果有需要也是可以这么去做的。
+       {}
 \printdelim{andothersdelim}\printdelim{strandothersdelim}%
 }{%当是译者的时候需要特殊处理：从7.2节看等，译前面加逗号，但从示例看等和译同时出现时，译前的逗号没有，比如：
 %袁训来, 陈哲, 肖书海, 等.
@@ -1887,8 +1896,6 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %   首先设置全局的，然后设置文献表中的，这一等价于将所有的cite命令环境都设置过了
 %   而不用对每一个引用命令单独设置，比如cite，parancite，textcite都设置
 \DeclareDelimFormat{strandothersdelim}{%
-  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
-  \addspace%
   \edef\userfieldabcde{userd}%这里使用\iffieldequalstr{labelnamesource}替代ifcurrentname因为标注中使用ifcurrentname无效
   \iffieldequalstr{labelnamesource}{translator}{\edef\userfieldabcde{usere}}{}%
   \iffieldequalstr{labelnamesource}{editor}{\edef\userfieldabcde{userc}}{}%
@@ -1907,9 +1914,8 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
   \bibstring{andothersincite}%
   \fi}
 
+
 \DeclareDelimFormat[bib,biblist]{strandothersdelim}{%
-  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
-  \addspace%
   \edef\userfieldabcde{userd}%
   \ifcurrentname{translator}{\edef\userfieldabcde{usere}}{}%
   \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%

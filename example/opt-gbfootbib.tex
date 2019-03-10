@@ -9,9 +9,9 @@
 \usepackage{lipsum}
 \usepackage[top=10pt,bottom=10pt,left=1cm,right=1cm]{geometry}
 \usepackage{xltxtra,mflogo,texnames}
-\usepackage[backend=biber,style=gb7714-2015]{biblatex}
+\usepackage[backend=biber,style=gb7714-2015,gbfootbib=true]{biblatex}
 
-\renewcommand{\bibfont}{\small}
+%\renewcommand{\bibfont}{\small}
 \usepackage{filecontents}
 \begin{filecontents}{\jobname.bib}
 
@@ -141,17 +141,24 @@
 \begin{document}
 
 \section{测试利用footfullcite实现国标格式的脚注文献表}
+
+\begin{minipage}{0.9\linewidth}
 \begin{refsection}
 
 古希腊对轴心时代思想真正的贡献不是来自对民主的赞扬\footfullcite[12-16]{蔡敏2006--}，
 改变社会规范也可能存在类似的“二阶囚徒困境”问题\footfullcite{Miroslav2004--}，
 但个人理性选择使得没有人愿意率先违反旧的规范\footfullcite[250]{蔡敏2006--}。
 
+%\makeatletter
+%\ifcsstring{@mpfn}{mpfootnote}{in minipage}{not in}
+%\makeatother
 
 \printbibliography[heading=subbibliography]
 \end{refsection}
+\end{minipage}
 
-\newpage
+\vspace{2cm}
+
 
 \begin{refsection}
 ……事实上，古希腊对轴心时代思想真正的贡献不是来自对民主的赞扬，
@@ -162,7 +169,11 @@
 \footfullcite{吕捷2015cpi}。
 ……据《唐会要》记载，当时拆毁的寺院有4 600余所，招提、兰若等佛教建筑4万余所，没收寺产，并强迫僧尼还俗达260 500人。
 佛教受到极大的打击\footfullcite[326-329]{Zhang2007-500-503}。
+
+\printbibliography[heading=subbibliography]
 \end{refsection}
+
+
 
 
 \end{document} 

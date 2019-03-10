@@ -241,6 +241,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * [CAUTemplate(中国农业大学课程论文模板)](https://github.com/Cdmium/CAUTemplate)
 * [Yet anoter BUPT Thesis LaTeX class (北邮研究生学位设计的LaTeX文档类)](https://github.com/qcts33/BUPTthesis-ctex)
 * [neuthesis (东北大学博士学位论文Latex模板)](https://github.com/mervin0502/neuthesis)
+* [nwafuthesis (西北农林科技大学学位论文LaTeX文档类)](https://github.com/registor/nwafuthesis)
 * [...]
 
 
@@ -366,6 +367,8 @@ citestyle=gb7714-2015%,backref=true%%其中后端backend使用biber
 ```
 	latexmk -xelatex jobname.tex
 ```
+
+编译引擎使用lualatex也是可以的，只要该引擎编译时ctex宏包能够正确支持中文。
 
 
 ### 3. Recommended environment/推荐使用环境

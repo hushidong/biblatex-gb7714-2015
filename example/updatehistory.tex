@@ -5,15 +5,23 @@
 %\updateinfo[2019-02-11]{date of update: 2019-02-11 to version v1.0q}\label{up:190211}
 \begin{enumerate}
 
-\item 增加了gblanorder选项，用于控制作者年制文献表中不同语言分集的排序。
+\item 增加了gblanorder选项，用于控制作者年制文献表中不同语言分集的排序。（20190307）
 
 add an option gblanorder to sort the reference groups of different language for author year style.
 
-\item 修正了作者年制标注中姓名中的本地化字符串输出时的作者角色判断逻辑，因为标注中无法使用ifcurrentname，所以改用labelnamesource域判断。
+\item 修正了作者年制标注中姓名中的本地化字符串输出时的作者角色判断逻辑，因为标注中无法使用ifcurrentname，所以改用labelnamesource域判断。（20190307）
 
 correct the author role judgement logic in the output of bibstrings in citations for author year style, because the  test ifcurrentname can not used in citations, so change to use labelnamesource field to judge.
 
+\item 修正了文献已经给出语言域比如language={English}中非完全小写情况下，biblatex3.11及以下版本匹配不成功而导致利用lansortorder域排序出错的问题。（20190310）
 
+correct a bug of sorting using lansortorder field when a reference with field language like language={English} which is not lower case at all thus the biblatex 3.11 and lower version fail to match it.
+
+
+\item 修正了小页环境中使用国标要求的脚注文献表时，相同文献引用时的标签问题，比如小页中应是同\textcircled{\tiny a}:15-45，
+而不是正文环境中的同\textcircled{\tiny 1}:15-45（20190310）
+    
+correct the footnote bibliography problem in minipage when repeatedly cite a same reference to set a label like: \textcircled{\tiny a}:15-45 rather than the \textcircled{\tiny 1}:15-45 in normal text.
 \end{enumerate}
 
 %============================

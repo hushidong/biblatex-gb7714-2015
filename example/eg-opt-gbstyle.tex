@@ -12,7 +12,7 @@
 \usepackage[top=10pt,bottom=10pt,left=1cm,right=1cm]{geometry}
 
 \usepackage[backend=biber,style=gb7714-2015ms,gbstyle=false,
-gbnamefmt=familyahead,sorting=nyt]{biblatex}%
+gbnamefmt=familyahead]{biblatex}%
 
 \usepackage{filecontents}
 \begin{filecontents}{\jobname.bib}
@@ -776,7 +776,7 @@ gbnamefmt=familyahead,sorting=nyt]{biblatex}%
     \begin{document}
     \section{测试gb7714-2015ms样式中英文不同样式：中文文献}
     \begin{refsection}
-    中文文献\cite{中华医学会湖北分会1984--,中国职工教育研究会1985--,abx2007-500-503,张凯军2012-04-05--,张成思2010长期均衡,张伯伟2002--,杨汝岱2015中国制造,杨洪升2013-56-75,杨光2015经济波动,徐伟康2010对,王文甫2010价格粘性,王国静2014金融冲击,汤万金2013-09-30--,马欢2011-27-27,罗德明2012要素市场扭曲,吕捷2015cpi,楼继伟2016改革,刘凤良2017,李晓西1994转轨过程中的结构性通货膨胀,李强2012-05-03--,雷光春2012--,贾东琴2011-45-52,韩吉人1985-90-99,国家环境保护局科技标准司1996-2-3,方军雄2007所有制,丁文祥2000--,白书农1998-146-163}
+    中文文献\cite{中华医学会湖北分会1984--,中国职工教育研究会1985--,abx2007-500-503,张凯军2012-04-05--,张成思2010长期均衡,张伯伟2002--,杨汝岱2015中国制造,杨洪升2013-56-75,杨光2015经济波动,徐伟康2010对,王文甫2010价格粘性,王国静2014金融冲击,汤万金2013-09-30--}
 
     \printbibliography
     \end{refsection}
@@ -785,20 +785,22 @@ gbnamefmt=familyahead,sorting=nyt]{biblatex}%
     \section{测试gb7714-2015ms样式中英文不同样式：英文文献}
     \begin{refsection}
     英文文献\cite{dataseteg,Misceg,zhang2009china,databaseeg,mapeg,aritileeg,
-    softwareeg,    archiveeg,Yi2013--,Yi2014--,xu2012role,wang2006another,IEEEexample:uspat,
-    saiz2010geographic,ROSENTHALL1963--,quadrini2011financial,IEEEexample:unpublished,
-    WHO1970--,lucas1976econometric,lucas1987money,IEEEexample:frenchpatreq,
-    kocherlakota2000creating,kiyotaki1997credit,khan2013credit,
-    IEEEexample:masterstype,jermann2012macroeconomic,iacoviello2005house,
-    IEEEexample:jppat,hayashi1985tests,greenwood1988investment,
-    FOURNEY1971-17-38,FOURNEY1971-55,fazzari1993working,enders2009international,
-    davis2005housing,IEEEexample:repeatedauthorone,IEEEexample:repeatedauthortwo,
-    calvo2006phoenix,CALMS1965--,bernanke1989agency,AAAS1883--,adam2011house}
+    softwareeg,archiveeg,Yi2013--,Yi2014--,xu2012role,wang2006another,IEEEexample:uspat,
+    saiz2010geographic,ROSENTHALL1963--}
 
     \printbibliography
     \end{refsection}
+    
+    \section{测试gb7714-2015ms样式中英文不同样式：中英文混合文献表}
+    \begin{refsection}
+    中英文文献\cite{马欢2011-27-27,kiyotaki1997credit,罗德明2012要素市场扭曲,khan2013credit,吕捷2015cpi,IEEEexample:masterstype,楼继伟2016改革, jermann2012macroeconomic,刘凤良2017,iacoviello2005house}
+    
+    \printbibliography
+    \end{refsection}
+    
+      
 
-    \section{测试gb7714-2015ms样式中英文不同样式：中英文对照文献}
+    \section{测试gb7714-2015ms样式中英文不同样式：中英文对照文献表}
     \begin{refsection}
     \defbibentryset{张敏莉，等，2007}{张敏莉2007-500-503,Zhang2007-500-503}
 

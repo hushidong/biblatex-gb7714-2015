@@ -62,7 +62,7 @@
   \ifcase\value{gbcitelocalcase}%
     \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{andincitecn}}{}%
     \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{andkr}}{}%
-    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{andjp}}{}%
+    \iffieldequalstr{\userfieldabcde}{japanese}{\bibstring{andjp}}{}%
     \iffieldequalstr{\userfieldabcde}{english}{\addspace\bibstring{andincite}\addspace}{}%
     \iffieldequalstr{\userfieldabcde}{french}{\addspace\bibstring{and}\addspace}{}%
     \iffieldequalstr{\userfieldabcde}{russian}{\addspace\bibstring{and}\addspace}{}%
@@ -73,30 +73,6 @@
   \fi
 }
 
-%----------------------------------------------------------------------
-%
-%-new added  20190215
-% 去掉空格
-\DeclareDelimFormat{strandothersdelim}{%
-  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
-  %\addspace%
-  \edef\userfieldabcde{userd}%
-  \ifcurrentname{translator}{\edef\userfieldabcde{usere}}{}%
-  \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
-  \ifcurrentname{author}{\edef\userfieldabcde{userf}}{}%
-  \ifcurrentname{bookauthor}{\edef\userfieldabcde{userb}}{}%
-  \ifcase\value{gbcitelocalcase}%
-    \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{andothersincitecn}}{}%中文已经通过english本地化字符串定义
-    \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{andotherskr}}{}%韩语未定义，所以与bib中一致
-    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{andothersjp}}{}%日与同韩语
-    \iffieldequalstr{\userfieldabcde}{english}{\bibstring{andothersincite}}{}%英语已定义
-    \iffieldequalstr{\userfieldabcde}{french}{\bibstring{andothers}}{}%法语未定义，若要定义需要针对french本地化字符串定义
-    \iffieldequalstr{\userfieldabcde}{russian}{\bibstring{andothers}}{}%俄语未定义，若要定义需要针对russian本地化字符串定义
-  \or%
-  \bibstring{andothersincitecn}%
-  \or%
-  \bibstring{andothersincite}%
-  \fi}
 
 %之所以不用\DeclareDelimFormat{andothersdelim}{}这样的设置是因为gb7714-2015中为兼容老版本的biblatex做的处理就是这样的
 %所以用相同的方式
@@ -112,7 +88,6 @@
     {\printtext[bibhyperref]{\printlabeldateextra}}}%\printfield{extradate}
 
 %文献表中的日期格式
-
 \@ifpackagelater{biblatex}{2016/12/06}
 {
   \renewbibmacro*{date+extradate}{%
