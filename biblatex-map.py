@@ -5,59 +5,38 @@ A python script to modify bib data and
 to display references with specific bibliography standard
 
 features：
-1. souce map of biblatex like: generalize date
-bib文件数据修改，比如对日期进行规范化等
-2. bib file parsing, bib file out, json formatted file out
-bib文件解析，输出新的bib文件，或json格式的文件
-3. display the bib info with specific standard like GB/T 7714-2015
-将bib文件信息格式化显示，比如以GB/T 7714-2015格式显示
-4. 当某些项缺失时，后面跟着的项前标点可能会变化的问题，要处理。
-5. newspaper,与aritcle的关系
-6. standard,与book和inbook的关系
-7. 同样是date，newspaper需要写全，而article不需要。
-
-history：
-v1.0 2019/02/09
-
-biblatex source map opts：
-
-已实现的选项：
-typesource=?entrytype?
-typetarget=?entrytype?
-fieldsource=?entryfield?
-fieldtarget=?entryfield?
-match=?regexp?
-matchi=?regexp?
-notmatch=?regexp?
-notmatchi=?regexp?
-replace=?regexp?
-
-notfield=?entryfield?
-final=true, false default: false
-origfieldval=true, false default: false
-append=true, false default: false
-pertype
-pernottype
-
-fieldset=?entryfield?
-fieldvalue=?string?
-null=true, false default: false
-origfield=true, false default: false
-origentrytype=true, false default: false
-origfieldval=true, false default: false
 
 
+未解决：
 
-未实现的选项
+6 检查格式是否写正确
+即用选项是否在设定范围内来进行检查
+比如有时会笔误，posstring写出postring
 
-entryclone=?clonekey?
-entrynew=?entrynewkey?
-entrynewtype=?string?
-entrytarget=?string?
-entrynocite=true, false default: false
-entrynull=true, false default: false
 
-1. match 大小写区分的match
+9. literal类型的格式选项：sentencecase
+
+
+11. range类型的格式选项
+
+12. 文本中{}的忽略，而输出到tex的文本中的{}不忽略
+到正常文本中的利用符号追踪方法成对的消除{}，或者也不消除，
+而是在html文件中做类似于tex中的编组操作，保护大小写的作用要体现。
+保护大小写的{}在域处理中必须要处理完成，而用于格式的编组{}必须要保留。
+
+
+13。 文献表的排序???
+
+
+9. match 大小写区分的match需要实现
+
+10. 一些biblatex的map选项需要实现，包括entryclone=?clonekey?
+		entrynew=?entrynewkey?
+		entrynewtype=?string?
+		entrytarget=?string?
+		entrynocite=true, false default: false
+		entrynull=true, false default: false
+		
 
 """
 
@@ -173,23 +152,45 @@ sourcemaps=[]
 ## 参考文献表的制定格式设置，比如GB/T 7714-2015
 ## 
 
-#选项
+#全局选项
 formatoptions={
 "nameformat":'uppercase',#姓名处理选项：uppercase,lowercase,given-family,family-given,pinyin
-"dateformat":'year',#'日期处理选项'：year，iso，等
-"urldateformat":'year',#'日期处理选项'：year，iso，等
+"giveninits":'space',#使用名的缩写，space表示名见用空格分隔，dotspace用点加空格，dot用点，terse无分隔，false不使用缩写
 "maxbibnames":3,#
 "minbibnames":3,#
+"morenames":True,#
 "maxbibitems":1,#
 "minbibitems":1,#
+"moreitems":False,#
+"date":'year',#'日期处理选项'：year，iso，等
+"urldate":'iso',#'日期处理选项'：year，iso，等
 }
 
 #本地化字符串
-bibstrings={
+localstrings={
 'andothers':{'english':'et al.','chinese':'等'},
 'and':{'english':' and ','chinese':'和'},
-'edition':{'english':'th ed.','chinese':'版'},
-'in':{'english':'in: ','chinese':'见: '}
+'edition':{'english':'th ed','chinese':'版'},#th ed. 中的点不要，为方便标点处理
+'in':{'english':'in: ','chinese':'见: '},
+'nolocation':{'english':'[S.l.]','chinese':'[出版地不详]'},
+'nopublisher':{'english':'[s.n.]','chinese':'[出版者不详]'},
+'bytranslator':{'english':'trans by','chinese':'译'},
+}
+
+#标点
+localpuncts={
+'multinamedelim':', ',
+'finalnamedelim':', ',
+'andothorsdelim':', ',
+'finalitemdelim':', ',
+'multiitemdelim':', ',
+}
+
+#替换字符串
+replacestrings={
+'[出版地不详]: [出版者不详]':'[出版地不详 : 出版者不详]',
+'[S.l.]: [s.n.]':'[S.l. : s.n.]',
+'..':'.',
 }
 
 #类型和载体字符串
@@ -211,7 +212,7 @@ typestrings={
 'incollection':'[G]',
 'thesis':'[D]',
 'mastersthsis':'[D]',
-'phdthsis':'[D]',
+'phdthesis':'[D]',
 'report':'[R]',
 'techreport':'[R]',
 'manual':'[A]',
@@ -228,8 +229,9 @@ typestrings={
 datatypeinfo={
 'namelist':['author','editor','translator','bookauthor'],
 'literallist':['location','address','publisher','institution','organization','school','language','keywords'],
-'literalfield':['title','journaltitle','journal','booktitle','subtitle','titleaddon','edition','version','url','volume','number','type','note','labelnumber'],
-'datefield':['date','year','urldate','origdate','eventdate'],
+'literalfield':['title','journaltitle','journal','booktitle','subtitle','titleaddon','edition','version','url',
+                'volume','number','endvolume','endnumber','type','note','labelnumber'],
+'datefield':['date','year','urldate','enddate','origdate','eventdate'],
 'rangefield':['pages']
 }
 
@@ -237,12 +239,12 @@ datatypeinfo={
 bibliographystyle={
 "book":[
 {"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
-{"fieldsource":['author','editor','translator'],'nameformat':'uppercase'},
-{"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'nolastfieldprepunct':'','posstring':r"\typestring"},
-{"fieldsource":['translator'],'nameformat':'uppercase','prepunct':". "},
-{"fieldsource":['edition'],'numerformat':'arabic','prepunct':". ","posstring":r'\bibstring{edition}'},#["版","ed."]
-{"fieldsource":['location','address'],'prepunct':". ",'replstring':""},#,'replstring':["出版社不详",'[S.l.]']
-{"fieldsource":['publisher'],'prepunct':": ",'replstring':"[出版者不详]",'nolastfieldprepunct':'. '},#,'replstring':["出版者不详",'[S.n.]']
+{"fieldsource":['author','editor','translator'],'options':{'nameformat':'uppercase'}},
+{"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':'','posstring':r"\typestring"},
+{"fieldsource":['translator'],'options':{'nameformat':'uppercase'},'prepunct':". ",'posstring':r', \bibstring{bytranslator}'},
+{"fieldsource":['edition'],'numerformat':'arabic','prepunct':". ","posstringifnumber":r'\bibstring{edition}'},
+{"fieldsource":['location','address'],'prepunct':". ",'replstring':r"\bibstring{nolocation}"},
+{"fieldsource":['publisher'],'prepunct':": ",'replstring':r"\bibstring{nopublisher}",'prepunctifnolastfield':'. '},
 {"fieldsource":['date','year'],'prepunct':", "},
 {"fieldsource":['pages'],'prepunct':": "},
 {"fieldsource":['urldate'],'prestring':"[","posstring":"]"},
@@ -252,10 +254,10 @@ bibliographystyle={
 ],
 "article":[
 {"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
-{"fieldsource":['author','editor','translator'],'nameformat':'uppercase'},
-{"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'nolastfieldprepunct':'','posstring':r"\typestring"},
+{"fieldsource":['author','editor','translator'],'options':{'nameformat':'uppercase'}},
+{"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':'','posstring':r"\typestring"},
 {"fieldsource":['journaltitle','journal'],'prepunct':". "},
-{"fieldsource":['date','year'],'prepunct':", "},
+{"fieldsource":['year','date'],'prepunct':", "},
 {"fieldsource":['volume'],'prepunct':", "},
 {"fieldsource":['number'],'prestring':"(",'posstring':")"},
 {"fieldsource":['pages'],'prepunct':": "},
@@ -264,24 +266,190 @@ bibliographystyle={
 {"fieldsource":['doi'],'prepunct':". "},
 {"fieldsource":['endpunct'],'replstring':"."}
 ],
-"newspaper":"article"
-#article:author.title[usera].journaltitle或journal,year,volume(number):pages[urldate].url.doi
-#standard:author.title[usera](//bookauthor.booktitle).edition.location:publisher,date或year:pages[urldate].url.doi
-#inbook:author.title[usera]//bookauthor.booktitle.edition.location:publisher,date或year:pages[urldate].url.doi
-#periodical:author/editor.title[usera].year或date,volume(number)-endyear, endvolume(endnumber).location:institution,date或year[urldate].url.doi
-#newspaper:author.title[usera].journaltitle或journal,date(number)[urldate].url.doi
-#patent:author.title:number[usera].date或year[urldate].url.doi
-#online:author.title[usera].organization/instiution,date或year:pages(date/enddate/eventdate)[urldate].url.doi
-#report:author.title[usera].translator.type number.version.location:institution,date 或year:pages[urldate].url.doi
-#thesis:author.title[usera].translator.location:institution,date或year:pages[urldate].url.doi
+"newspaper":[
+{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
+{"fieldsource":['author','editor','translator'],'options':{'nameformat':'uppercase'}},
+{"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':'','posstring':r"\typestring"},
+{"fieldsource":['journaltitle','journal'],'prepunct':". "},
+{"fieldsource":['date','year'],'prepunct':", ",'options':{'date':'iso'}},
+{"fieldsource":['number'],'prestring':"(",'posstring':")"},
+{"fieldsource":['pages'],'prepunct':": "},
+{"fieldsource":['urldate'],'prestring':"[","posstring":"]"},
+{"fieldsource":['url'],'prepunct':". "},
+{"fieldsource":['doi'],'prepunct':". "},
+{"fieldsource":['endpunct'],'replstring':"."}
+],
+"inbook":[
+{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
+{"fieldsource":['author','translator'],'options':{'nameformat':'uppercase'}},
+{"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':'','posstring':r"\typestring"},
+{"fieldsource":['in'],'replstring':"//",'omitifnofield':['bookauthor','editor','booktitle']},
+{"fieldsource":['bookauthor','editor'],'options':{'nameformat':'uppercase'}},
+{"fieldsource":['booktitle'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':''},
+{"fieldsource":['edition'],'numerformat':'arabic','prepunct':". ","posstring":r'\bibstring{edition}'},
+{"fieldsource":['location','address'],'prepunct':". ",'replstring':r"\bibstring{nolocation}"},
+{"fieldsource":['publisher'],'prepunct':": ",'replstring':r"\bibstring{nopublisher}",'prepunctifnolastfield':'. '},
+{"fieldsource":['date','year'],'prepunct':", "},
+{"fieldsource":['pages'],'prepunct':": "},
+{"fieldsource":['urldate'],'prestring':"[","posstring":"]"},
+{"fieldsource":['url'],'prepunct':". "},
+{"fieldsource":['doi'],'prepunct':". "},
+{"fieldsource":['endpunct'],'replstring':"."}
+],
+"inproceedings":"inbook",
+"incollection":"inbook",
+"standard":"inbook",
+"proceedings":"book",
+"collection":"book",
+"patent":[
+{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
+{"fieldsource":['author'],'options':{'nameformat':'uppercase'}},
+{"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':'','posstring':r"\typestring"},
+{"fieldsource":['number'],'prepunct':": "},
+{"fieldsource":['date','year'],'prepunct':", "},
+{"fieldsource":['urldate'],'prestring':"[","posstring":"]"},
+{"fieldsource":['url'],'prepunct':". "},
+{"fieldsource":['doi'],'prepunct':". "},
+{"fieldsource":['endpunct'],'replstring':"."}
+],
+"online":[
+{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
+{"fieldsource":['author','editor','translator'],'options':{'nameformat':'uppercase'}},
+{"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':'','posstring':r"\typestring"},
+{"fieldsource":['organization','instiution'],'prepunct':". "},
+{"fieldsource":['date','year'],'prepunct':", ",'prepunctifnolastfield':'. ','omitifnofield':['enddate','eventdate']},
+{"fieldsource":['pages'],'prepunct':": "},
+{"fieldsource":['date','enddate','eventdate'],'prepunct':". ",'options':{"date":"iso",'eventdate':'iso'},'prestring':"(","posstring":")"},
+{"fieldsource":['urldate'],'prestring':"[","posstring":"]",'prepunctifnolastfield':'. '},
+{"fieldsource":['url'],'prepunct':". ",'prepunctifnolastfield':''},
+{"fieldsource":['doi'],'prepunct':". "},
+{"fieldsource":['endpunct'],'replstring':"."}
+],
+"www":"online",
+"electronic":"online",
+"report":[
+{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
+{"fieldsource":['author','editor','translator'],'options':{'nameformat':'uppercase'}},
+{"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':'','posstring':r"\typestring"},
+{"fieldsource":['translator'],'options':{'nameformat':'uppercase'},'prepunct':". "},
+{"fieldsource":['type'],'prepunct':". "},
+{"fieldsource":['number'],'prepunct':"",'prepunctifnolastfield':'. '},
+{"fieldsource":['version'],'prepunct':". "},
+{"fieldsource":['location','address'],'prepunct':". ",'replstring':r"\bibstring{nolocation}"},
+{"fieldsource":['institution','publisher'],'prepunct':": ",'replstring':r"\bibstring{nopublisher}",'prepunctifnolastfield':'. '},
+{"fieldsource":['date','year'],'prepunct':", ",'omitifnofield':['location','address','institution','publisher'],'omitiffield':['url']},
+{"fieldsource":['date','year'],'prepunct':". ",'prestring':'(','posstring':')','omitiffield':['location','address','institution','publisher']},
+{"fieldsource":['pages'],'prepunct':": "},
+{"fieldsource":['urldate'],'prestring':"[","posstring":"]"},
+{"fieldsource":['url'],'prepunct':". "},
+{"fieldsource":['doi'],'prepunct':". "},
+{"fieldsource":['endpunct'],'replstring':"."}
+],
+"techreport":"report",
+"periodical":[
+{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
+{"fieldsource":['editor','author'],'options':{'nameformat':'uppercase'}},
+{"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':'','posstring':r"\typestring"},
+{"fieldsource":['year','date'],'prepunct':", "},
+{"fieldsource":['volume'],'prepunct':", "},
+{"fieldsource":['number'],'prestring':"(",'posstring':")-"},
+{"fieldsource":['endyear','enddate'],'prepunct':", "},
+{"fieldsource":['endvolume'],'prepunct':", "},
+{"fieldsource":['endnumber'],'prestring':"(",'posstring':")"},
+{"fieldsource":['location','address'],'prepunct':". ",'replstring':r"\bibstring{nolocation}"},
+{"fieldsource":['institution','publisher'],'prepunct':": ",'replstring':r"\bibstring{nopublisher}",'prepunctifnolastfield':'. '},
+{"fieldsource":['year','date'],'prepunct':", ",'posstring':'-'},
+{"fieldsource":['pages'],'prepunct':": "},
+{"fieldsource":['urldate'],'prestring':"[","posstring":"]"},
+{"fieldsource":['url'],'prepunct':". "},
+{"fieldsource":['doi'],'prepunct':". "},
+{"fieldsource":['endpunct'],'replstring':"."}
+],
+#omitifnofield:必须所有的域都不存在才为true
+#omitiffield:只要存在一个域就为true
+"thesis":[
+{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
+{"fieldsource":['author','editor','translator'],'options':{'nameformat':'uppercase'}},
+{"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':'','posstring':r"\typestring"},
+{"fieldsource":['translator'],'options':{'nameformat':'uppercase'},'prepunct':". "},
+{"fieldsource":['location','address'],'prepunct':". "},
+{"fieldsource":['institution','publisher','school'],'prepunct':": ",'prepunctifnolastfield':'. '},
+{"fieldsource":['date','year'],'prepunct':", ",'omitifnofield':['location','address','institution','publisher'],'omitiffield':['url']},
+{"fieldsource":['date','year'],'prepunct':". ",'prestring':'(','posstring':')','omitiffield':['location','address','institution','publisher']},
+{"fieldsource":['pages'],'prepunct':": "},
+{"fieldsource":['urldate'],'prestring':"[","posstring":"]"},
+{"fieldsource":['url'],'prepunct':". "},
+{"fieldsource":['doi'],'prepunct':". "},
+{"fieldsource":['endpunct'],'replstring':"."}
+],
+"manual":"thesis",
+"unpublished":"thesis",
+"database":"thesis",
+"dataset":"thesis",
+"software":"thesis",
+"map":"thesis",
+"archive":"thesis",
+"misc":[
+{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
+{"fieldsource":['author','editor','translator'],'options':{'nameformat':'uppercase'}},
+{"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':'','posstring':r"\typestring"},
+{"fieldsource":['howpublished'],'prepunct':". "},
+{"fieldsource":['location','address'],'prepunct':". "},
+{"fieldsource":['institution','publisher'],'prepunct':": ",'prepunctifnolastfield':'. '},
+{"fieldsource":['date','year'],'prepunct':", "},
+{"fieldsource":['pages'],'prepunct':": "},
+{"fieldsource":['urldate'],'prestring':"[","posstring":"]"},
+{"fieldsource":['url'],'prepunct':". "},
+{"fieldsource":['doi'],'prepunct':". "},
+{"fieldsource":['endpunct'],'replstring':"."}
+],
+"phdthesis":"thesis",
+"mastersthesis":"thesis",
 }
 
 
 #
 #
-#格式化一个文献条目文本
+#打印格式化后的全部文献条目文本
+def printbibliography():
+	
+	bibliographyentries=bibliographytext.split('\n')
+	
+	#md文件输出,直接用write写
+	mdoutfile="newformatted"+inputbibfile.replace('.bib','.md')
+	fout = open(mdoutfile, 'w', encoding="utf8")
+	print("INFO: writing cited references to '" + mdoutfile + "'")
+
+	for prtbibentry in bibliographyentries:
+		fout.write(prtbibentry+'\n')
+	fout.close()
+	
+	#html文件输出,直接用write写
+	mdoutfile="newformatted"+inputbibfile.replace('.bib','.html')
+	fout = open(mdoutfile, 'w', encoding="utf8")
+	print("INFO: writing cited references to '" + mdoutfile + "'")
+	fout.write('<html><head><title>references</title></head>')
+	fout.write('<body bgcolor="lightgray"><div align="top"><center>')
+	fout.write('<font color="blue">')
+	fout.write('<table border="0" cellPadding="10" cellSpacing="5" height="400" width="70%">')
+	fout.write('<tr><td height="1" width="566" align="center" colspan="1" bgcolor="teal"></td></tr>')
+	
+	for prtbibentry in bibliographyentries:
+		fout.write('<tr> <td width="480" height="15" colspan="6"><font color="blue">')
+		fout.write('<span style="font-family: 宋体; font-size: 14">')
+		fout.write(prtbibentry)
+		fout.write('</span></font></td> </tr>')
+	
+	fout.write('<tr><td height="1" width="566" align="center" colspan="1" bgcolor="teal"></td></tr>')
+	fout.write('</table></div></body></html>')
+	fout.close()
+
+#
+#
+#格式化全部文献条目文本
 def formatallbibliography():
 	labelnumber=0
+	global bibliographytext
 	bibliographytext=''
 	for bibentry in bibentries:
 		labelnumber=labelnumber+1
@@ -302,6 +470,48 @@ def formatbibentry(bibentry):
 	print('\nbibentry:',bibentry)
 	#bibentrytext='entry:'
 	
+	#
+	# 由于volume和number域可能存在范围的特殊情况，首先做特殊处理
+	#
+	if 'volume' in bibentry:
+		if '-' in bibentry['volume']:
+			multivolume=bibentry['volume'].split("-")
+			bibentry['volume']=multivolume[0]
+			bibentry['endvolume']=multivolume[1]
+	if 'number' in bibentry:
+		if '-' in bibentry['number']:
+			multinumber=bibentry['number'].split("-")
+			bibentry['number']=multinumber[0]
+			bibentry['endnumber']=multinumber[1]
+	
+	#四种日期域也做范围解析
+	if 'date' in bibentry:
+		if '/' in bibentry['date']:
+			datestring=bibentry['date'].split('/')
+			bibentry['date']=datestring[0]
+			bibentry['enddate']=datestring[1]
+	
+	if 'urldate' in bibentry:
+		if '/' in bibentry['urldate']:
+			datestring=bibentry['urldate'].split('/')
+			bibentry['urldate']=datestring[0]
+			bibentry['endurldate']=datestring[1]
+	
+	if 'eventdate' in bibentry:
+		if '/' in bibentry['eventdate']:
+			datestring=bibentry['eventdate'].split('/')
+			bibentry['eventdate']=datestring[0]
+			bibentry['endeventdate']=datestring[1]
+	
+	if 'origdate' in bibentry:
+		if '/' in bibentry['origdate']:
+			datestring=bibentry['origdate'].split('/')
+			bibentry['origdate']=datestring[0]
+			bibentry['endorigdate']=datestring[1]
+	
+	#
+	#接着处理所有域到一个条目文本
+	#
 	bibentrytext=''
 	
 	if bibentry['entrytype'] in bibliographystyle:
@@ -321,9 +531,20 @@ def formatbibentry(bibentry):
 			
 			bibentrytext=bibentrytext+fieldtext
 	
-		
+	#对替换字符串做处理
+	#包括对重复的标点做处理比如：..变为.
+	for k,v in replacestrings.items():
+		print(k,v)
+		#m=re.search(k,bibentrytext)
+		#print(m)
+		#bibentrytext=re.sub(k,v,bibentrytext)
+		#利用正则反而不行，直接用字符串替换
+		bibentrytext=bibentrytext.replace(k,v)
+	
 	print(bibentrytext)
 	return bibentrytext
+
+
 
 #
 #
@@ -339,54 +560,113 @@ def formatfield(bibentry,fieldinfo,lastfield):
 	fieldcontents=''
 	
 	fieldsource=None
-	if fieldinfo['fieldsource'][0] in  datatypeinfo['namelist']:
+
+	#首先判断域是否忽略
+	fieldomit=False
+	
+	if 'omitifnofield' in fieldinfo and 'omitiffield' in fieldinfo:
+
+		fieldomita=True#假设忽略的条件满足
+		for field in fieldinfo['omitifnofield']:#只要需要不存在的域有一个存在，那么条件就不满足
+			if field in bibentry:
+				fieldomita=False
+				break
+
+		fieldomitb=False#假设忽略的条件不满足
+		for field in fieldinfo['omitiffield']:#只要需要存在的域中有一个存在，那么条件就满足
+			if field not in bibentry:
+				fieldomitb=True
+				break
+
+		fieldomit=fieldomita and fieldomitb
 		
-		for field in fieldinfo['fieldsource']:#
-			if field in bibentry:#当域存在域条目中时，确定要处理的域
-				fieldsource=field
-				exit
-		if fieldsource:
-			fieldcontents=namelistparser(bibentry,fieldsource)
+	elif 'omitifnofield' in fieldinfo:
 		
+		fieldomit=True#假设忽略的条件满足
+		for field in fieldinfo['omitifnofield']:#只要需要不存在的域有一个存在，那么条件就不满足
+			if field in bibentry:
+				fieldomit=False
+				break
+		
+	elif 'omitiffield' in fieldinfo:
+		
+		fieldomit=False#假设忽略的条件不满足
+		for field in fieldinfo['omitiffield']:#只要需要存在的域中有一个存在，那么条件就满足
+			if field not in bibentry:
+				fieldomit=True
+				break
+	
+	print(fieldomit)
+	
+	
+	#如果不忽略该域那么：
+	if not fieldomit:
+		
+		#当域为姓名列表域时：
+		if fieldinfo['fieldsource'][0] in  datatypeinfo['namelist']:
+			#print('0',fieldinfo['fieldsource'][0])
+			#print('author' in bibentry)
+			for field in fieldinfo['fieldsource']:#
+				#print(fieldinfo['fieldsource'])
+				#print('namelist:',field)
+				if field in bibentry:#当域存在域条目中时，确定要处理的域
+					fieldsource=field
+					break
+			if fieldsource:
+				#传递条目给出的一些控制选项
+				if 'options' in fieldinfo:
+					options=fieldinfo['options']
+				else:
+					options={}
+				fieldcontents=namelistparser(bibentry,fieldsource,options)
+			
+		
+		#当域为文本列表域时：
+		elif fieldinfo['fieldsource'][0] in  datatypeinfo['literallist']:
 
-	elif fieldinfo['fieldsource'][0] in  datatypeinfo['literallist']:
+			for field in fieldinfo['fieldsource']:#
+				if field in bibentry:#当域存在域条目中时，确定要处理的域
+					fieldsource=field
+					break
+			if fieldsource:
+				fieldcontents=literallistparser(bibentry,fieldsource)
+				
+		#当域为文本域时：
+		elif fieldinfo['fieldsource'][0] in  datatypeinfo['literalfield']:
 
-		for field in fieldinfo['fieldsource']:#
-			if field in bibentry:#当域存在域条目中时，确定要处理的域
-				fieldsource=field
-				exit
-		if fieldsource:
-			fieldcontents=literallistparser(bibentry,fieldsource)
-			
-			
-	elif fieldinfo['fieldsource'][0] in  datatypeinfo['literalfield']:
+			for field in fieldinfo['fieldsource']:#
+				if field in bibentry:#当域存在域条目中时，确定要处理的域
+					fieldsource=field
+					break
+			if fieldsource:
+				fieldcontents=literalfieldparser(bibentry,fieldsource)
+				
+		
+		#当域为日期域时：
+		elif fieldinfo['fieldsource'][0] in  datatypeinfo['datefield']:
 
-		for field in fieldinfo['fieldsource']:#
-			if field in bibentry:#当域存在域条目中时，确定要处理的域
-				fieldsource=field
-				exit
-		if fieldsource:
-			fieldcontents=literalfieldparser(bibentry,fieldsource)
-			
-			
-	elif fieldinfo['fieldsource'][0] in  datatypeinfo['datefield']:
+			for field in fieldinfo['fieldsource']:#
+				if field in bibentry:#当域存在域条目中时，确定要处理的域
+					fieldsource=field
+					break
+			if fieldsource:
+				#传递条目给出的一些控制选项
+				if 'options' in fieldinfo:
+					options=fieldinfo['options']
+				else:
+					options={}
+				fieldcontents=datefieldparser(bibentry,fieldsource,options)
+				
+				
+		#当域为范围域时：
+		elif fieldinfo['fieldsource'][0] in  datatypeinfo['rangefield']:
 
-		for field in fieldinfo['fieldsource']:#
-			if field in bibentry:#当域存在域条目中时，确定要处理的域
-				fieldsource=field
-				exit
-		if fieldsource:
-			fieldcontents=datefieldparser(bibentry,fieldsource)
-			
-			
-	elif fieldinfo['fieldsource'][0] in  datatypeinfo['rangefield']:
-
-		for field in fieldinfo['fieldsource']:#
-			if field in bibentry:#当域存在域条目中时，确定要处理的域
-				fieldsource=field
-				exit
-		if fieldsource:
-			fieldcontents=rangefieldparser(bibentry,fieldsource)
+			for field in fieldinfo['fieldsource']:#
+				if field in bibentry:#当域存在域条目中时，确定要处理的域
+					fieldsource=field
+					break
+			if fieldsource:
+				fieldcontents=rangefieldparser(bibentry,fieldsource)
 	
 	if not fieldsource:
 		if 'replstring' in fieldinfo and fieldinfo['replstring']:
@@ -403,9 +683,9 @@ def formatfield(bibentry,fieldinfo,lastfield):
 		if lastfield:#当前一个著录项存在，则正常输出
 			if 'prepunct' in fieldinfo:
 				fieldtext=fieldtext+fieldinfo['prepunct']
-		else:#当前一个著录项不存在，则首先输出'nolastfieldprepunct'
-			if 'nolastfieldprepunct' in fieldinfo:
-				fieldtext=fieldtext+fieldinfo['nolastfieldprepunct']
+		else:#当前一个著录项不存在，则首先输出'prepunctifnolastfield'
+			if 'prepunctifnolastfield' in fieldinfo:
+				fieldtext=fieldtext+fieldinfo['prepunctifnolastfield']
 			elif 'prepunct' in fieldinfo:
 				fieldtext=fieldtext+fieldinfo['prepunct']
 		
@@ -419,6 +699,14 @@ def formatfield(bibentry,fieldinfo,lastfield):
 		
 		if 'posstring' in fieldinfo:
 			fieldtext=fieldtext+fieldinfo['posstring']
+			
+		if 'posstringifnumber' in fieldinfo:
+			try:
+				numtemp=int(fieldcontents)
+				if  isinstance(numtemp,int):
+					fieldtext=fieldtext+fieldinfo['posstringifnumber']
+			except:
+				print('info:waring the field value can not convert to integer')
 		
 		if 'pospunct' in fieldinfo:
 			fieldtext=fieldtext+fieldinfo['pospunct']
@@ -429,25 +717,40 @@ def formatfield(bibentry,fieldinfo,lastfield):
 		lastfield=False
 	
 	
+	#自定义标点的处理
+	print('fieldtext:',fieldtext)
+	while r'\printdelim' in fieldtext:
+		
+		m = re.search(r'\\printdelim{([^\}]*)}',fieldtext)#注意贪婪算法的影响，所以要排除\}字符
+		print('m.group(1):',m.group(1))
+		fieldtext=re.sub(r'\\printdelim{[^\}]*}',localpuncts[m.group(1)],fieldtext,count=1)
+		print('fieldtext:',fieldtext)
+	
+	
 	#本地化字符串的处理
 	print('fieldtext:',fieldtext)
 	while r'\bibstring' in fieldtext:
 		
 		language=languagejudgement(bibentry,fieldinfo,fieldsource)
-		m = re.search(r'\\bibstring{(.*)}',fieldtext)#注意\字符的匹配，即便是在r''中也需要用\\表示
-		fieldtext=re.sub(r'\\bibstring{.*}',bibstrings[m.group(1)][language],fieldtext,count=1)
+		m = re.search(r'\\bibstring{([^\}]*)}',fieldtext)#注意\字符的匹配，即便是在r''中也需要用\\表示
+		fieldtext=re.sub(r'\\bibstring{[^\}]*}',localstrings[m.group(1)][language],fieldtext,count=1)
 		print('fieldtext:',fieldtext)
 		#下面这句不行因为，在字典取值是，不支持\1这样的正则表达式
-		#fieldtext=re.sub(r'\\bibstring{(.*)}',bibstrings[r'\1'][language],fieldtext,count=1)
+		#fieldtext=re.sub(r'\\bibstring{(.*)}',localstrings[r'\1'][language],fieldtext,count=1)
 	
 	#标题的类型和载体标识符的处理
-	if r'\typestring' in fieldtext:
-		print(r'\typestring in',fieldtext)
-		if 'url' in bibentry:
+	if r'\typestring' in fieldtext:#当需要处理类型和载体时
+		if bibentry['entrytype'] in typestrings:#当条目对应的类型存在时
+			print(r'\typestring in',fieldtext)
 			typestring=typestrings[bibentry['entrytype']]
-			typestring=typestring.replace(']','/OL]')
-		else:
-			typestring=typestrings[bibentry['entrytype']]
+			if 'url' in bibentry:
+				typestring=typestring.replace(']','/OL]')
+			elif 'medium' in bibentry:
+				rplctypestring=bibentry['medium']+']'
+				typestring=typestring.replace(']',rplctypestring)
+		else:#当条目对应的类型不存在时，当做其它类型处理
+			typestring='[Z]'
+
 		print(typestring)
 		fieldtext=fieldtext.replace(r'\typestring',typestring)
 		
@@ -500,13 +803,301 @@ def fieldlanguage(fieldvalueinfo):
 
 #
 #
+#对存在{}做保护的字符串进行分割
+def safetysplit(strtosplt,seps):
+	
+	#首先查找{}保护的所有字符串
+	s1=re.findall('\{.*?\}',strtosplt)
+	
+	#接着确定保护字符串中是否存在分割用字符串
+	sepinbrace=False
+	for s1a in s1:
+		for sep in seps:
+			if sep in s1a:
+				sepinbrace=True
+				break
+		if sepinbrace:
+			break
+	#print(sepinbrace)
+			
+	#若保护字符串中存在分割字符串那么做特殊处理		
+	a=strtosplt
+	if sepinbrace:
+		
+		#保护字符串用特殊字符串代替，特殊字符串与分割字符串没有任何关联
+		strsn=0
+		for stra1 in s1:
+			strsn=strsn+1
+			a=a.replace(stra1,'$'+str(strsn)+'$')
+		#print(a)
+		
+		#处理原字符串为只需要一个分隔字符串就能分隔
+		if len(seps)>1:
+			for i in range(1,len(seps)):
+				a=a.replace(seps[i],seps[0])
+			#print(a)
+		
+		#接着做分割
+		names=a.split(seps[0])
+		#print(names)
+		
+		#对分割后的字符串做还原，即把特殊字符串还原回保护字符串
+		namesnew=[]
+		for name in names:
+			strsn=0
+			for stra1 in s1:
+				strsn=strsn+1
+				name=name.replace('$'+str(strsn)+'$',stra1)
+			#print(name)
+			namesnew.append(name.strip().lstrip())
+		
+	else:
+		#处理原字符串为只需要一个分隔字符串就能分隔
+		if len(seps)>1:
+			for i in range(1,len(seps)):
+				a=a.replace(seps[i],seps[0])
+			#print(a)
+		
+		#直接分割
+		names=a.split(seps[0])
+		namesnew=[]
+		for name in names:
+			namesnew.append(name.strip().lstrip())
+		
+	#print(namesnew)
+	return namesnew
+
+#
+#
 #姓名列表解析
-def namelistparser(bibentry,fieldsource):
+#增加条目给出的选项
+def namelistparser(bibentry,fieldsource,options):
 	fieldcontents=bibentry[fieldsource]
 	
-	return fieldcontents
+	#首先做针对{}保护的处理
+	#{}有可能保护一部分，有可能保护全部
+	#首先判断{}是否存在，若存在，那么可以确定需要做保护处理，否则用常规处理
+	#当然这些事情可以在一个函数中处理
 
+	#首先姓名列表进行分解，包括用' and '和' AND '做分解
+	#利用safetysplit函数实现安全的分解
+	seps=[' and ',' AND ']
+	fieldcontents=fieldcontents.lstrip().strip()
+	fieldauthors=safetysplit(fieldcontents,seps)
+
+	print('fieldauthors:',fieldauthors)
+	#接着从各个姓名得到更详细的分解信息
+	fieldnames=[]
+	for name in fieldauthors:
+		if name.lower() == 'others':
+			nameinfo={'morename':True}
+		else:
+			if fieldlanguage(name)=='chinese':#当中文姓名中存在逗号先去除
+				if ', ' in name:
+					name=name.replace(', ','')
+			else:
+				pass
+			nameinfo=singlenameparser(name)
+		fieldnames.append(nameinfo)
 	
+	#最后根据全局和局部选项进行格式化
+	nameformattedstr=''
+	
+	#根据'maxbibnames'和'minbibnames'截短
+	if 'maxbibnames' in options:#首先使用条目中的选项
+		if len(fieldnames)>options['maxbibnames']:
+			fieldnamestrunc=fieldnames[:options['minbibnames']]
+			nameinfo={'morename':True}
+			fieldnamestrunc.append(nameinfo)
+		else:
+			fieldnamestrunc=fieldnames
+	elif 'maxbibnames' in formatoptions:#接着使用全局选项
+		if len(fieldnames)>formatoptions['maxbibnames']:
+			fieldnamestrunc=fieldnames[:formatoptions['minbibnames']]
+			nameinfo={'morename':True}
+			fieldnamestrunc.append(nameinfo)
+		else:
+			fieldnamestrunc=fieldnames
+	else:
+		fieldnamestrunc=fieldnames
+	
+	#当条目选择中存在'nameformat'
+	if 'nameformat' in options:
+		option={'nameformat':options['nameformat']}
+	else:
+		option={}
+	
+	print('fieldnamestrunc:',fieldnamestrunc)
+	nameliststop=len(fieldnamestrunc)
+	nameliststart=1
+	namelistcount=0
+	for nameinfo in fieldnamestrunc:
+		namelistcount=namelistcount+1
+		if 'morename' in nameinfo:
+			if formatoptions['morenames']:#只有设置morenames为true是才输出other的相关信息
+				nameformattedstr=nameformattedstr+r'\printdelim{andothorsdelim}\bibstring{andothers}'
+		else:
+			if namelistcount==nameliststop and namelistcount>1:#当没有others时最后一个姓名前加的标点
+				nameformattedstr=nameformattedstr+r'\printdelim{finalnamedelim}'+singlenameformat(nameinfo,option)
+			elif namelistcount==nameliststart:
+				nameformattedstr=singlenameformat(nameinfo,option)
+			else:
+				nameformattedstr=nameformattedstr+r'\printdelim{multinamedelim}'+singlenameformat(nameinfo,option)
+	
+	return nameformattedstr
+
+
+#
+#
+#单个姓名格式化
+def singlenameformat(nameinfo,option):
+	
+	singlenamefmtstr=''
+	
+	
+	if 'nameformat' in option:#首先使用条目给出的选项
+		nameformat=option['nameformat']
+	elif 'nameformat' in formatoptions:#接着使用全局的选项
+		nameformat=formatoptions['nameformat']
+	else:#最后使用默认的选项
+		nameformat='uppercase'
+	
+	
+	#根据单个姓名格式化选项来实现具体的格式
+	if nameformat=='uppercase':
+		
+		if nameinfo['family'].startswith('{'):
+			singlenamefmtstr=nameinfo['family']
+		else:
+			singlenamefmtstr=nameinfo['family'].upper()
+		
+		#根据选项确定使用名的缩写
+		if formatoptions["giveninits"]=='space':#space表示名见用空格分隔，
+			if 'given' in nameinfo:
+				singlenamefmtstr=singlenamefmtstr+' '+nameinfo['giveni'].upper()
+			if 'middle' in nameinfo:
+				singlenamefmtstr=singlenamefmtstr+' '+nameinfo['middlei'].upper()
+		elif formatoptions["giveninits"]=='dotspace':#dotspace用点加空格，
+			if 'given' in nameinfo:
+				singlenamefmtstr=singlenamefmtstr+' '+nameinfo['giveni'].upper()
+			if 'middle' in nameinfo:
+				singlenamefmtstr=singlenamefmtstr+'. '+nameinfo['middlei'].upper()+'.'
+		elif formatoptions["giveninits"]=='dot':#dot用点，
+			if 'given' in nameinfo:
+				singlenamefmtstr=singlenamefmtstr+' '+nameinfo['giveni'].upper()
+			if 'middle' in nameinfo:
+				singlenamefmtstr=singlenamefmtstr+'.'+nameinfo['middlei'].upper()+'.'
+		elif formatoptions["giveninits"]=='terse':#terse无分隔，
+			if 'given' in nameinfo:
+				singlenamefmtstr=singlenamefmtstr+' '+nameinfo['giveni'].upper()
+			if 'middle' in nameinfo:
+				singlenamefmtstr=singlenamefmtstr+nameinfo['middlei'].upper()
+		elif formatoptions["giveninits"]=='false':#false不使用缩写
+			if 'given' in nameinfo:
+				singlenamefmtstr=singlenamefmtstr+' '+nameinfo['given'].upper()
+			if 'middle' in nameinfo:
+				singlenamefmtstr=singlenamefmtstr+' '+nameinfo['middle'].upper()
+
+		
+	elif nameformat=='lowercase':
+		pass
+	elif nameformat=='given-family':
+		pass
+	elif nameformat=='family-given':
+		pass
+	elif nameformat=='pinyin':
+		pass
+	else:
+		pass
+	
+	return singlenamefmtstr
+
+
+#
+#
+#单个姓名解析
+def singlenameparser(name):
+	
+	singlename=name
+	
+	print('name:',name)
+	
+	#字典用于存储所有的姓名成分信息
+	namepartsinfo={}
+	
+	nameparts=safetysplit(singlename,[','])
+	
+	if len(nameparts)==3:#两个逗号的情况，表示存在family和suffix
+		
+		prefixfamily=safetysplit(nameparts[0].lstrip().strip(),[' '])
+		if len(prefixfamily)>1:
+			namepartsinfo['prefix']=prefixfamily[0].lstrip().strip()
+			namepartsinfo['family']=prefixfamily[1].lstrip().strip()
+		else:
+			namepartsinfo['family']=prefixfamily[0].lstrip().strip()
+			
+		namepartsinfo['suffix']=nameparts[1].lstrip().strip()
+		
+		
+		givenmiddle=safetysplit(nameparts[2].lstrip().strip(),[' '])
+		if len(givenmiddle)>1:
+			namepartsinfo['given']=givenmiddle[0].lstrip().strip()
+			namepartsinfo['middle']=givenmiddle[1].lstrip().strip()
+		else:
+			namepartsinfo['given']=givenmiddle[0].lstrip().strip()
+		
+	elif len(nameparts)==2:
+		
+		prefixfamily=safetysplit(nameparts[0].lstrip().strip(),[' '])
+		if len(prefixfamily)>1:
+			namepartsinfo['prefix']=prefixfamily[0].lstrip().strip()
+			namepartsinfo['family']=prefixfamily[1].lstrip().strip()
+		else:
+			namepartsinfo['family']=prefixfamily[0].lstrip().strip()
+			
+		
+		givenmiddle=safetysplit(nameparts[1].lstrip().strip(),[' '])
+		if len(givenmiddle)>1:
+			namepartsinfo['given']=givenmiddle[0].lstrip().strip()
+			namepartsinfo['middle']=givenmiddle[1].lstrip().strip()
+		else:
+			namepartsinfo['given']=givenmiddle[0].lstrip().strip()
+		
+	else:
+		givenmiddlefamily=safetysplit(nameparts[0].lstrip().strip(),[' '])
+		if len(givenmiddlefamily)==3:
+			namepartsinfo['given']=givenmiddlefamily[0].lstrip().strip()
+			namepartsinfo['middle']=givenmiddlefamily[1].lstrip().strip()
+			namepartsinfo['family']=givenmiddlefamily[2].lstrip().strip()
+		elif len(givenmiddlefamily)==2:
+			namepartsinfo['given']=givenmiddlefamily[0].lstrip().strip()
+			namepartsinfo['family']=givenmiddlefamily[1].lstrip().strip()
+		elif len(givenmiddlefamily)==1:
+			namepartsinfo['family']=givenmiddlefamily[0].lstrip().strip()
+	
+	
+	print('nameparts:',namepartsinfo)
+	
+	if 'family' in namepartsinfo:
+		if namepartsinfo['family'].startswith('{'):
+			namepartsinfo['familyi']=namepartsinfo['family']
+		else:
+			namepartsinfo['familyi']=namepartsinfo['family'][0].upper()
+	
+	if 'given' in namepartsinfo:
+		#print(namepartsinfo['given'])
+		if namepartsinfo['given'].startswith('{'):
+			namepartsinfo['giveni']=namepartsinfo['given']
+		else:
+			namepartsinfo['giveni']=namepartsinfo['given'][0].upper()
+		
+	if 'middle' in namepartsinfo:
+		if namepartsinfo['middle'].startswith('{'):
+			namepartsinfo['middle']=namepartsinfo['middle']
+		else:
+			namepartsinfo['middlei']=namepartsinfo['middle'][0].upper()
+		
+	return namepartsinfo
 
 #
 #
@@ -514,7 +1105,47 @@ def namelistparser(bibentry,fieldsource):
 def literallistparser(bibentry,fieldsource):
 	fieldcontents=bibentry[fieldsource]
 	
-	return fieldcontents
+	
+	#首先从文本列表分解出各个项，包括用' and '和' AND '做分解
+	#利用safetysplit函数实现安全的分解
+	seps=[' and ',' AND ']
+	fieldcontents=fieldcontents.lstrip().strip()
+	fielditems=safetysplit(fieldcontents,seps)
+	
+	print('fielditems:',fielditems)
+	
+	#根据'maxbibitems'和'minbibitems'截短
+	fielditemstrunc=[]
+	
+	if len(fielditems)>formatoptions['maxbibitems']:
+		fielditemstrunc=fielditems[:formatoptions['minbibitems']]
+		fielditemstrunc.append('others')
+	else:
+		fielditemstrunc=fielditems
+	
+	#重设一下others的大小写，因为可能输入的时大写的
+	if fielditems[-1].lower() == 'others':
+		fielditems[-1]='others'
+	
+	#最后根据全局和局部选项进行格式化
+	itemliststop=len(fielditemstrunc)
+	itemliststart=1
+	itemlistcount=0
+	itemformattedstr=''
+	for iteminfo in fielditemstrunc:
+		itemlistcount=itemlistcount+1
+		if iteminfo == 'others':
+			if formatoptions['moreitems']:#只有设置moreitems为true是才输出other的相关信息
+				itemformattedstr=itemformattedstr+r'\printdelim{andothorsdelim}\bibstring{andothers}'
+		else:
+			if itemlistcount==itemliststop and itemlistcount>1:#当没有others时最后一个项前加标点
+				itemformattedstr=itemformattedstr+r'\printdelim{finalitemdelim}'+iteminfo
+			elif itemlistcount==itemliststart:
+				itemformattedstr=iteminfo
+			else:
+				itemformattedstr=itemformattedstr+r'\printdelim{multiitemdelim}'+iteminfo
+	
+	return itemformattedstr
 
 #
 #
@@ -526,16 +1157,104 @@ def literalfieldparser(bibentry,fieldsource):
 
 #
 #
-#文本域解析
-def datefieldparser(bibentry,fieldsource):
+#日期域解析
+#条目设置的选项options:
+def datefieldparser(bibentry,fieldsource,options):
 	fieldcontents=bibentry[fieldsource]
 	
+	#首先从日期域，解析日期类型：
+	dateparts={}
+	if fieldsource=='year':
+		datestring=bibentry[fieldsource]
+		datetype=''
+	else:
+		datetype=fieldsource.replace('date','')
+		datestring=bibentry[fieldsource]
+		
+		
+	#日期的年月日解析
+	#日期一般很少用{}进行保护，当保护的时候通常是整个进行包括，所以通常{}会出现在域的起始和末尾
+	#所以当出现{字符时通常不用再做解析
+	if '{' in datestring:
+		datepartinfo=[datestring]
+	else:
+		datepartinfo=datestring.split('-')
+	
+	if len(datepartinfo)==3:
+		dateparts[datetype+'year']=datepartinfo[0].strip().lstrip()
+		dateparts[datetype+'month']=datepartinfo[1].strip().lstrip()
+		dateparts[datetype+'day']=datepartinfo[2].strip().lstrip()
+	elif len(datepartinfo)==2:
+		dateparts[datetype+'year']=datepartinfo[0].strip().lstrip()
+		dateparts[datetype+'month']=datepartinfo[1].strip().lstrip()
+	else:
+		dateparts[datetype+'year']=datepartinfo[0].strip().lstrip()
+	
+	print(dateparts)
+	
+	#判断解析的年月日是不是整数，若不是则表示日期不可解析
+	datecanbeparse=True
+	for k,v in dateparts.items():
+		try:
+			datepartisint=isinstance(int(v),int)
+		except:
+			print('INFO: WARNING'+fieldsource+'can not be parsed')
+			datecanbeparse=False
+			break
+		
+	
+	#然后根据全局选项进行格式化：
+	#如果解析的年月日不是整数，那么对于date域则忽略，对于year域则直接输出
+	if datecanbeparse:
+		if datetype+'date' in options:#首先使用条目给出的选项
+			fieldcontents=singledateformat(dateparts,datetype,options[datetype+'date'])
+		elif datetype+'date' in formatoptions:#接着使用全局给出的选项
+			fieldcontents=singledateformat(dateparts,datetype,formatoptions[datetype+'date'])
+		else:#否则使用默认选项
+			fieldcontents=singledateformat(dateparts,datetype,'default')
+	else:
+		if fieldsource=='year':
+			fieldcontents=bibentry[fieldsource]
+		else:
+			fieldcontents=''
+			
 	return fieldcontents
 
 
 #
 #
-#文本域解析
+# 根据日期的设置选项格式化单个日期
+def singledateformat(dateparts,datetype,formatoption):
+	if formatoption=='year':
+		dateformatstr=dateparts[datetype+'year']
+	elif formatoption=='iso':
+		dateformatstr=dateparts[datetype+'year']
+		if len(dateparts[datetype+'month'])<2:
+			dateformatstr=dateformatstr+'-0'+dateparts[datetype+'month']
+		else:
+			dateformatstr=dateformatstr+'-'+dateparts[datetype+'month']
+		if len(dateparts[datetype+'day'])<2:
+			dateformatstr=dateformatstr+'-0'+dateparts[datetype+'day']
+		else:
+			dateformatstr=dateformatstr+'-'+dateparts[datetype+'day']
+	elif formatoption=='ymd':
+		dateformatstr=dateparts[datetype+'year']
+		dateformatstr=dateformatstr+'-'+dateparts[datetype+'month']
+		dateformatstr=dateformatstr+'-'+dateparts[datetype+'day']
+	elif formatoption=='default':
+		dateformatstr=dateparts[datetype+'year']
+	else:
+		pass
+	
+	return dateformatstr
+
+
+
+
+
+#
+#
+#范围域解析
 def rangefieldparser(bibentry,fieldsource):
 	fieldcontents=bibentry[fieldsource]
 	
@@ -576,18 +1295,31 @@ def readfilecontents(bibFile):
 def printfilecontents():
 	for line in bibfilecontents:
 		print(line)
-		
+
+
+
 #
 #输出修改后的bib文件
 def writefilenewbib(bibFile):
 
 	print(datetime.datetime.now().isoformat(timespec='seconds'))
 	
-	#json文件输出
+	#json文件输出,用dump方法
 	jsonoutfile="new"+bibFile.replace('.bib','.json')
 	print("INFO: writing all references to '" + jsonoutfile + "'")
 	fout = open(jsonoutfile, 'w', encoding="utf8")
 	json.dump(bibentries, fout)
+	fout.close()
+	
+	#json文件输出,直接用write写
+	jsonoutfile="new"+bibFile.replace('.bib','cited.json')
+	fout = open(jsonoutfile, 'w', encoding="utf8")
+	print("INFO: writing cited references to '" + jsonoutfile + "'")
+	fout.write('[\n')
+	for bibentry in bibentries:
+		if bibentry["entrykey"] in usedIds or not usedIds:
+			fout.write(repr(bibentry)+',\n')
+	fout.write(']\n')
 	fout.close()
 
 	#bib文件输出
@@ -600,6 +1332,23 @@ def writefilenewbib(bibFile):
 		
 		fout.write("%% "+datetime.datetime.now().isoformat(timespec='seconds')+"\n")
 		fout.write("%% \n\n\n")
+		
+		for bibcomment in bibcomments:
+			for k,v in bibcomment.items():
+				if k=="entrytype":
+					fout.write('@'+bibcomment["entrytype"]+'{')
+				else:
+					fout.write(str(v))
+			fout.write('}\n\n')
+			
+		for bibstring in bibstrings:
+			for k,v in bibstring.items():
+				if k=="entrytype":
+					fout.write('@'+bibstring["entrytype"]+'{')
+				else:
+					fout.write(str(v))
+			fout.write('}\n\n')
+		
 		writebibentrycounter=0
 		if auxfile:
 			print("INFO: writing cited references in aux to '" + biboutfile + "'")
@@ -633,14 +1382,32 @@ def writefilenewbib(bibFile):
 				"' doesn't exist or is not readable")
 		sys.exit(-1)
 		
+
+
+
 #
 #将条目解析放到bibentries列表中
 #每个条目是一个dict字典
 def bibentryparsing():
 	global bibentries
+	global bibcomments
+	global bibstrings
 	bibentries=[]#用于记录所有条目
 	bibentry={}#用于记录当前条目
+	
+	bibcomments=[]#用于记录所有@comment条目
+	bibcomment={}#用于记录当前@comment条目
+	
+	bibstrings=[]#用于记录所有@stirng条目
+	bibstring={}#用于记录当前@stirng条目
+	
 	entrysn=0 #用于标记条目序号
+	bibentrycounter=0##用于标记条目总数
+	commentsn=0 #用于标记@comment条目序号
+	bibcommentcounter=0#用于标记@comment条目总数
+	stringsn=0 #用于标记@stirng条目序号
+	bibstringcounter=0#用于标记@stirng条目总数
+	
 	entrystated=False #用于标记条目开始
 	fieldvalended=True #用于标记域的值当前行是否已经结束
 	fieldvalue="" #用于记录当前域的值
@@ -652,7 +1419,7 @@ def bibentryparsing():
 	for line in bibfilecontents:#遍历所有行
 		#print(line)
 		
-		if line.startswith("@") and not "@comment" in line.lower():#判断条目开始行
+		if line.startswith("@") and not "@comment" in line.lower() and not "@string" in line.lower():#判断条目开始行
 			entrysn=entrysn+1
 			entrystated=True #新条目开始
 			print('entrysn=',entrysn)
@@ -729,58 +1496,105 @@ def bibentryparsing():
 				
 				elif '}' in line:#条目结束行
 
-					global bibentryglobal
-					bibentryglobal=copy.deepcopy(bibentry) 
-					print('entry:',bibentryglobal)
-					bibentries.append(bibentryglobal)
+					#global bibentryglobal
+					#bibentryglobal=copy.deepcopy(bibentry) 
+					#print('entry:',bibentryglobal)
+					#bibentries.append(bibentryglobal)
+					print('entry:',bibentry)
+					bibentries.append(bibentry)
 					bibentry={}
 					entrystated=False
 					
 			else: #当前行是前面的未结束域的值，因此直接往前面的域值添加即可
 				fieldvalcontinued=True
-				entryfieldline=" "+line
-				for chari in entryfieldline.strip():
-					fieldvalue=fieldvalue+chari
-					if chari =='{':
-						counterbracket=counterbracket+1
-					elif chari =='}':
-						counterbracket=counterbracket-1
-						if enclosebracket:
-							if counterbracket==0:
-								bibentry[entryfield]=fieldvalue[1:-1]
-								fieldvalue=""
-								counterbracket=0
-								counterquotes=0
-								fieldvalended=True
-								fieldvalcontinued=False
-								break
-					elif chari =='"':
-						counterquotes=counterquotes+1
-						if not enclosebracket:
-							if mod(counterquotes,2)==0:
-								bibentry[entryfield]=fieldvalue[1:-1]
-								fieldvalue=""
-								counterbracket=0
-								counterquotes=0
-								fieldvalended=True
-								fieldvalcontinued=False
-								break
-					elif chari ==',':
-							if enclosenone:
-								bibentry[entryfield]=fieldvalue[:-1]
-								fieldvalue=""
-								counterbracket=0
-								counterquotes=0
-								fieldvalended=True
-								fieldvalcontinued=False
-								enclosenone=False
+
+				entryfieldline=line
+				
+				if enclosenone:#当域没有包围符号时，接续的行可能是用逗号结束的域，也可能没有逗号，而用}直接结束条目信息
+					for chari in entryfieldline.strip():
+						fieldvalue=fieldvalue+chari
+						if chari ==',':
+							bibentry[entryfield]=fieldvalue[:-1]
+							fieldvalue=""
+							counterbracket=0
+							counterquotes=0
+							fieldvalended=True
+							fieldvalcontinued=False
+							enclosenone=False
+						elif chari =='}':
+							bibentry[entryfield]=fieldvalue[:-1]
+							fieldvalue=""
+							counterbracket=0
+							counterquotes=0
+							fieldvalended=True
+							fieldvalcontinued=False
+							enclosenone=False
+							print('entry:',bibentry)
+							bibentries.append(bibentry)
+							bibentry={}
+							entrystated=False
+				
+				else:
+					for chari in entryfieldline.strip():
+						fieldvalue=fieldvalue+chari
+						if chari =='{':
+							counterbracket=counterbracket+1
+						elif chari =='}':
+							counterbracket=counterbracket-1
+							if enclosebracket:
+								if counterbracket==0:
+									bibentry[entryfield]=fieldvalue[1:-1]
+									fieldvalue=""
+									counterbracket=0
+									counterquotes=0
+									fieldvalended=True
+									fieldvalcontinued=False
+									break
+						elif chari =='"':
+							counterquotes=counterquotes+1
+							if not enclosebracket:
+								if mod(counterquotes,2)==0:
+									bibentry[entryfield]=fieldvalue[1:-1]
+									fieldvalue=""
+									counterbracket=0
+									counterquotes=0
+									fieldvalended=True
+									fieldvalcontinued=False
+									break
+
+								
 				if fieldvalcontinued:
 					fieldvalended=False
+		elif line.startswith("@") and "@comment" in line.lower():#@comment的起始
+			commentsn=commentsn+1
+			entrynow=line.lstrip('@').split(sep='{', maxsplit=1)
+			entrytype=entrynow[0]
+			bibcomment['entrytype']=entrytype.lower()#条目类型小写，方便比较
+			entrycontents=entrynow[1].strip()[:-1]
+			bibcomment['entrycontents']=entrycontents
+			print(bibcomment)
+			bibcomments.append(bibcomment)
+			bibcomment={}
+			
+		elif line.startswith("@") and "@string" in line.lower():#@string的起始
+			stringsn=stringsn+1
+			entrynow=line.lstrip('@').split(sep='{', maxsplit=1)
+			entrytype=entrynow[0]
+			bibstring['entrytype']=entrytype.lower()#条目类型小写，方便比较
+			entrycontents=entrynow[1].strip()[:-1]
+			bibstring['entrycontents']=entrycontents
+			print(bibstring)
+			bibstrings.append(bibstring)
+			bibstring={}
 
-	print('entrysn=',entrysn)
+	
 	bibentrycounter=len(bibentries)
-	print('entrycounter=',bibentrycounter)
-	if not bibentrycounter==entrysn:
+	bibcommentcounter=len(bibcomments)
+	bibstringcounter=len(bibstrings)
+	print('entrysn=',entrysn,' commentsn=',commentsn,' stringsn=',stringsn)
+	print('entryct=',bibentrycounter,' commentct=',bibcommentcounter,' stringct=',bibstringcounter)
+	
+	if not bibentrycounter==entrysn or not bibcommentcounter==commentsn or not bibstringcounter==stringsn:
 		try:
 			raise BibParsingError('bib file parsing went wrong!')
 		except BibParsingError as e:
@@ -1186,9 +2000,10 @@ if __name__=="__main__":
 	
 	writefilenewbib(inputbibfile)
 	
-	print(bibentries[0])
+	#print(bibentries[0])
 
-	print(formatbibentry(bibentries[0]))
+	#print(formatbibentry(bibentries[0]))
 	
 	formatallbibliography()
+	printbibliography()
 		

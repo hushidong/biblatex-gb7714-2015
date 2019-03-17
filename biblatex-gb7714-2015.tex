@@ -771,8 +771,25 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   该选项的实现主要是两个方面：一是实现国标要求的脚注标签和段落格式，利用对
   \verb|\@makefnmark|重定义实现正文脚注标签带圈上标，
-  利用对\verb|\@makefntext|做patch局部化重设\verb|\@makefnmark|使得脚注中的标签不上标，利用footmisc宏包实现对脚注的悬挂对齐，需要注意由于footmisc的问题，使用该宏包会导致脚注的超链接失效，如果不需要悬挂格式，那么可以在bbx文件中将footmisc注释掉，此外对于beamer类该包也并不兼容，所以当加载beamer类则直接注释掉；二是实现国标要求的相同的文献不输出，而是简化输出，比如同\textcircled{4} 等，主要利用citetracker 选项实现对文献引用的追踪，然后利用ifciteseen 判断和对footfullcite 命令做修改实现。
+  利用对\verb|\@makefntext|做patch局部化重设\verb|\@makefnmark|使得脚注中的标签不上标，利用对latex核心代码和hyperref宏包代码的重定义实现悬挂缩进的格式。
+  二是实现国标要求的相同的文献不输出，而是简化输出，比如同\textcircled{4} 等，主要利用citetracker 选项实现对文献引用的追踪，然后利用ifciteseen 判断和对footfullcite 命令做修改实现。
   测试文档见：\href{run:./example/opt-gbfootbib.tex}{opt-gbfootbib.tex}。
+
+  需要注意的是，由于图表标题(caption)环境的特殊性，在其中使用footfullcite可能无法得到正常的脚注文献表。而通常的方法是利用footnotemark和footnotetext来实现脚注，对于文献表也是类似的，因此也不能简单使用footfullcite命令，而是要使用footnotemark和footnotetext以及fullcite命令配合来实现， 比如：
+  
+  \begin{example}{图表标题中产生的脚注文献表}{eg:footbib:incaption}
+  \begin{texlist}
+  \begin{figure}[h]
+      \centering
+      \fbox{abc}
+      \caption{示意图见文献\protect\footnotemark}
+  \end{figure}
+
+  \footnotetext{\fullcite{bibtex-key}}
+  \end{texlist}
+  \end{example}
+
+  但要注意由于hyperref本身的原因，这种方式产生的脚注文献表可能没有超链接功能。
 
 
   \item[mergedate]=true，false，none.
@@ -784,7 +801,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item mergedate=none，作者年制文献表仅在出版项中输出日期。该选项用于满足中科院大学的作者年制格式要求。
     \item no mergedate，即不给出该选项，这是gb7714-2015ay默认的情况，仅在作者后输出日期且已经根据国标格式化。
   \end{itemize}
-  
+
   \item[gblanorder]=\textbf{chineseahead}，englishahead，userdefinedstr like:cn;en;ru;fr;jp;kr . \hfill default is chineseahead
 
   为作者年制文献不同语言分集排序而增加的选项。
@@ -795,7 +812,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \end{itemize}
 
   测试文档见：\href{run:./example/opt-gblanorder.tex}{opt-gblanorder.tex}。
-  
+
 \end{description}
 
 
@@ -1297,7 +1314,17 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
 需要注意的是，note域在本样式中也做特殊用途，即在book类型的note域中输入standard表示标准，在aritcle类型的note域中输入news表示报纸，当然也可以不做特殊用，而只是表示杂项信息，因为标准和报纸可以用standard和newspaper类型表示，尽管这两种类型不是biblatex原生的条目类型。而usera域用于表示参考文献类型和载体标识符（为兼容Lee zeping的bst样式使用的bib文件也可以用mark和medium表示）。一般情况下usera，mark，medium这些域不用在bib文件中输入，而由样式文件自动处理得到，既为了使bib文件更纯粹，也为了兼容不同的样式。想象一下如果在bib文件中给出usera域，但另一样式需要使用usera域且用途不同，那么就会有兼容性问题。不用手动输入更重要的目的是为用户减负，因为用户可以直接使用从网络（各种学术）导出参考文献信息而不用再额外添加一个参考文献类型和载体标识符。本宏包自动判断语言而不使用一个表示语言的域比如language来标记文献的语言类型也出于同样的考虑，当然也有一种情况即一篇文献中存在多种语言是无法用一个language标识的，比如一本英文著作被翻译为中文，那么原作者是英文，而译者则是中文，这时标记language的意义不大。标记language更多的是用在多种语言混合的文档中，可以用language来标记英语、中文、日语、法语和德语等用于分语言排序。
 
-各个数据域的录入应符合bib文件规范。\bc{需要注意: 有时直接从网络获取的参考文献信息中可能带有一些特殊字符比如\%，\&等，这些字符在 tex 中通常需要做转义处理，本样式中对像title，journal等常见域中出现的特殊字符已经做了转义，但是一些不常见的域比如 abstract 等没有考虑，所以用户需要手动处理，例如把\%改为\textbackslash \%，否则可能导致出错}。下面详细介绍本样式中使用的域及其数据录入方式:
+各个数据域的录入应符合bib文件规范。需要注意: 
+
+\bc{1. 有时直接从网络获取的参考文献信息中可能带有一些特殊字符比如\%，\&等，这些字符在 tex 中通常需要做转义处理，本样式中对像title，journal等常见域中出现的特殊字符已经做了转义，但是一些不常见的域比如 abstract 等没有考虑，所以用户需要手动处理，例如把\%改为\textbackslash \%，否则可能导致出错}
+
+\bc{2. 由于目前biber使用\href{https://github.com/ambs/Text-BibTeX/tree/master/btparse}{btparse}来解析bib文件，因此各条目中的引用关键词中不能出现圆括号作为其内容一部分比如\@misc\{Euclidean\_geometry(hi), 这样的写法是不允许的，需要去掉其中()，否则biber会报错。%}
+}
+
+\bc{3. 由于url宏包的特点，在各个域中使用 \textbackslash url命令时，无法使用中文字符，如果要使用带中文字符的网址，那么可以利用 \textbackslash href命令代替 \textbackslash url命令。或者不使用这两个命令，而直接输入网址，超链接则在域格式中用 \textbackslash href 命令定义，比如：
+\textbackslash DeclareFieldFormat\{howpublished\}\{\textbackslash href\{\#1\}\{\#1\}\}。
+} 
+下面详细介绍本样式中使用的域及其数据录入方式:
 
 \begin{description}
   \item[author] 在biblatex中author域属于name数据类型，输入数据时，各姓名间用and 连接，当姓名过多省略时，用others代替。

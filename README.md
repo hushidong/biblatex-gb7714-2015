@@ -26,6 +26,7 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 
 ## Need to do:
 
+	* minipage环境中的脚注的段落格式缩进不起作用需要修正
 	* 王临慧, 2010a. 王临慧, 等, 2010b.需要等biblatex2.13更新后完成
     * special characters in all fields?
     * entry without author: the delimiter between title and year?

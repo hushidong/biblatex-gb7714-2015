@@ -219,7 +219,11 @@
       \ifstrequal{#1}{false}{}{\execgbfootbib}}
     \ExecuteBibliographyOptions{gbfootbib}
 
-    %%
+        %%
+    \newlength{\footbibmargin}
+    \newlength{\footbiblabelsep}
+    \setlength{\footbibmargin}{1em}%脚注的段落左侧缩进距离
+    \setlength{\footbiblabelsep}{0.5em}%脚注中标记号与脚注段落的间距
     \def\execgbfootbib%
     {%
     %开启引用跟踪计数器，为使用\ifciteseen等测试命令
@@ -231,8 +235,52 @@
     %beamer类因为其特殊性，为避免冲突不调footmisc。
     %同时footmisc与hyperref宏包也不兼容，所以使用footmisc时会破坏脚注的超链接
     %如果要实现超链接可以将下句注释掉，这里留着主要是实现悬挂对齐。
-    \PassOptionsToPackage{perpage,hang}{footmisc}
-    \RequirePackage{footmisc}}
+    %\PassOptionsToPackage{perpage,hang}{footmisc}%
+    %\RequirePackage{footmisc}%
+
+    %重新实现脚注的根据单页重设脚注号码
+    %重新实现脚注的悬挂对齐问题，不再使用footmisc，直接从latex核心代码和hyperref代码进行修改
+    %v1.0q 20190317 hzz
+    \@addtoreset{footnote}{page}%重设计数器
+
+\@ifpackageloaded{hyperref}{%加载hyperref则对\H@@footnotetext做重定义
+    \long\def\H@@footnotetext##1{\insert\footins{%
+    \reset@font\footnotesize
+    \interlinepenalty\interfootnotelinepenalty
+    \splittopskip\footnotesep
+    \splitmaxdepth \dp\strutbox \floatingpenalty \@MM
+    \hsize\columnwidth \@parboxrestore
+    \protected@edef\@currentlabel{%
+       \csname p@footnote\endcsname\@thefnmark
+    }%
+    \color@begingroup
+    \leftskip \footbibmargin%增加的左侧缩进
+      \@makefntext{%
+        \rule\z@\footnotesep\ignorespaces##1\@finalstrut\strutbox%
+        }%
+    \color@endgroup}}%
+    }{%否则对latex核心代码中的\@footnotetext做重定义
+    \long\def\@footnotetext##1{\insert\footins{%
+    \reset@font\footnotesize
+    \interlinepenalty\interfootnotelinepenalty
+    \splittopskip\footnotesep
+    \splitmaxdepth \dp\strutbox \floatingpenalty \@MM
+    \hsize\columnwidth \@parboxrestore
+    \protected@edef\@currentlabel{%
+       \csname p@footnote\endcsname\@thefnmark
+    }%
+    \color@begingroup
+    \leftskip \footbibmargin%增加的左侧缩进
+      \@makefntext{%
+        \rule\z@\footnotesep\ignorespaces##1\@finalstrut\strutbox%
+        }%
+    \color@endgroup}}%
+    }
+
+    \long\def\@makefntext##1{%增加了脚注标记与正文的间隔
+    \parindent 1em\noindent \hb@xt@ 0em{\hss \@makefnmark\makebox[\footbiblabelsep]{}}##1}
+
+    }
 
     %
     %使脚注标记加圈并设置数字的字体为tiny，不使用修改thefootnote的方式

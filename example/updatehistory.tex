@@ -20,8 +20,12 @@ correct a bug of sorting using lansortorder field when a reference with field la
 
 \item 修正了小页环境中使用国标要求的脚注文献表时，相同文献引用时的标签问题，比如小页中应是同\textcircled{\tiny a}:15-45，
 而不是正文环境中的同\textcircled{\tiny 1}:15-45（20190310）
-    
+
 correct the footnote bibliography problem in minipage when repeatedly cite a same reference to set a label like: \textcircled{\tiny a}:15-45 rather than the \textcircled{\tiny 1}:15-45 in normal text.
+
+\item 修正了国标要求格式脚注文献表的超链接问题。由于footmisc会导致脚注的超链接失效，且与beamer 类该包也并不兼容，因此不再使用footmisc，而直接根据latex核心代码和hyperref宏包代码实现段落格式。（20190317）
+
+correct the footnote bibliographyhyperlink for gb standard. because of the invalid hyperlink and the incompatibility with beamer by loading package footmisc, using the code of latex core  and hyperref package instead of footmisc to realize the par shape format.
 \end{enumerate}
 
 %============================
