@@ -262,6 +262,20 @@
         \rule\z@\footnotesep\ignorespaces##1\@finalstrut\strutbox%
         }%
     \color@endgroup}}%
+
+  \long\def\H@@mpfootnotetext##1{%
+  \global\setbox\@mpfootins\vbox{%
+    \unvbox\@mpfootins
+    \reset@font\footnotesize
+    \hsize\columnwidth
+    \@parboxrestore
+    \protected@edef\@currentlabel
+         {\csname p@mpfootnote\endcsname\@thefnmark}%
+    \leftskip \footbibmargin%增加的左侧缩进
+    \color@begingroup
+      \@makefntext{%
+        \rule\z@\footnotesep\ignorespaces##1\@finalstrut\strutbox}%
+    \color@endgroup}}
     }{%否则对latex核心代码中的\@footnotetext做重定义
     \long\def\@footnotetext##1{\insert\footins{%
     \reset@font\footnotesize
@@ -278,6 +292,20 @@
         \rule\z@\footnotesep\ignorespaces##1\@finalstrut\strutbox%
         }%
     \color@endgroup}}%
+
+    \long\def\@mpfootnotetext##1{%
+    \global\setbox\@mpfootins\vbox{%
+    \unvbox\@mpfootins
+    \reset@font\footnotesize
+    \hsize\columnwidth
+    \@parboxrestore
+    \protected@edef\@currentlabel
+         {\csname p@mpfootnote\endcsname\@thefnmark}%
+    \leftskip \footbibmargin%增加的左侧缩进
+    \color@begingroup
+      \@makefntext{%
+        \rule\z@\footnotesep\ignorespaces##1\@finalstrut\strutbox}%
+    \color@endgroup}}
     }
 
     \long\def\@makefntext##1{%增加了脚注标记与正文的间隔

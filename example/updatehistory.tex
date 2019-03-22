@@ -26,6 +26,14 @@ correct the footnote bibliography problem in minipage when repeatedly cite a sam
 \item 修正了国标要求格式脚注文献表的超链接问题。由于footmisc会导致脚注的超链接失效，且与beamer 类该包也并不兼容，因此不再使用footmisc，而直接根据latex核心代码和hyperref宏包代码实现段落格式。（20190317）
 
 correct the footnote bibliographyhyperlink for gb standard. because of the invalid hyperlink and the incompatibility with beamer by loading package footmisc, using the code of latex core  and hyperref package instead of footmisc to realize the par shape format.
+
+\item 修正了minipage中脚注悬挂对齐的问题，通过重定义\verb|\@mpfootnotetext|和\verb|\H@@mpfootnotetext|。(20190318)
+
+correct the hang alignment of the footnotes in minipage
+
+\item 增加了gb7714-2015mx样式，可以在一个文档不同的文献节中使用不同的样式，比如某些节使用顺序编码制，而有的则使用作者年制。(20190322)
+
+add a style gb7714-2015mx which can be used to generate different style bibliographies in different refsetions, like numeric style in some refsections and authoryear style in other refsections. 
 \end{enumerate}
 
 %============================

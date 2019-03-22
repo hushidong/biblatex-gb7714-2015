@@ -4,39 +4,12 @@
 A python script to modify bib data and 
 to display references with specific bibliography standard
 
-features：
+two key features：
 
+两大核心功能
+1. bib文件抽取，bib文件内容的自定义修改
+2. 格式化文献表输出，包括json，bib，text，html，bbl文件，其中bbl文件可以在tex源代码中直接使用，利用natbib宏包可以实现不同的标注样式。
 
-未解决：
-
-6 检查格式是否写正确
-即用选项是否在设定范围内来进行检查
-比如有时会笔误，posstring写出postring
-
-
-9. literal类型的格式选项：sentencecase
-
-
-11. range类型的格式选项
-
-12. 文本中{}的忽略，而输出到tex的文本中的{}不忽略
-到正常文本中的利用符号追踪方法成对的消除{}，或者也不消除，
-而是在html文件中做类似于tex中的编组操作，保护大小写的作用要体现。
-保护大小写的{}在域处理中必须要处理完成，而用于格式的编组{}必须要保留。
-
-
-13。 文献表的排序???
-
-
-9. match 大小写区分的match需要实现
-
-10. 一些biblatex的map选项需要实现，包括entryclone=?clonekey?
-		entrynew=?entrynewkey?
-		entrynewtype=?string?
-		entrytarget=?string?
-		entrynocite=true, false default: false
-		entrynull=true, false default: false
-		
 
 """
 
@@ -154,6 +127,7 @@ sourcemaps=[]
 
 #全局选项
 formatoptions={
+"style":'authoryear',#写bbl信息的设置选项,authoryear,'numeric'
 "nameformat":'uppercase',#姓名处理选项：uppercase,lowercase,given-family,family-given,pinyin
 "giveninits":'space',#使用名的缩写，space表示名见用空格分隔，dotspace用点加空格，dot用点，terse无分隔，false不使用缩写
 "maxbibnames":3,#
@@ -238,7 +212,7 @@ datatypeinfo={
 #条目的著录格式
 bibliographystyle={
 "book":[
-{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
+#{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
 {"fieldsource":['author','editor','translator'],'options':{'nameformat':'uppercase'}},
 {"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':'','posstring':r"\typestring"},
 {"fieldsource":['translator'],'options':{'nameformat':'uppercase'},'prepunct':". ",'posstring':r', \bibstring{bytranslator}'},
@@ -248,12 +222,12 @@ bibliographystyle={
 {"fieldsource":['date','year'],'prepunct':", "},
 {"fieldsource":['pages'],'prepunct':": "},
 {"fieldsource":['urldate'],'prestring':"[","posstring":"]"},
-{"fieldsource":['url'],'prepunct':". "},
+{"fieldsource":['url'],'prepunct':". ",'prestring':r'\url{','posstring':'}'},
 {"fieldsource":['doi'],'prepunct':". "},
 {"fieldsource":['endpunct'],'replstring':"."}
 ],
 "article":[
-{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
+#{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
 {"fieldsource":['author','editor','translator'],'options':{'nameformat':'uppercase'}},
 {"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':'','posstring':r"\typestring"},
 {"fieldsource":['journaltitle','journal'],'prepunct':". "},
@@ -267,7 +241,7 @@ bibliographystyle={
 {"fieldsource":['endpunct'],'replstring':"."}
 ],
 "newspaper":[
-{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
+#{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
 {"fieldsource":['author','editor','translator'],'options':{'nameformat':'uppercase'}},
 {"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':'','posstring':r"\typestring"},
 {"fieldsource":['journaltitle','journal'],'prepunct':". "},
@@ -280,7 +254,7 @@ bibliographystyle={
 {"fieldsource":['endpunct'],'replstring':"."}
 ],
 "inbook":[
-{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
+#{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
 {"fieldsource":['author','translator'],'options':{'nameformat':'uppercase'}},
 {"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':'','posstring':r"\typestring"},
 {"fieldsource":['in'],'replstring':"//",'omitifnofield':['bookauthor','editor','booktitle']},
@@ -302,7 +276,7 @@ bibliographystyle={
 "proceedings":"book",
 "collection":"book",
 "patent":[
-{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
+#{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
 {"fieldsource":['author'],'options':{'nameformat':'uppercase'}},
 {"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':'','posstring':r"\typestring"},
 {"fieldsource":['number'],'prepunct':": "},
@@ -313,7 +287,7 @@ bibliographystyle={
 {"fieldsource":['endpunct'],'replstring':"."}
 ],
 "online":[
-{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
+#{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
 {"fieldsource":['author','editor','translator'],'options':{'nameformat':'uppercase'}},
 {"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':'','posstring':r"\typestring"},
 {"fieldsource":['organization','instiution'],'prepunct':". "},
@@ -328,7 +302,7 @@ bibliographystyle={
 "www":"online",
 "electronic":"online",
 "report":[
-{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
+#{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
 {"fieldsource":['author','editor','translator'],'options':{'nameformat':'uppercase'}},
 {"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':'','posstring':r"\typestring"},
 {"fieldsource":['translator'],'options':{'nameformat':'uppercase'},'prepunct':". "},
@@ -347,7 +321,7 @@ bibliographystyle={
 ],
 "techreport":"report",
 "periodical":[
-{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
+#{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
 {"fieldsource":['editor','author'],'options':{'nameformat':'uppercase'}},
 {"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':'','posstring':r"\typestring"},
 {"fieldsource":['year','date'],'prepunct':", "},
@@ -368,7 +342,7 @@ bibliographystyle={
 #omitifnofield:必须所有的域都不存在才为true
 #omitiffield:只要存在一个域就为true
 "thesis":[
-{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
+#{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
 {"fieldsource":['author','editor','translator'],'options':{'nameformat':'uppercase'}},
 {"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':'','posstring':r"\typestring"},
 {"fieldsource":['translator'],'options':{'nameformat':'uppercase'},'prepunct':". "},
@@ -378,7 +352,7 @@ bibliographystyle={
 {"fieldsource":['date','year'],'prepunct':". ",'prestring':'(','posstring':')','omitiffield':['location','address','institution','publisher']},
 {"fieldsource":['pages'],'prepunct':": "},
 {"fieldsource":['urldate'],'prestring':"[","posstring":"]"},
-{"fieldsource":['url'],'prepunct':". "},
+{"fieldsource":['url'],'prepunct':". ",'prestring':r'\url{','posstring':'}'},
 {"fieldsource":['doi'],'prepunct':". "},
 {"fieldsource":['endpunct'],'replstring':"."}
 ],
@@ -390,7 +364,7 @@ bibliographystyle={
 "map":"thesis",
 "archive":"thesis",
 "misc":[
-{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
+#{"fieldsource":["labelnumber"],'prestring':"[","posstring":"]","pospunct":"  "},
 {"fieldsource":['author','editor','translator'],'options':{'nameformat':'uppercase'}},
 {"fieldsource":['title'],'caseformat':'sentencecase','prepunct':". ",'prepunctifnolastfield':'','posstring':r"\typestring"},
 {"fieldsource":['howpublished'],'prepunct':". "},
@@ -419,9 +393,12 @@ def printbibliography():
 	mdoutfile="newformatted"+inputbibfile.replace('.bib','.md')
 	fout = open(mdoutfile, 'w', encoding="utf8")
 	print("INFO: writing cited references to '" + mdoutfile + "'")
-
+	
+	biblabelnumber=0
 	for prtbibentry in bibliographyentries:
-		fout.write(prtbibentry+'\n')
+		if len(prtbibentry)>0:
+			biblabelnumber=biblabelnumber+1
+			fout.write('['+str(biblabelnumber)+'] '+prtbibentry+'\n')
 	fout.close()
 	
 	#html文件输出,直接用write写
@@ -434,15 +411,87 @@ def printbibliography():
 	fout.write('<table border="0" cellPadding="10" cellSpacing="5" height="400" width="70%">')
 	fout.write('<tr><td height="1" width="566" align="center" colspan="1" bgcolor="teal"></td></tr>')
 	
+	biblabelnumber=0
 	for prtbibentry in bibliographyentries:
-		fout.write('<tr> <td width="480" height="15" colspan="6"><font color="blue">')
-		fout.write('<span style="font-family: 宋体; font-size: 14">')
-		fout.write(prtbibentry)
-		fout.write('</span></font></td> </tr>')
+		if len(prtbibentry)>0:
+			biblabelnumber=biblabelnumber+1
+			fout.write('<tr> <td width="480" height="15" colspan="6"><font color="blue">')
+			fout.write('<span style="font-family: 宋体; font-size: 14">')
+			fout.write('['+str(biblabelnumber)+'] '+prtbibentry)
+			fout.write('</span></font></td> </tr>')
 	
 	fout.write('<tr><td height="1" width="566" align="center" colspan="1" bgcolor="teal"></td></tr>')
 	fout.write('</table></div></body></html>')
 	fout.close()
+	
+	if auxfile:
+		bblfile=auxfile.replace('.aux','.bbl')
+	else:
+		bblfile=inputbibfile.replace('.bib','.bbl')
+	bbloutfile=bblfile
+	fout = open(bbloutfile, 'w', encoding="utf8")
+	print("INFO: writing cited references to '" + bbloutfile + "'")
+	
+	fout.write(r'\begin{thebibliography}{'+str(len(bibentries))+'}\n')
+	
+	biblabelnumber=0
+	for prtbibentry in bibliographyentries:
+		if len(prtbibentry)>0:
+			biblabelnumber=biblabelnumber+1
+			
+			entrysn=0
+			for bibentry in bibentries:
+				entrysn=entrysn+1
+				if entrysn==biblabelnumber:
+					entrykeystr=bibentry['entrykey']
+					entryciteauthor=formatlabelauthor(bibentry)
+					entryciteyear=formatlabelyear(bibentry)
+					entrycitelabel=entryciteauthor[0]+'('+entryciteyear+')'+entryciteauthor[1]
+					#Baker et~al.(1995)Baker and Jackson
+					break
+			if formatoptions['style']=='authoryear':
+				fout.write(r'\bibitem['+entrycitelabel+']{'+entrykeystr+'}'+prtbibentry+'\n')
+			else:
+				fout.write(r'\bibitem['+str(biblabelnumber)+']{'+entrykeystr+'}'+prtbibentry+'\n')
+			
+	fout.write(r'\end{thebibliography}')
+	fout.close()
+
+
+
+#
+#authoryear样式提供标注标签的作者信息
+#
+def formatlabelauthor(bibentry):
+	
+	if 'author' in bibentry:
+		namelist=bibentry['author']
+	elif 'editor' in bibentry:
+		namelist=bibentry['editor']
+	elif 'translator' in bibentry:
+		namelist=bibentry['translator']
+	else:
+		namelist='Anon'
+		
+	return [namelist,namelist]
+
+#
+#authoryear样式提供标注标签的年份信息
+#
+def formatlabelyear(bibentry):
+	
+	if 'year' in bibentry:
+		yearlist=bibentry['year']
+	elif 'eventyear' in bibentry:
+		yearlist=bibentry['eventyear']
+	elif 'origyear' in bibentry:
+		yearlist=bibentry['origyear']
+	elif 'urlyear' in bibentry:
+		yearlist=bibentry['urlyear']
+	else:
+		yearlist='N.D.'
+		
+	return yearlist
 
 #
 #
@@ -1978,7 +2027,8 @@ if __name__=="__main__":
 	
 	#设置需要修改的bib文件
 	#inputbibfile='example.bib'
-	inputbibfile='biblatex-map-test.bib'
+	#inputbibfile='biblatex-map-test.bib'
+	inputbibfile='eg-thesis.bib'
 	
 	#auxfile="opt-gbpub-true.aux"
 	#set the aux file
