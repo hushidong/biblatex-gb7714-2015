@@ -1470,6 +1470,9 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
   \item 目前符合GB/T7714-2005或GB/T7714-2015参考文献著录规则的biblatex 样式有好几个实现，除本样式外，还有李志奇(icetea)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}} 和沈周(szsdk)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152561&extra=page\%3D1}} 分别提供的样式文件，效果是类似的。此外，Casper Ti. Vector提供的biblatex 样式caspervector也是不错的中文参考文献样式
       \footnote{\url{https://gitlab.com/CasperVector/biblatex-caspervector}}。 感谢各位作者的分享!
+      
+    \item biblatex宏包的组成比较复杂，所以有的时候查找具体命令的代码会比较麻烦。总体来说，包括各bbx，cbx文件，重点是biblatex.sty，biblatex.def，STANDARD.BBX，还有blx-dm.def等一些设置文件。主要不要忘记lbx文件，这里面也有一些相关的代码用于设置语言相关的命令，比如\verb|\bibrangedash|，\verb|\finalandcomma|等。至于其他一些tex命令，可以从tex、xetex的相关书籍文档，latex相关代码可以从latex2e，etoolbox等文档，以及latex.ltx，etoolbox.STY等源文档中查找。注意多使用meaning命令来获取命令的定义。
+    
 
 %  \item 本文档根据GB/T 7714-2015提供的参考文献表著录格式示例做了测试和验证，详见第\ref{sec:eg:gb77142015}节。
 %    测试系统环境为:
