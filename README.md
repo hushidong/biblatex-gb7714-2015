@@ -1,4 +1,4 @@
-<b>Date of last change: 2019-02-11 to version v1.0q</b>
+<b>Date of last change: 2019-03-28 to version v1.0r</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -69,6 +69,8 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
 		`gbnamefmt = familyahead` for standard style, family-given style, like: Zhang, M. L. as the apa style. 
 		
         `gbnamefmt = pinyin` for a common Chinese style, like: ZHANG Min-li, YI Shi-he and so on. 
+		
+		`gbnamefmt = reserveorder` for standard style:family-given/given-family style
 		
 		the name format can be set per-entry using a field `nameformat`, add this field like `nameformat={pinyin}` to an entry in the bib file to set the entry's name format.
 
@@ -912,6 +914,7 @@ biber -l zh__stroke jobname
 * 2018/12/22 v1.0o
 * 2019/01/19 v1.0p
 * 2019/02/11 v1.0q
+* 2019/03/28 v1.0r
 
 
 ---------------------------------------------------------

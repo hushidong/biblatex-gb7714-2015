@@ -10,7 +10,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2019/02/11 v1.0q}
+\def\versionofgbtstyle{2019/03/28 v1.0r}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015ay.bbx}[\versionofgbtstyle biblatex bibliography style]
 %\RequireBiber[3]%显式指定用biber后端，当用bibtex时会报错，但其实不会影响编译，只是采用bibtex后无法达成格式需求
@@ -628,8 +628,9 @@
         \ifstrequal{#1}{uppercase}{\setcounter{gbnamefmtcase}{0}}{}%
         \ifstrequal{#1}{lowercase}{\setcounter{gbnamefmtcase}{1}}{}%
         \ifstrequal{#1}{givenahead}{\setcounter{gbnamefmtcase}{2}}{}%given-family
-        \ifstrequal{#1}{familyahead}{\setcounter{gbnamefmtcase}{3}}{}
-        \ifstrequal{#1}{pinyin}{\setcounter{gbnamefmtcase}{4}}{}%family-given
+        \ifstrequal{#1}{familyahead}{\setcounter{gbnamefmtcase}{3}}{}%family-given
+        \ifstrequal{#1}{pinyin}{\setcounter{gbnamefmtcase}{4}}{}%
+        \ifstrequal{#1}{reverseorder}{\setcounter{gbnamefmtcase}{5}}{}%family-given/given-family
     }
     \ExecuteBibliographyOptions{gbnamefmt}
 
@@ -666,6 +667,7 @@
         \ifstrequal{#1}{givenahead}{\setcounter{gbnamefmtcase}{2}}{}%given-family
         \ifstrequal{#1}{familyahead}{\setcounter{gbnamefmtcase}{3}}{}
         \ifstrequal{#1}{pinyin}{\setcounter{gbnamefmtcase}{4}}{}%family-given
+        \ifstrequal{#1}{reverseorder}{\setcounter{gbnamefmtcase}{5}}{}%family-given/given-family
     }
     \ExecuteBibliographyOptions{gbnamefmt}
 
@@ -2158,6 +2160,36 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
       {\namepartgiven}
       {\namepartprefix}
       {\namepartsuffix}%
+\or
+  \ifnumequal{\value{listcount}}{1}
+    {\ifgiveninits
+       {\usebibmacro{name:family-given}
+         {\namepartfamily}
+         {\namepartgiveni}
+         {\namepartprefix}
+         {\namepartsuffix}}
+       {\usebibmacro{name:family-given}
+         {\namepartfamily}
+         {\namepartgiven}
+         {\namepartprefix}
+         {\namepartsuffix}}%
+     \ifboolexpe{%
+       test {\ifdefvoid\namepartgiven}
+       and
+       test {\ifdefvoid\namepartprefix}}
+       {}
+       {\usebibmacro{name:revsdelim}}}
+    {\ifgiveninits
+       {\usebibmacro{name:given-family}
+         {\namepartfamily}
+         {\namepartgiveni}
+         {\namepartprefix}
+         {\namepartsuffix}}
+       {\usebibmacro{name:given-family}
+         {\namepartfamily}
+         {\namepartgiven}
+         {\namepartprefix}
+         {\namepartsuffix}}}%
 \fi
   \usebibmacro{name:andothers}}
 
@@ -2369,6 +2401,17 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
        {\usebibmacro{name:first-last}{#1}{#3}{#5}{#7}}%
     \or
     \usebibmacro{name:gbpinyin}{#1}{#3}{#5}{#7}%
+    \or
+      \ifnumequal{\value{listcount}}{1}
+    {\iffirstinits
+       {\usebibmacro{name:last-first}{#1}{#4}{#5}{#7}}
+       {\usebibmacro{name:last-first}{#1}{#3}{#5}{#7}}%
+     \ifblank{#3#5}
+       {}
+       {\usebibmacro{name:revsdelim}}}
+    {\iffirstinits
+       {\usebibmacro{name:first-last}{#1}{#4}{#5}{#7}}
+       {\usebibmacro{name:first-last}{#1}{#3}{#5}{#7}}}%
   \fi
   \usebibmacro{name:andothers}}
 }

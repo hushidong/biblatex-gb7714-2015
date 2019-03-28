@@ -1,0 +1,54 @@
+%%
+%% ---------------------------------------------------------------
+%% erj.cbx --- A citation style of Economic Research Journal in china
+%% modified from gb7714-2015ay for the request by ddswhu
+%% Maintained by huzhenzhen
+%% E-mail: hzzmail@163.com
+%% Released under the LaTeX Project Public License v1.3c or later
+%% ---------------------------------------------------------------
+%%
+%%用法：类似于标准的样式在biblatex加载时设置样式
+%%文献表正常处理，标注命令主要用cite和textcite
+
+\ProvidesFile{erj.cbx}[2019/03/28 v1.0 a biblatex citation style for ERJ]
+
+%==================================================
+%加载gb样式
+%==================================================
+\RequireCitationStyle{gb7714-2015ay} %
+
+%==================================================
+%选项设置
+%==================================================
+\ExecuteBibliographyOptions{
+    maxcitenames=2,
+    mincitenames=1,
+}
+
+%==================================================
+%引用命令设置，主要用cite和textcite
+%包括标点设置
+%==================================================
+\renewcommand*{\multicitedelim}{，}
+\renewcommand*{\textcitedelim}{%
+  \iffinalcitedelim
+    {\ifnumgreater{\value{textcitetotal}}{2}
+       {}{}%\iftextcitepunct{\finalandsemicolon}{\finalandcomma}
+     \bibstring{andincitecn}}%\addspace
+    {\iftextcitepunct{\addsemicolon\space}{、}}%\addcomma
+}%\space
+
+%标注压缩时，直接用date+extradate代替extradate实现2006a，2006b的效果
+%\DeclareDelimFormat*{compcitedelim}{、}%\addcomma\addspace
+\newbibmacro*{cite:extradate}{%
+  \iffieldundef{extradate}
+    {}
+    {\printtext[bibhyperref]{\addspace\printlabeldateextra}}}%\printfield{extradate}\printlabeldateextra \printfield{labelyear}\printfield{extradate}
+
+\DeclareCiteCommand{\cite}[\mkbibparens]
+  {\usebibmacro{cite:init}%
+   \usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite}}
+  {}
+  {\usebibmacro{postnote}}
