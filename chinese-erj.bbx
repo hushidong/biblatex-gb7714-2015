@@ -9,13 +9,20 @@
 %%
 %%用法：类似于标准的样式在biblatex加载时设置样式
 %%文献表正常处理，标注命令主要用cite和textcite
-\ProvidesFile{erj.bbx}[2019/03/28 v1.0 a biblatex bibliography style for ERJ]
+\ProvidesFile{chinese-erj.bbx}[2019/03/28 v1.0 a biblatex bibliography style for ERJ]
 
 
 %==================================================
 %加载gb样式
 %==================================================
 \RequireBibliographyStyle{gb7714-2015ay}
+\RequirePackage{mfirstuc}%单词首字母大写的问题
+\MFUnocap{in}%
+\MFUnocap{the}%
+\MFUnocap{of}%
+\MFUnocap{on}%
+\MFUnocap{and}%
+\MFUnocap{for}%
 
 
 %==================================================
@@ -71,7 +78,8 @@
     and         = { and },
     andcn       = {、},
     andincitecn = {和},%将标注中的分开，便于与文献表中的区分
-    andincite   = {and},
+    andincite   = {\&},
+    %andotherscn={等},
     %mathesiscn={[硕士学位论文]},
     %phdthesiscn={[博士学位论文]},
 }
@@ -80,6 +88,7 @@
 %==================================================
 %设置一些标点格式为中文的标点
 %==================================================
+\DeclareFieldFormat{titlecase}{\iffieldequalstr{userd}{chinese}{#1}{\capitalisewords{#1}}}
 \DeclareFieldFormat*{title}{\iffieldequalstr{userd}{chinese}{《#1》}{#1\isdot}}
 \DeclareFieldFormat[article]{title}{\iffieldequalstr{userd}{chinese}{《#1》}{\mkbibquote{#1}\isdot}}
 \DeclareFieldFormat*{journaltitle}{\iffieldequalstr{userd}{chinese}{《#1》}{\textit{#1}}}%
@@ -143,8 +152,8 @@
 \newcounter{numberwithoutzero}
 \DeclareFieldFormat[article,periodical]{number}%
     {\iffieldequalstr{userd}{chinese}{%
-        \iffieldint{number}{\setcounter{numberwithoutzero}{#1}\printtext{\bibstring{serialcn}\arabic{numberwithoutzero}期}}
-        {\printtext{\bibstring{serialcn}#1期}}%
+        \iffieldint{number}{\setcounter{numberwithoutzero}{#1}\printtext{\bibstring{serialcn}\addthinspace\arabic{numberwithoutzero}\addthinspace 期}}
+        {\printtext{\bibstring{serialcn}\addthinspace#1\addthinspace 期}}%
     }%
         {\printtext{(}#1\printtext{)}}}% %
 \DeclareFieldFormat[article,periodical]{volume}%

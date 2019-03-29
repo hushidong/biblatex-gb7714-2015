@@ -1,0 +1,151 @@
+%%
+%% ---------------------------------------------------------------
+%% erj.cbx --- A citation style of Economic Research Journal in china
+%% modified from gb7714-2015ay for the request by ddswhu
+%% Maintained by huzhenzhen
+%% E-mail: hzzmail@163.com
+%% Released under the LaTeX Project Public License v1.3c or later
+%% ---------------------------------------------------------------
+%%
+%%用法：类似于标准的样式在biblatex加载时设置样式
+%%文献表正常处理，标注命令主要用cite和textcite
+
+\ProvidesFile{chinese-erj.cbx}[2019/03/28 v1.0 a biblatex citation style for ERJ]
+
+%==================================================
+%加载gb样式
+%==================================================
+\RequireCitationStyle{gb7714-2015ay} %
+
+
+
+%==================================================
+%选项设置
+%==================================================
+\ExecuteBibliographyOptions{
+    maxcitenames=2,
+    mincitenames=1,
+}
+
+%==================================================
+%引用命令设置，主要用cite和textcite
+%包括标点设置
+%==================================================
+\renewcommand*{\multicitedelim}{；}%\addsemicolon\addspace；
+\renewcommand*{\textcitedelim}{%
+  \iffinalcitedelim
+    {\ifnumgreater{\value{textcitetotal}}{2}
+       {}{}%\iftextcitepunct{\finalandsemicolon}{\finalandcomma}
+     \addspace 、}%\addspace\bibstring{andincitecn}
+    {\iftextcitepunct{\addsemicolon\space}{\addspace 、}}%\addcomma
+}%\space
+
+\DeclareDelimFormat[textcite]{nameyeardelim}{\addspace}%\addcomma\space
+\DeclareDelimFormat[textcite]{andothersdelim}{\iffieldequalstr{userf}{chinese}{}{\addspace}}%
+
+%之所以不用\DeclareDelimFormat{andothersdelim}{}这样的设置是因为gb7714-2015中为兼容老版本的biblatex做的处理就是这样的
+%所以用相同的方式
+\AtEveryCitekey{%
+\iffieldequalstr{userf}{chinese}{\renewcommand*{\andothersdelim}{}}%\addthinspace
+  {\renewcommand*{\andothersdelim}{\addspace}}%
+}
+
+%标注压缩时，直接用date+extradate代替extradate实现2006a，2006b的效果
+%\DeclareDelimFormat*{compcitedelim}{、}%\addcomma\addspace
+\newbibmacro*{cite:extradate}{%
+  \iffieldundef{extradate}
+    {}
+    {\printtext[bibhyperref]{\addspace\printlabeldateextra}}}%\printfield{extradate}\printlabeldateextra \printfield{labelyear}\printfield{extradate}
+
+%\AtEveryCite{%
+%\let\parentext=\parentexttrack%
+%\let\bibopenparen=（%
+%\let\bibcloseparen=）}
+
+%添加前后空格
+\DeclareCiteCommand{\cite}%[\mkbibparens]
+  {\usebibmacro{cite:init}%
+   \printtext{（}\usebibmacro{prenote}}%)\addspace
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite}}
+  {}
+  {\usebibmacro{postnote}%(
+  ）}%\addspace
+
+%原版
+%\DeclareCiteCommand{\cite}[\mkbibparens]
+%  {\usebibmacro{cite:init}%
+%   \usebibmacro{prenote}}%)
+%  {\usebibmacro{citeindex}%
+%   \usebibmacro{cite}}
+%  {}
+%  {\usebibmacro{postnote}}
+
+%
+%添加后面空格
+%\DeclareCiteCommand{\cbx@textcite}
+%  {\usebibmacro{cite:init}}
+%  {\usebibmacro{citeindex}%
+%   \usebibmacro{textcite}}
+%  {}
+%  {\usebibmacro{textcite:postnote}\addspace}
+
+\newbibmacro*{textcite}{%
+  \iffieldequals{namehash}{\cbx@lasthash}
+    {\iffieldundef{shorthand}
+       {\ifthenelse{\iffieldequals{labelyear}{\cbx@lastyear}\AND
+                    \(\value{multicitecount}=0\OR\iffieldundef{postnote}\)}
+          {\setunit{\addcomma}%
+           \usebibmacro{cite:extradate}}
+          {\setunit{\compcitedelim}%
+           \usebibmacro{cite:labeldate+extradate}%
+           \savefield{labelyear}{\cbx@lastyear}}}
+       {\setunit{\compcitedelim}%
+        \usebibmacro{cite:shorthand}%
+        \global\undef\cbx@lastyear}}
+    {\ifnameundef{labelname}
+       {\iffieldundef{shorthand}
+          {\usebibmacro{cite:label}%
+           \setunit{%
+             \global\booltrue{cbx:parens}%
+             \printdelim{nonameyeardelim}（}%\bibopenparen
+           \ifnumequal{\value{citecount}}{1}
+             {\usebibmacro{prenote}}
+             {}%
+           \usebibmacro{cite:labeldate+extradate}}
+          {\usebibmacro{cite:shorthand}}}
+       {\printnames{labelname}%
+        \setunit{%
+          \global\booltrue{cbx:parens}%
+          \printdelim{nameyeardelim}（}%\bibopenparen
+        \ifnumequal{\value{citecount}}{1}
+          {\usebibmacro{prenote}}
+          {}%
+        \iffieldundef{shorthand}
+          {\iffieldundef{labelyear}
+             {\usebibmacro{cite:label}}
+             {\usebibmacro{cite:labeldate+extradate}}%
+           \savefield{labelyear}{\cbx@lastyear}}
+          {\usebibmacro{cite:shorthand}%
+           \global\undef\cbx@lastyear}}%
+     \stepcounter{textcitecount}%
+     \savefield{namehash}{\cbx@lasthash}}%
+  \setunit{%
+    \ifbool{cbx:parens}
+      {）\global\boolfalse{cbx:parens}}%\bibcloseparen
+      {}%
+    \textcitedelim}}
+
+\newbibmacro*{textcite:postnote}{%
+  \usebibmacro{postnote}%
+  \ifthenelse{\value{multicitecount}=\value{multicitetotal}}
+    {\setunit{}%
+     \printtext{%
+       \ifbool{cbx:parens}
+         {）\global\boolfalse{cbx:parens}}%\bibcloseparen
+         {}}}
+    {\setunit{%
+       \ifbool{cbx:parens}
+         {）\global\boolfalse{cbx:parens}}%\bibcloseparen
+         {}%
+       \textcitedelim}}}

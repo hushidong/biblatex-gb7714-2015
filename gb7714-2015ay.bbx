@@ -1940,7 +1940,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     test \ifmorenames
   }{\ifnumgreater{\value{liststop}}{1}%注意这里试图去区分姓名总数大于1的情况，当姓名总数大于1时，最后一个姓名后面先加入一个\finalandcomma
        {\finalandcomma}%目前国标没有这样的区分要求，如果有需要也是可以这么去做的。
-       {}
+       {}%
 \printdelim{andothersdelim}\printdelim{strandothersdelim}%
 }{%当是译者的时候需要特殊处理：从7.2节看等，译前面加逗号，但从示例看等和译同时出现时，译前的逗号没有，比如：
 %袁训来, 陈哲, 肖书海, 等.

@@ -9,6 +9,10 @@ copy ..\gb7714-2015ay.bbx . /y
 copy ..\gb7714-2015ay.cbx . /y
 copy ..\gb7714-2015ms.bbx . /y
 copy ..\gb7714-2015ms.cbx . /y
+copy ..\gb7714-2015mx.bbx . /y
+copy ..\gb7714-2015mx.cbx . /y
+copy ..\chinese-erj.cbx . /y
+copy ..\chinese-erj.bbx . /y
 copy ..\gb7714-2015-gbk.def . /y
 
 
