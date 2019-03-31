@@ -127,34 +127,35 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \draw[color=cyan,thick] (script.north) -- ($(script.north)+(0mm,3mm)$) ;
 \draw[color=cyan,thick] ($(style.north)+(0mm,3mm)$) -- ($(script.north)+(0mm,3mm)$);
 
-\node[below of=style,fill=gbgrey!20,yshift=0.5cm,xshift=2mm,text width=2cm] (numbbx) {\tiny \textcolor{black}{gb7715-2015.bbx}};
-\node[below of=numbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (numcbx) {\tiny \textcolor{black}{gb7715-2015.cbx}};
-\node[below of=numcbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (aybbx) {\tiny \textcolor{black}{gb7715-2015ay.bbx}};
-\node[below of=aybbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (aycbx) {\tiny \textcolor{black}{gb7715-2015ay.cbx}};
-\node[below of=aycbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (gbkdef) {\tiny \textcolor{black}{gb7715-2015-gbk.def}};
+\node[below of=style,fill=gbgrey!20,yshift=0.5cm,xshift=2mm,text width=2cm] (numcbbx) {\tiny \textcolor{black}{gb7715-2015.c/bbx}};
+\node[below of=numcbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (aycbbx) {\tiny \textcolor{black}{gb7715-2015ay.c/bbx}};
+\node[below of=aycbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (mscbbx) {\tiny \textcolor{black}{gb7715-2015ms.c/bbx}};
+\node[below of=mscbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (mxcbbx) {\tiny \textcolor{black}{gb7715-2015mx.c/bbx}};
+\node[below of=mxcbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (gbkdef) {\tiny \textcolor{black}{gb7715-2015-gbk.def}};
+\node[below of=gbkdef,fill=gbgrey!20,yshift=8mm,text width=2cm] (erjcbbx) {\tiny \textcolor{black}{chinese-erj.c/bbx}};
+%\node[below of=msbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (mscbx) {\tiny \textcolor{black}{gb7715-2015ms.cbx}};
 
-\node[below of=gbkdef,fill=gbgrey!20,yshift=8mm,text width=2cm] (msbbx) {\tiny \textcolor{black}{gb7715-2015ms.bbx}};
-\node[below of=msbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (mscbx) {\tiny \textcolor{black}{gb7715-2015ms.cbx}};
-
-\draw[color=blue,semithick] (numbbx.west) -- ($(numbbx.west)+(-3mm,0mm)$) ;
-\draw[color=blue,semithick] (numcbx.west) -- ($(numcbx.west)+(-3mm,0mm)$) ;
-\draw[color=blue,semithick] (aybbx.west) -- ($(aybbx.west)+(-3mm,0mm)$) ;
-\draw[color=blue,semithick] (aycbx.west) -- ($(aycbx.west)+(-3mm,0mm)$) ;
+\draw[color=blue,semithick] (numcbbx.west) -- ($(numcbbx.west)+(-3mm,0mm)$) ;
+\draw[color=blue,semithick] (aycbbx.west) -- ($(aycbbx.west)+(-3mm,0mm)$) ;
+\draw[color=blue,semithick] (mscbbx.west) -- ($(mscbbx.west)+(-3mm,0mm)$) ;
+\draw[color=blue,semithick] (mxcbbx.west) -- ($(mxcbbx.west)+(-3mm,0mm)$) ;
 \draw[color=blue,semithick] (gbkdef.west) -- ($(gbkdef.west)+(-3mm,0mm)$) ;
-\draw[color=blue,semithick] (msbbx.west) -- ($(msbbx.west)+(-3mm,0mm)$) ;
-\draw[color=blue,semithick] (mscbx.west) -- ($(mscbx.west)+(-3mm,0mm)$) ;
+\draw[color=blue,semithick] (erjcbbx.west) -- ($(erjcbbx.west)+(-3mm,0mm)$) ;
+%\draw[color=blue,semithick] (mscbx.west) -- ($(mscbx.west)+(-3mm,0mm)$) ;
 
-\draw[color=blue,semithick] ($(mscbx.west)+(-3mm,0mm)$) -- ($(aycbx.west)+(-3mm,28.1mm)$) ;
+\draw[color=blue,semithick] ($(erjcbbx.west)+(-3mm,0mm)$) -- ($(style.center)+(-12mm,-2.5mm)$) ;
 
 \node[below of=manual,fill=gbsteelblue!15,yshift=0.5cm,xshift=2mm,text width=2.8cm] (mtex) {\tiny \textcolor{black}{biblatex-gb7714-2015.tex}};
 \node[below of=mtex,fill=gbsteelblue!15,yshift=8mm,text width=2.8cm] (mpdf) {\tiny \textcolor{black}{biblatex-gb7714-2015.pdf}};
-\node[below of=mpdf,fill=gbsteelblue!15,yshift=8mm,text width=2.8cm] (egtex) {\tiny \textcolor{black}{example/eg*.tex}};
-\node[below of=egtex,fill=gbsteelblue!15,yshift=8mm,text width=2.8cm] (egbib) {\tiny \textcolor{black}{example/*.bib}};
+\node[below of=mpdf,fill=gbsteelblue!15,yshift=8mm,text width=2.8cm] (egtex) {\tiny \textcolor{black}{example}};
+\node[below of=egtex,fill=gbsteelblue!15,yshift=8mm,text width=2.8cm] (egbib) {\tiny \textcolor{black}{egfigure}};
+\node[below of=egbib,fill=gbsteelblue!15,yshift=8mm,text width=2.8cm] (egthesis) {\tiny \textcolor{black}{egthesis}};
 \draw[color=red,semithick] (mtex.west) -- ($(mtex.west)+(-3mm,0mm)$) ;
 \draw[color=red,semithick] (mpdf.west) -- ($(mpdf.west)+(-3mm,0mm)$) ;
 \draw[color=red,semithick] (egtex.west) -- ($(egtex.west)+(-3mm,0mm)$) ;
 \draw[color=red,semithick] (egbib.west) -- ($(egbib.west)+(-3mm,0mm)$) ;
-\draw[color=red,semithick] ($(egbib.west)+(-3mm,0mm)$) -- ($(egbib.west)+(-3mm,28.1mm)$) ;
+\draw[color=red,semithick] (egthesis.west) -- ($(egthesis.west)+(-3mm,0mm)$) ;
+\draw[color=red,semithick] ($(egthesis.west)+(-3mm,0mm)$) -- ($(manual.center)+(-16mm,-2.5mm)$) ;
 
 \node[below of=script,fill=gbblue!10,yshift=0.5cm,xshift=2mm,text width=2cm] (cpall) {\tiny \textcolor{black}{makeall.bat/sh}};
 \node[below of=cpall,fill=gbblue!10,yshift=8mm,text width=2cm] (cpfil) {\tiny \textcolor{black}{makefile.bat/sh}};
@@ -170,8 +171,10 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \caption{宏包文件结构}\label{fig:pkg:structure}
 \end{figure}
 
-其中，\zd{gb7714-2015.bbx/cbx}、\zd{gb7714-2015ay.bbx/cbx}分别为顺序编码制和作者年制样式文件，\zd{gb7715-2015-gbk.def}为GBK编码文档编译所需的支撑文件，\zd{gb7714-2015ms.bbx/cbx}是顺序编码制样式，但支持中英文语言分设不同标准的著录格式，该样式仅支持较新的biblatex版本。
-\zd{biblatex-gb7714-2015.tex}，\zd{eg*.tex}为说明文档和测试用例。\zd{*.bat}、\zd{*.sh}分别为windows和linux下说明文档的编译脚本。\zd{*.pl}为gb7714格式著录文献表到bib文件的perl转换脚本，\zd{*.dat}为转换测试文献表。
+其中，\zd{gb7714-2015.bbx/cbx}、\zd{gb7714-2015ay.bbx/cbx}分别为顺序编码制和作者年制样式文件，\zd{gb7715-2015-gbk.def}为GBK编码文档编译所需的支撑文件。\zd{gb7714-2015ms.bbx/cbx}是顺序编码制样式，但支持中英文语言分设不同标准的著录格式。
+\zd{gb7714-2015mx.bbx/cbx}是混合样式，支持在不同的参考文献分节中使用不同的样式，比如有的使用顺序编码制，有的使用作者年制。
+\zd{chinese-erj.bbx/cbx}是经济学研究期刊的文献样式。后三者仅支持较新的biblatex版本。
+\zd{biblatex-gb7714-2015.tex}为宏包说明文档，\zd{example}目录下为各种选项的测试用例，\zd{egfigure}目录下为说明文档中的图片文档，\zd{egthesis}为国内一些大学学位论文文献样式的测试用例。\zd{*.bat}、\zd{*.sh}分别为windows和linux下说明文档的编译脚本。\zd{*.pl}为gb7714格式著录文献表到bib文件的perl转换脚本，\zd{*.dat}为转换测试文献表。
 
 \subsection{最小示例}
 
@@ -220,8 +223,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 \subsection{编译方式}
 
-不同于基于bibtex传统方法的四步编译，基于biblatex生成参考文献的文档编译一般只需三步，第一遍xelatex，第二遍biber，第三遍xelatex，但如需反向超链接，除设置backref 选项外，还需第四遍 xelatex 编译。例\ref{eg:compile:cmd} 给出编译命令，其中--synctex=-1 选项也可以是-synctex=1。而且这四步命令可以用一条命令latexmk -xelatex jobname.tex 代替。前述的最小工作示例的编译结果如图\ref{fig:eg:ref}所示。关于文档采用非utf-8编码和使用pdflatex命令编译的
-细节另见第\ref{sec:pkg:hints}节。
+不同于基于bibtex传统方法的四步编译，基于biblatex生成参考文献的文档编译一般只需三步，第一遍xelatex，第二遍biber，第三遍xelatex，但如需反向超链接，除设置backref 选项外，还需第四遍 xelatex 编译。例\ref{eg:compile:cmd} 给出编译命令，其中--synctex=-1 选项也可以是-synctex=1。而且这四步命令可以用一条命令latexmk -xelatex jobname.tex 代替。前述的最小工作示例的编译结果如图\ref{fig:eg:ref}所示。关于文档采用非utf-8编码和使用pdflatex命令编译的细节另见第\ref{sec:pkg:hints}节。
 
 \begin{example}{使用biblatex宏包的文档编译命令}{eg:compile:cmd}
 \begin{texlist}
@@ -403,7 +405,7 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
      \lstinline!\DefineBibliographyStrings{english}{phdthesiscn={博士学位论文}}!， \\
   之所以用加cn的本地化字符串是为了某些样式需要区分中英文分别设置。
 
-  另一种设置方式是在bib文件直接设置type域为需要输出的字符，比如type={[博士学位论文]}。
+  另一种设置方式是在bib文件直接设置type域为需要输出的字符，比如type=\{[博士学位论文]\}。
 
   \end{itemize}
 
@@ -861,12 +863,15 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 %作者年制的参考文献样式则基于标准样式authoryear
 \paragraph{\heiti 作者年制样式} 中各条参考文献条目以作者-年为标签以一定的顺序排列。作者年制的著录格式与顺序编码制基本相同(除了把年份提到了作者后面作为文献条目内的标签)。数据源bib文件中各条目的数据录入与顺序编码制完全一致。
 
-\qd{作者年制有分文种文献集中的要求，因此gb7714-2015排序模板以nyt模板为基础，增加 language 作为 name 前的排序域。默认情况下，本样式文件将标题(或作者)为中文的文献的 language 域设置成 chinese，英文的设置成 english。这一设置过程，在biber 处理时自动完成。当出现问题或者有更多文种分集且有特殊顺序时，可以在bib文件中为相应文种文献的 language 域手动设置适合排序的字符串。比如: 中文文献设置为 chinese，英文文献设置为 enlish，法文文献设置为 french，那么排序中，相应的中文文献排在最前面，英文文献在中间，法文文献最后，因为升序情况下字母顺序是c然后e然后f。}
+\qd{作者年制有分文种文献集中的要求，因此gb7714-2015定制了专用的排序模板，可以配合gblanorder选项使用，默认是中日韩英法俄的语言顺序。如果需要其他需要顺序可以利用gblanorder选项重设。由于排序需要根据语言判断，因此使用language域，该域由biblatex-gb7714-2015宏包自动处理判断，一般不需要过多关注，如果当语言判断出现问题，可以手动在bib文件中对language域设置正确的语言。比如chinese，japanese，english，french等。}
+
+%前一段为20190331更新
+%\qd{作者年制有分文种文献集中的要求，因此gb7714-2015排序模板以nyt模板为基础，增加 language 作为 name 前的排序域。默认情况下，本样式文件将标题(或作者)为中文的文献的 language 域设置成 chinese，英文的设置成 english。这一设置过程，在biber 处理时自动完成。当出现问题或者有更多文种分集且有特殊顺序时，可以在bib文件中为相应文种文献的 language 域手动设置适合排序的字符串。比如: 中文文献设置为 chinese，英文文献设置为 enlish，法文文献设置为 french，那么排序中，相应的中文文献排在最前面，英文文献在中间，法文文献最后，因为升序情况下字母顺序是c然后e然后f。}
 
 %上一段2016-1114更新，下面是以前的说法。
 %\qd{根据文种文献集中的要求，修改了nyt排序格式，增加了userb作为name前的排序域，当有需求进行多文种分集且有特殊顺序时，在bib文件中给相应文种的文献设置适合排序的字符串。比如中文文献设置为cn，英文文献设置为en，法文文献设置为fr，那么排序中，相应的中文文献排在最前面，英文文献在中间，法文文献最后，因为升序情况下字母顺序是c然后e然后f。}
 
-打印出的文献表格式控制主要有两个部分的格式需要控制，一是文献表的段落格式，二是文献表中各条文献的著录格式：
+打印出的文献表主要有两个部分的格式需要控制，一是文献表的段落格式，二是文献表中各条文献的著录格式：
 
 \subsubsection{段落格式控制}
 
@@ -1007,7 +1012,20 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 再次，还可设置language选项，用于区分是否在标注或文献表中采用多语言处理方案。当language选项等于autobib时仅在文献表中自动切换语言，等于 autocite 时仅在标注中自动切换语言,等于 auto 时则在文献表和标注中同时切换。
 
-最后，需要在tex文档内加入babel宏包以及需要使用的语言，需要使用本地化字符串的西语都要加入，否则无法自动切换。比如需要自动切换的西文语言包括英文、法文和俄文，那么加入宏包命令为\verb|\usepackage[french,russian,english]{babel}|。
+最后，需要在tex文档内加入babel宏包以及需要使用的语言，需要使用本地化字符串的西语都要加入，否则无法自动切换。比如需要自动切换的西文语言包括英文、法文和俄文，那么加入宏包命令为\verb|\usepackage[french,russian,english]{babel}|。注意使用polyglossia宏包来进行语言支持也是类似，
+如例\ref{eg:multi:lanset}所示。
+
+\begin{example}{babel/polyglossia设置西方语言的多语言支持}{eg:multi:lanset}
+\begin{texlist}
+    %使用babel的方式
+    \usepackage[russian,french,english]{babel}
+
+    %使用polyglossia的方式
+    \usepackage{polyglossia}
+    \setdefaultlanguage{english}
+    \setotherlanguages{russian,french}
+\end{texlist}
+\end{example}
 
 由于东亚语言的特殊性，针对西文和东亚语言，分别做如下的考虑：
 \begin{enumerate}
@@ -1200,7 +1218,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 \subsubsection{完全自定义的条目内容样式}
 
-完全自定义的条目内容样式，主要针对不完全和不规范的文献表输出，而是输出部分参考文献信息。这是采用文献缩略信息打印的方法实现。具体的实现方法见\href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography/blob/master/biblatex-solution-to-latex-bibliography.pdf}%
+完全自定义的条目内容样式，针对不完全和不规范的文献表输出，主要用于输出部分参考文献信息。这时可以采用文献缩略信息打印的方法实现。具体的实现方法见\href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography/blob/master/biblatex-solution-to-latex-bibliography.pdf}%
 {biblatex-solution-to-latex-bibliography}中的第2.10节。
 
 具体例子则可以参考\href{run:./stdgbT7714-2015.pdf}{stdgbT7714-2015.pdf}。其中第8节中大量使用这种方式。
@@ -1442,13 +1460,14 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
 \begin{enumerate}
 
-  \item 本样式包的设计与实现方法以及设计到的一些biblatex功能介绍，以项目示例的形式总结在
+  \item 本样式包的设计与实现方法以及涉及到的一些biblatex功能介绍，以项目示例的形式总结在
   \href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}{\LaTeX 文档中文参考文献的biblatex解决方案}中，本文档不再重复给出，有需要了解的用户可以参见其中的第3.1节。
 
   \item tex源文档既可以用xelatex编译，也可以利用pdflatex或latex进行编译。但要注意的是pdflatex编译可能因为某些样式比如authoryear，使用了xstring宏包中的一些命令而导致错误，但numeric类样式通常没有问题。该问题在biblatex更新到3.12版本后取消xstring 宏包后得以解决。
 
       中文用户编译还需要注意编码问题。
-      utf-8编码的文档，采用xelatex 编译没有任何注意事项，但使用pdflatex编译时，需要给ctex 宏包加载UTF8选项，比如\verb|\usepackage[UTF8]{ctex}|，该选项在文档类加载时给出也可，比如\verb|\documentclass[[UTF8]{article}|，同时引用文献时使用的引用关键词应使用英文。
+      utf-8编码的文档，采用xelatex 编译没有任何注意事项，但使用pdflatex编译时，需要给ctex 宏包加载UTF8选项，
+      比如 \verb|\usepackage[UTF8]{ctex}| ，该选项在文档类加载时给出也可，比如 \verb|\documentclass[UTF8]{article}| ，同时\bc{引用文献时使用的引用关键词应使用英文}，比如 \verb|\cite{zhangml2008}| 而不能是中文的比如 \verb|\cite{张敏莉2008}|。
 
       当文档使用其他编码时，可以利用notepad++ 或notepad2 等编辑器将其转换为UTF-8编码。若不进行转换，使用xelatex编译通常需要指定一个文档编码，比如windows 环境下的GB2312 编码的文档需要指定\verb|\XeTeXinputencoding "GBK"|，否则会显示乱码。使用pdflatex进行编译时，如果biblatex不能正确的处理编码问题，那么需要为其明确的指定texencoding和bibencoding 选项。比如windows环境下的GB2312编码的文档，需要指定\verb|\usepackge[texencoding=GBK]{biblatex}|。
 
@@ -1458,7 +1477,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
   \item 当bibtex键中含有中文的时候，texlive2015中的biblatex3.0版的对参考文献条目的超链接会出现问题，而texlive2016中的biblatex3.4或以后的版本则没有问题。
 
-  \item GB/T 7714-2015中的作者年制要求参考文献按文种集合，且中文在前英文在后。主要通过定义DeclareSortingScheme\{gb7714-2015\} (biblatex3.7 以前版本) 或 DeclareSortingTemplate\{gb7714-2015\} (biblatex3.8以后版本)，利用自动设定的language 域实现排序。默认情况下，样式能基本正确的区分中文和英文文献并排序。当如果出现错误的情况，用户可以手动修改bib源文件，将language 域设置成合适的字符串，用于排序，详见\ref{sec:usage:bbx}节的说明。
+  \item GB/T 7714-2015中的作者年制要求参考文献按文种集合，且中文在前英文在后。主要通过定义DeclareSortingScheme\{gb7714-2015\} (biblatex3.7 以前版本) 或 DeclareSortingTemplate\{gb7714-2015\} (biblatex3.8以后版本)，利用自动设定的language 域实现排序。默认情况下，样式能基本正确的区分不同语言文献。当如果出现错误的情况，用户可以手动修改bib源文件，将language 域设置成正确的语言，详见\ref{sec:usage:bbx} 节的说明。
 
 %上一段2016-1114更新，下面这段是旧的说法，
 %通过定义DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现中文在前英文在后但两个文种的文献各自也是降序的。还有一种变通的方法是，在录入bib文件时，在userb域填入用于排序的信息，比如需要排前面中文文献填cn，排后面的英文文献用en。这样因为修改后的排序格式nyt会在author域前先用userb进行排序，自然会把中文文献放在前面。
@@ -1472,7 +1491,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
   \item 目前符合GB/T7714-2005或GB/T7714-2015参考文献著录规则的biblatex 样式有好几个实现，除本样式外，还有李志奇(icetea)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}} 和沈周(szsdk)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152561&extra=page\%3D1}} 分别提供的样式文件，效果是类似的。此外，Casper Ti. Vector提供的biblatex 样式caspervector也是不错的中文参考文献样式
       \footnote{\url{https://gitlab.com/CasperVector/biblatex-caspervector}}。 感谢各位作者的分享!
 
-    \item biblatex宏包的组成比较复杂，所以有的时候查找具体命令的代码会比较麻烦。总体来说，包括各bbx，cbx文件，重点是biblatex.sty，biblatex.def，STANDARD.BBX，还有blx-dm.def等一些设置文件。主要不要忘记lbx文件，这里面也有一些相关的代码用于设置语言相关的命令，比如\verb|\bibrangedash|，\verb|\finalandcomma|等。至于其他一些tex命令，可以从tex、xetex的相关书籍文档，latex相关代码可以从latex2e，etoolbox等文档，以及latex.ltx，etoolbox.STY等源文档中查找。注意多使用meaning命令来获取命令的定义。
+    \item biblatex宏包的组成比较复杂，所以有的时候查找具体命令的代码会比较麻烦。总体来说，包括各bbx，cbx文件，重点是biblatex.sty，biblatex.def，STANDARD.BBX，还有blx-dm.def等一些设置文件。另外不要忘记lbx文件，这里面也有一些相关的代码用于设置语言相关的命令，比如\verb|\bibrangedash|，\verb|\finalandcomma|等。至于其他一些tex命令，可以从tex、xetex的相关书籍文档，latex相关代码可以从latex2e，etoolbox等文档，以及latex.ltx，etoolbox.STY等源文档中查找。注意多使用meaning命令来获取命令的定义。
 
 
 %  \item 本文档根据GB/T 7714-2015提供的参考文献表著录格式示例做了测试和验证，详见第\ref{sec:eg:gb77142015}节。
@@ -1583,13 +1602,13 @@ GB/T 7714-2015规定采用顺序编码制组织参考文献时，各篇文献应
 
 多次引用同一著者的同一文献时，可在序号的方括号外著录该文献引文页码，这一要求与引用(标注)样式无关，需要作者在写文档时使用相应的引用命令并在需要时输入页码信息。针对这一要求，在cite等常用命令基础上，新定义了一个引用命令pagescite，其使用方式详见第\ref{sec:cbx:usage}节。标注样式更详细要求参考GB/T 7714-2015 第10.1节。
 
-如果顺序编码制采用脚注方式，则序号由计算机自动生成圈码。多次引用同一著者的同一文献时，若采用脚注方式应重复著录参考文献，但在参考文献列表中的著录项目可以简化文献序号和页码。
+如果顺序编码制采用脚注方式，则序号由计算机自动生成圈码。多次引用同一著者的同一文献时，若采用脚注方式应重复著录参考文献，但在参考文献表中的著录项目可以简化文献序号和页码，也就是说，每个文献引用都要对应的一个脚注，脚注的内容为文献条目，但条目的内容可以简化为文献序号和页码。
 
 脚注方式的顺序编码制与一般的顺序编码制的主要差别在于：
 一、正文每个文献需要引用均生成脚注文献，因此一个引用命令只能带一个文献引用关键字。且正文中引用的标注标签格式不同，是带圈的上标数字而不是[]包围的数字。
 二、脚注中的文献表即便是遇到相同文献也需要重复输出，但可以简化为序号和页码。
 
-事实上如果不进行简化而只是简单重复输出，对于biblatex来说处理其实更方便，但为了与GB/T 7714-2015 标准给出的示例一致，biblatex-gb7714-2015也做了实现，注意：脚注方式文献表的引用命令为\verb|\footfullcite|，需要注意由于脚注本身在小页环境或表格中存在的问题，可能导致在其中使用该命令出现比较奇怪的现象。GB/T 7714-2015 标准中示例实现如图\ref{fig:numeric:footnote}所示：
+事实上如果不进行简化而只是简单重复输出，对于biblatex来说处理其实更方便，但为了与GB/T 7714-2015 标准给出的示例一致，biblatex-gb7714-2015也做了实现，注意：脚注方式文献表的引用命令为\verb|\footfullcite|，需要注意由于脚注本身表格中存在的问题，可能导致在其中使用该命令出现比较奇怪的现象，也要注意在图表标题中的使用情况。GB/T 7714-2015 标准中示例实现如图\ref{fig:numeric:footnote}所示：
 
 \begin{figure}[!htb]
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%

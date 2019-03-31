@@ -1,4 +1,4 @@
-<b>Date of last change: 2019-03-28 to version v1.0r</b>
+<b>Date of last change: 2019-03-29 to version v1.0rm</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -915,6 +915,7 @@ biber -l zh__stroke jobname
 * 2019/01/19 v1.0p
 * 2019/02/11 v1.0q
 * 2019/03/28 v1.0r
+* 2019/03/29 v1.0rm,rename erj to chinese-erj,ctan
 
 
 ---------------------------------------------------------
