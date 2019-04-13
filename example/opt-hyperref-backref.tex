@@ -1,0 +1,99 @@
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015样式，gb7714-2015样式后向超链接
+%
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{fontspec}
+%\setmainfont{CMU Serif}
+\usepackage{xcolor}
+\usepackage{hyperref}%[colorlinks=true]
+\usepackage{lipsum}
+\usepackage[paperwidth=15cm,paperheight=9cm,top=1.5cm]{geometry}
+\usepackage[backend=biber,style=gb7714-2015,backref=true]{biblatex}
+\setlength{\bibitemsep}{0pt}
+\DeclareFieldFormat{howpublished}{#1}
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+%url输入不需要加上\url命令。且在url中不需要对特殊字符转义
+@online{greenwood1988,
+  TITLE = {Investment, capacity utilization},
+  url={http://www.greenwood.com/can_b_b#abc},
+}
+
+%在其它域中，无论是使用url，href，nolinkurl，链接网址中的特殊字符都需要转义
+%对于正文中出现的href命令，则网址内的特殊字符不需要转义，而链接文本中的需要转义
+%但是超链接文本需要内部存在可以断行的字符，否则可能无法断行。
+@misc{greenwood1992,
+  TITLE = {the real business cycle},
+  howpublished={\href{http://www.greenwood.com/can_b_b\#abc}{http://www.greenwood.com/can \_b\_b\#abc}},
+}
+
+@misc{greenwood1994,
+  TITLE = {the real business cycle},
+  howpublished={\nolinkurl{http://www.greenwood.com/can_b_b\#abc}},
+}
+
+@misc{greenwood1995,
+  TITLE = {the real business cycle},
+  howpublished={\hyperbaseurl{http://www.greenwood.com/can_b_b\#abc}},
+}
+
+@misc{greenwood1993,
+  TITLE = {the real business cycle},
+  howpublished={\url{http://www.greenwood.com/can_b_b\#abc}},
+}
+
+@misc{greenwood1996,
+  TITLE = {the real business cycle},
+  howpublished={http://www.greenwood.com/can\_b\_b\#abc},
+}
+
+@ARTICLE{刘凤良2017,
+  AUTHOR = {刘凤良 and 章潇萌 and 于泽 and 黄晓},
+  DATE = {2017},
+  JOURNALTITLE = {金融研究},
+  KEYWORDS = {刘凤良2017},
+  NUMBER = {2},
+  PAGES = {54--69},
+  TITLE = {高投资、结构失衡与价格指数二元分化},
+  url={http://www.finance.com},
+}%  langid={english}
+
+\end{filecontents}
+    \addbibresource{\jobname.bib}
+    %
+\usepackage{fancyhdr}
+\pagestyle{headings}
+    \begin{document}
+    \section{测试gb7714-2015样式后向超链接}
+
+
+	文献\cite{greenwood1988}
+
+    \newpage
+
+    文献\cite{greenwood1992}
+
+    \newpage
+
+    文献\cite{greenwood1993}
+
+    \newpage
+
+    文献\cite{刘凤良2017}
+
+    \newpage
+    \nocite{*}
+    断词阈值，值越大越不容易出现断词
+    \href{http://www.greenwood.com/can_b_b#abc}{http://www.greenwood. com/can\_b\_b\#abc}
+
+    {
+
+%\hyphenpenalty=100 %断词阈值，值越大越不容易出现断词
+\tolerance=10000 %丑度，10000为最大无溢出盒子，参考the texbook 第6章
+    \printbibliography
+
+    }
+
+    \end{document} 

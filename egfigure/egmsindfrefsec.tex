@@ -7,7 +7,7 @@
 \usepackage{etoolbox}
 \usepackage[colorlinks]{hyperref}
 \usepackage{lipsum}
-\usepackage[paperwidth=16cm,paperheight=16cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
+\usepackage[paperwidth=16cm,paperheight=14cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
 \usepackage{xltxtra,mflogo,texnames}
 \usepackage[backend=biber,style=gb7714-2015mx]{biblatex}%sorting=nyt
 
@@ -78,35 +78,44 @@
 
 \begin{document}
 %\subsection*{\S 不同文献节采用不同的文献样式}
-\subsubsection*{节一：用顺序编码制}
+
+\noindent\fbox{\parbox{15cm}{
 \begin{refsection}
 文献\cite{Yi2013--}
 \parencite{WHO1970--}
 \cite{FOURNEY1971-17-38}
 
 \vspace{-0.5cm}
-\printbibliography[heading=subbibliography]
+\printbibliography[heading=subbibliography,title={节一：用顺序编码制}]
 \end{refsection}
-\vspace{-0.5cm}
-\subsubsection*{节二：用著者年份制}
+}}
+
+
+
+\noindent\fbox{\parbox{15cm}{
 \begin{refsection}
 文献\cite{FOURNEY1971-17-38};
 \parencite{abx2007-500-503};
 \textcite{张伯伟2002--}
 
 \vspace{-0.5cm}
-\printbibliography[heading=subbibliography]%[env=bibliographyay]
+\printbibliography[heading=subbibliography,title={节二：用著者年份制}]%[env=bibliographyay]
 \end{refsection}
-\vspace{-0.5cm}
-\subsubsection*{节三：用顺序编码制}
+}}
+
+
+
+\noindent\fbox{\parbox{15cm}{
 \begin{refsection}
 文献\cite{Yi2013--}
 \parencite{abx2007-500-503}
 \cite{张伯伟2002--}
 
 \vspace{-0.5cm}
-\printbibliography[heading=subbibliography]
+\printbibliography[heading=subbibliography,title={节三：用顺序编码制}]
 \end{refsection}
+}}
+
 
 
 

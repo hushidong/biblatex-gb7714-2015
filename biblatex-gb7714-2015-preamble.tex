@@ -101,7 +101,7 @@ pdfstartview=FitH,allcolors=gbemphcolor]{hyperref}
 %参考文献
 \usepackage[backend=biber,style=gb7714-2015,gbalign=center,gbfootbib=true%,gbtype=true%
 ]{biblatex}%,backref=true%
-\addbibresource[location=local]{example/example.bib}
+\addbibresource[location=local]{example.bib}
 \setlength{\bibitemsep}{1pt}
 %\defbibheading{bibliography}[\bibname]{%
 %%\phantomsection%解决链接指引出错的问题，相当于加入了一个引导点
@@ -130,6 +130,7 @@ pdfstartview=FitH,allcolors=gbemphcolor]{hyperref}
 \newcommand{\egcodename}{例}%egcodename，新环境标题的图序
 \newfloatlist{egcode}{loc}{\listegcodename}{\egcodename}%loc，写入条目的文件的扩展名
 \newfixedcaption{\codecaption}{egcode}%egcode，环境名
+\newfixedcaption{\fixtabcaption}{table}%egcode，环境名
 
 %目录命令
 \setlength{\cftbeforetoctitleskip}{\baselineskip}
@@ -289,13 +290,14 @@ theorem style=plain,fonttitle=\bfseries\heiti,coltitle=gbforestgreen
 \newcommand{\titleandauthor}{
 \begin{center}
 \def\@makefnmark{\hbox{\@textsuperscript{\small\@thefnmark}}}
-{\renewcommand{\thefootnote}{\fnsymbol{footnote}}
-\setlength{\baselineskip}{30pt}\heiti{\zihao{-2}{\biaotiudf}}\par}
+{\setlength{\baselineskip}{40pt}\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\heiti{\zihao{-2}{\biaotiudf}}\par}%
 %注意这里\par要放在花括号内才有效
-\vspace*{0.3cm}
+\setlength{\baselineskip}{0.1cm}
+\rule{0pt}{0.5cm}\par
 {\renewcommand{\thefootnote}{\arabic{footnote}}
 \kaishu{\zihao{4}{\zuozheudf}}\par}
-\vspace*{0.2cm}
+\rule{0pt}{0.3cm}\par
 {\songti{\zihao{-4}{\riqiudf}}\par}
 \end{center}
 }
@@ -340,26 +342,26 @@ itemsep=0pt,leftmargin=0em,itemindent=0em}%注意，font或format中的最后一
 \newcommand{\HandRight}{$\bigstar$}
 \newcommand{\zhongdian}[1]{\textcolor{gbemphcolor}{\HandRight\small\heiti#1}}
 \newcommand{\pz}[1]{%定义pz为旁注命令
-\marginpar[\flushright\small\youyuan\color{gbemphcolor}\footnotesize #1]{\youyuan\color{gbemphcolor}\small #1}}
+\marginpar[\flushright\small\youyuan\color{gbemphcolor}\footnotesize #1]{\kaiti\color{gbemphcolor}\small #1}}
 \newcommand{\PZ}[1]{%定义pz为旁注命令
-\marginpar[\flushright\small\youyuan\color{gbemphcolor}\footnotesize  #1]{\small\youyuan\color{gbemphcolor}\small #1}}
+\marginpar[\flushright\small\youyuan\color{gbemphcolor}\footnotesize  #1]{\kaiti\color{gbemphcolor}\small #1}}
 \newcommand{\qd}[1]{%定义qd为强调命令
 \begin{quote}
-  \small\youyuan\color{gbemphcolor}#1%blue!50!black\fangsong
+  \fangsong\color{gbemphcolor}#1%blue!50!black\fangsong
 \end{quote}}
 \newcommand{\QD}[1]{%定义qd为强调命令
 \begin{quote}
-  \small\youyuan\color{gbemphcolor}#1
+  \fangsong\color{gbemphcolor}#1
 \end{quote}}
 
 \long\def\bc#1{%定义补充信息
-{\small\youyuan\color{gbemphcolor}#1}} %orange，brown，purple，teal，gbblue，olive，cyan
+{\kaiti\color{gbemphcolor}#1}} %orange，brown，purple，teal，gbblue，olive，cyan
 \long\def\BC#1{%定义补充信息
-{\small\youyuan\color{gbemphcolor}#1}}
+{\youyuan\color{gbemphcolor}#1}}
 \newcommand{\zd}[1]{%定义补充信息
-{\small\youyuan\color{gbemphcolor}#1}} %orange，brown，purple，teal，gbblue，olive，cyan
+{\kaiti\color{gbemphcolor}#1}} %orange，brown，purple，teal，gbblue，olive，cyan
 \newcommand{\ZD}[1]{%定义补充信息
-{\small\youyuan\color{gbemphcolor}#1}}
+{\kaiti\color{gbemphcolor}#1}}
 
 
 \newenvironment*{marglist}

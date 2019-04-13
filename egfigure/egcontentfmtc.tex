@@ -8,12 +8,12 @@
 \usepackage{toolbox}
 \usepackage[colorlinks]{hyperref}
 \usepackage{lipsum}
-\usepackage[paperwidth=15cm,paperheight=11.5cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
+\usepackage[paperwidth=14cm,paperheight=11.5cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
 \usepackage{xltxtra,mflogo,texnames}
 %\usepackage[backend=biber,style=gb7714-2015,gbnamefmt=givenahead,
 %gbpub=false,gbbiblabel=box,gbtitlelink=true]{biblatex}%sorting=nyt
 \usepackage[backend=biber,style=gb7714-2015ay,gbnamefmt=lowercase,maxcitenames=2,mincitenames=1,
-sortcites,sorting=gbyntd]{biblatex}
+sortcites,sorting=gbynta]{biblatex}
 \DefineBibliographyStrings{english}{
         andincite         = {和},
         andincitecn       = {和},
@@ -21,6 +21,7 @@ sortcites,sorting=gbyntd]{biblatex}
         andothersincite   = {等{\adddot}},%adddot才能避开标点追踪
 }
 \renewcommand{\bibfont}{\small}
+\setlength{\bibitemsep}{2pt}
 \usepackage{filecontents}
 \begin{filecontents}{\jobname.bib}
 
@@ -151,12 +152,13 @@ sortcites,sorting=gbyntd]{biblatex}
 
 \small
 
-\cite{IEEEexample:frenchpatreq,吕捷2015cpi,IEEEexample:uspat,杨光2015经济波动}
+\cite{IEEEexample:frenchpatreq,吕捷2015cpi,杨光2015经济波动}
 
 \cite{Miroslav2004--,蔡敏2006--,赵学功2001--,易仕和2013--}
 
 \cite{Peebles2001-100-100,Yi2013--}
 
+\vspace{-0.3cm}
 \printbibliography[heading=subbibliography]
 
 

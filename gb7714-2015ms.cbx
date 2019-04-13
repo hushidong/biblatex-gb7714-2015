@@ -8,7 +8,7 @@
 %% ---------------------------------------------------------------
 %%
 \def\versionofgbtstyle{2019/03/28 v1.0r}
-\ProvidesFile{gb7714-2015.cbx}[\versionofgbtstyle biblatex citation style]
+\ProvidesFile{gb7714-2015ms.cbx}[\versionofgbtstyle biblatex citation style]
 
 %
 %   加载标准样式
@@ -66,20 +66,10 @@
 %
 %   定义upcite命令
 %   20180604，v1.0l，hzz
+%   20190409，v1.0r，hzz
 %   方法:对supercite增加[]
-\DeclareCiteCommand{\upcite}[\mkbibsuperbracket]
-  {\usebibmacro{cite:init}
-   \let\multicitedelim=\supercitedelim
-   \iffieldundef{prenote}
-     {}
-     {\BibliographyWarning{Ignoring prenote argument}}%
-   \iffieldundef{postnote}
-     {}
-     {\BibliographyWarning{Ignoring postnote argument}}}
-  {\usebibmacro{citeindex}%
-   \usebibmacro{cite:comp}}
-  {}
-  {\usebibmacro{cite:dump}}
+\newrobustcmd*{\upcite}{%
+    \cite}
 
 %
 %   重定义parencite命令，以满足标签带页码的国标要求
@@ -163,4 +153,38 @@
   \printnames{labelname}\mkbibsuperscript{\mkbibbrackets{\usebibmacro{citeindex}%
    \usebibmacro{cite}}}}
   {\multicitedelim}
-  {\usebibmacro{postnote}}
+  {\mkbibsuperscript{\printfield{postnote}}}
+
+
+%
+%   增加如下多个命令
+%   20190409，v1.0r，hzz
+%   方法:利用newcommand或newrobustcmd命令进行定义
+%   注意\citet和\citep命令之所以不用newrobustcmd，是为避免加载natbib模块后产生冲突
+\DeclareCiteCommand{\citet}%
+  {\usebibmacro{prenote}}
+  {\iffieldequalstr{userf}{cn}{\renewcommand*{\andothersdelim}{\addthinspace}}%\addthinspace
+  {\renewcommand*{\andothersdelim}{\addspace}}%
+  \printnames{labelname}\mkbibsuperscript{\mkbibbrackets{\usebibmacro{citeindex}%
+   \usebibmacro{cite}}}}
+  {\multicitedelim}
+  {\mkbibsuperscript{\printfield{postnote}}}
+
+
+\DeclareCiteCommand{\citep}[\mkbibsuperscript]%利用mkbibsuperbracket添加方括号
+  {[\usebibmacro{cite:init}%
+   \usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:comp}}
+  {}
+  {\usebibmacro{cite:dump}]%
+   \printfield{postnote}}
+
+\newrobustcmd*{\citetns}%
+    {\textcite}
+
+\newrobustcmd*{\citepns}%
+    {\parencite}
+
+\newrobustcmd*{\inlinecite}%
+    {\parencite}

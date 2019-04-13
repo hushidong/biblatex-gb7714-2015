@@ -7,9 +7,9 @@
 \usepackage{toolbox}
 \usepackage[colorlinks]{hyperref}
 \usepackage{lipsum}
-\usepackage[paperwidth=14cm,paperheight=6cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
+\usepackage[paperwidth=14cm,paperheight=10cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
 \usepackage{xltxtra,mflogo,texnames}
-\usepackage[backend=biber,style=gb7714-2015ay,natbib]{biblatex}%sorting=nyt
+\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}%sorting=nyt,natbib
 
 \usepackage{filecontents}
 \begin{filecontents}{\jobname.bib}
@@ -129,6 +129,18 @@
  多次引用同一作者的同一文献：
  文献\citep[100-108]{蔡敏2006--}，
  文献\citep[205-208]{蔡敏2006--}。
+ 
+ 
+ 
+ 
+ 文献\citetns[205-208]{蔡敏2006--}。
+ 文献\citepns[205-208]{蔡敏2006--}。
+ 文献\inlinecite[205-208]{蔡敏2006--}。
+ 
+ 文献\citet{蔡敏2006--,赵学功2001--}，
+ 文献\citet[205-208]{蔡敏2006--,赵学功2001--}。
+ 
+ 
 }}
 
 %\printbibliography

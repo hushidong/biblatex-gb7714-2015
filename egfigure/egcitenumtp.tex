@@ -7,9 +7,9 @@
 \usepackage{toolbox}
 \usepackage[colorlinks]{hyperref}
 \usepackage{lipsum}
-\usepackage[paperwidth=13cm,paperheight=3.5cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
+\usepackage[paperwidth=13cm,paperheight=5cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
 \usepackage{xltxtra,mflogo,texnames}
-\usepackage[backend=biber,style=gb7714-2015,natbib]{biblatex}%sorting=nyt
+\usepackage[backend=biber,style=gb7714-2015]{biblatex}%sorting=nyt
 
 \usepackage{filecontents}
 \begin{filecontents}{\jobname.bib}
@@ -100,11 +100,14 @@
 \parbox{\textwidth}{
 国标示例：\par
  引用单篇文献：文献\citet{Peebles2001-100-100}\citep{赵学功2001--}\par
+ 引用单篇文献：文献\citetns{Peebles2001-100-100}\citepns{赵学功2001--}\inlinecite{赵学功2001--}\par
  同一处引用多篇文献：文献\citet{Peebles2001-100-100,Miroslav2004--}，
  文献\citep{蔡敏2006--,Miroslav2004--,赵学功2001--}\par
  多次引用同一作者的同一文献：
  文献\citet[100-108]{蔡敏2006--}，
  文献\citep[205-208]{蔡敏2006--}。
+ 文献\authornumcite[101-108]{蔡敏2006--}，
+ 文献\textcite[102-108]{蔡敏2006--}，
 }}
 
 

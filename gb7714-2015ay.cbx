@@ -102,13 +102,10 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
 %
 %   定义upcite命令
 %   20180604，v1.0l，hzz
-%   方法:与yearcite命令相同
-\DeclareCiteCommand{\upcite}%仅输出年份，不要页码
-  {\usebibmacro{cite:init}%
-  \printtext{(}\usebibmacro{prenote}}%
-  {\usebibmacro{cite:labeldate+extradate}}%\printfield{year}\printfield{extrayear}
-  {\multicitedelim}%
-  {\printtext{)}}
+%   20190409，v1.0r，hzz
+%   方法:与cite命令相同
+\newrobustcmd*{\upcite}{%
+    \cite}
 
 %
 %   重定义parencite命令
@@ -177,8 +174,67 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
 %
 %   定义\authornumcite命令，输出作者信息，然后在后面带上顺序编码
 %   20180427，v1.0k，增加，hzz
-%   为与顺序编码制兼容，增加了命令，定义与cite相同
-\DeclareCiteCommand{\authornumcite}
+%   20190409，v1.0r，hzz
+%   为与顺序编码制兼容，增加了命令，定义与citet相同
+\newbibmacro*{citet}{%
+  \iffieldundef{shorthand}
+    {\ifthenelse{\ifnameundef{labelname}\OR\iffieldundef{labelyear}}
+       {\usebibmacro{cite:label}%
+        \setunit{\printdelim{nonameyeardelim}}%
+        \usebibmacro{cite:labeldate+extradate}%
+        \usebibmacro{cite:reinit}}
+       {\iffieldequals{namehash}{\cbx@lasthash}
+          {\ifthenelse{\iffieldequals{labelyear}{\cbx@lastyear}\AND
+                       \(\value{multicitecount}=0\OR\iffieldundef{postnote}\)}
+             {\setunit{\addcomma}%
+              \usebibmacro{cite:extradate}}
+             {\setunit{\compcitedelim}%
+              \usebibmacro{cite:labeldate+extradate}%
+              \savefield{labelyear}{\cbx@lastyear}}}
+          {\printnames{labelname}%
+           %\setunit{\printdelim{nameyeardelim}}%
+           (\usebibmacro{cite:labeldate+extradate})%
+           \savefield{namehash}{\cbx@lasthash}%
+           \savefield{labelyear}{\cbx@lastyear}}}}
+    {\usebibmacro{cite:shorthand}%
+     \usebibmacro{cite:reinit}}%
+  \setunit{\multicitedelim}}
+
+\DeclareCiteCommand{\authornumcite}%
+  {\usebibmacro{cite:init}%
+  \renewbibmacro*{postnote}{%
+  \iffieldundef{postnote}%
+    {}%
+    {\thefield{postnote}}}%
+    \usebibmacro{prenote}}%
+  {\usebibmacro{citeindex}%
+   \usebibmacro{citet}}
+  {}
+  {\mkbibsuperscript{\usebibmacro{postnote}}%\usebibmacro{postnote}
+  }
+
+%
+%   增加如下多个命令
+%   20190409，v1.0r，hzz
+%   方法:利用newcommand或newrobustcmd命令进行定义
+%   注意\citet和\citep命令之所以不用newrobustcmd，是为避免加载natbib模块后产生冲突
+
+%同\authornumcite
+\DeclareCiteCommand{\citet}%
+  {\usebibmacro{cite:init}%
+  \renewbibmacro*{postnote}{%
+  \iffieldundef{postnote}%
+    {}%
+    {\thefield{postnote}}}%
+    \usebibmacro{prenote}}%
+  {\usebibmacro{citeindex}%
+   \usebibmacro{citet}}
+  {}
+  {\mkbibsuperscript{\usebibmacro{postnote}}%\usebibmacro{postnote}
+  }
+
+%同cite
+\DeclareCiteCommand{\citep}
   {\usebibmacro{cite:init}%
   \renewbibmacro*{postnote}{%
   \iffieldundef{postnote}%
@@ -191,3 +247,12 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
   {%(
   )\mkbibsuperscript{\usebibmacro{postnote}}%\usebibmacro{postnote}
   }
+
+\newrobustcmd*{\citetns}%
+    {\textcite}
+
+\newrobustcmd*{\citepns}%
+    {\parencite}
+
+\newrobustcmd*{\inlinecite}%
+    {\parencite}
