@@ -326,16 +326,16 @@
     %v1.0q 20190309 区分使脚注标注适应minipage中的情况
     \newbibmacro*{citesavefn}{%
         \ifciteseen%当被引用过为true
-        {\ifcsdef{sec\arabic{refsection}et\thefield{entrykey}}%当已经定义过脚注序号信息
-            {\csgdef{labelsec\arabic{refsection}et\thefield{entrykey}}{%
-    \str@sameentry\gdef\@thefnmark{\csuse{sec\arabic{refsection}et\thefield{entrykey}}}%
+        {\ifcsdef{sec\arabic{refsection}\arabic{page}et\thefield{entrykey}}%当已经定义过脚注序号信息
+            {\csgdef{labelsec\arabic{refsection}\arabic{page}et\thefield{entrykey}}{%
+    \str@sameentry\gdef\@thefnmark{\csuse{sec\arabic{refsection}\arabic{page}et\thefield{entrykey}}}%
     \@makefnmark%
             }}%
-            {\csxdef{sec\arabic{refsection}et\thefield{entrykey}}{%
+            {\csxdef{sec\arabic{refsection}\arabic{page}et\thefield{entrykey}}{%
             \ifcsstring{@mpfn}{mpfootnote}{\@alph\c@mpfootnote}{\thefootnote}%
             }}%
         }%
-        {\csxdef{sec\arabic{refsection}et\thefield{entrykey}}{%
+        {\csxdef{sec\arabic{refsection}\arabic{page}et\thefield{entrykey}}{%
         \ifcsstring{@mpfn}{mpfootnote}{\@alph\c@mpfootnote}{\thefootnote}%
         %判断在minipage中比较麻烦，这里使用\@mpfn的定义进行判断
         }}%
@@ -352,8 +352,8 @@
             {}{\setunit{\addcolon\addspace}\printtext{\thefield{postnote}}}}%由于ay样式中没有修改postnote域，此处因为格式需要不使用默认域格式
        }%
       {\usebibmacro{citesavefn}%
-          \ifcsdef{labelsec\arabic{refsection}et\thefield{entrykey}}%
-          {\csuse{labelsec\arabic{refsection}et\thefield{entrykey}}\nopunct}%
+          \ifcsdef{labelsec\arabic{refsection}\arabic{page}et\thefield{entrykey}}%
+          {\csuse{labelsec\arabic{refsection}\arabic{page}et\thefield{entrykey}}\nopunct}%
           {\usedriver{\DeclareNameAlias{sortname}{default}}{\thefield{entrytype}}}%
       }%
       {\multicitedelim}%
