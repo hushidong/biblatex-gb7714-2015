@@ -210,6 +210,14 @@
     \ExecuteBibliographyOptions{gbfieldtype}
 
     %
+    %   增加一个控制是否根据页码重设脚注数字标号的选项
+    %   20190422,v1,0r,hzz
+    \newtoggle{bbx:gbfnperpage}
+    \DeclareBibliographyOption{gbfnperpage}[false]{%
+      \settoggle{bbx:gbfnperpage}{#1}}
+    \ExecuteBibliographyOptions{gbfnperpage}
+
+    %
     %   增加一个选项，用于控制是否实现GB/T 7714-2015标准的脚注文献表
     %   20190203，v1.0p，hzz
     %   原理方法:默认做patch，文献引用带圈上标数字表示，脚注中的文献用带圈非上标数字做标签
@@ -241,7 +249,9 @@
     %重新实现脚注的根据单页重设脚注号码
     %重新实现脚注的悬挂对齐问题，不再使用footmisc，直接从latex核心代码和hyperref代码进行修改
     %v1.0q 20190317 hzz
-    \@addtoreset{footnote}{page}%重设计数器
+    %v1.0r 20190422 hzz 根据gbfnperpage选项设置
+    \iftoggle{bbx:gbfnperpage}%
+    {\@addtoreset{footnote}{page}}{}%重设计数器
 
 \@ifpackageloaded{hyperref}{%加载hyperref则对\H@@footnotetext做重定义
     \long\def\H@@footnotetext##1{\insert\footins{%

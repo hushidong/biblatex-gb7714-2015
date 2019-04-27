@@ -1,13 +1,22 @@
 \usepackage{expl3,etoolbox,ifthen,xstring}
-\usepackage{xltxtra,mflogo,texnames}
+\usepackage{xltxtra,mflogo,texnames,fontawesome}
+%\usepackage{amstext}
 \usepackage[zihao=-4]{ctex}
 \ctexset{today=old}
 \let\kaiti=\kaishu
 \usepackage{xeCJKfntef}
-\setmainfont{CMU Serif}
-\setCJKmainfont{SourceHanSerifSC-Regular.otf}
+%\setmainfont{CMU Serif}
+\usepackage{fontspec}
+%\usepackage{tgpagella}
+\setmainfont[Ligatures=TeX]{TeX Gyre Pagella}
+\setsansfont[Ligatures=TeX]{TeX Gyre Pagella}
+\setmonofont[Ligatures=TeX]{TeX Gyre Pagella}
+%\usepackage{unicode-math}
+%\setmathfont[math-style=ISO,bold-style=ISO]{TeX Gyre Pagella Math}
+\setCJKmainfont
+[BoldFont=SourceHanSansSC-Regular.otf, ItalicFont=simkai.ttf]{SourceHanSerifSC-Regular.otf}
 
-\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
 \colorlet{examplefill}{yellow!80!black}
 \definecolor{graphicbackground}{rgb}{0.96,0.96,0.8}
 \definecolor{codebackground}{rgb}{0.9,0.9,1}
@@ -19,6 +28,7 @@
 \definecolor{gbgrey}{RGB}{200,200,200}
 \colorlet{gblabelcolor}{violet}
 \colorlet{gbemphcolor}{blue!60!black}
+%\colorlet{gbemphcolor}{violet}
 
 %定义版面，showframe,
 \usepackage[paperwidth=210mm,paperheight=290mm,left=35mm,right=20mm,top=25mm, bottom=20mm,showcrop]{geometry}%,showframe
@@ -97,6 +107,10 @@ pdfstartview=FitH,allcolors=gbemphcolor]{hyperref}
 \titlespacing*{\subsection}{0pt}{0.5\baselineskip}{0.5\baselineskip}
 \titlespacing*{\subsubsection}{0pt}{0.5\baselineskip}{0pt}
 \titlespacing{\paragraph}{2em}{0.5\baselineskip}{1em}
+%这里利用titleformat*简单做设置，也可以利用titleformat做详细设置
+\titleformat*{\section}{\zihao{-3}\bfseries\heiti}
+\titleformat*{\subsection}{\zihao{4}\bfseries\songti}
+\titleformat*{\subsubsection}{\zihao{-4}\bfseries\kaiti}
 
 %参考文献
 \usepackage[backend=biber,style=gb7714-2015,gbalign=center,gbfootbib=true%,gbtype=true%
@@ -156,6 +170,9 @@ pdfstartview=FitH,allcolors=gbemphcolor]{hyperref}
 \renewcommand{\cftsecfont}{\zihao{5}\heiti} %条目样式
 \renewcommand{\cftsubsecfont}{\zihao{-5}\songti} %条目样式\fangsong
 \renewcommand{\cftsubsubsecfont}{\zihao{-5}\kaiti} %条目样式
+\renewcommand{\cftsecpagefont}{\bfseries\zihao{5}} %页码的样式
+\renewcommand{\cftsubsecpagefont}{\bfseries\zihao{-5}} %页码的样式
+\renewcommand{\cftsubsubsecpagefont}{\bfseries\zihao{-5}} %页码的样式
 %−−−−−−−−−−设置egcode条目样式−−−−−−−−−−−−−−−−−−−−−−
 %\renewcommand{\cftegcodeleader}{\leaders\hbox to 1em{\hss.\hss}\hfill}
 \setlength{\cftbeforeegcodeskip}{0.1ex} %条目前的间距
@@ -166,7 +183,7 @@ pdfstartview=FitH,allcolors=gbemphcolor]{hyperref}
 \renewcommand{\cftegcodeaftersnum}{ }
 \renewcommand{\cftegcodeaftersnumb}{~}
 %\cftsetindents{egcode}{0em}{3em}
-%\renewcommand{\cftegcodepagefont}{\bfseries}
+\renewcommand{\cftegcodepagefont}{\bfseries\zihao{-5}}
 %−−−−−−−−−−设置figure条目样式−−−−−−−−−−−−−−−−−−−−−−
 %\newcommand{\cftfigfill}{\renewcommand{\cftdot}{$\diamond$}\cftdotfill{\cftdotsep}}
 \setlength{\cftbeforefigskip}{0.1ex} %条目前的间距
@@ -180,6 +197,7 @@ pdfstartview=FitH,allcolors=gbemphcolor]{hyperref}
 %\renewcommand{\cftfigleader}{\bfseries\cftfigfill} %连接符粘连团
 %\renewcommand{\cftfigpagefont}{\color{red}\zihao{-5}$\diamond$\itshape} %页码的样式
 %\renewcommand{\cftfigafterpnum}{\color{red}$\diamond$} %页码后内容
+\renewcommand{\cftfigpagefont}{\bfseries\zihao{-5}} %页码的样式
 %−−−−−−−−−−设置table条目样式−−−−−−−−−−−−−−−−−−−−−−
 %\newcommand{\cfttabfill}{\renewcommand{\cftdot}{$\infty$}\cftdotfill{\cftdotsep}}
 \setlength{\cftbeforetabskip}{0.1ex} %条目前的间距
@@ -193,6 +211,7 @@ pdfstartview=FitH,allcolors=gbemphcolor]{hyperref}
 %\renewcommand{\cfttableader}{\bfseries\cfttabfill} %连接符粘连团
 %\renewcommand{\cfttabpagefont}{\color{red}\zihao{-5}$\infty$\itshape} %页码的样式
 %\renewcommand{\cfttabafterpnum}{\color{red}$\infty$} %页码后内容
+\renewcommand{\cfttabpagefont}{\bfseries\zihao{-5}} %页码的样式
 
 \usepackage{pdfpages}%直接插入pdf文件页
 \graphicspath{{egfigure/}{example/}}
@@ -202,7 +221,7 @@ pdfstartview=FitH,allcolors=gbemphcolor]{hyperref}
 \usepackage{tikz,pgf}
 \usetikzlibrary{calc}
 
-\newenvironment{example}[3][代码]%
+\newenvironment{example}[3][{\large\faFileCodeO}]%
 {\list{}{\begingroup\codecaption{#2}\label{#3}\endgroup
 \setlength{\topsep}{0pt}
 \setlength{\partopsep}{0pt}
@@ -233,13 +252,13 @@ rulecolor=\color{gblabelcolor},
 fontadjust=true,
 language=[LaTeX]TeX,
 backgroundcolor=\color{gbyellow!3},%\color{yellow}, %背景颜色
-numbers=left,
+%numbers=left,
 numberstyle=\tiny\color{gblabelcolor},
 basicstyle=\footnotesize\ttfamily, % print whole listing small
 keywordstyle=\bfseries\color{gbemphcolor},%\underbar,
 % underlined bold black keywords
 identifierstyle=, % nothing happens
-commentstyle=\color{green!40!gray}, % white comments
+commentstyle=\color{OliveGreen}, % white comments
 stringstyle=\ttfamily\color{purple!50}, % typewriter type for strings
 showstringspaces=false}% no special string spaces
 }
@@ -312,7 +331,7 @@ theorem style=plain,fonttitle=\bfseries\heiti,coltitle=gbforestgreen
 align=left,leftmargin=0em,itemsep=0.5em,labelwidth=0.1em,itemindent=2.6em,listparindent=2em}%label=$\triangleright$,itemindent=1em
 \setlist[itemize]{topsep=2pt,partopsep=0pt,parsep=0pt,%
 leftmargin=3em,itemindent=0em}
-\setlist[description]{font=\bfseries\textcolor{gbemphcolor},align=right,topsep=5pt,partopsep=0pt,parsep=0pt,%
+\setlist[description]{font=\bfseries\textcolor{gblabelcolor},align=right,topsep=5pt,partopsep=0pt,parsep=0pt,%
 itemsep=0pt,leftmargin=0em,itemindent=0em}%注意，font或format中的最后一个命令自动提取标签为其参数
 
 \usepackage{longtable}
@@ -385,5 +404,24 @@ itemsep=0pt,leftmargin=0em,itemindent=0em}%注意，font或format中的最后一
 
 %\usepackage{filecontents}
 
-
+%% 问答环境参考文献
+%\NewDocumentEnvironment { reference } { }
+%  {
+%    \skip_vertical:n { 2 ex }
+%    \small
+%    \noindent \textsf{ 参考文献 } \marginpar { \raggedleft \faBook }
+%    \enumerate [ topsep = 0pt ]
+%    % \ignorespaces
+%  }
+%  { \endenumerate }
+%
+%\NewDocumentEnvironment { note } { }
+%  {
+%    \skip_vertical:n { 2 ex }
+%    \small
+%    \noindent \textsf{ 注意 } \marginpar { \raggedleft \faWarning }
+%    \par
+%    % \ignorespaces
+%  }
+%  { }
 

@@ -46,7 +46,7 @@ biblatex-gb7714-2015 宏包是为满足《GB/T 7714-2015~~信息与文献~~参�
 \section{概述}
 
 《GB/T 7714-2015~~信息与文献~~参考文献著录规则》是国内科技文档参考文献著录的一般标准，国内多数大学、出版社、期刊编辑部对于学位论文、出版物、期刊论文的参考文献要求通常都基于该标准。对于\LaTeX{}用户来说，参考文献生成是典型的自动化应用，通常有两种方法，一是基于bibtex的传统方法，二是基于biblatex的新方法。生成符合GB/T 7714 标准要求的参考文献，这两条路子都已经实践多年。
-基于biblatex的方法，早期有李志奇(icetea)的gbtstyle实现以及Casper Ti. Vector的caspervector样式，然而由于biblatex宏包升级、样式包维护和完善方面的问题，未能达到精确符合国标要求、且具备高可用性、兼容性和可维护性的理想状态。开发biblatex-gb7714-2015 样式包的初衷首先是基于当时这样的状态，也为解决实际应用中的很多问题，因此考虑如下设计原则：
+基于biblatex的方法，早期有李志奇(icetea)的gbtstyle实现以及Casper Ti. Vector的caspervector样式，然而由于biblatex宏包升级、样式包维护和完善方面的问题，未能达到精确符合国标要求、且具备高可用性、兼容性和可维护性的理想状态。开发biblatex-gb7714-2015 样式包的初衷首先是基于当时这样的状态，其次也为解决很多实际应用中的问题，因此考虑如下原则：
 
 \subsection{设计原则}
 
@@ -75,6 +75,11 @@ biblatex-gb7714-2015 宏包是为满足《GB/T 7714-2015~~信息与文献~~参�
   \item 灵活性
 
 在考虑实现严格符合GB/T 7714-2015标准的格式外，也希望能够针对用户的特殊格式需求，提供方便灵活的定制方式，比如通过设置选项来达到格式的变化。为此，增加了多个方面的设置选项，使用户可以根据自己的需求灵活地调整。主要包括：
+
+著录表排序选项：
+sorting选项值(gb7714-2015支持以语言作者年份标题升序排列，gbnytd支持以语言作者年份标题降序排列，gbynta支持以语言年份作者标题升序排列，gbyntd支持以语言年份作者标题降序排列)、gblanorder 选项(可以设置不同的文种(语言)文献的排列顺序)、sortlocale 选项(可以设置本地语言的排序调整方案，比如zh\_\_pinyin支持汉字字符以拼音排序，zh\_\_stroke以笔画排序，auto/zh以unicode编码排序，zh\_\_gb2312han 以gb2312编码排序)。使用拼音排序时遇到多音字也可以利用key域解决。
+
+
 
 著录项格式选项：
 姓名格式调整(gbnamefmt选项，可以设置大写、小写、西语习惯用法、拼音习惯用法)、
@@ -197,7 +202,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 \subsection{最小示例}
 
-基于biblatex宏包的参考文献生成方法非常简单，例\ref{code:doc:structrue}是一个最小工作示例。示例代码中给出了详细注释，介绍了使用biblatex 的tex源文档基本结构，其中gb7714-2015 样式随biblatex宏包加载，
+基于biblatex宏包的参考文献生成方法非常简单，例 \ref{code:doc:structrue} 是一个最小工作示例。示例代码中给出了详细注释，介绍了使用biblatex 的tex源文档基本结构，其中gb7714-2015 样式随biblatex宏包加载，
 参考文献数据文件example.bib（bib文件需另外准备，详见\ref{sec:bib:bibtex}节）利用 \verb|\addbibresource|加载，文献表利用 \verb|\printbibliography| 命令输出(可在正文任意位置)。所有基于 biblatex 生成参考文献的文档无论大小万变不离其宗。
 若需更全面了解biblatex及参考文献生成高级功能另可参考:
 \href{https://github.com/plk/biblatex}{biblatex宏包手册}
@@ -566,6 +571,15 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   但要注意由于hyperref本身的原因，这种方式产生的脚注文献表可能没有超链接功能。
   对于表格环境中的引用无法产生脚注文献表的问题，可以将其置于小页环境中实现或者采用前述图标标题中的类似处理方式。
   注意：latex核心代码参考latex.ltx，而hyperref代码参考hyperref.STY。
+
+
+  \item[gbfnperpage]=true，\textbf{false}. \hfill default is false
+
+  为脚注计数器根据页码更新而增加的选项。
+  \begin{itemize}
+    \item gbfnperpage=true，每页更新脚注编号，即根据page计数器重设footnote计数器。
+    \item gbfnperpage=false，不根据页码重设脚注计数器。
+  \end{itemize}
 
 
   \item[mergedate]=true，false，none.
@@ -978,6 +992,120 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \caption{文献表条目著录格式示例三}\label{fig:content:fmtc}
 \end{figure}
 
+\subsection{文献表排序与调整}
+
+\subsubsection{国标要求的排序方式}
+
+文献表排序是文献表格式的重要内容。国标的两种编制方式中，顺序编码制要求文献表中的文献按照正文中文献引用的顺序排序，而作者年制则要求文献表首先按照文种对不同语言的文献进行分组，中文在前英文在后，分组内的中文文献则以拼音或笔画进行排序，而西文文献则按照字母顺序进行排列。在gb7714-2015国标样式中两种编制方式的排序分别以如下选项设置来实现:
+
+\begin{example}{两种编制方式的排序设置}{eg:bib:sorting}
+\begin{texlist}
+%顺序编码制:
+sorting=none
+
+%作者年制:
+sorting=gb7714-2015,gblanorder=chineseahead,sortlocale=zh__pinyin
+\end{texlist}
+\end{example}
+
+这些设置是样式的默认设置，用户如果没有其他需求则无需调整，若需调整详见下一节。
+
+\subsubsection{排序的逻辑和调整方法}
+
+文献表中文献的排序通常是由处理bib文件的后端程序执行的，实质就是由bibtex或biber程序实施。通常biblatex选择biber作为后端程序来实现更灵活的排序机制。biber在处理过程中读取bib文件信息并根据biblatex宏包和文献样式在bcf文件中输出设置信息实施排序。而bibtex程序则在读取bib文件后根据bst样式进行排序，尽管可以通过bibtex读入特殊格式bib文件这样的手段为bst提供一些设置参数，但总体来说基于bibtex的文献排序是由bst样式决定的。而biber程序则是提供了一套工具，具体的排序方式是由biblatex宏包和样式文件中的设置决定的，biber根据这些设置执行特定的逻辑来实现排序。
+
+biblatex通过sorting选项选择排序模板来进行排序，而排序模板是可以自定义的。
+gb7714-2015ay样式提供了gblanorder选项来选择文种的排列顺序，其本质是对排序模板中与语言相关的域进行设置，因此它是与sorting选项选择的排序模板密切相关的，biblatex提供的标准样式排序模板并不支持该选项。
+而sortlocale选项则是针对字符排序选择本地化调整方案，比如选项zh\_\_pinyin就是选择针对中文字符根据拼音进行排序。本地化调整方案是由perl模块提供，中文字符排序的可用选项值详见前面的sortlocale选项说明。需要注意的是本地化字符排序调整方案设置也可以通过biber命令行选项提供，biblatex设置和biber命令行设置两种方式见例\ref{eg:sort:opts}、例\ref{eg:sort:bibercmd}。
+
+\begin{example}{中文字符排序调整可利用biblatex选项}{eg:sort:opts}
+\begin{texlist}
+%按拼音排序，biblatex加载选项
+\usepackage[backend=biber,style=gb7714-2015ay,sortlocale=zh__pinyin]{biblatex}
+%按笔画排序，biblatex加载选项
+\usepackage[backend=biber,style=gb7714-2015ay,sortlocale=zh__stroke]{biblatex}%
+%此时，biber则正常编译不需手动加选项，因为排序调整方案（sort tailoring）已由biblatex 给出。
+biber jobname
+\end{texlist}
+\end{example}
+
+\begin{example}{中文字符排序调整也可利用biber选项}{eg:sort:bibercmd}
+\begin{texlist}
+%biblatex正常加载，即不设置排序的本地化调整方案
+\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}
+
+%此时需利用biber选项给出本地化排序调整方案：
+%按拼音排序，则设置-l zh__pinyin
+biber -l zh__pinyin jobname
+%按笔画排序，则设置-l zh__pinyin
+biber -l zh__stroke jobname
+\end{texlist}
+\end{example}
+
+对于sorting选项，biblatex提供了标准的排序模板包括:
+
+\begin{description}
+  \item[nty]  按照姓名、标题、年份排序。
+  \item[nyt]  按照姓名、年份、标题排序。
+  \item[nyvt]  按照姓名、年份、卷数、标题排序。
+  \item[anyt]  按照字母标签、姓名、年份、标题排序。
+  \item[anyvt]  按照字母标签、姓名、年份、卷数、标题排序。
+  \item[ynt]  按照年份、姓名、标题排序。
+  \item[ydnt]  按照年份（降序）、姓名、标题排序。
+  \item[none]  不进行排序。所有的条目按照引用顺序处理。
+\end{description}
+
+而gb7741-2015ay样式提供了4个排序模板:
+
+\begin{description}
+  \item[gb7714-2015]  以语言、作者、年份、标题、升序排列
+  \item[gbnytd]  以语言、作者、年份、标题、降序排列
+  \item[gbynta]  以语言、年份、作者、标题、升序排列
+  \item[gbyntd]  以语言、年份、作者、标题、降序排列
+\end{description}
+
+在使用gb7714-2015ay样式时可以使用上述排序模板。用户也可以增进自定义模板，比如为了处理多音字的问题，用户可以手动设置key域用来对中文文献进行排序，定义如下的排序模板:
+
+\begin{example}{针对多音字问题的排序模板}{eg:sort:multipinyin}
+\begin{texlist}
+\DeclareSortingTemplate{multipinyin}{
+      \sort{
+        \field{presort}
+      }
+      \sort{
+    	\field{lansortorder}%language
+      }
+      \sort{
+        \field{sortkey}
+      }
+      \sort{%[direction=descending]
+        \field{sortname}
+        \field{author}
+        \field{editor}
+        \field{translator}
+      }
+      \sort{
+        \field{sortyear}
+        \field{year}
+      }
+      \sort{
+        \field{sorttitle}
+        \field{title}
+      }
+      \sort{
+        \field{volume}
+        \literal{0}
+      }
+    }
+\end{texlist}
+\end{example}
+
+其中，排序模板优先使用persort域进行排序，接着是与文种相关的lansortorder域，接着是sortkey域，该域在biblatex中就是key域的别名，接着是作者姓名相关的域，对key域设置中文文献作者姓名多音字的首音就能得到需要的排序效果。比如三篇文献作者分别是[李四][J. B. Conway][曾三]。在设置sorting=multipinyin, gblanorder=chineseahead, sortlocale=zh\_\_pinyin的情况下，根据上述的排序模板multipinyin，首先根据文种和作者信息将中文文献[曾三][李四]排在前面，接着是[J. B. Conway]，因为默认情况下，曾字考虑的读音是ceng2。但若对key域手动设置中文的拼音，比如[李四]文献设置key=\{li3si4\}，而[曾三]文献设置key=\{zeng1san1\}，那么排序过程中文献仍然排在前面，但根据key域的设置会将[李四]文献排列在[曾三]前面。因此手动设置拼音后，文献排列顺序为:[李四][曾三][J. B. Conway]。
+
+其中，与文种相关的排序域lansortorder是由gblanorder选项设置的，当选项值为chineseahead时，语言顺序为cn;jp;kr;en;fr;ru，会将中文文献的lansortorder域设置为1，日语文献设置为2，韩语文献设置为3，英文文献设置为4，法语文献设置为5，俄语文献设置为6。排序过程中按升序排序，那么自然中文文献在前英文文献在后。若对gblanorder选择设置一个自定义的字符串如:cn;en;ru;fr;jp;kr，那么文种的排列顺序为中文、英文、俄语、法语、日语、韩语。
+
+根据上述的排序逻辑，我们可以知道，要做排序的调整首先可以设置选项，来选择合适的排序模板、文种顺序和本地化字符排序调整方案。当不满足要求时，可以自定义排序模板，并设置sorting选项为该模板，来实现用户需要的排序方式。
+
 
 \subsection{多语言支持}
 
@@ -1255,7 +1383,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \item 支持全面。后端处理程序biber处理大数据量毫无压力，不用担心内存不足问题，字符编码支持utf-8，完全支持中文的bibtex 键(引用关键字)。biber除了自身提供的大量功能，比如：动态数据修改、参考文献数据检查、输出引用文献的数据(例\ref{eg:bibercmd:outbibfile})等外，还可利用一些perl模块来实现一些特殊功能，比如：
     实现文件编码的转换（perl 的Encode::CN 模块），
     排序的本地化调整（perl的Unicode::Collation::locale 模块，
-    拼音和笔画排序见例\ref{eg:sort:opts}、例\ref{eg:sort:bibercmd}）等。
+    中文字符的拼音和笔画排序见例\ref{eg:sort:opts}、例\ref{eg:sort:bibercmd}）等。
 
     \begin{example}{输出引用文献数据时的biber选项}{eg:bibercmd:outbibfile}
     \begin{texlist}
@@ -1263,29 +1391,6 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \end{texlist}
     \end{example}
 
-    \begin{example}{中文文献排序可利用biblatex选项}{eg:sort:opts}
-    \begin{texlist}
-    %按拼音排序，biblatex加载选项
-    \usepackage[backend=biber,style=gb7714-2015ay,sortlocale=zh__pinyin]{biblatex}
-    %按笔画排序，biblatex加载选项
-    \usepackage[backend=biber,style=gb7714-2015ay,sortlocale=zh__stroke]{biblatex}%
-    %此时，biber则正常编译不需手动加选项，因为排序调整方案（sort tailoring）已由biblatex给出。
-    biber jobname
-    \end{texlist}
-    \end{example}
-
-    \begin{example}{中文文献排序也可利用biber选项}{eg:sort:bibercmd}
-    \begin{texlist}
-    %biblatex正常加载，即不设置排序的本地化调整方案
-    \usepackage[backend=biber,style=gb7714-2015ay]{biblatex}
-
-    %此时需利用biber选项给出本地化排序调整方案：
-    %按拼音排序，则设置-l zh__pinyin
-    biber -l zh__pinyin jobname
-    %按笔画排序，则设置-l zh__pinyin
-    biber -l zh__stroke jobname
-    \end{texlist}
-    \end{example}
 \end{enumerate}
 %上述这些优点也是笔者决定编写符合GB/T 7714-2015标准的参考文献样式文件的原因之一。
 
