@@ -1,0 +1,50 @@
+\documentclass{article}
+\usepackage{ctex}
+
+\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}
+\addbibresource{biblatex-examples.bib}
+
+
+\begin{document}
+
+文献\citec{sigfridsson,worman,geer}
+
+文献\citecs{sigfridsson}{worman}{geer}
+
+文献\authornumcite{sigfridsson,worman,geer}
+
+文献\authornumcites{sigfridsson}{worman}{geer}
+
+文献\parencite{sigfridsson,worman,geer}
+
+文献\parencites{sigfridsson}{worman}{geer}
+
+
+%1 \cites{sigfridsson}{worman}{geer}
+%
+%2 \cites[380]{sigfridsson}[34]{worman}[12]{geer}
+%
+%3 \cite[cf.][490]{sigfridsson,worman,geer}
+%
+%4 \cites{sigfridsson}{geer}
+%
+%5 \cite{sigfridsson,geer}
+%
+%6 \autocites{sigfridsson}{worman}{geer}
+%
+%7 \cites{sigfridsson}[cf][]{geer}{worman}
+%
+%7a \cites{sigfridsson}{worman}{geer}[cf][]{nussbaum}
+%
+%7b \cites{sigfridsson}{worman}{geer}[380]{nussbaum}
+%
+%7c \cites{sigfridsson}{worman}{geer}{nussbaum}
+%
+%8 \autocite{sigfridsson,worman,geer}
+%
+%9 \textcites{knuth:ct:a}{knuth:ct:b}{knuth:ct:c}
+%
+%10 \textcite{knuth:ct:a,knuth:ct:b,knuth:ct:c}
+
+\printbibliography
+\end{document} 

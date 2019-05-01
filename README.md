@@ -30,8 +30,8 @@ The biblatex-gb7714-2015 package provides an implementation of the bibliography 
     * special characters in all fields?
     * entry without author: the delimiter between title and year?
 	* TEST FOR texlive 2015,2016,2017
-	* [1]，(1)，1.，box{1}，superscript，compress，noncompress
-	
+
+
 
 ## Usage
 * for numerical sequence style: gb7714-2015

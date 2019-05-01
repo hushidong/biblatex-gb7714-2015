@@ -1798,7 +1798,7 @@
 %   修改译者位置格式
 %
 %   原理方法:修改来自biblatex.def文件的bytranslator+others宏的格式
-\renewbibmacro*{bytranslator+others}{%
+\renewbibmacro*{bytranslator+others}{\bibauthorfont%
   \ifnameundef{translator}
     {}
     {%\usebibmacro{bytranslator+othersstrg}
@@ -1819,7 +1819,7 @@
 %   v1.0O,20190103,hzz,修改利用新定义的一个分隔符strandothersdelim
 %
 %   原理方法:判断作者或译者是否中文，若中文用字符等，否则用et al. 。
-\renewbibmacro*{name:andothers}{%
+\renewbibmacro*{name:andothers}{\bibauthorfont%
   \ifboolexpr{
     test {\ifnumequal{\value{listcount}}{\value{liststop}}}
     and
@@ -2632,7 +2632,7 @@ incollection,proceedings,inproceedings]{number}{%
 %
 %   对edition版本信息格式做出修改
 %
-\DeclareFieldFormat{edition}{%源来自biblatex.DEF
+\DeclareFieldFormat{edition}{\bibtitlefont%源来自biblatex.DEF
 \testCJKfirst{userd}%
 \iftoggle{ifCJKforgbt}%
 {\ifinteger{#1}%
@@ -2645,7 +2645,7 @@ incollection,proceedings,inproceedings]{number}{%
 %
 %   对version的版本信息做出修改
 %
-\DeclareFieldFormat{version}{%源来自biblatex.DEF
+\DeclareFieldFormat{version}{\bibtitlefont%源来自biblatex.DEF
 \testCJKfirst{userd}%
 \ifinteger{#1}%
 {\iftoggle{ifCJKforgbt}{\printtext{#1\str@edition}}%

@@ -186,3 +186,94 @@
 
 \newrobustcmd*{\inlinecite}%
     {\parencite}
+
+%
+%   增加如下复数的命令，以符合biblatex的复数命令习惯
+%   20190430，v1.0r，hzz
+% citec和citecs命令是实现了[1]-[3]这样的压缩形式。
+% authornumcites是常用命令authornumcite的复数形式
+\DeclareFieldFormat{labelbracket}{\mkbibbrackets{#1}}
+
+\newbibmacro*{citec:comp:comp}{%
+  \ifboolexpr{
+    ( test {\iffieldundef{labelprefix}} and test {\ifundef\cbx@lastprefix} )
+    or
+    test {\iffieldequals{labelprefix}{\cbx@lastprefix}}
+  }
+    {\ifnumequal{\thefield{labelnumber}}{\value{cbx@tempcntb}}
+       {\savefield{entrykey}{\cbx@lastkey}%
+        \savefield{labelnumber}{\cbx@lastnumber}%
+        \addtocounter{cbx@tempcnta}{1}}
+       {\ifnumequal{\thefield{labelnumber}}{\value{cbx@tempcntb}-1}
+          {}
+          {\usebibmacro{citec:dump}%
+           \ifnumgreater{\value{cbx@tempcntb}}{-1}
+             {\multicitedelim}
+             {}%
+           \printtext[bibhyperref]{%
+             \printfield{labelprefix}%
+             \printtext[labelbracket]{\printfield{labelnumber}}}}}}
+    {\usebibmacro{cite:comp:end}}%
+  \setcounter{cbx@tempcntb}{\thefield{labelnumber}}%
+  \savefield{labelprefix}{\cbx@lastprefix}}
+
+\newbibmacro*{citec:comp}{%
+  \addtocounter{cbx@tempcntb}{1}%
+  \iffieldundef{shorthand}
+    {\ifbool{bbx:subentry}
+       {\iffieldundef{entrysetcount}
+          {\usebibmacro{citec:comp:comp}}
+          {\usebibmacro{cite:comp:inset}}}
+       {\usebibmacro{citec:comp:comp}}}
+    {\usebibmacro{cite:comp:shand}}}
+
+\newbibmacro*{citec:dump}{%
+  \ifnumgreater{\value{cbx@tempcnta}}{0}
+    {\ifnumgreater{\value{cbx@tempcnta}}{1}
+       {\bibrangedash}
+       {\multicitedelim}%
+     \bibhyperref[\cbx@lastkey]{%
+       \ifdef\cbx@lastprefix
+         {\printtext[labelprefix]{\cbx@lastprefix}}
+         {}%
+       \printtext[labelbracket]{\cbx@lastnumber}}}%labelnumber
+    {}%
+  \setcounter{cbx@tempcnta}{0}%
+  \global\undef\cbx@lastprefix}
+
+%\DeclareCiteCommand{\citec}[\mkbibsuperscript]%[\mkbibbrackets]
+%  {\usebibmacro{cite:init}%
+%   \usebibmacro{prenote}}
+%  {\usebibmacro{citeindex}%
+%   \usebibmacro{citec:comp}}
+%  {}
+%  {\usebibmacro{citec:dump}%
+%   \usebibmacro{postnote}}
+
+%上面这个用于非压缩情况，这里考虑了压缩的情况
+\DeclareCiteCommand{\citec}[\mkbibsuperscript]%
+  {\ifnumless{\value{multicitecount}}{2}
+     {\usebibmacro{cite:init}%
+      \usebibmacro{prenote}}
+     {\iffieldundef{prenote}
+        {\iffieldundef{postnote}
+           {}
+           {\usebibmacro{citec:dump}%
+            \usebibmacro{cite:init}%
+            \setunit{\multicitedelim}}}
+        {\usebibmacro{citec:dump}%
+         \usebibmacro{cite:init}%
+         \setunit{\multicitedelim}%
+         \usebibmacro{prenote}}}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{citec:comp}}
+  {}
+  {\ifboolexpr{       test {\ifnumequal{\value{multicitecount}}{\value{multicitetotal}}}
+               or not test {\iffieldundef{postnote}}}
+     {\usebibmacro{citec:dump}%
+      \usebibmacro{postnote}}
+     {}}
+
+\DeclareMultiCiteCommand{\citecs}[\mkbibsuperscript]{\citec}{}
+
+\DeclareMultiCiteCommand{\authornumcites}[]{\authornumcite}{\multicitedelim}

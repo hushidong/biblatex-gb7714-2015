@@ -256,3 +256,16 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
 
 \newrobustcmd*{\inlinecite}%
     {\parencite}
+
+
+%
+%   增加如下复数的命令，以符合biblatex的复数命令习惯
+%   20190430，v1.0r，hzz
+% citec和citecs命令是为了兼容顺序编码制。
+% authornumcites是常用命令authornumcite的复数形式
+\newrobustcmd*{\citec}%
+    {\cite}
+
+\DeclareMultiCiteCommand{\citecs}[]{\cite}{\multicitedelim}
+
+\DeclareMultiCiteCommand{\authornumcites}[]{\authornumcite}{\multicitedelim}
