@@ -27,6 +27,28 @@
 %   功能函数
 %=====================================================================
     %
+    %   增加一个控制是否输出annotation域的选项，该域可以用于在文献条目后面输出一些注释信息
+    %   20190509,v1,0s,hzz
+    \newtoggle{bbx:gbannote}
+    \DeclareBibliographyOption{gbannote}[false]{%biblatex低版本
+      \settoggle{bbx:gbannote}{#1}}
+    \ExecuteBibliographyOptions{gbannote}
+	%
+	%用于在文献条目后面输出注释信息的宏
+    %FieldFormat{annotation}用于设置注释信息的格式
+	\DeclareFieldFormat{annotation}{%
+		\printtext{\addspace(#1)}%
+	}
+	\renewbibmacro*{annotation}{%
+		\iftoggle{bbx:gbannote}%
+		{\iffieldundef{annotation}%
+	    	{\printfile[annotation]{\bibannotationprefix\thefield{entrykey}.tex}}%
+	    	{\printfield{annotation}}}%
+	    {}%
+	    }
+
+
+    %
     %   biblatex版本判断
     %   20180629，v1.0k，hzz
     %
@@ -2665,7 +2687,7 @@ incollection,proceedings,inproceedings]{number}{%
     {\usebibmacro{related:init}%
      \usebibmacro{related}}
     {}%
-  \usebibmacro{finentry}}
+  \usebibmacro{finentry}\usebibmacro{annotation}}
 
 
 %
@@ -2712,7 +2734,7 @@ incollection,proceedings,inproceedings]{number}{%
     {\usebibmacro{related:init}%
      \usebibmacro{related}}
     {}%
-  \usebibmacro{finentry}}
+  \usebibmacro{finentry}\usebibmacro{annotation}}
 
 
 
@@ -2750,7 +2772,7 @@ incollection,proceedings,inproceedings]{number}{%
     {\usebibmacro{related:init}%
      \usebibmacro{related}}
     {}%
-  \usebibmacro{finentry}}
+  \usebibmacro{finentry}\usebibmacro{annotation}}
 
 %
 %   专利文献驱动
@@ -2793,7 +2815,7 @@ incollection,proceedings,inproceedings]{number}{%
     {\usebibmacro{related:init}%
      \usebibmacro{related}}
     {}%
-  \usebibmacro{finentry}}
+  \usebibmacro{finentry}\usebibmacro{annotation}}
 
 
 %
@@ -2840,7 +2862,7 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
     {\usebibmacro{related:init}%
      \usebibmacro{related}}
     {}%
-  \usebibmacro{finentry}}
+  \usebibmacro{finentry}\usebibmacro{annotation}}
 
 
 %
@@ -2890,7 +2912,7 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
     {\usebibmacro{related:init}%
      \usebibmacro{related}}
     {}%
-  \usebibmacro{finentry}}
+  \usebibmacro{finentry}\usebibmacro{annotation}}
 
 %
 %   论文、手册类型驱动
@@ -2942,7 +2964,7 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
     {\usebibmacro{related:init}%
      \usebibmacro{related}}
     {}%
-  \usebibmacro{finentry}}
+  \usebibmacro{finentry}\usebibmacro{annotation}}
 
 %
 %   备选类型驱动
@@ -2983,7 +3005,7 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
     {\usebibmacro{related:init}%
      \usebibmacro{related}}
     {}%
-  \usebibmacro{finentry}}
+  \usebibmacro{finentry}\usebibmacro{annotation}}
 
 
 %
@@ -3041,7 +3063,7 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
     {\usebibmacro{related:init}%
      \usebibmacro{related}}
     {}%
-  \usebibmacro{finentry}}
+  \usebibmacro{finentry}\usebibmacro{annotation}}
 
 
 %

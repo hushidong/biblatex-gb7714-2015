@@ -614,6 +614,16 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   \end{itemize}
 
   测试文档见：\href{run:./example/opt-gblanorder.tex}{opt-gblanorder.tex}。
+  
+    \item[gbannote]=true，\textbf{false}. \hfill default is false
+
+  为控制是否在文献条目后面输出由annotation或annote域提供的注释信息而增加的选项。
+  \begin{itemize}
+    \item gbannote=false，即默认不输出。
+    \item gbannote=true，输出注释信息。
+  \end{itemize}
+
+  测试文档见：\href{run:./example/opt-gbannote.tex}{opt-gbannote.tex}。
 
 \end{description}
 
@@ -1010,6 +1020,54 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \caption{文献表条目著录格式示例三}\label{fig:content:fmtc}
 \end{figure}
 
+\subsubsection{著录格式局部调整}\label{sec:entry:fmtlocal}
+
+得益于biblatex利用tex宏控制著录格式的特点，加上tex语言本身编组的局部化特性，所以在利用biblatex生成参考文献的过程中可以有丰富手段，来进行参考文献著录格式的局部调整。也正因为局部的格式调整，因此通常局部格式都是结合refsection或者refsegment来操作的。前面提到过的一个很简单的例子，当在学位论文的写作中需要正文部分的参考文献使用顺序编码制，而附录中研究成果部分使用作者年制这样的需求就是一个典型的局部化格式调整。这一问题的解决方式为在研究成果部分使用一个refsection将其局部化，并结合gb7714-2015mx样式，并利用setaystylesection命令设置该refsection为作者年制样式。
+
+因为tex宏的局部化调整特性，因此几乎biblatex中所有格式设置都是可以做局部调整的，限于篇幅，这里仅介绍一些常见的简单的调整方式：
+
+\begin{enumerate}
+  \item 文献表标题
+  
+  局部重定义bibname、refname或者局部重设printbibliography命令的选项可以设置文献表标题。
+	
+  \item 文献表段落格式
+  
+  局部重定义bibfont命令即可局部设置参考文献的字体颜色等，进一步重定义bibauthorfont、bibtitlefont、bibpubfont 等命令用于控制文献不同著录项的格式。
+  
+  局部重定义bibitemindent 尺寸可以设置文献表的缩进
+  
+  局部重定义bibitemsep、bibnamesep、bibinitsep可以设置文献表的各条目的间距
+  
+  \item 文献表条目著录格式
+
+  biblatex中绝大部分的控制选项都是使用toggle的方式，比如url选项，gbtype选项，gbannote选项等，因此在局部设置选项对应的toggle 值可以局部设置选项控制的格式。
+  另外也有一些选项使用的是计数器，比如gbnamefmt选项，因此局部设置选项对应的计数器的值可以局部设置选项控制的格式。
+  当然由于一些选项的特殊性，它无法简单的进行利用toggle值或计数器值进行设置，而可能需要调整选项对应的宏的内容，因此复杂度会明显提升，如果不是非常必要，建议不要去局部化重设这些选项的所对应的格式。
+  
+  示例见\href{run:./example/opt-gbannote.tex}{opt-gbannote.tex}。
+  
+  \item 文献表条目中域或标点的格式
+  
+  biblatex中域和标点的格式设置其实是比较简单的，且设置命令不限制一定要在导言区中，因此做局部化调整也是合适的。比如在一个refsection中需要将期刊文献的volume域的格式设置为粗体，那么可以做设置为：
+  
+  \begin{example}{域格式的局部调整示例}{eg:bib:fieldsetlocal}
+	\begin{texlist}
+	\DeclareFieldFormat[article,periodical]{volume}{\textbf{#1}}% volume of a journal
+	\end{texlist}
+ \end{example}
+  
+\end{enumerate}
+
+实施上格式的局部调整和全局调整本质上是一致的，文献样式中几乎所有格式设置，都可以做局部化处理。当然做全面的样式设计会稍微往深里去一点，考虑的问题也会更多，但局部格式调整是可以借鉴的，关于样式中的格式设置和说明请参考：
+\href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography/blob/master/biblatex-solution-to-latex-bibliography.pdf}%
+{biblatex高级使用方法和样式包设计实现方法}。
+
+
+
+
+
+
 \subsection{文献表排序与调整}
 
 \subsubsection{国标要求的排序方式}
@@ -1143,7 +1201,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \caption{多语言混合文献表}\label{fig:multi:lan}
 \end{figure}
 
-\begin{enumerate} 
+\begin{enumerate}
 \item 多语言混合文献表首先要解决的是多语言文献的字符显示问题。使用xelatex编译时，由于其原生支持unicode的特性，在tex文档内显示多语言字符比较容易实现，正确显示的关键在于合适的字体设置。一般情况下西文如英/法/俄可以利用fontspec宏包选择合适的字体来解决，而中/日/韩语可以利用ctex宏包可以解决，但仍需注意要正确的显示中/日/韩语也需要字体支持，windows下常见的中文字体可能不支持日/韩字符，而思源宋体是一个不错的选择。本文的多语言示例编译均采用思源宋体常规(SourceHanSerifSC-Regular.otf)，
 请从其\href{https://github.com/adobe-fonts/source-han-serif/tree/release}{官网}下载。
 
@@ -1519,9 +1577,9 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
   \item note域在本样式中也做特殊用途，即在book类型的note域中输入standard表示标准，在aritcle类型的note域中输入news表示报纸，当然也可以不做特殊用，而只是表示杂项信息，因为标准和报纸也可以用standard和newspaper类型表示，尽管这两种类型不是biblatex原生支持的条目类型。
 
   \item usera域用于表示参考文献类型和载体标识符（为兼容Lee zeping 的bst样式使用的bib文件也可以用mark和medium 表示）。一般情况下usera，mark，medium这些域不用在bib文件中输入，而由样式文件自动处理得到，既为了使bib文件更纯粹，也为了兼容不同的样式。想象一下如果在bib文件中给出usera域，但另一样式需要使用usera域且用途不同，那么就会有兼容性问题。不用手动输入更重要的目的是为用户减负，因为用户可以直接使用从网络（各种学术网站）导出参考文献信息而不用再额外添加一个参考文献类型和载体标识符。
-      
+
   \item 本样式自动判断语言，用户一般不需要直接给出表示文献语言的域language，因为样式在处理过程中会对各个域的字符做语言判断，这对于一篇文献存在多种语言的情况非常有用，比如一本英文著作被翻译为中文，原作者仍用英文，而译者则使用中文。那么该文献无法用一个language 标识文献的语言，简单来说，标记language域更多的目的是用在多种语言混合的文档中，可以用language 来标记英语、中文、日语、法语和俄语等用于分文种排序。当然这种标记也是由样式自动处理的，用户仅需在自动判断出现问题时手动干预。
-      
+
 \end{itemize}
 
 
@@ -1551,7 +1609,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
   \item[author] 在biblatex中author域属于name数据类型，输入数据时，各姓名间用and 连接，当姓名过多省略时，用others代替。
 
       单个姓名，对于中文作者直接输入中文姓名即可。比如:
-      
+
       于潇 and 刘义 and 柴跃廷 and others
 
       对于英文作者，单个姓名有两种biblatex可以解析的输入方式:
@@ -1561,7 +1619,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
       \textcircled{2}firstname middlename lastname or firstname prefix lastname
 
       比如:
-      
+
       DES MARAIS, Jr., D J and H STRAUSS and SUMMONS, R. E. and others
 
       其中第一个姓名输入为前缀，姓，后缀，名\ 中间名。第二个姓名输入为名\ 姓。第三个姓名输入为姓，名\ 中间名。
@@ -1571,7 +1629,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
       对于中文的机构作者，不需要解析，直接输入机构名，比如:
 
       中国企业投资协会 and 台湾并购与私募股权协会 and 汇盈国际投资集团
-      
+
       对于英文的机构作者，由于机构名可能存在空格或and等字符串，因此最好用\{\}包起来，避免解析出错，比如：
 
       \{International Federation of Library Association and Institutions\} and NASA
@@ -1598,9 +1656,9 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
 
   \item[urldate] urldate域与date域类似，只是解析时，存储到urlday，urlmonth，urlyear，urlendday，urlendmonth，urlendyear域中。origdate和eventdate与urldate情况类似。
-      
+
   \item[pages] 可以格式化输入或输入需要打印的内容。格式化输入时，页码用整数，当有范围时，用单个或多个短横线-隔开。比如:59-60或\verb|59--60|。 当无法解析时，输入内容被认为是需要完整打印的内容。
-        
+
   \item[url] 直接输入需要打印的网址内容。注意不需要在域内加上\verb|\url|命令来表示网址链接，仅需要输入网址本身即可，且特殊字符无需转义。即输入方式为:
 
       \verb|url={http://www.greenwood.com/can_b_b#abc},|

@@ -1,0 +1,138 @@
+\documentclass[twoside]{article}
+    \usepackage{ctex}
+    \usepackage{xcolor}
+    \usepackage{toolbox}
+    \usepackage{hyperref}
+    \usepackage{lipsum}
+    \usepackage[paperwidth=21cm,paperheight=29cm,top=10pt,bottom=10pt,left=1cm,right=1cm]{geometry}
+
+\usepackage[backend=biber,style=gb7714-2015mx]{biblatex}
+
+\setaystylesection{1}
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+% Encoding: UTF-8
+@article{ref-1-1-Yang,
+author    = {Yang, Y and Ren, T L and Zhang, L T and others},
+title     = {Miniature microphone with silicon-based ferroelectric thin films},
+journal   = {Integrated Ferroelectrics},
+date      = {2003},
+pages      = {229-235},
+volume      = {52},
+annotation      = {SCI 收录, 检索号:758FZ},
+}
+
+@article{ref-2-1-杨轶,
+author    = {杨轶 and 张宁欣 and 任天令 and others},
+title     = {硅基铁电微声学器件中薄膜残余应力的研究},
+journal   = {中国机械工程},
+pages= {1289-1291},
+date      = {2005},
+volume      = {16},
+number ={14},
+annotation ={EI 收录, 检索号:0534931 2907},
+}
+
+@article{ref-3-1-杨轶,
+author    = {杨轶 and 张宁欣 and 任天令 and others},
+title     = {集成铁电器件中的关键工艺研究},
+journal   = {仪器仪表学报},
+date      = {2003},
+volume      = {24},
+pages={192-193},
+number      = {S4},
+annotation      = {EI 源刊},
+}
+
+@article{ref-4-1-Yang,
+author    = {Yang, Y and Ren, T L and Zhu, Y P and others},
+title     = {PMUTs for handwriting recognition},
+pubstate ={In press},
+annotation      = {已被 Integrated Ferroelectrics 录用. SCI 源刊.},
+}
+
+
+@article{ref-5-1-Wu,
+author    = {Wu, X M and Yang, Y and Cai, J and others},
+title     = {Measurements of ferroelectric MEMS microphones},
+journal   = {Integrated Ferroelectrics},
+date      = {2005},
+pages={417-429},
+volume      = {69},
+annotation      = {SCI 收录, 检索号 :896KM.},
+}
+
+
+@article{ref-6-1-贾泽,
+author    = {贾泽 and 杨轶 and 陈兢 and others},
+title     = {用于压电和电容微麦克风的体硅腐蚀相关研究},
+journal   = {压电与声光},
+date      = {2006},
+pages      = {117-119},
+number={1},
+volume      = {28},
+annotation      = {EI 收录, 检索号:06129773469.},
+}
+
+
+@article{ref-7-1-伍晓明,
+author    = {伍晓明 and 杨轶 and 张宁欣 and others},
+title     = {基于MEMS技术的集成铁电硅微麦克风},
+journal   = {中国集成电路},
+date      = {2003},
+volume      = {53},
+pages      = {59-61},
+}
+
+@patent{ref-8-1-任天令,
+author    = {任天令 and 杨轶 and 朱一平 and others},
+title     = {硅基铁电微声学传感器畴极化区域控制和电极连接的方法},
+number ={中国, CN1602118A},
+annotation      = {中国专利公开号.},
+}
+
+@patent{ref-9-1-Ren,
+author    = {Ren, T L and Yang, Y and Zhu, Y P and others},
+title     = {Piezoelectric micro acoustic sensor based on ferroelectric materials},
+number ={USA, No.11/215, 102},
+annotation      = {美国发明专利申请号.},
+}
+\end{filecontents}
+
+
+    \addbibresource{\jobname.bib}
+    %
+
+
+    \begin{document}
+
+
+    \nocite{*}
+    \printbibliography
+
+
+    \begin{refsection}
+
+    \settoggle{bbx:gbtype}{false}%局部设置不输出文献类型和载体标识符
+    \settoggle{bbx:gbannote}{true}%局部设置输出注释信息
+    \setcounter{gbnamefmtcase}{1}%局部设置作者的格式为大小写不变的国标格式
+    \nocite{ref-1-1-Yang,ref-2-1-杨轶,ref-3-1-杨轶,ref-4-1-Yang,ref-5-1-Wu,ref-6-1-贾泽,ref-7-1-伍晓明}
+
+    \printbibliography[title={论文成果}]
+
+    \end{refsection}
+    
+    
+    \begin{refsection}
+
+    \settoggle{bbx:gbtype}{false}%局部设置不输出文献类型和载体标识符
+    \settoggle{bbx:gbannote}{true}%局部设置输出注释信息
+    \setcounter{gbnamefmtcase}{3}%局部设置作者的格式为familyahead格式
+    \nocite{ref-8-1-任天令,ref-9-1-Ren}
+
+    \printbibliography[title={专利成果}]
+
+    \end{refsection}
+
+    \end{document} 
