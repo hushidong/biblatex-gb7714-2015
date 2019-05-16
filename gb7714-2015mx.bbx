@@ -2136,7 +2136,7 @@
 %    {}%
   %\newunit\newblock
   \iftoggle{bbx:eprint}
-    {\usebibmacro{eprint}}
+    {\newunit\usebibmacro{eprint}}
     {}%
   %\newunit\newblock
   \iftoggle{bbx:url}
@@ -2630,6 +2630,17 @@ incollection,proceedings,inproceedings]{number}{%
     {\ifbibstring{#1}{\bibstring{#1}}{#1}}%
 }
 
+
+%
+%   修改series域的输出格式
+%   2019.05.01，v1.0r，byhzz
+\renewbibmacro*{series+number}{%
+  \printfield{series}%
+  %\setunit*{\addspace}%
+  %\printfield{number}%
+  %\newunit
+  }
+
 %=====================================================================
 %设置驱动格式
 %=====================================================================
@@ -3024,8 +3035,9 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
   \ifnameundef{editor}{}{\newunit}%
   }{\newunit}%替换下一句
   %\newunit\newblock
+\iffieldundef{series}{}{\usebibmacro{series+number}\setunit{\addcolon\addspace}}%为处理一些存在series的情况而增加
   \usebibmacro{maintitle+booktitle}%
-  \setunit{\addcolon}\printfield{volume}\printfield{number}%增加卷和册信息
+\iffieldundef{volume}{}{\setunit{\addcolon\addspace}\printfield{volume}\iffieldundef{number}{}{\printfield{number}}}%增加卷和册信息
   \newunit\newblock%
 %  \usebibmacro{byeditor+others}%
 %  \newunit\newblock
@@ -3037,9 +3049,10 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
 %     \printfield{part}}
 %    {}%
 %  \newunit
-  \printfield{volumes}%
-  \newunit\newblock
-  \usebibmacro{series+number}}%
+%  \printfield{volumes}%
+%  \newunit\newblock
+%  \usebibmacro{series+number}
+  }%
   \newunit\newblock
   %\printfield{note}%
   %\newunit\newblock
