@@ -1889,7 +1889,7 @@ togl{bbx:gbstyle} or test {\iffieldequalstr{userd}{chinese}}%
 %    {}%
   %\newunit\newblock
   \iftoggle{bbx:eprint}
-    {\newunit\usebibmacro{eprint}}
+    {\iffieldundef{eprint}{}{\newunit\usebibmacro{eprint}}}
     {}%
   %\newunit\newblock
   \iftoggle{bbx:url}
@@ -2652,7 +2652,8 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
   %\newunit\newblock
 \iffieldundef{series}{}{\usebibmacro{series+number}\setunit{\addcolon\addspace}}%为处理一些存在series的情况而增加
   \usebibmacro{maintitle+booktitle}%
-\iffieldundef{volume}{}{\setunit{\addcolon\addspace}\printfield{volume}\iffieldundef{number}{}{\printfield{number}}}%增加卷和册信息
+\iffieldundef{volume}{}{\setunit{\addcolon\addspace}\printfield{volume}}%
+\iffieldundef{number}{}{\setunit{\addcolon\addspace}\printfield{number}}%增加卷和册信息
   \newunit\newblock%
 %  \usebibmacro{byeditor+others}%
 %  \newunit\newblock
