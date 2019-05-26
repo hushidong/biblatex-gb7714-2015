@@ -614,7 +614,7 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   \end{itemize}
 
   测试文档见：\href{run:./example/opt-gblanorder.tex}{opt-gblanorder.tex}。
-  
+
     \item[gbannote]=true，\textbf{false}. \hfill default is false
 
   为控制是否在文献条目后面输出由annotation或annote域提供的注释信息而增加的选项。
@@ -766,11 +766,13 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 \subsection{文献引用及标注格式}\label{sec:cbx:usage}
 
 要生成参考文献，第一步就是在正文中引用参考文献。正文中因引用文献所形成的标注的格式称为参考文献标注样式，也称引用样式或引用标签样式，分为两类: 顺序编码制和著者-出版年（作者年）制。引用文献的基本命令是\verb|\cite|，但为了在一篇文档中实现不同的标签效果，通常还需要使用其它命令，
-比如\verb|\parencite|, \verb|\textcite|, \verb|\pagescite|,\verb|\footfullcite|等。此外为遵循biblatex对于复数形式标注命令的使用习惯，也提供上述命令的复数形式，比如cite命令的复数形式命令cites，便于输出单个文献的页码等前后注信息。
+比如\verb|\parencite|, \verb|\textcite|, \verb|\pagescite|,\verb|\footfullcite|等。此外为遵循biblatex对于复数形式标注命令的使用习惯，也提供上述命令的复数形式，比如\verb|\cite|命令的复数形式命令\verb|\cites|，便于输出单个文献的页码等前后注信息。
 
 熟悉natbib的用户也可以直接使用使用\verb|\citet|, \verb|\citep|命令。
 另外也可以使用一些习惯命令比如\verb|\citetns|、\verb|\citepns|、
 \verb|\upcite|、\verb|\inlinecite|等。
+
+\subsubsection{两种编制的标注格式}
 
 %顺序编码制的标注样式文件大体使用标准引用样式numeric-comp的内容
 \paragraph{\heiti 顺序编码制的标注样式}
@@ -784,12 +786,33 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 \verb|\authornumcite|、\verb|\cite|、\verb|\textcite|、\verb|\parencite|、
 \verb|\cite|、\verb|\parencite|。
 
-上述命令中，均可以在{bibtexkey}前面的[]内或第二个[]内(当有两个[]时)，指定页码用于输出。若不指定页码，则仅有\verb|\pagescite|命令默认提取参考文献的页码信息进行输出。
+上述命令均可在{bibtexkey}前面的[]内或第二个[]内(当有两个[]时)，指定页码用于输出。若不指定页码，则仅有\verb|\pagescite|命令默认提取参考文献的页码信息进行输出。
 各引用命令的使用方式如表\ref{tab:cite:num}所示。
 测试文档见\href{run:example/testallformat.tex}{testallformat.tex}。
 
 %各命令使用方式如例\ref{eg:citefornumeric}所示。
 %各引用命令的效果如图\ref{fig:cite:num}所示。
+
+\qd{对于一个引用命令中同时给出多个文献bibtexkey的压缩形式，页码只会应用到最后一个参考文献后面，这是不正确的，但这种情况其实本不应出现，因为指定页码本来就需要具体化指向某一文献。使用时请尽可能使用
+\textbackslash pagescite\{key1\}\textbackslash pagescite\{key2\}这种形式
+而不是\textbackslash pagescite\{key1,key2\}|。当然除了多次使用标注命令外，也可以使用对应标注命令的复数形式来为每篇文献提供相应的页码信息。}
+
+
+%著者-出版年制的标注样式文件大体使用标准引用样式authoryear的内容。
+\paragraph{\heiti 著者-出版年制的标注样式}
+为满足GB/T 7714-2015第10.2节的要求，
+考虑\verb|\cite|和\verb|\parencite|命令将引用标签用圆括号括起来。增加了\verb|\pagescite|命令，用于自动加页码。增加了\verb|\yearpagescite|， \verb|\yearcite|命令用于处理文中已有作者信息只需要年份和页码的情况(为兼容性考虑，顺序编码制也给出该命令，但作用与
+\verb|\pagescite| 命令相同)，也完善了 \verb|\textcite| 命令，提供作者为句子主语，并附带行内非上标的页码，增加了\verb|\authornumcite|命令，以输出作者作为句子主语，并附带上标的页码。
+
+其它命令\verb|\citet|、\verb|\citep|、\verb|\citetns|、\verb|\citepns|、
+\verb|\upcite|、\verb|\inlinecite|分别等价于
+\verb|\authornumcite|、\verb|\cite|、\verb|\textcite|、\verb|\parencite|、
+\verb|\cite|、\verb|\parencite|。
+
+%各命令使用方式如例\ref{eg:citeforauthoryear}所示。
+%各引用命令的效果如图\ref{fig:cite:ay}所示。
+各引用命令的使用方式如表\ref{tab:cite:authoryear}所示。
+测试文档见\href{run:example/testallformat.tex}{testallformat.tex}。
 
 %\begin{table}[!htb]
 \noindent\begin{minipage}{0.95\linewidth}
@@ -827,26 +850,7 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 \end{minipage}
 %\end{table}
 
-\qd{对于一个引用命令中同时给出多个文献bibtekey的压缩形式，页码只会应用到最后一个参考文献后面，这是不正确的，但这种情况其实本不应出现，因为指定页码本来就需要具体化指向某一文献。使用时请尽可能使用
-\textbackslash pagescite\{key1\}\textbackslash pagescite\{key2\}这种形式
-而不是\textbackslash pagescite\{key1,key2\}|。当然除了多次使用标注命令外，也可以使用对应标注命令的复数形式来为每篇文献提供相应的页码信息。}
 
-
-%著者-出版年制的标注样式文件大体使用标准引用样式authoryear的内容。
-\paragraph{\heiti 著者-出版年制的标注样式}
-为满足GB/T 7714-2015第10.2节的要求，
-考虑\verb|\cite|和\verb|\parencite|命令将引用标签用圆括号括起来。增加了\verb|\pagescite|命令，用于自动加页码。增加了\verb|\yearpagescite|， \verb|\yearcite|命令用于处理文中已有作者信息只需要年份和页码的情况(为兼容性考虑，顺序编码制也给出该命令，但作用与
-\verb|\pagescite| 命令相同)，也完善了 \verb|\textcite| 命令，提供作者为句子主语，并附带行内非上标的页码，增加了\verb|\authornumcite|命令，以输出作者作为句子主语，并附带上标的页码。
-
-其它命令\verb|\citet|、\verb|\citep|、\verb|\citetns|、\verb|\citepns|、
-\verb|\upcite|、\verb|\inlinecite|分别等价于
-\verb|\authornumcite|、\verb|\cite|、\verb|\textcite|、\verb|\parencite|、
-\verb|\cite|、\verb|\parencite|。
-
-%各命令使用方式如例\ref{eg:citeforauthoryear}所示。
-%各引用命令的效果如图\ref{fig:cite:ay}所示。
-各引用命令的使用方式如表\ref{tab:cite:authoryear}所示。
-测试文档见\href{run:example/testallformat.tex}{testallformat.tex}。
 
 
 
@@ -890,6 +894,44 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 %\end{tcolorbox}
 %\caption{著者-出版年制标注格式}\label{fig:cite:ay}
 %\end{figure}
+
+\subsubsection{标注格式局部调整}
+
+标注在同一个文档中是可能存在不同格式需求的，比如：有的地方需要用上标，有的地方需要用行内，有的地方需要给出作者，有的地方需要给出页码等。一般情况下，不同标注格式可以通过使用不同的标注命令来得到，比如上一小节给出的大量不同的命令，不同命令能够产生独特的标注标签。
+
+除了利用命令来调整标注格式外，还有更多的方法来进行局部格式调整。这利用了tex的编组特性，编组内的局部格式不影响编组外的格式，所以可以利用编组内的局部设置来调整标注的格式，类似的，文献表的著录格式也是可以局部调整的，见下一节。
+
+引用文献所产生标注标签的格式包括很多内容，包括作者数量，标点，本地化字符串等。最常见的局部调整需求是标点和本地化字符串。这里以双语图题中的引用标签的不同本地化字符串需求为例来展示局部调整的方法。
+
+在中科院某类学位论文中，正文的标注标签要求两个英文作者之间用和而不是and连接，多个英文作者截断成一个作者时后面用等.而不是et al.表示。这可以容易通过设置本地化字符串来实现。然而对于双语的图题，英文图题中的出现等与和这样的字符实在不雅，所以又要求在这种全英文的环境中将和与等.更换为英文的表示符号，这就需要利用本地化字符串的局部调整。这种本地化字符串的局部调整其实已经是比较深入的内容，因为biblatex提供的接口DefineBibliographyStrings是全局的设置，如何进行局部调整并没有非常方便的接口，要解决这一需求，需要对biblatex以及gb7714-2015样式有比较深入的了解。
+
+因为gb7714-2015通过gbcitelocalcase计数器来选择使用中文或英文的本地化字符串，因此通过局部设置gbcitelocalcase可以局部的选择不同语言的本地化字符串，然而因为本地化字符串的内容通常是全局设置的，所以当中文的或者英文的本地化字符串设置都不满足要求时，就需要局部的调整本地化字符串的内容，如\ref{eg:str:localset}所示，对本地化字符串andothersincite的内容做了调整，从全局设置的等.转换为et al.，和转换为and，这种局部设置是通过csdef对保存字符串信息的命令直接做的调整。比如\verb|\csdef{abx@sstr@andothersincite}{et al.}|就是将andothersincite本地化字符串的内容临时调整为et al.。
+
+为方便用户使用，提供了
+\verb|\setlocalbibstring|命令来替代上述直接定义的csdef命令，比如：
+\verb|\setlocalbibstring{andothersincite}{et al.}|，等价于与前面csdef那条命令。
+另外，如果要在本地化字符串的内容设置中使用biblatex提供的一些标点命令，比如adddot等，那么需要对其进行保护，避免直接展开导致命令未定义的错误，比如：
+\verb|\setlocalbibstring{andothersincite}{et al\protect\adddot}|
+
+具体的测试见\href{egthesis/thesis-ucas-m.tex}{thesis-ucas-m.tex}
+
+  \begin{example}{双语图题内的标注标签的本地化字符串局部设置}{eg:str:localset}
+  \begin{texlist}
+\begin{figure}[!htbp]
+  \centering
+  \fbox{\parbox{5cm}{example fig\\在双语图题中强制使用某种语言的方式}}
+  \bicaption{中文图题具体见{\cite{walls2013drought}\cite{betts2005aging}}}
+    {English fig title See{\setlocalbibstring{andothersincite}{et al\protect\adddot}\setlocalbibstring{andincite}{and}\cite{walls2013drought}
+    \cite{betts2005aging}}}\label{fig:bi:lang}
+\end{figure}
+  \end{texlist}
+  \end{example}
+
+
+
+
+
+
 
 \subsection{文献表输出及著录格式}\label{sec:usage:bbx}
 
@@ -1028,35 +1070,35 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 \begin{enumerate}
   \item 文献表标题
-  
+
   局部重定义bibname、refname或者局部重设printbibliography命令的选项可以设置文献表标题。
 	
   \item 文献表段落格式
-  
+
   局部重定义bibfont命令即可局部设置参考文献的字体颜色等，进一步重定义bibauthorfont、bibtitlefont、bibpubfont 等命令用于控制文献不同著录项的格式。
-  
+
   局部重定义bibitemindent 尺寸可以设置文献表的缩进
-  
+
   局部重定义bibitemsep、bibnamesep、bibinitsep可以设置文献表的各条目的间距
-  
+
   \item 文献表条目著录格式
 
   biblatex中绝大部分的控制选项都是使用toggle的方式，比如url选项，gbtype选项，gbannote选项等，因此在局部设置选项对应的toggle 值可以局部设置选项控制的格式。
   另外也有一些选项使用的是计数器，比如gbnamefmt选项，因此局部设置选项对应的计数器的值可以局部设置选项控制的格式。
   当然由于一些选项的特殊性，它无法简单的进行利用toggle值或计数器值进行设置，而可能需要调整选项对应的宏的内容，因此复杂度会明显提升，如果不是非常必要，建议不要去局部化重设这些选项的所对应的格式。
-  
+
   示例见\href{run:./example/opt-gbannote.tex}{opt-gbannote.tex}。
-  
+
   \item 文献表条目中域或标点的格式
-  
+
   biblatex中域和标点的格式设置其实是比较简单的，且设置命令不限制一定要在导言区中，因此做局部化调整也是合适的。比如在一个refsection中需要将期刊文献的volume域的格式设置为粗体，那么可以做设置为：
-  
+
   \begin{example}{域格式的局部调整示例}{eg:bib:fieldsetlocal}
 	\begin{texlist}
 	\DeclareFieldFormat[article,periodical]{volume}{\textbf{#1}}% volume of a journal
 	\end{texlist}
  \end{example}
-  
+
 \end{enumerate}
 
 实施上格式的局部调整和全局调整本质上是一致的，文献样式中几乎所有格式设置，都可以做局部化处理。当然做全面的样式设计会稍微往深里去一点，考虑的问题也会更多，但局部格式调整是可以借鉴的，关于样式中的格式设置和说明请参考：

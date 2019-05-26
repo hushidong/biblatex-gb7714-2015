@@ -1,0 +1,426 @@
+
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试ucasthesis中应用biblatex-gb7714-2015的情况
+%
+
+\documentclass[twoside]{article}
+    \usepackage{ctex}
+    \usepackage{fontspec}
+\setmainfont{CMU Serif}
+\setCJKmainfont {SourceHanSerifSC-Regular.otf}
+    \usepackage{xcolor}
+    \usepackage{toolbox}
+    \usepackage[colorlinks,citecolor=blue]{hyperref}
+    \usepackage{lipsum}
+    \usepackage{geometry}%,showframe,showcrop
+\geometry{paper=a4paper,left=31.7mm,right=31.7mm,top=25.4mm,bottom=25.4mm}
+\usepackage[backend=biber,citestyle=gb7714-2015ay,bibstyle=gb7714-2015%citestyle=authoryear-comp,%
+]{biblatex}%
+
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+@book{IEEE-1363,
+  author={{IEEE Std 1363-2000}},
+  title={{IEEE} Standard Specifications for Public-Key Cryptography},
+  address={New York},
+  publisher={IEEE},
+  year={2000}
+}
+
+@inproceedings{kocher99,
+  author={C. Kocher and J. Jaffe and B. Jun},
+  title={Differential Power Analysis},
+  editor={M. Wiener},
+  booktitle={Advances in Cryptology ({CRYPTO}~'99)},
+  series={Lecture Notes in Computer Science},
+  volume={1666},
+  pages={388-397},
+  publisher={Springer-Verlag},
+  month={August},
+  year={1999}
+}
+
+
+@INCOLLECTION{Krasnogor2004e,
+  AUTHOR = {N. Krasnogor},
+  TITLE = {Towards robust memetic algorithms},
+  BOOKTITLE = {Recent Advances in Memetic Algorithms},
+  PUBLISHER = {Springer Berlin Heidelberg},
+  YEAR = {2004},
+  PAGES = {185-207},
+  EDITOR = {W.E. Hart and N. Krasnogor and J.E. Smith},
+  VOLUME = {166},
+  SERIES = {Studies in Fuzziness and Soft Computing},
+  ADDRESS = {New York},
+}
+
+@INCOLLECTION{zjsw,
+  AUTHOR = {班固},
+  TITLE = {苏武传},
+  BOOKTITLE = {传记散文英华},
+  PUBLISHER = {湖北人民出版社},
+  YEAR = {1998},
+  PAGES = {65-69},
+  EDITOR = {郑在瀛 and 汪超宏 and 周文复},
+  VOLUME = {2},
+  SERIES = {新古文观止丛书},
+  ADDRESS = {武汉},
+  pinyin = {bangu}
+}
+
+
+@INBOOK{clzs,
+  AUTHOR = {阎真},
+  TITLE = {沧浪之水},
+  CHAPTER = {大人物还是讲人情的},
+  PAGES = {185-207},
+  PUBLISHER = {人民文学出版社},
+  YEAR = {2001},
+  pinyin = {yanzhen}
+}
+
+@Book{tex,
+ author    = "Donald E. Knuth",
+ title     = "The {\TeX} Book",
+ publisher = "Addison-Wesley Publishing Company",
+ address   = "Reading, MA",
+ year      = 1989,
+ edition   = "15th",
+}
+
+@Book{companion,
+ author    = "Michel Goosens and Frank Mittelbach and Alexander Samarin",
+ title     = "The {\LaTeX} Companion",
+ publisher = "Addison-Wesley Publishing Company",
+ address   = "Reading, MA",
+ PAGES = "112--125",
+ year      = 1994,
+}
+
+@ARTICLE{ELIDRISSI94,
+  AUTHOR =       "{Chafik El Idrissi}, M. and {Roney}, A. and {Frigon}, C. and
+                  {Larzilli{\`e}re}, M.",
+  TITLE =        "Measurements of total kinetic-energy released to the {$N=2$}
+                  dissociation limit of {H}$_2$ --- evidence of the dissociation
+                  of very high vibrational {R}ydberg states of {H}$_2$ by
+                  doubly-excited states",
+  JOURNAL =      "Chemical Physics Letters",
+  PAGES =        "260-266",
+  VOLUME =       224,
+  NUMBER =       10,
+  YEAR =         1994,
+}
+
+@ARTICLE{MELLINGER96,
+  AUTHOR =       "Mellinger, A. and Vidal, C. R. and Jungen, Ch.",
+  TITLE =        "Laser reduced fluorescence study of the carbon-monoxide nd
+                  triplet {R}ydberg series-experimental results and multichannel
+                  quantum-defect analysis",
+  JOURNAL =      "J. Chem. Phys.",
+  PAGES =        "8913-8921",
+  VOLUME =       104,
+  NUMBER =       5,
+  YEAR =         1996,
+}
+
+@ARTICLE{SHELL02,
+  AUTHOR =       "Michael Shell",
+  TITLE =        "How to Use the {IEEEtran \LaTeX} Class",
+  JOURNAL =      "Journal of {\LaTeX} Class Files",
+  YEAR =         2002,
+  VOLUME =       12,
+  NUMBER =       4,
+  PAGES =        "100--120"
+}
+
+@TechReport{NPB2,
+  title =        {The {NAS} Parallel Benchmarks 2.0},
+  author =       {Alex Woo and David Bailey and Maurice Yarrow and Wijngaart
+                  Wijngaart and Tim Harris and William Saphir},
+  year =         1995,
+  month =        dec # "~05",
+  institution =  "The Pennsylvania State University CiteSeer Archives",
+  url =          "http://www.nasa.org/"
+}
+
+@INPROCEEDINGS{DPMG,
+  author =       {Kim, Sangbum and Woo, Namyoon and Yeom, Heon Y. and Park,
+                  Taesoon and Park, Hyoungwoo},
+  title =        {Design and {I}mplementation of {D}ynamic {P}rocess
+                  {M}anagement for {G}rid-enabled {MPICH}},
+  booktitle =    {the 10th European PVM/MPI Users' Group Conference},
+  year =         2003,
+  address =      {Venice, Italy},
+  month =        sep,
+}
+
+@INPROCEEDINGS{cnproceed,
+  author =       {王重阳 and 黄药师 and 欧阳峰 and 洪七公 and 段皇帝},
+  title =        {武林高手从入门到精通},
+  booktitle =    {第~$N$~次华山论剑},
+  year =         2006,
+  address =      {西安, 中国},
+  month =        sep,
+  pinyin = {wangchongyang}
+}
+
+@ARTICLE{cnarticle,
+  AUTHOR =       "贾宝玉 and 林黛玉 and 薛宝钗 and 贾探春",
+  TITLE =        "论刘姥姥食量大如牛之现实意义",
+  JOURNAL =      "红楼梦杂谈",
+  PAGES =        "260--266",
+  VOLUME =       224,
+  YEAR =         1800,
+  pinyin = {jiabaoyu}
+}
+
+@MastersThesis{zhubajie,
+  author =       {猪八戒},
+  title =        {论流体食物的持久保存},
+  school =       {广寒宫大学},
+  year =         2005,
+  address =      {北京},
+  pinyin = {zhubajie}
+}
+
+@PhdThesis{shaheshang,
+  author =       {沙和尚},
+  title =        {论流沙河的综合治理},
+  school =       {清华大学},
+  year =         2005,
+  address =      {北京},
+  pinyin = {shaheshang}
+}
+
+@MastersThesis{metamori2004,
+  author =       {Ashwin Raju Jeyakumar},
+  title =        {Metamori: A library for Incremental File Checkpointing},
+  school =       {Virgina Tech},
+  year =         2004,
+  month =        jun # "~21",
+  address =      {Blacksburg},
+}
+
+@PHDTHESIS{FistSystem01,
+  AUTHOR =       "Erez Zadok",
+  TITLE =        "{FiST: A System for Stackable File System Code Generation}",
+  YEAR =         2001,
+  MONTH =        "May",
+  SCHOOL =       "Computer Science Department, Columbia University",
+  ADDRESS =      "USA"
+}
+
+@INBOOK{ColdSources,
+  AUTHOR =       {P. Gr{\"o}ning and L. Nilsson and P. Ruffieux and R.
+                  Clergereaux and O. Gr{\"o}ning},
+  TITLE =        {Encyclopedia of Nanoscience and Nanotechnology},
+  pages =        {547--579},
+  PUBLISHER =    {American Scientific Publishers},
+  YEAR =         2004,
+  volume =       1,
+}
+
+@article{BogdanSLOPEAdaptiveVariable2014,
+  title = {{{SLOPE}}\textendash{}{{Adaptive Variable Selection}} via {{Convex Optimization}}},
+  journal = {arXiv preprint arXiv:1407.3824},
+  author = {Bogdan, Malgorzata and van den Berg, Ewout and Sabatti, Chiara and Su, Weijie and Candes, Emmanuel J.},
+  year = {2014},
+}
+
+@inproceedings{GossmannIdentificationsignificantgenetic2015,
+  title = {Identification of Significant Genetic Variants via {{SLOPE}}, and Its Extension to Group {{SLOPE}}},
+  booktitle = {Proceedings of the 6th {{ACM Conference}} on {{Bioinformatics}}, {{Computational Biology}} and {{Health Informatics}}},
+  publisher = {{ACM}},
+  author = {Gossmann, Alexej and Cao, Shaolong and Wang, Yu-Ping},
+  year = {2015},
+  pages = {232--240},
+}
+
+@inproceedings{AlbrechtTopologicalapproachfuzzy1999,
+  title = {Topological Approach to Fuzzy Sets and Fuzzy Logic},
+  booktitle = {Artificial {{Neural Nets}} and {{Genetic Algorithms}}},
+  publisher = {{Springer}},
+  author = {Albrecht, R. F.},
+  year = {1999},
+  pages = {1--7},
+}
+
+@book{AlbrechtTopologicalConceptsHierarchies2001,
+  title = {Topological {{Concepts}} for {{Hierarchies}} of {{Variables}}, {{Types}} and {{Controls}}},
+  publisher = {{Springer}},
+  author = {Albrecht, Rudolf F.},
+  year = {2001},
+}
+
+@incollection{AlbrechtTopologicaltheoryfuzziness1999,
+  title = {Topological Theory of Fuzziness},
+  booktitle = {Computational {{Intelligence}}},
+  publisher = {{Springer}},
+  author = {Albrecht, Rudolf F.},
+  year = {1999},
+  pages = {1--11},
+}
+
+@article{MoriasiModelevaluationguidelines2007,
+  title = {Model Evaluation Guidelines for Systematic Quantification of Accuracy in Watershed Simulations},
+  volume = {50},
+  number = {3},
+  journal = {Trans. Asabe},
+  author = {Moriasi, D. N. and Arnold, J. G. and Van Liew, M. W. and Bingner, R. L. and Harmel, R. D. and Veith, T. L.},
+  year = {2007},
+  pages = {885--900}
+}
+
+@misc{Jdatamodels2003,
+  title = {Of Data and Models.},
+  howpublished = {http://www.iwaponline.com/jh/005/jh0050075.htm},
+  author = {J Cunge},
+  month = apr,
+  year = {2003},
+  keywords = {经验论文，当博客读,特别有用}
+}
+\end{filecontents}
+    \addbibresource{\jobname.bib}
+    %
+
+\begin{filecontents}{resume.bib}
+% Encoding: UTF-8
+@article{ref-1-1-Yang,
+author    = {Yang, Y and Ren, T L and Zhang, L T and others},
+title     = {Miniature microphone with silicon-based ferroelectric thin films},
+journal   = {Integrated Ferroelectrics},
+date      = {2003},
+pages      = {229-235},
+volume      = {52},
+annotation      = {SCI 收录, 检索号:758FZ},
+}
+
+@article{ref-2-1-杨轶,
+author    = {杨轶 and 张宁欣 and 任天令 and others},
+title     = {硅基铁电微声学器件中薄膜残余应力的研究},
+journal   = {中国机械工程},
+pages= {1289-1291},
+date      = {2005},
+volume      = {16},
+number ={14},
+annotation ={EI 收录, 检索号:0534931 2907},
+}
+
+@article{ref-3-1-杨轶,
+author    = {杨轶 and 张宁欣 and 任天令 and others},
+title     = {集成铁电器件中的关键工艺研究},
+journal   = {仪器仪表学报},
+date      = {2003},
+volume      = {24},
+pages={192-193},
+number      = {S4},
+annotation      = {EI 源刊},
+}
+
+@article{ref-4-1-Yang,
+author    = {Yang, Y and Ren, T L and Zhu, Y P and others},
+title     = {PMUTs for handwriting recognition},
+pubstate ={In press},
+annotation      = {已被 Integrated Ferroelectrics 录用. SCI 源刊.},
+}
+
+
+@article{ref-5-1-Wu,
+author    = {Wu, X M and Yang, Y and Cai, J and others},
+title     = {Measurements of ferroelectric MEMS microphones},
+journal   = {Integrated Ferroelectrics},
+date      = {2005},
+pages={417-429},
+volume      = {69},
+annotation      = {SCI 收录, 检索号 :896KM.},
+}
+
+
+@article{ref-6-1-贾泽,
+author    = {贾泽 and 杨轶 and 陈兢 and others},
+title     = {用于压电和电容微麦克风的体硅腐蚀相关研究},
+journal   = {压电与声光},
+date      = {2006},
+pages      = {117-119},
+number={1},
+volume      = {28},
+annotation      = {EI 收录, 检索号:06129773469.},
+}
+
+
+@article{ref-7-1-伍晓明,
+author    = {伍晓明 and 杨轶 and 张宁欣 and others},
+title     = {基于MEMS技术的集成铁电硅微麦克风},
+journal   = {中国集成电路},
+date      = {2003},
+volume      = {53},
+pages      = {59-61},
+}
+
+@patent{ref-8-1-任天令,
+author    = {任天令 and 杨轶 and 朱一平 and others},
+title     = {硅基铁电微声学传感器畴极化区域控制和电极连接的方法},
+number ={中国, CN1602118A},
+annotation      = {中国专利公开号.},
+}
+
+@patent{ref-9-1-Ren,
+author    = {Ren, T L and Yang, Y and Zhu, Y P and others},
+title     = {Piezoelectric micro acoustic sensor based on ferroelectric materials},
+number ={USA, No.11/215, 102},
+annotation      = {美国发明专利申请号.},
+}
+\end{filecontents}
+
+\addbibresource{resume.bib}
+
+
+    \begin{document}
+    \section*{TONGJI THESIS}
+\setcounter{section}{1}
+\subsection{参考文献}
+\label{sec:bib}
+当然参考文献可以直接写 bibitem，虽然费点功夫，但是好控制，各种格式可以自己随意改
+写。
+
+本模板推荐使用 biblatex 包，因此工具链为: tex、biber、tex、tex
+以下默认使用数字式的引用，这些例子都是为数字式引用准备的，如果你喜欢使用 author year 的引用，可在cls中搜索 biblatex 进行设置。
+
+看看这个例子，关于书的\cite{tex, companion,
+ColdSources}， 还有这些\cite{Krasnogor2004e, clzs,
+zjsw}，关于杂志的\cite{ELIDRISSI94,
+  MELLINGER96, SHELL02}，硕士论文\cite{zhubajie, metamori2004}，博士论文
+\cite{shaheshang, FistSystem01}，标准文件\cite{IEEE-1363}，会议论文\cite{DPMG,kocher99}，技术报告\cite{NPB2}。中文参
+考文献\cite{cnarticle}。试一下很多个参考文献的情况吧\cite{BogdanSLOPEAdaptiveVariable2014,GossmannIdentificationsignificantgenetic2015,AlbrechtTopologicalapproachfuzzy1999,AlbrechtTopologicalConceptsHierarchies2001,AlbrechtTopologicaltheoryfuzziness1999,MoriasiModelevaluationguidelines2007,Jdatamodels2003}。
+
+有时候不想要上标，那么可以这样 \parencite{shaheshang}，这个非常重要。或使用命令: \inlinecite{shaheshang}
+
+    \printbibliography[heading=subbibliography]
+
+\subsection{成果简介}
+    \begin{refsection}
+
+    \settoggle{bbx:gbtype}{false}%局部设置不输出文献类型和载体标识符
+    \settoggle{bbx:gbannote}{true}%局部设置输出注释信息
+    \setcounter{gbnamefmtcase}{1}%局部设置作者的格式为大小写不变的国标格式
+    \nocite{ref-1-1-Yang,ref-2-1-杨轶,ref-3-1-杨轶,ref-4-1-Yang,ref-5-1-Wu,ref-6-1-贾泽,ref-7-1-伍晓明}
+
+    \printbibliography[heading=subbibliography,title={论文成果}]
+
+    \end{refsection}
+
+
+    \begin{refsection}
+
+    \settoggle{bbx:gbtype}{false}%局部设置不输出文献类型和载体标识符
+    \settoggle{bbx:gbannote}{true}%局部设置输出注释信息
+    \setcounter{gbnamefmtcase}{3}%局部设置作者的格式为familyahead格式
+    \nocite{ref-8-1-任天令,ref-9-1-Ren}
+
+    \printbibliography[heading=subbibliography,title={专利成果}]
+
+    \end{refsection}
+
+    \end{document} 

@@ -15,22 +15,26 @@
     \usepackage{lipsum}
     \usepackage{geometry}%,showframe,showcrop
 \geometry{paper=a4paper,left=31.7mm,right=31.7mm,top=25.4mm,bottom=25.4mm}
+\usepackage{bicaption}
+\captionsetup[bi-first]{name={图},labelsep=period}
+\captionsetup[bi-second]{name={Fig},labelsep=period}
 \usepackage[backend=biber,style=gb7714-2015ay,%citestyle=authoryear-comp,%
-maxcitenames=2,mincitenames=1,gbcitelocal=gb7714-2015,mergedate=none]{biblatex}%,sortcites=false
+maxcitenames=2,mincitenames=1,gbcitelocal=gb7714-2015,mergedate=none]{biblatex}%,sortcites=false,mergedate=none
+
+
+\DefineBibliographyStrings{english}{
+        andincite         = {和},
+        andincitecn       = {和},
+        andothersincitecn = {等},
+        andothersincite   = {等{\adddot}},%adddot才能避开标点追踪
+}
 
 %\DefineBibliographyStrings{english}{
-%        andincite         = {和},
+%        andincite         = {and},
 %        andincitecn       = {和},
 %        andothersincitecn = {等},
 %        andothersincite   = {等{\adddot}},%adddot才能避开标点追踪
 %}
-
-\DefineBibliographyStrings{english}{
-        andincite         = {and},
-        andincitecn       = {和},
-%        andothersincitecn = {等},
-%        andothersincite   = {等{\adddot}},%adddot才能避开标点追踪
-}
 
 \usepackage{filecontents}
 \begin{filecontents}{\jobname.bib}
@@ -62,7 +66,7 @@ maxcitenames=2,mincitenames=1,gbcitelocal=gb7714-2015,mergedate=none]{biblatex}%
 }
 @book{chu2004tushu,
     title={图书馆数字参考咨询服务研究},
-    author={初景利},
+    author={初景利 and 陈浩元},
     year={2004},
     address={北京},
     publisher={北京图书馆出版社}
@@ -152,6 +156,7 @@ maxcitenames=2,mincitenames=1,gbcitelocal=gb7714-2015,mergedate=none]{biblatex}%
     number       = {34},
     pages        = {3219},
 }
+
 @article{walls2013drought,
     author       = {Walls, Susan C. and Barichivich, William J. and Brown, Mary
         E.},
@@ -161,11 +166,12 @@ maxcitenames=2,mincitenames=1,gbcitelocal=gb7714-2015,mergedate=none]{biblatex}%
     year         = {2013},
     volume       = {2},
     number       = {1},
-    pages        = {399--418},
+    pages        = {399-418},
     urldate      = {2013-11-04},
     url          = {http://www.mdpi.com/2079-7737/2/1/399},
     doi          = {10.3390/biology2010399},
 }
+
 @article{Bohan1928,
     author = { ボハン, デ},
     title = { 過去及び現在に於ける英国と会 },
@@ -198,6 +204,85 @@ maxcitenames=2,mincitenames=1,gbcitelocal=gb7714-2015,mergedate=none]{biblatex}%
 
     \begin{document}
     \section*{UCASTHESIS-A}
+\setcounter{section}{1}
+\subsection{本地化字符串的临时调整示例}
+
+默认的本地化字符串由全局选项gbcitelocal控制，比如当前的设置条件下，有：
+    {
+    \cite{chu2004tushu}
+    \cite{chen1980zhongguo}
+    \cite{walls2013drought}
+    \cite{betts2005aging}
+    }
+
+
+%局部调整本地化字符串的语言可以使用自定义命令的方式
+%    局部强迫中文本地化字符串
+%    \cncite{walls2013drought}
+%    \cncite{betts2005aging}
+%
+%    局部强迫英文本地化字符串
+%    \encite{walls2013drought}
+%    \encite{betts2005aging}
+
+%也可以使用设置toggle，设置conter等来进行设置
+%主要是为了应付如下情况
+%1、全文设置英文文献的本地化字符串为等.与和
+%2、但在双语的题注的英文题注中则需使用英文文献的本地化字符串为et al.与and，因此需要做临时的调整。
+%详见下面的调整方法。
+    局部强迫中文本地化字符串
+    {\defcounter{gbcitelocalcase}{1}
+    \cite{chu2004tushu}
+    \cite{chen1980zhongguo}
+    \cite{walls2013drought}
+    \cite{betts2005aging}
+    }
+
+    局部强迫英文本地化字符串
+    {\defcounter{gbcitelocalcase}{2}
+    \cite{chu2004tushu}
+    \cite{chen1980zhongguo}
+    \cite{walls2013drought}
+    \cite{betts2005aging}}
+
+
+    局部调整中文本地化字符串
+    {%\makeatletter\csdef{abx@lstr@andothersincite}{et al.}\makeatother
+    \makeatletter\csdef{abx@sstr@andothersincitecn}{et al.}\csdef{abx@sstr@andincitecn}{and}\makeatother
+    \cite{chu2004tushu}
+    \cite{chen1980zhongguo}
+    \cite{walls2013drought}
+    \cite{betts2005aging}}
+
+
+    局部调整英文本地化字符串
+    {%\makeatletter\csdef{abx@lstr@andothersincite}{et al.}\makeatother
+    \makeatletter\csdef{abx@sstr@andothersincite}{et al.}\csdef{abx@sstr@andincite}{and}\makeatother
+    \cite{chu2004tushu}
+    \cite{chen1980zhongguo}
+    \cite{walls2013drought}
+    \cite{betts2005aging}}
+
+
+\begin{figure}[!htbp]
+  \centering
+  \fbox{\parbox{5cm}{example fig\\在双语图题中强制使用某种语言的方式}}
+  \bicaption{具体见{\cite{walls2013drought}\cite{betts2005aging}}}
+    {See{\makeatletter\csdef{abx@sstr@andothersincite}{et al.}\csdef{abx@sstr@andincite}{and}\makeatother\cite{walls2013drought}
+    \cite{betts2005aging}}}\label{fig:bi:lang}
+\end{figure}
+
+\begin{figure}[!htbp]
+  \centering
+  \fbox{\parbox{5cm}{example fig\\在双语图题中强制使用某种语言的方式}}
+  \bicaption{具体见{\cite{walls2013drought}\cite{betts2005aging}}}
+    {See{\setlocalbibstring{andothersincite}{et al.}\setlocalbibstring{andincite}{and}\cite{walls2013drought}
+    \cite{betts2005aging}}}\label{fig:bi:lang2}
+\end{figure}
+
+    其它由全局选项gbcitelocal设置。如下节所示：
+
+\subsection{学位论文的示例}
 
 参考文献引用过程以实例进行介绍，假设需要引用名为"Document Preparation System"的文献，步骤如下：
 

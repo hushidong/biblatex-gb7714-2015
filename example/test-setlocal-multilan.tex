@@ -1,0 +1,123 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015样式，实现的多语言混合的文献表
+\documentclass{article}
+\usepackage{ctex}
+\usepackage[english,russian,french]{babel}
+\usepackage{fontspec}
+\setmainfont{CMU Serif}
+\usepackage{bicaption}
+\captionsetup[bi-first]{lang=english}
+\captionsetup[bi-second]{lang=russian}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{lipsum}
+\usepackage{geometry}
+\usepackage[backend=biber,style=gb7714-2015ay,autolang=other,gbpub=false,gbnamefmt=familyahead]{biblatex}
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+
+@INPROCEEDINGS{frenchref,
+  AUTHOR = {Beneton Philippe and Touchard Jean and Beton Philippe and Betin Philippe},
+  BOOKTITLE = {Revue française de science politique},
+  DATE = {1968},
+  PAGES = {19--46},
+  TITLE = {ôçLes interprétations de la crise de mai-juinŕł},
+}
+
+@ARTICLE{greenwood1988,
+  AUTHOR = {Greenwood, Jeremy and Hercowitz, Zvi and Huffman, Gregory W and Williams, Joedge},
+  PUBLISHER = {JSTOR},
+  DATE = {1988},
+  JOURNALTITLE = {The American Economic Review},
+  KEYWORDS = {greenwood1988investment},
+  PAGES = {402--417},
+  TITLE = {Investment, capacity utilization, and the real business cycle},
+}
+%langid={english}
+
+@BOOK{russainref,
+  AUTHOR = {Кузнецов, А. В. and Кузнецов, C. В. and Кузнецов, D. В. and Кузнецов, E. В.},
+  TITLE = {Русский язык и языковая личность},
+  LOCATION = {М.},
+  PUBLISHER = {Диалог МГУ},
+  DATE = {1998},
+  PAGES = {28},
+}
+%langid={russian}
+
+@ARTICLE{刘凤良2017,
+  AUTHOR = {刘凤良 and 章潇萌 and 于泽 and 黄晓},
+  DATE = {2017},
+  JOURNALTITLE = {金融研究},
+  KEYWORDS = {刘凤良2017},
+  NUMBER = {2},
+  PAGES = {54--69},
+  TITLE = {高投资、结构失衡与价格指数二元分化},
+}%  langid={english}
+
+@BOOK{青木昌彦1996--,
+  AUTHOR = {青木昌彦 and 青木昌一 and 青木昌二 and 青木昌三},
+  PUBLISHER = {東洋経済新報社},
+  DATE = {1996},
+  PAGES = {288},
+  TITLE = {メインバンク ・ システムのモニタリング機能としての特徴},
+}
+
+\end{filecontents}
+    \addbibresource{\jobname.bib}
+    %
+    \begin{document}
+
+
+\section{多语言图题中的作者年制引用标签的本地化字符串临时调整}
+
+局部调整本地化字符串的内容，比如：
+
+{
+\captionsetup[bi-first]{lang=english,name={Fig},labelsep=period}
+\captionsetup[bi-second]{lang=english,name={图},labelsep=period}
+
+\begin{figure}[!htbp]
+  \centering
+  \fbox{\parbox{5cm}{example fig\\在双语图题中强制使用某种语言的方式}}
+  \bicaption{english{\cite{greenwood1988}}}
+    {中文{
+    %\setlocalbibstring{andothersincitecn}{等}
+    \setlocalbibstring{andothersincitecn}{et al.,}%adddot只能在biblatex内部使用，因为.会导致后面的逗号不输出，因此这里直接给出逗号
+    \cite{刘凤良2017}}}\label{fig:bi:lang}
+\end{figure}
+
+\begin{figure}[!htbp]
+  \centering
+  \fbox{\parbox{5cm}{example fig\\在双语图题中强制使用某种语言的方式}}
+  \bicaption{english{\cite{greenwood1988}}}
+    {中文{
+    %\setlocalbibstring{andothersincitecn}{等}
+    %adddot的问题也可以使用protect保护来使用
+    \setlocalbibstring{andothersincitecn}{et al\protect\adddot}
+    \cite{刘凤良2017}}}\label{fig:bi:lang}
+\end{figure}
+
+}
+
+
+{
+\captionsetup[bi-first]{lang=english}
+\captionsetup[bi-second]{lang=russian}
+
+\begin{figure}[!htbp]
+  \centering
+  \fbox{\parbox{5cm}{example fig\\在双语图题中强制使用某种语言的方式}}
+  \bicaption{english{\cite{greenwood1988}}}
+    {russian{
+    %\setlocalbibstring{andothers}{等}
+    %\setlocalbibstring{andothers}{et al.}
+    \cite{russainref}}}\label{fig:bi:lang}
+\end{figure}
+
+}
+    \printbibliography[heading=subbibliography,title=参考文献]
+
+    \end{document} 

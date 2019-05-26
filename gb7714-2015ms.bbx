@@ -603,7 +603,7 @@
         %andothers   = {et al.},  %将超过3个人名的省略，et al.改成为 等
         andotherscn   = {\str@andotherscn},     %将超过3个人名的省略，et al.改成为 等
         andothersincitecn={\str@andotherscn},%将标注中的分开，便于与文献表中的区分
-        andothersincite={et al.},
+        andothersincite={et al\adddot},
         backrefpage = {\str@backrefpage:},
         backrefpages = {\str@backrefpages:},
         in={in\intitlepunct},
@@ -621,6 +621,15 @@
        editorcn={\str@editorcn},
 }
 
+    %
+    % 增加两个命令用于临时的局部的修改本地化字符串
+    % 其中\setlocalbibstring修改缩写字符串，setlocalbiblstring修改长字符串
+    % 注意使用时因为是局部修改，因此要将其与需要修改的引用命令放在一个编组符号内
+    % v1.0t，hzz，20190525
+    \newcommand{\setlocalbibstring}[2]{%
+    \csdef{abx@sstr@#1}{#2}}
+    \newcommand{\setlocalbiblstring}[2]{%
+    \csdef{abx@lstr@#1}{#2}}
 
 %=====================================================================
 %   动态数据修改

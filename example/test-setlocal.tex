@@ -1,0 +1,151 @@
+
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试ucasthesis中应用biblatex-gb7714-2015的情况
+%
+
+\documentclass[twoside]{article}
+    \usepackage{ctex}
+    \usepackage{xcolor}
+    \usepackage[colorlinks,citecolor=blue]{hyperref}
+    \usepackage{geometry}
+\usepackage{bicaption}
+\captionsetup[bi-first]{name={图},labelsep=period}
+\captionsetup[bi-second]{name={Fig},labelsep=period}
+\usepackage[backend=biber,style=gb7714-2015ay,%citestyle=authoryear-comp,%
+maxcitenames=2,mincitenames=1,mergedate=none]{biblatex}%,sortcites=false,mergedate=none
+
+\DefineBibliographyStrings{english}{
+        andincite         = {和},
+        andincitecn       = {和},
+        andothersincitecn = {等},
+        andothersincite   = {等{\adddot}},%adddot才能避开标点追踪
+}
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+@INCOLLECTION{chen1980zhongguo,
+  AUTHOR = {陈晋镳 and 张惠民 and 朱士兴 and 赵震 and 王振刚},
+  EDITOR = {中国地质科学院天津地质矿产研究所},
+  LOCATION = {天津},
+  PUBLISHER = {天津科学技术出版社},
+  BOOKTITLE = {中国震旦亚界},
+  DATE = {1980},
+  PAGES = {56--114},
+  TITLE = {蓟县震旦亚界研究},
+}
+
+@BOOK{chu2004tushu,
+  AUTHOR = {初景利 and 陈浩元},
+  LOCATION = {北京},
+  PUBLISHER = {北京图书馆出版社},
+  DATE = {2004},
+  TITLE = {图书馆数字参考咨询服务研究},
+}
+
+@ARTICLE{betts2005aging,
+  AUTHOR = {Betts, Lisa R and Taylor, Christopher P},
+  PUBLISHER = {Elsevier},
+  DATE = {2005},
+  JOURNALTITLE = {Neuron},
+  NUMBER = {3},
+  PAGES = {361--366},
+  TITLE = {Aging reduces center-surround antagonism in visual motion processing},
+  VOLUME = {45},
+}
+
+@ARTICLE{walls2013drought,
+  AUTHOR = {Walls, Susan C. and Barichivich, William J. and Brown, Mary E.},
+  URL = {http://www.mdpi.com/2079-7737/2/1/399},
+  DATE = {2013},
+  DOI = {10.3390/biology2010399},
+  JOURNALTITLE = {Biology},
+  NUMBER = {1},
+  PAGES = {399--418},
+  TITLE = {Drought, deluge and declines: the impact of precipitation extremes on amphibians in a changing climate},
+  URLDATE = {2013-11-04},
+  VOLUME = {2},
+}
+\end{filecontents}
+    \addbibresource{\jobname.bib}
+    %
+
+    \begin{document}
+    
+\section{作者年制引用标签的本地化字符串临时调整}
+
+(1) 标注默认的设置是DefineBibliographyStrings设置的本地化字符串，带cn的用于中文的本地化字符串，因此有结果：
+
+    {
+    \cite{chu2004tushu}
+    \cite{chen1980zhongguo}
+    \cite{walls2013drought}
+    \cite{betts2005aging}
+    }
+    
+(2) 可以在标注命令中局部调整选择使用中文或英文的本地化字符串，比如：
+
+    局部强迫中文本地化字符串：
+    
+    {\defcounter{gbcitelocalcase}{1}
+    \cite{chu2004tushu}
+    \cite{chen1980zhongguo}
+    \cite{walls2013drought}
+    \cite{betts2005aging}
+    }
+
+    局部强迫英文本地化字符串：
+    
+    {\defcounter{gbcitelocalcase}{2}
+    \cite{chu2004tushu}
+    \cite{chen1980zhongguo}
+    \cite{walls2013drought}
+    \cite{betts2005aging}}
+
+
+
+
+(3) 如果要做局部调整字符串的内容，那么可以在内部命令中局部设置，比如：
+
+    局部调整中文本地化字符串：
+    
+    {%\makeatletter\csdef{abx@lstr@andothersincite}{et al.}\makeatother
+    \makeatletter\csdef{abx@sstr@andothersincitecn}{et al.}\csdef{abx@sstr@andincitecn}{and}\makeatother
+    \cite{chu2004tushu}
+    \cite{chen1980zhongguo}
+    \cite{walls2013drought}
+    \cite{betts2005aging}}
+
+
+    局部调整英文本地化字符串：
+    
+    {%\makeatletter\csdef{abx@lstr@andothersincite}{et al.}\makeatother
+    \makeatletter\csdef{abx@sstr@andothersincite}{et al.}\csdef{abx@sstr@andincite}{and}\makeatother
+    \cite{chu2004tushu}
+    \cite{chen1980zhongguo}
+    \cite{walls2013drought}
+    \cite{betts2005aging}}
+
+\begin{figure}[!htbp]
+  \centering
+  \fbox{\parbox{5cm}{example fig\\在双语图题中强制使用某种语言的方式}}
+  \bicaption{具体见{\cite{walls2013drought}\cite{betts2005aging}}}
+    {See{\makeatletter\csdef{abx@sstr@andothersincite}{et al.}\csdef{abx@sstr@andincite}{and}\makeatother\cite{walls2013drought}
+    \cite{betts2005aging}}}\label{fig:bi:lang}
+\end{figure}
+
+(4) 也可以利用setlocalbibstring来修改，等价于前一个示例直接修改，比如：
+
+\begin{figure}[!htbp]
+  \centering
+  \fbox{\parbox{5cm}{example fig\\在双语图题中强制使用某种语言的方式}}
+  \bicaption{具体见{\cite{walls2013drought}\cite{betts2005aging}}}
+    {See{\setlocalbibstring{andothersincite}{et al.,}
+    \setlocalbibstring{andincite}{and}\cite{walls2013drought}
+    \cite{betts2005aging}}}\label{fig:bi:lang}
+\end{figure}
+
+
+
+
+    \end{document} 
