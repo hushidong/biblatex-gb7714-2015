@@ -1,0 +1,25 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015样式文献表中数字标签的格式
+% 测试gbbiblabel选项
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage[top=10pt,bottom=10pt,left=1cm,right=1cm,paperheight=3cm]{geometry}
+\usepackage{xcolor}
+\usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=blue]{hyperref}
+\usepackage[backend=biber,style=gb7714-2015,gbtype=false]{biblatex}
+
+\addbibresource[location=local]{example.bib}
+\renewcommand{\bibfont}{\zihao{-5}}
+%\setlength{\bibitemsep}{0ex}
+%\setlength{\bibnamesep}{0ex}
+%\setlength{\bibinitsep}{0ex}
+
+\begin{document}
+
+%\section{测试gb7714-2015样式文献表中数字标签的格式}
+
+\nocite{王夫之1845--,陈登原2000-29-29,刘彻东1998-38-39,杨宗英1996-24-29}
+
+\printbibliography[heading=none]
+\end{document} 

@@ -1,0 +1,96 @@
+
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gblanorder选项的情况
+%
+
+\documentclass[twoside]{article}
+    \usepackage{ctex}
+    \usepackage{fontspec}
+\setmainfont{CMU Serif}
+\setCJKmainfont {SourceHanSerifSC-Regular.otf}
+    \usepackage{xcolor}
+    \usepackage{toolbox}
+    \usepackage[colorlinks,citecolor=blue]{hyperref}
+    \usepackage{lipsum}
+\usepackage[top=10pt,bottom=10pt,left=1cm,right=1cm,paperheight=4.1cm]{geometry}
+\usepackage[backend=biber,style=gb7714-2015ay,%citestyle=authoryear-comp,%
+maxcitenames=2,mincitenames=1,gbcitelocal=chinese,gblanorder=cn;en;ru;fr;jp;kr,gbpub=false]{biblatex}%,sortcites=false,cn;en;ru;fr;jp;kr
+
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+%---------------------------------------------------------------------------%
+%-                                                                         -%
+%-                             Bibliography                                -%
+%-                                                                         -%
+%---------------------------------------------------------------------------%
+@INPROCEEDINGS{frenchref,
+  AUTHOR = {Beneŕon Philipé},
+  BOOKTITLE = {Revue française},
+  DATE = {1968},
+  PAGES = {19--46},
+  TITLE = {ôçLes interprétations de la crise de mai-juinŕł},
+}
+
+@INPROCEEDINGS{kereanref,
+  AUTHOR = {김주성 and 함승호 and 김기수 and 김기회},
+  BOOKTITLE = {2015 한국 CAD/CAM 학회},
+  DATE = {2015},
+  address={울산},
+  PAGES = {19--46},
+  TITLE = {해저 저질과 환경 하중을},
+}
+
+@book{lamport1986document,
+    title={Document Preparation System},
+    author={Lamport, Leslie},
+    year={1986},
+    publisher={Addison-Wesley Reading, MA}
+}
+
+@book{chu2004tushu,
+    title={图书馆数字参考咨询服务研究},
+    author={初景利},
+    year={2004},
+    address={北京},
+    publisher={北京图书馆出版社}
+}
+
+
+@article{Bohan1928,
+    author = { ボハン, デ},
+    title = { 過去及び現在に於ける英国と会 },
+    journal = { 日本時報 },
+    year = { 1928 },
+    volume = { 17 },
+    pages = { 5-9 },
+    edition = { 9 },
+    hyphenation = { japanese },
+    language = { japanese }
+}
+
+@article{Dubrovin1906,
+    author = { Дубровин, А. И },
+    title = { Открытое письмо Председателя},
+    journal = { Вече },
+    year = { 1906 },
+    volume = {  },
+    edition = { 97 },
+    month = { 7 дек. 1906 },
+    pages = { 1-3 },
+    hyphenation = { russian },
+    language = { russian }
+}
+%---------------------------------------------------------------------------%
+
+\end{filecontents}
+    \addbibresource{\jobname.bib}
+    %
+
+    \begin{document}
+\nocite{*}
+
+    \printbibliography[heading=none]
+
+    \end{document} 

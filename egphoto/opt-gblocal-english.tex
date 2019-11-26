@@ -1,0 +1,73 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015ay样式，利用biblatex和样式定义的各种选项来控制文献表条目内容的格式
+% 这是科学院大学资源环境类学位论文的标注和文献表要求。
+\documentclass{article}
+\usepackage{ctex}
+\usepackage[top=10pt,bottom=10pt,left=1cm,right=1cm,paperheight=3cm]{geometry}
+\usepackage{xcolor}
+\usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=blue]{hyperref}
+\usepackage[backend=biber,style=gb7714-2015,maxnames=2,minnames=1,gblocal=english]{biblatex}
+\DefineBibliographyStrings{english}{
+        andincite         = {和},
+        andincitecn       = {和},
+        andcn = {和},%将标注中的分开，便于与文献表中的区分
+        and   = {and},
+        andothersincitecn = {等},
+        andothersincite   = {等{\adddot}},%adddot才能避开标点追踪
+}
+%\renewcommand{\bibfont}{\small}
+\setlength{\bibitemsep}{1pt}
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+
+@Book{易仕和2013--,
+  Title                    = {超声速和高超声速喷管设计},
+  Address                  = {北京},
+  Author                   = {易仕和 and 赵玉新 and 何霖 and 张敏莉},
+  Publisher                = {国防工业出版社},
+  Year                     = {2013}
+}
+
+@Book{Yi2013--,
+  Title                    = {Supersonic and hypersonic nozzle design},
+  Address                  = {Beijing},
+  Author                   = {Yi, Shi He and Zhao, Yu Xin and He, Lin and Zhang, Min Li},
+  Publisher                = {National Defense Industry Press},
+  Year                     = {2013}
+}
+
+@Article{张敏莉2007-500-503,
+  Title                    = {超声速短化喷管的设计和试验研究},
+  Author                   = {张敏莉 and 易仕和},
+  Journal                  = {空气动力学报},
+  Number                   = {4},
+  Pages                    = {500-503},
+  Volume                   = {25},
+  Year                     = {2007}
+}
+
+@Article{Zhang2007-500-503,
+  Title                    = {supersonic nozzle},
+  Author                   = {Zhang, Min Li and Yi, Shi He},
+  Journal                  = {ACTA AERODYNAMICA SINICA},
+  Number                   = {4},
+  Pages                    = {500-503},
+  Volume                   = {25},
+  Year                     = {2007}
+}
+
+
+
+\end{filecontents}
+
+\addbibresource{\jobname.bib}
+
+\begin{document}
+
+\nocite{*}
+
+\printbibliography[heading=none]
+
+
+\end{document} 

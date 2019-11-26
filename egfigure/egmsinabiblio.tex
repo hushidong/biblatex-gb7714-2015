@@ -9,10 +9,14 @@
 \usepackage{toolbox}
 \usepackage{hyperref}
 \usepackage{lipsum}
-\usepackage[paperwidth=14cm,paperheight=11cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
+\usepackage[paperwidth=14cm,paperheight=10.5cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
 
 \usepackage[backend=biber,style=gb7714-2015ms,gbstyle=false,
 gbnamefmt=familyahead]{biblatex}%
+
+\defbibheading{subbibliography}[\refname]{%
+\centering{\heiti #1}\par%
+}
 
 \usepackage{filecontents}
 \begin{filecontents}{\jobname.bib}

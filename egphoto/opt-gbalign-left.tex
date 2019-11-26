@@ -1,0 +1,25 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015样式的gbalign=left选项
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage[top=10pt,bottom=10pt,left=1cm,right=1cm,paperheight=4.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=blue]{hyperref}
+\usepackage[backend=biber,style=gb7714-2015,gbalign=left]{biblatex}
+\addbibresource[location=local]{example.bib}
+%\renewcommand{\bibfont}{\zihao{5}}
+%\setlength{\bibitemsep}{0ex}
+%\setlength{\bibnamesep}{0ex}
+%\setlength{\bibinitsep}{0ex}
+
+\begin{document}
+\section{测试gb7714-2015样式的gbalign=left选项}
+文献\cite{张伯伟2002--}\cite{CRAWFPRD1995--}\cite{陈志勇2011--}\cite{Babu2014--}\cite{汤万金2013-09-30--}
+\cite{Calkin2011-8-9}\cite{吴云芳2003--}\cite{CALMS1965--}\cite{BUSECK1980-117-211}\cite{陈建军2010-93-93}
+\cite{张凯军2012-04-05--}\cite{KOSEKI2002--}
+\cite{全国广播电视标准化技术委员会2007-1-1}\cite{国家环境保护局科技标准司1996-2-3}
+\cite{楼梦麟2011-11-12}
+\cite{DESMARAIS1992-605-609}\cite{张田勤2000--}\cite{萧钰2001--}
+\printbibliography[heading=subbibintoc,title=【参考文献】]
+\end{document} 

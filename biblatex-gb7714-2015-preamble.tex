@@ -92,7 +92,9 @@
 
 %超链接书签功能，选项去掉链接红色方框
 \usepackage[colorlinks=true,%
-pdfstartview=FitH,allcolors=gbemphcolor]{hyperref}
+pdfstartview=FitH,allcolors=gbemphcolor,
+bookmarksopenlevel=4,%
+bookmarksdepth=4,]{hyperref}
 %linkcolor=gbblue,anchorcolor=gbblue,citecolor=gbblue
 %linkcolor=black,linkcolor=green,blue,red,cyan, magenta,
 %yellow, black, gray,white, darkgray, lightgray, brown,
@@ -124,7 +126,7 @@ pdfstartview=FitH,allcolors=gbemphcolor]{hyperref}
 
 
 %目录，图/表/例目录，图表题注
-\usepackage{subfigure}
+\usepackage[bf]{subfigure}
 \usepackage[subfigure]{tocloft} %注意其与titletoc共用时分页会有问题
 \usepackage{ccaption}
 \captiondelim{. } %图序图题中间的间隔符号

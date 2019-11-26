@@ -12,6 +12,8 @@ mkdir egfigure
 
 mkdir egthesis
 
+mkdir egphoto
+
 cd ..
 
 copy biblatex-gb7714-2015-master\*.* biblatex-gb7714-2015-github\*.* /Y
@@ -21,6 +23,8 @@ copy biblatex-gb7714-2015-master\example\*.* biblatex-gb7714-2015-github\example
 copy biblatex-gb7714-2015-master\egfigure\*.* biblatex-gb7714-2015-github\egfigure\*.* /Y
 
 copy biblatex-gb7714-2015-master\egthesis\*.* biblatex-gb7714-2015-github\egthesis\*.* /Y
+
+copy biblatex-gb7714-2015-master\egphoto\*.* biblatex-gb7714-2015-github\egphoto\*.* /Y
 
 cd biblatex-gb7714-2015-github
 

@@ -77,8 +77,9 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 ---------------------------------------------------------
 
 <h2 id="jumptotutorial">Tutorial/使用入门</h2>
-[comment]: # (这里这种方式不适合可能主要是因为标题所导致，因此用上面的方式进行处理
-<span id="jumptotutorial">## Tutorial/使用入门</span>)
+
+[//]: # (这里这种方式不适合可能主要是因为标题所导致，因此用上面的方式进行处理)
+
 
 <h3 id="jumptopkgload">0. pacakge usage/宏包加载方式</h3>
 

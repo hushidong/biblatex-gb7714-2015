@@ -1,0 +1,62 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015样式，对于作者姓名格式的控制和选项
+% 测试gbnamefmt选项
+% 测试bib文件中的nameformat域
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage[top=10pt,bottom=10pt,left=1cm,right=1cm,paperheight=3cm]{geometry}
+\usepackage{xcolor}
+\usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=blue]{hyperref}
+\usepackage[backend=biber,style=gb7714-2015,gbnamefmt=familyahead]{biblatex}%align=gb7714-2015,gbnamefmt=lowercase
+\renewcommand{\bibfont}{\zihao{-5}}
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+    @Article{Zhang2007-500-503,
+      Title                    = {supersonic length shorted nozzle},
+      Author                   = {Zhang, Min Li and Yi, Shi He and Zhao, Yu Xin},
+      Journal                  = {ACTA AERODYNAMICA SINICA},
+      Number                   = {4},
+      Pages                    = {500-503},
+      Volume                   = {25},
+      Year                     = {2007}
+    }
+
+    @Book{Yi2013--,
+      Title                    = {Supersonic and hypersonic nozzle design},
+      Address                  = {Beijing},
+      Author                   = {Yi, Shi He and Zhao, Yu Xin and He, Lin and Zhang, Min Li},
+      Publisher                = {National Defense Industry Press},
+      Year                     = {2013}
+    }
+
+    @Book{LIAO2012--,
+      Title                    = {Electronic countermeasure techniques},
+      Address                  = {Beijing},
+      Author                   = {LIAO, Ping and JIANG, Qin Bo},
+      Publisher                = {National Defense Industry Press},
+      Year                     = {2013}
+    }
+
+    @Book{LIU2003--,
+      Title                    = {Introduction of Ballistic Misille Techniques},
+      Address                  = {Beijing},
+      Author                   = {LIU, Shi Qiu},
+      Publisher                = {China Astronautic Publishing House},
+      Year                     = {2003}
+    }
+
+
+\end{filecontents}
+\addbibresource{\jobname.bib}
+
+
+\begin{document}
+
+%\section*{五种不同的姓名格式}
+\nocite{*}
+
+\printbibliography[heading=none]
+
+
+\end{document} 

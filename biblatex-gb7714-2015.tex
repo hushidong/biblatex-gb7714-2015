@@ -1,9 +1,13 @@
 \documentclass[11pt]{article} %用draft选项找到badbox的位置 twoside,
 \input{biblatex-gb7714-2015-preamble} %宏包和一些格式设置
+\usepackage{microtype}
+\usepackage{babel}
+%\DefineHyphenationExceptions{english}{conf-erence}
 \begin{document}
 
 \hyphenpenalty=100 %断词阈值，值越大越不容易出现断词
 \tolerance=9000 %丑度，10000为最大无溢出盒子，参考the texbook 第6章
+
 
 
 %------------------------------------------------------------
@@ -271,15 +275,21 @@ latexmk -xelatex jobname.tex
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
 width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
-\deflength{\textparwd}{\linewidth-1cm}
-\parbox{\textparwd}{%\raggedright
-\hyphenpenalty=50 %断词阈值，值越大越不容易出现断词
-\tolerance=9500 %丑度，10000为最大无溢出盒子，参考the texbook 第6章
-详见文献\cite{Peebles2001-100-100}\parencite{Babu2014--}
-另见文献\cite[49]{于潇2012-1518-1523}\parencite[106]{Babu2014--}
-\renewcommand{\bibfont}{\zihao{-5}}
-\printbibliography[heading=subbibliography,title=参考文献]
-}
+\includegraphics*[page=1,viewport=0cm 0.4cm 14cm 6.1cm,clip=true]{egfigure/egmwe.pdf}
+%\deflength{\textparwd}{\linewidth-1.5cm}
+%\begin{minipage}{\textparwd}
+%\fbox{\parbox{\textparwd}{%\raggedright
+%详见文献\cite{Peebles2001-100-100}\parencite{Babu2014--}
+%另见文献\cite[49]{于潇2012-1518-1523}\parencite[106]{Babu2014--}
+%\renewcommand{\bibfont}{\zihao{-5}}
+%{
+%\hyphenation{conference}
+%\hyphenpenalty=100 %断词阈值，值越大越不容易出现断词
+%\tolerance=100 %丑度，10000为最大无溢出盒子，参考the texbook 第6章
+%\printbibliography[heading=subbibliography,title=参考文献]
+%\par}
+%}}
+%\end{minipage}
 \end{tcolorbox}
 \caption{最小工作示例编译生成的PDF文档}\label{fig:eg:ref}
 \end{figure}
@@ -290,8 +300,11 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 \subsection{样式及选项加载}
 
+\subsubsection{几种样式}
+
 例\ref{code:doc:structrue}中给出了宏包和样式的基本加载方式，选项的加载也类似。比如:
 
+\pdfbookmark[4]{gb7714-2015}{stygb7714-2015}
 \begin{example}{顺序编码制(gb7714-2015)加载方式}{eg:gb7714numeric}
 \begin{texlist}
 %简单方式：
@@ -303,6 +316,8 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{texlist}
 \end{example}
 
+
+\pdfbookmark[4]{gb7714-2015ay}{stygb7714-2015ay}
 \begin{example}{著者-出版年制(gb7714-2015ay)加载方式}{eg:gb7714authoryear}
 \begin{texlist}
 %简单方式：
@@ -312,6 +327,8 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{texlist}
 \end{example}
 
+
+\pdfbookmark[4]{gb7714-2015ms}{stygb7714-2015ms}
 \begin{example}{同一文献表中不同语言区分著录格式的样式(gb7714-2015ms)}{eg:gb7714ms}
 \begin{texlist}
 %默认方式，所有文献使用一种著录格式，即GB/T 7714-2015样式
@@ -320,7 +337,10 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \usepackage[backend=biber,style=gb7714-2015ms,gbstyle=false]{biblatex}
 \end{texlist}
 \end{example}
+格式效果如图\ref{fig:eg:ms}所示。
 
+
+\pdfbookmark[4]{gb7714-2015mx}{stygb7714-2015mx}
 \begin{example}{同一文档中不同文献分节区分不同著录格式的样式(gb7714-2015mx)}{eg:gb7714mx}
 \begin{texlist}
 %默认方式使用顺序编码制样式
@@ -329,6 +349,8 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \setaystylesection{2}
 \end{texlist}
 \end{example}
+格式效果如图\ref{fig:eg:mx}所示。
+
 
 \begin{example}{参考文献文本转换为bib文件perl脚本使用方式}{eg:transtobib}
 \begin{texlist}
@@ -336,11 +358,24 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 \end{texlist}
 \end{example}
 
-其中，v1.0m版本增加的gb7714-2015ms样式文件，主要是为了在一个文献表中针对不同语言使用不同多种样式，比如中文文献使用GB/T 7714-2015规定的著录格式，而其它语言文献使用biblatex提供的标准样式。v1.0r版本增加了gb7714-2015mx样式，主要是为了在一个文档中针对不同参考文献分节使用不同的参考文献样式，比如某些节使用著者年份制，某些节使用顺序编码制。尽管这些方式不常用，但偶尔也有需求，所以都做了实现。另外应ddswhu要求，v1.0r版本增加了chinese-erj样式用于生成经济研究期刊的文献。且在egthesis文件夹内，针对国内一些大学的学位论文文献要求，基于国标样式做了一些定制和测试。
+其中，v1.0m版本增加的gb7714-2015ms样式文件，主要是为了在一个文献表中针对不同语言使用不同多种样式，比如中文文献使用GB/T 7714-2015规定的著录格式，而其它语言文献使用biblatex提供的标准样式。v1.0r版本增加了gb7714-2015mx样式，主要是为了在一个文档中针对不同参考文献分节使用不同的参考文献样式，比如某些节使用著者年份制，某些节使用顺序编码制。尽管这些方式不常用，但偶尔也有需求，所以都做了实现。
+
+另外应ddswhu要求，v1.0r版本增加了chinese-erj样式用于生成经济研究期刊的文献。且在egthesis文件夹内，针对国内一些大学的学位论文文献要求，基于国标样式做了一些定制和测试。
+
+\pdfbookmark[4]{chinese-erj}{chinese-erj}
+\begin{example}{经济研究期刊文献样式(chinese-erj)}{eg:gbchineseerj}
+\begin{texlist}
+%使用经济研究期刊文献样式
+\usepackage[backend=biber,style=chinese-erj]{biblatex}
+\end{texlist}
+\end{example}
+
 
 \subsubsection{新增选项}\label{sec:added:opt}
 样式包新增了一些选项，用于标签对齐方式、出版项缺省处理、责任者(作者)缺省处理等功能的控制，其使用方式与biblatex宏包选项完全相同:
 \begin{description}
+
+  \pdfbookmark[4]{gbalign}{gbalign}
   \item[gbalign]=\textbf{right}，left，center，gb7714-2015. \hfill default is right
 
   为顺序编码制增加的选项，用于选择参考文献表序号标签的对齐方式。
@@ -357,8 +392,22 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   \href{run:./example/opt-gbalign-left.tex}{opt-gbalign-left.tex}，
   项对齐(标签与内容等间距)见:
   \href{run:./example/opt-gbalign-gb.tex}{opt-gbalign-gb.tex}。
+  效果示例如图\ref{fig:eg:optgbalign}所示。
 
+\begin{figure}[!htb]
+\centering
+\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
+width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
+\subfigure[\heiti gbalign=right 即右对齐]{\parbox{0.5\linewidth}{\includegraphics*[page=4,viewport=1cm 0cm 8cm 4.5cm,clip=true]{egphoto/opt-gbalign-right.pdf}}}
+\subfigure[\heiti gbalign=left 即左对齐]{\parbox{0.5\linewidth}{\includegraphics*[page=4,viewport=1cm 0cm 8cm 4.5cm,clip=true]{egphoto/opt-gbalign-left.pdf}}}\\
+\subfigure[\heiti gbalign=center 即中对齐]{\parbox{0.5\linewidth}{\includegraphics*[page=4,viewport=1cm 0cm 8cm 4.5cm,clip=true]{egphoto/opt-gbalign-center.pdf}}}
+\subfigure[\heiti gbalign=gb7714-2015 即项对齐]{\parbox{0.5\linewidth}{\includegraphics*[page=4,viewport=1cm 0cm 8cm 4.5cm,clip=true]{egphoto/opt-gbalign-gb.pdf}}}
+\end{tcolorbox}
+\caption{文献表标签对齐选项gbalign效果}\label{fig:eg:optgbalign}
+\end{figure}
 
+  \pdfbookmark[4]{gbpub}{gbpub}
   \item[gbpub]=\textbf{true}，false. \hfill default is true
 
   为控制出版信息缺失处理增加的选项。
@@ -369,8 +418,44 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   顺序编码制测试（著者年份制类似）见:
   \href{run:./example/opt-gbpub-true.tex}{opt-gbpub-true.tex}，
   \href{run:./example/opt-gbpub-false.tex}{opt-gbpub-false.tex}。
+  效果示例如图\ref{fig:eg:optgbpub}所示。
 
+\begin{figure}[!htb]
+\centering
+\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
+width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
+\subfigure[\heiti gbpub=false 出版项缺省]{\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0cm 9cm 4.5cm,clip=true]{egphoto/opt-gbpub-false.pdf}}}
+\subfigure[\heiti gbpub=true 出版项补充]{\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0cm 10cm 4.5cm,clip=true]{egphoto/opt-gbpub-true.pdf}}}
+\end{tcolorbox}
+\caption{文献表出版项缺失处理选项gbpub效果}\label{fig:eg:optgbpub}
+\end{figure}
 
+  \pdfbookmark[4]{gbnoauthor}{gbnoauthor}
+  \item[gbnoauthor]=true，\textbf{false}. \hfill default is false
+
+  为著者年份制增加的选项，用于控制责任者缺失时的处理。
+  \begin{itemize}
+    \item gbnoauthor=false，当作者信息缺失时默认不做处理，使用标准样式的处理方式；
+    \item gbnoauthor=true，则根据GB/T 7714-2015 的要求进行处理，中文文献使用“佚名”来代替author，英文文献用“Anon”来代替author。
+  \end{itemize}
+  测试结果见:
+  \href{run:./example/opt-gbnoauthor-true.tex}{opt-gbnoauthor-true.tex}，
+  \href{run:./example/opt-gbnoauthor-false.tex}{opt-gbnoauthor-false.tex}。
+  效果示例如图\ref{fig:eg:optgbnoauthor}所示。
+
+\begin{figure}[!htb]
+\centering
+\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
+width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
+\subfigure[\heiti gbnoauthor=true] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.4cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gbnoauthor-true.pdf}}}
+\subfigure[\heiti gbnoauthor=false] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.4cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gbnoauthor-false.pdf}}}
+\end{tcolorbox}
+\caption{文献表作者缺失处理选项gbnoauthor效果}\label{fig:eg:optgbnoauthor}
+\end{figure}
+
+  \pdfbookmark[4]{gbbiblabel}{gbbiblabel}
   \item[gbbiblabel]=\textbf{bracket}，parens，plain，dot，box，circle. \hfill default is bracket
 
   为顺序编码制增加的选项，用于选择参考文献表序号数字的格式。
@@ -382,19 +467,25 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
     \item gbbiblabel=box，序号数字由方框包围，比如\framebox{1}；
     \item gbbiblabel=circle，序号数字由圆圈包围，比如\textcircled{1}。
   \end{itemize}
+  效果示例如图\ref{fig:eg:optgbbiblabel}所示。
 
-  \item[gbnoauthor]=true，\textbf{false}. \hfill default is false
+\begin{figure}[!htb]
+\centering
+\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
+width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
+\subfigure[\heiti gbbiblabel=box] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbbiblabela.pdf}}}
+\subfigure[\heiti gbbiblabel=bracket] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbbiblabelb.pdf}}}\\
+\subfigure[\heiti gbbiblabel=parens] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbbiblabelc.pdf}}}
+\subfigure[\heiti gbbiblabel=dot] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbbiblabeld.pdf}}}\\
+\subfigure[\heiti gbbiblabel=plain] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbbiblabele.pdf}}}
+\subfigure[\heiti gbbiblabel=circle] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbbiblabelf.pdf}}}\\
+\end{tcolorbox}
+\caption{文献表标签数字格式选项gbbiblabel效果}\label{fig:eg:optgbbiblabel}
+\end{figure}
 
-  为著者年份制增加的选项，用于控制责任者缺失时的处理。
-  \begin{itemize}
-    \item gbnoauthor=false，当作者信息缺失时默认不做处理，使用标准样式的处理方式；
-    \item gbnoauthor=true，则根据GB/T 7714-2015 的要求进行处理，中文文献使用“佚名”来代替author，英文文献用“Anon”来代替author。
-  \end{itemize}
-  测试结果见:
-  \href{run:./example/opt-gbnoauthor-true.tex}{opt-gbnoauthor-true.tex}，
-  \href{run:./example/opt-gbnoauthor-false.tex}{opt-gbnoauthor-false.tex}。
 
-
+  \pdfbookmark[4]{gbnamefmt}{gbnamefmt}
   \item[gbnamefmt]=\textbf{uppercase}，lowercase，givenahead，familyahead，pinyin. \hfill default is uppercase
 
   为姓名大小写格式控制增加的选项。
@@ -411,8 +502,25 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   测试结果见：
   \href{run:./example/opt-gbnamefmt.tex}{opt-gbnamefmt.tex}，
   \href{run:./example/opt-gbnamefmt-default.tex}{opt-gbnamefmt-default.tex}。
+  效果示例如图\ref{fig:eg:optgbnamefmt}所示。
+
+\begin{figure}[!htb]
+\centering
+\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
+width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
+\subfigure[\heiti gbnamefmt=uppercase] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbnamefmt-a.pdf}}}
+\subfigure[\heiti gbnamefmt=lowercase] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbnamefmt-b.pdf}}}\\
+\subfigure[\heiti gbnamefmt=givenahead] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbnamefmt-c.pdf}}}
+\subfigure[\heiti gbnamefmt=familyahead] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbnamefmt-d.pdf}}}\\
+\subfigure[\heiti gbnamefmt=pinyin] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbnamefmt-e.pdf}}}
+\subfigure[\heiti gbnamefmt=reverseorder] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbnamefmt-f.pdf}}}\\
+\end{tcolorbox}
+\caption{文献表姓名格式选项gbnamefmt效果}\label{fig:eg:optgbnamefmt}
+\end{figure}
 
 
+  \pdfbookmark[4]{gbtype}{gbtype}
   \item[gbtype]=\textbf{true}，false. \hfill default is true
 
   为控制是否输出题名后面的文献类型和载体标识符而增加的选项。
@@ -420,7 +528,44 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
     \item gbtype=true，根据GB/T 7714-2015 要求输出标识符，例如“在线的期刊析出文献题名[J/OL]”。
     \item gbtype=false，则不输出标识符，例如“在线的期刊析出文献题名”。
   \end{itemize}
+  效果示例如图\ref{fig:eg:optgbtype}所示。
 
+\begin{figure}[!htb]
+\centering
+\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
+width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
+\subfigure[\heiti gbtype=true] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbtype-true.pdf}}}
+\subfigure[\heiti gbtype=false] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbtype-false.pdf}}}
+\end{tcolorbox}
+\caption{文献类型标识符输出控制选项}\label{fig:eg:optgbtype}
+\end{figure}
+
+
+  \pdfbookmark[4]{gbmedium}{gbmedium}
+  \item[gbmedium]=\textbf{true}，false. \hfill default is true
+
+  为控制是否输出题名后面的文献载体标识符而增加的选项。
+  \begin{itemize}
+    \item gbmedium=true，根据GB/T 7714-2015 要求输出载体标识符，例如“在线的期刊析出文献题名[J/OL]”。
+    \item gbmedium=false，则不输出标识符，例如“在线的期刊析出文献题名[J]”。
+  \end{itemize}
+  注意：gbtype选项是更大范围的控制，包括了gbmedium。当gbtype=false时，无所谓gbmedium设置什么，因为整个文献类型和载体标识符整个都不显示，而gbmedium只是设置载体标识的。
+  效果示例如图\ref{fig:eg:optgbmedium}所示。
+
+\begin{figure}[!htb]
+\centering
+\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
+width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
+\subfigure[\heiti gbmedium=true] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbmedium-true.pdf}}}
+\subfigure[\heiti gbmedium=false] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbmedium-false.pdf}}}
+\end{tcolorbox}
+\caption{文献载体标识符输出控制选项}\label{fig:eg:optgbmedium}
+\end{figure}
+
+
+  \pdfbookmark[4]{gbfieldtype}{gbfieldtype}
   \item[gbfieldtype]=true，\textbf{false}. \hfill default is false
 
   为控制是否输出type域而增加的选项。
@@ -438,8 +583,20 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   二是设置type域，比如在bib文件直接设置需要输出的字符，比如type=\{[博士学位论文]\}。
 
   \end{itemize}
+  效果示例如图\ref{fig:eg:optgbfieldtype}所示。
 
+\begin{figure}[!htb]
+\centering
+\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
+width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
+\subfigure[\heiti gbfieldtype=true] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=8cm 0.2cm 14.5cm 2.8cm,clip=true]{egphoto/opt-gbfieldtype-true.pdf}}}
+\subfigure[\heiti gbfieldtype=false] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=8cm 0.2cm 14.5cm 2.8cm,clip=true]{egphoto/opt-gbfieldtype-false.pdf}}}
+\end{tcolorbox}
+\caption{文献表类型（type）域输出控制选项}\label{fig:eg:optgbfieldtype}
+\end{figure}
 
+  \pdfbookmark[4]{gbpunctin}{gbpunctin}
   \item[gbpunctin]=\textbf{true}，false. \hfill default is true
 
   为控制inbook,incollection,inproceedings中析出来源文献前的\texttt{//}符号而增加的选项。
@@ -450,7 +607,149 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   \lstinline!\DefineBibliographyStrings{english}{in={}}!，\lstinline!\DefineBibliographyStrings{english}{incn={}}!。
   之所以用加cn的本地化字符串是为了适应某些样式对中英文文献的区别设置。
   \end{itemize}
+  效果示例如图\ref{fig:eg:optgbpunctin}所示。
 
+\begin{figure}[!htb]
+\centering
+\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
+width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
+\subfigure[\heiti gbpunctin=true] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gbpunctin-true.pdf}}}
+\subfigure[\heiti gbpunctin=false] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gbpunctin-false.pdf}}}
+\end{tcolorbox}
+\caption{析出文献标识符号控制选项}\label{fig:eg:optgbpunctin}
+\end{figure}
+
+  \pdfbookmark[4]{gbtitlelink}{gbtitlelink}
+  \item[gbtitlelink]=true，\textbf{false}. \hfill default is false
+
+  为设置标题的超链接增加的选项。
+  \begin{itemize}
+    \item gbtitlelink=false，即默认不给标题设置超链接。
+    \item gbtitlelink=true，当文献存在url 域时为文献标题设置超链接。
+  \end{itemize}
+  测试文件见：
+  \href{run:example/opt-gbtitlelink.tex}{opt-gbtitlelink.tex}。
+  效果示例如图\ref{fig:eg:optgbtitlelink}所示。
+
+\begin{figure}[!htb]
+\centering
+\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
+width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
+\subfigure[\heiti gbtitlelink=true] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gbtitlelink-true.pdf}}}
+\subfigure[\heiti gbtitlelink=false] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gbtitlelink-false.pdf}}}
+\end{tcolorbox}
+\caption{文献标题超链接控制选项}\label{fig:eg:optgbtitlelink}
+\end{figure}
+
+  \pdfbookmark[4]{gblocal}{gblocal}
+  \item[gblocal]=\textbf{gb7714-2015}，chinese，english. \hfill default is gb7714-2015
+  \item[gbcitelocal]=\textbf{gb7714-2015}，chinese，english. \hfill default is gb7714-2015
+  \item[gbbiblocal]=\textbf{gb7714-2015}，chinese，english. \hfill default is gb7714-2015
+
+  为设置引用标注标签和文献表中的本地化字符串而增加的选项。其中gbcitelocal 用于控制标注中的本地化字符串，而gbbiblocal用于控制文献表中的本地化字符串，gblocal选项等价于同时设置gbcitelocal 和 gbbiblocal。
+  配合\lstinline[breaklines=true]!\DefineBibliographyStrings!命令对本地化字符串进行设置可以实现一些特殊的效果。图\ref{fig:content:fmtc}就是该选项的一个使用示例。
+  \begin{itemize}
+    \item gblocal=gb7714-2015，即默认区分中英文，不同语言采用不同的字符串比如中文使用“等”“和”，而英文使用“et al.”“and”。
+    \item gblocal=chinese，强制设置所有的本地化字符串使用中文。
+    \item gblocal=english，强制设置所有的本地化字符串使用英文。
+  \end{itemize}
+  测试文件见：
+  \href{run:egfigure/egcontentfmtc.tex}{egcontentfmtc.tex}。
+  效果示例如图\ref{fig:eg:optgblocal}所示。
+
+\begin{figure}[!htb]
+\centering
+\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
+width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
+\centering
+\subfigure[\heiti gblocal=gb7714-2015] {\parbox{0.45\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gblocal-gb.pdf}}}\hfill
+\subfigure[\heiti gblocal=chinese] {\parbox{0.45\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gblocal-chinese.pdf}}}\\
+\subfigure[\heiti gblocal=english] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gblocal-english.pdf}}}
+\end{tcolorbox}
+\caption{常用本地化字符串的中英文控制选项}\label{fig:eg:optgblocal}
+\end{figure}
+
+  \pdfbookmark[4]{mergedate}{mergedate}
+  \item[mergedate]=true，false，none.
+
+  为著者年份制是否在文献表中作者后面输出日期信息而增加了选项值none。
+  \begin{itemize}
+    \item mergedate=true，著者年份制文献表仅在作者后输出日期
+    \item mergedate=false，著者年份制文献表在作者后和出版项中输出日期
+    \item mergedate=none，著者年份制文献表仅在出版项中输出日期。该选项用于满足中科院大学的著者年份制格式要求。
+    \item no mergedate，即不给出该选项，这是gb7714-2015ay默认的情况，仅在作者后输出日期且已经根据国标格式化。
+  \end{itemize}
+  效果示例如图\ref{fig:eg:optmergedate}所示。
+
+\begin{figure}[!htb]
+\centering
+\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
+width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
+\subfigure[\heiti mergedate 不给出] {\parbox{\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 14.5cm 2.8cm,clip=true]{egphoto/opt-mergedate-a.pdf}}}\\
+\subfigure[\heiti mergedate=true] {\parbox{\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 14.5cm 2.8cm,clip=true]{egphoto/opt-mergedate-b.pdf}}}\\
+\subfigure[\heiti mergedate=false] {\parbox{\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 14.5cm 2.8cm,clip=true]{egphoto/opt-mergedate-c.pdf}}}\\
+\subfigure[\heiti mergedate=none] {\parbox{\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 14.5cm 2.8cm,clip=true]{egphoto/opt-mergedate-d.pdf}}}\\
+\end{tcolorbox}
+\caption{作者年制文献表年份格式控制选项}\label{fig:eg:optmergedate}
+\end{figure}
+
+
+  \pdfbookmark[4]{gblanorder}{gblanorder}
+  \item[gblanorder]=\textbf{chineseahead}，englishahead，userdefinedstr like:cn;en;ru;fr;jp;kr . \hfill default is chineseahead
+
+  为著者年份制文献不同文种分集排序而增加的选项。
+  \begin{itemize}
+    \item gblanorder=chineseahead，即默认做中文文献在前英文文献在后的排序，各语言顺序为: cn;jp;kr;en;fr;ru。
+    \item gblanorder=englishahead，做英文在前中文文献在后的排序，各语言顺序为: en;fr;ru;cn;jp;kr。
+    \item gblanorder=自定义字符串，比如cn;en;ru;fr;jp;kr。这是一个用分号分隔的语言缩写名构成的字符串，缩写名的前后顺序代表文献表中文种分集的顺序。
+  \end{itemize}
+
+  测试文档见：\href{run:./example/opt-gblanorder.tex}{opt-gblanorder.tex}。
+  效果示例如图\ref{fig:eg:optgblanorder}所示。
+
+\begin{figure}[!htb]
+\centering
+\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
+width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
+\centering
+\subfigure[\heiti gblanorder=chineseahead] {\parbox{0.45\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 7.5cm 4.0cm,clip=true]{egphoto/opt-gblanorder-chineseahead.pdf}}}\hfill
+\subfigure[\heiti gblanorder=englishahead] {\parbox{0.45\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 7.5cm 4.0cm,clip=true]{egphoto/opt-gblanorder-englishahead.pdf}}}\\
+\subfigure[\heiti gblanorder=cn;en;ru;fr;jp;kr] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 7.5cm 4.0cm,clip=true]{egphoto/opt-gblanorder-udf.pdf}}}
+\end{tcolorbox}
+\caption{多语言文献表语言排序控制选项}\label{fig:eg:optgblanorder}
+\end{figure}
+
+
+  \pdfbookmark[4]{gbannote}{gbannote}
+  \item[gbannote]=true，\textbf{false}. \hfill default is false
+
+  为控制是否在文献条目后面输出由annotation或annote域提供的注释信息而增加的选项。
+  \begin{itemize}
+    \item gbannote=false，即默认不输出。
+    \item gbannote=true，输出注释信息。
+  \end{itemize}
+
+  测试文档见：\href{run:./example/opt-gbannote.tex}{opt-gbannote.tex}。
+  效果示例如图\ref{fig:eg:optgbannote}所示。
+
+\begin{figure}[!htb]
+\centering
+\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
+width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
+\subfigure[\heiti gbannote=true] {\parbox{\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 16cm 2.8cm,clip=true]{egphoto/opt-gbannote-true.pdf}}}\\
+\subfigure[\heiti gbannote=false] {\parbox{\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 16cm 2.8cm,clip=true]{egphoto/opt-gbannote-false.pdf}}}
+\end{tcolorbox}
+\caption{文献的附加注释输出控制选项}\label{fig:eg:optgbannote}
+\end{figure}
+
+
+  \pdfbookmark[4]{gbctexset}{gbctexset}
   \item[gbctexset]=\textbf{true}，false. \hfill default is true
 
   为控制参考文献标题内容的设置方式增加的选项。
@@ -467,6 +766,7 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   \lstinline[breaklines=true]!\printbibliography[title=title you want]!。
 
 
+  \pdfbookmark[4]{gbcodegbk}{gbcodegbk}
   \item[gbcodegbk]=true，\textbf{false}. \hfill default is false
 
   为兼容GBK编码的文档增加的选项。
@@ -477,37 +777,11 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   当在源文档前面增加 XeTeX 原语：\lstinline!\XeTeXinputencoding "GBK"! 后，GBK编码的文档也可以使用xelatex编译，这时应设置为false或不给出该选项。测试文件见：
   \href{run:example/codeopt-gbcodegbk.tex}{codeopt-gbcodegbk.tex}。
 
-  \item[gbstrict]=\textbf{true}，false. \hfill default is true
 
-  为避免输出bib文件中多余的域信息而增加选项，目的是为了兼容一些bib文件，因为某些bst样式文件进行中英文判断需要在bib文件中增加类似language这样的域作为支撑，而其中某些域在标准的biblatex样式文件中是默认输出的。
-  \begin{itemize}
-    \item gbstrict=true，即默认不输出。
-    \item gbstrict=false，需要还原标准样式的输出情况时使用。
-  \end{itemize}
-
-
-  \item[gbfieldstd]=true，\textbf{false}. \hfill default is false
-
-  为控制一些域如标题，网址，卷域的格式而增加选项。目的是使用一些标准样式的处理来增加格式多样性。
-  \begin{itemize}
-    \item gbfieldstd=false，即默认使用GB/T 7714-2015要求的样式。
-    \item gbfieldstd=true，即还原使用标准样式的格式，比如使用引号，字体，加引导词等。当然要调整这些格式也可采用biblatex提供的更为直接的设置域格式的方式。
-  \end{itemize}
-
-
-  \item[gbtitlelink]=true，\textbf{false}. \hfill default is false
-
-  为设置标题的超链接增加的选项。
-  \begin{itemize}
-    \item gbtitlelink=false，即默认不给标题设置超链接。
-    \item gbtitlelink=true，当文献存在url 域时为文献标题设置超链接。
-  \end{itemize}
-  测试文件见：
-  \href{run:example/opt-gbtitlelink.tex}{opt-gbtitlelink.tex}。
-
+  \pdfbookmark[4]{gbstyle}{gbstyle}
   \item[gbstyle]=\textbf{true}，false. \hfill default is true
 
-  为实现多种样式并存而增加的选项。
+  为实现多种样式并存而增加的选项。仅用于gb7714-2015ms样式中。
   \begin{itemize}
     \item gbstyle=true，即默认全部文献使用gb7714-2015样式。
     \item gbstyle=false，仅中文文献使用gb7714-2015样式，其它语言文献使用biblatex默认样式。
@@ -515,21 +789,8 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 
   该选项的实现原理是把所有国标格式设置局部化到每一条文献打印时，处理时首先判断gbstyle 选项及文献的语言，当满足要求则使用这些局部化格式，否则使用默认的标准样式。这种实现为一篇文档内实现两种样式提供解决思路，尽管目前非中文语言文献的著录格式是标准样式，但只要对标准样式做进一步的修改就可以形成符合某种格式规范的样式，比如像ieee，nature等的样式。因此存在中文使用GB/T 7714-2015 著录格式，而英文文献使用ieee等著录格式的可能性。测试文档见：\href{run:./example/opt-gbstyle.tex}{opt-gbstyle.tex}。
 
-  \item[gblocal]=\textbf{gb7714-2015}，chinese，english. \hfill default is gb7714-2015
-  \item[gbcitelocal]=\textbf{gb7714-2015}，chinese，english. \hfill default is gb7714-2015
-  \item[gbbiblocal]=\textbf{gb7714-2015}，chinese，english. \hfill default is gb7714-2015
 
-  为设置引用标注标签和文献表中的本地化字符串而增加的选项。其中gbcitelocal 用于控制标注中的本地化字符串，而gbbiblocal用于控制文献表中的本地化字符串，gblocal选项等价于同时设置gbcitelocal 和 gbbiblocal。
-  配合\lstinline[breaklines=true]!\DefineBibliographyStrings!命令对本地化字符串进行设置可以实现一些特殊的效果。图\ref{fig:content:fmtc}就是该选项的一个使用示例。
-  \begin{itemize}
-    \item gblocal=gb7714-2015，即默认区分中英文，不同语言采用不同的字符串比如中文使用“等”“和”，而英文使用“et al.”“and”。
-    \item gblocal=chinese，强制设置所有的本地化字符串使用中文。
-    \item gblocal=english，强制设置所有的本地化字符串使用英文。
-  \end{itemize}
-  测试文件见：
-  \href{run:egfigure/egcontentfmtc.tex}{egcontentfmtc.tex}。
-
-
+  \pdfbookmark[4]{gbfootbib}{gbfootbib}
   \item[gbfootbib]=true，\textbf{false}. \hfill default is false
 
   为实现国标样式的脚注文献表格式而增加的选项。
@@ -582,7 +843,7 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   对于表格环境中的引用无法产生脚注文献表的问题，可以将其置于小页环境中实现或者采用前述图标标题中的类似处理方式。
   注意：latex核心代码参考latex.ltx，而hyperref代码参考hyperref.STY。
 
-
+  \pdfbookmark[4]{gbfnperpage}{gbfnperpage}
   \item[gbfnperpage]=true，\textbf{false}. \hfill default is false
 
   为脚注计数器根据页码更新而增加的选项。
@@ -594,36 +855,22 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
   注意，若要让脚注计数器与其它计数器比如chapter等关联，那么采用latex的常规方法就能解决，比如使用latex内核常用的\verb|\@addtoreset|命令。
 
 
-  \item[mergedate]=true，false，none.
+  \item[gbstrict]=\textbf{true}，false. \hfill default is true
 
-  为著者年份制是否在文献表中作者后面输出日期信息而增加了选项值none。
+  为避免输出bib文件中多余的域信息而增加选项，目的是为了兼容一些bib文件，因为某些bst样式文件进行中英文判断需要在bib文件中增加类似language这样的域作为支撑，而其中某些域在标准的biblatex样式文件中是默认输出的。
   \begin{itemize}
-    \item mergedate=true，著者年份制文献表仅在作者后输出日期
-    \item mergedate=false，著者年份制文献表在作者后和出版项中输出日期
-    \item mergedate=none，著者年份制文献表仅在出版项中输出日期。该选项用于满足中科院大学的著者年份制格式要求。
-    \item no mergedate，即不给出该选项，这是gb7714-2015ay默认的情况，仅在作者后输出日期且已经根据国标格式化。
+    \item gbstrict=true，即默认不输出。
+    \item gbstrict=false，需要还原标准样式的输出情况时使用。
   \end{itemize}
 
-  \item[gblanorder]=\textbf{chineseahead}，englishahead，userdefinedstr like:cn;en;ru;fr;jp;kr . \hfill default is chineseahead
 
-  为著者年份制文献不同文种分集排序而增加的选项。
+  \item[gbfieldstd]=true，\textbf{false}. \hfill default is false
+
+  为控制一些域如标题，网址，卷域的格式而增加选项。目的是使用一些标准样式的处理来增加格式多样性。
   \begin{itemize}
-    \item gblanorder=chineseahead，即默认做中文文献在前英文文献在后的排序，各语言顺序为: cn;jp;kr;en;fr;ru。
-    \item gblanorder=englishahead，做英文在前中文文献在后的排序，各语言顺序为: en;fr;ru;cn;jp;kr。
-    \item gblanorder=自定义字符串，比如cn;en;ru;fr;jp;kr。这是一个用分号分隔的语言缩写名构成的字符串，缩写名的前后顺序代表文献表中文种分集的顺序。
+    \item gbfieldstd=false，即默认使用GB/T 7714-2015要求的样式。
+    \item gbfieldstd=true，即还原使用标准样式的格式，比如使用引号，字体，加引导词等。当然要调整这些格式也可采用biblatex提供的更为直接的设置域格式的方式。
   \end{itemize}
-
-  测试文档见：\href{run:./example/opt-gblanorder.tex}{opt-gblanorder.tex}。
-
-    \item[gbannote]=true，\textbf{false}. \hfill default is false
-
-  为控制是否在文献条目后面输出由annotation或annote域提供的注释信息而增加的选项。
-  \begin{itemize}
-    \item gbannote=false，即默认不输出。
-    \item gbannote=true，输出注释信息。
-  \end{itemize}
-
-  测试文档见：\href{run:./example/opt-gbannote.tex}{opt-gbannote.tex}。
 
 \end{description}
 
@@ -857,7 +1104,7 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 \begin{table}[!htb]
 \centering
 \caption{著者年份制常用命令示例}\label{tab:cite:authoryear}
-\hspace{-1cm}{\parbox{\linewidth}{\includegraphics[scale=0.95]{egciteaytab.pdf}}}
+\hspace{-1cm}{\parbox{\linewidth}{\includegraphics[scale=0.95,page=2]{egciteaytab.pdf}}}
 \end{table}
 
 
@@ -1474,7 +1721,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \deflength{\textparwd}{\linewidth-1cm}
 \includegraphics[width=\textparwd]{egmsindfrefsec.pdf}
 \end{tcolorbox}
-\caption{不同参考文献分节采用不同著录样式}\label{fig:eg:ms}
+\caption{不同参考文献分节采用不同著录样式}\label{fig:eg:mx}
 \end{figure}
 
 测试见文档\href{run:egfigure/egmsindfrefsec.tex}{egmsindfrefsec.tex}。
@@ -1818,7 +2065,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
 \subsection{GB/T 7714-2015 标准示例}
 
-详见文档：\href{run:./stdGBT7714-2015.pdf}{GBT7714-2015std}
+详见文档：\href{run:./stdGBT7714-2015.pdf}{stdGBT7714-2015.pdf}
 
 \subsection{多语言支持相关测试示例}
 
@@ -1869,7 +2116,7 @@ beamer类示例，参见: \href{run:./example/egbeamer.tex}{顺序编码制}；
 \href{run:./example/testallformat.tex}{testallformat.tex}。
 
 详见文档:
-\href{run:./example/stdGBT7714-2015eg.pdf}{GBT7714-2015egstd}，
+\href{run:./example/stdGBT7714-2015eg.pdf}{stdGBT7714-2015eg.pdf}，
 \href{run:./example/stdgbT7714-2015fmt.pdf}{stdgbT7714-2015fmt.pdf}。
 
 
@@ -2104,7 +2351,7 @@ author.title[usera].organization/instiution,date或year:pages(date/enddate/event
 \begin{refentry}{}{}
 会议文集的biblatex的entrytype为:proceedings。文献类型标识用C表示。
 
-\paragraph{其著录格式为} 采用与book类似的格式。
+\bibliofmt{其著录格式为} 采用与book类似的格式。
 \end{refentry}
 
 \subsubsection{会议文集中析出的文献/inproceedings}

@@ -1,0 +1,51 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015ay样式，对于作者缺省时的控制
+% 测试gbnoauthor=true选项
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage[top=10pt,bottom=10pt,left=1cm,right=1cm,paperheight=3cm]{geometry}
+\usepackage{xcolor}
+\usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=blue]{hyperref}
+\usepackage[backend=biber,style=gb7714-2015ay,gbnoauthor=true]{biblatex}%align=gb7714-2015
+%\addbibresource[location=local]{egtest.bib}
+\addbibresource[location=local]{example.bib}
+
+\renewcommand{\bibfont}{\zihao{-5}}
+%\setlength{\bibitemsep}{0ex}
+%\setlength{\bibnamesep}{0ex}
+%\setlength{\bibinitsep}{0ex}
+%\renewcommand{\thefootnote}{\textcircled{\tiny\arabic{footnote}}}
+
+\begin{document}
+
+%%%测试作者年/biblatex版本兼容性的文件
+%%%test file for author year style
+
+%\section{测试gb7714-2015ay样式gbnoauthor=true选项}
+%文献
+\nocite{1962-50-50,2009-155-155}
+
+\nocite{olnoauthorcn}
+\nocite{olnoauthoren}
+%\nocite{Allianceurlonly}
+
+%\cite{萧钰2001--}
+%\cite{李强2012-05-03--,Commonwealth--,HOPKINSON--,OCLC--}
+%\cite{傅刚2000--}
+%\cite{蔡敏2006--}
+%\cite{Saito2006-169-176}
+%\cite{CRAWFPRD1995--}\cite{Proakis2007--}
+%\cite{Giorgetti2005-1037-1042,Giorgetti2005-794-798}
+%\cite{Haemaelaeinen2002-1712-1721}
+%\cite{Oetiker2011--}
+%\cite{刘彻东1998-38-39}
+%\cite{Commonwealth--}
+
+{
+\hyphenation{kurose-gawa}
+%\hyphenpenalty=1000
+%\tolerance=500
+\printbibliography[heading=none]
+}
+\end{document} 

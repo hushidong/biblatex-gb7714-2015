@@ -57,3 +57,21 @@ del *.bib /Q
 
 cd ..
 
+
+
+cd egphoto
+
+call makeclearph
+
+
+del *.bbx /Q
+
+del *.cbx /Q
+
+del *.def /Q
+
+del *.bib /Q
+
+cd ..
+
+

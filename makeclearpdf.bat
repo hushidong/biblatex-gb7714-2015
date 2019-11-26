@@ -25,4 +25,12 @@ cd ..
 
 
 
+cd egphoto
+
+del *.pdf /Q
+
+cd ..
+
+
+
 del gbT*.pdf /Q

@@ -1,0 +1,71 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015样式文献表中数字标签的格式
+% 测试gbbiblabel选项
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage[top=10pt,bottom=10pt,left=1cm,right=1cm,paperheight=3cm]{geometry}
+\usepackage{xcolor}
+\usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=blue]{hyperref}
+\usepackage[backend=biber,style=gb7714-2015,gbpunctin=true]{biblatex}
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+@inbook{李约瑟1991--,
+  author     = {李约瑟},
+  title      = {题词},
+  bookauthor = {苏克福 and 管成学 and 邓明鲁},
+  booktitle  = {苏颂与《本草图经》研究},
+  year       = {1991},
+  publisher  = {长春出版社},
+  address    = {长春},
+  pages      = {扉页}
+}
+
+@Inbook{BUSECK1980-117-211,
+  Title                    = {Subsolidus},
+  Author                   = {P R BUSECK},
+  Bookauthor               = {CT PREWITT},
+  Booktitle                = {Pyroxense},
+  year                     = {c1980},
+  Pages                    = {117-211},
+  Publisher                = {MSA},
+  Location                 = {Washington, D.C.}
+}
+
+@Incollection{韩吉人1985-90-99,
+  Title                    = {论职工教育的特点},
+  Author                   = {韩吉人},
+  Booktitle                = {职工教育研究论文集},
+  Date                     = {1985},
+  Publisher                = {人民教育出版社},
+  Pages                    = {90-99},
+  Bookauthor               = {中国职工教育研究会},
+  Location                 = {北京}
+}
+
+@Inproceedings{Nemec1997-209-214,
+  Title                    = {Force control},
+  Author                   = {B Nemec},
+  Booktitle                = {Processings of Symposium on Robot Control},
+  Pages                    = {209-214},
+  Country                  = {Nantes France},
+  Year                     = {1997}
+}
+
+
+\end{filecontents}
+\addbibresource{\jobname.bib}
+\renewcommand{\bibfont}{\zihao{-5}}
+%\setlength{\bibitemsep}{0ex}
+%\setlength{\bibnamesep}{0ex}
+%\setlength{\bibinitsep}{0ex}
+
+\begin{document}
+
+%\section{测试gb7714-2015样式文献表中数字标签的格式}
+
+\nocite{*}
+
+\printbibliography[heading=none]
+\end{document} 

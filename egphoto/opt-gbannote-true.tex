@@ -1,0 +1,70 @@
+\documentclass[twoside]{article}
+    \usepackage{ctex}
+    \usepackage{xcolor}
+    \usepackage{toolbox}
+    \usepackage{hyperref}
+\usepackage[top=10pt,bottom=10pt,left=1cm,right=1cm,paperheight=3.2cm]{geometry}
+
+\usepackage[backend=biber,style=gb7714-2015,maxnames=1,minnames=1,gbannote=true]{biblatex}
+\renewcommand{\bibfont}{\zihao{-5}}
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+% Encoding: UTF-8
+@article{ref-1-1-Yang,
+author    = {Yang, Y and Ren, T L and Zhang, L T and others},
+title     = {Miniature microphone},
+journal   = {Ferroelectrics},
+date      = {2003},
+pages      = {229-235},
+volume      = {52},
+annotation      = {SCI 收录, 检索号:758FZ},
+}
+
+@article{ref-2-1-杨轶,
+author    = {杨轶 and 张宁欣 and 任天令 and others},
+title     = {薄膜残余应力},
+journal   = {机械工程},
+pages= {1289-1291},
+date      = {2005},
+volume      = {16},
+number ={14},
+annotation ={EI 收录, 检索号:0534931 2907},
+}
+
+@article{ref-5-1-Wu,
+author    = {Wu, X M and Yang, Y and Cai, J and others},
+title     = {Measurements},
+journal   = {Ferroelectrics},
+date      = {2005},
+pages={417-429},
+volume      = {69},
+annotation      = {SCI 收录, 检索号 :896KM.},
+}
+
+
+@article{ref-6-1-贾泽,
+author    = {贾泽 and 杨轶 and 陈兢 and others},
+title     = {腐蚀研究},
+journal   = {压电与声光},
+date      = {2006},
+pages      = {117-119},
+number={1},
+volume      = {28},
+annotation      = {EI 收录, 检索号:06129773469.},
+}
+
+\end{filecontents}
+
+
+    \addbibresource{\jobname.bib}
+    %
+
+
+    \begin{document}
+
+
+    \nocite{*}
+    \printbibliography[heading=none]
+
+
+    \end{document} 

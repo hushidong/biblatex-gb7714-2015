@@ -1,0 +1,61 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015样式文献表中数字标签的格式
+% 测试gbbiblabel选项
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage[top=10pt,bottom=10pt,left=1cm,right=1cm,paperheight=3cm]{geometry}
+\usepackage{xcolor}
+\usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=blue]{hyperref}
+\usepackage[backend=biber,style=gb7714-2015,gbmedium=true]{biblatex}
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+@database{databaseeg,
+  AUTHOR = {Zhang, San},
+  DATE = {2007},
+  TITLE = {A data base},
+  medium={CD}
+}
+
+@dataset{dataseteg,
+  AUTHOR = {Zhang, Yi},
+  DATE = {2008},
+  TITLE = {A data set},
+  medium={DK}
+}
+
+@archive{archiveeg,
+  AUTHOR = {Zhang, Er},
+  DATE = {2009},
+  TITLE = {An archive for friend B},
+  medium={MT}
+}
+
+@ARTICLE{aritileeg,
+  AUTHOR = {Zhang, Qi},
+  DATE = {2007},
+  JOURNALTITLE = {An periodical},
+  PAGES = {82--92},
+  TITLE = {An article for test},
+  VOLUME = {12},
+  NUMBER ={2},
+  url     = {http://wenku.baidu.com},
+  urldate = {2014-08-29},
+}
+
+
+\end{filecontents}
+\addbibresource{\jobname.bib}
+\renewcommand{\bibfont}{\zihao{-5}}
+%\setlength{\bibitemsep}{0ex}
+%\setlength{\bibnamesep}{0ex}
+%\setlength{\bibinitsep}{0ex}
+
+\begin{document}
+
+%\section{测试gb7714-2015样式文献表中数字标签的格式}
+
+\nocite{*}
+
+\printbibliography[heading=none]
+\end{document} 

@@ -1,0 +1,17 @@
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{hyperref}
+\usepackage[paperwidth=14cm,paperheight=6.5cm,top=10pt,bottom=10pt,left=10pt,right=10pt]{geometry}
+\usepackage[backend=biber,style=gb7714-2015]{biblatex}
+
+\addbibresource{example.bib}
+
+\begin{document}
+
+详见文献\cite{Peebles2001-100-100}\parencite{Babu2014--}
+另见文献\cite[49]{于潇2012-1518-1523}\parencite[106]{Babu2014--}
+\renewcommand{\bibfont}{\zihao{-5}}
+
+\printbibliography[heading=subbibliography,title=参考文献]
+
+\end{document} 

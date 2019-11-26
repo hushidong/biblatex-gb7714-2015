@@ -1,0 +1,51 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015样式文献表中数字标签的格式
+% 测试gbbiblabel选项
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage[top=10pt,bottom=10pt,left=1cm,right=1cm,paperheight=3cm]{geometry}
+\usepackage{xcolor}
+\usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=blue]{hyperref}
+\usepackage[backend=biber,style=gb7714-2015,gbtitlelink=false]{biblatex}
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+@Article{CHRISTINE1998-331-332,
+  Title                    = {Plant physiology:plant biology in the Genome Era},
+  Author                   = {M CHRISTINE},
+  Date                     = {1998},
+  Journaltitle             = {Science},
+  Pages                    = {331-332},
+  Volume                   = {281},
+  Url                      = {http://www.sciencemag.org/cgi/collection/anatmorp},
+  Urldate                  = {1998-09-23}
+}
+
+@Article{江向东1999-4-4,
+  Title                    = {互联网环境下的信息处理与图书管理系统解决方案},
+  Author                   = {江向东},
+  Date                     = {1999},
+  Journaltitle             = {情报学报},
+  Number                   = {2},
+  Pages                    = {4},
+  Volume                   = {18},
+  Url                      = {http://www.chinainfo.gov.cn/periodical/qbxb/qbxb99/qbxb990203},
+  Urldate                  = {2000-01-18}
+}
+
+\end{filecontents}
+\addbibresource{\jobname.bib}
+\renewcommand{\bibfont}{\zihao{-5}}
+%\setlength{\bibitemsep}{0ex}
+%\setlength{\bibnamesep}{0ex}
+%\setlength{\bibinitsep}{0ex}
+
+\begin{document}
+
+%\section{测试gb7714-2015样式文献表中数字标签的格式}
+
+\nocite{*}
+
+\printbibliography[heading=none]
+\end{document} 

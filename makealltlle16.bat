@@ -28,6 +28,12 @@ call makecompilefig.bat
 
 cd ..
 
+cd egphoto
+
+call makecompileph.bat
+
+cd ..
+
 
 echo biblatex-gb7714-2015.tex >> example/makerecord.dat
 

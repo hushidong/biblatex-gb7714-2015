@@ -27,6 +27,13 @@
 %   功能函数
 %=====================================================================
     %
+    %   增加一个控制是否输出文献载体的选项
+    %   20191125,v1,0s,hzz
+    \newtoggle{bbx:gbmedium}
+    \DeclareBibliographyOption{gbmedium}[true]{%biblatex低版本
+      \settoggle{bbx:gbmedium}{#1}}
+    \ExecuteBibliographyOptions{gbmedium}
+    %
     %   增加一个控制是否输出annotation域的选项，该域可以用于在文献条目后面输出一些注释信息
     %   20190509,v1,0s,hzz
     \newtoggle{bbx:gbannote}
@@ -1591,7 +1598,8 @@
 %   而[]中间的内容，从4.6.2节的例子看也是可以分割的，因此内部的nobreak也可以去掉
 %
 \DeclareFieldFormat{gbtypeflag}{%
-\iftoggle{bbx:url}%
+\iftoggle{bbx:gbmedium}%
+{\iftoggle{bbx:url}%
     {\iffieldundef{url}%当存在url时，增加一个OL标识符
         {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}}%
         {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\texttt{/}OL]}}%
@@ -1599,31 +1607,36 @@
     {\ifentrytype{online}%
         {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\texttt{/}OL]}}%
         {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}}%
-    }%
+    }}%
+    {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{]}}%
 }
 
 %
 %   新增用于报纸的文献类型标识符的格式
 %
 \DeclareFieldFormat{gbtypeflagn}{%用于报纸newspaper
-\iftoggle{bbx:url}%
+\iftoggle{bbx:gbmedium}%
+{\iftoggle{bbx:url}%
     {\iffieldundef{url}%当存在url时，增加一个OL标识符
         {\nobreak\printtext{[}\nobreak N\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
         {\nobreak\printtext{[}\nobreak N\printtext{\texttt{/}OL]}\nobreak}%
     }%
     {\nobreak\printtext{[}\nobreak N\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
+}{\nobreak\printtext{[}\nobreak N\printtext{]}\nobreak}%
 }
 
 %
 %   新增用于标准的文献类型标识符的格式
 %
 \DeclareFieldFormat{gbtypeflags}{%用于标准standard
-\iftoggle{bbx:url}%
+\iftoggle{bbx:gbmedium}%
+{\iftoggle{bbx:url}%
     {\iffieldundef{url}%当存在url时，增加一个OL标识符
         {\nobreak\printtext{[}\nobreak S\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
         {\nobreak\printtext{[}\nobreak S\printtext{\texttt{/}OL]}\nobreak}%
     }%
     {\nobreak\printtext{[}\nobreak S\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
+}{\nobreak\printtext{[}\nobreak S\printtext{]}\nobreak}%
 }
 
 %

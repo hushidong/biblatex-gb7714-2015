@@ -32,6 +32,13 @@ call makecompileGBT.bat
 
 cd ..
 
+cd egphoto
+
+call makecompileph.bat
+
+
+cd ..
+
 cd egthesis
 
 call makecompilethesis.bat
