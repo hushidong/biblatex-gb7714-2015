@@ -372,14 +372,24 @@ biber -l zh__stroke jobname
 * <b>作者年制参考文献表目前的排序时升序排列，能不能改成降序排序？</b>
 		
 
-能，这需要通过修改gb7714-2015ay.bbx中的代码来实现，找到:
+能，通过修改sorting选项实现:
 
-```\sort{%[direction=descending]```
 
-修改为:
+```\usepackage[backend=biber,style=gb7714-2015ay,sorting=gbnytd]{biblatex}```
 
-```\sort[direction=descending]{%```
-
+可用的选项值包括:
+nty 按照姓名、标题、年份排序。
+nyt 按照姓名、年份、标题排序。
+nyvt 按照姓名、年份、卷数、标题排序。
+anyt 按照字母标签、姓名、年份、标题排序。
+anyvt 按照字母标签、姓名、年份、卷数、标题排序。
+ynt 按照年份、姓名、标题排序。
+ydnt 按照年份（降序）、姓名、标题排序。
+none 不进行排序。所有的条目按照引用顺序处理。
+gb7714-2015 以语言、作者、年份、标题、升序排列
+gbnytd 以语言、作者、年份、标题、降序排列
+gbynta 以语言、年份、作者、标题、升序排列
+gbyntd 以语言、年份、作者、标题、降序排列
 
 
 * <b>我希望文献表以阿拉伯数字编号，而正文中的引用标签使用作者和年份标注而不是数字，请问我该如何处理？</b>
@@ -421,6 +431,35 @@ biber -l zh__stroke jobname
 ```
 
 当然字体设置需要fontspec宏包的支持。
+
+
+
+* <b>如何修改参考文献文献表的垂直间距(竖直间距)？</b>
+
+设置如下尺寸即可
+
+```
+% 间距的控制
+\setlength{\bibitemsep}{0ex}
+\setlength{\bibnamesep}{0ex}
+\setlength{\bibinitsep}{0ex}
+
+```
+其中itemsep设置各条文献之间的间隔，一般够用，后面两个常在西文中使用。具体意义参考biblatex-zh-cn
+
+
+
+* <b>如何修改作者年制参考文献文献表的缩进？</b>
+
+设置如下尺寸即可:
+```
+% 文献表中各条文献的缩进控制
+%\setlength{\bibitemindent}{0em} % bibitemindent表示一条文献中第一行相对后面各行的缩进
+%\setlength{\bibhang}{0pt} % 著者-出版年制中 bibhang 表示的各行起始位置到页边的距离， 顺序编码制中
+bibhang+labelnumberwidth 表示各行起始位置到页边的距离
+     
+```
+      
 
 
 ​	
