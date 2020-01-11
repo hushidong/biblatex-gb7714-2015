@@ -87,7 +87,13 @@
     \DeclareDatamodelFields[type=field,datatype=literal]{shortbooktitle}
     \DeclareDatamodelFields[type=field,datatype=literal]{lansortorder}
 
-
+    %因为biblatex更新3.14版本以后，biber对于为声明数据模型的条目类型
+    %不再默认读取，而是以空字符串作为条目类型名，自然在条目定义alias时
+    %就会出现问题，因此显式的声明一下newspaper，然后保留后面采用alias的方式
+    %而standard类型则是采用另一种方式直接在sourcemap中转换为其它类型。
+    \@ifpackagelater{biblatex}{2019/11/30}{%2019/12/01 v3.14
+    \DeclareDatamodelEntrytypes{newspaper}%
+    }{}
 
 %=====================================================================
 %   设置宏包选项
