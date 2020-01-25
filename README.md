@@ -461,6 +461,25 @@ gbyntd 以语言、年份、作者、标题、降序排列
 bibhang+labelnumberwidth 表示各行起始位置到页边的距离
      
 ```
+
+
+* <b>如何修改参考文献表的字？</b>
+
+通过修改如下命令实现
+  
+```
+% 字体的控制： \textit， sl， emph-楷体， \textbf， sf-黑体， \texttt-仿宋， \textsc， md， up-宋体
+% 全局字体
+\renewcommand{\bibfont}{\zihao{-5}}%\fangsong
+% 题名字体
+\renewcommand{\bibauthorfont}{\bfseries\color{teal}}%
+\renewcommand{\bibtitlefont}{\ttfamily\color{blue}}%
+\renewcommand{\bibpubfont}{\itshape\color{violet}}%
+% url和doi字体
+\def\UrlFont{\ttfamily} %\urlstyle{sf} %\def\UrlFont{\bfseries}
+
+  
+```
       
 
 
