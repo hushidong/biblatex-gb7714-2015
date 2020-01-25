@@ -463,7 +463,7 @@ bibhang+labelnumberwidth 表示各行起始位置到页边的距离
 ```
 
 
-* <b>如何修改参考文献表的字？</b>
+* <b>如何修改参考文献表的字体字号？</b>
 
 通过修改如下命令实现
   
@@ -477,8 +477,6 @@ bibhang+labelnumberwidth 表示各行起始位置到页边的距离
 \renewcommand{\bibpubfont}{\itshape\color{violet}}%
 % url和doi字体
 \def\UrlFont{\ttfamily} %\urlstyle{sf} %\def\UrlFont{\bfseries}
-
-  
 ```
       
 
