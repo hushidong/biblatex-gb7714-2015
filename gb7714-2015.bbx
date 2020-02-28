@@ -622,7 +622,39 @@
     %   numeric样式，不使用该选项，这里给出仅为兼容性考虑
     %   v1.0q，20190307，hzz
     %
-    \DeclareBibliographyOption[string]{gblanorder}[chineseahead]{}
+        %   增加不同语言排序的切换选项
+    %   gblanorder=chineseahead的顺序为cn，jp，kr，en，fr，ru
+    %   gblanorder=englishahead的顺序为en，fr，ru，cn，jp，kr
+    %   gblanorder=cn;en;ru;fr;jp;kr的顺序为指定的cn;en;ru;fr;jp;kr，自定义内容可以随意写以分号分隔
+    %   v1.0q，20190307，hzz
+    %
+    \DeclareBibliographyOption[string]{gblanorder}[chineseahead]{%
+        \ifstrequal{#1}{chineseahead}%%中文在前的顺序
+            {\gdef\lancnorder{1}\gdef\lanjporder{2}\gdef\lankrorder{3}%
+             \gdef\lanenorder{4}\gdef\lanfrorder{5}\gdef\lanruorder{6}}%
+            {%
+            \ifstrequal{#1}{englishahead}%
+                {\execlanodeah\dealsortlan}%
+                {\execlanodudf{#1}\dealsortlan}%
+            }%
+    }
+    \ExecuteBibliographyOptions{gblanorder}
+
+    \def\execlanodeah{%中文在后的顺序
+        \gdef\lancnorder{4}
+        \gdef\lanjporder{5}
+        \gdef\lankrorder{6}
+        \gdef\lanenorder{1}
+        \gdef\lanfrorder{2}
+        \gdef\lanruorder{3}}
+
+    \newcounter{lanordernum}
+    \newcommand{\execlanodudf}[1]{%like：cn;en;ru;fr;jp;kr
+        \setcounter{lanordernum}{0}
+        \DeclareListParser{\parsinglanorder}{;}
+        \renewcommand*{\do}[1]{\stepcounter{lanordernum}\csxdef{lan##1order}{\thelanordernum}}
+        \parsinglanorder{#1}
+    }
 
     %
     %   增加本地化字符串的中英文切换选项
@@ -686,7 +718,7 @@
   }
   {% 针对biblatex<3.3版本的选项设置
     %   增加不同语言排序的切换选项
-    %   numeric样式，不使用该选项，这里给出仅为兼容性考虑
+    %   numeric样式， biblatex 3.4及以下版本不能使用多个stylesourcemap，所以不使用该选项
     %   v1.0q，20190307，hzz
     %
     \DeclareBibliographyOption{gblanorder}[chineseahead]{}
@@ -1253,26 +1285,32 @@
         \map{%当文献给出language域时，设置文献要使用的本地化字符串的语言
             \step[fieldsource=language,match=\regexp{(e|E)(n|N)(g|G)(l|L)(i|I)(s|S)(h|H)},final]
             \step[fieldset=langid,fieldvalue={english}]
+            \step[fieldset=lansortorder,fieldvalue=\lanenorder]
             }
         \map{
             \step[fieldsource=language,match=\regexp{(r|R)(u|U)(s|S)(s|S)(i|I)(a|A)(n|N)},final]
             \step[fieldset=langid,fieldvalue={russian}]
+            \step[fieldset=lansortorder,fieldvalue=\lanruorder]
             }
         \map{%
             \step[fieldsource=language,match=\regexp{(f|F)(r|R)(e|E)(n|N)(c|C)(h|H)},final]
             \step[fieldset=langid,fieldvalue={french}]
+            \step[fieldset=lansortorder,fieldvalue=\lanfrorder]
             }
         \map{%
             \step[fieldsource=language,match=\regexp{(c|C)(h|H)(i|I)(n|N)(e|E)(s|S)(e|E)},final]%中日韩语目前都用english，
             \step[fieldset=langid,fieldvalue={english}]
+            \step[fieldset=lansortorder,fieldvalue=\lancnorder]
             }
         \map{%
             \step[fieldsource=language,match=\regexp{(j|J)(a|A)(p|P)(a|A)(n|N)(e|E)(s|S)(e|E)},final]%中日韩语目前都用english，
             \step[fieldset=langid,fieldvalue={english}]
+            \step[fieldset=lansortorder,fieldvalue=\lanjporder]
             }
         \map{%
             \step[fieldsource=language,match=\regexp{(k|K)(o|O)(r|R)(e|E)(a|A)(n|N)},final]%中日韩语目前都用english，
             \step[fieldset=langid,fieldvalue={english}]
+            \step[fieldset=lansortorder,fieldvalue=\lankrorder]
             }
 }
 }
@@ -1578,6 +1616,42 @@
     {\switchversion{3.0}{map}}%%当采用biblatex<=3.2版本时
     {\switchversion{3.4}{map}}%%当采用3.3<=biblatex版本时
 
+
+%
+%   不同语言分集调整的实现方式
+%
+%   原理方法:利用样式层的动态数据修改lansortorder域来实现排序
+\def\dealsortlan{
+  \DeclareStyleSourcemap{
+      \maps[datatype=bibtex]{
+      \map[overwrite]{%当文献给出language域时，设置文献要使用的本地化字符串的语言
+          \step[fieldsource=language,match=english,final]
+          \step[fieldset=lansortorder,fieldvalue=\lanenorder]
+          }
+      \map[overwrite]{
+          \step[fieldsource=language,match=russian,final]
+          \step[fieldset=lansortorder,fieldvalue=\lanruorder]
+          }
+      \map[overwrite]{%
+          \step[fieldsource=language,match=french,final]
+          \step[fieldset=lansortorder,fieldvalue=\lanfrorder]
+          }
+      \map[overwrite]{%
+          \step[fieldsource=language,match=chinese,final]%中日韩语目前都用english，
+          \step[fieldset=lansortorder,fieldvalue=\lancnorder]
+          }
+      \map[overwrite]{%
+          \step[fieldsource=language,match=japanese,final]%中日韩语目前都用english，
+          \step[fieldset=lansortorder,fieldvalue=\lanjporder]
+          }
+      \map[overwrite]{%
+          \step[fieldsource=language,match=korean,final]%中日韩语目前都用english，
+          \step[fieldset=lansortorder,fieldvalue=\lankrorder]
+          }
+      }
+  }
+}
+
 %
 %驱动别名等价于驱动层映射
 %
@@ -1595,7 +1669,274 @@
 \DeclareBibliographyAlias{map}{manual}
 \DeclareBibliographyAlias{archive}{manual}
 
+%=====================================================================
+%   设置排序格式
+%=====================================================================
+%
+%   排序格式，用降序，及userb域，针对biblatex3.7及以下版本
+%
+\defversion{3.7}{sort}{%这是3.4版的，3.7版略有差异，但不大，后面有注释
+    \DeclareSortingScheme{gb7714-2015}{
+      \sort{
+        \field{presort}
+      }
+      \sort[final]{
+        \field{sortkey}
+      }
+      \sort{
+    	\field{lansortorder}%language
+    	}
+      \sort{%[direction=descending]
+        \field{sortname}
+        \field{author}
+        \field{editor}
+        \field{translator}
+      }
+      \sort{
+        \field{sortyear}
+        \field{year}
+      }
+      \sort{
+        \field{sorttitle}
+        \field{title}
+      }
+      \sort{
+        \field[padside=left,padwidth=4,padchar=0]{volume}%3.7版是\field{volume}
+        \literal{0000}%3.7版是\literal{0}
+      }
+    }
 
+    %降序的nyt
+    \DeclareSortingScheme{gbnytd}{
+      \sort{
+        \field{presort}
+      }
+      \sort[final]{
+        \field{sortkey}
+      }
+      \sort{
+    	\field{lansortorder}%language
+    	}
+      \sort[direction=descending]{
+        \field{sortname}
+        \field{author}
+        \field{editor}
+        \field{translator}
+      }
+      \sort{
+        \field{sortyear}
+        \field{year}
+      }
+      \sort{
+        \field{sorttitle}
+        \field{title}
+      }
+      \sort{
+        \field[padside=left,padwidth=4,padchar=0]{volume}%3.7版是\field{volume}
+        \literal{0000}%3.7版是\literal{0}
+      }
+    }
+
+    %降序的ynt
+    \DeclareSortingScheme{gbyntd}{
+      \sort{
+        \field{presort}
+      }
+      \sort[final]{
+        \field{sortkey}
+      }
+      \sort{
+    	\field{lansortorder}%language
+    	}
+      \sort[direction=descending]{
+        \field{sortyear}
+        \field{year}
+      }
+      \sort{
+        \field{sortname}
+        \field{author}
+        \field{editor}
+        \field{translator}
+      }
+      \sort{
+        \field{sorttitle}
+        \field{title}
+      }
+      \sort{
+        \field[padside=left,padwidth=4,padchar=0]{volume}%3.7版是\field{volume}
+        \literal{0000}%3.7版是\literal{0}
+      }
+    }
+
+    %升序的ynt
+    \DeclareSortingScheme{gbynta}{
+      \sort{
+        \field{presort}
+      }
+      \sort[final]{
+        \field{sortkey}
+      }
+      \sort{
+    	\field{lansortorder}%language
+    	}
+      \sort{
+        \field{sortyear}
+        \field{year}
+      }
+      \sort{
+        \field{sortname}
+        \field{author}
+        \field{editor}
+        \field{translator}
+      }
+      \sort{
+        \field{sorttitle}
+        \field{title}
+      }
+      \sort{
+        \field[padside=left,padwidth=4,padchar=0]{volume}%3.7版是\field{volume}
+        \literal{0000}%3.7版是\literal{0}
+      }
+    }
+}
+
+
+%
+%   排序格式，用降序，及userb域，针对biblatex3.8及以上版本
+%
+\defversion{3.8}{sort}{
+    \DeclareSortingTemplate{gb7714-2015}{
+      \sort{
+        \field{presort}
+      }
+      \sort[final]{
+        \field{sortkey}
+      }
+      \sort{
+    	\field{lansortorder}%language
+    	}
+      \sort{%[direction=descending]
+        \field{sortname}
+        \field{author}
+        \field{editor}
+        \field{translator}
+      }
+      \sort{
+        \field{sortyear}
+        \field{year}
+      }
+      \sort{
+        \field{sorttitle}
+        \field{title}
+      }
+      \sort{
+        \field{volume}
+        \literal{0}
+      }
+    }
+
+    %降序的nyt
+    \DeclareSortingTemplate{gbnytd}{
+      \sort{
+        \field{presort}
+      }
+      \sort[final]{
+        \field{sortkey}
+      }
+      \sort{
+    	\field{lansortorder}%language
+    	}
+      \sort[direction=descending]{%
+        \field{sortname}
+        \field{author}
+        \field{editor}
+        \field{translator}
+      }
+      \sort{
+        \field{sortyear}
+        \field{year}
+      }
+      \sort{
+        \field{sorttitle}
+        \field{title}
+      }
+      \sort{
+        \field{volume}
+        \literal{0}
+      }
+    }
+
+    %降序的ynt
+    \DeclareSortingTemplate{gbyntd}{
+      \sort{
+        \field{presort}
+      }
+      \sort[final]{
+        \field{sortkey}
+      }
+      \sort{
+    	\field{lansortorder}%language
+    	}
+      \sort[direction=descending]{
+        \field{sortyear}
+        \field{year}
+      }
+      \sort{%
+        \field{sortname}
+        \field{author}
+        \field{editor}
+        \field{translator}
+      }
+      \sort{
+        \field{sorttitle}
+        \field{title}
+      }
+      \sort{
+        \field{volume}
+        \literal{0}
+      }
+    }
+
+    %升序的ynt
+    \DeclareSortingTemplate{gbynta}{
+      \sort{
+        \field{presort}
+      }
+      \sort[final]{
+        \field{sortkey}
+      }
+      \sort{
+    	\field{lansortorder}%language
+    	}
+      \sort{%[direction=ascending]
+        \field{sortyear}
+        \field{year}
+      }
+      \sort{%
+        \field{sortname}
+        \field{author}
+        \field{editor}
+        \field{translator}
+      }
+      \sort{
+        \field{sorttitle}
+        \field{title}
+      }
+      \sort{
+        \field{volume}
+        \literal{0}
+      }
+    }
+}
+
+
+\ifboolexpr{
+test {\iftoggle{iftlfive}}
+or
+test {\iftoggle{iftlsix}}
+or
+test {\iftoggle{iftlseven}}%biblatex<=3.7
+}{\switchversion{3.7}{sort}}{\switchversion{3.8}{sort}}%3.8<=biblatex
 
 %=====================================================================
 %   参考文献表环境

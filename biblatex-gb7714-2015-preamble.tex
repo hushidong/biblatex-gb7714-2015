@@ -13,8 +13,10 @@
 \setmonofont[Ligatures=TeX]{TeX Gyre Pagella}
 %\usepackage{unicode-math}
 %\setmathfont[math-style=ISO,bold-style=ISO]{TeX Gyre Pagella Math}
-\setCJKmainfont
-[BoldFont=SourceHanSansSC-Regular.otf, ItalicFont=simkai.ttf]{SourceHanSerifSC-Regular.otf}
+
+\setmainfont{CMU Serif}
+\IfFileExists{SourceHanSerifSC-Regular.otf}
+{\setCJKmainfont[BoldFont=SourceHanSansSC-Regular.otf, ItalicFont=simkai.ttf]{SourceHanSerifSC-Regular.otf}}{}
 
 \usepackage[dvipsnames]{xcolor}
 \colorlet{examplefill}{yellow!80!black}

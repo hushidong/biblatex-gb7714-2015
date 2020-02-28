@@ -1,7 +1,7 @@
 \documentclass[11pt]{article} %用draft选项找到badbox的位置 twoside,
 \input{biblatex-gb7714-2015-preamble} %宏包和一些格式设置
 \usepackage{microtype}
-\usepackage{babel}
+%\usepackage[russian,french,english]{babel}
 %\DefineHyphenationExceptions{english}{conf-erence}
 \begin{document}
 
@@ -1379,7 +1379,7 @@ sorting=gb7714-2015,gblanorder=chineseahead,sortlocale=zh__pinyin
 
 文献表中文献的排序通常是由处理bib文件的后端程序实施的，比如bibtex或biber程序。通常biblatex选择biber作为后端程序来实现更灵活的排序机制。biber在处理过程中读取bib文件信息并根据biblatex宏包和文献样式在bcf文件中输出设置信息执行排序。而bibtex程序则在读取bib文件后根据bst样式进行排序，尽管可以让bibtex读入特殊格式bib文件来提供一些设置参数，但总的来说基于bibtex的文献排序是由bst样式决定的。而biber程序则是提供了一套工具，具体的排序方式是由biblatex宏包和样式文件中的设置决定的，biber根据这些设置执行特定的逻辑来实现排序。
 
-biblatex通过sorting选项选择排序模板来进行排序，而排序模板是可以自定义的。
+biblatex通过sorting选项选择排序模板来进行排序，而排序模板是可以自定义的。gb7714-2015及
 gb7714-2015ay样式提供了gblanorder选项来选择文种的排列顺序，其本质是对排序模板中与语言相关的域进行设置，因此它是与sorting选项选择的排序模板密切相关的，biblatex提供的标准样式排序模板并不支持该选项。
 而sortlocale选项则是针对字符排序选择本地化调整方案，比如选项zh\_\_pinyin就是选择针对中文字符根据拼音进行排序。本地化调整方案是由perl模块提供，中文字符排序的可用选项值详见前面的sortlocale选项说明。需要注意的是本地化字符排序调整方案设置也可以通过biber命令行选项提供，biblatex设置和biber命令行设置两种方式见例\ref{eg:sort:opts}、例\ref{eg:sort:bibercmd}。
 
@@ -1420,7 +1420,7 @@ biber -l zh__stroke jobname
   \item[none]  不进行排序。所有的条目按照引用顺序处理。
 \end{description}
 
-而gb7741-2015ay样式提供了4个排序模板:
+而gb7741-2015和gb7741-2015ay样式提供了4个排序模板:
 
 \begin{description}
   \item[gb7714-2015]  以语言、作者、年份、标题、升序排列
@@ -1429,7 +1429,7 @@ biber -l zh__stroke jobname
   \item[gbyntd]  以语言、年份、作者、标题、降序排列
 \end{description}
 
-在使用gb7714-2015ay样式时可以使用上述排序模板。用户也可以增加自定义模板，比如为了处理多音字的问题，用户可以手动设置key域用来对中文文献进行排序，定义如下的排序模板:
+在使用gb7714-2015和gb7714-2015ay样式时可以使用上述排序模板。用户也可以增加自定义模板，比如为了处理多音字的问题，用户可以手动设置key域用来对中文文献进行排序，定义如下的排序模板:
 
 \begin{example}{针对多音字问题的排序模板}{eg:sort:multipinyin}
 \begin{texlist}

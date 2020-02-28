@@ -24,8 +24,24 @@
   headsep    = 0.24cm,
   footskip   = 0.79cm,
 }
-\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}%标注(引用)样式citestyle，著录样式bibstyle都采用gb7714-2015样式
-
+\usepackage[backend=biber,style=gb7714-2015mx]{biblatex}%标注(引用)样式citestyle，著录样式bibstyle都采用gb7714-2015样式
+\makeatletter
+\renewbibmacro*{cite:dump}{%
+  \ifnumgreater{\value{cbx@tempcnta}}{0}%
+    {\ifnumgreater{\value{cbx@tempcnta}}{0}%1改为0，可以将压缩起始3个编号改为2个编号
+       {\bibrangedash}%
+       {\multicitedelim}%
+     \bibhyperref[\cbx@lastkey]{%
+       \ifdef\cbx@lastprefix
+         {\printtext[labelprefix]{\cbx@lastprefix}}%
+         {}%
+       \printtext[labelnumber]{\cbx@lastnumber}}}%
+    {}%
+  \setcounter{cbx@tempcnta}{0}%
+  \global\undef\cbx@lastprefix}
+\makeatother
+%第二个refsection使用author-year样式
+\setaystylesection{2}
 
 \usepackage{filecontents}
 \begin{filecontents}{\jobname.bib}
@@ -223,47 +239,65 @@
     %
 \def\cs#1{\textbackslash\texttt{#1}}
     \begin{document}
-%    \section*{USTC-顺序编码制}
-%
-%模板使用 \texttt{natbib} 宏包来设置参考文献引用的格式，
-%更多引用方法可以参考该宏包的使用说明。
-%
-%\subsection{角标数字标注法}
-%
-%\noindent
-%\begin{tabular}{l@{\quad$\Rightarrow$\quad}l}
-%  \verb|\cite{knuth86a}|         & \cite{knuth86a}         \\
-%  \verb|\authornumcite{knuth86a}|        & \authornumcite{knuth86a}        \\
-%  \verb|\cite[42]{knuth86a}|     & \cite[42]{knuth86a}     \\
-%  \verb|\cite{knuth86a,tlc2}|    & \cite{knuth86a,tlc2}    \\
-%  \verb|\cite{knuth86a,knuth84}| & \cite{knuth86a,knuth84} \\
-%\end{tabular}
-%
-%
-%\subsection{数字标注法}
-%
-%\noindent
-%\begin{tabular}{l@{\quad$\Rightarrow$\quad}l}
-%  \verb|\parencite{knuth86a}|         & \parencite{knuth86a}         \\
-%  \verb|\textcite{knuth86a}|        & \textcite{knuth86a}        \\
-%  \verb|\parencite[42]{knuth86a}|     & \parencite[42]{knuth86a}     \\
-%  \verb|\parencite{knuth86a,tlc2}|    & \parencite{knuth86a,tlc2}    \\
-%  \verb|\parencite{knuth86a,knuth84}| & \parencite{knuth86a,knuth84} \\
-%\end{tabular}
+\begin{refsection}
+	
+    \section*{USTC-顺序编码制}
+\stepcounter{section}
+模板使用 \texttt{biblatex} 宏包来设置参考文献引用的格式，
+更多引用方法可以参考该宏包的使用说明。
+
+\subsection{角标数字标注法}
+
+\noindent
+\begin{tabular}{l@{\quad$\Rightarrow$\quad}l}
+  \verb|\cite{knuth86a}|         & \cite{knuth86a}         \\
+  \verb|\authornumcite{knuth86a}|        & \authornumcite{knuth86a}        \\
+  \verb|\cite[42]{knuth86a}|     & \cite[42]{knuth86a}     \\
+  \verb|\cite{knuth86a,tlc2}|    & \cite{knuth86a,tlc2}    \\
+  \verb|\cite{knuth86a,knuth84}| & \cite{knuth86a,knuth84} \\
+  \verb|\parencite{knuth86a}|         & \parencite{knuth86a}         \\
+  \verb|\textcite{knuth86a}|        & \textcite{knuth86a}        \\
+  \verb|\parencite[42]{knuth86a}|     & \parencite[42]{knuth86a}     \\
+  \verb|\parencite{knuth86a,tlc2}|    & \parencite{knuth86a,tlc2}    \\
+  \verb|\parencite{knuth86a,knuth84}| & \parencite{knuth86a,knuth84} \\
+\end{tabular}
+
+
+\subsection{数字标注法}
+
+\noindent
+\begin{tabular}{l@{\quad$\Rightarrow$\quad}l}
+  \verb|\parencite{knuth86a}|         & \parencite{knuth86a}         \\
+  \verb|\textcite{knuth86a}|        & \textcite{knuth86a}        \\
+  \verb|\parencite[42]{knuth86a}|     & \parencite[42]{knuth86a}     \\
+  \verb|\parencite{knuth86a,tlc2}|    & \parencite{knuth86a,tlc2}    \\
+  \verb|\parencite{knuth86a,knuth84}| & \parencite{knuth86a,knuth84} \\
+\end{tabular}
+
+
+\vskip 2ex
+注意，参考文献列表中的每条文献在正文中都要被引用
+\cite{slg,lyc,ljs,cgw,cjb,kqy,yhs,yx,dwx,jxz,wjk,syw,wf,xd,twh,huston}。
+
+    \printbibliography
+\end{refsection}
+
+
+
+\begin{refsection}
 
 
 
 \section{USTC-著者-出版年制标注法}
 
-%\citestyle{authoryear}
+
 \noindent
 \begin{tabular}{l@{\quad$\Rightarrow$\quad}l}
-  \verb|\textcite{knuth86a}|         & \textcite{knuth86a}         \\
-  \verb|\cite{knuth86a}|        & \cite{knuth86a}        \\
+  \verb|\cite{knuth86a}|         & \cite{knuth86a}         \\
+  \verb|\citep{knuth86a}|        & \citep{knuth86a}        \\
   \verb|\cite[42]{knuth86a}|     & \cite[42]{knuth86a}     \\
   \verb|\cite{knuth86a,tlc2}|    & \cite{knuth86a,tlc2}    \\
   \verb|\cite{knuth86a,knuth84}| & \cite{knuth86a,knuth84} \\
-  \verb|\textcite{knuth86a,knuth84}| & \textcite{knuth86a,knuth84} \\
 \end{tabular}
 
 \vskip 2ex
@@ -271,5 +305,7 @@
 \cite{slg,lyc,ljs,cgw,cjb,kqy,yhs,yx,dwx,jxz,wjk,syw,wf,xd,twh,huston}。
 
     \printbibliography
+	
+\end{refsection}
 
     \end{document} 

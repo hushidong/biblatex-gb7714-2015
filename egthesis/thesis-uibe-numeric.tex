@@ -1,0 +1,189 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015ms样式，实现一种对外经贸大学文献表格式
+% 仅实现了article类型的设计。
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{xcolor}
+\usepackage[colorlinks]{hyperref}
+\usepackage[paperwidth=21cm,paperheight=29cm,top=1cm,bottom=1cm,left=1cm,right=1cm]{geometry}
+\usepackage{xltxtra,mflogo,texnames}
+\usepackage[backend=biber,style=gb7714-2015ms,gbstyle=false,gbnamefmt=familyahead]{biblatex}%sorting=nyt
+
+\makeatletter
+%%全局标点设置
+\DeclareDelimFormat{nameyeardelim}{，}%\addcomma\addspace
+\DeclareDelimFormat[bib,biblist]{nameyeardelim}{，}%\addcomma\addspace
+\DeclareDelimFormat{bibpagespunct}{\iffieldequalstr{userd}{chinese}{，}{，}}%\addcomma\addspace
+\renewcommand*{\newunitpunct}{，}%\addcomma\space %，
+\renewcommand*{\finentrypunct}{\iffieldequalstr{userd}{chinese}{。}{\adddot}}
+\DeclareDelimFormat{multinamedelim}{，}%[bib,biblist]
+\DeclareDelimFormat{finalnamedelim}{，}
+\DeclareDelimFormat{andothersdelim}{，}
+
+%%本地化字符串设置
+\def\str@qicn{期}
+\NewBibliographyString{qicn}
+\DefineBibliographyStrings{english}{
+        and         = {，},%将第2和3人名间的and符号改成逗号，
+        andcn       = {，},%and本地化字符串的中文对应词
+        qicn ={\str@qicn},
+        in={},
+}
+
+%%英文文献的相关设置
+\renewbibmacro*{in:}{%
+  \printtext{%
+    \bibstring{in}}}%\intitlepunct
+
+\newbibmacro*{journal+issuetitle}{%
+  \usebibmacro{journal}%
+  \setunit*{\addspace}%
+  \iffieldundef{series}
+    {}
+    {\newunit
+     \printfield{series}%
+     \setunit{\addspace}}%
+  \usebibmacro{volume+number+eid}%
+%  \setunit{\addspace}%
+%  \usebibmacro{issue+date}%
+%  \setunit{\addcolon\space}%
+%  \usebibmacro{issue}%
+  \newunit}
+
+\renewbibmacro*{issue+date}{%
+  \printtext{%
+    \printfield{issue}%
+    \setunit*{\addspace}%
+    \usebibmacro{date}}%
+  \newunit}
+
+\DeclareBibliographyDriver{article}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\printdelim{nametitledelim}}\newblock
+  \usebibmacro{title}%
+  \newunit
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{bytranslator+others}%
+  \newunit\newblock
+  \printfield{version}%
+  \newunit\newblock
+  \usebibmacro{in:}%
+  \usebibmacro{journal+issuetitle}%
+  \newunit
+  \usebibmacro{byeditor+others}%
+  \newunit
+  \usebibmacro{note+pages}%
+  \newunit\newblock
+  \usebibmacro{issue+date}%
+  \iftoggle{bbx:isbn}
+    {\printfield{issn}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
+
+%%中文文献的相关设置
+\AtEveryBibitem{
+\ifboolexpr{%
+togl{bbx:gbstyle} or test {\iffieldequalstr{userd}{chinese}}%
+}%
+{%
+\DeclareFieldFormat[article]{title}{#1}
+%
+%   调整期刊名的格式
+%
+%   v1.0k,20180425,增加了字体控制命令，hzz
+\renewbibmacro*{journal+issuetitle}{\bibpubfont%源来自standard.bbx
+  \usebibmacro{journal}%
+  \setunit*{，}%修改为增加一个逗号
+  \usebibmacro{issue+date}%
+  \usebibmacro{volume+number+eid}%把卷期放到年份后面
+  %\newunit
+  }%
+%
+%   调整期刊卷和期的格式
+%
+\renewbibmacro*{volume+number+eid}{%源来自standard.bbx
+\bibstring{serialcn}%
+  \printfield{number}%
+  \bibstring{qicn}%
+}%
+\DeclareDelimFormat[bib,biblist]{multinamedelim}{，}
+\DeclareDelimFormat[bib,biblist]{finalnamedelim}{，}
+\DeclareDelimFormat[bib,biblist]{andothersdelim}{，}
+}{}
+}%
+
+
+\makeatother
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+@ARTICLE{熊平2005--,
+  author       = {熊平 and 吴颉},
+  title        = {从交易费用的角度谈如何构建药品流通的良性机制},
+  Journaltitle = {中国物价},
+  DATE         = {2005},
+  number       = {8},
+  pages        = {42-45},
+}
+
+@ARTICLE{xiong2005--,
+  author       = {Xiong, Ping and Wu, Xie},
+  title        = {Discussion on how to construct benign medicine circulantion mechanism fromtranaction cosperspective},
+  Journaltitle = {China price},
+  DATE         = {2005},
+  number       = {8},
+  pages        = {42-45},
+}
+
+@Article{Dowler1995-5-26,
+  author  = {Dowler, L},
+  title   = {The research university’s dilemma: resource sharing and research in a transinstitutional environment},
+  journal = {Journal of library administration},
+  year    = {1995},
+  volume  = {21},
+  number  = {1/2},
+  pages   = {5--26},
+}
+
+@Article{王临慧2010-147,
+  author  = {王临慧 and others},
+  title   = {天津方言的源流关系刍议},
+  journal = {山西师范大学学报(社会科学版)},
+  year    = {2010},
+  volume  = {37},
+  number  = {4},
+  pages   = {147},
+}
+
+\end{filecontents}
+
+\addbibresource{\jobname.bib}
+
+
+
+\begin{document}
+
+\section{对外经贸大学硕士论文参考文献示例-期刊文献}
+
+\nocite{*}
+\printbibliography[heading=subbibliography,title={参考文献}]
+
+\end{document}

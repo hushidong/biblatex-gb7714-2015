@@ -33,6 +33,25 @@ xelatex.exe --synctex=-1 !jobfile!
 setlocal DISABLEDELAYEDEXPANSION
 
 
+set bv="false"
+biber --version | findstr "2.13" && set bv="true"
+biber --version | findstr "2.14" && set bv="true"
+echo %bv%
+
+if %bv% == "true" (
+xelatex.exe -no-pdf tngbcitationaynew.tex
+biber tngbcitationaynew
+xelatex.exe -no-pdf tngbcitationaynew.tex
+xelatex.exe --synctex=-1 tngbcitationaynew.tex
+) else (
+xelatex.exe -no-pdf tngbcitationay.tex
+biber tngbcitationay
+xelatex.exe -no-pdf tngbcitationay.tex
+xelatex.exe --synctex=-1 tngbcitationay.tex
+)
+
+
+
 
 call makeclear
 

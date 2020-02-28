@@ -1,10 +1,10 @@
 % !Mode:: "TeX:UTF-8"
 % 用于测试gb7714-2015样式，是否支持多语言混合的文献表
 % 测试不使用利用babel进行本地化字符串自动切换的情况
-% 测试不使用biblatex的autolang选项。
+% 测试多语言排序。
 \documentclass[twoside]{article}
 \usepackage{ctex}
-%\usepackage[english,russian,french]{babel}
+\usepackage[english,russian,french]{babel}
 \usepackage{fontspec}
 \setmainfont{CMU Serif}
     \IfFileExists{SourceHanSerifSC-Regular.otf}
@@ -15,7 +15,7 @@
 \usepackage{lipsum}
 \usepackage[top=10pt,bottom=10pt,left=1cm,right=1cm]{geometry}
 %,autolang=other
-\usepackage[backend=biber,style=gb7714-2015,gbpub=false]{biblatex}
+\usepackage[backend=biber,style=gb7714-2015,sorting=gb7714-2015,gblanorder=englishahead,gbpub=false,autolang=other]{biblatex}
 
 \usepackage{filecontents}
 \begin{filecontents}{\jobname.bib}
@@ -137,7 +137,7 @@
     %
 
     \begin{document}
-    \section{测试gb7714-2015样式多语言混合文献表：不使用babel}
+    \section{测试gb7714-2015样式多语言混合文献表及其排序}
     created with biblatex v\versionofbiblatex, last revised at 2019-01-19;\\ \hspace*{1.5em} Style Files (gb7714-2015*.*) have version number: \versionofgbtstyle.
 
 	\nocite{*}

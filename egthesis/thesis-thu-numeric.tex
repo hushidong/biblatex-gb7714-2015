@@ -8,7 +8,9 @@
     \usepackage{ctex}%[zihao=-4]
     \usepackage{fontspec}
 \setmainfont{CMU Serif}
-\setCJKmainfont {SourceHanSerifSC-Regular.otf}
+    \IfFileExists{SourceHanSerifSC-Regular.otf}
+    {\setCJKmainfont{SourceHanSerifSC-Regular.otf}}{}
+    %\IfFontExistsTF{⟨font name⟩}{⟨true branch⟩}{⟨false branch⟩}
     \usepackage{xcolor}
     \usepackage{toolbox}
     \usepackage[colorlinks,citecolor=blue]{hyperref}
