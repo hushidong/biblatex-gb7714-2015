@@ -1212,9 +1212,9 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 用法具体见例\ref{eg:biblist:fontset}，结果如图\ref{fig:par:fmt}所示。
 测试用例见\href{run:example/testfontinbiblio.tex}{testfontinbiblio.tex}。
 
-\begin{example}{文献表段落格式、字体、颜色、间距控制}{eg:biblist:fontset}
+\begin{example}{文献表段落格式、字体、颜色}{eg:biblist:fontset}
 \begin{texlist}
-% 换行的控制
+% 文献项之间的间隔符控制（比如是否换行）
     % 选项 block=none , space , par , nbpar , ragged
     % 或\renewcommand*{\newblockpunct}{\par\nobreak}
 % 字体的控制：\textit，sl，emph-楷体，\textbf，sf-黑体，\texttt-仿宋，\textsc，md，up-宋体
@@ -1226,14 +1226,6 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \renewcommand{\bibpubfont}{\itshape\color{violet}}%
     % url和doi字体
 \def\UrlFont{\ttfamily} %\urlstyle{sf} %\def\UrlFont{\bfseries}
-
-% 间距的控制
-\setlength{\bibitemsep}{0ex}\setlength{\bibnamesep}{0ex}\setlength{\bibinitsep}{0ex}
-% 文献表中各条文献的缩进控制
-%\setlength{\bibitemindent}{0em} % bibitemindent表示一条文献中第一行相对后面各行的缩进
-%\setlength{\bibhang}{0pt} % 著者-出版年制中 bibhang 表示的各行起始位置到页边的距离，顺序编码制中 bibhang+labelnumberwidth 表示各行起始位置到页边的距离
-
-% 标点类型的控制（全局字体能控制标点的字体）
 \end{texlist}
 \end{example}
 
@@ -1247,6 +1239,105 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{tcolorbox}
 \caption{文献表段落格式示例}\label{fig:par:fmt}
 \end{figure}
+
+文献表各条目之间的竖直间距控制如例\ref{eg:biblist:vspace}所示：
+
+\begin{example}{文献表竖直间距控制}{eg:biblist:vspace}
+\begin{texlist}
+% 竖直间距的控制
+\setlength{\bibitemsep}{0ex}
+\setlength{\bibnamesep}{0ex}
+\setlength{\bibinitsep}{0ex}
+\end{texlist}
+\end{example}
+
+文献表的水平缩进控制，两种编制方式下是不同的。对于著者-出版年制文献表，bibitemindent表示一条文献中第一行相对后面各行的缩进，bibhang 表示页边到文献各行起始位置的距离。因此要调整缩进就是要设置这两尺寸。
+
+对于顺序编码制文献表，由于存在数字标签，且其宽度与参考文献数量相关，所以这个宽度是动态变的，无能提前设定的，而是在文献表生成时给出，所以调整缩进需要在文献表输出环境中调整。由于顺序编码样式使用了两类输出环境，所以需要根据设定的选项区分处理：
+
+一是采用list环境的文献表，即设置gbalign=left、right、center时（即顺序编码标签是左对齐、右对齐和居中对齐的情况），在重定义的文献表环境中，调整bibitemindent和bibhang两个尺寸，默认情况下bibhang+labelnumberwidth的长度是页边到各行起始位置的距离。
+
+二是采用正常段落环境的文献表，即设置gbalign=gb7714-2015时（即项对齐情况，就是各条文献是自身对齐的情况），在重定义的命令中通过调整lengthid尺寸来设置每条参考文献第二行开始的缩进距离。
+调整方法见例\ref{eg:biblist:hspace}。
+
+\begin{example}{文献表水平缩进控制}{eg:biblist:hspace}
+\begin{texlist}
+% 著者-出版年制文献表缩进控制
+\setlength{\bibitemindent}{0em} % bibitemindent表示一条文献中第一行相对后面各行的缩进
+\setlength{\bibhang}{0pt} % 著者-出版年制中 bibhang 表示的各行起始位置到页边的距离
+
+% 顺序编码制文献表缩进控制
+% 调整顺序标签与文献内容的间距
+\setlength{\biblabelsep}{2mm}
+
+% 调整各条文献的缩进：
+%-1-----gbalign=left、right、center时，重定义 bibenvironment
+\defbibenvironment{bibliography}%修改对齐环境-调整缩进
+  {\list
+     {\printtext[labelnumberwidth]{%
+        \printfield{labelprefix}%
+        \printfield{labelnumber}}}
+{%
+%这里是所做的调整，通过设置\bibitemindent，\bibhang调整缩进
+\addtolength{\bibitemindent}{\labelnumberwidth}%
+\addtolength{\bibitemindent}{\biblabelsep}%
+\addtolength{\bibhang}{-\labelnumberwidth} %
+\addtolength{\bibhang}{-\biblabelsep}%
+    %
+    %以下是默认的设置
+     \setlength{\labelwidth}{\labelnumberwidth}%
+      \setlength{\labelsep}{\biblabelsep}%
+      \setlength{\leftmargin}{\bibhang}%
+      \addtolength{\leftmargin}{\labelnumberwidth}%
+      \setlength{\itemindent}{\bibitemindent}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}}%
+      \renewcommand*{\makelabel}[1]{\hss##1}}
+  {\endlist}
+  {\item}
+
+%-2-----gbalign=gb7714-2015时，重定义 \itemcmd命令
+\renewcommand{\itemcmd}{%%修改对齐环境-调整缩进
+\settowidth{\lengthid}{\mkgbnumlabel{\printfield{labelnumber}}}
+%
+%%这里是所做的调整，以下两句通过调整\lengthid来调整缩进
+\setlength{\lengthid}{0pt}
+\addtolength{\lengthid}{-\biblabelsep}
+%
+%如下是默认设置
+\addtolength{\lengthid}{\biblabelsep}
+\setlength{\lengthlw}{\textwidth}
+\addtolength{\lengthlw}{-\lengthid}
+\addvspace{\bibitemsep}%恢复\bibitemsep的作用
+%\parshape 2 0em \textwidth \lengthid \lengthlw
+\hangindent\lengthid
+\mkgbnumlabel{\printfield{labelnumber}}%
+\hspace{\biblabelsep}}
+\end{texlist}
+\end{example}
+
+文献表中有时需要调整标点为中文的全角标点，可以通过不同机制下的标点设置来调整。
+调整方式如例\ref{eg:biblist:separator}所示。有时在本地化字符串中也可以实现标点调整，比如and，in等本地化字符串。有时在域格式中也可能出现标点调整，比如title域格式。而且因为不同语言的处理，可能内部也存在标点的调整。具体情况是比较复杂的，这里不再一一列举，一些修改示例可以参考：
+\href{run:./chinese-erj.bbx}{chinese-erj.bbx}，
+\href{run:./egthesis/thesis-uibe-numeric.tex}{thesis-uibe-numeric.tex}。具体的标点命令的意义详见biblatex手册。
+
+\begin{example}{文献表常见标点控制}{eg:biblist:separator}
+\begin{texlist}
+% 标点类型的控制（注意：全局字体能控制标点的字体）
+
+%文献表各条文献中各单元间隔标点设置（与异步标点机制相关的）
+\renewcommand*{\newunitpunct}{，}%\addcomma\space %，
+\renewcommand*{\finentrypunct}{\iffieldequalstr{userd}{chinese}{。}{\adddot}}
+
+%姓名格式相关的标点
+\DeclareDelimFormat{nameyeardelim}{，}%\addcomma\addspace
+%\DeclareDelimFormat[bib,biblist]{nameyeardelim}{，}%\addcomma\addspace
+\DeclareDelimFormat{multinamedelim}{，}%[bib,biblist]
+\DeclareDelimFormat{finalnamedelim}{，}
+\DeclareDelimFormat{andothersdelim}{，}
+\renewcommand*{\revsdnamepunct}{，}%
+\end{texlist}
+\end{example}
 
 \subsubsection{条目著录格式控制}\label{sec:entry:fmt}
 
