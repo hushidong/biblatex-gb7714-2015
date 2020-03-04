@@ -1,4 +1,4 @@
-<b>Date of last change: 2019-08-28 to version v1.0s</b>
+<b>Date of last change: 2020-03-04 to version v1.0t</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -1160,6 +1160,8 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * 2019/03/28 v1.0r
 * 2019/03/29 v1.0rm,rename erj to chinese-erj,ctan
 * 2019/08/28 v1.0s
+* 2020/03/04 v1.0t,ctan
+
 
 ---------------------------------------------------------
 ## Update history:
