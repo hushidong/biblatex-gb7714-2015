@@ -1,6 +1,19 @@
 
 %更新历史仅给出更新针对的问题，相应的处理代码和解释不在此给出，详见提示对应的说明文档内容
 
+
+\begin{enumerate}
+
+\item 调整排序模板使得key域能够兼容拼音，因为在中文环境中key域其实没有更多的作用。（20200312）
+
+redefine sorting template for the Pinyin compatibility in key field, because the key field has no more functions in Chinese environment.
+
+\item 调整语言判断逻辑，避免出现中日文字符混合的日文文献判断成中文的错误。（20200312）
+
+adjust the logic of language judgement，to avoid the error that the Japanese reference with mixed characters of Japanese and Chinese to be judged as Chinese.
+
+\end{enumerate}
+
 %============================
 \updateinfo[2020-03-04]{date of update: 2020-03-04 to version v1.0t}\label{up:2020304}
 

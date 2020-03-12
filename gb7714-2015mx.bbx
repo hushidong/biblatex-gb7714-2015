@@ -964,10 +964,6 @@
             \step[fieldsource=entrykey]
             \step[fieldset=keywords, origfieldval]
             }
-        \map{%文献题名的中文判断，将信息保存到userd中，避免因为标签生成原因导致title域被清除而产生问题
-            \step[fieldsource=title, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]%
-            \step[fieldset=userd, fieldvalue={chinese}]
-            }
         \map{\step[fieldsource=title,match=\regexp{[\x{0100}-\x{017F}]},final]%\x80-\xFF
             \step[fieldset=userd,fieldvalue={french}]%法语,0080开始到00ff的字符没法匹配有点奇怪
             }
@@ -983,13 +979,13 @@
             \step[fieldsource=title,match=\regexp{[\x{1100}-\x{11FF}\x{3130}-\x{318F}\x{AC00}-\x{D7AF}]},final]
             \step[fieldset=userd,fieldvalue={korean}]%韩语
             }
+        \map{%文献题名的中文判断，将信息保存到userd中，避免因为标签生成原因导致title域被清除而产生问题
+            \step[fieldsource=title, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]%
+            \step[fieldset=userd, fieldvalue={chinese}]
+            }
         \map{%将没有设置userd，且存在title域的默认设置为英文
             \step[fieldsource=title,final]
             \step[fieldset=userd,fieldvalue={english}]
-            }
-       \map{%作者的中文判断
-	        \step[fieldsource=author, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
-            \step[fieldset=userf, fieldvalue={chinese}]
             }
        \map{\step[fieldsource=author,match=\regexp{[\x{0100}-\x{017F}]},final]%\x80-\xFF
             \step[fieldset=userf,fieldvalue={french}]%法语,0080开始到00ff的字符没法匹配有点奇怪
@@ -1006,13 +1002,13 @@
             \step[fieldsource=author,match=\regexp{[\x{1100}-\x{11FF}\x{3130}-\x{318F}\x{AC00}-\x{D7AF}]},final]
             \step[fieldset=userf,fieldvalue={korean}]%韩语
             }
+       \map{%作者的中文判断
+	        \step[fieldsource=author, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
+            \step[fieldset=userf, fieldvalue={chinese}]
+            }
         \map{%将没有设置userf，且存在author域的默认设置为英文
             \step[fieldsource=author,final]
             \step[fieldset=userf,fieldvalue={english}]
-            }
-	   \map{%译者的中文判断
-            \step[fieldsource=translator, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
-            \step[fieldset=usere, fieldvalue={chinese}]
             }
        \map{\step[fieldsource=translator,match=\regexp{[\x{0100}-\x{017F}]},final]%\x80-\xFF
             \step[fieldset=usere,fieldvalue={french}]%法语,0080开始到00ff的字符没法匹配有点奇怪
@@ -1029,13 +1025,13 @@
             \step[fieldsource=translator,match=\regexp{[\x{1100}-\x{11FF}\x{3130}-\x{318F}\x{AC00}-\x{D7AF}]},final]
             \step[fieldset=usere,fieldvalue={korean}]%韩语
             }
+	   \map{%译者的中文判断
+            \step[fieldsource=translator, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]
+            \step[fieldset=usere, fieldvalue={chinese}]
+            }
         \map{%将没有设置usere，且存在translator域的默认设置为英文
             \step[fieldsource=translator,final]
             \step[fieldset=usere,fieldvalue={english}]
-            }
-       \map{%编者的中文判断
-	        \step[fieldsource=editor, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]%直接匹配cjk字符，unicode编码位置从2FF0到9FA5
-            \step[fieldset=userc, fieldvalue={chinese}]
             }
        \map{\step[fieldsource=editor,match=\regexp{[\x{0100}-\x{017F}]},final]%\x80-\xFF
             \step[fieldset=userc,fieldvalue={french}]%法语,0080开始到00ff的字符没法匹配有点奇怪
@@ -1052,13 +1048,13 @@
             \step[fieldsource=editor,match=\regexp{[\x{1100}-\x{11FF}\x{3130}-\x{318F}\x{AC00}-\x{D7AF}]},final]
             \step[fieldset=userc,fieldvalue={korean}]%韩语
             }
+       \map{%编者的中文判断
+	        \step[fieldsource=editor, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]%直接匹配cjk字符，unicode编码位置从2FF0到9FA5
+            \step[fieldset=userc, fieldvalue={chinese}]
+            }
         \map{%将没有设置userc，且存在editor域的默认设置为英文
             \step[fieldsource=editor,final]
             \step[fieldset=userc,fieldvalue={english}]
-            }
-        \map{%编者的中文判断
-	        \step[fieldsource=bookauthor, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]%直接匹配cjk字符，unicode编码位置从2FF0到9FA5
-            \step[fieldset=userb, fieldvalue={chinese}]
             }
        \map{\step[fieldsource=bookauthor,match=\regexp{[\x{0100}-\x{017F}]},final]%\x80-\xFF
             \step[fieldset=userb,fieldvalue={french}]%法语,0080开始到00ff的字符没法匹配有点奇怪
@@ -1074,6 +1070,10 @@
         \map{%
             \step[fieldsource=bookauthor,match=\regexp{[\x{1100}-\x{11FF}\x{3130}-\x{318F}\x{AC00}-\x{D7AF}]},final]
             \step[fieldset=userb,fieldvalue={korean}]%韩语
+            }
+        \map{%编者的中文判断
+	        \step[fieldsource=bookauthor, match=\regexp{[\x{2FF0}-\x{9FA5}]},final]%直接匹配cjk字符，unicode编码位置从2FF0到9FA5
+            \step[fieldset=userb, fieldvalue={chinese}]
             }
         \map{%将没有设置userc，且存在editor域的默认设置为英文
             \step[fieldsource=bookauthor,final]
@@ -1346,23 +1346,24 @@
 %
 %   排序格式，用降序，及userb域，针对biblatex3.8及以上版本
 %
-    \DeclareSortingTemplate{gb7714-2015}{
+\DeclareSortingTemplate{gb7714-2015}{
       \sort{
         \field{presort}
       }
-      \sort[final]{
-        \field{sortkey}
-      }
+      %\sort[final]{
+        %\field{sortkey}
+      %}
       \sort{
     	\field{lansortorder}%language
     	}
+      \sort{
+        \field{sortkey}
+      }
       \sort{%[direction=descending]
         \field{sortname}
         \field{author}
         \field{editor}
         \field{translator}
-        \field{sorttitle}
-        \field{title}
       }
       \sort{
         \field{sortyear}
@@ -1383,19 +1384,20 @@
       \sort{
         \field{presort}
       }
-      \sort[final]{
-        \field{sortkey}
-      }
+%      \sort[final]{
+%        \field{sortkey}
+%      }
       \sort{
     	\field{lansortorder}%language
     	}
+      \sort[direction=descending]{
+        \field{sortkey}
+      }
       \sort[direction=descending]{%
         \field{sortname}
         \field{author}
         \field{editor}
         \field{translator}
-        \field{sorttitle}
-        \field{title}
       }
       \sort{
         \field{sortyear}
@@ -1416,9 +1418,9 @@
       \sort{
         \field{presort}
       }
-      \sort[final]{
-        \field{sortkey}
-      }
+%      \sort[final]{
+%        \field{sortkey}
+%      }
       \sort{
     	\field{lansortorder}%language
     	}
@@ -1426,13 +1428,14 @@
         \field{sortyear}
         \field{year}
       }
+      \sort{
+        \field{sortkey}
+      }
       \sort{%
         \field{sortname}
         \field{author}
         \field{editor}
         \field{translator}
-        \field{sorttitle}
-        \field{title}
       }
       \sort{
         \field{sorttitle}
@@ -1449,9 +1452,9 @@
       \sort{
         \field{presort}
       }
-      \sort[final]{
-        \field{sortkey}
-      }
+%      \sort[final]{
+%        \field{sortkey}
+%      }
       \sort{
     	\field{lansortorder}%language
     	}
@@ -1459,13 +1462,14 @@
         \field{sortyear}
         \field{year}
       }
+      \sort{
+        \field{sortkey}
+      }
       \sort{%
         \field{sortname}
         \field{author}
         \field{editor}
         \field{translator}
-        \field{sorttitle}
-        \field{title}
       }
       \sort{
         \field{sorttitle}
