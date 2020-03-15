@@ -2383,7 +2383,8 @@ incollection,proceedings,inproceedings]{number}{%
   \usebibmacro{note+pages}%
   \iffieldequalstr{note}{news}{}{%当是新闻时不输出修改或更新日期
   \iffieldundef{url}{}{%当没有网址时也不输出
-  \usebibmacro{modifydate}}}%带括号的修改或更新日期，
+  \iftoggle{bbx:url}{%当url选项为false时，也不输出
+  \usebibmacro{modifydate}}{}}}%带括号的修改或更新日期，
   \usebibmacro{doi+eprint+url}%从后面移上来，调整url和页码之间的位置
   \newunit\newblock
   \iftoggle{bbx:isbn}
