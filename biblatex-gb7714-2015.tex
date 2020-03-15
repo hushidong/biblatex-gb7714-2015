@@ -1590,7 +1590,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 对于西方语言， biblatex基于 babel/polyglossia宏包，结合autolang/language等选项和langid/langidopt等域，提供了一套多语言解决方案。
 
 \begin{itemize}
-\item 首先，对不同语言的文献，设置langid域为文献所用语言，比如英文文献则设置langid域等于english，俄文文献则设置等于rassian。
+\item 首先，对不同语言的文献，设置langid域为文献所用语言，比如英文文献则设置langid域等于english，俄文文献则设置等于russian。
 
 \item 其次，在biblatex加载时设置 autolang选项，等于none则不做多语言处理，等于hyphen则仅做不同语言的断词处理，等于other或other*则处理不同语言的断词和本地化字符串，other*选项等价于使用babel的otherlanguage*环境，与other的差别在于不忽略环境后的空白。从实践看，当要使用条目集时，使用other*选项更为合适。
 
