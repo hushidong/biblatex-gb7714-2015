@@ -1970,9 +1970,12 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %
 %   增加一个\bibitemindent尺寸用于控制list环境的itemindent
 %   v1.0l，20180615，hzz
+%   v1.0t,20200319,hzz,增加尺寸\biblabelextend使某些字体下标签宽度不足时可增加标签宽度
 \setlength{\bibhang}{\biblabelsep}%
 \newlength{\bibitemindent}
 \setlength{\bibitemindent}{0pt}
+\newlength{\biblabelextend}
+\setlength{\biblabelextend}{0pt}
 
 
 \defbibenvironment{bibliography}
@@ -1980,7 +1983,8 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
      {\printtext[labelnumberwidth]{%
         \printfield{labelprefix}%
         \printfield{labelnumber}}}
-     {\setlength{\labelwidth}{\labelnumberwidth}%
+     {\addtolength{\labelnumberwidth}{\biblabelextend}%
+     \setlength{\labelwidth}{\labelnumberwidth}%
       \setlength{\labelsep}{\biblabelsep}%
       \setlength{\leftmargin}{\bibhang}%
       \addtolength{\leftmargin}{\labelnumberwidth}%
