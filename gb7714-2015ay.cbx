@@ -7,7 +7,7 @@
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\def\versionofgbtstyle{2019/08/28 v1.0s}
+\def\versionofgbtstyle{2020/03/20 v1.0u}
 \ProvidesFile{gb7714-2015ay.cbx}[\versionofgbtstyle biblatex citation style]
 
 %
@@ -61,7 +61,12 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
 }{\newbibmacro{cite:labeldate+extradate}{\usebibmacro{cite:labelyear+extrayear}}}{}%else: biblatex>3.7
 
 %textcite标注命令中的标点设置，注意只针对textcite命令。
-\DeclareDelimFormat[textcite]{nameyeardelim}{}%\addcomma\space
+% v-old
+% v1.0t，20200320，hzz，修改如下
+% 在cbx中增加标注中的nameyeardelim标点定义，避免bbx使用其它样式时出现问题
+% 同时设置textcite的nameyeardelim为一个短空格，似乎原来直接连上去的不够美观
+\DeclareDelimFormat[cite,parencite,pagescite]{nameyeardelim}{\addcomma\space}%\addcomma\space
+\DeclareDelimFormat[textcite]{nameyeardelim}{\addthinspace}%\addcomma\space
 \DeclareDelimFormat[textcite]{andothersdelim}{\iffieldequalstr{userf}{chinese}{\addthinspace}{\addspace}}%
 \AtEveryCitekey{%
 \iffieldequalstr{userf}{chinese}{\renewcommand*{\andothersdelim}{\addthinspace}}%\addthinspace
