@@ -896,7 +896,7 @@
 %      incollection和inproceedings基本与inbook类似，因此做inbook驱动别名处理
 %   3. 专利类型有其特殊性，考虑patent类型
 %   4. 电子资源类型有其特殊性，考虑online类型
-%   5. 报告类型与book有点类似，出版项处理与book一样，但有时又要有修改和更细日期
+%   5. 报告类型与book有点类似，出版项处理与book一样，但有时又要有修改和更新日期
 %      因此考虑用一种类型来输出，使用report类型
 %   6. 手册/学位论文等类型与book有点类似，但对于出版项处理时，有缺省时，直接省略，
 %      同时有version和edition的区别，因此考虑用一种类型来输出，使用manual类型
@@ -917,7 +917,7 @@
 %     modifydate 用于更新或修改日期，输出到日，且用()包围，数据源为date或enddate或eventdate
 
 \DeclareSourcemap{
-\maps[datatype=bibtex]{
+\maps[datatype=bibtex]{%
         \map{%当没有作者时将editor转成author
         \pernottype{inbook}%因为in系列中editor可能用来表示bookauthor，所以排除
         \pernottype{inproceedings}
@@ -1042,7 +1042,7 @@
             \pertype{inproceedings}
             \pertype{conference}%兼容老的conference类型
             \step[fieldset=usera, fieldvalue={C}]
-            \step[fieldsource=institution]%有时会把publisher和institution混淆，处理后使用institution
+            \step[fieldsource=institution]%有时会把publisher和institution混淆，处理后使用publisher
             \step[fieldset=publisher, origfieldval]
             }
         \map{
@@ -1054,7 +1054,7 @@
         \map{
             \pertype{incollection}
             \step[fieldset=usera, fieldvalue={G}]
-            \step[fieldsource=institution]%有时会把publisher和institution混淆，处理后使用institution
+            \step[fieldsource=institution]%有时会把publisher和institution混淆，处理后使用publisher
             \step[fieldset=publisher, origfieldval]
             }
         \map{
@@ -1516,7 +1516,8 @@
 \DeclareBibliographyAlias{database}{manual}
 \DeclareBibliographyAlias{dataset}{manual}
 \DeclareBibliographyAlias{software}{manual}
-
+\DeclareBibliographyAlias{map}{manual}
+\DeclareBibliographyAlias{archive}{manual}
 
 %=====================================================================
 %   设置排序格式
@@ -1866,8 +1867,8 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %
 %   原理方法:set方法可以参考3.11.5 Entry Sets，4.11.1 Entry Sets
 %   这里调整一下两种语言参考文献的间隔，源来自biblatex.def
-\renewcommand*{\entrysetpunct}{\adddot\par\nobreak}
-\renewcommand*{\bibpagespunct}{\addcolon\addthinspace}%页码引用格式的修改%修改为用冒号
+\renewcommand*{\entrysetpunct}{\adddot\par\nobreak}%ay样式用par也可以，因为没有悬挂对齐问题
+\renewcommand*{\bibpagespunct}{\addcolon\addthinspace}%%页码引用格式的修改，修改为用冒号
 %\renewcommand{\relateddelim}{}%\par
 
 %=====================================================================
@@ -1941,6 +1942,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
   {title}{#1}%\nopunct\unspace
 \DeclareFieldFormat{url}{\url{#1}} %url域修改如本行%url相关输出，源来自biblatex.def
 \def\UrlFont{\rmfamily}%设置url字体为roman字体%\ttfamily
+%\urlstyle{rm} %使用这句也一样
 \setcounter{biburlnumpenalty}{100} %让url可以在数字后断行
 \setcounter{biburlucpenalty}{100} %让url可以在大写字母后断行
 \setcounter{biburllcpenalty}{100} %让url可以在小写字母后断行
@@ -2004,7 +2006,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %   修改译者位置格式
 %
 %   原理方法:修改来自biblatex.def文件的bytranslator+others宏的格式
-\renewbibmacro*{bytranslator+others}{%
+\renewbibmacro*{bytranslator+others}{\bibauthorfont%
   \ifnameundef{translator}
     {}
     {%\usebibmacro{bytranslator+othersstrg}
@@ -2027,7 +2029,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %
 %   原理方法:判断作者或译者是否中文，若中文用字符等，否则用et al. 。
 %   \printnames由start-stop控制项数，默认是1和maxnames/minnames
-\renewbibmacro*{name:andothers}{%
+\renewbibmacro*{name:andothers}{\bibauthorfont%
   \ifboolexpr{
     test {\ifnumequal{\value{listcount}}{\value{liststop}}}
     and
@@ -2853,7 +2855,7 @@ incollection,proceedings,inproceedings]{number}{%
 %
 %   对edition版本信息格式做出修改
 %
-\DeclareFieldFormat{edition}{%源来自biblatex.DEF
+\DeclareFieldFormat{edition}{\bibtitlefont%源来自biblatex.DEF
 \testCJKfirst{userd}%
 \iftoggle{ifCJKforgbt}%
 {\ifinteger{#1}%
@@ -2866,7 +2868,7 @@ incollection,proceedings,inproceedings]{number}{%
 %
 %   对version的版本信息做出修改
 %
-\DeclareFieldFormat{version}{%源来自biblatex.DEF
+\DeclareFieldFormat{version}{\bibtitlefont%源来自biblatex.DEF
 \testCJKfirst{userd}%
   \ifinteger{#1}%
     {\iftoggle{ifCJKforgbt}{\printtext{#1\str@edition}}%
