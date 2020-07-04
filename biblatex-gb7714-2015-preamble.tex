@@ -51,36 +51,36 @@
 \deflength{\ruleraised}{\headsep+\textheight}
 \usepackage{fancyhdr}
 \fancyhf{}
-\fancyhead[LO]{%
-\raisebox{-\skipheadrule}{%
-\raisebox{-\headsep}[0pt][0pt]{\makebox[0pt][l]{\ruler{rightup}{\linewidth}}}%
-\raisebox{-\ruleraised}[0pt][0pt]{\makebox[0pt][r]{\ruler{upleft}{\ruletotalen}}}%
-}%HEAD LEFT%
-}
-\fancyhead[LE]{%
-\raisebox{-\skipheadrule}{%
-\raisebox{-\headsep}[0pt][0pt]{\makebox[0pt][l]{\ruler{rightup}{\linewidth}}}%
-\raisebox{-\ruleraised}[0pt][0pt]{\makebox[0pt][r]{\ruler{upleft}{\ruletotalen}}}%
-}\leftmark%HEAD LEFT%
-}
-\fancyhead[RO]{%
-%HEAD RIGHT%
-\raisebox{-\skipheadrule}{%
-\hfill\makebox[0pt][l]{\raisebox{-\ruleraised}[0pt][0pt]{\ruler{downright}{\ruletotalen}}\hss}%
-}}
-\fancyhead[RE]{%
-\rightmark%HEAD RIGHT%
-\raisebox{-\skipheadrule}{%
-\hfill\makebox[0pt][l]{\raisebox{-\ruleraised}[0pt][0pt]{\ruler{downright}{\ruletotalen}}\hss}%
-}}
+%\fancyhead[LO]{%
+%\raisebox{-\skipheadrule}{%
+%\raisebox{-\headsep}[0pt][0pt]{\makebox[0pt][l]{\ruler{rightup}{\linewidth}}}%
+%\raisebox{-\ruleraised}[0pt][0pt]{\makebox[0pt][r]{\ruler{upleft}{\ruletotalen}}}%
+%}%HEAD LEFT%
+%}
+%\fancyhead[LE]{%
+%\raisebox{-\skipheadrule}{%
+%\raisebox{-\headsep}[0pt][0pt]{\makebox[0pt][l]{\ruler{rightup}{\linewidth}}}%
+%\raisebox{-\ruleraised}[0pt][0pt]{\makebox[0pt][r]{\ruler{upleft}{\ruletotalen}}}%
+%}\leftmark%HEAD LEFT%
+%}
+%\fancyhead[RO]{%
+%%HEAD RIGHT%
+%\raisebox{-\skipheadrule}{%
+%\hfill\makebox[0pt][l]{\raisebox{-\ruleraised}[0pt][0pt]{\ruler{downright}{\ruletotalen}}\hss}%
+%}}
+%\fancyhead[RE]{%
+%\rightmark%HEAD RIGHT%
+%\raisebox{-\skipheadrule}{%
+%\hfill\makebox[0pt][l]{\raisebox{-\ruleraised}[0pt][0pt]{\ruler{downright}{\ruletotalen}}\hss}%
+%}}
 \fancyhead[CO]{%
 符合GB/T 7714-2015标准的biblatex参考文献样式%HEAD CENTER
 }
-\fancyfoot[L]{%
-\raisebox{-\skipfootrule}{%
-\raisebox{\footskip}[0pt][0pt]{\makebox[0pt][l]{\ruler{rightdown}{\linewidth}}}
-}%FOOT LEFT
-}
+%\fancyfoot[L]{%
+%\raisebox{-\skipfootrule}{%
+%\raisebox{\footskip}[0pt][0pt]{\makebox[0pt][l]{\ruler{rightdown}{\linewidth}}}
+%}%FOOT LEFT
+%}
 \fancyfoot[C]{%
 \thepage%FOOT CENTER
 }

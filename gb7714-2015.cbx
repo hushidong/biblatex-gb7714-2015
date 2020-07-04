@@ -31,6 +31,27 @@
 %\DeclareDelimFormat[textcite]{andothersdelim}{\addspace}%
 
 %
+%将连续3篇文献压缩改为连续2篇文献压缩
+%
+%该宏的目的是抛弃压缩内部的编号，而仅输出最后一个编号，主要通过cbx@tempcnta来控制
+%一般情况下cbx@tempcnta为0，所以该宏不输出任何内容。当cbx@tempcnta在cite:comp:comp宏中更改变大后
+%说明开始进入需要压缩的范围，当到压缩终点时，cbx@tempcnta必然大于1，则输出内容。
+%修改第二行的数字1为0即可将默认的3个开始压缩变为2个开始压缩。
+\renewbibmacro*{cite:dump}{%
+  \ifnumgreater{\value{cbx@tempcnta}}{0}%
+    {\ifnumgreater{\value{cbx@tempcnta}}{0}%1改为0，可以将压缩起始3个编号改为2个编号
+       {\bibrangedash}%
+       {\multicitedelim}%
+     \bibhyperref[\cbx@lastkey]{%
+       \ifdef\cbx@lastprefix%
+         {\printtext[labelprefix]{\cbx@lastprefix}}%
+         {}%
+       \printtext[labelnumber]{\cbx@lastnumber}}}%
+    {}%
+  \setcounter{cbx@tempcnta}{0}%
+  \global\undef\cbx@lastprefix}
+
+%
 %   定义一个上标方括号wrapper
 %
 \newcommand*\mkbibsuperbracket[1]{%

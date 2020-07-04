@@ -1251,13 +1251,14 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{texlist}
 \end{example}
 
-文献表的水平缩进控制，两种编制方式下是不同的。对于著者-出版年制文献表，bibitemindent表示一条文献中第一行相对后面各行的缩进，bibhang 表示页边到文献各行起始位置的距离。因此要调整缩进就是要设置这两尺寸。
+文献表的水平缩进控制，两种编制方式下是不同的。对于著者-出版年制文献表，bibitemindent表示
+\emph{一条文献中第一行相对后面各行的缩进}，bibhang 表示\emph{页边到文献各行起始位置的距离}。因此要调整缩进就是要设置这两尺寸。
 
 对于顺序编码制文献表，由于存在数字标签，且其宽度与参考文献数量相关，所以这个宽度是动态变的，无能提前设定的，而是在文献表生成时给出，所以调整缩进需要在文献表输出环境中调整。由于顺序编码样式使用了两类输出环境，所以需要根据设定的选项区分处理：
 
 一是采用list环境的文献表，即设置gbalign=left、right、center时（即顺序编码标签是左对齐、右对齐和居中对齐的情况），在重定义的文献表环境中，调整bibitemindent和bibhang两个尺寸，默认情况下bibhang+labelnumberwidth的长度是页边到各行起始位置的距离。当采用某些字体导致计算计算的标签宽度不足时，可以设置biblabelextend尺寸，来增加labelnumberwidth的宽度，避免缩进格式产生问题，默认情况下biblabelextend尺寸为0pt。
 
-二是采用正常段落环境的文献表，即设置gbalign=gb7714-2015时（即项对齐情况，就是各条文献是自身对齐的情况），在重定义的命令中通过调整lengthid尺寸来设置每条参考文献第二行开始的缩进距离。
+二是采用正常段落环境的文献表，即设置gbalign=gb7714-2015时（即项对齐情况，就是各条文献是自身对齐的情况），在重定义的命令中通过调整lengthid尺寸来设置\emph{每条参考文献第二行开始的缩进距离}。
 调整方法见例\ref{eg:biblist:hspace}。
 
 \begin{example}{文献表水平缩进控制}{eg:biblist:hspace}
