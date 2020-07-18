@@ -47,16 +47,19 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 
 * [SJTUThesis(上海交通大学学位论文模板)](https://github.com/sjtug/SJTUThesis)(母校的论文模板，不得不说缘分真的很神奇)
 * [fduthesis(复旦大学论文模板)](https://github.com/Stone-Zeng/fduthesis)
-* [ECNU-Undergraduate-LaTeX(华东师范大学本科毕业论文模板)](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)
-* [UCASthesis(中国科学院大学学位论文模板**国科大新版标准**)](https://github.com/xiaoyao9933/UCASthesis)
-* [Study-LaTeX(LaTeX学习笔记)](https://github.com/Zousiyu/Study-LaTeX)
 * [Zhejiang University thesis(浙江大学毕业设计/论文模板)](https://github.com/TheNetAdmin/zjuthesis)
+* [UCASthesis(中国科学院大学学位论文模板**国科大新版标准**)](https://github.com/xiaoyao9933/UCASthesis)
+* [UCASthesis(ucasthesis 国科大学位论文 LaTeX 模板 [最新样式])](https://github.com/mohuangrui/ucasthesis)
+* [TongjiThesis(同济大学硕博士论文LaTeX模板)](https://github.com/marquistj13/TongjiThesis)
+* [neuthesis(东北大学博士学位论文Latex模板)](https://github.com/mervin0502/neuthesis)
+* [nwafuthesis(西北农林科技大学学位论文LaTeX文档类)](https://github.com/registor/nwafuthesis)
+* [nudtpaper(nudt学位论文模板)](https://github.com/liubenyuan/nudtpaper)
+* [ECNU-Undergraduate-LaTeX(华东师范大学本科毕业论文模板)](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)
 * [fjnu-bathesis (福建师范大学本科毕业论文LaTeX 模板)](https://github.com/fjnuer/fjnu-bathesis)
 * [Thesis-Template-for-XJTU (西安交大毕业设计模板)](https://github.com/DXie123/Thesis-Template-for-XJTU)
 * [CAUTemplate(中国农业大学课程论文模板)](https://github.com/Cdmium/CAUTemplate)
 * [Yet anoter BUPT Thesis LaTeX class (北邮研究生学位设计的LaTeX文档类)](https://github.com/qcts33/BUPTthesis-ctex)
-* [neuthesis (东北大学博士学位论文Latex模板)](https://github.com/mervin0502/neuthesis)
-* [nwafuthesis (西北农林科技大学学位论文LaTeX文档类)](https://github.com/registor/nwafuthesis)
+* [Study-LaTeX(LaTeX学习笔记)](https://github.com/Zousiyu/Study-LaTeX)
 * [...]
 
 
