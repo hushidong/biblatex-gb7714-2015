@@ -16,7 +16,7 @@ copy ..\gb7714-2015-gbk.def . /y
 
 setlocal enabledelayedexpansion
 for  %%a in ( thesis*.tex ) do (
-call makeclear
+call makeclearthesis
 set jobfile=%%a
 set jobname=!jobfile:~0,-4!
 echo %%a
@@ -30,7 +30,7 @@ setlocal DISABLEDELAYEDEXPANSION
 
 
 
-call makeclear
+call makeclearthesis
 
 
 del *.bbx /Q

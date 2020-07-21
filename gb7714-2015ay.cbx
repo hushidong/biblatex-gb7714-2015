@@ -7,7 +7,7 @@
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\def\versionofgbtstyle{2020/03/20 v1.0u}
+\def\versionofgbtstyle{2020/07/21 v1.0v}
 \ProvidesFile{gb7714-2015ay.cbx}[\versionofgbtstyle biblatex citation style]
 
 %
@@ -181,7 +181,7 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
 %   20180427，v1.0k，增加，hzz
 %   20190409，v1.0r，hzz
 %   为与顺序编码制兼容，增加了命令，定义与citet相同
-\newbibmacro*{citet}{%
+\newbibmacro*{citeta}{%
   \iffieldundef{shorthand}
     {\ifthenelse{\ifnameundef{labelname}\OR\iffieldundef{labelyear}}
        {\usebibmacro{cite:label}%
@@ -213,7 +213,7 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
     {\thefield{postnote}}}%
     \usebibmacro{prenote}}%
   {\usebibmacro{citeindex}%
-   \usebibmacro{citet}}
+   \usebibmacro{citeta}}
   {}
   {\mkbibsuperscript{\usebibmacro{postnote}}%\usebibmacro{postnote}
   }
@@ -225,18 +225,87 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
 %   注意\citet和\citep命令之所以不用newrobustcmd，是为避免加载natbib模块后产生冲突
 
 %同\authornumcite
-\DeclareCiteCommand{\citet}%
-  {\usebibmacro{cite:init}%
-  \renewbibmacro*{postnote}{%
-  \iffieldundef{postnote}%
-    {}%
-    {\thefield{postnote}}}%
-    \usebibmacro{prenote}}%
+%\DeclareCiteCommand{\citet}%
+%  {\usebibmacro{cite:init}%
+%  \renewbibmacro*{postnote}{%
+%  \iffieldundef{postnote}%
+%    {}%
+%    {\thefield{postnote}}}%
+%    \usebibmacro{prenote}}%
+%  {\usebibmacro{citeindex}%
+%   \usebibmacro{citet}}
+%  {}
+%  {%(
+%  )\mkbibsuperscript{\usebibmacro{postnote}}%\usebibmacro{postnote}
+%  }
+
+
+%
+%   重定义citet，因为前面与\authornumcite同定义的命令无法正确处理多个bibtexkey同时给出的压缩情况
+%   20200721，v1.0v，hzz
+%   方法:利用textcite命令进行定义
+%   基本利用textcite命令来写citet，仅利用bool{cbx:incitet}做判断，进而处理不同的页码形式
+\newbool{cbx:incitet}
+\newbibmacro*{citet:postnote}{%
+  \ifthenelse{\value{multicitecount}=\value{multicitetotal}}
+    {\setunit{}%
+     \printtext{%
+       \ifbool{cbx:parens}
+         {\bibcloseparen\global\boolfalse{cbx:parens}}
+         {}}}
+    {\setunit{%
+       \ifbool{cbx:parens}
+         {\bibcloseparen\global\boolfalse{cbx:parens}}
+         {}%
+       \textcitedelim}}%
+       \renewbibmacro*{postnote}{%
+      \iffieldundef{postnote}%
+        {}%
+        {\thefield{postnote}}}%
+      \mkbibsuperscript{\usebibmacro{postnote}}%
+       }
+
+\DeclareCiteCommand{\cbx@textcite}
+  {\usebibmacro{cite:init}}
   {\usebibmacro{citeindex}%
-   \usebibmacro{citet}}
+   \usebibmacro{textcite}}
   {}
-  {\mkbibsuperscript{\usebibmacro{postnote}}%\usebibmacro{postnote}
-  }
+  {\ifbool{cbx:incitet}{\usebibmacro{citet:postnote}}{\usebibmacro{textcite:postnote}}}
+
+  \newrobustcmd{\cbx@citet@init}[2]{%
+  \global\booltrue{cbx:incitet}%
+  \setcounter{textcitetotal}{0}%
+  \setcounter{textcitecount}{0}%
+  \def\cbx@savedcites{#1}#2\cbx@savedcites\empty}
+
+  \renewrobustcmd{\cbx@textcite@init}[2]{%
+  \global\boolfalse{cbx:incitet}%
+  \setcounter{textcitetotal}{0}%
+  \setcounter{textcitecount}{0}%
+  \def\cbx@savedcites{#1}#2\cbx@savedcites\empty}
+
+\DeclareCiteCommand{\citet}[\cbx@citet@init\cbx@textcite]
+  {\gdef\cbx@savedkeys{}%
+   \citetrackerfalse%
+   \pagetrackerfalse%
+   \DeferNextCitekeyHook%
+   \usebibmacro{cite:init}}
+  {\ifthenelse{\iffirstcitekey\AND\value{multicitetotal}>0}
+     {\protected@xappto\cbx@savedcites{()(\thefield{multipostnote})}%
+      \global\clearfield{multipostnote}}
+     {}%
+   \xappto\cbx@savedkeys{\thefield{entrykey},}%
+   \iffieldequals{namehash}{\cbx@lasthash}
+     {}
+     {\stepcounter{textcitetotal}%
+      \savefield{namehash}{\cbx@lasthash}}}
+  {}
+  {\protected@xappto\cbx@savedcites{%
+     [\thefield{prenote}][\thefield{postnote}]{\cbx@savedkeys}}}
+
+\let\cbx@citets@init\cbx@citet@init
+\pretocmd{\cbx@citets@init}{\UseNextMultiCiteHook}{}{}
+\DeclareMultiCiteCommand{\citets}[\cbx@citets@init\cbx@textcites]{\citet}{}
 
 %同cite
 \DeclareCiteCommand{\citep}

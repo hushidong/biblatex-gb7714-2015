@@ -19,7 +19,7 @@ echo compiled files info: > makerecord.dat
 
 setlocal enabledelayedexpansion
 for  %%a in ( test*.tex ) do (
-call makeclear
+call makecleareg
 set jobfile=%%a
 set jobname=!jobfile:~0,-4!
 echo %%a
@@ -34,7 +34,7 @@ setlocal DISABLEDELAYEDEXPANSION
 
 setlocal enabledelayedexpansion
 for  %%a in ( cls*.tex ) do (
-call makeclear
+call makecleareg
 set jobfile=%%a
 set jobname=!jobfile:~0,-4!
 echo %%a
@@ -49,7 +49,7 @@ setlocal DISABLEDELAYEDEXPANSION
 
 setlocal enabledelayedexpansion
 for  %%a in ( opt*.tex ) do (
-call makeclear
+call makecleareg
 set jobfile=%%a
 set jobname=!jobfile:~0,-4!
 echo %%a
@@ -64,7 +64,7 @@ setlocal DISABLEDELAYEDEXPANSION
 
 setlocal enabledelayedexpansion
 for  %%a in ( code*.tex ) do (
-call makeclear
+call makecleareg
 set jobfile=%%a
 set jobname=!jobfile:~0,-4!
 echo %%a
@@ -78,7 +78,7 @@ pdflatex.exe !jobfile!
 )
 setlocal DISABLEDELAYEDEXPANSION
 
-::call makeclear
+call makecleareg
 
 
 del *.bbx /Q

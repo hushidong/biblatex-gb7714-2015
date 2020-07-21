@@ -12,15 +12,15 @@
 \usepackage{xltxtra,mflogo,texnames}
 %\usepackage[backend=biber,style=gb7714-2015,gbnamefmt=givenahead,
 %gbpub=false,gbbiblabel=box,gbtitlelink=true]{biblatex}%sorting=nyt
-\usepackage[backend=biber,style=gb7714-2015ay,gbnamefmt=lowercase,maxcitenames=2,mincitenames=1,
-sortcites=false,sorting=gbynta]{biblatex}
+\usepackage[backend=biber,style=gb7714-2015,gbnamefmt=lowercase,maxcitenames=2,mincitenames=1,
+sortcites=false,sorting=gbynta,gbcitelocal=english]{biblatex}
  \renewcommand{\bibauthorfont}{\color{violet}}%
-\DefineBibliographyStrings{english}{
-        andincite         = {和},
-        andincitecn       = {和},
-        andothersincitecn = {等},
-        andothersincite   = {等{\adddot}},%adddot才能避开标点追踪
-}
+%\DefineBibliographyStrings{english}{
+%        andincite         = {和},
+%        andincitecn       = {和},
+%        andothersincitecn = {等},
+%        andothersincite   = {等{\adddot}},%adddot才能避开标点追踪
+%}
 %\renewcommand{\bibfont}{\small}
 \setlength{\bibitemsep}{2pt}
 \usepackage{filecontents}
@@ -156,9 +156,9 @@ sortcites=false,sorting=gbynta]{biblatex}
 %\cite{杨光2015经济波动}
 %\nocite{易仕和2013--,赵学功2001--,蔡敏2006--,Peebles2001-100-100,Zhang2007-500-503,Yi2013--}
 
-\cite{赵学功2001--,吕捷2015cpi,蔡敏2006--}
+\textcite{赵学功2001--,吕捷2015cpi,蔡敏2006--}
 
-\cite{Peebles2001-100-100,IEEEexample:frenchpatreq,Yi2013--}
+\textcite{Peebles2001-100-100,IEEEexample:frenchpatreq,Yi2013--}
 
 \vspace{-0.3cm}
 \printbibliography[heading=subbibliography]

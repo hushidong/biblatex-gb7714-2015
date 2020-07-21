@@ -12,6 +12,7 @@
     \def\str@references{参考文献}
     \def\str@bytranslator{译}
     \def\str@andotherscn{等}
+	\def\str@andcn{和}
     \def\str@backrefpage{引用页}
     \def\str@backrefpages{引用页}
     \def\str@noaddress{出版地不详}

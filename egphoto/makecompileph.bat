@@ -19,7 +19,7 @@ copy ..\gb7714-2015-gbk.def . /y
 
 setlocal enabledelayedexpansion
 for  %%a in ( opt*.tex ) do (
-call makeclear
+call makeclearph
 set jobfile=%%a
 set jobname=!jobfile:~0,-4!
 echo %%a

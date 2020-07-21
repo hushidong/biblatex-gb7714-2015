@@ -1,4 +1,4 @@
-<b>Date of last change: 2020-03-20 to version v1.0u</b>
+<b>Date of last change: 2020-07-21 to version v1.0v</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -60,6 +60,8 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 * [CAUTemplate(中国农业大学课程论文模板)](https://github.com/Cdmium/CAUTemplate)
 * [Yet anoter BUPT Thesis LaTeX class (北邮研究生学位设计的LaTeX文档类)](https://github.com/qcts33/BUPTthesis-ctex)
 * [Study-LaTeX(LaTeX学习笔记)](https://github.com/Zousiyu/Study-LaTeX)
+* [ElegantBook](https://github.com/ElegantLaTeX/ElegantBook)
+* [《经济研究》杂志 LaTeX 论文模板)](https://github.com/EthanDeng/Chinese-ERJ)
 * [...]
 
 
@@ -1167,6 +1169,8 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * 2019/08/28 v1.0s
 * 2020/03/04 v1.0t,ctan
 * 2020/03/30 v1.0u
+* 2020/07/21 v1.0v,ctan
+
 
 
 ---------------------------------------------------------

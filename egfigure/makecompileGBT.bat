@@ -19,7 +19,7 @@ copy ..\gb7714-2015-gbk.def . /y
 
 setlocal enabledelayedexpansion
 for  %%a in ( tgb*.tex ) do (
-call makeclear
+call makeclearfig
 set jobfile=%%a
 set jobname=!jobfile:~0,-4!
 echo %%a
@@ -53,7 +53,7 @@ xelatex.exe --synctex=-1 tngbcitationay.tex
 
 
 
-call makeclear
+call makeclearfig
 
 
 del *.bbx /Q

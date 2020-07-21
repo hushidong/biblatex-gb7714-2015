@@ -10,7 +10,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2020/03/20 v1.0u}
+\def\versionofgbtstyle{2020/07/21 v1.0v}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015ay.bbx}[\versionofgbtstyle biblatex bibliography style]
 %\RequireBiber[3]%显式指定用biber后端，当用bibtex时会报错，但其实不会影响编译，只是采用bibtex后无法达成格式需求
@@ -448,6 +448,7 @@
     \def\str@references{参考文献}
     \def\str@bytranslator{译}
     \def\str@andotherscn{等}
+    \def\str@andcn{和}
     \def\str@backrefpage{引用页}
     \def\str@backrefpages{引用页}
     \def\str@noaddress{出版地不详}
@@ -823,7 +824,7 @@
         bytranslator= {\str@bytranslator\adddot}, %将trans. by 改成 译
         and         = {\addcomma},%将第2和3人名见的and符号改成 逗号，用\finalnamedelim命令也可以定义，参见3.9.1节
         andcn       = {\addcomma},%\str@andcn\ and本地化字符串的中文对应词
-        andincitecn = {\addcomma},%将标注中的分开，便于与文献表中的区分
+        andincitecn = {\str@andcn},%将标注中的分开，便于与文献表中的区分
         andincite   = {\addcomma},
         %andothers   = {et al.},        %将超过3个人名的省略，et al.改成为 等
         andotherscn   = {\str@andotherscn},%将超过3个人名的省略，et al.改成为 等

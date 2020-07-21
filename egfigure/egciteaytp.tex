@@ -7,9 +7,9 @@
 \usepackage{toolbox}
 \usepackage[colorlinks]{hyperref}
 \usepackage{lipsum}
-\usepackage[paperwidth=14cm,paperheight=10cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
+%\usepackage[paperwidth=14cm,paperheight=10cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
 \usepackage{xltxtra,mflogo,texnames}
-\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}%sorting=nyt,natbib
+\usepackage[backend=biber,style=gb7714-2015]{biblatex}%sorting=nyt,natbib
 
 \usepackage{filecontents}
 \begin{filecontents}{\jobname.bib}
@@ -114,34 +114,47 @@
 
 \begin{document}
 
+ citep命令：\citep{Peebles2001-100-100}，\citep{赵学功2001--}，
+ \citep{蔡敏2006--}，\citep{Miroslav2004--}，\citep[100-108]{蔡敏2006--}，\citep[205-208]{蔡敏2006--}。
+ 
+ citet命令：\citet[100]{Peebles2001-100-100}
+ ，\citet{赵学功2001--}，\citet{蔡敏2006--}，
+\citet{Miroslav2004--}，\citet[100-108]{蔡敏2006--}，
+\citet[205-208]{蔡敏2006--}。
+ 
 
-\noindent\fbox{
-\parbox{\textwidth}{
-国标示例：\par
- 引用文献文中无作者信息：文献\citep{Peebles2001-100-100}，文献\citep{赵学功2001--}\par
- 引用文献文中有作者信息：文献\citet{Peebles2001-100-100}
- ，文献\citet{赵学功2001--}\par
- 引用多作者文献：中文文献\citep{蔡敏2006--}，
- 英文文献\citep{Miroslav2004--}\par
- 引用同一作者同一年份文献：文献\cite{蔡敏2006a--}，文献\cite{蔡敏2006b--}\par
- 同一处引用多篇文献：文献\cite{Peebles2001-100-100,Miroslav2004--}，
- 文献\cite{蔡敏2006--,Miroslav2004--,赵学功2001--}\par
- 多次引用同一作者的同一文献：
- 文献\citep[100-108]{蔡敏2006--}，
- 文献\citep[205-208]{蔡敏2006--}。
+
+ citepns命令：\citepns[205-208]{蔡敏2006--}。
  
- 
- 
- 
- 文献\citetns[205-208]{蔡敏2006--}。
- 文献\citepns[205-208]{蔡敏2006--}。
- 文献\inlinecite[205-208]{蔡敏2006--}。
- 
+ citetns命令：\citetns[205-208]{蔡敏2006--}。
+
+------------------------
+
  文献\citet{蔡敏2006--,赵学功2001--}，
+
  文献\citet[205-208]{蔡敏2006--,赵学功2001--}。
+
+ 文献\citet[205-208]{蔡敏2006--,蔡敏2006b--,蔡敏2006a--}。
+
+ 文献\citet[205-208]{蔡敏2006--,蔡敏2006b--,蔡敏2006a--,赵学功2001--}。
+
+------------------------
+
+ 文献\textcite[205-208]{蔡敏2006--,赵学功2001--}。
  
+ 文献\textcite[205-208]{蔡敏2006--,蔡敏2006b--,蔡敏2006a--}。
  
-}}
+ 文献\textcite[205-208]{蔡敏2006--,蔡敏2006b--,蔡敏2006a--,赵学功2001--}。
+
+------------------------
+
+\textcites[100]{蔡敏2006--}[200]{赵学功2001--}，
+
+%\citets[100]{蔡敏2006--}
+
+%\citets[200]{赵学功2001--}，
+
+
 
 %\printbibliography
 
