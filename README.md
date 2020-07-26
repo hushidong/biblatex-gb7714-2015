@@ -62,6 +62,18 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 * [Study-LaTeX(LaTeX学习笔记)](https://github.com/Zousiyu/Study-LaTeX)
 * [ElegantBook](https://github.com/ElegantLaTeX/ElegantBook)
 * [《经济研究》杂志 LaTeX 论文模板)](https://github.com/EthanDeng/Chinese-ERJ)
+* [WUTthesis（武汉理工大学研究生学位论文的 LaTeX 模板）](https://github.com/Jiayin-Gu/WUTthesis)
+* [shtthesis (ShangHaiTech university THESIS)](https://github.com/lirundong/shtthesis)
+* [LaTeX-SWUFE-Bachelor-Thesis （西南财经大学本科毕业论文 LaTeX 模板）](https://github.com/sukanka/LaTeX-SWUFE-Bachelor-Thesis)
+* [NJU-thesis-esz（南京大学学位论文-微调整后适用于人文社科）](https://github.com/EdwardSaidZhou/NJU-thesis-esz)
+* [NKThesis（南开大学硕士毕业论文(博士论文)Latex模板）](https://github.com/procuteboy/NKThesis)
+* [NKUBachelorThesis（南开大学本科生毕业论文(毕业设计)LaTeX模板）](https://github.com/NKcqx/NKUBachelorThesis)
+* [BIThesis（bachelor graduation thesis for  Dept. of Undergraduate Academic Affairs of Beijing Institute of Technology.）](https://github.com/BITNP/BIThesis)
+* [nputhesis（NPU 博士、硕士学位论文 \LaTeX 模板）](https://github.com/NPUSCG/nputhesis)
+* [sustechthesis（Southern University of Science and Technology Thesis Template LaTeX Template）](https://github.com/Iydon/sustechthesis)
+* [SHMTUThesis（上海海事大学 LaTeX 学位论文模板）](https://github.com/hellckt/SHMTUThesis)
+* [LZUthesis（兰州大学本科毕业论文LaTeX模板）](https://github.com/szsdk/LZUthesis)
+* [nuaa-thesis（南京航空航天大学本科、硕士和博士学位论文的样式模板）](https://github.com/nuaa803/nuaa-thesis)
 * [...]
 
 
