@@ -1,1 +1,17 @@
 gbT7714-2015.dvi
+
+egthesis/*.aux
+egthesis/*.bbl
+egthesis/*.bcf
+egthesis/*.bib
+egthesis/*.blg
+egthesis/*.fdb_latexmk
+egthesis/*.fls
+egthesis/*.log
+egthesis/*.out
+egthesis/*.pdf
+egthesis/*.synctex.gz
+egthesis/*.synctex.gz(busy)
+egthesis/*.run.xml
+egthesis/*.pdf
+egthesis/*.xdv
