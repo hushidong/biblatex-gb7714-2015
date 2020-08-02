@@ -2347,7 +2347,7 @@ author/editor.title[usera].year或date,volume(number)-endyear, endvolume(endnumb
 \end{example}
 
 其中连续出版物的出版者用institution表示。
-\qd{因为连续出版物可能用到两个日期，两个卷，两个期，所以录入数据时需要特别处理。不需要录入endyear等信息，只需要在到year或date域录入两个日期，由biber自动解析，两个日期之间用/分隔。而卷和期由于可能有合订模式，且合订卷期之间用/分隔(参考GB/T 7714-2015第8.8.3节)，因此如果需要解析有起止范围的卷和期，录入到volume和number域的信息中起止值之间应用-分隔。}
+\qd{因为连续出版物可能用到两个日期，两个卷，两个期，所以录入数据时需要特别处理。不需要录入endyear等信息，只需要在到year或date域录入两个日期，由biber自动解析，由于一个日期内部的年月日之间是用-进行分隔，因此两个日期之间用/分隔。而卷和期由于可能有合订模式，且合订卷期之间用/分隔(参考GB/T 7714-2015第8.8.3节)，因此如果需要解析有起止范围的卷和期，录入到volume和number域的信息中起止值之间应用-分隔。}
 
 \subsubsection{连续出版物的析出文献/article}
 \begin{refentry}{}{}%[break at=0.5cm/0pt]
