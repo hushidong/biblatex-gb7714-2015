@@ -1,5 +1,6 @@
 @echo off
 
+cd ..
 
 cd example
 

@@ -1,0 +1,15 @@
+\documentclass{article}
+\usepackage{pdfpages}%直接插入pdf文件页
+\graphicspath{{../egfigure/}{../example/}}
+
+\begin{document}
+
+\includepdf[pages=-]{../egfigure/tgbcitation.pdf}
+
+\IfFileExists{../egfigure/tngbcitationay.pdf}
+{\includepdf[pages=-]{../egfigure/tngbcitationay.pdf}}
+{\includepdf[pages=-]{../egfigure/tngbcitationaynew.pdf}}
+
+\includepdf[pages=-]{../egfigure/tgbbiblio.pdf}
+
+\end{document}

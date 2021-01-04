@@ -1694,6 +1694,7 @@
 \href{\thefield{url}}{#1}}}{\MakeCapital#1}}%重设标题格式，将其修改为首字母大写
 \DeclareFieldFormat{pages}{#1}%去掉前面引导页码的pp.等字符，\mkpageprefix[bookpagination]{#1}
 \DefineBibliographyExtras{english}{\renewcommand*{\bibrangedash}{-}}%将页码间隔符替换会英文的短横线
+\DefineBibliographyExtras{russian}{\renewcommand*{\bibrangedash}{-}}
 
 \def\execgbfdfmtstd{%恢复到标准样式的设置
 \DeclareFieldFormat{title}{\mkbibemph{##1}}
@@ -2658,7 +2659,7 @@ incollection,proceedings,inproceedings]{number}{%
 %
 %   原理方法:使用bibmacro{in:}改变了以前在driver中直接输出//的方式，同时也简化了标点控制。
 \renewbibmacro*{in:}{%
- \iftoggle{bbx:gbpunctin}{\printtext{\texttt{//}\allowbreak}}%\addthinspace
+ \iftoggle{bbx:gbpunctin}{\printtext{\allowbreak\texttt{//}\allowbreak}}%\addthinspace
                          {\setunit{\adddot\addspace}%
                          \iffieldequalstr{userd}{chinese}%
                          {\printtext{\bibstring{incn}}}%

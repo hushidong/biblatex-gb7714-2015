@@ -1,0 +1,319 @@
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/W32TeX) (preloaded format=xelatex 2020.9.17)  4 JAN 2021 10:20
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**gbT7714-2015.tex
+(./gbT7714-2015.tex
+LaTeX2e <2020-02-02> patch level 5
+L3 programming layer <2020-03-06>
+(d:/texlive/2020/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2019/12/20 v1.4l Standard LaTeX document class
+(d:/texlive/2020/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
+)
+\c@part=\count163
+\c@section=\count164
+\c@subsection=\count165
+\c@subsubsection=\count166
+\c@paragraph=\count167
+\c@subparagraph=\count168
+\c@figure=\count169
+\c@table=\count170
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen134
+)
+(d:/texlive/2020/texmf-dist/tex/latex/pdfpages/pdfpages.sty
+Package: pdfpages 2020/01/28 v0.5q Insert pages of external PDF documents (AM)
+
+(d:/texlive/2020/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(d:/texlive/2020/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count171
+\calc@Bcount=\count172
+\calc@Adimen=\dimen135
+\calc@Bdimen=\dimen136
+\calc@Askip=\skip49
+\calc@Bskip=\skip50
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count173
+\calc@Cskip=\skip51
+)
+(d:/texlive/2020/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+Package: eso-pic 2018/04/12 v2.0h eso-pic (RN)
+
+(d:/texlive/2020/texmf-dist/tex/generic/atbegshi/atbegshi.sty
+Package: atbegshi 2019/12/05 v1.19 At begin shipout hook (HO)
+
+(d:/texlive/2020/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+(d:/texlive/2020/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2019/12/15 v1.24 LaTeX kernel commands for general use (HO)
+)
+(d:/texlive/2020/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+))
+(d:/texlive/2020/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks15
+)
+(d:/texlive/2020/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+
+(d:/texlive/2020/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: xetex.def on input line 225.
+
+(d:/texlive/2020/texmf-dist/tex/latex/graphics-def/xetex.def
+File: xetex.def 2017/06/24 v5.0h Graphics/color driver for xetex
+)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
+Package xcolor Info: Model `RGB' extended on input line 1364.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
+))
+(d:/texlive/2020/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2019/11/30 v1.2a Enhanced LaTeX Graphics (DPC,SPQR)
+
+(d:/texlive/2020/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2019/11/30 v1.4a Standard LaTeX Graphics (DPC,SPQR)
+
+(d:/texlive/2020/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(d:/texlive/2020/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: xetex.def on input line 105.
+)
+\Gin@req@height=\dimen137
+\Gin@req@width=\dimen138
+)
+\AM@pagewidth=\dimen139
+\AM@pageheight=\dimen140
+
+(d:/texlive/2020/texmf-dist/tex/latex/pdfpages/ppxetex.def
+File: ppxetex.def 2020/01/28 v0.5q Pdfpages driver for XeTeX (AM)
+)
+\AM@pagebox=\box45
+\AM@global@opts=\toks16
+\AM@pagecnt=\count174
+\AM@toc@title=\toks17
+\c@AM@survey=\count175
+\AM@templatesizebox=\box46
+)
+(d:/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-xdvipdfmx.def
+File: l3backend-xdvipdfmx.def 2020-03-12 L3 backend support: xdvipdfmx
+\g__graphics_track_int=\count176
+\l__pdf_internal_box=\box47
+\g__pdf_backend_object_int=\count177
+\g__pdf_backend_annotation_int=\count178
+)
+(./gbT7714-2015.aux)
+\openout1 = `gbT7714-2015.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 5.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 5
+.
+ (d:/texlive/2020/texmf-dist/tex/latex/base/ts1cmr.fd
+File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+\AtBeginShipoutBox=\box48
+
+(d:/texlive/2020/texmf-dist/tex/latex/pdflscape/pdflscape.sty
+Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
+
+(d:/texlive/2020/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: dvipdfm (xetex) on input line 98.
+
+)
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 1>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 1>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 1>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 1>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 1>
+ [1
+
+]
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 2>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 2>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 2>
+ [2]
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 3>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 3>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 3>
+ [3]
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 4>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 4>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 4>
+
+[4]
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 5>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 5>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 5>
+ [5]
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 6>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 6>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 6>
+ [6]
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 7>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 7>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 7>
+ [7]
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 8>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 8>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 8>
+ [8]
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 9>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 9>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 9>
+ [9]
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 10>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 10>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 10>
+ [10]
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 11>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 11>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 11>
+ [11]
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 12>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 12>
+File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
+<use ../egfigure/tgbcitation.pdf, page 12>
+ [12]
+File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationaynew.pdf>
+File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationaynew.pdf>
+File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationaynew.pdf, page 1>
+File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationaynew.pdf, page 1>
+File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationaynew.pdf, page 1>
+File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationaynew.pdf, page 1>
+File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationaynew.pdf, page 1>
+ [13]
+File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationaynew.pdf, page 2>
+File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationaynew.pdf, page 2>
+File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationaynew.pdf, page 2>
+ [14]
+File: ../egfigure/tgbbiblio.pdf Graphic file (type pdf)
+<use ../egfigure/tgbbiblio.pdf>
+File: ../egfigure/tgbbiblio.pdf Graphic file (type pdf)
+<use ../egfigure/tgbbiblio.pdf>
+File: ../egfigure/tgbbiblio.pdf Graphic file (type pdf)
+<use ../egfigure/tgbbiblio.pdf, page 1>
+File: ../egfigure/tgbbiblio.pdf Graphic file (type pdf)
+<use ../egfigure/tgbbiblio.pdf, page 1>
+File: ../egfigure/tgbbiblio.pdf Graphic file (type pdf)
+<use ../egfigure/tgbbiblio.pdf, page 1>
+File: ../egfigure/tgbbiblio.pdf Graphic file (type pdf)
+<use ../egfigure/tgbbiblio.pdf, page 1>
+File: ../egfigure/tgbbiblio.pdf Graphic file (type pdf)
+<use ../egfigure/tgbbiblio.pdf, page 1>
+ [15]
+File: ../egfigure/tgbbiblio.pdf Graphic file (type pdf)
+<use ../egfigure/tgbbiblio.pdf, page 2>
+File: ../egfigure/tgbbiblio.pdf Graphic file (type pdf)
+<use ../egfigure/tgbbiblio.pdf, page 2>
+File: ../egfigure/tgbbiblio.pdf Graphic file (type pdf)
+<use ../egfigure/tgbbiblio.pdf, page 2>
+ [16]
+File: ../egfigure/tgbbiblio.pdf Graphic file (type pdf)
+<use ../egfigure/tgbbiblio.pdf, page 3>
+File: ../egfigure/tgbbiblio.pdf Graphic file (type pdf)
+<use ../egfigure/tgbbiblio.pdf, page 3>
+File: ../egfigure/tgbbiblio.pdf Graphic file (type pdf)
+<use ../egfigure/tgbbiblio.pdf, page 3>
+ [17]
+File: ../egfigure/tgbbiblio.pdf Graphic file (type pdf)
+<use ../egfigure/tgbbiblio.pdf, page 4>
+File: ../egfigure/tgbbiblio.pdf Graphic file (type pdf)
+<use ../egfigure/tgbbiblio.pdf, page 4>
+File: ../egfigure/tgbbiblio.pdf Graphic file (type pdf)
+<use ../egfigure/tgbbiblio.pdf, page 4>
+ [18]
+(./gbT7714-2015.aux) ) 
+Here is how much of TeX's memory you used:
+ 2392 strings out of 479418
+ 37230 string characters out of 5888105
+ 281387 words of memory out of 5000000
+ 19910 multiletter control sequences out of 15000+600000
+ 532346 words of font info for 25 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 41i,18n,45p,285b,433s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+Output written on gbT7714-2015.pdf (18 pages).
