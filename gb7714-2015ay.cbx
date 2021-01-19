@@ -7,13 +7,23 @@
 %% Released under the LaTeX Project Public License v1.3c or later
 %% ---------------------------------------------------------------
 %%
-\def\versionofgbtstyle{2020/07/21 v1.0v}
+\def\versionofgbtstyle{2021/01/19 v1.0w}
 \ProvidesFile{gb7714-2015ay.cbx}[\versionofgbtstyle biblatex citation style]
 
 %
 %   加载标准样式
 %
 \RequireCitationStyle{authoryear-comp}
+
+
+%
+%   增加一个控制是否将标准标签中的作者加上超链接的选项
+%   20210119,v1.0v,hzz
+\newtoggle{bbx:gblabelref}
+\DeclareBibliographyOption{gblabelref}[true]{%biblatex低版本
+  \settoggle{bbx:gblabelref}{#1}}
+\ExecuteBibliographyOptions{gblabelref}
+
 
 \ExecuteBibliographyOptions{
   %autocite  = superscript ,
@@ -72,6 +82,80 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
 \iffieldequalstr{userf}{chinese}{\renewcommand*{\andothersdelim}{\addthinspace}}%\addthinspace
   {\renewcommand*{\andothersdelim}{\addspace}}%
 }
+
+%
+%   修订使可用选项gblabelref来控制是否将标准标签中的作者加上超链接
+%   20210119,v1.0v,hzz
+\iftoggle{iftlatest}%
+{\renewbibmacro*{cite}{%
+  \iffieldundef{shorthand}
+    {\ifthenelse{\ifnameundef{labelname}\OR\iffieldundef{labelyear}}
+       {\usebibmacro{cite:label}%
+        \setunit{\printdelim{nonameyeardelim}}%
+        \usebibmacro{cite:labeldate+extradate}%
+        \usebibmacro{cite:reinit}}
+       {\iffieldequals{namehash}{\cbx@lasthash}
+          {\ifthenelse{\iffieldequals{labelyear}{\cbx@lastyear}\AND
+                       \(\value{multicitecount}=0\OR\iffieldundef{postnote}\)}
+             {\setunit{\addcomma}%
+              \usebibmacro{cite:extradate}}
+             {\setunit{\compcitedelim}%
+              \usebibmacro{cite:labeldate+extradate}%
+              \savefield{labelyear}{\cbx@lastyear}}}
+          {\iftoggle{bbx:gblabelref}{\printtext[bibhyperref]{\printnames{labelname}}}{\printnames{labelname}}%
+           \setunit{\printdelim{nameyeardelim}}%
+           \usebibmacro{cite:labeldate+extradate}%
+           \savefield{namehash}{\cbx@lasthash}%
+           \savefield{labelyear}{\cbx@lastyear}}}}
+    {\usebibmacro{cite:shorthand}%
+     \usebibmacro{cite:reinit}}%
+  \setunit{\multicitedelim}}
+\renewbibmacro*{textcite}{%
+  \iffieldequals{namehash}{\cbx@lasthash}
+    {\iffieldundef{shorthand}
+       {\ifthenelse{\iffieldequals{labelyear}{\cbx@lastyear}\AND
+                    \(\value{multicitecount}=0\OR\iffieldundef{postnote}\)}
+          {\setunit{\addcomma}%
+           \usebibmacro{cite:extradate}}
+          {\setunit{\compcitedelim}%
+           \usebibmacro{cite:labeldate+extradate}%
+           \savefield{labelyear}{\cbx@lastyear}}}
+       {\setunit{\compcitedelim}%
+        \usebibmacro{cite:shorthand}%
+        \global\undef\cbx@lastyear}}
+    {\ifnameundef{labelname}
+       {\iffieldundef{shorthand}
+          {\usebibmacro{cite:label}%
+           \setunit{%
+             \global\booltrue{cbx:parens}%
+             \printdelim{nonameyeardelim}\bibopenparen}%
+           \ifnumequal{\value{citecount}}{1}
+             {\usebibmacro{prenote}}
+             {}%
+           \usebibmacro{cite:labeldate+extradate}}
+          {\usebibmacro{cite:shorthand}}}
+       {\iftoggle{bbx:gblabelref}{\printtext[bibhyperref]{\printnames{labelname}}}{\printnames{labelname}}%
+        \setunit{%
+          \global\booltrue{cbx:parens}%
+          \printdelim{nameyeardelim}\bibopenparen}%
+        \ifnumequal{\value{citecount}}{1}
+          {\usebibmacro{prenote}}
+          {}%
+        \iffieldundef{shorthand}
+          {\iffieldundef{labelyear}
+             {\usebibmacro{cite:label}}
+             {\usebibmacro{cite:labeldate+extradate}}%
+           \savefield{labelyear}{\cbx@lastyear}}
+          {\usebibmacro{cite:shorthand}%
+           \global\undef\cbx@lastyear}}%
+     \stepcounter{textcitecount}%
+     \savefield{namehash}{\cbx@lasthash}}%
+  \setunit{%
+    \ifbool{cbx:parens}
+      {\bibcloseparen\global\boolfalse{cbx:parens}}
+      {}%
+    \textcitedelim}}}{}
+
 
 
 %
@@ -196,7 +280,7 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
              {\setunit{\compcitedelim}%
               \usebibmacro{cite:labeldate+extradate}%
               \savefield{labelyear}{\cbx@lastyear}}}
-          {\printnames{labelname}%
+          {\iftoggle{bbx:gblabelref}{\printtext[bibhyperref]{\printnames{labelname}}}{\printnames{labelname}}%%
            %\setunit{\printdelim{nameyeardelim}}%
            (\usebibmacro{cite:labeldate+extradate})%
            \savefield{namehash}{\cbx@lasthash}%

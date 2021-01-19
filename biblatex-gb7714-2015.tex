@@ -93,7 +93,8 @@ sorting选项值(gb7714-2015支持以语言著者-出版年标题升序排列，
 姓名格式调整(gbnamefmt选项，可以设置大写、小写、西语习惯用法、拼音习惯用法)、
 出版项控制(gbpub选项，可设置出版项缺失时是否填补信息)、类型和载体标识控制(gbtype选项，可设置不输出)、
 析出文献标识符控制(gbpunctin选项，可设置\texttt{//}不输出或其它表示形式)、
-标题超链接控制(gbtitlelink选项，可设置标题超链接)、
+标题超链接控制(gbtitlelink选项，可设置文献表中各条目标题超链接)、
+标准标签超链接控制(gblabelref选项，可设置标注中作者标签的超链接)、
 作者项处理(gbnoauthor选项，可设置作者缺失时是否填补信息)；
 
 著录表格式选项和命令：
@@ -642,6 +643,20 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{tcolorbox}
 \caption{文献标题超链接控制选项}\label{fig:eg:optgbtitlelink}
 \end{figure}
+
+
+  \pdfbookmark[4]{gblabelref}{gblabelref}
+  \item[gblabelref]=\textbf{true}，false. \hfill default is true
+
+  为作者年制设置标注中的作者标签的超链接增加的选项。
+  \begin{itemize}
+    \item gblabelref=true，即默认给作者标签加上超链接。
+    \item gblabelref=false，不给作者标签加上超链接。
+  \end{itemize}
+  测试文件见：
+  \href{run:egphoto/opt-gblabelref-true.tex}{opt-gblabelref-true.tex}。
+
+
 
   \pdfbookmark[4]{gblocal}{gblocal}
   \item[gblocal]=\textbf{gb7714-2015}，chinese，english. \hfill default is gb7714-2015

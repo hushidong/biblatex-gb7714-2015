@@ -1,0 +1,72 @@
+
+\documentclass[twoside]{article}
+    \usepackage{ctex}
+    \usepackage{fontspec}
+\usepackage[backend=biber,style=gb7714-2015ay,mergedate=none]{biblatex}
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+@ARTICLE{DUBAR2013--,
+  author       = {DUBAR, K L.  AND MITCHELL, D A.},
+  title        = {Revealing nature's synthetic potential through the study of ribosomal natural product biosynthesis},
+  Journaltitle = {ACS chemical biology},
+  DATE         = {2013},
+  VOLUME       = {8},
+  pages        = {473-487},
+  url          = {http://pubs.acs.org/doi/pdfplus/10.1021/cb3005325},
+  urldate      = {2013-10-16}
+}
+
+@ARTICLE{DUBAR2008--,
+  author       = {DUBAR, K L.  AND MITCHELL, D A.},
+  title        = {A study on online pharmaceutical operating situation and supervision mechanism},
+  Journaltitle = {Shanghai food and drug information research},
+  DATE         = {2008},
+  number       = {1},
+  pages        = {8-11},
+}
+
+@ARTICLE{关立哲2014--,
+  author       = {关立哲 and 韩纪富 and 张晨延},
+  title        = {科技期刊编辑审读中要注重比较思维的科学运用},
+  Journaltitle = {编辑学报},
+  DATE         = {2014},
+  VOLUME       = {26},
+  number       = {2},
+  pages        = {144-146}
+}
+
+@ARTICLE{关立哲2005--,
+  author       = {关立哲 and 韩纪富 and 张晨延},
+  title        = {从交易费用的角度谈如何构建药品流通的良性机制},
+  Journaltitle = {中国物价},
+  DATE         = {2005},
+  number       = {8},
+  pages        = {42-45},
+}
+
+\end{filecontents}
+
+\addbibresource{\jobname.bib}
+
+\usepackage{hyperref}
+
+    \begin{document}
+
+
+\cite{关立哲2005--,关立哲2014--,DUBAR2008--,DUBAR2013--}
+
+\parencite{关立哲2005--,关立哲2014--,DUBAR2008--,DUBAR2013--}
+
+\citet{关立哲2005--,关立哲2014--,DUBAR2008--,DUBAR2013--}
+
+\citep{关立哲2005--,关立哲2014--,DUBAR2008--,DUBAR2013--}
+
+\textcite{关立哲2005--,关立哲2014--,DUBAR2008--,DUBAR2013--}
+
+\authornumcite{关立哲2005--,关立哲2014--,DUBAR2008--,DUBAR2013--}
+
+
+\printbibliography
+
+    \end{document} 
