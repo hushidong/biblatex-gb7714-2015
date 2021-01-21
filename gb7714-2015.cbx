@@ -15,6 +15,14 @@
 %
 \RequireCitationStyle{numeric-comp} %numeric
 
+%
+%   增加一个控制是否将标准标签中的作者加上超链接的选项
+%   20210121,v1.0w,hzz
+\newtoggle{bbx:gblabelref}
+\DeclareBibliographyOption{gblabelref}[false]{%biblatex低版本
+  \settoggle{bbx:gblabelref}{#1}}
+\ExecuteBibliographyOptions{gblabelref}
+
 
 %
 %   选项设置
@@ -26,6 +34,35 @@
   maxcitenames=1,
   mincitenames=1,
 }
+
+%
+%   修订使可用选项gblabelref来控制是否将标准标签中的作者加上超链接
+%   20210121,v1.0w,hzz
+\iftoggle{iftlatest}%
+{\renewbibmacro*{textcite}{%
+  \iffieldequals{namehash}{\cbx@lasthash}
+    {\usebibmacro{cite:comp}}
+    {\usebibmacro{cite:dump}%
+     \ifbool{cbx:parens}
+       {\printtext{\bibclosebracket}\global\boolfalse{cbx:parens}}
+       {}%
+     \iffirstcitekey
+       {}
+       {\setunit{\textcitedelim}}%
+     \usebibmacro{cite:init}%
+     \ifnameundef{labelname}
+       {\printfield[citetitle]{labeltitle}}
+       {\iftoggle{bbx:gblabelref}{\printtext[bibhyperref]{\printnames{labelname}}}{\printnames{labelname}}}%
+     \setunit*{\printdelim{namelabeldelim}}%
+     \printtext{\bibopenbracket}\global\booltrue{cbx:parens}%
+     \ifnumequal{\value{citecount}}{1}
+       {\usebibmacro{prenote}}
+       {}%
+     \usebibmacro{cite:comp}%
+     \stepcounter{textcitecount}%
+     \savefield{namehash}{\cbx@lasthash}}}%
+     }
+
 
 %textcite标注命令中的标点设置
 %\DeclareDelimFormat[textcite]{andothersdelim}{\addspace}%
@@ -155,9 +192,9 @@
 %   定义\authornumcite命令，输出作者信息，然后在后面带上顺序编码
 %   20180427，v1.0k，增加，hzz
 %   gb7714样式新定义的命令都把cite放到最后，比如前面的pagescite，yearcite，这里的\authornumcite
-%   区别于biblatex定义的命令都把cite放到前面，比如citeauthor等。
-%见numeric.CBX
-\newbibmacro*{cite}{%
+%   区别于biblatex定义的命令都把cite放到前面，比如citeauthor等。见numeric.CBX
+%   20200121，v1.0w，增加超链接，hzz
+\newbibmacro*{citeathn}{%
   \printtext[bibhyperref]{%
     \printfield{labelprefix}%
     \printfield{labelnumber}%
@@ -169,8 +206,9 @@
   {\usebibmacro{prenote}}
   {\iffieldequalstr{userf}{cn}{\renewcommand*{\andothersdelim}{\addthinspace}}%\addthinspace
   {\renewcommand*{\andothersdelim}{\addspace}}%
-  \printnames{labelname}\mkbibsuperscript{\mkbibbrackets{\usebibmacro{citeindex}%
-   \usebibmacro{cite}}}}
+  \iftoggle{bbx:gblabelref}{\printtext[bibhyperref]{\printnames{labelname}}}{\printnames{labelname}}%
+  \mkbibsuperscript{\mkbibbrackets{\usebibmacro{citeindex}%
+   \usebibmacro{citeathn}}}}
   {\multicitedelim}
   {\mkbibsuperscript{\printfield{postnote}}}
 
@@ -185,7 +223,7 @@
 %  {\iffieldequalstr{userf}{cn}{\renewcommand*{\andothersdelim}{\addthinspace}}%\addthinspace
 %  {\renewcommand*{\andothersdelim}{\addspace}}%
 %  \printnames{labelname}\mkbibsuperscript{\mkbibbrackets{\usebibmacro{citeindex}%
-%   \usebibmacro{cite}}}}
+%   \usebibmacro{citeathn}}}}
 %  {\multicitedelim}
 %  {\mkbibsuperscript{\printfield{postnote}}}
 
