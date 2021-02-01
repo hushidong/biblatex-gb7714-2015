@@ -170,7 +170,7 @@ citestyle=gb7714-2015%,backref=true%%其中后端backend使用biber
 }
 
 @Book{蔡敏2006--,
-  Title                    = {UML基础和Rose建模教程},27
+  Title                    = {UML基础和Rose建模教程},
   Address                  = {北京},
   Author                   = {蔡敏 and 徐慧慧 and 黄柄强},
   Publisher                = {人民邮电出版社},
@@ -201,7 +201,7 @@ citestyle=gb7714-2015%,backref=true%%其中后端backend使用biber
 
 4. 顺序编码制中同时输出作者和顺序编码标签，比如：\\
 	见\citeauthor{蔡敏2006--}\cite{蔡敏2006--}\\
-	见\authornu*mcite{蔡敏2006--}\\
+	见\authornumcite{蔡敏2006--}\\
 	见\textcite{蔡敏2006--} (顺序编码标签不上标)
 
 5. 作者年制文中已有作者还需要年份和页码(顺序编码制与pagescite作用相同，作者年制年份行内页码上标):\\
