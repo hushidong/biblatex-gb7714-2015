@@ -44,36 +44,37 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 
 
 ## Applications
-
-* [SJTUThesis(上海交通大学学位论文模板)](https://github.com/sjtug/SJTUThesis)(母校的论文模板，不得不说缘分真的很神奇)
-* [fduthesis(复旦大学论文模板)](https://github.com/Stone-Zeng/fduthesis)
-* [Zhejiang University thesis(浙江大学毕业设计/论文模板)](https://github.com/TheNetAdmin/zjuthesis)
-* [UCASthesis(中国科学院大学学位论文模板**国科大新版标准**)](https://github.com/xiaoyao9933/UCASthesis)
-* [UCASthesis(ucasthesis 国科大学位论文 LaTeX 模板 [最新样式])](https://github.com/mohuangrui/ucasthesis)
-* [TongjiThesis(同济大学硕博士论文LaTeX模板)](https://github.com/marquistj13/TongjiThesis)
-* [neuthesis(东北大学博士学位论文Latex模板)](https://github.com/mervin0502/neuthesis)
-* [nwafuthesis(西北农林科技大学学位论文LaTeX文档类)](https://github.com/registor/nwafuthesis)
-* [nudtpaper(nudt学位论文模板)](https://github.com/liubenyuan/nudtpaper)
-* [ECNU-Undergraduate-LaTeX(华东师范大学本科毕业论文模板)](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)
-* [fjnu-bathesis (福建师范大学本科毕业论文LaTeX 模板)](https://github.com/fjnuer/fjnu-bathesis)
-* [Thesis-Template-for-XJTU (西安交大毕业设计模板)](https://github.com/DXie123/Thesis-Template-for-XJTU)
+* [BIThesis（bachelor graduation thesis for  Dept. of Undergraduate Academic Affairs of Beijing Institute of Technology.）](https://github.com/BITNP/BIThesis)
 * [CAUTemplate(中国农业大学课程论文模板)](https://github.com/Cdmium/CAUTemplate)
-* [Yet anoter BUPT Thesis LaTeX class (北邮研究生学位设计的LaTeX文档类)](https://github.com/qcts33/BUPTthesis-ctex)
-* [Study-LaTeX(LaTeX学习笔记)](https://github.com/Zousiyu/Study-LaTeX)
 * [ElegantBook](https://github.com/ElegantLaTeX/ElegantBook)
-* [《经济研究》杂志 LaTeX 论文模板)](https://github.com/EthanDeng/Chinese-ERJ)
-* [WUTthesis（武汉理工大学研究生学位论文的 LaTeX 模板）](https://github.com/Jiayin-Gu/WUTthesis)
-* [shtthesis (ShangHaiTech university THESIS)](https://github.com/lirundong/shtthesis)
+* [ECNU-Undergraduate-LaTeX(华东师范大学本科毕业论文模板)](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)
+* [fduthesis(复旦大学论文模板)](https://github.com/Stone-Zeng/fduthesis)
+* [fjnu-bathesis (福建师范大学本科毕业论文LaTeX 模板)](https://github.com/fjnuer/fjnu-bathesis)
 * [LaTeX-SWUFE-Bachelor-Thesis （西南财经大学本科毕业论文 LaTeX 模板）](https://github.com/sukanka/LaTeX-SWUFE-Bachelor-Thesis)
+* [LZUthesis（兰州大学本科毕业论文LaTeX模板）](https://github.com/szsdk/LZUthesis)
+* [neuthesis(东北大学博士学位论文Latex模板)](https://github.com/mervin0502/neuthesis)
 * [NJU-thesis-esz（南京大学学位论文-微调整后适用于人文社科）](https://github.com/EdwardSaidZhou/NJU-thesis-esz)
 * [NKThesis（南开大学硕士毕业论文(博士论文)Latex模板）](https://github.com/procuteboy/NKThesis)
 * [NKUBachelorThesis（南开大学本科生毕业论文(毕业设计)LaTeX模板）](https://github.com/NKcqx/NKUBachelorThesis)
-* [BIThesis（bachelor graduation thesis for  Dept. of Undergraduate Academic Affairs of Beijing Institute of Technology.）](https://github.com/BITNP/BIThesis)
 * [nputhesis（NPU 博士、硕士学位论文 \LaTeX 模板）](https://github.com/NPUSCG/nputhesis)
-* [sustechthesis（Southern University of Science and Technology Thesis Template LaTeX Template）](https://github.com/Iydon/sustechthesis)
-* [SHMTUThesis（上海海事大学 LaTeX 学位论文模板）](https://github.com/hellckt/SHMTUThesis)
-* [LZUthesis（兰州大学本科毕业论文LaTeX模板）](https://github.com/szsdk/LZUthesis)
 * [nuaa-thesis（南京航空航天大学本科、硕士和博士学位论文的样式模板）](https://github.com/nuaa803/nuaa-thesis)
+* [nudtpaper(nudt学位论文模板)](https://github.com/liubenyuan/nudtpaper)
+* [nwafuthesis(西北农林科技大学学位论文LaTeX文档类)](https://github.com/registor/nwafuthesis)
+* [shtthesis (ShangHaiTech university THESIS)](https://github.com/lirundong/shtthesis)
+* [SHMTUThesis（上海海事大学 LaTeX 学位论文模板）](https://github.com/hellckt/SHMTUThesis)
+* [SJTUThesis(上海交通大学学位论文模板)](https://github.com/sjtug/SJTUThesis) (母校的论文模板，不得不说缘分真的很神奇，16年一出来就直接用上)
+* [sustechthesis（Southern University of Science and Technology Thesis Template LaTeX Template）](https://github.com/Iydon/sustechthesis)
+* [Thesis-Template-for-XJTU (西安交大毕业设计模板)](https://github.com/DXie123/Thesis-Template-for-XJTU)
+* [ThuThesis（LaTeX Thesis Template for Tsinghua University ）](https://github.com/tuna/thuthesis)
+* [TongjiThesis(同济大学硕博士论文LaTeX模板)](https://github.com/marquistj13/TongjiThesis)
+* [UCASthesis(中国科学院大学学位论文模板**国科大新版标准**)](https://github.com/xiaoyao9933/UCASthesis)
+* [UCASthesis(ucasthesis 国科大学位论文 LaTeX 模板 [最新样式])](https://github.com/mohuangrui/ucasthesis)
+* [ustcthesis（中国科学技术大学学位论文 LaTeX 模板）](https://github.com/ustctug/ustcthesis)
+* [WUTthesis（武汉理工大学研究生学位论文的 LaTeX 模板）](https://github.com/Jiayin-Gu/WUTthesis)
+* [Yet anoter BUPT Thesis LaTeX class (北邮研究生学位设计的LaTeX文档类)](https://github.com/qcts33/BUPTthesis-ctex)
+* [Zhejiang University thesis(浙江大学毕业设计/论文模板)](https://github.com/TheNetAdmin/zjuthesis)
+* [《经济研究》杂志 LaTeX 论文模板)](https://github.com/EthanDeng/Chinese-ERJ)
+* [LaTeX学习笔记（Study-LaTeX)](https://github.com/Zousiyu/Study-LaTeX)
 * [...]
 
 
@@ -280,6 +281,52 @@ biblatex-gb7714-2015宏包是基于biblatex的样式宏包，目前texlive，mik
 如果使用时，系统提示找不gb7714-2015.bbx或gb7714-2015ay.bbx文件的错误，说明当前tex系统未安装biblatex-gb7714-2015样式包，这时需要安装它。
 
 最简单的方法是从本项目源码中下载 gb7714-2015.bbx, gb7714-2015ay.bbx, gb7714-2015.cbx, gb7714-2015ay.cbx 四个文件放到你要编译的主文档所在目录，如果需要使用gbk编码，则还需复制 gb7714-2015-gbk.def 文件。对于已经安装的用户需要更新到最新版，也可以下载这些文件替换系统已经安装的文件。
+
+
+* <b>使用biblatex时运行简单示例也出现错误，查看biber输出结果似乎不正常，这种情况怎么解决？*
+
+由于biber在第一次运行时会在缓存文件夹下创建一些二进制运行文件，如果这些文件被破坏，那么biber运行结果会出现莫名其妙的错误。比如：
+biber运行一半就结束了，log信息如下所示：
+
+```
+INFO - This is Biber 2.16
+INFO - Logfile is 'thuthesis-example.blg'
+INFO - Reading 'thuthesis-example.bcf'
+INFO - Found 34 citekeys in bib section 0
+INFO - Processing section 0
+INFO - Looking for bibtex format file 'ref/refs.bib' for section 0
+INFO - LaTeX decoding ...
+INFO - Found BibTeX data source 'ref/refs.bib'
+```
+这次运行中知识找到了bib文件，并没有下一步的处理，显然是存在问题的。
+
+因此如果出现这种情况，可以手动删除缓存文件夹，让biber重新创建。这些缓存文件夹名字通常为：
+
+```
+    par-<hex_encoded_username>/cache-*
+    par-<hex_encoded_username>\cache-*
+```
+
+在不同的系统下面，缓存文件夹的位置是不同的，可能的位置包括：
+
+```
+    /var/folders/*/*/*/ (OSX, local GUI login shell)
+    /var/tmp/ (OSX (remote ssh login shell), Unix)
+    /tmp/ (Linux)
+    C:\Documents and Settings\<username>\Local Settings\Temp (Windows XP/Cyg- win)
+    C:\Windows\Temp (Windows)
+    C:\Users\<username>\AppData\Local\Temp (Windows 7/8)
+```
+
+也可以从运行得到的.blg文件或者命令`biber --cache`来找到缓存文件夹。
+
+删除缓存文件夹操作，在Linux和Mac下可以使用如下命令操作：
+```
+rm -rf `biber --cache`
+```
+
+在windows下，那么其实随便用个清理软件把临时文件夹清理一下就行。直接点就是找到`par-<hex_encoded_username>/cache-*`缓存文件夹然后删除它。
+
 
 
 
@@ -906,16 +953,35 @@ biblatex中处理顺序数字编码压缩的代码默认从3个连续编码开�
 ​	
 ### 5. Examples/著录和标注结果示例
 
-* 顺序编码制
++ 标注样式示例
 
-![示例a](example/fig-style-numeric.png)
+	* 顺序编码制
+
+	![示例a](example/fig-style-numeric.png)
+		
+	* 作者年制
+
+	![示例b](example/fig-style-authoryear.png)
+
+	具体代码见：egfigure 文件夹下的各个文件。
+	命令说明见：biblatex-gb7714-2015.pdf文档。
+
++ 著录样式示例
+
+	国标文档的完整实现：
 	
-* 作者年制
+	* 顺序编码制
+	
+	代码见：![tgbcitation.tex](egfigure/tgbcitation.tex)
+	
+	* 作者年制
+	
+	代码见：![tngbcitationay.tex](egfigure/tngbcitationay.tex)
+	
 
-![示例b](example/fig-style-authoryear.png)
++ 姓名的格式更改示例
 
-
-* 姓名的格式更改
+代码见：![opt-gbnamefmt.tex](example/opt-gbnamefmt.tex) ，![opt-gbnamefmt-default.tex](example/opt-gbnamefmt-default.tex) 
 
 对于bib文件中的如下条目，有:
 
