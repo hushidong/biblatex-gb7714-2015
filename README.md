@@ -283,20 +283,20 @@ biblatex-gb7714-2015宏包是基于biblatex的样式宏包，目前texlive，mik
 最简单的方法是从本项目源码中下载 gb7714-2015.bbx, gb7714-2015ay.bbx, gb7714-2015.cbx, gb7714-2015ay.cbx 四个文件放到你要编译的主文档所在目录，如果需要使用gbk编码，则还需复制 gb7714-2015-gbk.def 文件。对于已经安装的用户需要更新到最新版，也可以下载这些文件替换系统已经安装的文件。
 
 
-* <b>使用biblatex时运行简单示例也出现错误，查看biber输出结果似乎不正常，这种情况怎么解决？*
+* <b>使用biblatex时运行简单示例也出现错误，查看biber输出结果似乎不正常，这种情况怎么解决？</b>
 
 由于biber在第一次运行时会在缓存文件夹下创建一些二进制运行文件，如果这些文件被破坏，那么biber运行结果会出现莫名其妙的错误。比如：
 biber运行一半就结束了，log信息如下所示：
 
 ```
-INFO - This is Biber 2.16
-INFO - Logfile is 'thuthesis-example.blg'
-INFO - Reading 'thuthesis-example.bcf'
-INFO - Found 34 citekeys in bib section 0
-INFO - Processing section 0
-INFO - Looking for bibtex format file 'ref/refs.bib' for section 0
-INFO - LaTeX decoding ...
-INFO - Found BibTeX data source 'ref/refs.bib'
+	INFO - This is Biber 2.16
+	INFO - Logfile is 'thuthesis-example.blg'
+	INFO - Reading 'thuthesis-example.bcf'
+	INFO - Found 34 citekeys in bib section 0
+	INFO - Processing section 0
+	INFO - Looking for bibtex format file 'ref/refs.bib' for section 0
+	INFO - LaTeX decoding ...
+	INFO - Found BibTeX data source 'ref/refs.bib'
 ```
 这次运行中知识找到了bib文件，并没有下一步的处理，显然是存在问题的。
 
@@ -958,17 +958,23 @@ biblatex中处理顺序数字编码压缩的代码默认从3个连续编码开�
 	* 顺序编码制
 
 	![示例a](example/fig-style-numeric.png)
+	
+	代码见：![egcitetab.tex](egfigure/egcitetab.tex)，![egcitenumtp.tex](egfigure/egcitenumtp.tex)
 		
 	* 作者年制
 
 	![示例b](example/fig-style-authoryear.png)
+	
+	代码见：![egciteaytab.tex](egfigure/egciteaytab.tex)，![egciteaytp.tex](egfigure/egciteaytp.tex)
+	，![egciteay.tex](egfigure/egciteay.tex)
 
 	具体代码见：egfigure 文件夹下的各个文件。
+	
 	命令说明见：biblatex-gb7714-2015.pdf文档。
 
 + 著录样式示例
 
-	国标文档的完整实现：
+	国标文档的完整复现：
 	
 	* 顺序编码制
 	
@@ -977,6 +983,10 @@ biblatex中处理顺序数字编码压缩的代码默认从3个连续编码开�
 	* 作者年制
 	
 	代码见：![tngbcitationay.tex](egfigure/tngbcitationay.tex)
+	
+	* 国标附录
+	
+	代码见：![tgbbiblio.tex](egfigure/tgbbiblio.tex)
 	
 
 + 姓名的格式更改示例
