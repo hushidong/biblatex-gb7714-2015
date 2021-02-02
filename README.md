@@ -283,52 +283,6 @@ biblatex-gb7714-2015宏包是基于biblatex的样式宏包，目前texlive，mik
 最简单的方法是从本项目源码中下载 gb7714-2015.bbx, gb7714-2015ay.bbx, gb7714-2015.cbx, gb7714-2015ay.cbx 四个文件放到你要编译的主文档所在目录，如果需要使用gbk编码，则还需复制 gb7714-2015-gbk.def 文件。对于已经安装的用户需要更新到最新版，也可以下载这些文件替换系统已经安装的文件。
 
 
-* <b>使用biblatex时运行简单示例也出现错误，查看biber输出结果似乎不正常，这种情况怎么解决？</b>
-
-由于biber在第一次运行时会在缓存文件夹下创建一些二进制运行文件，如果这些文件被破坏，那么biber运行结果会出现莫名其妙的错误。比如：
-biber运行一半就结束了，log信息如下所示：
-
-```
-	INFO - This is Biber 2.16
-	INFO - Logfile is 'thuthesis-example.blg'
-	INFO - Reading 'thuthesis-example.bcf'
-	INFO - Found 34 citekeys in bib section 0
-	INFO - Processing section 0
-	INFO - Looking for bibtex format file 'ref/refs.bib' for section 0
-	INFO - LaTeX decoding ...
-	INFO - Found BibTeX data source 'ref/refs.bib'
-```
-这次运行中知识找到了bib文件，并没有下一步的处理，显然是存在问题的。
-
-因此如果出现这种情况，可以手动删除缓存文件夹，让biber重新创建。这些缓存文件夹名字通常为：
-
-```
-    par-<hex_encoded_username>/cache-*
-    par-<hex_encoded_username>\cache-*
-```
-
-在不同的系统下面，缓存文件夹的位置是不同的，可能的位置包括：
-
-```
-    /var/folders/*/*/*/ (OSX, local GUI login shell)
-    /var/tmp/ (OSX (remote ssh login shell), Unix)
-    /tmp/ (Linux)
-    C:\Documents and Settings\<username>\Local Settings\Temp (Windows XP/Cyg- win)
-    C:\Windows\Temp (Windows)
-    C:\Users\<username>\AppData\Local\Temp (Windows 7/8)
-```
-
-也可以从运行得到的.blg文件或者命令`biber --cache`来找到缓存文件夹。
-
-删除缓存文件夹操作，在Linux和Mac下可以使用如下命令操作：
-```
-rm -rf `biber --cache`
-```
-
-在windows下，那么其实随便用个清理软件把临时文件夹清理一下就行。直接点就是找到`par-<hex_encoded_username>/cache-*`缓存文件夹然后删除它。
-
-
-
 
 * <b>请问使用时biblatex-gb7714-2015宏包时出现错误“ Package xkeyval Error: gb****** ' undefined in families blx@opt@pre'. [\blx@processoptions] ”？</b>
 
@@ -360,6 +314,50 @@ xelatex jobname.tex
 biber jobname
 xelatex jobname.tex
 ```
+
+* <b>使用biblatex时运行简单示例也出现错误，查看biber输出结果似乎不正常，这种情况怎么解决？</b>
+
+由于biber在第一次运行时会在缓存文件夹下创建一些二进制运行文件，如果这些文件被破坏，那么biber运行结果会出现莫名其妙的错误。比如：
+biber运行一半就结束了，log信息如下所示：
+
+```
+	INFO - This is Biber 2.16
+	INFO - Logfile is 'thuthesis-example.blg'
+	INFO - Reading 'thuthesis-example.bcf'
+	INFO - Found 34 citekeys in bib section 0
+	INFO - Processing section 0
+	INFO - Looking for bibtex format file 'ref/refs.bib' for section 0
+	INFO - LaTeX decoding ...
+	INFO - Found BibTeX data source 'ref/refs.bib'
+```
+这次运行中只是找到了bib文件，并没有下一步的处理，显然是存在问题的。
+
+因此如果出现这种情况，可以手动删除缓存文件夹，让biber重新创建。这些缓存文件夹名字通常为：
+
+```
+    par-<hex_encoded_username>/cache-*
+    par-<hex_encoded_username>\cache-*
+```
+
+在不同的系统下面，缓存文件夹的位置是不同的，可能的位置包括：
+
+```
+    /var/folders/*/*/*/ (OSX, local GUI login shell)
+    /var/tmp/ (OSX (remote ssh login shell), Unix)
+    /tmp/ (Linux)
+    C:\Documents and Settings\<username>\Local Settings\Temp (Windows XP/Cyg- win)
+    C:\Windows\Temp (Windows)
+    C:\Users\<username>\AppData\Local\Temp (Windows 7/8)
+```
+
+也可以从运行得到的.blg文件或者命令`biber --cache`来找到缓存文件夹。
+
+删除缓存文件夹操作，在Linux和Mac下可以使用如下命令操作：
+```
+rm -rf `biber --cache`
+```
+
+在windows下，那么其实随便用个清理软件把临时文件夹清理一下就行。直接点就是找到`par-<hex_encoded_username>/cache-*`缓存文件夹然后删除它。
 
 
 * <b>为什么利用 ctex2.9 套装进行编译时，出现错误？</b>
