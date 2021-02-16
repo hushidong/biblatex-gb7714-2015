@@ -213,6 +213,39 @@
 %   设置宏包选项
 %=====================================================================
     %
+    %   增加一个控制是否输出恢复传统crossref作用的选项
+    %   20210216,v1.0w,hzz
+    \newtoggle{bbx:citexref}
+    \DeclareBibliographyOption{citexref}[true]{%
+    \settoggle{bbx:citexref}{#1}}
+    \ExecuteBibliographyOptions{citexref}
+
+    \newbibmacro*{citexref}{%
+      \printtext[bibhyperref]{%
+        \printfield{labelprefix}%
+        \printfield{labelnumber}%
+        \ifbool{bbx:subentry}
+          {\printfield{entrysetcount}}
+          {}}}
+
+    \DeclareCiteCommand{\bbx@xrefcite}[\mkbibbrackets]%
+      {\boolfalse{citetracker}%
+       \boolfalse{pagetracker}%
+       \boolfalse{backtracker}}
+      {\usebibmacro{citexref}}
+      {}
+      {}
+
+    \newbibmacro*{crosscite}[1]{%
+      \iftoggle{bbx:citexref}
+        {\iffieldundef{crossref}
+           {\iffieldundef{xref}
+              {\usebibmacro{#1}}
+              {\printtext{\bbx@xrefcite{\thefield{xref}}}}}
+           {\printtext{\bbx@xrefcite{\thefield{crossref}}}}}
+        {\usebibmacro{#1}}}
+
+    %
     %   增加一个控制是否输出文献载体的选项
     %   20191125,v1,0s,hzz
     \newtoggle{bbx:gbmedium}
@@ -3838,19 +3871,12 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
     {}%
   \usebibmacro{finentry}\usebibmacro{annotation}}
 
-
 %
-%   专著中的析出文献的格式修改
-%
-\DeclareBibliographyDriver{inbook}{%源来自standard.bbx
-  \usebibmacro{bibindex}%
-  \usebibmacro{begentry}%
-  \usebibmacro{author/translator+others}%
-\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
-\usebibmacro{title}%
-\usebibmacro{in:}%
-%\printtext{\texttt{//}\addthinspace}%
-  \usebibmacro{bybookauthor}%
+%   增加inbook:parent用于辅助crossref传统功能的实现
+%   用在{crosscite}宏中
+%   20210216,v1.0w,hzz
+\newbibmacro*{inbook:parent}{%
+\usebibmacro{bybookauthor}%
   \ifnameundef{bookauthor}{%
   \ifnameundef{editor}{}{\newunit}%
   }{\newunit}%替换下一句
@@ -3877,7 +3903,20 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
   \newunit\newblock
   %\printfield{note}%
   %\newunit\newblock
-  \usebibmacro{publisher+location+date}%
+  \usebibmacro{publisher+location+date}}
+
+%
+%   专著中的析出文献的格式修改
+%
+\DeclareBibliographyDriver{inbook}{%源来自standard.bbx
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+\usebibmacro{title}%
+\usebibmacro{in:}%
+%\printtext{\texttt{//}\addthinspace}%
+\usebibmacro{crosscite}{inbook:parent}%
   %\newunit\newblock
   \usebibmacro{chapter+pages}%
   %\newunit\newblock

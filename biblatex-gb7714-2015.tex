@@ -1,3 +1,8 @@
+
+%!Mode:: "TeX:UTF-8"
+%!TEX program = xelatex
+%!BIB program = biber
+
 \documentclass[11pt]{article} %用draft选项找到badbox的位置 twoside,
 \input{biblatex-gb7714-2015-preamble} %宏包和一些格式设置
 \usepackage{microtype}
@@ -739,6 +744,29 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \caption{多语言文献表语言排序控制选项}\label{fig:eg:optgblanorder}
 \end{figure}
 
+  \pdfbookmark[4]{citexref}{citexref}
+  \item[citexref]=\textbf{true}，false. \hfill default is true
+
+  为顺序编码制样式控制是否使用传统的crossref功能而增加的选项。
+  \begin{itemize}
+    \item citexref=true，默认启用传统的crossref功能，即一个析出文献中给出crossref或xref 域来指定其析出来源文献，则在著录表中该析出文献的源用其来源文献在著录表中的序号如[1]等来代替。
+    \item citexref=false，则使用biblatex的默认方式，当存在crossref域时自动将来源文献的信息引入到当前析出文献中，而使用xref域时，则不引入来源文献的信息。
+  \end{itemize}
+
+  测试文档见：\href{run:./egphoto/opt-citexref-true.tex}{opt-citexref-true.tex}、
+  \href{run:./egphoto/opt-citexref-false.tex}{opt-citexref-false.tex}。
+  效果示例如图\ref{fig:eg:optcitexref}所示。
+  
+\begin{figure}[!htb]
+\centering
+\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
+width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
+\subfigure[\heiti citexref=true] {\parbox{7.5cm}{\includegraphics*[page=1,viewport=0.2cm 0.2cm 7.5cm 8cm,clip=true]{egphoto/opt-citexref-true.pdf}}}
+\subfigure[\heiti citexref=false] {\parbox{7.5cm}{\includegraphics*[page=1,viewport=0.5cm 0.2cm 8cm 8cm,clip=true]{egphoto/opt-citexref-false.pdf}}}
+\end{tcolorbox}
+\caption{控制传统crossref功能的citexref选项}\label{fig:eg:optcitexref}
+\end{figure}
 
   \pdfbookmark[4]{gbannote}{gbannote}
   \item[gbannote]=true，\textbf{false}. \hfill default is false

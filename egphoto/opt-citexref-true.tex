@@ -1,0 +1,58 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试citexref选项的作用，用于恢复传统crossref域的作用
+%
+
+\documentclass{article}
+\usepackage[paperwidth=8cm,paperheight=9cm,top=0.5cm,bottom=0.5cm,left=0.5cm,right=0.5cm]{geometry}
+\usepackage[style=gb7714-2015,gbpunctin=false]{biblatex}%citexref=true,citexref=false
+
+\begin{filecontents}{\jobname.bib}
+@incollection{article1,
+  author =   {Sally Scribe},
+  title =    {Article One},
+  pages =    {1--20},
+  crossref = {somebook},
+}
+@incollection{article2,
+  author =   {Walter Writer},
+  title =    {Article Two},
+  pages =    {21--30},
+  crossref = {somebook},
+}
+@collection{somebook,
+  editor =    {Edward Editor},
+  title = {Some Book},
+  year =      2020,
+  publisher = {Polly Publisher},
+}
+
+@inbook{article3,
+  author =   {Sally Scribe},
+  title =    {Article One},
+  pages =    {1--20},
+  xref = {newbook},
+}
+@inbook{article4,
+  author =   {Walter Writer},
+  title =    {Article Two},
+  pages =    {21--30},
+  xref = {newbook},
+}
+@book{newbook,
+  editor =    {Edward Editor},
+  title = {New Book},
+  year =      2020,
+  publisher = {Polly Publisher},
+}
+\end{filecontents}
+\addbibresource{\jobname.bib}
+
+\begin{document}
+\nocite{somebook}
+\cite{article1,article2}
+\nocite{newbook}
+\cite{article3,article4}
+
+\printbibliography
+\end{document} 
