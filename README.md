@@ -46,6 +46,7 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 ## Applications
 * [BIThesis（bachelor graduation thesis for  Dept. of Undergraduate Academic Affairs of Beijing Institute of Technology.）](https://github.com/BITNP/BIThesis)
 * [CAUTemplate(中国农业大学课程论文模板)](https://github.com/Cdmium/CAUTemplate)
+* [CSUThesis(中南大学论文 Latex 模板 )](https://github.com/disc0ver-csu/csu-thesis)
 * [ElegantBook](https://github.com/ElegantLaTeX/ElegantBook)
 * [ECNU-Undergraduate-LaTeX(华东师范大学本科毕业论文模板)](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)
 * [fduthesis(复旦大学论文模板)](https://github.com/Stone-Zeng/fduthesis)
@@ -377,6 +378,24 @@ rm -rf `biber --cache`
 utf-8编码的文档，采用xelatex编译没有任何注意事项，但使用pdflatex编译时，需要给ctex宏包加载UTF8选项，比如`\usepackage[UTF8]{ctex}`或者在文档类加载时给出也可以比如`\documentclass[[UTF8]{article}`,同时引用文献时使用的引用关键词应使用英文。
 
 当文档使用其他编码时，xelatex编译通常需要指定一个文档编码，比如windows环境下的GB2312编码的文档需要指定`\XeTeXinputencoding "GBK"`， 否则显示乱码。使用pdflatex进行编译，如果biblatex不能正确的处理编码问题，那么需要为其明确的指定texencoding和bibencoding选项。比如windows环境下的GB2312编码的文档，需要指定`\usepackge[texencoding=GBK]{biblatex}`。
+
+
+* <b>请问要给biblatex-gb7714-2015设置一些选项，但模板已经将biblatex调用写死且不方便修改，该如何处理？</b>
+
+可以使用PassOptionsToPackage命令来实现。，比如将gbnamefmt=lowercase选项传递给biblatex，那么可以使用如下命令：
+```
+\PassOptionsToPackage{gbnamefmt=lowercase}{biblatex}
+```
+需要注意的是要使该命令生效，这条命令需要在调用biblatex之前出现，可以放到导言区调用biblatex之前，也可以放到文档类调用之前(即documentclass命令之前)，比如：
+
+```
+\PassOptionsToPackage{gbpub=false}{biblatex}
+
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage[backend=biber,style=gb7714-2015,gbalign=center]{biblatex}
+```
+
 
 
 * <b>请问使用backref=true选项后，某个反向超链接总是链接到封面页是怎么回事？</b>

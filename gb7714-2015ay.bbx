@@ -1846,7 +1846,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \newlength{\bibitemindent}
 \setlength{\bibitemindent}{-\bibhang}
 \setlength{\bibitemsep}{4.5pt}
-  \defbibenvironment{bibliography}
+\defbibenvironment{bibliography}
   {\list
      {}
      {\setlength{\leftmargin}{\bibhang}%
@@ -1855,6 +1855,32 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
       \setlength{\parsep}{\bibparsep}}}
   {\endlist}
   {\item}
+%
+%   增加一个numerical环境用于自动显示数字
+%   v1.0w，20210311，hzz
+\newcounter{refnumerical}
+\newlength{\biblabelextend}
+\defbibenvironment{numerical}
+  {\setlength{\bibhang}{\biblabelsep}%
+   \setlength{\labelnumberwidth}{2em}%
+    \setlength{\bibitemindent}{0pt}%
+    \setlength{\biblabelextend}{0pt}%
+    \setlength{\biblabelextend}{0pt}%
+    \list
+     {\printtext[labelnumberwidth]{[\arabic{refnumerical}]}}
+     {\usecounter{refnumerical}%
+     \addtolength{\labelnumberwidth}{\biblabelextend}%
+     \setlength{\labelwidth}{\labelnumberwidth}%
+      \setlength{\labelsep}{\biblabelsep}%
+      \setlength{\leftmargin}{\bibhang}%
+      \addtolength{\leftmargin}{\labelnumberwidth}%
+      \setlength{\itemindent}{\bibitemindent}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}}%
+      \renewcommand*{\makelabel}[1]{\hss##1}}
+  {\endlist}
+  {\item}
+
 
 
 %=====================================================================

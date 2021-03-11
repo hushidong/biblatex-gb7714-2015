@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/W32TeX) (preloaded format=xelatex 2020.9.17)  4 JAN 2021 10:20
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/W32TeX) (preloaded format=xelatex 2020.9.17)  19 JAN 2021 18:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -248,27 +248,27 @@ File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
 File: ../egfigure/tgbcitation.pdf Graphic file (type pdf)
 <use ../egfigure/tgbcitation.pdf, page 12>
  [12]
-File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
-<use ../egfigure/tngbcitationaynew.pdf>
-File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
-<use ../egfigure/tngbcitationaynew.pdf>
-File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
-<use ../egfigure/tngbcitationaynew.pdf, page 1>
-File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
-<use ../egfigure/tngbcitationaynew.pdf, page 1>
-File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
-<use ../egfigure/tngbcitationaynew.pdf, page 1>
-File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
-<use ../egfigure/tngbcitationaynew.pdf, page 1>
-File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
-<use ../egfigure/tngbcitationaynew.pdf, page 1>
+File: ../egfigure/tngbcitationay.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationay.pdf>
+File: ../egfigure/tngbcitationay.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationay.pdf>
+File: ../egfigure/tngbcitationay.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationay.pdf, page 1>
+File: ../egfigure/tngbcitationay.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationay.pdf, page 1>
+File: ../egfigure/tngbcitationay.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationay.pdf, page 1>
+File: ../egfigure/tngbcitationay.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationay.pdf, page 1>
+File: ../egfigure/tngbcitationay.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationay.pdf, page 1>
  [13]
-File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
-<use ../egfigure/tngbcitationaynew.pdf, page 2>
-File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
-<use ../egfigure/tngbcitationaynew.pdf, page 2>
-File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
-<use ../egfigure/tngbcitationaynew.pdf, page 2>
+File: ../egfigure/tngbcitationay.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationay.pdf, page 2>
+File: ../egfigure/tngbcitationay.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationay.pdf, page 2>
+File: ../egfigure/tngbcitationay.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationay.pdf, page 2>
  [14]
 File: ../egfigure/tgbbiblio.pdf Graphic file (type pdf)
 <use ../egfigure/tgbbiblio.pdf>
@@ -308,10 +308,10 @@ File: ../egfigure/tgbbiblio.pdf Graphic file (type pdf)
  [18]
 (./gbT7714-2015.aux) ) 
 Here is how much of TeX's memory you used:
- 2392 strings out of 479418
- 37230 string characters out of 5888105
+ 2390 strings out of 479418
+ 37153 string characters out of 5888105
  281387 words of memory out of 5000000
- 19910 multiletter control sequences out of 15000+600000
+ 19909 multiletter control sequences out of 15000+600000
  532346 words of font info for 25 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  41i,18n,45p,285b,433s stack positions out of 5000i,500n,10000p,200000b,80000s

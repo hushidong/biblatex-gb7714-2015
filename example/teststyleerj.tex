@@ -8,6 +8,49 @@
 
 \usepackage[backend=biber,style=chinese-erj]{biblatex}
 
+
+%%
+%%如下处理用于使英文的文献输出英文的标点
+\renewcommand*{\revsdnamepunct}{\iffieldequalstr{userd}{chinese}{，}{\addcomma\addspace}}%
+\DeclareDelimFormat{nameyeardelim}{\iffieldequalstr{userd}{chinese}{，}{\addcomma\addspace}}%\addcomma\addspace
+\DeclareDelimFormat[bib,biblist]{nameyeardelim}{\iffieldequalstr{userd}{chinese}{，}{\addcomma\addspace}}%\addcomma\addspace
+\DeclareDelimFormat{bibpagespunct}{\iffieldequalstr{userd}{chinese}{}{\addcomma\addspace}}%\addcomma\addspace
+\renewcommand*{\newunitpunct}{\iffieldequalstr{userd}{chinese}{，}{\addcomma\addspace}}%\addcomma\space
+\renewcommand*{\finentrypunct}{\iffieldequalstr{userd}{chinese}{。}{\adddot}}
+\DeclareDelimFormat*{multinamedelim}{\iffieldequalstr{userd}{chinese}{、}{\addcomma\addspace}}%\addcomma\addspace
+%
+%   重设title的输出
+%
+%   20180425，v1.0k，为标题增加字体控制命令，Hu Zhenzhen
+%   原理方法:将文献类型标识符输出出去，原输出来自biblatex.def文件
+%   利用toggle做标识符是否输出的判断
+\renewbibmacro*{title}{%
+  \ifboolexpr{%
+    test{\iffieldundef{title}}%
+    and
+    test{\iffieldundef{subtitle}}%
+  }%
+    {}%
+    {\setunit{\iffieldequalstr{userd}{chinese}{：}{\addcolon\addspace}}\printtext[title]{\bibtitlefont%增加字体控制命令%增加了标点：
+       \printfield[titlecase]{title}%
+       \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
+       {}{\setunit{\subtitlepunct}%
+       \printfield[titlecase]{subtitle}}%
+       \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
+        {\setunit{\subtitlepunct}\printfield{titleaddon}}%
+        \iftoggle{bbx:gbtype}{%
+         \iffieldundef{note}{\printfield[gbtypeflag]{usera}}%在标题后直接给出文献标识字母，判断一下，是否是报纸和标准
+        {\iffieldequalstr{note}{standard}{\printfield[gbtypeflags]{usera}}%判断是否为标准
+                                         {\iffieldequalstr{note}{news}{\printfield[gbtypeflagn]{usera}}% 判断是否为报纸
+                                                                      {\printfield[gbtypeflag]{usera}}}% 其它
+        }}{}%
+     %\iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
+     %\newunit
+     }%
+}}
+
+
+
 \usepackage{filecontents}
 \begin{filecontents}{\jobname.bib}
 @ARTICLE{方军雄2007所有制,
@@ -192,7 +235,7 @@
 @ARTICLE{Carlson2000,
   AUTHOR = {Carlson, C. D. and M. Cropper and K． Palmer},
   DATE = {2000},
-  JOURNALTITLE = {Discussion Paper No． 98-44-REV，Resources for Future},
+  JOURNALTITLE = {Discussion Paper No. 98-44-REV. Resources for Future},
   TITLE = {Sulfur Dioxide Control by Electric Utilities: What Are the Gains from
 Trade?},
 location={Washington, DC}
@@ -363,6 +406,13 @@ b 不带页码
 \cite{Carlson2000}
 \nocite{*}
 
+{
+%\hyphenation{Proce-edings}
+\hyphenpenalty=100 %断词阈值， 值越大越不容易出现断词
+\tolerance=5000 %丑度， 10000为最大无溢出盒子， 参考the texbook 第6章
+\hbadness=100 %如果丑度超过hbadness这一阀值， 那么就会发出警告
     \printbibliography
+
+}
 
     \end{document} 
