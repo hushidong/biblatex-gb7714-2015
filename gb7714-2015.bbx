@@ -737,6 +737,7 @@
         \ifstrequal{#1}{familyahead}{\setcounter{gbnamefmtcase}{3}}{}
         \ifstrequal{#1}{pinyin}{\setcounter{gbnamefmtcase}{4}}{}%family-given
         \ifstrequal{#1}{reverseorder}{\setcounter{gbnamefmtcase}{5}}{}%family-given/given-family
+        \ifstrequal{#1}{quanpin}{\setcounter{gbnamefmtcase}{6}}{}%family-given
     }
     \ExecuteBibliographyOptions{gbnamefmt}
 
@@ -777,6 +778,7 @@
         \ifstrequal{#1}{familyahead}{\setcounter{gbnamefmtcase}{3}}{}
         \ifstrequal{#1}{pinyin}{\setcounter{gbnamefmtcase}{4}}{}%family-given
         \ifstrequal{#1}{reverseorder}{\setcounter{gbnamefmtcase}{5}}{}%family-given/given-family
+        \ifstrequal{#1}{quanpin}{\setcounter{gbnamefmtcase}{6}}{}%family-given
     }
     \ExecuteBibliographyOptions{gbnamefmt}
 
@@ -1027,6 +1029,10 @@
         \map{%处理在bib文件中直接给出文献的姓名格式为pinyin的情况
             \step[fieldsource=nameformat,match=pinyin,final]
             \step[fieldset=namefmtid,fieldvalue={4}]
+            }
+        \map{%处理在bib文件中直接给出文献的姓名格式为pinyin的情况
+            \step[fieldsource=nameformat,match=quanpin,final]
+            \step[fieldset=namefmtid,fieldvalue={6}]
             }
         \map{%根据article确定文献类型标识符
             \pertype{article}
@@ -2517,6 +2523,12 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
          {\namepartgiven}
          {\namepartprefix}
          {\namepartsuffix}}}%
+\or
+\usebibmacro{name:gbquanpin}
+      {\namepartfamily}
+      {\namepartgiven}
+      {\namepartprefix}
+      {\namepartsuffix}%
 \fi
   \usebibmacro{name:andothers}}
 
@@ -2602,6 +2614,35 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     {\usebibmacro{name:delim}{#1}%
      \usebibmacro{name:hook}{#1}%
      \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeUppercase{#1}}}\isdot%
+     \ifboolexpe{%
+       test {\ifdefvoid{#2}}
+       and
+       test {\ifdefvoid{#3}}}
+       {}
+       {\revsdnamepunct}%
+     \ifdefvoid{#2}{}{\bibnamedelimd\mkbibnamegiven{\MakeCapital{#2}}\isdot}%\MakeCapital
+     \ifdefvoid{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}
+     \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}%
+}
+%中文常见风格，汉语拼音全拼模式
+\newbibmacro*{name:gbquanpin}[4]{\bibauthorfont%
+\renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
+\renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
+\renewrobustcmd*{\bibnamedelima}{}%
+  \ifuseprefix
+    {\usebibmacro{name:delim}{#3#1}%
+     \usebibmacro{name:hook}{#3#1}%
+     \ifdefvoid{#3}{}{%
+       \ifcapital
+         {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
+         {\mkbibnameprefix{#3}\isdot}%
+       \ifprefchar{}{\bibnamedelimc}}%
+     \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeCapital{#1}}}\isdot%
+     \ifdefvoid{#2}{}{\revsdnamepunct\bibnamedelimd\MakeSentenceCase{\mkbibnamegiven{#2}}\isdot}%\MakeCapital
+     \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}
+    {\usebibmacro{name:delim}{#1}%
+     \usebibmacro{name:hook}{#1}%
+     \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeCapital{#1}}}\isdot%
      \ifboolexpe{%
        test {\ifdefvoid{#2}}
        and
@@ -2702,6 +2743,32 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
          \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}%
          }%
      }
+      %中文常见风格，汉语拼音全拼模式
+    \renewbibmacro*{name:gbquanpin}[4]{\bibauthorfont%
+    \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉
+    \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
+    \renewrobustcmd*{\bibnamedelima}{}%
+      \ifuseprefix
+        {\usebibmacro{name:delim}{#3#1}%
+         \usebibmacro{name:hook}{#3#1}%
+         \ifblank{#3}{}{%
+           \ifcapital
+             {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
+             {\mkbibnameprefix{#3}\isdot}%
+           \ifpunctmark{'}{}{\bibnamedelimc}}%
+         \ifblank{#2}{\MakeCapital#1}{\mkbibnamelast{\MakeCapital{#1}}}\isdot%\MakeUppercase %\mkbibnamelast{\MakeUppercase{#1}} %\MakeSentenceCase
+         \ifblank{#2}{}{\revsdnamepunct\bibnamedelimd\MakeSentenceCase{\mkbibnamefirst{#2}}\isdot}%
+         \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}}
+        {\usebibmacro{name:delim}{#1}%
+         \usebibmacro{name:hook}{#1}%
+         \ifblank{#2}{\MakeCapital#1}{\mkbibnamelast{\MakeCapital{#1}}}\isdot  %大写，参考4.6.4 Miscellaneous Commands，\MakeUppercase %\MakeSentenceCase
+         \ifblank{#2#3}{}{\revsdnamepunct}%
+         \ifblank{#2}{}{\bibnamedelimd\mkbibnamefirst{\MakeUppercase{#2}}\isdot}%
+         \ifblank{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}%
+         \addcomma\addspace%
+         \ifblank{#4}{}{\addcomma\addspace\bibnamedelimd\mkbibnameaffix{#4}\isdot}%
+         }%
+     }
 
   %%biblatex<3.2版的情况，姓名的处理格式带参数
   \DeclareNameFormat{namefmtselected}{%
@@ -2739,6 +2806,8 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     {\iffirstinits
        {\usebibmacro{name:first-last}{#1}{#4}{#5}{#7}}
        {\usebibmacro{name:first-last}{#1}{#3}{#5}{#7}}}%
+    \or
+    \usebibmacro{name:gbquanpin}{#1}{#3}{#5}{#7}%
   \fi
   \usebibmacro{name:andothers}}
 }

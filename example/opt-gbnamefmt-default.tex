@@ -16,7 +16,7 @@ afterskip={0pt} }
 }
 \usepackage{xcolor}
 \usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=blue]{hyperref}
-\usepackage[backend=biber,style=gb7714-2015,gbpub=true]{biblatex}%align=gb7714-2015,gbnamefmt=lowercase
+\usepackage[backend=biber,style=gb7714-2015ay,gbpub=true]{biblatex}%align=gb7714-2015,gbnamefmt=lowercase
 \renewcommand{\bibfont}{\zihao{-5}}
 \setlength{\bibitemsep}{0pt}
 \defbibheading{bibliography}[\refname]{%
@@ -208,6 +208,45 @@ afterskip={0pt} }
       nameformat={pinyin},
       Year                     = {2003}
     }
+    
+    @Article{qpZhang2007-500-503,
+      Title                    = {The design and experimental investigations of supersonic length shorted nozzle},
+      Author                   = {Zhang, Min-li and Yi, Shi-he and Zhao, Yu-xin},
+      Journal                  = {ACTA AERODYNAMICA SINICA},
+      Number                   = {4},
+      Pages                    = {500-503},
+      Volume                   = {25},
+      nameformat={quanpin},
+      Year                     = {2007}
+    }
+
+    @Book{qpYi2013--,
+      Title                    = {Supersonic and hypersonic nozzle design},
+      Address                  = {Beijing},
+      Author                   = {Yi, Shi he and Zhao, Yu xin and He, Lin and Zhang, Min li},
+      Publisher                = {National Defense Industry Press},
+      nameformat={quanpin},
+      Year                     = {2013}
+    }
+
+    @Book{qpLIAO2012--,
+      Title                    = {Electronic countermeasure techniques for missile penetration},
+      Address                  = {Beijing},
+      Author                   = {LIAO, ping and JIANG, qin bo},
+      Publisher                = {National Defense Industry Press},
+      nameformat={quanpin},
+      Year                     = {2013}
+    }
+
+    @Book{qpLIU2003--,
+      Title                    = {Introduction of Ballistic Misille Techniques},
+      Address                  = {Beijing},
+      Author                   = {LIU, shi Qiu},
+      Publisher                = {China Astronautic Publishing House},
+      nameformat={quanpin},
+      Year                     = {2003}
+    }
+    
 \end{filecontents}
 \addbibresource{\jobname.bib}
 
@@ -226,6 +265,9 @@ afterskip={0pt} }
 \defbibcheck{pinyin}{%
 \iffieldequalstr{nameformat}{pinyin}{}{\skipentry}}
 
+\defbibcheck{quanpin}{%
+\iffieldequalstr{nameformat}{quanpin}{}{\skipentry}}
+
 \begin{document}
 
 \section*{五种不同的姓名格式}
@@ -234,6 +276,7 @@ afterskip={0pt} }
 \printbibliography[check=uppercase,title=国标风格-全大写]
 \printbibliography[check=lowercase,title=国标风格-大小写不变]
 \printbibliography[check=pinyin,title=中文常见风格-拼音]
+\printbibliography[check=quanpin,title=中文常见风格-全拼]
 \printbibliography[check=givenahead,title=biblatex标准风格-名在前]
 \printbibliography[check=familyahead,title=biblatex标准风格-姓在前]
 

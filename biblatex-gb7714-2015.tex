@@ -501,6 +501,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbnamefmt=givenahead，姓名的格式与biblatex标准样式的given-family格式一致，即名在前姓在后，类似于ieee的样式；
     \item gbnamefmt=familyahead时，姓名的格式与biblatex 标准样式的family-given格式一致，即姓在前名在后，类似于APA 的样式；
     \item gbnamefmt=pinyin 时，姓名的格式采用一种常见的中文拼音方式，比如对于 Zhao, Yu Xin 或 Yu Xin Zhao 这个姓名拼音格式化为ZHAO Yu-xin。
+    \item gbnamefmt=quanpin 时，姓名的格式采用另一种常见的中文拼音方式，比如对于 Zhao, Yu Xin 或 Yu Xin Zhao 这个姓名拼音格式化为Zhao Yuxin。
     \item gbnamefmt=reverseorder 时，姓名的格式与biblatex 标准样式的family-given/ given-family格式一致，常用于经济学类的文献。
   \end{itemize}
   \bc{注意：还可以利用 nameformat 域为某一具体条目设置该条目的姓名格式，比如：要在一个文献表中实现英文文献是givenahead 格式，而拼音的文献是pinyin风格，那么可以设置拼音文献的 nameformat 域为pinyin，而gbnamefmt设置为givenahead。条目中nameformat 域的局部设置优先于gbnamefmt的全局设置。}\par
@@ -756,7 +757,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   测试文档见：\href{run:./egphoto/opt-citexref-true.tex}{opt-citexref-true.tex}、
   \href{run:./egphoto/opt-citexref-false.tex}{opt-citexref-false.tex}。
   效果示例如图\ref{fig:eg:optcitexref}所示。
-  
+
 \begin{figure}[!htb]
 \centering
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
