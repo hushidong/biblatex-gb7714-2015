@@ -98,19 +98,33 @@
 %   修改postnote的输出格式
 \DeclareFieldFormat{postnote}{#1}
 
+
+%修改\mkbibsuperscript宏在最后加上一个空白使得xeCJK不会自动在引用标签后面加上中英文之间的空白
+%hzz,v1.0w,2021-0401
+\renewrobustcmd{\mkbibsuperscript}[1]{%
+  \unspace\allowhyphens\textsuperscript{%
+    \begingroup
+    \protected\long\def\mkbibsuperscript##1{%
+      \blx@warning{Nested superscript}%
+      \mkbibbrackets{##1}}%
+    #1\endgroup}\kern\z@}
+
 %
 %   重定义cite命令
 %
 %   方法:\DeclareCiteCommand{\cite}[\mkbibparens]{precode}{loopcode}{sepcode}{postcode}
 %    v1.0p版后将cite的处理方式修改为类似pagescite，而不再使用biblatex的标准方式
-\DeclareCiteCommand{\cite}[\mkbibsuperscript]%利用mkbibsuperbracket添加方括号
-  {[\usebibmacro{cite:init}%
+\DeclareCiteCommand{\cite}[\mkbibsuperscript]%利用mkbibsuperbracket添加方括号 \textsuperscript
+  {[\usebibmacro{cite:init}%]
    \usebibmacro{prenote}}
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:comp}}
   {}
-  {\usebibmacro{cite:dump}]%
-   \printfield{postnote}}
+  {%[
+  \usebibmacro{cite:dump}]%
+   \printfield{postnote}}%\kern\p@ \kern\z@
+
+%\renewcommand{\cite}[1]{\textsuperscript{[\supercite{#1}]}\kern\z@}
 %   v1.0p 以前用的方式
 %\DeclareCiteCommand{\cite}[\mkbibsuperbracket]%利用mkbibsuperbracket添加方括号
 %  {\usebibmacro{cite:init}%
@@ -333,7 +347,7 @@
   \ifboolexpr{
     ( test {\iffieldundef{labelprefix}} and test {\ifundef\cbx@lastprefix} )
     or
-    test {\iffieldequals{labelprefix}{\cbx@lastprefix}}
+    test {\iffieldequals{labelprefix}{\cbx@lastprefix}}%
   }
     {\ifnumequal{\thefield{labelnumber}}{\value{cbx@tempcntb}}
        {\savefield{entrykey}{\cbx@lastkey}%

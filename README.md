@@ -63,8 +63,9 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 * [nwafuthesis(西北农林科技大学学位论文LaTeX文档类)](https://github.com/registor/nwafuthesis)
 * [shtthesis (ShangHaiTech university THESIS)](https://github.com/lirundong/shtthesis)
 * [SHMTUThesis（上海海事大学 LaTeX 学位论文模板）](https://github.com/hellckt/SHMTUThesis)
-* [SJTUThesis(上海交通大学学位论文模板)](https://github.com/sjtug/SJTUThesis) (母校的论文模板，不得不说缘分真的很神奇，16年一出来就直接用上)
+* [SJTUThesis(上海交通大学学位论文模板)](https://github.com/sjtug/SJTUThesis) (母校的论文模板，不得不说缘分真的很神奇，16年一出来就用上)
 * [sustechthesis（Southern University of Science and Technology Thesis Template LaTeX Template）](https://github.com/Iydon/sustechthesis)
+* [SwufeTeX（西南财经大学学位论文LaTeX模板）](https://github.com/OopsYao/swufethesis)
 * [Thesis-Template-for-XJTU (西安交大毕业设计模板)](https://github.com/DXie123/Thesis-Template-for-XJTU)
 * [ThuThesis（LaTeX Thesis Template for Tsinghua University ）](https://github.com/tuna/thuthesis)
 * [TongjiThesis(同济大学硕博士论文LaTeX模板)](https://github.com/marquistj13/TongjiThesis)
@@ -599,7 +600,7 @@ gbyntd 以语言、年份、作者、标题、降序排列
 \hspace{\biblabelsep}}
 ```
 
-示例见：https://github.com/hushidong/biblatex-gb7714-2015/issues/62
+示例见：[issue](https://github.com/hushidong/biblatex-gb7714-2015/issues/62)
 
 
 
@@ -706,9 +707,25 @@ biblatex-7714-2015的顺序编码制样式特别设计了这样的环境，以�
 \setcounter{biburlnumpenalty}{100}%大于0允许在数字后面断行
 \setcounter{biburlucpenalty}{100}%大于0允许在大写字母后面断行
 \setcounter{biburllcpenalty}{100}%大于0允许在小写字母后面断行
-
 ```
 
+* <b>中英文混排，有些英文断行不佳，导致行溢出，怎么解决？</b>
+	
+
+biblatex的参考文献表的换行是由tex的断行机制决定的，处理行（盒子）溢出就要用tex的方式处理：
+
+```
+ {
+ %\hyphenation{Proce-edings}
+ \hyphenpenalty=5000 %断词阈值， 值越大越不容易出现断词
+ \tolerance=500 %丑度， 10000为最大无溢出盒子， 参考the texbook 第6章
+ \hbadness=100 %如果丑度超过hbadness这一阀值， 那么就会发出警告
+ \printbibliography[heading=subbibintoc,title=【参考文献】]
+}
+```
+
+当然如果不想这么设置，可以手动的修改参考文献条目的内容，在需要换行的内容前加上-符号。
+见：https://github.com/hushidong/biblatex-gb7714-2015/issues/89
 
 ​	
 * <b>当参考文献没有作者时，希望用佚名或Anon代替作者时，请问该怎么处理？</b>
@@ -823,6 +840,20 @@ biblatex-gb7714-2015设计了两种多语言对照参考文献的实现方式，
  需要给出年份的标签是作者年制的标签，可以使用命令`\yearpagescite{bibtexkey}`给出包含年份和页码信息的标签，
  使用命令`\yearcite{bibtexkey}`给出仅包含年份的标签。
 
+
+* <b>中文文档中，引用标注标签在一个句子中时，标签的`]`后面与中文字符之间存在一个空格，怎么消除？</b>
+	
+
+在引用命令后面加一个没有长度的空白即可，比如：
+```
+中文字符\cite{sally_history_1985}\mbox{}中文字符
+
+中文字符\cite{sally_history_1985}\hbox{}中文字符
+
+中文字符\cite{sally_history_1985}\makebox{}中文字符
+
+中文字符\cite{sally_history_1985}\hspace{0pt}中文字符
+```
 
 
 * <b>在使用作者年制时，我希望文献表是按作者年份标题排序，而正文某处一个cite命令引用多个参考文献，且这些文献的标签是按年份作者标题排序，该怎么操作？</b>

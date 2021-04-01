@@ -1,0 +1,41 @@
+\documentclass{article}
+\usepackage[backend=biber,style=gb7714-2015]{biblatex}%citexref=true
+\usepackage{ctex}
+
+%\apptocmd{\cite}{\makebox{\rule{1em}{1pt}}}{}{}
+
+
+\begin{filecontents}{\jobname.bib}
+@book{sally_history_1985,
+location = {Monterey, California},
+title = {History of Algebraic Geometry},
+isbn = {978-0-534-03723-9},
+series = {Wadsworth Mathematics Series},
+pagetotal = {xii+186},
+publisher = {Wadsworth International Group, Belmont, {CA}},
+author = {Dieudonné, Jean},
+translator = {Sally, Judith D.},
+date = {1985},
+mrnumber = {780183},
+}
+\end{filecontents}
+\addbibresource{\jobname.bib}
+
+\begin{document}
+abcd\cite{sally_history_1985}abcd
+
+中文字符\cite{sally_history_1985}中文字符
+
+中文字符\cite{sally_history_1985}a\rule{1em}{1pt}中文字符
+
+中文字符\cite{sally_history_1985}\mbox{}中文字符
+
+中文字符\cite{sally_history_1985}\hbox{}中文字符
+
+中文字符\cite{sally_history_1985}\makebox{}中文字符%
+
+中文字符\cite{sally_history_1985}\hspace{0pt}中文字符%
+
+
+\printbibliography
+\end{document} 

@@ -1,0 +1,38 @@
+%--
+%测试译作中的译者的中英文的差异化处理
+%
+
+\documentclass{article}
+\usepackage[backend=biber,style=gb7714-2015]{biblatex}%citexref=true
+\usepackage{ctex}
+
+\begin{filecontents}{\jobname.bib}
+@Book{GPS1988--,
+  Title                    = {外国出版史},
+  Author                   = {{昂温, G} and {昂温, P S}},
+  Publisher                = {中国书籍出版社},
+  Translator               = {陈生诤},
+  Year                     = {1988},
+  Location                 = {北京}
+}
+
+
+@book{sally_history_1985,
+location = {Monterey, California},
+title = {History of Algebraic Geometry},
+isbn = {978-0-534-03723-9},
+series = {Wadsworth Mathematics Series},
+pagetotal = {xii+186},
+publisher = {Wadsworth International Group, Belmont, {CA}},
+author = {Dieudonné, Jean},
+translator = {Sally, Judith D.},
+date = {1985},
+mrnumber = {780183},
+}
+\end{filecontents}
+\addbibresource{\jobname.bib}
+
+\begin{document}
+\nocite{*}
+\printbibliography
+\end{document} 
