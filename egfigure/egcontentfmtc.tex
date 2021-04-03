@@ -12,15 +12,15 @@
 \usepackage{xltxtra,mflogo,texnames}
 %\usepackage[backend=biber,style=gb7714-2015,gbnamefmt=givenahead,
 %gbpub=false,gbbiblabel=box,gbtitlelink=true]{biblatex}%sorting=nyt
-\usepackage[backend=biber,style=gb7714-2015,gbnamefmt=lowercase,maxcitenames=2,mincitenames=1,
-sortcites=false,sorting=gbynta,gbcitelocal=english]{biblatex}
+\usepackage[backend=biber,style=gb7714-2015ay,gbnamefmt=lowercase,maxcitenames=2,mincitenames=1,
+sortcites=false,sorting=gbynta]{biblatex}
  \renewcommand{\bibauthorfont}{\color{violet}}%
-%\DefineBibliographyStrings{english}{
-%        andincite         = {和},
-%        andincitecn       = {和},
-%        andothersincitecn = {等},
-%        andothersincite   = {等{\adddot}},%adddot才能避开标点追踪
-%}
+\DefineBibliographyStrings{english}{
+        andincite         = {和},
+        andincitecn       = {和},
+        andothersincitecn = {等},
+        andothersincite   = {等{\adddot}},%adddot才能避开标点追踪
+}
 %\renewcommand{\bibfont}{\small}
 \setlength{\bibitemsep}{2pt}
 \usepackage{filecontents}

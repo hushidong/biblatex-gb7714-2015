@@ -1,0 +1,123 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015mx的在不同的参考文献分节中使用不用的样式，主要是顺序编码和作者年制
+%测试gb7714-2015mx样式在不同的参考文献分节中使用顺序编码和作者年制两种不同样式
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{xcolor}
+\usepackage{etoolbox}
+\usepackage[colorlinks]{hyperref}
+\usepackage{lipsum}
+\usepackage[paperwidth=16cm,paperheight=14cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
+\usepackage{xltxtra,mflogo,texnames}
+\usepackage[backend=biber,style=gb7714-2015mx]{biblatex}%sorting=nyt
+
+\setaystylesection{2}
+\renewcommand{\bibfont}{\small}
+\defbibheading{subbibliography}[\refname]{%
+\centering\paragraph*{#1}}%
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+
+@Book{Yi2013--,
+  Title                    = {Supersonic and hypersonic nozzle design},
+  Address                  = {Beijing},
+  Author                   = {Yi, Shi he and Zhao, Yu xin and He, Lin and Zhang, Min li},
+  Publisher                = {National Defense Industry Press},
+  Year                     = {2013},
+  aysections ={2},
+  styleaysection ={{2}{3}},
+}
+
+@Report{WHO1970--,
+  Title                    = {Factors regulating the immune response},
+  Author                   = {{World Health Organization}},
+  Date                     = {1970},
+  Institution              = {WHO},
+  Location                 = {Geneva},
+  Titleaddon               = {report of WHO Scientific Group}
+}
+
+@Inproceedings{FOURNEY1971-17-38,
+  Title                    = {Advances in holographic photoelasticity},
+  Author                   = {M E FOURNEY},
+  Booktitle                = {Symposium on Applications of Holography in Mechanics, August 23-25, 1971, University of Southern California, Los Angeles, California},
+  Date                     = {1971},
+  Pages                    = {17-38},
+  Publisher                = {ASME},
+  Location                 = {New York}
+}
+	
+    @Article{abx2007-500-503,
+      Title                    = {超声速短化喷管的设计和试验研究},
+      Author                   = {张敏莉 and 易仕和 and 赵玉新 and 李明},
+      Journal                  = {空气动力学报},
+      Year                     = {2007},
+      Number                   = {4},
+      Pages                    = {500-503},
+      Volume                   = {25},
+      language                 = {chinese}
+    }
+
+
+
+    @BOOK{张伯伟2002--,
+  AUTHOR = {张伯伟},
+  LOCATION = {南京},
+  PUBLISHER = {江苏古籍出版社},
+  DATE = {2002},
+  KEYWORDS = {张伯伟2002--},
+  PAGES = {288},
+  TITLE = {全唐五代诗格会考},
+  language = {chinese}
+}
+
+\end{filecontents}
+
+\addbibresource{\jobname.bib}
+%\renewcommand{\thefootnote}{\textcircled{\tiny\arabic{footnote}}}
+
+\begin{document}
+%\subsection*{\S 不同文献节采用不同的文献样式}
+
+\noindent\parbox{15cm}{
+\begin{refsection}
+文献\cite{Yi2013--}
+\parencite{WHO1970--}
+\cite{FOURNEY1971-17-38}
+
+\vspace{-0.5cm}
+\printbibliography[heading=subbibliography,title={节一：用顺序编码制}]
+\end{refsection}
+}
+
+\noindent\rule{1.05\linewidth}{0.4pt}
+
+\noindent\parbox{15cm}{
+\begin{refsection}
+文献\cite{FOURNEY1971-17-38};
+\parencite{abx2007-500-503};
+\textcite{张伯伟2002--}
+
+\vspace{-0.5cm}
+\printbibliography[heading=subbibliography,title={节二：用著者年份制}]%[env=bibliographyay]
+\end{refsection}
+}
+
+\noindent\rule{1.05\linewidth}{0.4pt}
+
+\noindent\parbox{15cm}{
+\begin{refsection}
+文献\cite{Yi2013--}
+\parencite{abx2007-500-503}
+\cite{张伯伟2002--}
+
+\vspace{-0.5cm}
+\printbibliography[heading=subbibliography,title={节三：用顺序编码制}]
+\end{refsection}
+}
+
+
+
+
+\end{document} 
