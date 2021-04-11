@@ -750,6 +750,7 @@
         \ifstrequal{#1}{left}{\setcounter{gbalignlabel}{1}}{}
         \ifstrequal{#1}{center}{\setcounter{gbalignlabel}{2}}{}
         \ifstrequal{#1}{gb7714-2015}{\setaligngbstyle}{}
+        \ifstrequal{#1}{gb7714-2015ay}{\setaligngbstyleay}{}
     }
   }
   {% 针对biblatex<3.3版本的选项设置
@@ -793,6 +794,7 @@
         \ifstrequal{#1}{left}{\setcounter{gbalignlabel}{1}}{}
         \ifstrequal{#1}{center}{\setcounter{gbalignlabel}{2}}{}
         \ifstrequal{#1}{gb7714-2015}{}{}
+        \ifstrequal{#1}{gb7714-2015ay}{\setaligngbstyleay}{}
     }
   }
 
@@ -2111,6 +2113,23 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 {\endgroup}
 {\itemcmd}}
 
+%
+%   增加一个作者年制文献表格式的文献表输出环境。
+%   20210411,hzz,v1.0x
+\def\setaligngbstyleay{%
+\setlength{\bibhang}{1em}
+\setlength{\bibitemindent}{-\bibhang}
+\setlength{\bibitemsep}{4.5pt}
+\defbibenvironment{bibliography}
+  {\list
+     {}
+     {\setlength{\leftmargin}{\bibhang}%
+      \setlength{\itemindent}{\bibitemindent}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}}}
+  {\endlist}
+  {\item}
+}
 
 %=====================================================================
 %   设置单元或块等的标点

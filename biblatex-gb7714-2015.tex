@@ -382,16 +382,17 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 \begin{description}
 
   \pdfbookmark[4]{gbalign}{gbalign}
-  \item[gbalign]=\textbf{right}，left，center，gb7714-2015. \hfill default is right
+  \item[gbalign]=\textbf{right}，left，center，gb7714-2015，\textbf{gb7714-2015ay}. \hfill default: right for numeric style and gb7714-2015ay for author-year style
 
   为顺序编码制增加的选项，用于选择参考文献表序号标签的对齐方式。
   \begin{itemize}
-    \item gbalign=right，默认的list环境中的标签右对齐；
-    \item gbalign=left，是list环境中的标签左对齐；
-    \item gbalign=center，是list环境中的等宽标签，数字在[]内居中；
-    \item gbalign=gb7714-2015，是项对齐方式，即段落环境中标签使用原始宽度，标签与条目内容等间距。
+    \item gbalign=right，数字序号标签，是list环境中的标签右对齐，是gb7714-2015样式的默认选项；
+    \item gbalign=left，数字序号标签，是list环境中的标签左对齐；
+    \item gbalign=center，数字序号标签，是list环境中的等宽标签，数字在[]内居中；
+    \item gbalign=gb7714-2015，数字序号标签，是项对齐方式，即段落环境中标签使用原始宽度，标签与条目内容等间距。
+    \item gbalign=gb7714-2015ay，无数字序号标签，是author-year风格的文献表，是gb7714-2015ay样式的默认选项。
   \end{itemize}
-  该选项对著者年份制无效。顺序编码制序号标签对齐方式测试，
+  该选项对\textbf{著者年份制、顺序编码制均有效}。使用序号标签对齐方式的测试，
   数字在标签内居中见:
   \href{run:./example/opt-gbalign-center.tex}{opt-gbalign-center.tex}，
   标签左对齐见:
