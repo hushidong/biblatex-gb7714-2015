@@ -1,6 +1,8 @@
 \documentclass{article}
 \usepackage[backend=biber,style=gb7714-2015]{biblatex}%citexref=true
 \usepackage{ctex}
+\usepackage[top=1cm,bottom=1cm]{geometry}
+\usepackage{multicol}
 
 %\apptocmd{\cite}{\makebox{\rule{1em}{1pt}}}{}{}
 
@@ -18,10 +20,25 @@ translator = {Sally, Judith D.},
 date = {1985},
 mrnumber = {780183},
 }
+
+@book{foo,
+  author     = {Foo, Bar},
+  title      = {Foo},
+  year       = {2021},
+}
+
+@book{foc,
+  author     = {Foc, Bar},
+  title      = {Foo},
+  year       = {2021},
+}
 \end{filecontents}
 \addbibresource{\jobname.bib}
 
 \begin{document}
+
+\begin{multicols}{2}
+
 abcd\cite{sally_history_1985}abcd
 
 中文字符\cite{sally_history_1985}中文字符
@@ -36,6 +53,92 @@ abcd\cite{sally_history_1985}abcd
 
 中文字符\cite{sally_history_1985}\hspace{0pt}中文字符%
 
+引用\cite{foo}测试\par
+引用\cite[42]{foo}测试\par
+引用\cite[见][]{foo}测试\par
+引用\cite[见][42]{foo}测试\par
+
+Citation \cite{foo} test\par
+Citation \cite[42]{foo} test\par
+Citation \cite[see][]{foo} test\par
+Citation \cite[see][42]{foo} test\par
+
+引用\parencite{foo}测试\par
+引用\parencite[42]{foo}测试\par
+引用\parencite[见][]{foo}测试\par
+引用\parencite[见][42]{foo}测试\par
+
+Citation \parencite{foo} test\par
+Citation \parencite[42]{foo} test\par
+Citation \parencite[see][]{foo} test\par
+Citation \parencite[see][42]{foo} test\par
+
+引用\textcite{foo}测试\par
+引用\textcite[42]{foo}测试\par
+引用\textcite[见][]{foo}测试\par
+引用\textcite[见][42]{foo}测试\par
+
+Citation \textcite{foo} test\par
+Citation \textcite[42]{foo} test\par
+Citation \textcite[see][]{foo} test\par
+Citation \textcite[see][42]{foo} test\par
+
+引用\citet{foo}测试\par
+引用\citet[42]{foo}测试\par
+引用\citet[见][]{foo}测试\par
+引用\citet[见][42]{foo}测试\par
+
+Citation \citet{foo} test\par
+Citation \citet[42]{foo} test\par
+Citation \citet[see][]{foo} test\par
+Citation \citet[see][42]{foo} test\par
+
+
+引用\citep{foo}测试\par
+引用\citep[42]{foo}测试\par
+引用\citep[见][]{foo}测试\par
+引用\citep[见][42]{foo}测试\par
+
+Citation \citep{foo} test\par
+Citation \citep[42]{foo} test\par
+Citation \citep[see][]{foo} test\par
+Citation \citep[see][42]{foo} test\par
+
+
+引用\authornumcite{foo}测试\par
+引用\authornumcite[42]{foo}测试\par
+引用\authornumcite[见][]{foo}测试\par
+引用\authornumcite[见][42]{foo}测试\par
+
+Citation \authornumcite{foo} test\par
+Citation \authornumcite[42]{foo} test\par
+Citation \authornumcite[see][]{foo} test\par
+Citation \authornumcite[see][42]{foo} test\par
+
+引用\citec{foo}测试\par
+引用\citec[42]{foo}测试\par
+引用\citec[见][]{foo}测试\par
+引用\citec[见][42]{foo}测试\par
+
+Citation \citec{foo} test\par
+Citation \citec[42]{foo} test\par
+Citation \citec[see][]{foo} test\par
+Citation \citec[see][42]{foo} test\par
+
+引用\cite{sally_history_1985,foo}测试\par
+Citation \cite{sally_history_1985,foo} test\par
+引用\parencite{sally_history_1985,foo}测试\par
+Citation \parencite{sally_history_1985,foo} test\par
+引用\citet{sally_history_1985,foo}测试\par
+Citation \citet{sally_history_1985,foo} test\par
+引用\citep{sally_history_1985,foo}测试\par
+Citation \citep{sally_history_1985,foo} test\par
+引用\textcite{sally_history_1985,foo}测试\par
+Citation \textcite{sally_history_1985,foo} test\par
+引用\citec{sally_history_1985,foc,foo}测试\par
+Citation \citec{sally_history_1985,foo} test\par
+
+\end{multicols}
 
 \printbibliography
 \end{document} 

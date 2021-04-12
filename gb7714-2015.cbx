@@ -109,6 +109,14 @@
       \mkbibbrackets{##1}}%
     #1\endgroup}\kern\z@}
 
+\newrobustcmd{\mkbibsuperscriptusp}[1]{%
+  \unspace\allowhyphens\textsuperscript{%
+    \begingroup
+    \protected\long\def\mkbibsuperscriptusp##1{%
+      \blx@warning{Nested superscript}%
+      \mkbibbrackets{##1}}%
+    #1\endgroup}}
+
 %
 %   重定义cite命令
 %
@@ -154,7 +162,7 @@
   {}
   {%[
   \usebibmacro{cite:dump}]%
-   \mkbibsuperscript{\printfield{postnote}}}
+   \mkbibsuperscriptusp{\printfield{postnote}}}
 
 %
 %   新定义pagescite命令，以满足标签带页码的国标要求
@@ -378,7 +386,7 @@
 
 \newbibmacro*{citec:dump}{%
   \ifnumgreater{\value{cbx@tempcnta}}{0}
-    {\ifnumgreater{\value{cbx@tempcnta}}{1}
+    {\ifnumgreater{\value{cbx@tempcnta}}{0}%从1改成0就是从3个开始压缩改成2个开始压缩
        {\bibrangedash}
        {\multicitedelim}%
      \bibhyperref[\cbx@lastkey]{%
@@ -409,7 +417,8 @@
            {}
            {\usebibmacro{citec:dump}%
             \usebibmacro{cite:init}%
-            \setunit{\multicitedelim}}}
+            \setunit{\multicitedelim}%
+            }}
         {\usebibmacro{citec:dump}%
          \usebibmacro{cite:init}%
          \setunit{\multicitedelim}%
@@ -420,7 +429,8 @@
   {\ifboolexpr{       test {\ifnumequal{\value{multicitecount}}{\value{multicitetotal}}}
                or not test {\iffieldundef{postnote}}}
      {\usebibmacro{citec:dump}%
-      \usebibmacro{postnote}}
+      \printfield{postnote}%
+      }
      {}}
 
 \DeclareMultiCiteCommand{\citecs}[\mkbibsuperscript]{\citec}{}
