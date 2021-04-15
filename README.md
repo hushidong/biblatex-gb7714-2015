@@ -116,6 +116,16 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 	\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}
 ```
 
+* 区分标注（引用）样式和著录样式的使用：
+```
+\usepackage[backend=biber,citestyle=gb7714-2015,bibstyle=gb7714-2015ay]{biblatex}
+```
+或
+```
+\usepackage[backend=biber,citestyle=gb7714-2015ay,bibstyle=gb7714-2015]{biblatex}
+```
+都是可以的。
+
 * 使用宏包提供的选项：
 
 ```
@@ -490,7 +500,30 @@ gbyntd 以语言、年份、作者、标题、降序排列
 
 ```\usepackage[backend=biber,citestyle=gb7714-2015ay,bibstyle=gb7714-2015]{biblatex}```
 
-参见:[issue:参考文献的顺序](https://github.com/sjtug/SJTUThesis/issues/300)
+但这种情况下，文献表中的年份信息是在出版项里面的，如果要提前到作者后面，可以使用如下方式：
+
+```\usepackage[backend=biber,style=gb7714-2015ay,gbgalign=right]{biblatex}```
+
+如果要让年份信息既出现在作者后面又出现在出版项里面，那么还可以增加mergedate选项进行控制：
+
+```\usepackage[backend=biber,style=gb7714-2015ay,gbgalign=right,mergedate=false]{biblatex}```
+
+这种情况下，直接用gb7714-2015ay下的gbgalign选项来生成数字标签的文献表，而且可以使用right/left/center/gb7714-2015等不同的选项值来实现不同对齐形式的标签。
+
+反过来如果要在文中引用是数字标签，而文献表是无数字标签的样式，那么也可以使用下面两种方式：
+
+```\usepackage[backend=biber,style=gb7714-2015,gbalign=gb7714-2015ay]{biblatex}```
+
+这种情况下，文献表中的年份信息是在出版项里面的，如果要提前到作者后面，则使用：
+
+```\usepackage[backend=biber,citestyle=gb7714-2015,bibstyle=gb7714-2015ay]{biblatex}```
+
+类似的也可以使用mergedate选项来控制年份的显示情况：
+
+```\usepackage[backend=biber,citestyle=gb7714-2015,bibstyle=gb7714-2015ay,mergedate=false]{biblatex}```
+
+参见:[issue:参考文献的顺序](https://github.com/sjtug/SJTUThesis/issues/300) , 
+[issue90](https://github.com/hushidong/biblatex-gb7714-2015/issues/90)
 
 
 
