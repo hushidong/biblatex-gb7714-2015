@@ -73,6 +73,7 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 * [UCASthesis(ucasthesis 国科大学位论文 LaTeX 模板 [最新样式])](https://github.com/mohuangrui/ucasthesis)
 * [ustcthesis（中国科学技术大学学位论文 LaTeX 模板）](https://github.com/ustctug/ustcthesis)
 * [WUTthesis（武汉理工大学研究生学位论文的 LaTeX 模板）](https://github.com/Jiayin-Gu/WUTthesis)
+* [whu-thesis（武汉大学毕业论文 LaTeX 模板）](https://github.com/whutug/whu-thesis)
 * [Yet anoter BUPT Thesis LaTeX class (北邮研究生学位设计的LaTeX文档类)](https://github.com/qcts33/BUPTthesis-ctex)
 * [Zhejiang University thesis(浙江大学毕业设计/论文模板)](https://github.com/TheNetAdmin/zjuthesis)
 * [《经济研究》杂志 LaTeX 论文模板)](https://github.com/EthanDeng/Chinese-ERJ)
@@ -821,6 +822,17 @@ biblatex-gb7714-2015设计了两种多语言对照参考文献的实现方式，
 
 具体示例见：[biblatex中如何修改参考文献中日期的著录格式](https://blog.csdn.net/xenonhu/article/details/86933525)
 
+
+* <b>我希望将文献表中期刊文献的卷和期使用加粗格式，请问该如何处理？</b>
+
+调整其域格式输出即可，比如：
+
+```
+\DeclareFieldFormat[article,periodical]{volume}{\textbf{#1}}
+\DeclareFieldFormat[article,periodical]{number}{\textbf{#1}}
+```
+
+见：[issue](https://github.com/sjtug/SJTUThesis/issues/580)
 
 ​	
 #### 4.3 Citation format/正文引用的标注格式

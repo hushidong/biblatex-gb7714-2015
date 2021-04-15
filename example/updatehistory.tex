@@ -15,10 +15,11 @@ modify the parencite to retain the space after the citation label for numeric bi
 
 add value gb7714-2015 for option gbalign and modify its implementation to generate numeric or none-numeric bibliography for different styles.
 
+\item 为兼容性考虑，对gb7714-2015样式增加mergedate样式但没有实际作用，如果要使用mergedate 的效果可以使用bibstyle=gb7714-2015ay，因为现在ay样式也能实现顺序编码的文献表。（20210415）
+    
+add mergedate option for gb7714-2015 with none actual effect, if want to obtain the use of mergedate, one can use bibstyle=gb7714-2015ay, because ay style also has the numeric bibliography now.
 
-\item 删掉为作者年份制增加的著录表环境(numerical)，因为gbalign实现了替代。（20210411）
 
- del the bibliography environment (numerical), because it is substituted by gbalign option.
 \end{enumerate}
 
 \updateinfo[2021-04-03]{date of update: 2021-04-03 to version v1.0x}\label{up:20210403}

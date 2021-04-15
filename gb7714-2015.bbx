@@ -213,6 +213,22 @@
 %   设置宏包选项
 %=====================================================================
     %
+    %   增加一个控制是否调整日期输出位置的选项mergedate
+    %   为兼容性考虑，但实际不产生作用了，因为如果要使用ay样式可以直接从bibstyle进入
+    %   因为使用string所以只适用于biblatex3.3以上版本
+    %   20210415,v1.0y,hzz
+    \DeclareBibliographyOption[string]{mergedate}[none]{%
+      \ifcsdef{bbx@opt@mergedate@#1}
+        {\csuse{bbx@opt@mergedate@#1}}
+        {}}
+    \ExecuteBibliographyOptions{mergedate}
+
+    \def\bbx@opt@mergedate@none{}%none就是正常的顺序编码样式
+    \def\bbx@opt@mergedate@true{}%none就是正常的顺序编码样式
+    \def\bbx@opt@mergedate@false{}%none就是正常的顺序编码样式
+
+
+    %
     %   增加一个控制是否输出恢复传统crossref作用的选项
     %   20210216,v1.0w,hzz
     \newtoggle{bbx:citexref}

@@ -1920,6 +1920,27 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
   {\item}
 }
 
+\defbibenvironment{numerical}%作者年制中数字标签的文献表环境
+  {\setlength{\bibhang}{\biblabelsep}%
+   \setlength{\labelnumberwidth}{2em}%
+    \setlength{\bibitemindent}{0pt}%
+    \setlength{\biblabelextend}{0pt}%
+    \setlength{\biblabelextend}{0pt}%
+    \list
+     {\printtext[labelnumberwidth]{\arabic{refnumeric}}}
+     {\usecounter{refnumeric}%
+     \addtolength{\labelnumberwidth}{\biblabelextend}%
+     \setlength{\labelwidth}{\labelnumberwidth}%
+      \setlength{\labelsep}{\biblabelsep}%
+      \setlength{\leftmargin}{\bibhang}%
+      \addtolength{\leftmargin}{\labelnumberwidth}%
+      \setlength{\itemindent}{\bibitemindent}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}}%
+      \renewcommand*{\makelabel}[1]{\hss##1}}
+  {\endlist}
+  {\item}
+
 \DeclareFieldFormat{labelnumberwidth}{%
 \ifcase\value{gbalignlabel}%右对齐，整个标签为右对齐
     \mkgbnumlabel{#1}%
