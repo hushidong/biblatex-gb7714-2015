@@ -9,7 +9,7 @@
 \usepackage{lipsum}
 %\usepackage[paperwidth=14cm,paperheight=10cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
 \usepackage{xltxtra,mflogo,texnames}
-\usepackage[backend=biber,style=gb7714-2015]{biblatex}%sorting=nyt,natbib
+\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}%sorting=nyt,natbib
 
 \usepackage{filecontents}
 \begin{filecontents}{\jobname.bib}
@@ -106,6 +106,36 @@
   Year                     = {2001}
 }
 
+@Article{wan.w.liu.l.2008,
+author = {Wan, Weixing and Liu, Libo and Pi, X. and Zhang, M.-L. and Ning, B. and Xiong, Jiangang and Ding, F.},
+year = {2008},
+title = {Wavenumber-4 patterns of the total electron content over the low latitude ionosphere},
+pages = {L12104},
+volume = {35},
+journal = {Geophysical Research Letters},
+doi = {10.1029/2008GL033755}
+}
+
+@Article{wan.w.xiong.j.2010,
+author = {Wan, Weixing and Xiong, Jiangang and Ren, Zhipeng and Liu, Libo and Zhang, M.-L. and Ding, F. and Ning, B. and Zhao, B. and Yue, X.},
+year = {2010},
+title = {Correlation between the ionospheric {WN4} signature and the upper atmospheric {DE3} tide},
+pages = {A11303},
+volume = {115},
+journal = {Journal of Geophysical Research},
+doi = {10.1029/2010JA015527}
+}
+
+@Article{wan.w.ren.z.2012,
+author = {Wan, Weixing and Ren, Zhipeng and Ding, F. and Xiong, Jiangang and Liu, Libo and Ning, B. and Zhao, B. and Li, Guozhu and Zhang, M.-L.},
+year = {2012},
+title = {A simulation study for the couplings between DE3 tide and longitudinal WN4 structure in the thermosphere and ionosphere},
+pages = {52--60},
+volume = {90-91},
+journal = {Journal of Atmospheric and Solar-Terrestrial Physics},
+doi = {10.1016/j.jastp.2012.04.011}
+}
+
 
 \end{filecontents}
 
@@ -154,6 +184,23 @@
 
 %\citets[200]{赵学功2001--}，
 
+
+\noindent\fbox{
+\parbox{\textwidth}{
+国标示例：\par
+ 引用单篇文献：文献\citet{Peebles2001-100-100}\citep{赵学功2001--}\par
+ 引用单篇文献：文献\citetns{Peebles2001-100-100}\citepns{赵学功2001--}\inlinecite{赵学功2001--}\par
+ 同一处引用多篇文献：文献\citet{Peebles2001-100-100,Miroslav2004--}，
+ 文献\citep{蔡敏2006--,Miroslav2004--,赵学功2001--}\par
+ 多次引用同一作者的同一文献：
+ 文献\citet[100-108]{蔡敏2006--}，
+ 文献\citep[205-208]{蔡敏2006--}。
+ 文献\authornumcite[101-108]{蔡敏2006--}，
+ 文献\textcite[102-108]{蔡敏2006--}，\par
+ 同一作者多篇文献压缩：\textcite{wan.w.liu.l.2008,wan.w.xiong.j.2010,wan.w.ren.z.2012}；
+ \citet{wan.w.liu.l.2008,wan.w.xiong.j.2010,wan.w.ren.z.2012}；
+ \citep{wan.w.liu.l.2008,wan.w.xiong.j.2010,wan.w.ren.z.2012}。
+}}
 
 
 %\printbibliography

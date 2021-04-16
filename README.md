@@ -804,7 +804,7 @@ biblatex的参考文献表的换行是由tex的断行机制决定的，处理行
 
 `{\MakeLowercase i}FogSim title contents`
 
-（2）修改titlecase域格式，即将如下命令放到导言区中，放biblatex后面
+（2）修改titlecase域格式，即将如下命令放到导言区中，放在biblatex宏包加载命令后面
 
 ```
 \DeclareFieldFormat{titlecase}{\iftoggle{bbx:titlelink}{%

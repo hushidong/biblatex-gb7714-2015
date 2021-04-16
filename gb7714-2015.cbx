@@ -38,6 +38,7 @@
 %
 %   修订使可用选项gblabelref来控制是否将标准标签中的作者加上超链接
 %   20210121,v1.0w,hzz
+%   
 \iftoggle{iftlatest}%
 {\renewbibmacro*{textcite}{%
   \iffieldequals{namehash}{\cbx@lasthash}
@@ -251,9 +252,11 @@
 
 %
 %   重定义citet，因为前面与\authornumcite同定义的命令无法正确处理多个bibtexkey同时给出的压缩情况
-%   20200721，v1.0v，hzz
+%   20200721,v1.0v,hzz
 %   方法:利用textcite命令进行定义
 %   基本利用textcite命令来写citet，仅利用bool{cbx:incitet}做判断，进而处理不同的上标和页码形式
+%   20210416,v1.0y,hzz:将namelabeldelim标点注释掉了，因为中文环境下不需要，
+%   若有需要可以用context sensitive的形式做定义
 \newbool{cbx:incitet}
 \global\booltrue{cbx:incitet}
 
@@ -271,7 +274,7 @@
      \ifnameundef{labelname}
        {\printfield[citetitle]{labeltitle}}
        {\printnames{labelname}}%
-     \setunit*{\printdelim{namelabeldelim}}%
+     %\setunit*{\printdelim{namelabeldelim}}%
      \mkbibsuperscript{\printtext{\bibopenbracket}\global\booltrue{cbx:parens}%
      \ifnumequal{\value{citecount}}{1}
        {\usebibmacro{prenote}}%
