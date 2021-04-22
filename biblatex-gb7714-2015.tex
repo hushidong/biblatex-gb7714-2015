@@ -1306,6 +1306,8 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 二是采用正常段落环境的文献表，即设置gbalign=gb7714-2015时（即项对齐情况，就是各条文献是自身对齐的情况），在重定义的命令中通过调整lengthid尺寸来设置\emph{每条参考文献第二行开始的缩进距离}。
 调整方法见例\ref{eg:biblist:hspace}。
 
+除了使用这种段落形式的文献表外，也有需求是要把文献表放到一个表格里面这样的需求，要求每一条文献占据表格的一行，这也是能实现的，但本宏包就不去实现了，具体有需求的用户可以在github 的biblatex下搜索tabular或者在tex.stackexchange上搜索biblatex tabular，已经有具体的实现了，这里不再赘述。
+
 \begin{example}{文献表水平缩进控制}{eg:biblist:hspace}
 \begin{texlist}
 % 著者-出版年制文献表缩进控制

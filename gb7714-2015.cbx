@@ -38,7 +38,7 @@
 %
 %   修订使可用选项gblabelref来控制是否将标准标签中的作者加上超链接
 %   20210121,v1.0w,hzz
-%   
+%
 \iftoggle{iftlatest}%
 {\renewbibmacro*{textcite}{%
   \iffieldequals{namehash}{\cbx@lasthash}
@@ -88,6 +88,25 @@
     {}%
   \setcounter{cbx@tempcnta}{0}%
   \global\undef\cbx@lastprefix}
+
+%biblatex v3.15 增加了一堆标点命令如\multiciterangedelim
+%为方便用户定义，在新的版本中使用新的{cite:dump}，尽管前面的定义也没有问题
+%前面的定义是适用于biblatex v2.8以后的版本的，从16年到20年都没动过
+%而且也适用于最新的版本，biblatex本身兼容性做的也还是不错的。
+\@ifpackagelater{biblatex}{2020/08/15}{%v3.15 2020-08-16
+    \renewbibmacro*{cite:dump}{%
+      \usebibmacro{cite:dump:inset}%
+      % dump labelnumber (+labelprefix)
+      \ifnumgreater{\value{cbx@tempcnta}}{0}
+        {\ifnumgreater{\value{cbx@tempcnta}}{0}%1改为0，可以将压缩起始3个编号改为2个编号
+           {\setunit{\multiciterangedelim}}
+           {\setunit{\multicitedelim}}%
+         \usebibmacro{cite:print:last:labelnumber}%
+         \global\undef\cbx@lastprefix}
+        {}%
+      \setcounter{cbx@tempcnta}{0}%
+    }%
+}{}
 
 %
 %   定义一个上标方括号wrapper

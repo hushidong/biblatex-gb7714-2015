@@ -16,9 +16,12 @@ modify the parencite to retain the space after the citation label for numeric bi
 add value gb7714-2015 for option gbalign and modify its implementation to generate numeric or none-numeric bibliography for different styles.
 
 \item 为兼容性考虑，对gb7714-2015样式增加mergedate样式但没有实际作用，如果要使用mergedate 的效果可以使用bibstyle=gb7714-2015ay，因为现在ay样式也能实现顺序编码的文献表。（20210415）
-    
+
 add mergedate option for gb7714-2015 with none actual effect, if want to obtain the use of mergedate, one can use bibstyle=gb7714-2015ay, because ay style also has the numeric bibliography now.
 
+\item 为方便使用，增加对标点 multiciterangedelim 的兼容，因为 biblatex v3.15 增加了一些标点并更新了一些宏，尽管以前的旧版本的宏也能用。（20210421）
+
+add support of multiciterangedelim for convenience of use, because biblatex v3.15 add some new delim and updated some macros, although the old version macro still works.
 
 \end{enumerate}
 
