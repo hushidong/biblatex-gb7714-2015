@@ -2015,7 +2015,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
 各个数据域的录入应符合bib文件规范。需要注意:
 
-\bc{1. 有时直接从网络获取的参考文献信息中可能带有一些特殊字符比如\%，\&等，这些字符在 tex 中通常需要做转义处理，本样式中对像title，journal等常见域中出现的特殊字符已经做了转义，但是一些不常见的域比如 abstract 等没有考虑，所以用户需要手动处理，例如把\%改为\textbackslash \%，否则可能导致出错}
+\bc{1. 有时直接从网络获取的参考文献信息中可能带有一些特殊字符比如\%，\&等，这些字符在 tex 中通常需要做转义处理，本样式中对像title，journal，abstract，howpublished等常见域中出现的特殊字符已经做了转义，但也存在一些域没有考虑，所以当出现错误时，用户需要手动处理，例如把\%改为\textbackslash \%。}
 
 \bc{2. 由于目前biber使用\href{https://github.com/ambs/Text-BibTeX/tree/master/btparse}
 {btparse}

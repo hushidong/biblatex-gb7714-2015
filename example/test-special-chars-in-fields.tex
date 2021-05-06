@@ -1,0 +1,63 @@
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试gb7714-2015样式文献表中数字标签的格式
+% 测试gbpunctin选项
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage[top=10pt,bottom=10pt,left=1cm,right=1cm,paperheight=6cm]{geometry}
+\usepackage{xcolor}
+\usepackage[CJKbookmarks,colorlinks,bookmarksnumbered=true,pdfstartview=FitH,linkcolor=blue]{hyperref}
+\usepackage[backend=biber,style=gb7714-2015]{biblatex}
+
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+@misc{mocap_gear_price,
+title = {High Quality Mocap for a Fraction of the Cost},
+howpublished= {\url{https://nofilmschool.com/rokoko-review-high-quality-mocap-fraction-cost#:~:text=The%20Rokoko%20Smartsuit%20fills%20an,usually%20cost%20upwards%20of%20%2415%2C000.}
+},
+year={2019}
+}
+
+@Inproceedings{ref-replace-char,
+  Title                    = {Cognitive Radio and Cooperative Strategies for Power Saving in Multi-Standard Wireless Devices},
+  Address                  = {Florence, Italy},
+  Author                   = {Rodriguez, J. and P. Marques and A. Radwan and K. Moessner and R. Tafazolli and others},
+  Booktitle                = {Future % Network & Mobile # Summit 2010},
+  Date                     = {June 2010}
+}
+
+@incollection{article3,
+  author =   {Sally Scribe},
+  title =    {title},
+  abstract =  {40â€“110â€ŻÂµm % Network & Mobile # Summit 2010},
+  pages =    {1--20},
+}
+
+
+@inproceedings{savingface_paper,
+author = {Camilo Rojas and Niels Poulsen and Mileva Van Tuyl and Daniel Vargas and Zipporah Cohen and Joseph A. Paradiso and Pattie Maes and Kevin M Esvelt and Fadel Adib},
+title = {A Scalable Solution for Signaling Face Touches to Reduce the Spread of Surface-based Pathogens},
+booktitle = {Proceedings of the 2021 ACM International Joint Conference on Pervasive and Ubiquitous Computing},
+series = {UbiComp '21},
+year = {2021},
+publisher = {ACM},
+address = {New York, NY, USA},
+keywords = {activity recognition, magnetic, sensor, wearable device}
+}
+
+\end{filecontents}
+\addbibresource{\jobname.bib}
+\renewcommand{\bibfont}{\zihao{-5}}
+%\setlength{\bibitemsep}{0ex}
+%\setlength{\bibnamesep}{0ex}
+%\setlength{\bibinitsep}{0ex}
+
+\begin{document}
+
+%\section{测试gb7714-2015样式文献表中数字标签的格式}
+
+\nocite{*}
+
+\printbibliography[heading=none]
+\end{document} 

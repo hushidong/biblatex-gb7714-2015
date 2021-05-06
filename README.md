@@ -1,4 +1,4 @@
-<b>Date of last change: 2021-04-03 to version v1.0x</b>
+<b>Date of last change: 2021-05-06 to version v1.0y</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -104,37 +104,19 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 <h3 id="jumptopkgload">0. pacakge usage/宏包加载方式</h3>
 样式包配合biblatex使用，即在biblatex调用时加载样式包：
 
-* 使用顺序编码制：
+* 顺序编码制样式(gb7714-2015)：
 
 ```
 	\usepackage[backend=biber,style=gb7714-2015]{biblatex}
 ```
 
-* 使用著者-出版年制：
+* 著者-出版年制样式(gb7714-2015ay)：
 
 ```
 	\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}
 ```
 
-* 区分标注（引用）样式和著录样式的使用：
-```
-\usepackage[backend=biber,citestyle=gb7714-2015,bibstyle=gb7714-2015ay]{biblatex}
-```
-或
-```
-\usepackage[backend=biber,citestyle=gb7714-2015ay,bibstyle=gb7714-2015]{biblatex}
-```
-都是可以的。
-
-* 使用宏包提供的选项：
-
-```
-    %设置gbalign选项以改变文献表序号标签对齐方式，
-    %设置gbpub=false取消缺省出版项自填补信息，比如:
-    \usepackage[backend=biber,style=gb7714-2015,gbalign=gb7714-2015,gbpub=false]{biblatex}
-```
-
-* 使用同一文献表中不同语言区分著录格式的样式(gb7714-2015ms)：
+* 同一文献表中不同语言区分不同著录格式的样式(gb7714-2015ms)：
 
 ```
     %设置gbstyle=false，中文文献使用GB/T 7714-2015著录格式，而其它语言文献使用biblatex标准样式
@@ -150,6 +132,25 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
     \setaystylesection{2}
 ```
 
+* 标注（引用）样式和著录样式区分使用：
+```
+\usepackage[backend=biber,citestyle=gb7714-2015,bibstyle=gb7714-2015ay]{biblatex}
+```
+或（类似的方式均可）
+```
+\usepackage[backend=biber,citestyle=gb7714-2015ay,bibstyle=gb7714-2015]{biblatex}
+```
+
+* 宏包选项的使用：
+
+```
+    %设置gbalign选项以改变文献表序号标签对齐方式，
+    %设置gbpub=false取消缺省出版项自填补信息，比如:
+    \usepackage[backend=biber,style=gb7714-2015,gbalign=gb7714-2015,gbpub=false]{biblatex}
+```
+
+
+
 更多宏包选项的说明见：[biblatex-gb7714-2015.pdf](biblatex-gb7714-2015.pdf)
 
 宏包加载的完整文档示例见：[tex文档一般结构](#jumptotexsrcf)
@@ -162,7 +163,7 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 
 \usepackage{ctex}%加载ctex宏包，中文支持
 
-\usepackage[left=20mm,right=20mm,top=25mm, bottom=15mm]{geometry}%加载geometry宏包，定义版面
+\usepackage{geometry}%加载geometry宏包，定义版面
 
 \usepackage[colorlinks=true,pdfstartview=FitH,%
 linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}%加载hyperref宏包，使用超链接
@@ -205,7 +206,8 @@ citestyle=gb7714-2015%,backref=true%%其中后端backend使用biber
 	见文献\supercite{Peebles2001-100-100}
 
 2. 不带页码的引用(顺序编码制非上标，方括号包围；作者年制行内，括号包围):\\
-	见文献\parencite{Peebles2001-100-100}
+	见文献\parencite{Peebles2001-100-100}\\
+	见文献\citep{Peebles2001-100-100}
 
 3. 带页码的引用(标准命令，默认样式; 增加命令，GB/T 7714-2015样式):\\
 	见文献\cite[见][49页]{蔡敏2006--}\\
@@ -214,9 +216,10 @@ citestyle=gb7714-2015%,backref=true%%其中后端backend使用biber
 	见文献\pagescite[201-301]{Peebles2001-100-100}
 
 4. 顺序编码制中同时输出作者和顺序编码标签，比如：\\
-	见\citeauthor{蔡敏2006--}\cite{蔡敏2006--}\\
+	见\citet{蔡敏2006--}（顺序编码标签上标）\\
 	见\authornumcite{蔡敏2006--}\\
 	见\textcite{蔡敏2006--} (顺序编码标签不上标)
+	见\citeauthor{蔡敏2006--}\cite{蔡敏2006--}\\
 
 5. 作者年制文中已有作者还需要年份和页码(顺序编码制与pagescite作用相同，作者年制年份行内页码上标):\\
 	见蔡敏\yearpagescite[][205]{蔡敏2006--}和Peebles\yearpagescite[][15]{Peebles2001-100-100}
@@ -227,7 +230,11 @@ citestyle=gb7714-2015%,backref=true%%其中后端backend使用biber
 	见赵耀东(\citeyear{蔡敏2006--})
 
 7. 作者年制中由标注命令给出作者年份信息，作者以主语方式作为正文内容：\\
-	见\textcite{蔡敏2006--}
+	见\cite{蔡敏2006--}\\
+	见\parencite{蔡敏2006--}\\
+	见\textcite{蔡敏2006--}\\
+	见\citet{蔡敏2006--}\\
+	见\citep{蔡敏2006--}\\
 
 8. 在页脚中引用和打印文献表:\\
 	见文献\footnote{在脚注中引用\footcite{蔡敏2006--}}\\
@@ -1270,6 +1277,7 @@ biblatex中处理顺序数字编码压缩的代码默认从3个连续编码开�
 	- ![teststyleerj.tex](example\teststyleerj.tex)			测试chinese-erj样式
 	- ![test-translator-in-other-lan.tex](example\test-translator-in-other-lan.tex)	测试译著的其它语言的译者格式
 	- ![test-space-after-citelabel-inCJKline.tex](example\test-space-after-citelabel-inCJKline.tex)		测试删除标注后因为xeCJK加入的空格
+	- ![test-special-chars-in-fields.tex](test-special-chars-in-fields.tex) 测试不同域中存在的特殊字符处理
 	
 
 ---------------------------------------------------------
@@ -1498,6 +1506,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * 2020/07/21 v1.0v,ctan
 * 2021/01/19 v1.0w,ctan
 * 2021/04/03 v1.0x,ctan
+* 2021/05/06 v1.0y,ctan
 
 
 
