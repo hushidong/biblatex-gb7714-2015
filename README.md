@@ -1162,122 +1162,122 @@ biblatex中处理顺序数字编码压缩的代码默认从3个连续编码开�
 ### 6. 测试文件说明
 
 + egfigure
-	- ![egciteay.tex](egfigure\egciteay.tex)	 		测试gb7714-2015ay的标注样式，是否满足GB要求
-	- ![egciteaytab.tex](egfigure\egciteaytab.tex)		测试gb7714-2015ay的标注样式，绘制成表用于biblatex-gb7714-2015.pdf
-	- ![egciteaytp.tex](egfigure\egciteaytp.tex)		测试gb7714-2015ay使用natbib的常用标注命令
-	- ![egcitenum.tex](egfigure\egcitenum.tex)			测试gb7714-2015的标注样式，是否满足GB要求
-	- ![egcitenumtp.tex](egfigure\egcitenumtp.tex)		测试gb7714-2015使用natbib的常用标注命令
-	- ![egcitetab.tex](egfigure\egcitetab.tex)			测试gb7714-2015的标注样式，绘制成表用于biblatex-gb7714-2015.pdf
-	- ![egcitesay.tex](egfigure\egcitesay.tex)			测试gb7714-2015ay使用复数形式的命令
-	- ![egcitesnum.tex](egfigure\egcitesnum.tex)		测试gb7714-2015使用复数形式的命令
-	- ![egcontentfmt.tex](egfigure\egcontentfmt.tex)		测试gb7714-2015样式选项gbnamefmt=givenahead,gbbiblabel=dot,gbtitlelink=true
-	- ![egcontentfmtb.tex](egfigure\egcontentfmtb.tex)		测试gb7714-2015ms样式选项gbnamefmt=lowercase,gbstyle=false,sorting=nyt
-	- ![egcontentfmtc.tex](egfigure\egcontentfmtc.tex)		测试gb7714-2015ay样式选项maxcitenames=2,mincitenames=1,sorting=gbynta（UCAS-资环类）
-	- ![egdoublelan.tex](egfigure\egdoublelan.tex)		测试gb7714-2015样式实现的双语对照文献表，关联条目方法
-	- ![egdoublelanb.tex](egfigure\egdoublelanb.tex)		测试gb7714-2015样式实现的双语对照文献表，关联条目方法，（gbnamefmt=pinyin 国内某期刊）
-	- ![eggbfootstyle.tex](egfigure\eggbfootstyle.tex)		测试gb7714-2015样式实现国标要求的脚注文献表
-	- ![egfootstyle.tex](egfigure\egfootstyle.tex)		测试gb7714-2015样式一般的脚注文献表
-	- ![egmsinabiblio.tex](egfigure\egmsinabiblio.tex)		测试gb7714-2015ms样式在一篇文档中使用两种格式设置，中文：GB，英文：biblatex标准样式
-	- ![egmxindfrefsec.tex](egfigure\egmxindfrefsec.tex)	测试gb7714-2015mx样式在不同的参考文献分节中使用顺序编码和作者年制两种不同样式
-	- ![egmultilan.tex](egfigure\egmultilan.tex)		测试gb7714-2015样式实现的多语言混合的文献表
-	- ![egmwe.tex](egfigure\egmwe.tex)				测试gb7714-2015样式最小示例，用于biblatex-gb7714-2015.PDF
-	- ![egparfmt.tex](egfigure\egparfmt.tex)			测试gb7714-2015样式文献表段落格式设置，包括缩进，颜色，字体，间距等
-	- ![tgbbiblio.tex](egfigure\tgbbiblio.tex)			实现GB/T 7714-2015 标准的附录的文献表示例（gb7714-2015样式）
-	- ![tgbbiblioms.tex](egfigure\tgbbiblioms.tex)		实现GB/T 7714-2015 标准的附录的文献表示例（gb7714-2015ms样式）
-	- ![tgbcitation.tex](egfigure\tgbcitation.tex)		实现GB/T 7714-2015 标准2-10节给出的顺序编码制示例（gb7714-2015样式）
-	- ![tgbcitationms.tex](egfigure\tgbcitationms.tex)		实现GB/T 7714-2015 标准2-10节给出的顺序编码制示例（gb7714-2015ms样式）
-	- ![tngbcitationay.tex](egfigure\tngbcitationay.tex)	实现GB/T 7714-2015 标准2-10节给出的著者年份制示例（gb7714-2015ay样式）
-	- ![tngbcitationaynew.tex](egfigure\tngbcitationaynew.tex)	实现GB/T 7714-2015 标准2-10节给出的著者年份制示例（gb7714-2015ay样式，nohashothers=true）
+	- ![egciteay.tex](egfigure/egciteay.tex)	 		测试gb7714-2015ay的标注样式，是否满足GB要求
+	- ![egciteaytab.tex](egfigure/egciteaytab.tex)		测试gb7714-2015ay的标注样式，绘制成表用于biblatex-gb7714-2015.pdf
+	- ![egciteaytp.tex](egfigure/egciteaytp.tex)		测试gb7714-2015ay使用natbib的常用标注命令
+	- ![egcitenum.tex](egfigure/egcitenum.tex)			测试gb7714-2015的标注样式，是否满足GB要求
+	- ![egcitenumtp.tex](egfigure/egcitenumtp.tex)		测试gb7714-2015使用natbib的常用标注命令
+	- ![egcitetab.tex](egfigure/egcitetab.tex)			测试gb7714-2015的标注样式，绘制成表用于biblatex-gb7714-2015.pdf
+	- ![egcitesay.tex](egfigure/egcitesay.tex)			测试gb7714-2015ay使用复数形式的命令
+	- ![egcitesnum.tex](egfigure/egcitesnum.tex)		测试gb7714-2015使用复数形式的命令
+	- ![egcontentfmt.tex](egfigure/egcontentfmt.tex)		测试gb7714-2015样式选项gbnamefmt=givenahead,gbbiblabel=dot,gbtitlelink=true
+	- ![egcontentfmtb.tex](egfigure/egcontentfmtb.tex)		测试gb7714-2015ms样式选项gbnamefmt=lowercase,gbstyle=false,sorting=nyt
+	- ![egcontentfmtc.tex](egfigure/egcontentfmtc.tex)		测试gb7714-2015ay样式选项maxcitenames=2,mincitenames=1,sorting=gbynta（UCAS-资环类）
+	- ![egdoublelan.tex](egfigure/egdoublelan.tex)		测试gb7714-2015样式实现的双语对照文献表，关联条目方法
+	- ![egdoublelanb.tex](egfigure/egdoublelanb.tex)		测试gb7714-2015样式实现的双语对照文献表，关联条目方法，（gbnamefmt=pinyin 国内某期刊）
+	- ![eggbfootstyle.tex](egfigure/eggbfootstyle.tex)		测试gb7714-2015样式实现国标要求的脚注文献表
+	- ![egfootstyle.tex](egfigure/egfootstyle.tex)		测试gb7714-2015样式一般的脚注文献表
+	- ![egmsinabiblio.tex](egfigure/egmsinabiblio.tex)		测试gb7714-2015ms样式在一篇文档中使用两种格式设置，中文：GB，英文：biblatex标准样式
+	- ![egmxindfrefsec.tex](egfigure/egmxindfrefsec.tex)	测试gb7714-2015mx样式在不同的参考文献分节中使用顺序编码和作者年制两种不同样式
+	- ![egmultilan.tex](egfigure/egmultilan.tex)		测试gb7714-2015样式实现的多语言混合的文献表
+	- ![egmwe.tex](egfigure/egmwe.tex)				测试gb7714-2015样式最小示例，用于biblatex-gb7714-2015.PDF
+	- ![egparfmt.tex](egfigure/egparfmt.tex)			测试gb7714-2015样式文献表段落格式设置，包括缩进，颜色，字体，间距等
+	- ![tgbbiblio.tex](egfigure/tgbbiblio.tex)			实现GB/T 7714-2015 标准的附录的文献表示例（gb7714-2015样式）
+	- ![tgbbiblioms.tex](egfigure/tgbbiblioms.tex)		实现GB/T 7714-2015 标准的附录的文献表示例（gb7714-2015ms样式）
+	- ![tgbcitation.tex](egfigure/tgbcitation.tex)		实现GB/T 7714-2015 标准2-10节给出的顺序编码制示例（gb7714-2015样式）
+	- ![tgbcitationms.tex](egfigure/tgbcitationms.tex)		实现GB/T 7714-2015 标准2-10节给出的顺序编码制示例（gb7714-2015ms样式）
+	- ![tngbcitationay.tex](egfigure/tngbcitationay.tex)	实现GB/T 7714-2015 标准2-10节给出的著者年份制示例（gb7714-2015ay样式）
+	- ![tngbcitationaynew.tex](egfigure/tngbcitationaynew.tex)	实现GB/T 7714-2015 标准2-10节给出的著者年份制示例（gb7714-2015ay样式，nohashothers=true）
 + egphoto
-	- ![opt-citexref-false.tex](egphoto\opt-citexref-false.tex)	测试citexref=false选项
-	- ![opt-citexref-true.tex](egphoto\opt-citexref-true.tex)		测试citexref=true选项
-	- ![opt-gbalign-center.tex](egphoto\opt-gbalign-center.tex)	测试gbalign=center选项
-	- ![opt-gbalign-gb.tex](egphoto\opt-gbalign-gb.tex)		测试gbalign=gb7714-2015选项
-	- ![opt-gbalign-left.tex](egphoto\opt-gbalign-left.tex)		测试gbalign=left选项
-	- ![opt-gbalign-right.tex](egphoto\opt-gbalign-right.tex)		测试gbalign=right选项
-	- ![opt-gbannote-false.tex](egphoto\opt-gbannote-false.tex)	测试gbannote=false选项
-	- ![opt-gbannote-true.tex](egphoto\opt-gbannote-true.tex)		测试gbannote=true选项
-	- ![opt-gbannote-true.tex](egphoto\opt-gbannote-true.tex)		测试gbannote=true选项
-	- ![opt-gbbiblabela.tex](egphoto\opt-gbbiblabela.tex)		测试gbbiblabel=box选项
-	- ![opt-gbbiblabelb.tex](egphoto\opt-gbbiblabelb.tex)		测试gbbiblabel=bracket选项
-	- ![opt-gbbiblabelc.tex](egphoto\opt-gbbiblabelc.tex)		测试gbbiblabel=parens选项
-	- ![opt-gbbiblabeld.tex](egphoto\opt-gbbiblabeld.tex)		测试gbbiblabel=dot选项
-	- ![opt-gbbiblabele.tex](egphoto\opt-gbbiblabele.tex)		测试gbbiblabel=plain选项
-	- ![opt-gbbiblabelf.tex](egphoto\opt-gbbiblabelf.tex)		测试gbbiblabel=circle选项
-	- ![opt-gbnoauthor-false.tex](egphoto\opt-gbnoauthor-false.tex)	测试gbnoauthor=false选项
-	- ![opt-gbnoauthor-true.tex](egphoto\opt-gbnoauthor-true.tex)	测试gbnoauthor=true选项
-	- ![opt-gbpub-false.tex](egphoto\opt-gbpub-false.tex)		测试gbpub=false选项
-	- ![opt-gbpub-true.tex](egphoto\opt-gbpub-true.tex)		测试gbpub=true选项
-	- ![opt-gbpunctin-false.tex](egphoto\opt-gbpunctin-false.tex)	测试gbpunctin=false选项
-	- ![opt-gbpunctin-true.tex](egphoto\opt-gbpunctin-true.tex)	测试gbpunctin=true选项
-	- ![opt-gbtitlelink-false.tex](egphoto\opt-gbtitlelink-false.tex)	测试gbtitlelink=false选项
-	- ![opt-gbtitlelink-true.tex](egphoto\opt-gbtitlelink-true.tex)	测试gbtitlelink=true选项
-	- ![opt-gbtype-false.tex](egphoto\opt-gbtype-false.tex)		测试gbtype=false选项
-	- ![opt-gbtype-true.tex](egphoto\opt-gbtype-true.tex)		测试gbtype=true选项
-	- ![opt-mergedate-a.tex](egphoto\opt-mergedate-a.tex)		测试mergedate默认选项（gb7714-2015ay）
-	- ![opt-mergedate-b.tex](egphoto\opt-mergedate-b.tex)		测试mergedate=true选项（gb7714-2015ay）
-	- ![opt-mergedate-c.tex](egphoto\opt-mergedate-c.tex)		测试mergedate=false选项（gb7714-2015ay）
-	- ![opt-mergedate-d.tex](egphoto\opt-mergedate-d.tex)		测试mergedate=none选项（gb7714-2015ay）
+	- ![opt-citexref-false.tex](egphoto/opt-citexref-false.tex)	测试citexref=false选项
+	- ![opt-citexref-true.tex](egphoto/opt-citexref-true.tex)		测试citexref=true选项
+	- ![opt-gbalign-center.tex](egphoto/opt-gbalign-center.tex)	测试gbalign=center选项
+	- ![opt-gbalign-gb.tex](egphoto/opt-gbalign-gb.tex)		测试gbalign=gb7714-2015选项
+	- ![opt-gbalign-left.tex](egphoto/opt-gbalign-left.tex)		测试gbalign=left选项
+	- ![opt-gbalign-right.tex](egphoto/opt-gbalign-right.tex)		测试gbalign=right选项
+	- ![opt-gbannote-false.tex](egphoto/opt-gbannote-false.tex)	测试gbannote=false选项
+	- ![opt-gbannote-true.tex](egphoto/opt-gbannote-true.tex)		测试gbannote=true选项
+	- ![opt-gbannote-true.tex](egphoto/opt-gbannote-true.tex)		测试gbannote=true选项
+	- ![opt-gbbiblabela.tex](egphoto/opt-gbbiblabela.tex)		测试gbbiblabel=box选项
+	- ![opt-gbbiblabelb.tex](egphoto/opt-gbbiblabelb.tex)		测试gbbiblabel=bracket选项
+	- ![opt-gbbiblabelc.tex](egphoto/opt-gbbiblabelc.tex)		测试gbbiblabel=parens选项
+	- ![opt-gbbiblabeld.tex](egphoto/opt-gbbiblabeld.tex)		测试gbbiblabel=dot选项
+	- ![opt-gbbiblabele.tex](egphoto/opt-gbbiblabele.tex)		测试gbbiblabel=plain选项
+	- ![opt-gbbiblabelf.tex](egphoto/opt-gbbiblabelf.tex)		测试gbbiblabel=circle选项
+	- ![opt-gbnoauthor-false.tex](egphoto/opt-gbnoauthor-false.tex)	测试gbnoauthor=false选项
+	- ![opt-gbnoauthor-true.tex](egphoto/opt-gbnoauthor-true.tex)	测试gbnoauthor=true选项
+	- ![opt-gbpub-false.tex](egphoto/opt-gbpub-false.tex)		测试gbpub=false选项
+	- ![opt-gbpub-true.tex](egphoto/opt-gbpub-true.tex)		测试gbpub=true选项
+	- ![opt-gbpunctin-false.tex](egphoto/opt-gbpunctin-false.tex)	测试gbpunctin=false选项
+	- ![opt-gbpunctin-true.tex](egphoto/opt-gbpunctin-true.tex)	测试gbpunctin=true选项
+	- ![opt-gbtitlelink-false.tex](egphoto/opt-gbtitlelink-false.tex)	测试gbtitlelink=false选项
+	- ![opt-gbtitlelink-true.tex](egphoto/opt-gbtitlelink-true.tex)	测试gbtitlelink=true选项
+	- ![opt-gbtype-false.tex](egphoto/opt-gbtype-false.tex)		测试gbtype=false选项
+	- ![opt-gbtype-true.tex](egphoto/opt-gbtype-true.tex)		测试gbtype=true选项
+	- ![opt-mergedate-a.tex](egphoto/opt-mergedate-a.tex)		测试mergedate默认选项（gb7714-2015ay）
+	- ![opt-mergedate-b.tex](egphoto/opt-mergedate-b.tex)		测试mergedate=true选项（gb7714-2015ay）
+	- ![opt-mergedate-c.tex](egphoto/opt-mergedate-c.tex)		测试mergedate=false选项（gb7714-2015ay）
+	- ![opt-mergedate-d.tex](egphoto/opt-mergedate-d.tex)		测试mergedate=none选项（gb7714-2015ay）
 + egthesis	
-	- ![thesis-bupt-numeric.tex](egthesis\thesis-bupt-numeric.tex)	
-	- ![thesis-cau-numeric.tex](egthesis\thesis-cau-numeric.tex)	
-	- ![thesis-ecnu-numeric.tex](egthesis\thesis-ecnu-numeric.tex)	
-	- ![thesis-fdu-numeric.tex](egthesis\thesis-fdu-numeric.tex)	
-	- ![thesis-nwafu-ay.tex](egthesis\thesis-nwafu-ay.tex)			测试西北农林科技大学（可以参考：特殊的ay样式调整）
-	- ![thesis-seu-numeric.tex](egthesis\thesis-seu-numeric.tex)		测试东南大学（可以参考：gb7714-2015样式调整）
-	- ![thesis-sjtu-numeric.tex](egthesis\thesis-sjtu-numeric.tex)	
-	- ![thesis-thu-author-year.tex](egthesis\thesis-thu-author-year.tex)	
-	- ![thesis-thu-numeric.tex](egthesis\thesis-thu-numeric.tex)	
-	- ![thesis-tongji.tex](egthesis\thesis-tongji.tex)	
-	- ![thesis-ucas-m.tex](egthesis\thesis-ucas-m.tex)				测试中科院大学（可以参考：ay样式调整）
-	- ![thesis-ucas-x.tex](egthesis\thesis-ucas-x.tex)	
-	- ![thesis-uibe-numeric.tex](egthesis\thesis-uibe-numeric.tex)		测试对外经贸大学（可以参考：中文标点、卷期格式；中英文不同）
-	- ![thesis-ustc-all.tex](egthesis\thesis-ustc-all.tex)			测试中科大（可以参考：一文中使用两种样式）
-	- ![thesis-ustc-authoryear.tex](egthesis\thesis-ustc-authoryear.tex)	
-	- ![thesis-ustc-numeric.tex](egthesis\thesis-ustc-numeric.tex)	
-	- ![thesis-xjtu-numeric.tex](egthesis\thesis-xjtu-numeric.tex)	
-	- ![thesis-zju-numeric.tex](egthesis\thesis-zju-numeric.tex)	
-	- ![thesistest.tex](egthesis\thesistest.tex)	
+	- ![thesis-bupt-numeric.tex](egthesis/thesis-bupt-numeric.tex)	
+	- ![thesis-cau-numeric.tex](egthesis/thesis-cau-numeric.tex)	
+	- ![thesis-ecnu-numeric.tex](egthesis/thesis-ecnu-numeric.tex)	
+	- ![thesis-fdu-numeric.tex](egthesis/thesis-fdu-numeric.tex)	
+	- ![thesis-nwafu-ay.tex](egthesis/thesis-nwafu-ay.tex)			测试西北农林科技大学（可以参考：特殊的ay样式调整）
+	- ![thesis-seu-numeric.tex](egthesis/thesis-seu-numeric.tex)		测试东南大学（可以参考：gb7714-2015样式调整）
+	- ![thesis-sjtu-numeric.tex](egthesis/thesis-sjtu-numeric.tex)	
+	- ![thesis-thu-author-year.tex](egthesis/thesis-thu-author-year.tex)	
+	- ![thesis-thu-numeric.tex](egthesis/thesis-thu-numeric.tex)	
+	- ![thesis-tongji.tex](egthesis/thesis-tongji.tex)	
+	- ![thesis-ucas-m.tex](egthesis/thesis-ucas-m.tex)				测试中科院大学（可以参考：ay样式调整）
+	- ![thesis-ucas-x.tex](egthesis/thesis-ucas-x.tex)	
+	- ![thesis-uibe-numeric.tex](egthesis/thesis-uibe-numeric.tex)		测试对外经贸大学（可以参考：中文标点、卷期格式；中英文不同）
+	- ![thesis-ustc-all.tex](egthesis/thesis-ustc-all.tex)			测试中科大（可以参考：一文中使用两种样式）
+	- ![thesis-ustc-authoryear.tex](egthesis/thesis-ustc-authoryear.tex)	
+	- ![thesis-ustc-numeric.tex](egthesis/thesis-ustc-numeric.tex)	
+	- ![thesis-xjtu-numeric.tex](egthesis/thesis-xjtu-numeric.tex)	
+	- ![thesis-zju-numeric.tex](egthesis/thesis-zju-numeric.tex)	
+	- ![thesistest.tex](egthesis/thesistest.tex)	
 + example
-	- ![cls-beamer.tex](example\cls-beamer.tex)			测试beamer中的使用（gb7714-2015样式）
-	- ![cls-beameray.tex](example\cls-beameray.tex)			测试beamer中的使用（gb7714-2015ay样式）
-	- ![codeopt-gbcodegbk.tex](example\codeopt-gbcodegbk.tex)		测试gb7714-2015、ay样式，对于GBK编码文档的兼容性
-	- ![eg-opt-gbstyle.tex](example\eg-opt-gbstyle.tex)		测试gb7714-2015ms样式一篇文档中中英文两种格式设置，多语言对照，多语言混合文献表
-	- ![testallformat.tex](example\testallformat.tex)			测试全面的类型、格式
-	- ![egtest.tex](example\egtest.tex)				测试示例
-	- ![opt-autolang-multilan.tex](example\opt-autolang-multilan.tex)	测试多语言混合的文献表，各语言不同的本地化字符串
-	- ![opt-eg-multilan.tex](example\opt-eg-multilan.tex)		测试多语言混合的文献表
-	- ![opt-eg-authoryear.tex](example\opt-eg-authoryear.tex)		测试ay样式
-	- ![opt-eg-dblang.tex](example\opt-eg-dblang.tex)			测试双语对照文献-两种方法（条目集、关联条目）
-	- ![opt-gbalign-center.tex](example\opt-gbalign-center.tex)	测试gbalign选项
-	- ![opt-gbalign-gb.tex](example\opt-gbalign-gb.tex)		测试gbalign选项
-	- ![opt-gbalign-left.tex](example\opt-gbalign-left.tex)		测试gbalign选项
-	- ![opt-gbannote.tex](example\opt-gbannote.tex)			测试gbannote选项，在文献表中加上附加信息用以说明三大索引情况
-	- ![opt-gbbiblabel.tex](example\opt-gbbiblabel.tex)		测试gbbiblabel选项
-	- ![opt-gbctexset.tex](example\opt-gbctexset.tex)			测试gbctexset选项，使可以利用ctex的设置对文献表的标题进行修改
-	- ![opt-gbfieldstd.tex](example\opt-gbfieldstd.tex)		测试gbfiledstd选项，著录格式还原为biblatex标准样式的格式
-	- ![opt-gbfootbib.tex](example\opt-gbfootbib.tex)			测试实现国标要求的脚注文献表
-	- ![opt-gblanorder-chineseahead.tex](example\opt-gblanorder-chineseahead.tex)	测试文献表排序，中文在前
-	- ![opt-gblanorder-englishahead.tex](example\opt-gblanorder-englishahead.tex)	测试文献表排序，英文在前
-	- ![opt-gblanorder-udforder.tex](example\opt-gblanorder-udforder.tex)		测试文献表排序，自定义顺序
-	- ![opt-sorting-multilan.tex](example\opt-sorting-multilan.tex)			测试多语言混合文献表排序
-	- ![opt-gblocal.tex](example\opt-gblocal.tex)				测试本地化字符串设置（引用标注标签、文献表）
-	- ![test-setlocal.tex](example\test-setlocal.tex)				测试本地化字符串设置（多种方法局部调整）
-	- ![test-setlocal-multilan.tex](example\test-setlocal-multilan.tex)	测试本地化字符串设置（多种语言的局部调整）
-	- ![opt-gbnamefmt.tex](example\opt-gbnamefmt.tex)			测试gbnamefmt对于作者姓名格式的控制
-	- ![opt-gbnamefmt-default.tex](example\opt-gbnamefmt-default.tex)	测试gbnamefmt对于作者姓名格式的控制
-	- ![opt-gbnamefmt-quanpin.tex](example\opt-gbnamefmt-quanpin.tex)	测试gbnamefmt对于作者姓名格式的控制
-	- ![opt-gbnoauthor-false.tex](example\opt-gbnoauthor-false.tex)		测试gbnoauthor选项
-	- ![opt-gbnoauthor-true.tex](example\opt-gbnoauthor-true.tex)		测试gbnoauthor选项
-	- ![opt-gbpub-true.tex](example\opt-gbpub-true.tex)		测试gbpub选项
-	- ![opt-gbpunctin.tex](example\opt-gbpunctin.tex)			测试gbpunctin选项
-	- ![opt-gbtitlelink.tex](example\opt-gbtitlelink.tex)		测试gbtitlelink选项
-	- ![opt-gbtype.tex](example\opt-gbtype.tex)			测试gbtype选项
-	- ![opt-hyperref-backref.tex](example\opt-hyperref-backref.tex)	测试backrref选项，反向超链接
-	- ![teststyleerj.tex](example\teststyleerj.tex)			测试chinese-erj样式
-	- ![test-translator-in-other-lan.tex](example\test-translator-in-other-lan.tex)	测试译著的其它语言的译者格式
-	- ![test-space-after-citelabel-inCJKline.tex](example\test-space-after-citelabel-inCJKline.tex)		测试删除标注后因为xeCJK加入的空格
-	- ![test-special-chars-in-fields.tex](test-special-chars-in-fields.tex) 测试不同域中存在的特殊字符处理
+	- ![cls-beamer.tex](example/cls-beamer.tex)			测试beamer中的使用（gb7714-2015样式）
+	- ![cls-beameray.tex](example/cls-beameray.tex)			测试beamer中的使用（gb7714-2015ay样式）
+	- ![codeopt-gbcodegbk.tex](example/codeopt-gbcodegbk.tex)		测试gb7714-2015、ay样式，对于GBK编码文档的兼容性
+	- ![eg-opt-gbstyle.tex](example/eg-opt-gbstyle.tex)		测试gb7714-2015ms样式一篇文档中中英文两种格式设置，多语言对照，多语言混合文献表
+	- ![testallformat.tex](example/testallformat.tex)			测试全面的类型、格式
+	- ![egtest.tex](example/egtest.tex)				测试示例
+	- ![opt-autolang-multilan.tex](example/opt-autolang-multilan.tex)	测试多语言混合的文献表，各语言不同的本地化字符串
+	- ![opt-eg-multilan.tex](example/opt-eg-multilan.tex)		测试多语言混合的文献表
+	- ![opt-eg-authoryear.tex](example/opt-eg-authoryear.tex)		测试ay样式
+	- ![opt-eg-dblang.tex](example/opt-eg-dblang.tex)			测试双语对照文献-两种方法（条目集、关联条目）
+	- ![opt-gbalign-center.tex](example/opt-gbalign-center.tex)	测试gbalign选项
+	- ![opt-gbalign-gb.tex](example/opt-gbalign-gb.tex)		测试gbalign选项
+	- ![opt-gbalign-left.tex](example/opt-gbalign-left.tex)		测试gbalign选项
+	- ![opt-gbannote.tex](example/opt-gbannote.tex)			测试gbannote选项，在文献表中加上附加信息用以说明三大索引情况
+	- ![opt-gbbiblabel.tex](example/opt-gbbiblabel.tex)		测试gbbiblabel选项
+	- ![opt-gbctexset.tex](example/opt-gbctexset.tex)			测试gbctexset选项，使可以利用ctex的设置对文献表的标题进行修改
+	- ![opt-gbfieldstd.tex](example/opt-gbfieldstd.tex)		测试gbfiledstd选项，著录格式还原为biblatex标准样式的格式
+	- ![opt-gbfootbib.tex](example/opt-gbfootbib.tex)			测试实现国标要求的脚注文献表
+	- ![opt-gblanorder-chineseahead.tex](example/opt-gblanorder-chineseahead.tex)	测试文献表排序，中文在前
+	- ![opt-gblanorder-englishahead.tex](example/opt-gblanorder-englishahead.tex)	测试文献表排序，英文在前
+	- ![opt-gblanorder-udforder.tex](example/opt-gblanorder-udforder.tex)		测试文献表排序，自定义顺序
+	- ![opt-sorting-multilan.tex](example/opt-sorting-multilan.tex)			测试多语言混合文献表排序
+	- ![opt-gblocal.tex](example/opt-gblocal.tex)				测试本地化字符串设置（引用标注标签、文献表）
+	- ![test-setlocal.tex](example/test-setlocal.tex)				测试本地化字符串设置（多种方法局部调整）
+	- ![test-setlocal-multilan.tex](example/test-setlocal-multilan.tex)	测试本地化字符串设置（多种语言的局部调整）
+	- ![opt-gbnamefmt.tex](example/opt-gbnamefmt.tex)			测试gbnamefmt对于作者姓名格式的控制
+	- ![opt-gbnamefmt-default.tex](example/opt-gbnamefmt-default.tex)	测试gbnamefmt对于作者姓名格式的控制
+	- ![opt-gbnamefmt-quanpin.tex](example/opt-gbnamefmt-quanpin.tex)	测试gbnamefmt对于作者姓名格式的控制
+	- ![opt-gbnoauthor-false.tex](example/opt-gbnoauthor-false.tex)		测试gbnoauthor选项
+	- ![opt-gbnoauthor-true.tex](example/opt-gbnoauthor-true.tex)		测试gbnoauthor选项
+	- ![opt-gbpub-true.tex](example/opt-gbpub-true.tex)		测试gbpub选项
+	- ![opt-gbpunctin.tex](example/opt-gbpunctin.tex)			测试gbpunctin选项
+	- ![opt-gbtitlelink.tex](example/opt-gbtitlelink.tex)		测试gbtitlelink选项
+	- ![opt-gbtype.tex](example/opt-gbtype.tex)			测试gbtype选项
+	- ![opt-hyperref-backref.tex](example/opt-hyperref-backref.tex)	测试backrref选项，反向超链接
+	- ![teststyleerj.tex](example/teststyleerj.tex)			测试chinese-erj样式
+	- ![test-translator-in-other-lan.tex](example/test-translator-in-other-lan.tex)	测试译著的其它语言的译者格式
+	- ![test-space-after-citelabel-inCJKline.tex](example/test-space-after-citelabel-inCJKline.tex)		测试删除标注后因为xeCJK加入的空格
+	- ![test-special-chars-in-fields.tex](example/test-special-chars-in-fields.tex) 测试不同域中存在的特殊字符处理
 	
 
 ---------------------------------------------------------

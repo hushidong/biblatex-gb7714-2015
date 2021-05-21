@@ -1,0 +1,202 @@
+%%
+%% ---------------------------------------------------------------
+%% Maintained by huzhenzhen
+%% E-mail: hzzmail@163.com
+%% Released under the LaTeX Project Public License v1.3c or later
+%% ---------------------------------------------------------------
+%%注意因为使用了stylemap所以只兼容了biblatex3.7以后的版本
+\ProvidesFile{gb7714-1987ay.bbx}[2021/05/16 v1.0 a biblatex bibliography style for GB/T 7714-1987]
+
+
+%==================================================
+%加载gb样式
+%==================================================
+\RequireBibliographyStyle{gb7714-2015ay}
+
+%==================================================
+% 2005与2015的主要差异：
+%1.无doi
+%2.文献类型标志(电子文献必备，其他文献任选)，引用日期(联机文献必备，其他电子文献任选)，这条差异无需处理
+%3.用汉语拼音书写的中国著者姓名不得缩写。标准说是这么说的，但没有任何示例。需要的话可以在bib条目中设置nameformat=quanpin
+%4.无关于页码、获取和访问路径的说明。这条差异无需处理
+%5.没有A/CM/DS/Z等新的类型
+%==================================================
+% 1987与2005的主要差异：
+%1. 没有电子文献。主要考虑将高版本的电子文献转换为misc
+%2. 各类文献没有引用日期，获取和访问路径。考虑去掉url和urldate
+%3. 没有文献标志类型。考虑去掉文献类型标志和文献载体标志。
+%4. 专著存在文献数量、丛编项、附注项、文献标准编号。这一条不考虑。
+%5. 析出文献：中文用见:，英文用In:
+%6. 页码之间的连接符用~
+%7. 英文作者的姓只是首字母大写
+%8. 作者年份制中；文献表中，最后一个作者与年份之间的标点用.加空格。但引用的标注标签上是空格
+%9. 学位论文：用学位论文和dissertation表示。
+%10. 编者会加上编者角色信息。
+%11. 专利输出国别和类型。可以全部放到number中处理。专利的日期也有特点。特殊处理。
+%==================================================
+
+
+%==================================================
+%选项设置
+%==================================================
+\ExecuteBibliographyOptions{
+    gbtype=false,
+    gbnamefmt=lowercase,
+    gbfieldtype=true,
+    gbpunctin=false,
+    doi=false,
+    url=false,
+    }
+
+%==================================================
+%标点设置
+%==================================================
+\DefineBibliographyExtras{english}{\renewcommand*{\bibrangedash}{$\sim$}}
+\DeclareFieldFormat%将期刊等文献的标题中原来带的引号去掉
+  [thesis]
+  {title}{#1}%\mkbibquote{#1\isdot}
+\DeclareDelimFormat[bib,biblist]{nameyeardelim}{\adddot\space}
+
+%==================================================
+%字符串设置
+%==================================================
+\DefineBibliographyStrings{english}{
+    %andincitecn = {和},
+    %andincite   = {and},
+    mathesiscn={学位论文},
+    phdthesiscn={学位论文},
+    mathesis={[dissertation]},
+    phdthesis={[dissertation]},
+    in={In:\addspace},
+    incn={见:\addspace},
+    editorscn={编},
+    editorcn={编},
+}
+
+
+%==================================================
+%类型转换回来
+%==================================================
+    \DeclareStyleSourcemap{
+        \maps[datatype=bibtex]{
+            \map{
+                \step[typesource=online, typetarget=misc, final]
+            }
+            \map{
+                \step[typesource=electronic, typetarget=misc, final]
+            }
+            \map{
+                \step[typesource=www, typetarget=misc, final]
+            }
+        }
+    }
+
+%==================================================
+%域格式设置
+%==================================================
+%专著如果责任者是editor，也输入相关类型
+\renewbibmacro*{editor+others}{%
+  \ifboolexpr{
+    test \ifuseeditor
+    and
+    not test {\ifnameundef{editor}}
+  }
+    {\usebibmacro{bbx:dashcheck}
+       {\bibnamedash}
+       {\usebibmacro{editor}%
+        \usebibmacro{bbx:savehash}}%
+     \clearname{editor}%
+     \setunit{\printdelim{nameyeardelim}}}%
+    {\global\undef\bbx@lasthash
+     \usebibmacro{labeltitle}%
+     \setunit*{\printdelim{nonameyeardelim}}}%
+  \usebibmacro{date+extradate}}
+
+%专利的日期
+\renewbibmacro*{newsdate}{%%新增加一个公告日期，公开日期或新闻日期
+    \iffieldundef{year}{}{\printfield{year}%
+    \iffieldundef{month}{}{\adddot\printtext{\thefield{month}}%
+    \iffieldundef{day}{}{\adddot\printfield{day}}}}%
+    }
+
+%
+%   重设专利title的输出，将文献类型标识符输出出去
+%
+\newbibmacro*{patenttitle}{%原输出来自biblatex.def文件
+  \ifboolexpr{%
+    test{\iffieldundef{title}}%
+    and%
+    test{\iffieldundef{subtitle}}%
+  }%
+    {}%
+    {\printtext[title]{\bibtitlefont%
+       \printfield[titlecase]{title}%
+       \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
+       {}{\setunit{\subtitlepunct}%
+       \printfield[titlecase]{subtitle}}%
+       \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
+        {\setunit{\subtitlepunct}\printfield{titleaddon}}%
+        \newunit\printfield{number}%写专利号
+        \iftoggle{bbx:gbtype}{\printfield[gbtypeflag]{usera}}{}%
+     %\iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
+     %\newunit
+     }%
+}%
+}
+
+
+%==================================================
+%条目的输出驱动
+%==================================================
+%
+%   论文类型单独处理：增加论文类型信息
+%
+%
+\DeclareBibliographyDriver{thesis}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+\ifnameundef{namea}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+  \usebibmacro{title}%
+  \iftoggle{bbx:gbstrict}{}{%
+  \newunit%
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}%增加的译者信息
+  \newunit\newblock
+  \iftoggle{bbx:gbfieldtype}{%
+  \setunit{\addcolon\addspace}%
+  \printfield{type}%
+  \setunit*{\addspace}}{}%
+  \printfield{number}%
+  \newunit\newblock
+  \printfield{version}%
+  \newunit
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{institution+location+date}%
+  %\newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \iffieldundef{url}{}{%当没有网址时也不输出修改或更新日期
+  \usebibmacro{modifydate}}%修改或更新日期为带括号的时间
+  \usebibmacro{doi+eprint+url}%
+  \newunit
+  \printfield{pagetotal}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isrn}}
+    {}%
+  \newunit\newblock
+%  \usebibmacro{doi+eprint+url}%
+%  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}\usebibmacro{annotation}}

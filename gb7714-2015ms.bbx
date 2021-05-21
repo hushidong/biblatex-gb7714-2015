@@ -708,21 +708,17 @@
 
 \DeclareSourcemap{%\perdatasource{examples.bib}
 \maps[datatype=bibtex]{%
-        \map{%当没有作者时将editor转成author
-        \pernottype{inbook}%因为in系列中editor可能用来表示bookauthor，所以排除
-        \pernottype{inproceedings}
-        \pernottype{incollection}
-        \pernottype{periodical}%因为peridical直接使用editor，所以排除
-        %注意notfield在低版本biblatex中没有
-        %\step[notfield=author,final]%当author不存在，将editor复制给author
-        \step[fieldsource=editor,fieldtarget=author]%并删除editor
+        \map{%如果author或者editor或者translator存在，那么设置namea便于后面判断。
+            \step[fieldsource=author,final]
+            \step[fieldset=namea,origfieldval]
         }
-        \map{%当没有作者时将translator转成author
-        \pernottype{inbook}
-        \pernottype{inproceedings}
-        \pernottype{incollection}
-        %\step[notfield=author,final]%当author不存在，将translator复制给author
-        \step[fieldsource=translator,fieldtarget=author]%并删除translator
+        \map{%
+            \step[fieldsource=editor,final]
+            \step[fieldset=namea,origfieldval]
+        }
+        \map{%
+            \step[fieldsource=translator,final]
+            \step[fieldset=namea,origfieldval]
         }
         \map{%让address和location同步，biblatex中address是location的别名
         %因此输出的时候只有location信息，但处理过程中是可以存在address的。
@@ -1822,6 +1818,7 @@ togl{bbx:gbstyle} or test {\iffieldequalstr{userd}{chinese}}%
 %   v1.0w,20210401,hzz,针对其它语言的译者后的标点与中文不同做处理
 %   原理方法:判断作者或译者是否中文，若中文用字符等，否则用et al. 。
 %   \printnames由start-stop控制项数，默认是1和maxnames/minnames
+\newcommand{\aftertransdelim}{\addcomma\addthinspace}
 \renewbibmacro*{name:andothers}{\bibauthorfont%
   \ifboolexpr{
     test {\ifnumequal{\value{listcount}}{\value{liststop}}}
@@ -1835,7 +1832,7 @@ togl{bbx:gbstyle} or test {\iffieldequalstr{userd}{chinese}}%
 %袁训来, 陈哲, 肖书海, 等.
 %胡泳, 范海燕, 译.
 %潘惠霞, 魏婧, 杨艳, 等译.
-\ifcurrentname{translator}{\iffieldequalstr{usere}{chinese}{\addcomma\addthinspace}{}}{}%为了实现上述第二个示例情况做的处理
+\ifcurrentname{translator}{\iffieldequalstr{usere}{chinese}{\aftertransdelim}{}}{}%为了实现上述第二个示例情况做的处理
 }}
 %
 %   修改省略作者后的本地化字符串，比如et al.
@@ -2252,6 +2249,29 @@ incollection,proceedings,inproceedings]{number}{%
             {}{\printnames{bookauthor}}%
         }%
 }%
+% 责任者如果没有author用editor或translator替代
+% 20210521 v1.0y hzz
+%专著如果责任者是editor那么不用输出类型信息
+\renewbibmacro*{editor+others}{%
+  \ifboolexpr{
+    test \ifuseeditor
+    and
+    not test {\ifnameundef{editor}}
+  }
+    {\printnames{editor}%
+     \clearname{editor}}
+    {}}%
+%要注意要使用translator那么需要开启usetranslator选项的。
+%注意其中的标点处理。
+\renewbibmacro*{translator+others}{%
+  \ifboolexpr{
+    test \ifusetranslator
+    and
+    not test {\ifnameundef{translator}}
+  }
+    {\renewcommand{\aftertransdelim}{\adddot\addspace}\printnames{translator}%
+     \clearname{translator}}
+    {}}%
 %
 %   修改期刊的标题
 %
@@ -2339,7 +2359,7 @@ incollection,proceedings,inproceedings]{number}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
 \usebibmacro{author/editor+others/translator+others}%
-\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+\ifnameundef{namea}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
 \usebibmacro{maintitle+title}%
 \iftoggle{bbx:gbstrict}{}{%
 \newunit
@@ -2517,7 +2537,7 @@ incollection,proceedings,inproceedings]{number}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/editor+others/translator+others}%
-\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+\ifnameundef{namea}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
   \usebibmacro{title}%
   \iftoggle{bbx:gbstrict}{}{%
   \newunit%
@@ -2562,8 +2582,8 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
 \csdef{blx@bbx@report}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
-  \usebibmacro{author}%
-\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+  \usebibmacro{author/editor+others/translator+others}%
+\ifnameundef{namea}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
   \usebibmacro{title}%
   \iftoggle{bbx:gbstrict}{}{%
   \newunit%
@@ -2611,8 +2631,8 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
 \csdef{blx@bbx@manual}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
-  \usebibmacro{author}%
-\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+  \usebibmacro{author/editor+others/translator+others}%
+\ifnameundef{namea}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
   \usebibmacro{title}%
   \iftoggle{bbx:gbstrict}{}{%
   \newunit%
@@ -2663,7 +2683,7 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/editor+others/translator+others}%
-\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+\ifnameundef{namea}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
   \usebibmacro{title}%
 \iftoggle{bbx:gbstrict}{}{%
   \newunit

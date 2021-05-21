@@ -1,0 +1,21 @@
+%%
+%% ---------------------------------------------------------------
+%% Maintained by huzhenzhen
+%% E-mail: hzzmail@163.com
+%% Released under the LaTeX Project Public License v1.3c or later
+%% ---------------------------------------------------------------
+%%
+\ProvidesFile{gb7714-1987ay.cbx}[2021/05/16 v1.0 a biblatex bibliography style for GB/T 7714-1987]
+
+%==================================================
+%加载gb样式
+%==================================================
+\RequireCitationStyle{gb7714-2015ay} %
+
+\ExecuteBibliographyOptions{
+  uniquename=false,%不处理姓名歧义
+  uniquelist=false
+}
+
+\DeclareDelimFormat[cite,parencite,pagescite]{nameyeardelim}{\space}%\addcomma\space
+\DeclareDelimFormat[citet,citep,textcite]{nameyeardelim}{\space}%\addcomma\space

@@ -1,0 +1,54 @@
+%%
+%% ---------------------------------------------------------------
+%% erj.bbx --- A bibliography style of Economic Research Journal in china
+%% modified from gb7714-2015ay at the request of ddswhu
+%% Maintained by huzhenzhen
+%% E-mail: hzzmail@163.com
+%% Released under the LaTeX Project Public License v1.3c or later
+%% ---------------------------------------------------------------
+%%注意因为使用了stylemap所以只兼容了biblatex3.7以后的版本
+\ProvidesFile{gb7714-2005.bbx}[2021/05/16 v1.0 a biblatex bibliography style for GB/T 7714-2005]
+
+
+%==================================================
+%加载gb样式
+%==================================================
+\RequireBibliographyStyle{gb7714-2015}
+
+%==================================================
+%与2015的主要差异：
+%1.无doi
+%2.文献类型标志(电子文献必备，其他文献任选)，引用日期(联机文献必备，其他电子文献任选)，这条差异无需处理
+%3.用汉语拼音书写的中国著者姓名不得缩写。标准说是这么说的，但没有任何示例。需要的话可以在bib条目中设置nameformat=quanpin
+%4.无关于页码、获取和访问路径的说明。这条差异无需处理
+%5.没有A/CM/DS/Z等新的类型
+%==================================================
+
+
+%==================================================
+%选项设置
+%==================================================
+    \ExecuteBibliographyOptions{
+    doi=false,
+    url=false,
+    }
+
+%==================================================
+%类型转换回来
+%==================================================
+    \DeclareStyleSourcemap{
+        \maps[datatype=bibtex]{
+            \map[overwrite]{%
+                \pertype{dataset}
+                \step[fieldset=usera, fieldvalue={Z}]%
+            }
+            \map[overwrite]{%
+                \pertype{archive}
+                \step[fieldset=usera, fieldvalue={Z}]%
+            }
+            \map[overwrite]{%
+                \pertype{map}
+                \step[fieldset=usera, fieldvalue={Z}]%
+            }
+        }
+    }

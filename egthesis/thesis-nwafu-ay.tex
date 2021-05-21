@@ -25,6 +25,8 @@
             isbn=false,
             gbfieldtype=true,
             gbpunctin=false,
+            uniquename=false,
+            uniquelist=false
            ]{biblatex}
 
 \makeatletter
@@ -40,7 +42,7 @@
 \renewcommand{\postnotedelim}{\addcolon\space}
 \renewcommand*{\nameyeardelim}{\addspace}
 \DeclareDelimFormat[bib,biblist]{nameyeardelim}{\addperiod\space}
-%\DeclareDelimFormat[textcite]{nameyeardelim}{\addspace}
+\DeclareDelimFormat[textcite,cite,parencite,citet,citep]{nameyeardelim}{\addspace}
 \DeclareFieldFormat{postnote}{#1}
 
 \DefineBibliographyStrings{english}{

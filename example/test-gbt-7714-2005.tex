@@ -1,0 +1,77 @@
+
+%测试gb7714-2005的差异
+
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage[backend=biber,style=gb7714-2005]{biblatex}
+
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+
+@Article{Walls2013-399-418,
+  Title                    = {drought, deluge and declines: the impact of precipition extremes on amphibians in a changing climate},
+  Author                   = {Walls, S C and barichivich, W. J. and BROWN, m. e.},
+  Journal                  = {Biology},
+  Number                   = {1},
+  Pages                    = {399-418},
+  Volume                   = {2},
+  Url                      = {http://www.mdpi.com},
+  Urldate                  = {2013-11-04},
+  Year                     = {2013},
+  doi                      = {10.3390/biology2010399}
+}
+
+@Article{Zhang2007-500-503,
+  Title                    = {The design and experimental investigations of supersonic length shorted nozzle},
+  Author                   = {Zhang, Min li and Yi, Shi he and Zhao, Yu xin},
+  Journal                  = {ACTA AERODYNAMICA SINICA},
+  Number                   = {4},
+  Pages                    = {500-503},
+  Volume                   = {25},
+  Year                     = {2007},
+  nameformat={quanpin},
+}
+
+@Book{Yi2013--,
+  Title                    = {Supersonic and hypersonic nozzle design},
+  Address                  = {Beijing},
+  Author                   = {Yi, Shi he and Zhao, Yu xin and He, Lin and Zhang, Min li},
+  Publisher                = {National Defense Industry Press},
+  Year                     = {2013},
+  nameformat={quanpin},
+}
+
+@Archive{中国第一历史档案馆2001--,
+  author    = {中国第一历史档案馆 and 辽宁省档案馆},
+  title     = {中国明朝档案总汇},
+  year      = {2001},
+  address   = {桂林},
+  publisher = {广西师范大学出版社},
+}
+
+@Www{萧钰2001--,
+  Title                    = {出版业信息化迈入快车道},
+  Author                   = {萧钰},
+  Url                      = {http://www.creader.com/news/20011219/200112190019.html},
+  Urldate                  = {2002-04-15},
+  Date                     = {2001-12-19}
+}
+
+
+
+
+\end{filecontents}
+
+\addbibresource{\jobname.bib}
+%\addbibresource{example.bib}
+
+\begin{document}
+
+
+\nocite{*}
+
+\printbibliography
+
+
+\end{document} 

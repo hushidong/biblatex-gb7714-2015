@@ -11,6 +11,14 @@ copy ..\gb7714-2015mx.cbx . /y
 copy ..\chinese-erj.cbx . /y
 copy ..\chinese-erj.bbx . /y
 copy ..\gb7714-2015-gbk.def . /y
+copy ..\gb7714-2005.bbx . /y
+copy ..\gb7714-2005.cbx . /y
+copy ..\gb7714-2005ay.bbx . /y
+copy ..\gb7714-2005ay.cbx . /y
+copy ..\gb7714-1987.bbx . /y
+copy ..\gb7714-1987.cbx . /y
+copy ..\gb7714-1987ay.bbx . /y
+copy ..\gb7714-1987ay.cbx . /y
 
 
 

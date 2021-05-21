@@ -1,0 +1,214 @@
+
+%测试gb7714-2005的差异
+
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage[backend=biber,style=gb7714-1987ay,usetranslator]{biblatex}
+\usepackage{geometry}
+
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+
+@Article{Walls2013-399-418,
+  Title                    = {drought, deluge and declines: the impact of precipition extremes on amphibians in a changing climate},
+  Author                   = {Walls, S C and barichivich, W. J. and BROWN, m. e.},
+  Journal                  = {Biology},
+  Number                   = {1},
+  Pages                    = {399-418},
+  Volume                   = {2},
+  Url                      = {http://www.mdpi.com},
+  Urldate                  = {2013-11-04},
+  Year                     = {2013},
+  doi                      = {10.3390/biology2010399}
+}
+
+
+
+@Article{Zhang2007-500-503,
+  Title                    = {The design and experimental investigations of supersonic length shorted nozzle},
+  Author                   = {Zhang, Min Li and Yi, Shi He and Zhao, Yu Xin},
+  Journal                  = {ACTA AERODYNAMICA SINICA},
+  Number                   = {4},
+  Pages                    = {500-503},
+  Volume                   = {25},
+  Year                     = {2007},
+}
+
+@Book{Yi2013--,
+  Title                    = {Supersonic and hypersonic nozzle design},
+  Address                  = {Beijing},
+  Author                   = {Yi, Shi He and Zhao, Yu Xin and He, Lin and Zhang, Min Li},
+  Publisher                = {National Defense Industry Press},
+  Year                     = {2013},
+}
+
+@Archive{中国第一历史档案馆2001--,
+  author    = {中国第一历史档案馆 and 辽宁省档案馆},
+  title     = {中国明朝档案总汇},
+  year      = {2001},
+  address   = {桂林},
+  publisher = {广西师范大学出版社},
+}
+
+@Www{萧钰2001--,
+  Title                    = {出版业信息化迈入快车道},
+  Author                   = {萧钰},
+  Url                      = {http://www.creader.com/news/20011219/200112190019.html},
+  Urldate                  = {2002-04-15},
+  Date                     = {2001-12-19}
+}
+
+@InProceedings{王临慧2010-138,
+  author    = {王临慧},
+  title     = {从几组声母的演变看天津方言形成的自然条件和历史条件},
+  bookauthor= {曹志耘},
+  booktitle = {汉语方言的地理语言学研究：首届中国地理语言学国际学术研讨会论文集},
+  year      = {2010},
+  publisher = {北京语言大学出版社},
+  pages     = {138},
+  address   = {北京},
+}
+
+@Inproceedings{FOURNEY1971-17-38,
+  Title                    = {Advances in holographic photoelasticity},
+  Author                   = {M E FOURNEY},
+  Booktitle                = {Symposium on Applications of Holography in Mechanics, August 23-25, 1971, University of Southern California, Los Angeles, California},
+  year                     = {c1971},
+  Pages                    = {17-38},
+  Publisher                = {ASME},
+  Location                 = {New York}
+}
+
+@Incollection{韩吉人1985-90-99,
+  Title                    = {论职工教育的特点},
+  Author                   = {韩吉人},
+  Booktitle                = {职工教育研究论文集},
+  Date                     = {1985},
+  Publisher                = {人民教育出版社},
+  Pages                    = {90-99},
+  Bookauthor               = {中国职工教育研究会},
+  Location                 = {北京}
+}
+
+@PhdThesis{刘乃安2000-17-18a,
+  author  = {刘乃安},
+  title   = {生物质材料热解失重动力学及其分析方法研究},
+  year    = {2000},
+  pages   = {17--18},
+  doi     = {10.7666/d.y351065},
+  url     = {http://wenku.baidu.com/link?url=GJDJxb4lxBUXnIPmq1XoEGSIr1H8TMLbidW_LjlYu33tpt707u62rKliypU_FBGUmox7ovPNaVIVBALAMd5yfwuKUUOAGYuB7cuZ-BYEhXa},
+  urldate = {2014-08-29},
+  address = {安徽},
+  school  = {中国科学技术大学},
+}
+
+@PhdThesis{Deverell2013-21-22a,
+  author  = {Deverell, William and Igler, David},
+  title   = {A Companion to {California} History},
+  year    = {2013},
+  date    = {2013-11-15},
+  pages   = {21--22},
+  doi     = {10.1002/9781444305036.ch2},
+  url     = {http://onlinelibrary.wiley.com/doi/10.1002/9781444305036.ch2/summary},
+  urldate = {2014-06-24},
+  address = {New York},
+  school  = {John Wiley \& Sons},
+}
+
+
+
+@Mastersthesis{张志祥1998--,
+  Title                    = {间断动力系统的随机扰动及其在守恒律方程中的应用},
+  Author                   = {张志祥},
+  Date                     = {1998},
+  Institution              = {北京大学数学学院},
+  Location                 = {北京}
+}
+
+@Inbook{Weinstein1974-745-772,
+  author    = {Weinstein, L and Swertz, M N},
+  title     = {Pathogenic properties of invading microorganism},
+  booktitle = {Pathologic physiology: mechanisms of disease},
+  year      = {1974},
+  editor    = {Sodeman, Jr., William A and others},
+  editortype={editor},
+  publisher = {Saunders},
+  pages     = {745--772},
+  address   = {Philadelphia},
+}
+
+@inbook{李约瑟1991--,
+  author     = {李约瑟},
+  title      = {题词},
+  editor = {苏克福 and 管成学 and 邓明鲁 and others},
+  editortype={editor},
+  booktitle  = {苏颂与《本草图经》研究},
+  year       = {1991},
+  publisher  = {长春出版社},
+  address    = {长春},
+  pages      = {扉页}
+}
+
+
+@Book{周鲁卫2011--,
+  translator = {周鲁卫},
+  title      = {软物质物理导论},
+  year       = {2011},
+  publisher  = {复旦大学出版社},
+  address    = {上海},
+  pages      = {1}
+}
+
+@Book{RUDDOCK2009--,
+  editor     = {RUDDOCK, L.},
+  editortype={editor},
+  title      = {Economics for the modern built environment},
+  year       = {2009},
+  publisher  = {Taylor & Francis},
+  address    = {London},
+  pages      = {12},
+  url        = {http://lib.mylib.com},
+  urldate    = {2010-06-15},
+}
+
+@Patent{张凯军2012-04-05--,
+  Title                    = {轨道火车及高速轨道火车紧急安全制动辅助装置},
+  Author                   = {张凯军},
+  Number                   = {中国, 发明专利. 201220158825.2},
+  Year                     = {2012-04-05}
+}
+
+@patent{刘加林1993--,
+	title = {多功能一次性压舌板},
+	author = {刘加林},
+	date = {1993-04-14},
+	number = {中国, 发明专利. 92214985.2},
+}
+
+@Book{库恩2012--,
+  Title                    = {科学革命的结构:第4版},
+  Address                  = {北京},
+  Author                   = {库恩},
+  Edition                  = {2},
+  Publisher                = {北京大学出版社},
+  Translator               = {金吾伦 and 胡新和},
+  Year                     = {2012}
+}
+
+\end{filecontents}
+
+\addbibresource{\jobname.bib}
+%\addbibresource{example.bib}
+
+\begin{document}
+
+
+\cite{库恩2012--,刘加林1993--,张凯军2012-04-05--,周鲁卫2011--,RUDDOCK2009--,李约瑟1991--,Weinstein1974-745-772,张志祥1998--,Deverell2013-21-22a,刘乃安2000-17-18a,韩吉人1985-90-99,FOURNEY1971-17-38,王临慧2010-138,萧钰2001--,中国第一历史档案馆2001--,Yi2013--,Walls2013-399-418,Zhang2007-500-503}
+
+\citet{库恩2012--,刘加林1993--,张凯军2012-04-05--,周鲁卫2011--,RUDDOCK2009--,李约瑟1991--,Weinstein1974-745-772,张志祥1998--,Deverell2013-21-22a,刘乃安2000-17-18a,韩吉人1985-90-99,FOURNEY1971-17-38,王临慧2010-138,萧钰2001--,中国第一历史档案馆2001--,Yi2013--,Walls2013-399-418,Zhang2007-500-503}
+
+\printbibliography
+
+
+\end{document} 
