@@ -26,8 +26,8 @@
 %\usebibmacro{begentry}%
 \begingroup
 \usebibmacro{author/editor+others/translator+others}\par
-%\usebibmacro{finentry}
 \endgroup
+%\usebibmacro{finentry}
 }
 
 
@@ -58,14 +58,14 @@
 
 \DeclareBibliographyDriver{titlexample}{%
 \usebibmacro{begentry}%
-\iffieldundef{title}{\usebibmacro{journal+issuetitle}}{\usebibmacro{title}}
+\iffieldundef{title}{\usebibmacro{journal+issuetitle}}{\usebibmacro{title}}%
 \usebibmacro{finentry}
 }
 
 \DeclareBibliographyDriver{editionexample}{%
 %\usebibmacro{begentry}%
 \begingroup
-\printfield{edition}\par
+\printfield{edition}\par%
 %\usebibmacro{finentry}
 \endgroup
 }
@@ -84,7 +84,7 @@
 \ifkeyword{news}{\usebibmacro{newsdate}}{\usebibmacro{institution+location+date}}}%\par
 \usebibmacro{chapter+pages}%
 \usebibmacro{doi+eprint+url}%从下面移动到上面来，因为gbt2015的url需直接放在页码后面。
-\usebibmacro{finentry}
+\usebibmacro{finentry}%
 }
 
 \DeclareBibliographyDriver{dvnpexample}{%
@@ -110,7 +110,23 @@
 \defbibheading{biblist}[\bibname]{%
 \paragraph*{#1}}
 
+
 \addbibresource{example.bib}
+
+%
+%注意要让printbiblist使用相关设置。这句命令不知道什么时候删掉了都不知道
+%所以导致出现问题了，2021-05-22，今天找了半天才看到问题所在。
+%而不是ms样式自然是不需要的，因为设置都是全局的，所以是正确的。
+%我估计还是biblatex有所改动导致的问题。
+%以前AtEveryLositem或者AtEveryBibitem这两个命令可能涵盖了相关功能。
+\AtBeginBiblist{authorexample}{\localsetchinesecode}
+\AtBeginBiblist{titlexamplea}{\localsetchinesecode}
+\AtBeginBiblist{titlexample}{\localsetchinesecode}
+\AtBeginBiblist{editionexample}{\localsetchinesecode}
+\AtBeginBiblist{pubexample}{\localsetchinesecode}
+\AtBeginBiblist{dateexample}{\localsetchinesecode}
+\AtBeginBiblist{dvnpexample}{\localsetchinesecode}
+
 
 \begin{document}
 

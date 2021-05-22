@@ -753,7 +753,7 @@
         \ifstrequal{#1}{familyahead}{\setcounter{gbnamefmtcase}{3}}{}
         \ifstrequal{#1}{pinyin}{\setcounter{gbnamefmtcase}{4}}{}%family-given
         \ifstrequal{#1}{reverseorder}{\setcounter{gbnamefmtcase}{5}}{}%family-given/given-family
-        \ifstrequal{#1}{quanpin}{\setcounter{gbnamefmtcase}{6}}{}%family-given
+        \ifstrequal{#1}{quanpin}{\setcounter{gbnamefmtcase}{6}}{}%全拼
     }
     \ExecuteBibliographyOptions{gbnamefmt}
 
@@ -1045,7 +1045,7 @@
             \step[fieldsource=nameformat,match=pinyin,final]
             \step[fieldset=namefmtid,fieldvalue={4}]
             }
-        \map{%处理在bib文件中直接给出文献的姓名格式为pinyin的情况
+        \map{%处理在bib文件中直接给出文献的姓名格式为全拼的情况
             \step[fieldsource=nameformat,match=quanpin,final]
             \step[fieldset=namefmtid,fieldvalue={6}]
             }

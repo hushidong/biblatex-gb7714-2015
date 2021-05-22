@@ -38,9 +38,13 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 
 ## Need to do:
 
+	* 注意：ms.bbx样式引入内容时需要特别注意空格的引入
+	* 注意：mx.cbx样式的没有更新一些新的设置（比如2篇文件就压缩等），若有需要可以参考15.cbx和15ay.cbx修改。
+	* 应该说经过这些年的使用，很多corner case已经处理过了，但还是可能会存在一些，特别是ms和mx两个样式使用的少。
     * special characters in all fields?
     * entry without author: the delimiter between title and year?
     * TEST FOR texlive 2015,2016,2017
+	
 
 
 ## Applications
@@ -1278,6 +1282,9 @@ biblatex中处理顺序数字编码压缩的代码默认从3个连续编码开�
 	- ![test-translator-in-other-lan.tex](example/test-translator-in-other-lan.tex)	测试译著的其它语言的译者格式
 	- ![test-space-after-citelabel-inCJKline.tex](example/test-space-after-citelabel-inCJKline.tex)		测试删除标注后因为xeCJK加入的空格
 	- ![test-special-chars-in-fields.tex](example/test-special-chars-in-fields.tex) 测试不同域中存在的特殊字符处理
+	- ![test-gbt-7714-1987.tex](example/test-gbt-7714-1987.tex) 测试GB/T7714-1987标准的样式
+	- ![test-gbt-7714-2005.tex](example/test-gbt-7714-2005.tex) 测试GB/T7714-2005标准的样式
+	
 	
 
 ---------------------------------------------------------
