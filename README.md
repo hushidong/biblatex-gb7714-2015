@@ -39,7 +39,7 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 ## Need to do:
 
 	* 注意：ms.bbx样式引入内容时需要特别注意空格的引入
-	* 注意：mx.cbx样式的没有更新一些新的设置（比如2篇文件就压缩等），若有需要可以参考15.cbx和15ay.cbx修改。
+	* 注意：mx.cbx样式没有更新一些新的设置（比如2篇文献就压缩等），若有需要可以参考15.cbx和15ay.cbx修改。
 	* 应该说经过这些年的使用，很多corner case已经处理过了，但还是可能会存在一些，特别是ms和mx两个样式使用的少。
     * special characters in all fields?
     * entry without author: the delimiter between title and year?

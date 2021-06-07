@@ -65,8 +65,14 @@
      }
 
 
+%
+%设置标注中各篇文献之间的标点
+%20210530,v1.0y,hzz
 %textcite标注命令中的标点设置
 %\DeclareDelimFormat[textcite]{andothersdelim}{\addspace}%
+\renewcommand*{\compcitedelim}{\addcomma}%\addcomma\addthinspace
+\renewcommand*{\supercitedelim}{\addcomma}
+\renewcommand*{\multicitedelim}{\addcomma}
 
 %
 %将连续3篇文献压缩改为连续2篇文献压缩

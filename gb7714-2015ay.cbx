@@ -97,7 +97,7 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
        {\iffieldequals{namehash}{\cbx@lasthash}
           {\ifthenelse{\iffieldequals{labelyear}{\cbx@lastyear}\AND
                        \(\value{multicitecount}=0\OR\iffieldundef{postnote}\)}
-             {\setunit{\addcomma}%
+             {\setunit{\addcomma\addthinspace}%同一作者的年份之间的标点,示例见thesis-nwafu-ay
               \usebibmacro{cite:extradate}}
              {\setunit{\compcitedelim}%
               \usebibmacro{cite:labeldate+extradate}%

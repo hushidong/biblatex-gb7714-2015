@@ -1,0 +1,78 @@
+
+%
+
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage[backend=biber,style=gb7714-2015,gbpunctin=false]{biblatex}
+\usepackage{geometry}
+
+\DefineBibliographyStrings{english}{
+    in={In: }
+}
+
+\DeclareStyleSourcemap{
+    \maps[datatype=bibtex]{
+        \map[overwrite]{
+            \pertype{inproceedings}
+            \pertype{conference}%兼容老的conference类型
+            \step[fieldset=usera, fieldvalue={A}]
+            }
+    }
+}
+
+\DeclareFieldFormat{booktitlecase}{\MakeCapital{#1}\nobreak[C]}
+
+\renewbibmacro*{booktitle}{%
+  \ifboolexpr{
+    test {\iffieldundef{booktitle}}
+    and
+    test {\iffieldundef{booksubtitle}}
+  }
+    {}
+    {\printtext[booktitle]{\bibtitlefont%
+       \printfield[booktitlecase]{booktitle}%
+       \setunit{\subtitlepunct}%
+       \printfield[titlecase]{booksubtitle}}%
+     \setunit{\subtitlepunct}}%
+  \printfield{booktitleaddon}}
+
+
+
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+
+@Inproceedings{r27-BenHadjAlaya-FekiA.2008-1-5,
+  Title                    = {Interference cartography for hierarchical dynamic spectrum access},
+  Address                  = {Chicago, IL},
+  Author                   = {{Ben Hadj Alaya-Feki A.} and B. Sayrac and S. Ben Jemaa and E. Moulines},
+  Booktitle                = {Proc. IEEE Symp. on New Frontiers in Dynamic Spectrum Access Networks (DySPAN)},
+  Date                     = {2008-10},
+  Pages                    = {1-5}
+}
+
+@InProceedings{王临慧2010-138,
+  author    = {王临慧},
+  title     = {从几组声母的演变看天津方言形成的自然条件和历史条件},
+  bookauthor= {曹志耘},
+  booktitle = {汉语方言的地理语言学研究：首届中国地理语言学国际学术研讨会论文集},
+  year      = {2010},
+  publisher = {北京语言大学出版社},
+  pages     = {138},
+  address   = {北京},
+}
+
+\end{filecontents}
+
+\addbibresource{\jobname.bib}
+%\addbibresource{example.bib}
+
+\begin{document}
+
+\cite{王临慧2010-138,r27-BenHadjAlaya-FekiA.2008-1-5}
+
+
+\printbibliography
+
+
+\end{document} 
