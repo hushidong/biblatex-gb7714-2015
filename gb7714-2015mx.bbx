@@ -11,7 +11,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2021/05/06 v1.0y}
+\def\versionofgbtstyle{2021/08/19 v1.0z}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015mx.bbx}[\versionofgbtstyle biblatex bibliography style]
 %\RequireBiber[3]%显式指定用biber后端，当用bibtex时会报错，但其实不会影响编译，只是采用bibtex后无法达成格式需求
@@ -1643,6 +1643,8 @@
 %   这里调整一下两种语言参考文献的间隔，源来自biblatex.def
 \renewcommand*{\entrysetpunct}{\adddot\newline\nobreak}
 \renewcommand*{\bibpagespunct}{\addcolon\addthinspace}%%页码引用格式的修改，修改为用冒号
+%    2021.08.19，增加出版地和出版社之间的标点，hzz
+\newcommand{\publocpunct}{\addcolon\addspace}%出版项中：出版社地址后面的标点
 %\renewcommand{\relateddelim}{}%\par
 
 %=====================================================================
@@ -2333,7 +2335,7 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
 }{%
 \iflistundef{location}{\iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress]}}{\printtext{[S.l.\adddot]}}}%
   {\printlist{location}}%
-\addcolon\addspace%
+\publocpunct%
 \iflistundef{institution}{%
 \iftoggle{ifCJKforgbt}{\printtext{[\str@nopublisher]}}{\printtext{\mkbibbrackets{s.n.}}}}%
 {\printlist{institution}}}%
@@ -2346,7 +2348,7 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
 {\printlist{location}%
   \iflistundef{institution}%
     {\setunit*{\addcomma\space}}
-    {\setunit*{\addcolon\space}}%
+    {\setunit*{\publocpunct}}%
   \printlist{institution}%
   \setunit*{\addcomma\space}%
   \usebibmacro{date}%
@@ -2365,8 +2367,8 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
     {\iffieldequalstr{note}{standard}{}{\iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress}\space :\space\str@nopublisher]}{\printtext{[S.l.\space :\space s.n.\adddot]}}}}%
     {\iflistundef{location}{%\adddot
         \iffieldequalstr{note}{standard}{}%%从gbt7714-2015标准第19页看到，标准存在出版项时输出，没有时完全省略。
-        {\iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress]}\addcolon\addspace}{\printtext{[S.l.\adddot]}\addcolon\addspace}}}%  \bibstring{noaddress}
-        {\printlist{location}\addcolon\addspace}%%\addcolon\addspace%
+        {\iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress]}\addcolon\addspace}{\printtext{[S.l.\adddot]}\publocpunct}}}%  \bibstring{noaddress}
+        {\printlist{location}\publocpunct}%%\addcolon\addspace%
     \iflistundef{publisher}{%
         \iffieldequalstr{note}{standard}{}%
         {\iftoggle{ifCJKforgbt}{\printtext{[\str@nopublisher]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
@@ -2378,7 +2380,7 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
 {\printlist{location}%
   \iflistundef{publisher}
     {\setunit*{\addcomma\space}}
-    {\setunit*{\addcolon\space}}%
+    {\setunit*{\publocpunct}}%
   \printlist{publisher}%
   \setunit*{\addcomma\space}%
   \usebibmacro{date}%%\newunit
@@ -2394,7 +2396,7 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
 {\printlist{location}%%加了一个编组避免\usebibmacro{date}把month和day信息去掉
   \iflistundef{institution}
     {\setunit*{\addcomma\space}}
-    {\setunit*{\addcolon\space}}%
+    {\setunit*{\publocpunct}}%
   \printlist{institution}%
   \setunit*{\addcomma\space}%
   \usebibmacro{date}%

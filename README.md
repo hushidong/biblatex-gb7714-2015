@@ -1,4 +1,4 @@
-<b>Date of last change: 2021-05-06 to version v1.0y</b>
+<b>Date of last change: 2021-08-19 to version v1.0z</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -95,7 +95,7 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 * [biblatex-map bib文件修改工具](https://github.com/hushidong/biblatex-map/)
 * [biblatex-check bib文件检查工具](https://github.com/Pezmc/BibLatex-Check)
 * [biblatex-caspervector: caspervector 设计的中文参考文献样式](https://github.com/CasperVector/biblatex-caspervector)
-* [gbt7714-bibtex-style: GB/T7714-2015 标准的bst实现版本](https://github.com/zepinglee/gbt7714-bibtex-style)
+* [gbt7714-bibtex-style: GB/T7714-2015 标准的bst实现版本](https://github.com/CTeX-org/gbt7714-bibtex-style)
 * [LaTeX学习网站](http://www.latexstudio.net/)
 * [LaTeX交流论坛](http://www.ctex.org/)
 
@@ -1514,6 +1514,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * 2021/01/19 v1.0w,ctan
 * 2021/04/03 v1.0x,ctan
 * 2021/05/06 v1.0y,ctan
+* 2021/08/19 v1.0z,ctan
 
 
 

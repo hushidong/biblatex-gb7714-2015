@@ -113,7 +113,7 @@ bookmarksdepth=4,]{hyperref}
 \titlespacing{\paragraph}{2em}{0.5\baselineskip}{1em}
 %这里利用titleformat*简单做设置，也可以利用titleformat做详细设置
 \titleformat*{\section}{\zihao{-3}\bfseries\heiti}
-\titleformat*{\subsection}{\zihao{4}\bfseries\songti}
+\titleformat*{\subsection}{\zihao{4}\bfseries\heiti}
 \titleformat*{\subsubsection}{\zihao{-4}\bfseries\kaiti}
 
 %参考文献
@@ -225,7 +225,7 @@ bookmarksdepth=4,]{hyperref}
 \usepackage{tikz,pgf}
 \usetikzlibrary{calc}
 
-\newenvironment{example}[3][{\large\faFileCodeO}]%
+\newenvironment{example}[3][{\footnotesize\faFileCodeO}]%
 {\list{}{\begingroup\codecaption{#2}\label{#3}\endgroup
 \setlength{\topsep}{0pt}
 \setlength{\partopsep}{0pt}
@@ -247,10 +247,10 @@ breaklines=true,
 %showspaces=true,
 extendedchars=false,
 columns=fullflexible,%flexible,
-aboveskip=2pt,
+%aboveskip=2pt,
 boxpos=t,
 rulesep=0pt,
-frame=tb,
+frame=t,
 framesep=0pt,
 rulecolor=\color{gblabelcolor},
 fontadjust=true,

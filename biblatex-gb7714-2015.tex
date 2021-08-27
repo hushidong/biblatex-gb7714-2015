@@ -145,11 +145,20 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 
 \subsection{宏包结构}
 
-宏包文件结构如图\ref{fig:pkg:structure}所示:
+宏包文件结构如图\ref{fig:pkg:structure}所示。
+\zd{gb7714-2015.bbx/cbx}、\zd{gb7714-2015ay.bbx/cbx}分别为国标参考文献样式2015版本的顺序编码制和著者年份制样式文件。
+对应的\zd{gb7714-1987/ay.bbx/cbx}、\zd{gb7714-2005/ay.bbx/cbx}则是1987和2005版本的国标样式。
+\zd{gb7714-2015ms.bbx/cbx}是混合样式，支持区分中英文语言分设不同标准的著录格式。
+\zd{gb7714-2015mx.bbx/cbx}是混合样式，支持在不同的参考文献分节中使用不同的编制样式，比如有的节使用顺序编码制，有的节使用著者年份制。
+\zd{gb7715-2015-gbk.def}为GBK编码文档编译所需的支撑文件。
+\zd{chinese-erj.bbx/cbx} 是经济学研究期刊的文献样式。后三者仅支持较新的biblatex版本。
+\zd{biblatex-gb7714-2015.tex} 为宏包说明文档，\zd{example}目录下为各种选项的测试用例，
+\zd{egfigure}目录下为说明文档中的图例文档，\zd{egthesis}为国内一些大学学位论文文献样式的测试用例，包括完全按照国标的BUPT、CAU、ECNU、FDU、SJTU、THU、USTC、XJTU、ZJU，与国标略有差异的UCAS，以及与国标有较大差异的NWAFU、SEU等。\zd{*.bat}、\zd{*.sh}分别为windows和linux下说明文档的编译脚本。\zd{*.pl}为gb7714格式著录文献表到bib文件的perl转换脚本，\zd{*.dat}为转换测试文献表。
+
 \begin{figure}[!htb]
-\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
-width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
-leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
+%\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
+%width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+%leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \centering\footnotesize
 \begin{tikzpicture}[node distance=1.5cm]
 %\definecolor{bluea}{rgb}{0.05,0.62,0.94}
@@ -164,11 +173,11 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \draw[color=cyan,thick] (script.north) -- ($(script.north)+(0mm,3mm)$) ;
 \draw[color=cyan,thick] ($(style.north)+(0mm,3mm)$) -- ($(script.north)+(0mm,3mm)$);
 
-\node[below of=style,fill=gbgrey!20,yshift=0.5cm,xshift=2mm,text width=2cm] (numcbbx) {\tiny \textcolor{black}{gb7715-2015.c/bbx}};
-\node[below of=numcbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (aycbbx) {\tiny \textcolor{black}{gb7715-2015ay.c/bbx}};
+\node[below of=style,fill=gbgrey!20,yshift=0.5cm,xshift=2mm,text width=2cm] (numcbbx) {\tiny \textcolor{black}{gb7715-2015/ay.c/bbx}};
+\node[below of=numcbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (aycbbx) {\tiny \textcolor{black}{gb7715-1987/ay.c/bbx}};
 \node[below of=aycbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (mscbbx) {\tiny \textcolor{black}{gb7715-2015ms.c/bbx}};
 \node[below of=mscbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (mxcbbx) {\tiny \textcolor{black}{gb7715-2015mx.c/bbx}};
-\node[below of=mxcbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (gbkdef) {\tiny \textcolor{black}{gb7715-2015-gbk.def}};
+\node[below of=mxcbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (gbkdef) {\tiny \textcolor{black}{gb7715-2005/ay.c/bbx}};
 \node[below of=gbkdef,fill=gbgrey!20,yshift=8mm,text width=2cm] (erjcbbx) {\tiny \textcolor{black}{chinese-erj.c/bbx}};
 %\node[below of=msbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (mscbx) {\tiny \textcolor{black}{gb7715-2015ms.cbx}};
 
@@ -204,19 +213,13 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \draw[color=orange,semithick] (plspt.west) -- ($(plspt.west)+(-3mm,0mm)$) ;
 \draw[color=orange,semithick] ($(plspt.west)+(-3mm,0mm)$) -- ($(plspt.west)+(-3mm,28.1mm)$) ;
 \end{tikzpicture}
-\end{tcolorbox}
+%\end{tcolorbox}
 \caption{宏包文件结构}\label{fig:pkg:structure}
 \end{figure}
 
 
 
-其中，\zd{gb7714-2015.bbx/cbx}、\zd{gb7714-2015ay.bbx/cbx}分别为顺序编码制和著者年份制样式文件。
-\zd{gb7714-2015ms.bbx/cbx}是混合样式，支持区分中英文语言分设不同标准的著录格式。
-\zd{gb7714-2015mx.bbx/cbx}是混合样式，支持在不同的参考文献分节中使用不同的编制样式，比如有的节使用顺序编码制，有的节使用著者年份制。
-\zd{gb7715-2015-gbk.def}为GBK编码文档编译所需的支撑文件。
-\zd{chinese-erj.bbx/cbx} 是经济学研究期刊的文献样式。后三者仅支持较新的biblatex版本。
-\zd{biblatex-gb7714-2015.tex} 为宏包说明文档，\zd{example}目录下为各种选项的测试用例，
-\zd{egfigure}目录下为说明文档中的图例文档，\zd{egthesis}为国内一些大学学位论文文献样式的测试用例，包括完全按照国标的BUPT、CAU、ECNU、FDU、SJTU、THU、USTC、XJTU、ZJU，与国标略有差异的UCAS，以及与国标有较大差异的NWAFU、SEU等。\zd{*.bat}、\zd{*.sh}分别为windows和linux下说明文档的编译脚本。\zd{*.pl}为gb7714格式著录文献表到bib文件的perl转换脚本，\zd{*.dat}为转换测试文献表。
+
 
 \subsection{最小示例}
 
@@ -278,9 +281,9 @@ latexmk -xelatex jobname.tex
 \begin{refsection}
 \begin{figure}[!htb]
 \centering
-\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
-width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
-leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
+%\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
+%width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+%leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \includegraphics*[page=1,viewport=0cm 0.4cm 14cm 6.1cm,clip=true]{egfigure/egmwe.pdf}
 %\deflength{\textparwd}{\linewidth-1.5cm}
 %\begin{minipage}{\textparwd}
@@ -296,7 +299,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 %\par}
 %}}
 %\end{minipage}
-\end{tcolorbox}
+%\end{tcolorbox}
 \caption{最小工作示例编译生成的PDF文档}\label{fig:eg:ref}
 \end{figure}
 \end{refsection}
@@ -328,7 +331,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \begin{texlist}
 %简单方式：
 \usepackage[backend=biber,style=gb7714-2015ay]{biblatex}
-%设置gbnoauthor=true以使用佚名或NOAUTHOR填补缺失的author信息:
+%设置gbnoauthor=true以使用佚名或Anon填补缺失的author信息:
 \usepackage[backend=biber,style=gb7714-2015ay,gbnoauthor=true]{biblatex}
 \end{texlist}
 \end{example}
@@ -358,7 +361,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 格式效果如图\ref{fig:eg:mx}所示。
 
 
-\begin{example}{参考文献文本转换为bib文件perl脚本使用方式}{eg:transtobib}
+\begin{example}{顺序编码参考文献文本转换为bib文件perl脚本使用方式}{eg:transtobib}
 \begin{texlist}
 perl gb7714texttobib.pl in=textfilename out=bibfilename
 \end{texlist}
@@ -366,13 +369,32 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 
 其中，v1.0m版本增加的gb7714-2015ms样式文件，主要是为了在一个文献表中针对不同语言使用不同多种样式，比如中文文献使用GB/T 7714-2015规定的著录格式，而其它语言文献使用biblatex提供的标准样式。v1.0r版本增加了gb7714-2015mx样式，主要是为了在一个文档中针对不同参考文献分节使用不同的参考文献样式，比如某些节使用著者年份制，某些节使用顺序编码制。尽管这些方式不常用，但偶尔也有需求，所以都做了实现。
 
-另外应ddswhu要求，v1.0r版本增加了chinese-erj样式用于生成经济研究期刊的文献。且在egthesis文件夹内，针对国内一些大学的学位论文文献要求，基于国标样式做了一些定制和测试。
+另外应东升要求，v1.0r版本增加了chinese-erj样式用于生成经济研究期刊的文献。且在egthesis文件夹内，针对国内一些大学的学位论文文献要求，基于国标样式做了一些定制和测试。
 
 \pdfbookmark[4]{chinese-erj}{chinese-erj}
 \begin{example}{经济研究期刊文献样式(chinese-erj)}{eg:gbchineseerj}
 \begin{texlist}
 %使用经济研究期刊文献样式
 \usepackage[backend=biber,style=chinese-erj]{biblatex}
+\end{texlist}
+\end{example}
+
+尽管国标1987和2005版本已经过时，但仍然有些地方还在使用，所以1.0z版本增加了gb7714-1987和gb7714-2005两个版本的样式，也分顺序编码和著者年份制：
+
+\pdfbookmark[4]{gb7714-1987}{gb7714-1987}
+\pdfbookmark[4]{gb7714-1987ay}{gb7714-1987ay}
+\pdfbookmark[4]{gb7714-2005}{gb7714-2005}
+\pdfbookmark[4]{gb7714-2005ay}{gb7714-2005ay}
+\begin{example}{1987和2005版的国标样式}{eg:gb87and2005}
+\begin{texlist}
+%国标1987顺序编码制
+\usepackage[backend=biber,style=gb7714-1987]{biblatex}
+%国标1987著者年份制
+\usepackage[backend=biber,style=gb7714-1987ay]{biblatex}
+%国标2005顺序编码制
+\usepackage[backend=biber,style=gb7714-2005]{biblatex}
+%国标2005著者年份制
+\usepackage[backend=biber,style=gb7714-2005ay]{biblatex}
 \end{texlist}
 \end{example}
 
@@ -404,7 +426,7 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 \begin{figure}[!htb]
 \centering
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
-width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+width=\linewidth,colframe=white,colback=white,arc=0pt,%gblabelcolor
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subfigure[\heiti gbalign=right 即右对齐]{\parbox{0.5\linewidth}{\includegraphics*[page=4,viewport=1cm 0cm 8cm 4.5cm,clip=true]{egphoto/opt-gbalign-right.pdf}}}
 \subfigure[\heiti gbalign=left 即左对齐]{\parbox{0.5\linewidth}{\includegraphics*[page=4,viewport=1cm 0cm 8cm 4.5cm,clip=true]{egphoto/opt-gbalign-left.pdf}}}\\
@@ -430,7 +452,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \begin{figure}[!htb]
 \centering
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
-width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+width=\linewidth,colframe=white,colback=white,arc=0pt,%gblabelcolor
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subfigure[\heiti gbpub=false 出版项缺省]{\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0cm 9cm 4.5cm,clip=true]{egphoto/opt-gbpub-false.pdf}}}
 \subfigure[\heiti gbpub=true 出版项补充]{\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0cm 10cm 4.5cm,clip=true]{egphoto/opt-gbpub-true.pdf}}}
@@ -454,7 +476,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \begin{figure}[!htb]
 \centering
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
-width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+width=\linewidth,colframe=white,colback=white,arc=0pt,%gblabelcolor
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subfigure[\heiti gbnoauthor=true] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.4cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gbnoauthor-true.pdf}}}
 \subfigure[\heiti gbnoauthor=false] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.4cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gbnoauthor-false.pdf}}}
@@ -479,7 +501,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \begin{figure}[!htb]
 \centering
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
-width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+width=\linewidth,colframe=white,colback=white,arc=0pt,%gblabelcolor
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subfigure[\heiti gbbiblabel=box] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbbiblabela.pdf}}}
 \subfigure[\heiti gbbiblabel=bracket] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbbiblabelb.pdf}}}\\
@@ -515,7 +537,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \begin{figure}[!htb]
 \centering
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
-width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+width=\linewidth,colframe=white,colback=white,arc=0pt,%gblabelcolor
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subfigure[\heiti gbnamefmt=uppercase] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbnamefmt-a.pdf}}}
 \subfigure[\heiti gbnamefmt=lowercase] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbnamefmt-b.pdf}}}\\
@@ -541,7 +563,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \begin{figure}[!htb]
 \centering
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
-width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+width=\linewidth,colframe=white,colback=white,arc=0pt,%gblabelcolor
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subfigure[\heiti gbtype=true] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbtype-true.pdf}}}
 \subfigure[\heiti gbtype=false] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbtype-false.pdf}}}
@@ -564,7 +586,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \begin{figure}[!htb]
 \centering
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
-width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+width=\linewidth,colframe=white,colback=white,arc=0pt,%gblabelcolor
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subfigure[\heiti gbmedium=true] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbmedium-true.pdf}}}
 \subfigure[\heiti gbmedium=false] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbmedium-false.pdf}}}
@@ -596,7 +618,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \begin{figure}[!htb]
 \centering
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
-width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+width=\linewidth,colframe=white,colback=white,arc=0pt,%gblabelcolor
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subfigure[\heiti gbfieldtype=true] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=8cm 0.2cm 14.5cm 2.8cm,clip=true]{egphoto/opt-gbfieldtype-true.pdf}}}
 \subfigure[\heiti gbfieldtype=false] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=8cm 0.2cm 14.5cm 2.8cm,clip=true]{egphoto/opt-gbfieldtype-false.pdf}}}
@@ -620,7 +642,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \begin{figure}[!htb]
 \centering
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
-width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+width=\linewidth,colframe=white,colback=white,arc=0pt,%gblabelcolor
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subfigure[\heiti gbpunctin=true] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gbpunctin-true.pdf}}}
 \subfigure[\heiti gbpunctin=false] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gbpunctin-false.pdf}}}
@@ -643,7 +665,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \begin{figure}[!htb]
 \centering
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
-width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+width=\linewidth,colframe=white,colback=white,arc=0pt,%gblabelcolor
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subfigure[\heiti gbtitlelink=true] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gbtitlelink-true.pdf}}}
 \subfigure[\heiti gbtitlelink=false] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gbtitlelink-false.pdf}}}
@@ -684,7 +706,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \begin{figure}[!htb]
 \centering
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
-width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+width=\linewidth,colframe=white,colback=white,arc=0pt,%gblabelcolor
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \centering
 \subfigure[\heiti gblocal=gb7714-2015] {\parbox{0.45\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gblocal-gb.pdf}}}\hfill
@@ -709,7 +731,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \begin{figure}[!htb]
 \centering
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
-width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+width=\linewidth,colframe=white,colback=white,arc=0pt,%gblabelcolor
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subfigure[\heiti mergedate 不给出] {\parbox{\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 14.5cm 2.8cm,clip=true]{egphoto/opt-mergedate-a.pdf}}}\\
 \subfigure[\heiti mergedate=true] {\parbox{\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 14.5cm 2.8cm,clip=true]{egphoto/opt-mergedate-b.pdf}}}\\
@@ -736,7 +758,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \begin{figure}[!htb]
 \centering
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
-width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+width=\linewidth,colframe=white,colback=white,arc=0pt,%gblabelcolor
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \centering
 \subfigure[\heiti gblanorder=chineseahead] {\parbox{0.45\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 7.5cm 4.0cm,clip=true]{egphoto/opt-gblanorder-chineseahead.pdf}}}\hfill
@@ -762,7 +784,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \begin{figure}[!htb]
 \centering
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
-width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+width=\linewidth,colframe=white,colback=white,arc=0pt,%gblabelcolor
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subfigure[\heiti citexref=true] {\parbox{7.5cm}{\includegraphics*[page=1,viewport=0.2cm 0.2cm 7.5cm 8cm,clip=true]{egphoto/opt-citexref-true.pdf}}}
 \subfigure[\heiti citexref=false] {\parbox{7.5cm}{\includegraphics*[page=1,viewport=0.5cm 0.2cm 8cm 8cm,clip=true]{egphoto/opt-citexref-false.pdf}}}
@@ -785,7 +807,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \begin{figure}[!htb]
 \centering
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
-width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
+width=\linewidth,colframe=white,colback=white,arc=0pt,%gblabelcolor
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subfigure[\heiti gbannote=true] {\parbox{\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 16cm 2.8cm,clip=true]{egphoto/opt-gbannote-true.pdf}}}\\
 \subfigure[\heiti gbannote=false] {\parbox{\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 16cm 2.8cm,clip=true]{egphoto/opt-gbannote-false.pdf}}}
@@ -1604,7 +1626,12 @@ biber -l zh__stroke jobname
 \end{texlist}
 \end{example}
 
-其中，排序模板优先使用persort域进行排序，接着是与文种相关的lansortorder域，接着是sortkey域(该域在biblatex中就是key域的别名)，接着是sortname等作者姓名相关的域，要让文献根据多音字习惯音进行排序，那么就在key域中设置文献作者姓名的习惯音。比如三篇文献作者分别是[李四]、[J. B. Conway]、[曾三]。在设置sorting=multipinyin, gblanorder=chineseahead, sortlocale=zh\_\_pinyin的情况下，根据上述的multipinyin排序模板，首先根据文种和作者信息将中文文献[曾三][李四]排在前面，接着是[J. B. Conway]，因为默认情况下，曾字考虑的读音是ceng2。但若对key域手动设置中文的拼音，比如[李四]文献设置key=\{li3si4\}，而[曾三]文献设置key=\{zeng1san1\}，那么中文文献仍然排在前面，但根据key域的设置会将[李四]文献排列在[曾三]前面。因此手动设置作者姓名的习惯拼音后，文献排列顺序为:[李四][曾三][J. B. Conway]。
+其中，排序模板优先使用persort域进行排序，接着是与文种相关的lansortorder域，接着是sortkey域(该域在biblatex中就是key域的别名)，接着是sortname等作者姓名相关的域，要让文献根据多音字习惯音进行排序，那么就在key域中设置文献作者姓名的习惯音。比如三篇文献作者分别是[李四]、[J. B. Conway]、[曾三]。在设置sorting=multipinyin, gblanorder=chineseahead, sortlocale=zh\_\_pinyin的情况下，根据上述的multipinyin排序模板，首先根据文种和作者信息将中文文献[曾三][李四]排在前面，接着是[J. B. Conway]，因为默认情况下，曾字考虑的读音是ceng2，但这不是我们希望得到的。
+
+所以需要手动将key域设置为中文的拼音，比如[李四]文献设置key=\{li3si4\}，而[曾三]文献设置key=\{zeng1san1\}，那么中文文献仍然排在前面，但根据key域的设置会将[李四]文献排列在[曾三]前面。因此手动设置作者姓名的习惯拼音后，文献排列正确，顺序为:[李四][曾三][J. B. Conway]。 需要注意的是：手动设置拼音是一个不轻松的活，所以我们可以使用自动设置拼音的工具，详见
+\href{https://www.latexstudio.net/index/details/index/ids/1546}{为中文参考文献自动添加排序用的拼音信息域}，\href{https://github.com/hushidong/biblatex-map}{bibmap宏包}。
+
+
 
 其中，与文种相关的排序域lansortorder是由gblanorder选项设置的，当选项值为chineseahead时，语言顺序为cn;jp;kr;en;fr;ru，会将中文文献的lansortorder域设置为1，日语文献设置为2，韩语文献设置为3，英文文献设置为4，法语文献设置为5，俄语文献设置为6。排序过程中按升序排序，那么自然中文文献在前英文文献在后。若对gblanorder选择设置一个自定义的字符串如:cn;en;ru;fr;jp;kr，那么文种的排列顺序为中文、英文、俄语、法语、日语、韩语。
 
