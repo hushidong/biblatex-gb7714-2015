@@ -7,6 +7,7 @@
 ##% Homepage: <https://github.com/hushidong/biblatex-gb7714-2015>
 ##% history:
 ##% 	2017/02/26 v1.0g
+##% 	2021/09/04 add compatablity for text with no space after punctuations.
 ##% E-mail: 
 ##% 	hzzmail@163.com
 ##% Released under the LaTeX Project Public License v1.3c or later
@@ -53,6 +54,21 @@ open (FHW,">$outfile");
 print FHW '% Encoding: UTF-8',"\n";
 
 @references=<FHR>;#将所有的文献存为@references数组，各文献以<行>为单位进行区分
+
+
+#有些文本标点后面没有空格，所以先对这个问题进行处理
+#在所有的关键标点后面加上空格
+#20210904,HZZ
+foreach $stra (@references) {
+	print "$stra\n";
+	$stra=~s/\.(\S)/\. $1/g;
+	$stra=~s/\,(\S)/\, $1/g;
+	$stra=~s/\:(\S)/\: $1/g;
+	print "$stra\n";
+	}
+print "@references\n";
+
+
 
 $ns=1;
 $ne=@references;
@@ -103,7 +119,9 @@ foreach $reference(@references){
 	#---------------------------------------------------------------
 	if(1){
 	if($reference=~m/\[J\]/){
-		if($reference=~m/:\s/ and $reference=~m/:\s\D/){#根据存在出版社前的冒号加空格区分
+		#避免在标题中存在在冒号的问题，所以从[J]开始匹配，通常也不需要从[J/OL]开始因为periodical通常不会出现online
+		#2021.09.04,hzz,修改
+		if($reference=~m/:\s/ and $reference=~m/\[J\].*:\s\D/){#根据存在出版社前的冒号加空格区分
 			print 'this entry is periodical',"\n";
 			$entrytype='periodical';
 		}else{
@@ -1075,6 +1093,7 @@ foreach $reference(@references){
 			for($k=0;$k<@nameparts;$k++){
 			if(@nameparts[$k]=~m/.{2,}/ and @nameparts[$k]!~m/\s*von\s*/i and @nameparts[$k]!~m/\s*jr\s*/i){
 			#当分解的单作者的各个部分，存在两个以上为2个字符以上的情况，说明不是一般的姓名而是机构作者
+			#这个判断是对的，因为国标规定要求缩写的，否则就是不是国标了，对于不标准的情形请输出后手动处理即去掉作者外包围的花括号。
 				$org=$org+1;
 				print 'org=',"$org\n";
 			}
