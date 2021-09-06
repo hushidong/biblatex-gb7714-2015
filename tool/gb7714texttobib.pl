@@ -81,731 +81,787 @@ foreach $reference(@references){
 	while($reference=~m/–/){
 		$reference=~s/–/-/;#直接利用正则表达式更正页码/日期/网址中的连字符
 	}
-	print "$reference ";#打印各文献的内容
-	
-	undef	$entrytype;
-	undef	$author;
-	undef	$title;
-	undef	$journal;
-	undef	$translator;
-	undef	$bookauthor;
-	undef	$booktitle;
-	undef	$version;
-	undef	$address;
-	undef	$publisher;
-	undef	$institution;
-	undef	$year;
-	undef	$type;
-	undef	$date;
-	undef	$volume;
-	undef	$number;
-	undef	$pages;
-	undef	$eventdate;
-	undef	$urldate;
-	undef	$url;
-	undef	$doi;
-	undef	$note;
-	undef	$eventyvn; 
-	undef	$endeventyvn;
-	undef	$eventdate; 
-	undef	$eventvol; 
-	undef	$eventnum;
-	undef	$endeventdate; 
-	undef	$endeventvol; 
-	undef	$endeventnum;
-	
-	#---------------------------------------------------------------
-	#条目类型:期刊和期刊中析出的文献/periodical、article
-	#---------------------------------------------------------------
-	if(1){
-	if($reference=~m/\[J\]/){
-		#避免在标题中存在在冒号的问题，所以从[J]开始匹配，通常也不需要从[J/OL]开始因为periodical通常不会出现online
-		#2021.09.04,hzz,修改
-		if($reference=~m/:\s/ and $reference=~m/\[J\].*:\s\D/){#根据存在出版社前的冒号加空格区分
-			print 'this entry is periodical',"\n";
-			$entrytype='periodical';
-		}else{
-			print 'this entry is article',"\n";
-			$entrytype='article';
-		}
-	}
-	
-	if($entrytype eq 'periodical'){#字符串比较用eq而数字比较用==，如果用==那么两边都是1，则是真
-		$regexformach='\[J\]\.';
-		&bfidentifier;
-		
-		($preadderess, $pospublisher)=($reference=~m/\[J\]\.(.*):\s(.*)/);
-		print 'preadderess =',$preadderess,"\n";
-		print 'pospublisher=',$pospublisher,"\n";
-		($eventyear, $address)=($preadderess=~m/(.*)\.\s(.*)/);
-		print 'eventyear   =',$eventyear,"\n";
-		print 'address     =',$address,"\n";
-		($eventyvn, $endeventyvn)=($eventyear=~m/(.*)\-(.*)/);#yvn表示year，volume，number
-		print 'eventyvn    =',$eventyvn,"\n";
-		print 'endeventyvn =',$endeventyvn,"\n"; 
-		if($eventyvn=~m/.*,.*/){#存在逗号表明有卷信息
-			($eventdate, $eventvol, $eventnum)=($eventyvn=~m/\s*(.*),\s(.*)\((.*)\)/);#yvn表示year，volume，number
-			print 'eventdate    =',$eventdate,"\n";
-			print 'eventvol     =',$eventvol,"\n"; 
-			print 'eventnum     =',$eventnum,"\n"; 
-			if($endeventyvn){
-				($endeventdate, $endeventvol, $endeventnum)=($endeventyvn=~m/\s*(.*),\s(.*)\((.*)\)/);#yvn表示year，volume，number
-				print 'endeventdate =',$endeventdate,"\n";
-				print 'endeventvol  =',$endeventvol,"\n"; 
-				print 'endeventnum  =',$endeventnum,"\n"; 
-			}
-		}else{
-			($eventdate, $eventnum)=($eventyvn=~m/\s*(.*)\((.*)\)/);#yvn表示year，volume，number
-			print 'eventdate    =',$eventdate,"\n";
-			print 'eventvol     =',$eventvol,"\n"; 
-			print 'eventnum     =',$eventnum,"\n"; 
-			if($endeventyvn){
-				($endeventdate, $endeventnum)=($endeventyvn=~m/\s*(.*)\((.*)\)/);#yvn表示year，volume，number
-				print 'endeventdate =',$endeventdate,"\n";
-				print 'endeventvol  =',$endeventvol,"\n"; 
-				print 'endeventnum  =',$endeventnum,"\n"; 
-			}
-		}
-		if($endeventdate){
-			$date=$eventdate.'-'.$endeventdate;
-		}else{
-			$date=$eventdate
-		}
-		if($endeventvol){
-			$volume=$eventvol.'-'.$endeventvol;
-		}else{
-			$volume=$eventvol
-		}
-		if($endeventnum){
-			$number=$eventnum.'-'.$endeventnum;
-		}else{
-			$number=$eventnum
-		}
-		print 'date      =',$date,"\n";
-		print 'volume    =',$volume,"\n"; 
-		print 'number    =',$number,"\n"; 
-		($publisher)=($pospublisher=~m/(.*),/);
-		print 'publisher =',$publisher,"\n";
-	}
-	
-	if($entrytype eq 'article'){
-		$regexformach='\[J\]\.';
-		&bfidentifier;
-	
-	    $flagmatched=0;
-		$regexbfjournal='\]\.\s(.*),\s(.*),\s(.*)\((.*)\):\s(.*)\.';#包括全部信息
-		if($reference=~m/$regexbfjournal/){
-			($journal,$date,$volume,$number,$pages)=($reference=~m/$regexbfjournal/);
-			$flagmatched=1;
-			print '包括全部信息',"\n";
-		}
-		$regexbfjournal='\]\.\s(.*),\s(.*),\s(.*)\((.*)\)\.';#没有页码
-		if($reference=~m/$regexbfjournal/ and $flagmatched==0){
-			($journal,$date,$volume,$number)=($reference=~m/$regexbfjournal/);
-			$flagmatched=1;
-			print '没有页码',"\n";
-		}
-		$regexbfjournal='\]\.\s(.*),\s(.*),\s(.*):\s(.*)\.';#没有期
-		if($reference=~m/$regexbfjournal/ and $flagmatched==0){
-			($journal,$date,$volume,$pages)=($reference=~m/$regexbfjournal/);
-			$flagmatched=1;
-			print '没有期',"\n";
-		}
-		$regexbfjournal='\]\.\s(.*),\s(.*)\((.*)\):\s(.*)\.';#没有卷/年
-		if($reference=~m/$regexbfjournal/ and $flagmatched==0){
-			($journal,$date,$number,$pages)=($reference=~m/$regexbfjournal/);
-			$flagmatched=1;
-			if($date!~m/\d{4}/){
-			$volume=$date;
-			$date='';
-			}
-			print '没有卷/年',"\n";
-		}
-		$regexbfjournal='\]\.\s(.*),\s(.*),\s(.*)\.';#没有页码,期
-		if($reference=~m/$regexbfjournal/ and $flagmatched==0){
-			($journal,$date,$volume)=($reference=~m/$regexbfjournal/);
-			$flagmatched=1;
-			print '没有页码,期',"\n";
-		}
-		$regexbfjournal='\]\.\s(.*),\s(.*)\((.*)\)\.';#没有页码,卷/年
-		if($reference=~m/$regexbfjournal/ and $flagmatched==0){
-			($journal,$date,$number)=($reference=~m/$regexbfjournal/);
-			$flagmatched=1;
-			if($date!~m/\d{4}/){
-			$volume=$date;
-			$date='';
-			}
-			print '没有页码,卷/年',"\n";
-		}
-		$regexbfjournal='\]\.\s(.*),\s(.*):\s(.*)\.';#没有卷/年,期
-		if($reference=~m/$regexbfjournal/ and $flagmatched==0){
-			($journal,$date,$pages)=($reference=~m/$regexbfjournal/);
-			$flagmatched=1;
-			if($date!~m/\d{4}/){
-			$volume=$date;
-			$date='';
-			}
-			print '没有卷/年,期',"\n";
-		}
-		
-		if($flagmatched==0){
-			print 'the text after title was not matched, please add a regex for the current entry in the perl source code!',"\n";
-			print '当前条目标题之后的内容没有匹配的正则表达式，请在perl代码中增加适合该条目正则表达式!',"\n";
-		}
-		
-		print 'journal =',$journal,"\n";
-		print 'date    =',$date,"\n";
-		print 'volume  =',$volume,"\n";
-		print 'number  =',$number,"\n";
-		print 'pages   =',$pages,"\n";
-	
-	}
-		
-	#判断期刊中析出的文献,带url
-	if($reference=~m/\[J\/OL\]/){
-		print 'this entry is article with url',"\n";
-		$entrytype='article';
-		
-		$regexformach='\[J\/OL\]\.';
-		&bfidentifier;
-		
-		($postitle)=($reference=~m/\[J\/OL\]\.\s(.*)/);
-		if($postitle=~m/\[.*\]/){#存在urldate
-			($preurldate,$urldate,$posurl)=($postitle=~m/(.*)\[(.*)\]\.\s(.*)/);
-		}else{#不存在urldate
-			($preurldate,$posurl)=($postitle=~m/(.*)(http:.*)/);
-		}
-		unless($preurldate=~m/\.$/){$preurldate=$preurldate.'.';}#加个点统一上面两种方式
-		
-		#处理url和doi
-		$regexposurl='(.*)doi:\s(.*)';#处理url和doi
-		if($posurl=~m/$regexposurl/i){
-			($url,$doi)=($posurl=~m/$regexposurl/i);
-		}else{
-			$url=$posurl;
-		}
-		
-		#处理urldate前的内容，基本article不带url的情况相同
-		$flagmatched=0;
-		$regexbfjournal='(.*),\s(.*),\s(.*)\((.*)\):\s(.*)\.';#包括全部信息
-		if($preurldate=~m/$regexbfjournal/ and $flagmatched==0){
-			($journal,$date,$volume,$number,$pages)=($preurldate=~m/$regexbfjournal/);
-			$flagmatched=1;
-		}
-		$regexbfjournal='(.*),\s(.*),\s(.*)\((.*)\)\.';#没有页码
-		if($preurldate=~m/$regexbfjournal/ and $flagmatched==0){
-			($journal,$date,$volume,$number)=($preurldate=~m/$regexbfjournal/);
-			$flagmatched=1;
-		}
-		$regexbfjournal='(.*),\s(.*),\s(.*):\s(.*)\.';#没有期
-		if($preurldate=~m/$regexbfjournal/ and $flagmatched==0){
-			($journal,$date,$volume,$pages)=($preurldate=~m/$regexbfjournal/);
-			$flagmatched=1;
-		}
-		$regexbfjournal='(.*),\s(.*)\((.*)\):\s(.*)\.';#没有卷/年
-		if($preurldate=~m/$regexbfjournal/ and $flagmatched==0){
-			($journal,$date,$number,$pages)=($preurldate=~m/$regexbfjournal/);
-			$flagmatched=1;
-			if($date!~m/\d{4}/){
-			$volume=$date;
-			$date='';
-			}
-		}
-		$regexbfjournal='(.*),\s(.*),\s(.*)\.';#没有页码,期
-		if($preurldate=~m/$regexbfjournal/ and $flagmatched==0){
-			($journal,$date,$volume)=($preurldate=~m/$regexbfjournal/);
-			$flagmatched=1;
-		}
-		$regexbfjournal='(.*),\s(.*)\((.*)\)\.';#没有页码,卷/年
-		if($preurldate=~m/$regexbfjournal/ and $flagmatched==0){
-			($journal,$date,$number)=($preurldate=~m/$regexbfjournal/);
-			$flagmatched=1;
-			if($date!~m/\d{4}/){
-			$volume=$date;
-			$date='';
-			}
-		}
-		$regexbfjournal='(.*),\s(.*):\s(.*)\.';#没有卷/年,期
-		if($preurldate=~m/$regexbfjournal/ and $flagmatched==0){
-			($journal,$date,$pages)=($preurldate=~m/$regexbfjournal/);
-			$flagmatched=1;
-			if($date!~m/\d{4}/){
-			$volume=$date;
-			$date='';
-			}
-		}
-		
-		if($flagmatched==0){
-			print 'the text after title was not matched, please add a regex for the current entry in the perl source code!',"\n";
-			print '当前条目标题之后的内容没有匹配的正则表达式，请在perl代码中增加适合该条目正则表达式!',"\n";
-		}
-		
-		print 'journal =',$journal,"\n";
-		print 'date    =',$date,"\n";
-		print 'volume  =',$volume,"\n";
-		print 'number  =',$number,"\n";
-		print 'pages   =',$pages,"\n";
-		print 'urldate =',$urldate,"\n";
-		print 'url     =',$url,"\n";
-		print 'doi     =',$doi,"\n";
+	print "ref: $reference ";#打印各文献的内容
 
+	$lenstr=length($reference);
+	print "lenstr=$lenstr\n";
+	$lenstr=rindex $reference."\$","\$";
+	print "lenstr=$lenstr\n";
 
-	}
-	}
-	
-	#---------------------------------------------------------------
-	#条目类型:判断报纸中析出的文献/newspaper
-	#---------------------------------------------------------------
-	if(1){
-	if($reference=~m/\[N\]/){
-		print 'this entry is newspaper',"\n";
-		$entrytype='newspaper';
-		$note='news';
-		$regexnewsflag='\[N\]';
-		$onlineflag=0;
-	}
-	if($reference=~m/\[N\/OL\]/){
-		print 'this entry is newspaper with url',"\n";
-		$entrytype='newspaper';
-		$note='news';
-		$regexnewsflag='\[N\/OL\]';
-		$onlineflag=1;
-	}
-	if($entrytype eq 'newspaper'){
-		if($onlineflag==1){
-			$regexformach='\[N\/OL\]';
+	if ($lenstr>1){
+		undef	$entrytype;
+		undef	$author;
+		undef	$title;
+		undef	$journal;
+		undef	$translator;
+		undef	$bookauthor;
+		undef	$booktitle;
+		undef	$version;
+		undef	$address;
+		undef	$publisher;
+		undef	$institution;
+		undef	$year;
+		undef	$type;
+		undef	$date;
+		undef	$volume;
+		undef	$number;
+		undef	$pages;
+		undef	$eventdate;
+		undef	$urldate;
+		undef	$url;
+		undef	$doi;
+		undef	$note;
+		undef	$eventyvn; 
+		undef	$endeventyvn;
+		undef	$eventdate; 
+		undef	$eventvol; 
+		undef	$eventnum;
+		undef	$endeventdate; 
+		undef	$endeventvol; 
+		undef	$endeventnum;
+		
+		#---------------------------------------------------------------
+		#条目类型:期刊和期刊中析出的文献/periodical、article
+		#---------------------------------------------------------------
+		if(1){
+		if($reference=~m/\[J\]/){
+			#避免在标题中存在在冒号的问题，所以从[J]开始匹配，通常也不需要从[J/OL]开始因为periodical通常不会出现online
+			#2021.09.04,hzz,修改
+			if($reference=~m/:\s/ and $reference=~m/\[J\].*:\s\D/){#根据存在出版社前的冒号加空格区分
+				print 'this entry is periodical',"\n";
+				$entrytype='periodical';
+			}else{
+				print 'this entry is article',"\n";
+				$entrytype='article';
+			}
+		}
+		
+		if($entrytype eq 'periodical'){#字符串比较用eq而数字比较用==，如果用==那么两边都是1，则是真
+			$regexformach='\[J\]\.';
 			&bfidentifier;
 			
-			print 'has url',"\n";
+			($preadderess, $pospublisher)=($reference=~m/\[J\]\.(.*):\s(.*)/);
+			print 'preadderess =',$preadderess,"\n";
+			print 'pospublisher=',$pospublisher,"\n";
+			($eventyear, $address)=($preadderess=~m/(.*)\.\s(.*)/);
+			print 'eventyear   =',$eventyear,"\n";
+			print 'address     =',$address,"\n";
+			($eventyvn, $endeventyvn)=($eventyear=~m/(.*)\-(.*)/);#yvn表示year，volume，number
+			print 'eventyvn    =',$eventyvn,"\n";
+			print 'endeventyvn =',$endeventyvn,"\n"; 
+			if($eventyvn=~m/.*,.*/){#存在逗号表明有卷信息
+				($eventdate, $eventvol, $eventnum)=($eventyvn=~m/\s*(.*),\s(.*)\((.*)\)/);#yvn表示year，volume，number
+				print 'eventdate    =',$eventdate,"\n";
+				print 'eventvol     =',$eventvol,"\n"; 
+				print 'eventnum     =',$eventnum,"\n"; 
+				if($endeventyvn){
+					($endeventdate, $endeventvol, $endeventnum)=($endeventyvn=~m/\s*(.*),\s(.*)\((.*)\)/);#yvn表示year，volume，number
+					print 'endeventdate =',$endeventdate,"\n";
+					print 'endeventvol  =',$endeventvol,"\n"; 
+					print 'endeventnum  =',$endeventnum,"\n"; 
+				}
+			}else{
+				($eventdate, $eventnum)=($eventyvn=~m/\s*(.*)\((.*)\)/);#yvn表示year，volume，number
+				print 'eventdate    =',$eventdate,"\n";
+				print 'eventvol     =',$eventvol,"\n"; 
+				print 'eventnum     =',$eventnum,"\n"; 
+				if($endeventyvn){
+					($endeventdate, $endeventnum)=($endeventyvn=~m/\s*(.*)\((.*)\)/);#yvn表示year，volume，number
+					print 'endeventdate =',$endeventdate,"\n";
+					print 'endeventvol  =',$endeventvol,"\n"; 
+					print 'endeventnum  =',$endeventnum,"\n"; 
+				}
+			}
+			if($endeventdate){
+				$date=$eventdate.'-'.$endeventdate;
+			}else{
+				$date=$eventdate
+			}
+			if($endeventvol){
+				$volume=$eventvol.'-'.$endeventvol;
+			}else{
+				$volume=$eventvol
+			}
+			if($endeventnum){
+				$number=$eventnum.'-'.$endeventnum;
+			}else{
+				$number=$eventnum
+			}
+			print 'date      =',$date,"\n";
+			print 'volume    =',$volume,"\n"; 
+			print 'number    =',$number,"\n"; 
+			($publisher)=($pospublisher=~m/(.*),/);
+			print 'publisher =',$publisher,"\n";
+		}
+		
+		if($entrytype eq 'article'){
+			$regexformach='\[J\]\.';
+			&bfidentifier;
+		
 			$flagmatched=0;
-			$regexnewspostitle='\.\s(.*),\s(.*)\((.*)\)\s*\[(.*)\]\.\s(.*)';
-			if($reference=~m/$regexnewsflag$regexnewspostitle/ and $flagmatched==0){
-			$flagmatched=1;
-			($journal,$date,$number,$urldate,$posurl)=($reference=~m/$regexnewsflag$regexnewspostitle/);}
-			$regexnewspostitle='\.\s(.*),\s(.*)\s*\[(.*)\]\.\s(.*)';
-			if($reference=~m/$regexnewsflag$regexnewspostitle/ and $flagmatched==0){
-			$flagmatched=1;
-			($journal,$date,$urldate,$posurl)=($reference=~m/$regexnewsflag$regexnewspostitle/);}
+			$regexbfjournal='\]\.\s(.*),\s(.*),\s(.*)\((.*)\):\s(.*)\.';#包括全部信息
+			if($reference=~m/$regexbfjournal/){
+				($journal,$date,$volume,$number,$pages)=($reference=~m/$regexbfjournal/);
+				$flagmatched=1;
+				print '包括全部信息',"\n";
+			}
+			$regexbfjournal='\]\.\s(.*),\s(.*),\s(.*)\((.*)\)\.';#没有页码
+			if($reference=~m/$regexbfjournal/ and $flagmatched==0){
+				($journal,$date,$volume,$number)=($reference=~m/$regexbfjournal/);
+				$flagmatched=1;
+				print '没有页码',"\n";
+			}
+			$regexbfjournal='\]\.\s(.*),\s(.*),\s(.*):\s(.*)\.';#没有期
+			if($reference=~m/$regexbfjournal/ and $flagmatched==0){
+				($journal,$date,$volume,$pages)=($reference=~m/$regexbfjournal/);
+				$flagmatched=1;
+				print '没有期',"\n";
+			}
+			$regexbfjournal='\]\.\s(.*),\s(.*)\((.*)\):\s(.*)\.';#没有卷/年
+			if($reference=~m/$regexbfjournal/ and $flagmatched==0){
+				($journal,$date,$number,$pages)=($reference=~m/$regexbfjournal/);
+				$flagmatched=1;
+				if($date!~m/\d{4}/){
+				$volume=$date;
+				$date='';
+				}
+				print '没有卷/年',"\n";
+			}
+			$regexbfjournal='\]\.\s(.*),\s(.*),\s(.*)\.';#没有页码,期
+			if($reference=~m/$regexbfjournal/ and $flagmatched==0){
+				($journal,$date,$volume)=($reference=~m/$regexbfjournal/);
+				$flagmatched=1;
+				print '没有页码,期',"\n";
+			}
+			$regexbfjournal='\]\.\s(.*),\s(.*)\((.*)\)\.';#没有页码,卷/年
+			if($reference=~m/$regexbfjournal/ and $flagmatched==0){
+				($journal,$date,$number)=($reference=~m/$regexbfjournal/);
+				$flagmatched=1;
+				if($date!~m/\d{4}/){
+				$volume=$date;
+				$date='';
+				}
+				print '没有页码,卷/年',"\n";
+			}
+			$regexbfjournal='\]\.\s(.*),\s(.*):\s(.*)\.';#没有卷/年,期
+			if($reference=~m/$regexbfjournal/ and $flagmatched==0){
+				($journal,$date,$pages)=($reference=~m/$regexbfjournal/);
+				$flagmatched=1;
+				if($date!~m/\d{4}/){
+				$volume=$date;
+				$date='';
+				}
+				print '没有卷/年,期',"\n";
+			}
+			
 			if($flagmatched==0){
-			print 'the text after title was not matched, please add a regex for the current entry in the perl source code!',"\n";
-			print '当前条目标题之后的内容没有匹配的正则表达式，请在perl代码中增加适合该条目正则表达式!',"\n";
-			}
-		}else{
-			$regexformach='\[N\]';
-			&bfidentifier;
-			
-			print 'no url',"\n";
-			$regexnewspostitle='\.\s(.*),\s(.*)\((.*)\)';
-			($journal,$date,$number)=($reference=~m/$regexnewsflag$regexnewspostitle/);
-		}
-		#处理url和doi
-		$regexposurl='(.*)doi:\s(.*)';#处理url和doi
-		if($posurl=~m/$regexposurl/i){
-			($url,$doi)=($posurl=~m/$regexposurl/i);
-		}else{
-			$url=$posurl;
-		}
-		
-		# print 'journal =',$journal,"\n";
-		# print 'date    =',$date,"\n";
-		# print 'volume  =',$volume,"\n";
-		# print 'number  =',$number,"\n";
-		# print 'pages   =',$pages,"\n";
-		# print 'urldate =',$urldate,"\n";
-		# print 'url     =',$url,"\n";
-		# print 'doi     =',$doi,"\n";
-	}
-	}
-	
-		
-	#---------------------------------------------------------------
-	#条目类型:论文集中析出的文献/inproceedings
-	#---------------------------------------------------------------
-	if(1){#\/\/
-		if ($reference=~m/\[C\/OL\]\/\//){
-			$entrytype='inproceedings';
-			print "this entry's type is: $entrytype with url\n";
-			$regexformach='\[C\/OL\]\/\/';
-			&bfidentifier;
-			
-			$regexformach='C\/OL\]\/\/';
-			&bfaddressinbook;
-		
-			&afpublisherbookurl;
-		}elsif($reference=~m/\[C\]\/\//){
-			$entrytype='inproceedings';
-			print "this entry's type is: $entrytype \n";
-			$regexformach='\[C\]\/\/';
-			&bfidentifier;
-			
-			$regexformach='C\]\/\/';
-			&bfaddressinbook;
-			
-			&afpublisherbook;
-		}
-		
-		if ($entrytype eq 'inproceedings'){
-			if ($address=~m/\[S\.l\.\]/ or $address=~m/出版地不详/) {#当存在英文的[s.n.]
-				$address=""; 
-			}
-			if ($publisher=~m/\[s\.n\.\]/ or $publisher=~m/出版者不详/) {#当存在英文的[s.n.]
-				$publisher=""; 
-			}
-			$date=$year;
-		}
-		
-	}
-	
-	
-	#---------------------------------------------------------------
-	#条目类型:论文集/proceedings 
-	#---------------------------------------------------------------
-	if(1){
-		if ($reference=~m/\[C\/OL\]\./){
-			$entrytype='proceedings';
-			print "this entry's type is: $entrytype with url\n";
-			$regexformach='\[C\/OL\]\.';
-			&bfidentifier;
-			
-			$regexformach='C\/OL\]\.';
-			&bfaddressbook;
-		
-			&afpublisherbookurl;
-		}elsif($reference=~m/\[C\]\./){
-			$entrytype='proceedings';
-			print "this entry's type is: $entrytype \n";
-			$regexformach='\[C\]\.';
-			&bfidentifier;
-			
-			$regexformach='C\]\.';
-			&bfaddressbook;
-			
-			&afpublisherbook;
-		}
-		
-		if ($entrytype eq 'proceedings'){
-			if ($address=~m/\[S\.l\.\]/ or $address=~m/出版地不详/) {#当存在英文的[s.n.]
-				$address=""; 
-			}
-			if ($publisher=~m/\[s\.n\.\]/ or $publisher=~m/出版者不详/) {#当存在英文的[s.n.]
-				$publisher=""; 
-			}
-			$date=$year;
-			print 'date=',"$date";
-		}
-	}
-	
-	
-	
-	
-	#---------------------------------------------------------------
-	#条目类型:未出版物/unpublished
-	#---------------------------------------------------------------
-	if(1){
-		if ($reference=~m/\[Z\/OL\]\./){
-			$entrytype='unpublished';
-			print "this entry's type is: $entrytype with url\n";
-			$regexformach='\[Z\/OL\]\.';
-			&bfidentifier;
-			
-			$regexformach='Z\/OL\]\.';
-			&bfaddressbook;
-		
-			&afpublisherbookurlb;
-		}elsif($reference=~m/\[Z\]\./){
-			$entrytype='unpublished';
-			print "this entry's type is: $entrytype \n";
-			$regexformach='\[Z\]\.';
-			&bfidentifier;
-			
-			$regexformach='Z\]\.';
-			&bfaddressbook;
-			
-			&afpublisherbookb;
-		}
-		
-		if ($entrytype eq 'unpublished'){
-			$date=$year;
-			print 'date=',"$date";
-		}
-	}
-	
-		
-	#---------------------------------------------------------------
-	#条目类型:手册、档案/manual
-	#---------------------------------------------------------------
-	if(1){
-		if ($reference=~m/\[A\/OL\]\./){
-			$entrytype='manual';
-			print "this entry's type is: $entrytype with url\n";
-			$regexformach='\[A\/OL\]\.';
-			&bfidentifier;
-			
-			$regexformach='A\/OL\]\.';
-			&bfaddressbook;
-		
-			&afpublisherbookurlb;
-		}elsif($reference=~m/\[A\]\./){
-			$entrytype='manual';
-			print "this entry's type is: $entrytype \n";
-			$regexformach='\[A\]\.';
-			&bfidentifier;
-			
-			$regexformach='A\]\.';
-			&bfaddressbook;
-			
-			&afpublisherbookb;
-		}
-		
-		if ($entrytype eq 'manual'){
-			$date=$year;
-			print 'date=',"$date";
-		}
-	}
-	
-	
-	
-	#---------------------------------------------------------------
-	#条目类型:报告/report
-	#---------------------------------------------------------------
-	if(1){
-		if ($reference=~m/\[R\/OL\]\./){
-			$entrytype='report';
-			print "this entry's type is: $entrytype with url\n";
-			$regexformach='\[R\/OL\]\.';
-			&bfidentifier;
-			
-			$regexformach='R\/OL\]\.';
-			&bfaddressbook;
-		
-			&afpublisherbookurlb;
-		}elsif($reference=~m/\[R\]\./){
-			$entrytype='report';
-			print "this entry's type is: $entrytype \n";
-			$regexformach='\[R\]\.';
-			&bfidentifier;
-			
-			$regexformach='R\]\.';
-			&bfaddressbook;
-			
-			&afpublisherbookb;
-		}
-		
-		if ($entrytype eq 'report'){
-			$date=$year;
-			print 'date=',"$date";
-		}
-	
-	}
-	
-	#---------------------------------------------------------------
-	#条目类型:标准/standard
-	#---------------------------------------------------------------
-	if(1){
-		if ($reference=~m/\[S\/OL\]\./){
-			$entrytype='standard';
-			print "this entry's type is: $entrytype with url\n";
-			$regexformach='\[S\/OL\]\.';
-			&bfidentifier;
-			
-			$regexformach='S\/OL\]\.';
-			&bfaddressbook;
-			&afpublisherbookurl;
-		}elsif($reference=~m/\[S\]\./){
-			$entrytype='standard';
-			print "this entry's type is: $entrytype \n";
-			$regexformach='\[S\]\.';
-			&bfidentifier;
-			
-			$regexformach='S\]\.';
-			&bfaddressbook;
-			
-			&afpublisherbook;
-		}elsif ($reference=~m/\[S\/OL\]\/\//){
-			$entrytype='standard';
-			print "this entry's type is: $entrytype with url\n";
-			$regexformach='\[S\/OL\]\/\/';
-			&bfidentifier;
-			
-			$regexformach='S\/OL\]\/\/';
-			&bfaddressinbook;
-		
-			&afpublisherbookurl;
-		}elsif($reference=~m/\[S\]\/\//){
-			$entrytype='standard';
-			print "this entry's type is: $entrytype \n";
-			$regexformach='\[S\]\/\/';
-			&bfidentifier;
-			
-			$regexformach='S\]\/\/';
-			&bfaddressinbook;
-			
-			&afpublisherbook;
-		}
-		if ($entrytype eq 'standard'){
-			if ($address=~m/\[S\.l\.\]/ or $address=~m/出版地不详/) {#当存在英文的[s.n.]
-				$address=""; 
-			}
-			if ($publisher=~m/\[s\.n\.\]/ or $publisher=~m/出版者不详/) {#当存在英文的[s.n.]
-				$publisher=""; 
-			}
-			$date=$year;
-			$note='standard';
-			print 'date=',"$date";
-			print 'note=',"$note";
-		}
-	
-	}
-	
-	#---------------------------------------------------------------
-	#条目类型:学位论文/thesis
-	#---------------------------------------------------------------
-	if(1){
-		if ($reference=~m/\[D\/OL\]\./){
-			$entrytype='thesis';
-			print "this entry's type is: $entrytype with url\n";
-			$regexformach='\[D\/OL\]\.';
-			&bfidentifier;
-			
-			$regexformach='D\/OL\]\.';
-			&bfaddressbook;
-		
-			&afpublisherbookurl;
-		}elsif($reference=~m/\[D\]\./){
-			$entrytype='thesis';
-			print "this entry's type is: $entrytype \n";
-			$regexformach='\[D\]\.';
-			&bfidentifier;
-			
-			$regexformach='D\]\.';
-			&bfaddressbook;
-			
-			&afpublisherbook;
-		}
-		
-		if ($entrytype eq 'thesis'){
-			if ($address=~m/\[S\.l\.\]/ or $address=~m/出版地不详/) {#当存在英文的[s.n.]
-				$address=""; 
-			}
-			if ($publisher=~m/\[s\.n\.\]/ or $publisher=~m/出版者不详/) {#当存在英文的[s.n.]
-				$publisher=""; 
-			}
-			$date=$year;
-			print 'date=',"$date";
-		}
-	
-	}
-	
-	
-	#---------------------------------------------------------------
-	#条目类型:汇编中析出的文献/incollection 
-	#---------------------------------------------------------------
-	if(1){#\/\/
-		if ($reference=~m/\[G\/OL\]\/\//){
-			$entrytype='incollection';
-			print "this entry's type is: $entrytype with url\n";
-			$regexformach='\[G\/OL\]\/\/';
-			&bfidentifier;
-			
-			$regexformach='G\/OL\]\/\/';
-			&bfaddressinbook;
-		
-			&afpublisherbookurl;
-		}elsif($reference=~m/\[G\]\/\//){
-			$entrytype='incollection';
-			print "this entry's type is: $entrytype \n";
-			$regexformach='\[G\]\/\/';
-			&bfidentifier;
-			
-			$regexformach='G\]\/\/';
-			&bfaddressinbook;
-			
-			&afpublisherbook;
-		}
-		
-		if ($entrytype eq 'incollection'){
-			if ($address=~m/\[S\.l\.\]/ or $address=~m/出版地不详/) {#当存在英文的[s.n.]
-				$address=""; 
-			}
-			if ($publisher=~m/\[s\.n\.\]/ or $publisher=~m/出版者不详/) {#当存在英文的[s.n.]
-				$publisher=""; 
-			}
-			$date=$year;
-		}
-		
-	}
-	
-	
-	#---------------------------------------------------------------
-	#条目类型:汇编/collection 
-	#---------------------------------------------------------------
-	if(1){
-		if ($reference=~m/\[G\/OL\]\./){
-			$entrytype='collection';
-			print "this entry's type is: $entrytype with url\n";
-			$regexformach='\[G\/OL\]\.';
-			&bfidentifier;
-			
-			$regexformach='G\/OL\]\.';
-			&bfaddressbook;
-		
-			&afpublisherbookurl;
-		}elsif($reference=~m/\[G\]\./){
-			$entrytype='collection';
-			print "this entry's type is: $entrytype \n";
-			$regexformach='\[G\]\.';
-			&bfidentifier;
-			
-			$regexformach='G\]\.';
-			&bfaddressbook;
-			
-			&afpublisherbook;
-		}
-		
-		if ($entrytype eq 'collection'){
-			if ($address=~m/\[S\.l\.\]/ or $address=~m/出版地不详/) {#当存在英文的[s.n.]
-				$address=""; 
-			}
-			if ($publisher=~m/\[s\.n\.\]/ or $publisher=~m/出版者不详/) {#当存在英文的[s.n.]
-				$publisher=""; 
-			}
-			$date=$year;
-			print 'date=',"$date";
-		}
-	}
-	
-	
-	#---------------------------------------------------------------
-	#条目类型:专利/patent
-	#---------------------------------------------------------------
-	if(1){
-		if ($reference=~m/\[P\/OL\]\./){
-			$entrytype='patent';
-			print "this entry's type is: $entrytype with url\n";
-			$regexformach='\[P\/OL\]\.';
-			&bfidentifier;
-		}elsif($reference=~m/\[P\]\./){
-			$entrytype='patent';
-			print "this entry's type is: $entrytype \n";
-			$regexformach='\[P\]\.';
-			&bfidentifier;
-		}
-		
-		if($entrytype eq 'patent'){
-			($postitle)=($reference=~m/$regexformach\s*(.*)/);
-			print 'postitle=',$postitle,"\n";
-			$titlenumber=$title;
-			if($titlenumber=~m/:\s*\d.*/){
-				($title,$number)=($titlenumber=~m/(.*):\s*(\d.*)/);
-				print 'title  =',$title,"\n";
-				print 'number =',$number,"\n";
+				print 'the text after title was not matched, please add a regex for the current entry in the perl source code!',"\n";
+				print '当前条目标题之后的内容没有匹配的正则表达式，请在perl代码中增加适合该条目正则表达式!',"\n";
 			}
 			
-			if($postitle=~m/\[.*\]/ and $reference=~m/\[P\/OL\]\./){
-				($date,$urldate,$posurl)=($postitle=~/(.*)\s*\[(.*)\]\.\s*(.*)/);
-				print 'date=',$date,"\n";
+			print 'journal =',$journal,"\n";
+			print 'date    =',$date,"\n";
+			print 'volume  =',$volume,"\n";
+			print 'number  =',$number,"\n";
+			print 'pages   =',$pages,"\n";
+		
+		}
+			
+		#判断期刊中析出的文献,带url
+		if($reference=~m/\[J\/OL\]/){
+			print 'this entry is article with url',"\n";
+			$entrytype='article';
+			
+			$regexformach='\[J\/OL\]\.';
+			&bfidentifier;
+			
+			($postitle)=($reference=~m/\[J\/OL\]\.\s(.*)/);
+			if($postitle=~m/\[.*\]/){#存在urldate
+				($preurldate,$urldate,$posurl)=($postitle=~m/(.*)\[(.*)\]\.\s(.*)/);
+			}else{#不存在urldate
+				($preurldate,$posurl)=($postitle=~m/(.*)(http:.*)/);
+			}
+			unless($preurldate=~m/\.$/){$preurldate=$preurldate.'.';}#加个点统一上面两种方式
+			
+			#处理url和doi
+			$regexposurl='(.*)doi:\s(.*)';#处理url和doi
+			if($posurl=~m/$regexposurl/i){
+				($url,$doi)=($posurl=~m/$regexposurl/i);
+			}else{
+				$url=$posurl;
+			}
+			
+			#处理urldate前的内容，基本article不带url的情况相同
+			$flagmatched=0;
+			$regexbfjournal='(.*),\s(.*),\s(.*)\((.*)\):\s(.*)\.';#包括全部信息
+			if($preurldate=~m/$regexbfjournal/ and $flagmatched==0){
+				($journal,$date,$volume,$number,$pages)=($preurldate=~m/$regexbfjournal/);
+				$flagmatched=1;
+			}
+			$regexbfjournal='(.*),\s(.*),\s(.*)\((.*)\)\.';#没有页码
+			if($preurldate=~m/$regexbfjournal/ and $flagmatched==0){
+				($journal,$date,$volume,$number)=($preurldate=~m/$regexbfjournal/);
+				$flagmatched=1;
+			}
+			$regexbfjournal='(.*),\s(.*),\s(.*):\s(.*)\.';#没有期
+			if($preurldate=~m/$regexbfjournal/ and $flagmatched==0){
+				($journal,$date,$volume,$pages)=($preurldate=~m/$regexbfjournal/);
+				$flagmatched=1;
+			}
+			$regexbfjournal='(.*),\s(.*)\((.*)\):\s(.*)\.';#没有卷/年
+			if($preurldate=~m/$regexbfjournal/ and $flagmatched==0){
+				($journal,$date,$number,$pages)=($preurldate=~m/$regexbfjournal/);
+				$flagmatched=1;
+				if($date!~m/\d{4}/){
+				$volume=$date;
+				$date='';
+				}
+			}
+			$regexbfjournal='(.*),\s(.*),\s(.*)\.';#没有页码,期
+			if($preurldate=~m/$regexbfjournal/ and $flagmatched==0){
+				($journal,$date,$volume)=($preurldate=~m/$regexbfjournal/);
+				$flagmatched=1;
+			}
+			$regexbfjournal='(.*),\s(.*)\((.*)\)\.';#没有页码,卷/年
+			if($preurldate=~m/$regexbfjournal/ and $flagmatched==0){
+				($journal,$date,$number)=($preurldate=~m/$regexbfjournal/);
+				$flagmatched=1;
+				if($date!~m/\d{4}/){
+				$volume=$date;
+				$date='';
+				}
+			}
+			$regexbfjournal='(.*),\s(.*):\s(.*)\.';#没有卷/年,期
+			if($preurldate=~m/$regexbfjournal/ and $flagmatched==0){
+				($journal,$date,$pages)=($preurldate=~m/$regexbfjournal/);
+				$flagmatched=1;
+				if($date!~m/\d{4}/){
+				$volume=$date;
+				$date='';
+				}
+			}
+			
+			if($flagmatched==0){
+				print 'the text after title was not matched, please add a regex for the current entry in the perl source code!',"\n";
+				print '当前条目标题之后的内容没有匹配的正则表达式，请在perl代码中增加适合该条目正则表达式!',"\n";
+			}
+			
+			print 'journal =',$journal,"\n";
+			print 'date    =',$date,"\n";
+			print 'volume  =',$volume,"\n";
+			print 'number  =',$number,"\n";
+			print 'pages   =',$pages,"\n";
+			print 'urldate =',$urldate,"\n";
+			print 'url     =',$url,"\n";
+			print 'doi     =',$doi,"\n";
+
+
+		}
+		}
+		
+		#---------------------------------------------------------------
+		#条目类型:判断报纸中析出的文献/newspaper
+		#---------------------------------------------------------------
+		if(1){
+		if($reference=~m/\[N\]/){
+			print 'this entry is newspaper',"\n";
+			$entrytype='newspaper';
+			$note='news';
+			$regexnewsflag='\[N\]';
+			$onlineflag=0;
+		}
+		if($reference=~m/\[N\/OL\]/){
+			print 'this entry is newspaper with url',"\n";
+			$entrytype='newspaper';
+			$note='news';
+			$regexnewsflag='\[N\/OL\]';
+			$onlineflag=1;
+		}
+		if($entrytype eq 'newspaper'){
+			if($onlineflag==1){
+				$regexformach='\[N\/OL\]';
+				&bfidentifier;
+				
+				print 'has url',"\n";
+				$flagmatched=0;
+				$regexnewspostitle='\.\s(.*),\s(.*)\((.*)\)\s*\[(.*)\]\.\s(.*)';
+				if($reference=~m/$regexnewsflag$regexnewspostitle/ and $flagmatched==0){
+				$flagmatched=1;
+				($journal,$date,$number,$urldate,$posurl)=($reference=~m/$regexnewsflag$regexnewspostitle/);}
+				$regexnewspostitle='\.\s(.*),\s(.*)\s*\[(.*)\]\.\s(.*)';
+				if($reference=~m/$regexnewsflag$regexnewspostitle/ and $flagmatched==0){
+				$flagmatched=1;
+				($journal,$date,$urldate,$posurl)=($reference=~m/$regexnewsflag$regexnewspostitle/);}
+				if($flagmatched==0){
+				print 'the text after title was not matched, please add a regex for the current entry in the perl source code!',"\n";
+				print '当前条目标题之后的内容没有匹配的正则表达式，请在perl代码中增加适合该条目正则表达式!',"\n";
+				}
+			}else{
+				$regexformach='\[N\]';
+				&bfidentifier;
+				
+				print 'no url',"\n";
+				$regexnewspostitle='\.\s(.*),\s(.*)\((.*)\)';
+				($journal,$date,$number)=($reference=~m/$regexnewsflag$regexnewspostitle/);
+			}
+			#处理url和doi
+			$regexposurl='(.*)doi:\s(.*)';#处理url和doi
+			if($posurl=~m/$regexposurl/i){
+				($url,$doi)=($posurl=~m/$regexposurl/i);
+			}else{
+				$url=$posurl;
+			}
+			
+			# print 'journal =',$journal,"\n";
+			# print 'date    =',$date,"\n";
+			# print 'volume  =',$volume,"\n";
+			# print 'number  =',$number,"\n";
+			# print 'pages   =',$pages,"\n";
+			# print 'urldate =',$urldate,"\n";
+			# print 'url     =',$url,"\n";
+			# print 'doi     =',$doi,"\n";
+		}
+		}
+		
+			
+		#---------------------------------------------------------------
+		#条目类型:论文集中析出的文献/inproceedings
+		#---------------------------------------------------------------
+		if(1){#\/\/
+			if ($reference=~m/\[C\/OL\]\/\//){
+				$entrytype='inproceedings';
+				print "this entry's type is: $entrytype with url\n";
+				$regexformach='\[C\/OL\]\/\/';
+				&bfidentifier;
+				
+				$regexformach='C\/OL\]\/\/';
+				&bfaddressinbook;
+			
+				&afpublisherbookurl;
+			}elsif($reference=~m/\[C\]\/\//){
+				$entrytype='inproceedings';
+				print "this entry's type is: $entrytype \n";
+				$regexformach='\[C\]\/\/';
+				&bfidentifier;
+				
+				$regexformach='C\]\/\/';
+				&bfaddressinbook;
+				
+				&afpublisherbook;
+			}
+			
+			if ($entrytype eq 'inproceedings'){
+				if ($address=~m/\[S\.l\.\]/ or $address=~m/出版地不详/) {#当存在英文的[s.n.]
+					$address=""; 
+				}
+				if ($publisher=~m/\[s\.n\.\]/ or $publisher=~m/出版者不详/) {#当存在英文的[s.n.]
+					$publisher=""; 
+				}
+				$date=$year;
+			}
+			
+		}
+		
+		
+		#---------------------------------------------------------------
+		#条目类型:论文集/proceedings 
+		#---------------------------------------------------------------
+		if(1){
+			if ($reference=~m/\[C\/OL\]\./){
+				$entrytype='proceedings';
+				print "this entry's type is: $entrytype with url\n";
+				$regexformach='\[C\/OL\]\.';
+				&bfidentifier;
+				
+				$regexformach='C\/OL\]\.';
+				&bfaddressbook;
+			
+				&afpublisherbookurl;
+			}elsif($reference=~m/\[C\]\./){
+				$entrytype='proceedings';
+				print "this entry's type is: $entrytype \n";
+				$regexformach='\[C\]\.';
+				&bfidentifier;
+				
+				$regexformach='C\]\.';
+				&bfaddressbook;
+				
+				&afpublisherbook;
+			}
+			
+			if ($entrytype eq 'proceedings'){
+				if ($address=~m/\[S\.l\.\]/ or $address=~m/出版地不详/) {#当存在英文的[s.n.]
+					$address=""; 
+				}
+				if ($publisher=~m/\[s\.n\.\]/ or $publisher=~m/出版者不详/) {#当存在英文的[s.n.]
+					$publisher=""; 
+				}
+				$date=$year;
+				print 'date=',"$date";
+			}
+		}
+		
+		
+		
+		
+		#---------------------------------------------------------------
+		#条目类型:未出版物/unpublished
+		#---------------------------------------------------------------
+		if(1){
+			if ($reference=~m/\[Z\/OL\]\./){
+				$entrytype='unpublished';
+				print "this entry's type is: $entrytype with url\n";
+				$regexformach='\[Z\/OL\]\.';
+				&bfidentifier;
+				
+				$regexformach='Z\/OL\]\.';
+				&bfaddressbook;
+			
+				&afpublisherbookurlb;
+			}elsif($reference=~m/\[Z\]\./){
+				$entrytype='unpublished';
+				print "this entry's type is: $entrytype \n";
+				$regexformach='\[Z\]\.';
+				&bfidentifier;
+				
+				$regexformach='Z\]\.';
+				&bfaddressbook;
+				
+				&afpublisherbookb;
+			}
+			
+			if ($entrytype eq 'unpublished'){
+				$date=$year;
+				print 'date=',"$date";
+			}
+		}
+		
+			
+		#---------------------------------------------------------------
+		#条目类型:手册、档案/manual
+		#---------------------------------------------------------------
+		if(1){
+			if ($reference=~m/\[A\/OL\]\./){
+				$entrytype='manual';
+				print "this entry's type is: $entrytype with url\n";
+				$regexformach='\[A\/OL\]\.';
+				&bfidentifier;
+				
+				$regexformach='A\/OL\]\.';
+				&bfaddressbook;
+			
+				&afpublisherbookurlb;
+			}elsif($reference=~m/\[A\]\./){
+				$entrytype='manual';
+				print "this entry's type is: $entrytype \n";
+				$regexformach='\[A\]\.';
+				&bfidentifier;
+				
+				$regexformach='A\]\.';
+				&bfaddressbook;
+				
+				&afpublisherbookb;
+			}
+			
+			if ($entrytype eq 'manual'){
+				$date=$year;
+				print 'date=',"$date";
+			}
+		}
+		
+		
+		
+		#---------------------------------------------------------------
+		#条目类型:报告/report
+		#---------------------------------------------------------------
+		if(1){
+			if ($reference=~m/\[R\/OL\]\./){
+				$entrytype='report';
+				print "this entry's type is: $entrytype with url\n";
+				$regexformach='\[R\/OL\]\.';
+				&bfidentifier;
+				
+				$regexformach='R\/OL\]\.';
+				&bfaddressbook;
+			
+				&afpublisherbookurlb;
+			}elsif($reference=~m/\[R\]\./){
+				$entrytype='report';
+				print "this entry's type is: $entrytype \n";
+				$regexformach='\[R\]\.';
+				&bfidentifier;
+				
+				$regexformach='R\]\.';
+				&bfaddressbook;
+				
+				&afpublisherbookb;
+			}
+			
+			if ($entrytype eq 'report'){
+				$date=$year;
+				print 'date=',"$date";
+			}
+		
+		}
+		
+		#---------------------------------------------------------------
+		#条目类型:标准/standard
+		#---------------------------------------------------------------
+		if(1){
+			if ($reference=~m/\[S\/OL\]\./){
+				$entrytype='standard';
+				print "this entry's type is: $entrytype with url\n";
+				$regexformach='\[S\/OL\]\.';
+				&bfidentifier;
+				
+				$regexformach='S\/OL\]\.';
+				&bfaddressbook;
+				&afpublisherbookurl;
+			}elsif($reference=~m/\[S\]\./){
+				$entrytype='standard';
+				print "this entry's type is: $entrytype \n";
+				$regexformach='\[S\]\.';
+				&bfidentifier;
+				
+				$regexformach='S\]\.';
+				&bfaddressbook;
+				
+				&afpublisherbook;
+			}elsif ($reference=~m/\[S\/OL\]\/\//){
+				$entrytype='standard';
+				print "this entry's type is: $entrytype with url\n";
+				$regexformach='\[S\/OL\]\/\/';
+				&bfidentifier;
+				
+				$regexformach='S\/OL\]\/\/';
+				&bfaddressinbook;
+			
+				&afpublisherbookurl;
+			}elsif($reference=~m/\[S\]\/\//){
+				$entrytype='standard';
+				print "this entry's type is: $entrytype \n";
+				$regexformach='\[S\]\/\/';
+				&bfidentifier;
+				
+				$regexformach='S\]\/\/';
+				&bfaddressinbook;
+				
+				&afpublisherbook;
+			}
+			if ($entrytype eq 'standard'){
+				if ($address=~m/\[S\.l\.\]/ or $address=~m/出版地不详/) {#当存在英文的[s.n.]
+					$address=""; 
+				}
+				if ($publisher=~m/\[s\.n\.\]/ or $publisher=~m/出版者不详/) {#当存在英文的[s.n.]
+					$publisher=""; 
+				}
+				$date=$year;
+				$note='standard';
+				print 'date=',"$date";
+				print 'note=',"$note";
+			}
+		
+		}
+		
+		#---------------------------------------------------------------
+		#条目类型:学位论文/thesis
+		#---------------------------------------------------------------
+		if(1){
+			if ($reference=~m/\[D\/OL\]\./){
+				$entrytype='thesis';
+				print "this entry's type is: $entrytype with url\n";
+				$regexformach='\[D\/OL\]\.';
+				&bfidentifier;
+				
+				$regexformach='D\/OL\]\.';
+				&bfaddressbook;
+			
+				&afpublisherbookurl;
+			}elsif($reference=~m/\[D\]\./){
+				$entrytype='thesis';
+				print "this entry's type is: $entrytype \n";
+				$regexformach='\[D\]\.';
+				&bfidentifier;
+				
+				$regexformach='D\]\.';
+				&bfaddressbook;
+				
+				&afpublisherbook;
+			}
+			
+			if ($entrytype eq 'thesis'){
+				if ($address=~m/\[S\.l\.\]/ or $address=~m/出版地不详/) {#当存在英文的[s.n.]
+					$address=""; 
+				}
+				if ($publisher=~m/\[s\.n\.\]/ or $publisher=~m/出版者不详/) {#当存在英文的[s.n.]
+					$publisher=""; 
+				}
+				$date=$year;
+				print 'date=',"$date";
+			}
+		
+		}
+		
+		
+		#---------------------------------------------------------------
+		#条目类型:汇编中析出的文献/incollection 
+		#---------------------------------------------------------------
+		if(1){#\/\/
+			if ($reference=~m/\[G\/OL\]\/\//){
+				$entrytype='incollection';
+				print "this entry's type is: $entrytype with url\n";
+				$regexformach='\[G\/OL\]\/\/';
+				&bfidentifier;
+				
+				$regexformach='G\/OL\]\/\/';
+				&bfaddressinbook;
+			
+				&afpublisherbookurl;
+			}elsif($reference=~m/\[G\]\/\//){
+				$entrytype='incollection';
+				print "this entry's type is: $entrytype \n";
+				$regexformach='\[G\]\/\/';
+				&bfidentifier;
+				
+				$regexformach='G\]\/\/';
+				&bfaddressinbook;
+				
+				&afpublisherbook;
+			}
+			
+			if ($entrytype eq 'incollection'){
+				if ($address=~m/\[S\.l\.\]/ or $address=~m/出版地不详/) {#当存在英文的[s.n.]
+					$address=""; 
+				}
+				if ($publisher=~m/\[s\.n\.\]/ or $publisher=~m/出版者不详/) {#当存在英文的[s.n.]
+					$publisher=""; 
+				}
+				$date=$year;
+			}
+			
+		}
+		
+		
+		#---------------------------------------------------------------
+		#条目类型:汇编/collection 
+		#---------------------------------------------------------------
+		if(1){
+			if ($reference=~m/\[G\/OL\]\./){
+				$entrytype='collection';
+				print "this entry's type is: $entrytype with url\n";
+				$regexformach='\[G\/OL\]\.';
+				&bfidentifier;
+				
+				$regexformach='G\/OL\]\.';
+				&bfaddressbook;
+			
+				&afpublisherbookurl;
+			}elsif($reference=~m/\[G\]\./){
+				$entrytype='collection';
+				print "this entry's type is: $entrytype \n";
+				$regexformach='\[G\]\.';
+				&bfidentifier;
+				
+				$regexformach='G\]\.';
+				&bfaddressbook;
+				
+				&afpublisherbook;
+			}
+			
+			if ($entrytype eq 'collection'){
+				if ($address=~m/\[S\.l\.\]/ or $address=~m/出版地不详/) {#当存在英文的[s.n.]
+					$address=""; 
+				}
+				if ($publisher=~m/\[s\.n\.\]/ or $publisher=~m/出版者不详/) {#当存在英文的[s.n.]
+					$publisher=""; 
+				}
+				$date=$year;
+				print 'date=',"$date";
+			}
+		}
+		
+		
+		#---------------------------------------------------------------
+		#条目类型:专利/patent
+		#---------------------------------------------------------------
+		if(1){
+			if ($reference=~m/\[P\/OL\]\./){
+				$entrytype='patent';
+				print "this entry's type is: $entrytype with url\n";
+				$regexformach='\[P\/OL\]\.';
+				&bfidentifier;
+			}elsif($reference=~m/\[P\]\./){
+				$entrytype='patent';
+				print "this entry's type is: $entrytype \n";
+				$regexformach='\[P\]\.';
+				&bfidentifier;
+			}
+			
+			if($entrytype eq 'patent'){
+				($postitle)=($reference=~m/$regexformach\s*(.*)/);
+				print 'postitle=',$postitle,"\n";
+				$titlenumber=$title;
+				if($titlenumber=~m/:\s*\d.*/){
+					($title,$number)=($titlenumber=~m/(.*):\s*(\d.*)/);
+					print 'title  =',$title,"\n";
+					print 'number =',$number,"\n";
+				}
+				
+				if($postitle=~m/\[.*\]/ and $reference=~m/\[P\/OL\]\./){
+					($date,$urldate,$posurl)=($postitle=~/(.*)\s*\[(.*)\]\.\s*(.*)/);
+					print 'date=',$date,"\n";
+					print 'urldate  =',$urldate,"\n";
+					print 'posurl   =',$posurl,"\n";
+					if($posurl=~m/DOI/i){#匹配存在doi的话
+						($url,$doi)=($posurl=~m/(.*)DOI:(.*)\./i);
+						print 'url=',"$url \n";
+						print 'doi=',"$doi \n";
+					}else{
+						$url=$posurl;
+						print 'url   =',"$url \n";
+					}
+				}else{
+					$posurl=$postitle;
+					if($posurl=~m/DOI/i){#匹配存在doi的话
+						($date,$doi)=($posurl=~m/(.*)DOI:(.*)\./i);
+						print 'date=',"$date \n";
+						print 'doi =',"$doi \n";
+					}else{
+						$date=$posurl;
+						print 'date   =',"$date \n";
+					}
+				}
+			}
+		}
+		
+		
+		#---------------------------------------------------------------
+		#条目类型:电子资源/online
+		#---------------------------------------------------------------
+		if(1){
+			if ($reference=~m/\[EB\/OL\]\./){#匹配[EB/OL]判断为online类型
+				$entrytype='online';
+				print "this entry's type is: $entrytype \n";
+				
+				$regexformach='\[EB\/OL\]\.';
+				&bfidentifier;
+				
+				($postitle)=($reference=~m/$regexformach\s*(.*)/);
+				print 'postitle=',$postitle,"\n";
+				
+				if($postitle=~m/\(.*\)/ and $postitle=~m/\[.*\]/){#存在更新日期和引用日期
+					($eventdate,$urldate,$posurl)=($postitle=~/\s*\((.*)\)\s*\[(.*)\]\.\s*(.*)/);
+				}elsif($postitle=~m/\(.*\)/ and $postitle!~m/\[.*\]/){#存在更新日期但无引用日期
+					($eventdate,$posurl)=($postitle=~/\s*\((.*)\)\.\s*(.*)/);
+				}elsif($postitle!~m/\(.*\)/ and $postitle=~m/\[.*\]/){#存在引用日期但无更新日期
+					($urldate,$posurl)=($postitle=~/\s*\[(.*)\]\.\s*(.*)/);
+				}else{
+					($posurl)=($postitle=~/\s*(.*)/);
+				}
+				print 'eventdate=',$eventdate,"\n";
 				print 'urldate  =',$urldate,"\n";
 				print 'posurl   =',$posurl,"\n";
+				
 				if($posurl=~m/DOI/i){#匹配存在doi的话
 					($url,$doi)=($posurl=~m/(.*)DOI:(.*)\./i);
 					print 'url=',"$url \n";
@@ -814,232 +870,185 @@ foreach $reference(@references){
 					$url=$posurl;
 					print 'url   =',"$url \n";
 				}
-			}else{
-				$posurl=$postitle;
-				if($posurl=~m/DOI/i){#匹配存在doi的话
-					($date,$doi)=($posurl=~m/(.*)DOI:(.*)\./i);
-					print 'date=',"$date \n";
-					print 'doi =',"$doi \n";
-				}else{
-					$date=$posurl;
-					print 'date   =',"$date \n";
-				}
 			}
 		}
-	}
-	
-	
-	#---------------------------------------------------------------
-	#条目类型:电子资源/online
-	#---------------------------------------------------------------
-	if(1){
-		if ($reference=~m/\[EB\/OL\]\./){#匹配[EB/OL]判断为online类型
-			$entrytype='online';
-			print "this entry's type is: $entrytype \n";
+		
+		#---------------------------------------------------------------
+		#条目类型:专著/book
+		#---------------------------------------------------------------
+		if(1){
+		if ($reference=~m/\[M\]\./){#匹配[M]判断为book类型
+			print "this entry's type is: book \n";
+			$entrytype='book';
 			
-			$regexformach='\[EB\/OL\]\.';
+			$regexformach='\[M\]\.';
+			&bfidentifier;
+					
+			$regexformach='M\]\.';
+			&bfaddressbook;
+			
+			&afpublisherbook;
+			
+			if ($address=~m/\[S\.l\.\]/ or $address=~m/出版地不详/) {#当存在英文的[s.n.]
+				$address=""; 
+			}
+			if ($publisher=~m/\[s\.n\.\]/ or $publisher=~m/出版者不详/) {#当存在英文的[s.n.]
+				$publisher=""; 
+			}
+			$date=$year;
+		}
+		}
+		
+		#---------------------------------------------------------------
+		#条目类型:专著但存在网址/book with url  
+		#---------------------------------------------------------------
+		if(1){
+		if ($reference=~m/\[M\/OL\]\./){ 
+			print "this entry's type is: book with url\n";
+			$entrytype='book';
+			
+			$regexformach='\[M\/OL\]\.';
 			&bfidentifier;
 			
-			($postitle)=($reference=~m/$regexformach\s*(.*)/);
-			print 'postitle=',$postitle,"\n";
+			$regexformach='M\/OL\]\.';
+			&bfaddressbook;
+		
+			&afpublisherbookurl;
+
 			
-			if($postitle=~m/\(.*\)/ and $postitle=~m/\[.*\]/){#存在更新日期和引用日期
-				($eventdate,$urldate,$posurl)=($postitle=~/\s*\((.*)\)\s*\[(.*)\]\.\s*(.*)/);
-			}elsif($postitle=~m/\(.*\)/ and $postitle!~m/\[.*\]/){#存在更新日期但无引用日期
-				($eventdate,$posurl)=($postitle=~/\s*\((.*)\)\.\s*(.*)/);
-			}elsif($postitle!~m/\(.*\)/ and $postitle=~m/\[.*\]/){#存在引用日期但无更新日期
-				($urldate,$posurl)=($postitle=~/\s*\[(.*)\]\.\s*(.*)/);
-			}else{
-				($posurl)=($postitle=~/\s*(.*)/);
+			if ($address=~m/\[S\.l\.\]/ or $address=~m/出版地不详/) {#当存在英文的[s.n.]
+				$address=""; 
 			}
-			print 'eventdate=',$eventdate,"\n";
-			print 'urldate  =',$urldate,"\n";
-			print 'posurl   =',$posurl,"\n";
-			
-			if($posurl=~m/DOI/i){#匹配存在doi的话
-				($url,$doi)=($posurl=~m/(.*)DOI:(.*)\./i);
-				print 'url=',"$url \n";
-				print 'doi=',"$doi \n";
-			}else{
-				$url=$posurl;
-				print 'url   =',"$url \n";
+			if ($publisher=~m/\[s\.n\.\]/ or $publisher=~m/出版者不详/) {#当存在英文的[s.n.]
+				$publisher=""; 
 			}
+			$date=$year;
 		}
-	}
-	
-	#---------------------------------------------------------------
-	#条目类型:专著/book
-	#---------------------------------------------------------------
-	if(1){
-	if ($reference=~m/\[M\]\./){#匹配[M]判断为book类型
-		print "this entry's type is: book \n";
-		$entrytype='book';
-		
-		$regexformach='\[M\]\.';
-		&bfidentifier;
-				
-		$regexformach='M\]\.';
-		&bfaddressbook;
-		
-		&afpublisherbook;
-		
-		if ($address=~m/\[S\.l\.\]/ or $address=~m/出版地不详/) {#当存在英文的[s.n.]
-			$address=""; 
 		}
-		if ($publisher=~m/\[s\.n\.\]/ or $publisher=~m/出版者不详/) {#当存在英文的[s.n.]
-			$publisher=""; 
-		}
-		$date=$year;
-	}
-	}
-	
-	#---------------------------------------------------------------
-	#条目类型:专著但存在网址/book with url  
-	#---------------------------------------------------------------
-	if(1){
-	if ($reference=~m/\[M\/OL\]\./){ 
-		print "this entry's type is: book with url\n";
-		$entrytype='book';
 		
-		$regexformach='\[M\/OL\]\.';
-		&bfidentifier;
-		
-		$regexformach='M\/OL\]\.';
-		&bfaddressbook;
-	
-		&afpublisherbookurl;
-
-		
-		if ($address=~m/\[S\.l\.\]/ or $address=~m/出版地不详/) {#当存在英文的[s.n.]
-			$address=""; 
-		}
-		if ($publisher=~m/\[s\.n\.\]/ or $publisher=~m/出版者不详/) {#当存在英文的[s.n.]
-			$publisher=""; 
-		}
-		$date=$year;
-	}
-	}
-	
-		
-	#---------------------------------------------------------------
-	#条目类型:专著中析出文献/inbook
-	#---------------------------------------------------------------
-	if(1){
-	if ($reference=~m/\[M\]\/\//){#匹配[M]//判断为inbook类型
-		print "this entry's type is: inbook \n";
-		$entrytype='inbook';
-		
-		$regexformach='\[M\]\/\/';
-		&bfidentifier;
-				
-		$regexformach='M\]\/\/';
-		&bfaddressinbook;
-		
-		&afpublisherbook;#出版社及之后的信息inbook/book一样的
-
-		
-		if ($address=~m/\[S\.l\.\]/ or $address=~m/出版地不详/) {#当存在英文的[s.n.]
-			$address=""; 
-		}
-		if ($publisher=~m/\[s\.n\.\]/ or $publisher=~m/出版者不详/) {#当存在英文的[s.n.]
-			$publisher=""; 
-		}
-		$date=$year;
-	}
-	}
-	
-
-	#---------------------------------------------------------------
-	#条目类型:专著中析出文献但存在网址/inbook with url
-	#---------------------------------------------------------------
-	if(1){
-		if ($reference=~m/\[M\/OL\]\/\//){#匹配[M]//判断为inbook类型
-		print "this entry's type is: inbook \n";
-		$entrytype='inbook';
-		
-		
-		$regexformach='\[M\/OL\]\/\/';
-		&bfidentifier;
-				
-		$regexformach='M\/OL\]\/\/';
-		&bfaddressinbook;
-		
-		&afpublisherbookurl;#出版社及之后的信息inbook/book一样的
-
-		
-		if ($address=~m/\[S\.l\.\]/ or $address=~m/出版地不详/) {#当存在英文的[s.n.]
-			$address=""; 
-		}
-		if ($publisher=~m/\[s\.n\.\]/ or $publisher=~m/出版者不详/) {#当存在英文的[s.n.]
-			$publisher=""; 
-		}
-		$date=$year;
-	}
-	}
-	
-		
-	#---------------------------------------------------------------
-	#输出到bib文件中
-	#---------------------------------------------------------------
-	if(1){
-		if($date=~m/-\d{4}/){#存在enddate的情况下，将中间的连字符转化成斜杠
-			print 'date=',$date,"\n";
-			($datetempa,$datetempb)=($date=~m/(.*)-(\d{4}.*)/);
-			$date=$datetempa.'/'.$datetempb;
-			print 'date=',$date,"\n";
-		}
-	
-		if($url=~m/.*\.$/){
-			$urlplusdot=$url;
-			($url)=($urlplusdot=~m/(.*)\.$/);#去掉处于条目末尾的url地址后的点
-		}
-		#最后输出
-		print "\n";
-		print '@',"$entrytype",'{',"ref-$nline-$sn",',',"\n";
-		$author&& print 'author    = {',$author,'},',"\n";
-		$title&& print 'title     = {',$title,'},',"\n";
-		$journal&& print 'journal   = {',$journal,'},',"\n";
-		$translator&& print 'translator= {',$translator,'},',"\n";
-		$bookauthor&& print 'bookauthor= {',$bookauthor,'},',"\n";
-		$booktitle&& print 'booktitle = {',$booktitle,'},',"\n";
-		$version&& print 'version   = {',$version,'},',"\n";
-		$address&& print 'address   = {',$address,'},',"\n";
-		$publisher&& print 'publisher = {',$publisher,'},',"\n";
-		$type&& print 'type = {',$type,'},',"\n";
-		$date&& print 'date      = {',$date,'},',"\n";
-		$volume&& print 'volume      = {',$volume,'},',"\n";
-		$number&& print 'number      = {',$number,'},',"\n";
-		$pages&& print 'pages     = {',$pages,'},',"\n";
-		$eventdate&& print 'eventdate   = {',$eventdate,'},',"\n";
-		$urldate&& print 'urldate   = {',$urldate,'},',"\n";
-		$url&& print 'url       = {',$url,'},',"\n";
-		$doi&& print 'doi       = {',$doi,'},',"\n";
-		$note&& print 'note       = {',$note,'},',"\n";
-		print '}',"\n";
-		print 'authorlabel=',$authorlabel,"\n";
-	
 			
-		print FHW '@',"$entrytype",'{',"ref-$nline-$sn-$authorlabel",',',"\n";
-		$author&& print FHW 'author    = {',$author,'},',"\n";
-		$title&& print FHW 'title     = {',$title,'},',"\n";
-		$journal&& print FHW 'journal   = {',$journal,'},',"\n";
-		$translator&& print FHW 'translator= {',$translator,'},',"\n";
-		$bookauthor&& print FHW 'bookauthor= {',$bookauthor,'},',"\n";
-		$booktitle&& print FHW 'booktitle = {',$booktitle,'},',"\n";
-		$version&& print FHW 'version   = {',$version,'},',"\n";
-		$address&& print FHW 'address   = {',$address,'},',"\n";
-		$publisher&& print FHW 'publisher = {',$publisher,'},',"\n";
-		$type&& print FHW 'type = {',$type,'},',"\n";
-		$date&& print FHW 'date      = {',$date,'},',"\n";
-		$volume&& print FHW 'volume      = {',$volume,'},',"\n";
-		$number&& print FHW 'number      = {',$number,'},',"\n";
-		$pages&& print FHW 'pages     = {',$pages,'},',"\n";
-		$eventdate&& print FHW 'eventdate   = {',$eventdate,'},',"\n";
-		$urldate&& print FHW 'urldate   = {',$urldate,'},',"\n";
-		$url&& print FHW 'url       = {',$url,'},',"\n";
-		$doi&& print FHW 'doi       = {',$doi,'},',"\n";
-		$note&& print FHW 'note       = {',$note,'},',"\n";
-		print FHW '}',"\n";
+		#---------------------------------------------------------------
+		#条目类型:专著中析出文献/inbook
+		#---------------------------------------------------------------
+		if(1){
+		if ($reference=~m/\[M\]\/\//){#匹配[M]//判断为inbook类型
+			print "this entry's type is: inbook \n";
+			$entrytype='inbook';
+			
+			$regexformach='\[M\]\/\/';
+			&bfidentifier;
+					
+			$regexformach='M\]\/\/';
+			&bfaddressinbook;
+			
+			&afpublisherbook;#出版社及之后的信息inbook/book一样的
+
+			
+			if ($address=~m/\[S\.l\.\]/ or $address=~m/出版地不详/) {#当存在英文的[s.n.]
+				$address=""; 
+			}
+			if ($publisher=~m/\[s\.n\.\]/ or $publisher=~m/出版者不详/) {#当存在英文的[s.n.]
+				$publisher=""; 
+			}
+			$date=$year;
+		}
+		}
+		
+
+		#---------------------------------------------------------------
+		#条目类型:专著中析出文献但存在网址/inbook with url
+		#---------------------------------------------------------------
+		if(1){
+			if ($reference=~m/\[M\/OL\]\/\//){#匹配[M]//判断为inbook类型
+			print "this entry's type is: inbook \n";
+			$entrytype='inbook';
+			
+			
+			$regexformach='\[M\/OL\]\/\/';
+			&bfidentifier;
+					
+			$regexformach='M\/OL\]\/\/';
+			&bfaddressinbook;
+			
+			&afpublisherbookurl;#出版社及之后的信息inbook/book一样的
+
+			
+			if ($address=~m/\[S\.l\.\]/ or $address=~m/出版地不详/) {#当存在英文的[s.n.]
+				$address=""; 
+			}
+			if ($publisher=~m/\[s\.n\.\]/ or $publisher=~m/出版者不详/) {#当存在英文的[s.n.]
+				$publisher=""; 
+			}
+			$date=$year;
+		}
+		}
+		
+			
+		#---------------------------------------------------------------
+		#输出到bib文件中
+		#---------------------------------------------------------------
+		if(1){
+			if($date=~m/-\d{4}/){#存在enddate的情况下，将中间的连字符转化成斜杠
+				print 'date=',$date,"\n";
+				($datetempa,$datetempb)=($date=~m/(.*)-(\d{4}.*)/);
+				$date=$datetempa.'/'.$datetempb;
+				print 'date=',$date,"\n";
+			}
+		
+			if($url=~m/.*\.$/){
+				$urlplusdot=$url;
+				($url)=($urlplusdot=~m/(.*)\.$/);#去掉处于条目末尾的url地址后的点
+			}
+			#最后输出
+			print "\n";
+			#print '@',"$entrytype",'{',"ref-$nline-$sn",',',"\n";
+			print '@',"$entrytype",'{',"$author$date",',',"\n";
+			$author&& print 'author    = {',$author,'},',"\n";
+			$title&& print 'title     = {',$title,'},',"\n";
+			$journal&& print 'journal   = {',$journal,'},',"\n";
+			$translator&& print 'translator= {',$translator,'},',"\n";
+			$bookauthor&& print 'bookauthor= {',$bookauthor,'},',"\n";
+			$booktitle&& print 'booktitle = {',$booktitle,'},',"\n";
+			$version&& print 'version   = {',$version,'},',"\n";
+			$address&& print 'address   = {',$address,'},',"\n";
+			$publisher&& print 'publisher = {',$publisher,'},',"\n";
+			$type&& print 'type = {',$type,'},',"\n";
+			$date&& print 'date      = {',$date,'},',"\n";
+			$volume&& print 'volume      = {',$volume,'},',"\n";
+			$number&& print 'number      = {',$number,'},',"\n";
+			$pages&& print 'pages     = {',$pages,'},',"\n";
+			$eventdate&& print 'eventdate   = {',$eventdate,'},',"\n";
+			$urldate&& print 'urldate   = {',$urldate,'},',"\n";
+			$url&& print 'url       = {',$url,'},',"\n";
+			$doi&& print 'doi       = {',$doi,'},',"\n";
+			$note&& print 'note       = {',$note,'},',"\n";
+			print '}',"\n";
+			print 'authorlabel=',$authorlabel,"\n";
+		
+				
+			#print FHW "\n@","$entrytype",'{',"ref-$nline-$sn-$authorlabel",',',"\n";
+			print FHW "\n@","$entrytype",'{',"$authorlabel$date",',',"\n";
+			$author&& print FHW 'author    = {',$author,'},',"\n";
+			$title&& print FHW 'title     = {',$title,'},',"\n";
+			$journal&& print FHW 'journal   = {',$journal,'},',"\n";
+			$translator&& print FHW 'translator= {',$translator,'},',"\n";
+			$bookauthor&& print FHW 'bookauthor= {',$bookauthor,'},',"\n";
+			$booktitle&& print FHW 'booktitle = {',$booktitle,'},',"\n";
+			$version&& print FHW 'version   = {',$version,'},',"\n";
+			$address&& print FHW 'address   = {',$address,'},',"\n";
+			$publisher&& print FHW 'publisher = {',$publisher,'},',"\n";
+			$type&& print FHW 'type = {',$type,'},',"\n";
+			$date&& print FHW 'date      = {',$date,'},',"\n";
+			$volume&& print FHW 'volume      = {',$volume,'},',"\n";
+			$number&& print FHW 'number      = {',$number,'},',"\n";
+			$pages&& print FHW 'pages     = {',$pages,'},',"\n";
+			$eventdate&& print FHW 'eventdate   = {',$eventdate,'},',"\n";
+			$urldate&& print FHW 'urldate   = {',$urldate,'},',"\n";
+			$url&& print FHW 'url       = {',$url,'},',"\n";
+			$doi&& print FHW 'doi       = {',$doi,'},',"\n";
+			$note&& print FHW 'note       = {',$note,'},',"\n";
+			print FHW '}',"\n";
+		}
 	}
 	
 	
@@ -1069,6 +1078,13 @@ foreach $reference(@references){
 			}
 			while($author=~m/,/){
 				$author=~s/,/ and /;#将逗号换成and
+			}
+			#当“等”直接与作者相连时，需要在others前面增加一个and
+			if($author=~m/others/){#若存在other是且其前面没有and时
+				if ($author=~m/and\s*others/){}
+				else{
+					$author=~s/others/ and others/;
+				}
 			}
 			print 'author=',"$author \n";
 		}else{#不存在作者的话\[M\]\/\/
