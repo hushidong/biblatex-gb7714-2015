@@ -680,6 +680,13 @@ GB/T 7714-2015标准实现的bst版本，已经由[zeping lee](https://github.co
 请邮件联系hzzmail@163.com或在项目内发issue提问即可。
 
 
+* <b>注意帮助的文档的查询顺序？</b>
+
+一般用户的话查：biblatex-gb7714-2015.pdf，biblatex-solution-to-latex-bibliography.pdf,biblatex-zh-cn.PDF。
+宏包作者的话查：gb7714-2015*.C/BBX,biblatex.PDF,numeric/authoryear.c/BBX,standard.bbx,biblatex.def,biblatex.sty,english.lbx
+注意别忘了lbx文件。
+
+
 #### 4.2 Bibliography format/文献表著录格式
 
 * <b>请问可以在参考文献表中实现类似于word那样的与文献内容等间距标签对齐格式么？</b>
@@ -966,6 +973,29 @@ biblatex-gb7714-2015设计了两种多语言对照参考文献的实现方式，
 可通过设置选项uniquelist=false实现，该设置标签中的作者只会是指定的1个:
 
 ```\usepackage[backend=biber,style=gb7714-2015ay,uniquelist=false]{biblatex}```
+
+
+* <b>请问希望正文中作者年制的标注(引用)标签希望作者给出3个，而且最后一个作者的前面用和及&符号链接，该怎么处理？</b>
+	
+
+首先设置标注标签中的作者的最大数量为3个:
+
+```\usepackage[backend=biber,style=gb7714-2015ay,maxcitenames=3]{biblatex}```
+
+然后修改标注中的本地化字符串：
+
+```
+\DefineBibliographyStrings{english}{
+        andincitecn = {\str@andcn},%将标注中的分开，便于与文献表中的区分
+        andincite   = {\&}}
+```
+
+最后重新定义finalandcomma标点，注意这里与语言相关的标点，需要用DefineBibliographyExtras命令定义。
+
+```
+\DefineBibliographyExtras{english}{\def\finalandcomma{}}%
+```
+
 		
 		
 		

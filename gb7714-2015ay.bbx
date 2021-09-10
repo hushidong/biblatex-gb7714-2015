@@ -857,7 +857,7 @@
         and         = {\addcomma},%将第2和3人名见的and符号改成 逗号，用\finalnamedelim命令也可以定义，参见3.9.1节
         andcn       = {\addcomma},%\str@andcn\ and本地化字符串的中文对应词
         andincitecn = {\str@andcn},%将标注中的分开，便于与文献表中的区分
-        andincite   = {\addcomma},
+        andincite   = {\addcomma\space},%注意add开头的命令会其把前面的空格去掉
         %andothers   = {et al.},        %将超过3个人名的省略，et al.改成为 等
         andotherscn   = {\str@andotherscn},%将超过3个人名的省略，et al.改成为 等
         andothersincitecn={\str@andotherscn},%将标注中的分开，便于与文献表中的区分
@@ -2297,14 +2297,14 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{andincitecn}}{}%
     \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{andkr}}{}%
     \iffieldequalstr{\userfieldabcde}{japanese}{\bibstring{andjp}}{}%
-    \iffieldequalstr{\userfieldabcde}{english}{\space\bibstring{andincite}\space}{}%
-    \iffieldequalstr{\userfieldabcde}{french}{\space\bibstring{and}\space}{}%
-    \iffieldequalstr{\userfieldabcde}{russian}{\space\bibstring{and}\space}{}%
+    \iffieldequalstr{\userfieldabcde}{english}{\bibstring{andincite}}{}%
+    \iffieldequalstr{\userfieldabcde}{french}{\bibstring{and}}{}%
+    \iffieldequalstr{\userfieldabcde}{russian}{\bibstring{and}}{}%
 %\space%
   \or%
   \bibstring{andincitecn}%\space%
   \or%
-\space\bibstring{andincite}\space%
+\bibstring{andincite}%
   \fi}
 
 \DeclareDelimFormat[bib,biblist]{finalnamedelim}{%
@@ -2324,9 +2324,9 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     \iffieldequalstr{\userfieldabcde}{russian}{\bibstring{and}}{}%
 \space%
   \or%
-  \bibstring{andcn}\space%
+  \bibstring{andcn}%
   \or%
-  \bibstring{and}\space%
+  \bibstring{and}%
   \fi}
 
 
