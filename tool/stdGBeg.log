@@ -1,0 +1,34 @@
+  Temporary directory: C:\Users\hzz\AppData\Local\Temp\diffpdf9k7zo9hf
+  Converting each page of the PDFs to an image...
+  PDFs have same number of pages. Checking each pair of converted images...
+- Page 01: significance=30.4833
+- Page 02: significance=45.2709
+- Page 03: significance=45.2709
+- Page 04: significance=inf
+- Page 05: significance=42.8584
+- Page 06: significance=inf
+- Page 07: significance=44.8764
+- Page 08: significance=inf
+- Page 09: significance=37.7152
+- Page 10: significance=43.3355
+- Page 11: significance=41.5946
+- Page 12: significance=40.9931
+- Page 13: significance=40.7708
+- Page 14: significance=40.9931
+- Page 15: significance=42.7015
+- Page 16: significance=44.6045
+- Page 17: significance=36.5888
+- Page 18: significance=25.6337
+- Page 19: significance=inf
+- Page 20: significance=39.151
+- Page 21: significance=48.2619
+- Page 22: significance=54.747
+- Page 23: significance=40.5653
+- Page 24: significance=45.8999
+- Page 25: significance=45.8999
+- Page 26: significance=42.4353
+- Page 27: significance=42.4353
+- Page 28: significance=49.9584
+- Page 29: significance=49.4244
+- Page 30: significance=29.1509
+Min sig = 25.6337, significant?=True. The PDFs are different. The most different pages are: page 18 (sgf. 25.6337), page 30 (sgf. 29.1509), page 1 (sgf. 30.4833), page 17 (sgf. 36.5888), page 9 (sgf. 37.7152).

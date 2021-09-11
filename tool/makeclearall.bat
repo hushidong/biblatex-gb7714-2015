@@ -23,6 +23,8 @@ del *.def /Q
 
 del *.bib /Q
 
+del *.pdf /Q
+
 cd ..
 
 
@@ -38,6 +40,8 @@ del *.cbx /Q
 del *.def /Q
 
 del *.bib /Q
+
+del *.pdf /Q
 
 cd ..
 
@@ -56,6 +60,8 @@ del *.def /Q
 
 del *.bib /Q
 
+del *.pdf /Q
+
 cd ..
 
 
@@ -72,6 +78,8 @@ del *.cbx /Q
 del *.def /Q
 
 del *.bib /Q
+
+del *.pdf /Q
 
 cd ..
 

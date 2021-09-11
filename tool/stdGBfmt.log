@@ -1,0 +1,28 @@
+  Temporary directory: C:\Users\hzz\AppData\Local\Temp\diffpdfwst2lmac
+  Converting each page of the PDFs to an image...
+  PDFs have same number of pages. Checking each pair of converted images...
+- Page 01: significance=44.1387
+- Page 02: significance=44.8624
+- Page 03: significance=43.1352
+- Page 04: significance=42.0189
+- Page 05: significance=39.5166
+- Page 06: significance=42.8437
+- Page 07: significance=38.9898
+- Page 08: significance=33.2005
+- Page 09: significance=inf
+- Page 10: significance=37.7684
+- Page 11: significance=38.5458
+- Page 12: significance=41.8222
+- Page 13: significance=41.3613
+- Page 14: significance=40.1709
+- Page 15: significance=27.4347
+- Page 16: significance=38.5245
+- Page 17: significance=inf
+- Page 18: significance=43.6298
+- Page 19: significance=35.5905
+- Page 20: significance=43.7918
+- Page 21: significance=45.1856
+- Page 22: significance=38.6274
+- Page 23: significance=34.8562
+- Page 24: significance=50.9576
+Min sig = 27.4347, significant?=True. The PDFs are different. The most different pages are: page 15 (sgf. 27.4347), page 8 (sgf. 33.2005), page 23 (sgf. 34.8562), page 19 (sgf. 35.5905), page 10 (sgf. 37.7684).

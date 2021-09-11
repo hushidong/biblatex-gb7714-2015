@@ -11,7 +11,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2021/08/19 v1.0z}
+\def\versionofgbtstyle{2021/09/11 v1.1a}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015.bbx}[\versionofgbtstyle biblatex bibliography style]
 %\RequireBiber[3]%显式指定用biber后端，当用bibtex时会报错，但其实不会影响编译，只是采用bibtex后无法达成格式需求
@@ -2517,6 +2517,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \DeclareNameFormat{namefmtselected}{%
 \iffieldundef{namefmtid}{}%
 {\defcounter{gbnamefmtcase}{\thefield{namefmtid}}}%
+%\printtext{\thegbnamefmtcase}%
 \ifcase\value{gbnamefmtcase}%
   \ifgiveninits
     {\usebibmacro{name:gbuppercase}
@@ -2618,9 +2619,11 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %\DeclareDelimFormat[textcite]{andothersdelim}{\addspace}%
 
 %GB/T 7714-2015 风格，全部大写
+\def\gbcaselocalset{\renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉
+\renewcommand*{\revsdnamepunct}{}%%%来源biblatex.def
+}
 \newbibmacro*{name:gbuppercase}[4]{\bibauthorfont%
-\renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉
-\renewcommand*{\revsdnamepunct}{}%
+  \gbcaselocalset%
   \ifuseprefix%
     {\usebibmacro{name:delim}{#3#1}%
      \usebibmacro{name:hook}{#3#1}%
@@ -2647,8 +2650,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 
 %GB/T 7714-2015 风格，大小写不变，根据bib文件内输入原样输出
 \newbibmacro*{name:gblowercase}[4]{\bibauthorfont%
-    \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉
-    \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
+  \gbcaselocalset%
   \ifuseprefix
     {\usebibmacro{name:delim}{#3#1}%
      \usebibmacro{name:hook}{#3#1}%
@@ -2674,10 +2676,11 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 }
 
 %中文常见风格，汉语拼音全拼模式
-\newbibmacro*{name:gbpinyin}[4]{\bibauthorfont%
-\renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
+\def\gbpinyinlocalset{\renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
 \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
-\renewrobustcmd*{\bibnamedelima}{\mbox{-}}%
+\renewrobustcmd*{\bibnamedelima}{\mbox{-}}}
+\newbibmacro*{name:gbpinyin}[4]{\bibauthorfont%
+\gbpinyinlocalset%
   \ifuseprefix
     {\usebibmacro{name:delim}{#3#1}%
      \usebibmacro{name:hook}{#3#1}%
@@ -2703,10 +2706,11 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
      \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}%
 }
 %中文常见风格，汉语拼音全拼模式
-\newbibmacro*{name:gbquanpin}[4]{\bibauthorfont%
-\renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
+\def\gbquanpinlocalset{\renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
 \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
-\renewrobustcmd*{\bibnamedelima}{}%
+\renewrobustcmd*{\bibnamedelima}{}}
+\newbibmacro*{name:gbquanpin}[4]{\bibauthorfont%
+\gbquanpinlocalset%
   \ifuseprefix
     {\usebibmacro{name:delim}{#3#1}%
      \usebibmacro{name:hook}{#3#1}%
@@ -2737,8 +2741,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
   {}{
     %GB/T 7714-2015 风格，全部大写
     \renewbibmacro*{name:gbuppercase}[4]{\bibauthorfont%
-    \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉
-    \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
+    \gbcaselocalset%
       \ifuseprefix
         {\usebibmacro{name:delim}{#3#1}%
          \usebibmacro{name:hook}{#3#1}%
@@ -2771,8 +2774,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 
     %GB/T 7714-2015 风格，大小写不变，根据bib文件内输入原样输出
     \renewbibmacro*{name:gblowercase}[4]{\bibauthorfont%
-    \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉
-    \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
+      \gbcaselocalset%
       \ifuseprefix
         {\usebibmacro{name:delim}{#3#1}%
          \usebibmacro{name:hook}{#3#1}%
@@ -2797,9 +2799,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 
     %中文常见风格，汉语拼音全拼模式
     \renewbibmacro*{name:gbpinyin}[4]{\bibauthorfont%
-    \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉
-    \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
-    \renewrobustcmd*{\bibnamedelima}{\mbox{-}}%
+    \gbpinyinlocalset%
       \ifuseprefix
         {\usebibmacro{name:delim}{#3#1}%
          \usebibmacro{name:hook}{#3#1}%
@@ -2823,9 +2823,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
      }
       %中文常见风格，汉语拼音全拼模式
     \renewbibmacro*{name:gbquanpin}[4]{\bibauthorfont%
-    \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉
-    \renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
-    \renewrobustcmd*{\bibnamedelima}{}%
+    \gbquanpinlocalset%
       \ifuseprefix
         {\usebibmacro{name:delim}{#3#1}%
          \usebibmacro{name:hook}{#3#1}%

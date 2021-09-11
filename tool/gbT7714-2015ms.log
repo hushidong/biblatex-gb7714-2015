@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/W32TeX) (preloaded format=xelatex 2020.6.28)  19 AUG 2021 22:30
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/W32TeX) (preloaded format=xelatex 2020.9.17)  11 SEP 2021 13:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -6,9 +6,9 @@ entering extended mode
 (./gbT7714-2015ms.tex
 LaTeX2e <2020-02-02> patch level 5
 L3 programming layer <2020-03-06>
-(c:/texlive/2020/texmf-dist/tex/latex/base/article.cls
+(d:/texlive/2020/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2019/12/20 v1.4l Standard LaTeX document class
-(c:/texlive/2020/texmf-dist/tex/latex/base/size10.clo
+(d:/texlive/2020/texmf-dist/tex/latex/base/size10.clo
 File: size10.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
 )
 \c@part=\count163
@@ -23,13 +23,13 @@ File: size10.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
 \belowcaptionskip=\skip48
 \bibindent=\dimen134
 )
-(c:/texlive/2020/texmf-dist/tex/latex/pdfpages/pdfpages.sty
+(d:/texlive/2020/texmf-dist/tex/latex/pdfpages/pdfpages.sty
 Package: pdfpages 2020/01/28 v0.5q Insert pages of external PDF documents (AM)
 
-(c:/texlive/2020/texmf-dist/tex/latex/base/ifthen.sty
+(d:/texlive/2020/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 )
-(c:/texlive/2020/texmf-dist/tex/latex/tools/calc.sty
+(d:/texlive/2020/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Acount=\count171
 \calc@Bcount=\count172
@@ -42,34 +42,34 @@ LaTeX Info: Redefining \addtolength on input line 81.
 \calc@Ccount=\count173
 \calc@Cskip=\skip51
 )
-(c:/texlive/2020/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+(d:/texlive/2020/texmf-dist/tex/latex/eso-pic/eso-pic.sty
 Package: eso-pic 2018/04/12 v2.0h eso-pic (RN)
 
-(c:/texlive/2020/texmf-dist/tex/generic/atbegshi/atbegshi.sty
+(d:/texlive/2020/texmf-dist/tex/generic/atbegshi/atbegshi.sty
 Package: atbegshi 2019/12/05 v1.19 At begin shipout hook (HO)
 
-(c:/texlive/2020/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+(d:/texlive/2020/texmf-dist/tex/generic/infwarerr/infwarerr.sty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
-(c:/texlive/2020/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+(d:/texlive/2020/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 Package: ltxcmds 2019/12/15 v1.24 LaTeX kernel commands for general use (HO)
 )
-(c:/texlive/2020/texmf-dist/tex/generic/iftex/iftex.sty
+(d:/texlive/2020/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2020/03/06 v1.0d TeX engine tests
 ))
-(c:/texlive/2020/texmf-dist/tex/latex/graphics/keyval.sty
+(d:/texlive/2020/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks15
 )
-(c:/texlive/2020/texmf-dist/tex/latex/xcolor/xcolor.sty
+(d:/texlive/2020/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
 
-(c:/texlive/2020/texmf-dist/tex/latex/graphics-cfg/color.cfg
+(d:/texlive/2020/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: xetex.def on input line 225.
 
-(c:/texlive/2020/texmf-dist/tex/latex/graphics-def/xetex.def
+(d:/texlive/2020/texmf-dist/tex/latex/graphics-def/xetex.def
 File: xetex.def 2017/06/24 v5.0h Graphics/color driver for xetex
 )
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
@@ -81,16 +81,16 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 ))
-(c:/texlive/2020/texmf-dist/tex/latex/graphics/graphicx.sty
+(d:/texlive/2020/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2019/11/30 v1.2a Enhanced LaTeX Graphics (DPC,SPQR)
 
-(c:/texlive/2020/texmf-dist/tex/latex/graphics/graphics.sty
+(d:/texlive/2020/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2019/11/30 v1.4a Standard LaTeX Graphics (DPC,SPQR)
 
-(c:/texlive/2020/texmf-dist/tex/latex/graphics/trig.sty
+(d:/texlive/2020/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 )
-(c:/texlive/2020/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+(d:/texlive/2020/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: xetex.def on input line 105.
@@ -101,7 +101,7 @@ Package graphics Info: Driver file: xetex.def on input line 105.
 \AM@pagewidth=\dimen139
 \AM@pageheight=\dimen140
 
-(c:/texlive/2020/texmf-dist/tex/latex/pdfpages/ppxetex.def
+(d:/texlive/2020/texmf-dist/tex/latex/pdfpages/ppxetex.def
 File: ppxetex.def 2020/01/28 v0.5q Pdfpages driver for XeTeX (AM)
 )
 \AM@pagebox=\box45
@@ -111,7 +111,7 @@ File: ppxetex.def 2020/01/28 v0.5q Pdfpages driver for XeTeX (AM)
 \c@AM@survey=\count175
 \AM@templatesizebox=\box46
 )
-(c:/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-xdvipdfmx.def
+(d:/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-xdvipdfmx.def
 File: l3backend-xdvipdfmx.def 2020-03-12 L3 backend support: xdvipdfmx
 \g__graphics_track_int=\count176
 \l__pdf_internal_box=\box47
@@ -132,7 +132,7 @@ LaTeX Font Info:    ... okay on input line 5.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 5.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 5
 .
- (c:/texlive/2020/texmf-dist/tex/latex/base/ts1cmr.fd
+ (d:/texlive/2020/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 5.
@@ -144,10 +144,10 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 5.
 LaTeX Font Info:    ... okay on input line 5.
 \AtBeginShipoutBox=\box48
 
-(c:/texlive/2020/texmf-dist/tex/latex/pdflscape/pdflscape.sty
+(d:/texlive/2020/texmf-dist/tex/latex/pdflscape/pdflscape.sty
 Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
 
-(c:/texlive/2020/texmf-dist/tex/latex/graphics/lscape.sty
+(d:/texlive/2020/texmf-dist/tex/latex/graphics/lscape.sty
 Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
 )
 Package pdflscape Info: Auto-detected driver: dvipdfm (xetex) on input line 98.
@@ -248,27 +248,27 @@ File: ../egfigure/tgbcitationms.pdf Graphic file (type pdf)
 File: ../egfigure/tgbcitationms.pdf Graphic file (type pdf)
 <use ../egfigure/tgbcitationms.pdf, page 12>
  [12]
-File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
-<use ../egfigure/tngbcitationaynew.pdf>
-File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
-<use ../egfigure/tngbcitationaynew.pdf>
-File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
-<use ../egfigure/tngbcitationaynew.pdf, page 1>
-File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
-<use ../egfigure/tngbcitationaynew.pdf, page 1>
-File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
-<use ../egfigure/tngbcitationaynew.pdf, page 1>
-File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
-<use ../egfigure/tngbcitationaynew.pdf, page 1>
-File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
-<use ../egfigure/tngbcitationaynew.pdf, page 1>
+File: ../egfigure/tngbcitationay.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationay.pdf>
+File: ../egfigure/tngbcitationay.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationay.pdf>
+File: ../egfigure/tngbcitationay.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationay.pdf, page 1>
+File: ../egfigure/tngbcitationay.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationay.pdf, page 1>
+File: ../egfigure/tngbcitationay.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationay.pdf, page 1>
+File: ../egfigure/tngbcitationay.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationay.pdf, page 1>
+File: ../egfigure/tngbcitationay.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationay.pdf, page 1>
  [13]
-File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
-<use ../egfigure/tngbcitationaynew.pdf, page 2>
-File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
-<use ../egfigure/tngbcitationaynew.pdf, page 2>
-File: ../egfigure/tngbcitationaynew.pdf Graphic file (type pdf)
-<use ../egfigure/tngbcitationaynew.pdf, page 2>
+File: ../egfigure/tngbcitationay.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationay.pdf, page 2>
+File: ../egfigure/tngbcitationay.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationay.pdf, page 2>
+File: ../egfigure/tngbcitationay.pdf Graphic file (type pdf)
+<use ../egfigure/tngbcitationay.pdf, page 2>
  [14]
 File: ../egfigure/tgbbiblioms.pdf Graphic file (type pdf)
 <use ../egfigure/tgbbiblioms.pdf>
@@ -308,10 +308,10 @@ File: ../egfigure/tgbbiblioms.pdf Graphic file (type pdf)
  [18]
 (./gbT7714-2015ms.aux) ) 
 Here is how much of TeX's memory you used:
- 2392 strings out of 479418
- 37342 string characters out of 5888105
+ 2390 strings out of 479418
+ 37265 string characters out of 5888105
  281389 words of memory out of 5000000
- 19910 multiletter control sequences out of 15000+600000
+ 19909 multiletter control sequences out of 15000+600000
  532346 words of font info for 25 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  41i,18n,45p,287b,433s stack positions out of 5000i,500n,10000p,200000b,80000s
