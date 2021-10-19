@@ -85,10 +85,12 @@
     %为单个条目的姓名格式控制增加nameformat和namefmtid两个域
     %为缩略信息文献表增加了shortbooktitle域
     %为多语言排序增加了lansortorder域
+    %因为language域会被clearlang选项清除，增加languageid域，类型设为field而不是list
     \DeclareDatamodelFields[type=field,datatype=literal]{mark,medium,nameformat}
     \DeclareDatamodelFields[type=field,datatype=integer]{namefmtid}
     \DeclareDatamodelFields[type=field,datatype=literal]{shortbooktitle}
     \DeclareDatamodelFields[type=field,datatype=literal]{lansortorder}
+    \DeclareDatamodelFields[type=field,datatype=literal]{languageid}
 
     %因为biblatex更新3.14版本以后，biber对于为声明数据模型的条目类型
     %不再默认读取，而是以空字符串作为条目类型名，自然在条目定义alias时
@@ -1052,26 +1054,32 @@
         \map{%当文献给出language域时，设置文献要使用的本地化字符串的语言
             \step[fieldsource=language,match=\regexp{(e|E)(n|N)(g|G)(l|L)(i|I)(s|S)(h|H)},final]
             \step[fieldset=langid,fieldvalue={english}]
+            \step[fieldset=languageid,fieldvalue={english}]
             }
         \map{
             \step[fieldsource=language,match=\regexp{(r|R)(u|U)(s|S)(s|S)(i|I)(a|A)(n|N)},final]
             \step[fieldset=langid,fieldvalue={russian}]
+            \step[fieldset=languageid,fieldvalue={russian}]
             }
         \map{%
             \step[fieldsource=language,match=\regexp{(f|F)(r|R)(e|E)(n|N)(c|C)(h|H)},final]
             \step[fieldset=langid,fieldvalue={french}]
+            \step[fieldset=languageid,fieldvalue={french}]
             }
         \map{%
             \step[fieldsource=language,match=\regexp{(c|C)(h|H)(i|I)(n|N)(e|E)(s|S)(e|E)},final]%中日韩语目前都用english，
             \step[fieldset=langid,fieldvalue={english}]
+            \step[fieldset=languageid,fieldvalue={chinese}]
             }
         \map{%
             \step[fieldsource=language,match=\regexp{(j|J)(a|A)(p|P)(a|A)(n|N)(e|E)(s|S)(e|E)},final]%中日韩语目前都用english，
             \step[fieldset=langid,fieldvalue={english}]
+            \step[fieldset=languageid,fieldvalue={japanese}]
             }
         \map{%
             \step[fieldsource=language,match=\regexp{(k|K)(o|O)(r|R)(e|E)(a|A)(n|N)},final]%中日韩语目前都用english，
             \step[fieldset=langid,fieldvalue={english}]
+            \step[fieldset=languageid,fieldvalue={korean}]
             }
 }
 }
@@ -1578,7 +1586,7 @@
          {\mkbibnameprefix{#3}\isdot}%
        \ifprefchar{}{\bibnamedelimc}}%
      \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeUppercase{#1}}}\isdot%
-     \ifdefvoid{#2}{}{\revsdnamepunct\bibnamedelimd\MakeSentenceCase{\mkbibnamegiven{#2}}\isdot}%\MakeCapital
+     \ifdefvoid{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{\MakeSentenceCase{#2}}\isdot}%\MakeCapital
      \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}
     {\usebibmacro{name:delim}{#1}%
      \usebibmacro{name:hook}{#1}%
@@ -1609,7 +1617,7 @@
          {\mkbibnameprefix{#3}\isdot}%
        \ifprefchar{}{\bibnamedelimc}}%
      \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeCapital{#1}}}\isdot%
-     \ifdefvoid{#2}{}{\revsdnamepunct\bibnamedelimd\MakeSentenceCase{\mkbibnamegiven{#2}}\isdot}%\MakeCapital
+     \ifdefvoid{#2}{}{\revsdnamepunct\bibnamedelimd\mkbibnamegiven{\MakeSentenceCase{#2}}\isdot}%\MakeCapital
      \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}
     {\usebibmacro{name:delim}{#1}%
      \usebibmacro{name:hook}{#1}%

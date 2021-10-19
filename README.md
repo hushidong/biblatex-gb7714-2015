@@ -670,7 +670,7 @@ gbyntd 以语言、年份、作者、标题、降序排列
 * <b>我习惯用传统的bst文件来生成参考文献，有没有GB/T 7714-2015标准的实现版本？</b>
 	
 
-GB/T 7714-2015标准实现的bst版本，已经由[zeping lee](https://github.com/zepinglee/gbt7714-bibtex-style)开发完毕，直接使用即可。
+GB/T 7714-2015标准实现的bst版本，已经由[zeping lee](https://github.com/CTeX-org/gbt7714-bibtex-style)开发完毕，直接使用即可。
 
 
 

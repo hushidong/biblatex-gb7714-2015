@@ -1,4 +1,4 @@
-﻿##%
+##%
 ##% ---------------------------------------------------------------
 ##% gb7714texttobib--- A transformation tool for GB/T 7714-2015 style 
 ##% bibliography text to bib source file
