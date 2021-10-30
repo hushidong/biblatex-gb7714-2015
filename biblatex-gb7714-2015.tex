@@ -100,6 +100,7 @@ sorting选项值(gb7714-2015支持以语言著者-出版年标题升序排列，
 析出文献标识符控制(gbpunctin选项，可设置\texttt{//}不输出或其它表示形式)、
 标题超链接控制(gbtitlelink选项，可设置文献表中各条目标题超链接)、
 标准标签超链接控制(gblabelref选项，可设置标注中作者标签的超链接)、
+标注标签格式控制(gbcitelabel选项，可设置标签包围符号)、
 作者项处理(gbnoauthor选项，可设置作者缺失时是否填补信息)；
 
 著录表格式选项和命令：
@@ -512,6 +513,22 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{tcolorbox}
 \caption{文献表标签数字格式选项gbbiblabel效果}\label{fig:eg:optgbbiblabel}
 \end{figure}
+
+
+  \pdfbookmark[4]{gbcitelabel}{gbcitelabel}
+  \item[gbcitelabel]=\textbf{bracket}，parens，plain，dot，box，circle. \hfill default is bracket
+
+  为标注标签的包围符号增加的选项，用于选择正文中标注标签符号。
+  \begin{itemize}
+    \item gbcitelabel=bracket，标注标签由方括号包围，比如[1]；
+    \item gbcitelabel=parens，标注标签由圆括号包围，比如(1)；
+    \item gbcitelabel=dot，标注标签数字后面加点，比如1.；
+    \item gbcitelabel=plain，标注标签无装饰，比如1；
+    \item gbcitelabel=box，标注标签由方框包围，比如\framebox{1}；
+    \item gbcitelabel=circle，标注标签由圆圈包围，比如\textcircled{1}。
+  \end{itemize}
+  顺序编码制和作者年制存在一定的差异，作者年制主要是方括号、圆括号、无括号的选择。
+  顺序编码制默认是方括号，作者年制默认是圆括号。
 
 
   \pdfbookmark[4]{gbnamefmt}{gbnamefmt}

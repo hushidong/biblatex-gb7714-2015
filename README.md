@@ -44,6 +44,7 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
     * special characters in all fields?
     * entry without author: the delimiter between title and year?
     * TEST FOR texlive 2015,2016,2017
+	* 标注中包围符号的定义[]、()、圆圈、方框等，有些命令没有去修改。
 	
 
 

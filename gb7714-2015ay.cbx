@@ -24,6 +24,43 @@
 \ExecuteBibliographyOptions{gblabelref}
 
 
+%
+%   增加标签包围符号格式处理选项
+%   20211030,1.1a,hzz
+%
+\newrobustcmd{\mkbibleftborder}{(}
+\newrobustcmd{\mkbibrightborder}{)}
+\DeclareBibliographyOption[string]{gbcitelabel}[bracket]{%
+    \csuse{gbcitelabelopt@#1}
+}
+\ExecuteBibliographyOptions{gbcitelabel}
+
+\def\gbcitelabelopt@bracket{%
+\renewrobustcmd{\mkbibleftborder}{[}%
+\renewrobustcmd{\mkbibrightborder}{]}%
+}
+\def\gbcitelabelopt@parens{%
+\renewrobustcmd{\mkbibleftborder}{(}%
+\renewrobustcmd{\mkbibrightborder}{)}%
+}
+\def\gbcitelabelopt@dot{%
+\renewrobustcmd{\mkbibleftborder}{}%
+\renewrobustcmd{\mkbibrightborder}{.}%
+}
+\def\gbcitelabelopt@plain{%
+\renewrobustcmd{\mkbibleftborder}{}%
+\renewrobustcmd{\mkbibrightborder}{}%
+}
+\def\gbcitelabelopt@box{%
+\renewrobustcmd{\mkbibleftborder}{}%
+\renewrobustcmd{\mkbibrightborder}{}%
+}
+\def\gbcitelabelopt@circle{%
+\renewrobustcmd{\mkbibleftborder}{}%
+\renewrobustcmd{\mkbibrightborder}{}%
+}
+
+
 \ExecuteBibliographyOptions{
   %autocite  = superscript ,
   %autopunct = true       ,
@@ -179,12 +216,11 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
   \iffieldundef{postnote}%
     {}%
     {\thefield{postnote}}}%
-    (\usebibmacro{prenote}}%)
+    \mkbibleftborder\usebibmacro{prenote}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite}}
   {}
-  {%(
-  )\mkbibsuperscript{\usebibmacro{postnote}}%\usebibmacro{postnote}
+  {\mkbibrightborder\mkbibsuperscript{\usebibmacro{postnote}}%\usebibmacro{postnote}
   }
 
 %
@@ -198,19 +234,34 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
 %
 %   重定义parencite命令
 %
-%\DeclareCiteCommand{\parencite}
-%  {\usebibmacro{cite:init}%
-%  \renewbibmacro*{postnote}{%
-%  \iffieldundef{postnote}%
-%    {}%
-%    {\nopunct%
-%     \printfield{postnote}}}%
-%    (\usebibmacro{prenote}}%)
-%  {\usebibmacro{citeindex}%
-%   \usebibmacro{cite}}
-%  {}
-%  {%(
-%  )\mkbibsuperscript{\usebibmacro{postnote}}}
+\DeclareCiteCommand{\parencite}%[\mkbibparens]
+  {\usebibmacro{cite:init}%
+  \renewbibmacro*{postnote}{%
+  \iffieldundef{postnote}%
+    {}%
+    {\nopunct%
+     \printfield{postnote}}}%
+   \mkbibleftborder\usebibmacro{prenote}}%
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite}}
+  {}
+  {\mkbibrightborder\mkbibsuperscript{\usebibmacro{postnote}}}
+
+%
+%   重定义footcite需要使用的命令
+%
+\renewrobustcmd{\blx@mkbibfootnote}[2]{%
+  \iftoggle{blx@footnote}
+    {\blx@warning{Nested notes}%
+     \addspace\mkbibleftborder{#2}\mkbibrightborder}
+    {\unspace
+     \ifnum\blx@notetype=\tw@
+       \expandafter\@firstoftwo
+     \else
+       \expandafter\@secondoftwo
+     \fi
+       {\csuse{blx@theendnote#1}{\protecting{\blxmkbibnote{end}{#2}}}}
+       {\csuse{footnote#1}{\protecting{\blxmkbibnote{foot}{#2}}}}}}
 
 
 %
@@ -224,13 +275,12 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
   \iffieldundef{postnote}%
     {\thefield{pages}}%
     {\thefield{postnote}}}%
-    (\usebibmacro{prenote}%)
+    \mkbibleftborder\usebibmacro{prenote}%
     }%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite}}
   {}
-  {%(
-  )\mkbibsuperscript{\usebibmacro{postnote}}}
+  {\mkbibrightborder\mkbibsuperscript{\usebibmacro{postnote}}}
 
 %
 %   定义yearpagescite，用于当文中作者已经存在，需要页码和年份的情况
@@ -243,10 +293,10 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
   \iffieldundef{postnote}%
     {\thefield{pages}}%
     {\thefield{postnote}}}%
-  \printtext{(}\usebibmacro{prenote}}%
+  \printtext{\mkbibleftborder}\usebibmacro{prenote}}%
   {\usebibmacro{cite:labeldate+extradate}}%\printfield{year}\printfield{extrayear}
   {\multicitedelim}%
-  {\printtext{)}\textsuperscript{\usebibmacro{postnote}}}
+  {\printtext{\mkbibrightborder}\textsuperscript{\usebibmacro{postnote}}}
 
 %
 %   定义yearcite，用于当文中作者已经存在，仅需要年份的情况
@@ -254,10 +304,10 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
 %   原理:增加一个命令yearcite
 \DeclareCiteCommand{\yearcite}%仅输出年份，不要页码
   {\usebibmacro{cite:init}%
-  \printtext{(}\usebibmacro{prenote}}%
+  \printtext{\mkbibleftborder}\usebibmacro{prenote}}%
   {\usebibmacro{cite:labeldate+extradate}}%\printfield{year}\printfield{extrayear}
   {\multicitedelim}%
-  {\printtext{)}}
+  {\printtext{\mkbibrightborder}}
 
 %
 %   定义\authornumcite命令，输出作者信息，然后在后面带上顺序编码
@@ -355,13 +405,13 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
   {}
   {\ifbool{cbx:incitet}{\usebibmacro{citet:postnote}}{\usebibmacro{textcite:postnote}}}
 
-  \newrobustcmd{\cbx@citet@init}[2]{%
+\newrobustcmd{\cbx@citet@init}[2]{%
   \global\booltrue{cbx:incitet}%
   \setcounter{textcitetotal}{0}%
   \setcounter{textcitecount}{0}%
   \def\cbx@savedcites{#1}#2\cbx@savedcites\empty}
 
-  \renewrobustcmd{\cbx@textcite@init}[2]{%
+\renewrobustcmd{\cbx@textcite@init}[2]{%
   \global\boolfalse{cbx:incitet}%
   \setcounter{textcitetotal}{0}%
   \setcounter{textcitecount}{0}%
@@ -397,12 +447,11 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
   \iffieldundef{postnote}%
     {}%
     {\thefield{postnote}}}%
-    (\usebibmacro{prenote}}%)
+    \mkbibleftborder\usebibmacro{prenote}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite}}
   {}
-  {%(
-  )\mkbibsuperscript{\usebibmacro{postnote}}%\usebibmacro{postnote}
+  {\mkbibrightborder\mkbibsuperscript{\usebibmacro{postnote}}%\usebibmacro{postnote}
   }
 
 \newrobustcmd*{\citetns}%
