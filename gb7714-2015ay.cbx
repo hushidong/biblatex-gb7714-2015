@@ -106,6 +106,11 @@ or
 test {\iftoggle{iftlseven}}%3.7=biblatex
 }{\newbibmacro{cite:labeldate+extradate}{\usebibmacro{cite:labelyear+extrayear}}}{}%else: biblatex>3.7
 
+%标注中biblatex专门定义了labelname来控制格式
+%所以如果要让标注的格式也同著录表一样的话
+%就可以使用下面这一个定义，当然通常情况下我们使用默认的定义即可。
+%\DeclareNameAlias{labelname}{namefmtselected}
+
 %textcite标注命令中的标点设置，注意只针对textcite命令。
 % v-old
 % v1.0t，20200320，hzz，修改如下

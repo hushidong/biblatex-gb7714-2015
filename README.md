@@ -1,4 +1,4 @@
-<b>Date of last change: 2021-09-11 to version v1.1a</b>
+<b>Date of last change: 2021-12-11 to version v1.1b</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -1547,7 +1547,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * 2021/05/06 v1.0y,ctan
 * 2021/08/19 v1.0z,ctan
 * 2021/09/11 v1.1a,ctan
-
+* 2021/12/11 v1.1b,ctan
 
 
 ---------------------------------------------------------
