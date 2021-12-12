@@ -425,7 +425,7 @@
     %   增加一个出版项自动处理控制选项，当true时使用出版者不详等信息补充缺失的出版信息。
     %
     \newtoggle{bbx:gbpub}
-    \DeclareBibliographyOption{gbpub}[true]{%
+    \DeclareBibliographyOption{gbpub}[false]{%
         %\settoggle{bbx:gbpub}{#1} %或采用下面这一句
         \ifstrequal{#1}{false}{\togglefalse{bbx:gbpub}}{\toggletrue{bbx:gbpub}}}
 
