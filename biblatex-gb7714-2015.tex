@@ -532,7 +532,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 
   \pdfbookmark[4]{gbnamefmt}{gbnamefmt}
-  \item[gbnamefmt]=\textbf{uppercase}，lowercase，givenahead，familyahead，pinyin. \hfill default is uppercase
+  \item[gbnamefmt]=\textbf{uppercase}，lowercase，pinyin etc. \hfill default is uppercase
 
   为姓名大小写格式控制增加的选项。
   \begin{itemize}
@@ -546,6 +546,14 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \end{itemize}
   \bc{注意：还可以利用 nameformat 域为某一具体条目设置该条目的姓名格式，比如：要在一个文献表中实现英文文献是givenahead 格式，而拼音的文献是pinyin风格，那么可以设置拼音文献的 nameformat 域为pinyin，而gbnamefmt设置为givenahead。条目中nameformat 域的局部设置优先于gbnamefmt的全局设置。}\par
   \emph{注意：使用pinyin选项时，bib文件中文献的作者应给出完整的名而不是缩写，否则出来的效果未必令人满意}。
+  另外，pinyin格式中名之间的短横线可以用如下设置取消。
+  
+  \verb|\apptocmd{\gbpinyinlocalset}{\renewrobustcmd*{\bibnamedelima}{}}{}{}|
+  
+  而全拼格式的名中间的短横线可以用相反的设置加上。
+  
+  \verb|\apptocmd{\gbpinyinlocalset}{\renewrobustcmd*{\bibnamedelima}{\mbox{-}}}{}{}|
+  
   测试结果见：
   \href{run:./example/opt-gbnamefmt.tex}{opt-gbnamefmt.tex}，
   \href{run:./example/opt-gbnamefmt-default.tex}{opt-gbnamefmt-default.tex}。
@@ -817,6 +825,8 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbannote=false，即默认不输出。
     \item gbannote=true，输出注释信息。
   \end{itemize}
+  
+  \emph{需要注意的是：bib文件中的annote域会自动转换为annotation域若需要进行判断则需要用annotation域。}
 
   测试文档见：\href{run:./example/opt-gbannote.tex}{opt-gbannote.tex}。
   效果示例如图\ref{fig:eg:optgbannote}所示。
@@ -2402,7 +2412,7 @@ author.title[usera].translator.edition.location:publisher,date或year:pages[urld
 
 其中标题相关的附加信息除了可以直接在title域中录入外，还可以在subtitle或titleaddon域中添加，后面出现的booktitle，journaltitle，也有类似情况，可以在booktitleaddon或者journalsubtitle中附加信息。其中出版地用location域表示，也可以用传统的address表示，biblatex将address作为location的别名处理，使用两者中的任何一个都可以表示出版地信息。\bc{特别强调: usera域不用录入，该域内容由bbx样式文件根据条目类型自动处理得到。}
 
-\qd{由于biblatex不支持standard条目类型，所以“标准”类型可以用book或inbook替代，但使用note域等于standard作为一个区分，当note域数据存在且内容等于standard时，就将其作为“标准”文献进行处理，其文献类型标识用S表示。这里为什么使用note域而不是type域和keywords域，是因为考虑到note域一般情况下没有什么特殊意义，使用它不会导致冲突，而type域在biblatex标准样式中没有被book和article条目类型当作支持的域，对于支持该域的条目比如thesis，type域又有特殊的意义，是用来区分master和doctor的，而keywords域倒是可以使用，只是该域一般很少在jabref之类软件的默认域中，需要进一步设置，而且可能带来不通用的问题。}
+\qd{由于biblatex不支持standard条目类型，所以“标准”类型可以用book或inbook替代，但使用note域等于standard作为一个区分，当note域数据存在且内容等于standard时，就将其作为“标准”文献进行处理，其文献类型标识用S表示。这里为什么使用note域而不是type域和keywords域，是因为考虑到note域一般情况下没有什么特殊意义，使用它不会导致冲突，而type域在biblatex标准样式中没有被book和article条目类型当作支持的域，对于支持该域的条目比如thesis，type域又有特殊的意义，是用来区分master和doctor的，而keywords域在biblatex-gb7714-2015中用来存放entrykey以实现一些特殊的判断，所以也不便于使用它。}
 
 \subsubsection{标准/standard}\label{sec:standard}
 “标准”(standard)作为一种文献条目类型biblatex并不支持，因此直接利用book或inbook类型加note域等于standard代替。当然为了兼容传统BIBTeX格式存在standard类型的情况，也可以直接使用standard类型。
