@@ -205,6 +205,16 @@ citestyle=gb7714-2015%,backref=true%%其中后端backend使用biber
 
 %正文内容，引用参考文献
 
+一、基本用法
+
+见文献\cite{Peebles2001-100-100}\\
+见文献\parencite{Peebles2001-100-100}\\
+见文献\citet{Peebles2001-100-100}\\
+见文献\citep{Peebles2001-100-100}\\
+
+
+二、详细用法
+
 1. 不带页码的引用(顺序编码制上标，方括号包围；作者年制行内，括号包围):\\
 	见文献\cite{Peebles2001-100-100}\\
 	见文献\upcite{Peebles2001-100-100}\\

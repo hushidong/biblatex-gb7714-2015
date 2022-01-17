@@ -547,13 +547,13 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \bc{注意：还可以利用 nameformat 域为某一具体条目设置该条目的姓名格式，比如：要在一个文献表中实现英文文献是givenahead 格式，而拼音的文献是pinyin风格，那么可以设置拼音文献的 nameformat 域为pinyin，而gbnamefmt设置为givenahead。条目中nameformat 域的局部设置优先于gbnamefmt的全局设置。}\par
   \emph{注意：使用pinyin选项时，bib文件中文献的作者应给出完整的名而不是缩写，否则出来的效果未必令人满意}。
   另外，pinyin格式中名之间的短横线可以用如下设置取消。
-  
+
   \verb|\apptocmd{\gbpinyinlocalset}{\renewrobustcmd*{\bibnamedelima}{}}{}{}|
-  
+
   而全拼格式的名中间的短横线可以用相反的设置加上。
-  
+
   \verb|\apptocmd{\gbpinyinlocalset}{\renewrobustcmd*{\bibnamedelima}{\mbox{-}}}{}{}|
-  
+
   测试结果见：
   \href{run:./example/opt-gbnamefmt.tex}{opt-gbnamefmt.tex}，
   \href{run:./example/opt-gbnamefmt-default.tex}{opt-gbnamefmt-default.tex}。
@@ -825,8 +825,10 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbannote=false，即默认不输出。
     \item gbannote=true，输出注释信息。
   \end{itemize}
+
+  \emph{需要注意的是：bib文件中的annote域会自动转换为annotation域若需要进行判断则需要用annotation域。}比如：
   
-  \emph{需要注意的是：bib文件中的annote域会自动转换为annotation域若需要进行判断则需要用annotation域。}
+  \verb|\renewcommand*{\finentrypunct}{\iffieldundef{annotation}{\addperiod}{}}|
 
   测试文档见：\href{run:./example/opt-gbannote.tex}{opt-gbannote.tex}。
   效果示例如图\ref{fig:eg:optgbannote}所示。
