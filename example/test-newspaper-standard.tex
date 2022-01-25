@@ -1,0 +1,90 @@
+\documentclass{ctexart}
+
+\usepackage[style=gb7714-2015]{biblatex}
+
+\begin{filecontents}{\jobname.bib}
+@Newspaper{余建斌2013--,
+  author  = {余建斌},
+  date    = {2013-01-12},
+  journal = {人民日报},
+  number  = {2},
+  title   = {我们的科技一直在追赶: 访中国工程院院长周济},
+  url     = {http://paper.people.com.cn/rmrb/html/2013-01/12/nw.D110000renmrb_20130112_5-02.htm},
+  urldate = {2013-03-20},
+  year    = {2013},
+}
+
+@Article{丁文祥2000--,
+  Title                    = {数字革命与竞争国际化},
+  Author                   = {丁文祥},
+  Date                     = {2000-11-20},
+  Journaltitle             = {中国青年报},
+  Number                   = {15},
+  Note                     = {News}
+}
+
+@Article{张田勤2000--,
+  Title                    = {犯罪DNA库与生命伦理学计划},
+  Author                   = {张田勤},
+  Date                     = {2000-11-12},
+  Journaltitle             = {大众科技报},
+  Note                     = {Newspaper},
+  Number                   = {7}
+}
+
+@Article{傅刚2000--,
+  Title                    = {大风沙过后的思考},
+  Author                   = {傅刚 and 赵承 and 李佳路},
+  Date                     = {2000-04-12},
+  Journaltitle             = {北京青年报},
+  entrysubtype             = {Newspaper},
+  Url                      = {http://www.bjyouth.com.cn/Bqb/20000412/GB/4216%5ED0412B1401.htm},
+  Number                   = {14},
+  Urldate                  = {2005-09-28}
+}
+
+@Book{全国广播电视标准化技术委员会2007-1-1,
+  Title                    = {广播电视音像资料编目规范:第2部分~ 广播资料:GY/T202.2-2007},
+  Address                  = {北京},
+  Author                   = {全国广播电视标准化技术委员会},
+  Note                     = {standard},
+  Pages                    = {1},
+  Publisher                = {国家广播电影电视局广播电视规划院},
+  Year                     = {2007}
+}
+
+@Book{全国信息文献标准化技术委员会2010-3-3,
+  Title                    = {文献著录:第4部分~ 非书资料:GB/T3792.4-2009},
+  Address                  = {北京},
+  Author                   = {全国信息文献标准化技术委员会},
+  entrysubtype             = {Standard},
+  Pages                    = {3},
+  Publisher                = {中国标准出版社},
+  Year                     = {2010}
+}
+
+@Standard{全国信息与文献标准化技术委员会2010-2-3,
+  author    = {全国信息与文献标准化技术委员会},
+  title     = {信息与文献\ \ \ \ 都柏林核心元数据元素集: GB/T 25100—2010},
+  year      = {2010},
+  address   = {北京},
+  pages     = {2--3},
+  publisher = {中国标准出版社},
+}
+
+
+
+\end{filecontents}
+
+\addbibresource{\jobname.bib}
+
+
+
+\begin{document}
+
+\nocite{*}
+
+\sloppy
+\printbibliography
+
+\end{document} 

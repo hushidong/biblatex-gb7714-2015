@@ -6,8 +6,9 @@
 
 \documentclass[twoside]{article}
     \usepackage{ctex}%[zihao=-4]
+    
     \usepackage{fontspec}
-\setmainfont{CMU Serif}
+    \setmainfont{CMU Serif}
     \IfFileExists{SourceHanSerifSC-Regular.otf}
     {\setCJKmainfont{SourceHanSerifSC-Regular.otf}}{}
     %\IfFontExistsTF{⟨font name⟩}{⟨true branch⟩}{⟨false branch⟩}
@@ -20,8 +21,12 @@
 \usepackage[backend=biber,%
 style=gb7714-2015]{biblatex}%biber
 \renewcommand{\bibfont}{\zihao{-5}\songti}
-\newcommand{\bibname}{参考文献}
+\providecommand{\bibname}{参考文献}
 \setlength{\bibitemsep}{2pt}
+
+\makeatletter
+\@ifpackageloaded{xeCJKfntef}{}{\usepackage{xeCJKfntef}}
+\makeatother
 
 \usepackage{filecontents}
 \begin{filecontents}{\jobname.bib}

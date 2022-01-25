@@ -10,9 +10,9 @@ cd ./example
 
 ./makefileeg.sh
 
-cd ..
+cd ../tool
 
-./makeclear.sh
+./makeclearall.sh
 
 ./makefile.sh
 

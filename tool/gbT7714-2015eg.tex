@@ -1,7 +1,19 @@
 \documentclass{article}
 \usepackage[colorlinks=true]{hyperref}
 \usepackage{pdfpages}%直接插入pdf文件页
+\usepackage{etoolbox}
 \graphicspath{{../egfigure/}{../example/}}
+
+\makeatletter
+\newtoggle{flag:texliveGTtwtw}
+\@ifclasslater{2020/04/01}
+{
+\toggletrue{flag:texliveGTtwtw}
+}
+{
+\togglefalse{flag:texliveGTtwtw}
+}
+\makeatother
 
 \begin{document}
 
@@ -14,10 +26,13 @@
 %\addcontentsline{toc}{section}{cls-beameray}
 \includepdf[pages=-,addtotoc={1,section,1,cls-beameray,eg:beameray}]{../example/cls-beameray.pdf}
 
-
+%texlive 2021 开始对于gbk支持不好了。
+%所以做一个判断，若article是texlive2021以后的版本，都不在添加codeopt
+\iftoggle{flag:texliveGTtwtw}{
 \phantomsection
-%\addcontentsline{toc}{section}{codeopt-gbcodegbk}
+\addcontentsline{toc}{section}{codeopt-gbcodegbk}
 \includepdf[pages=-,addtotoc={1,section,1,codeopt-gbcodegbk,eg:gbk}]{../example/codeopt-gbcodegbk.pdf}
+}
 
 
 \phantomsection

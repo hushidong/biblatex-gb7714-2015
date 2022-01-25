@@ -827,7 +827,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \end{itemize}
 
   \emph{需要注意的是：bib文件中的annote域会自动转换为annotation域若需要进行判断则需要用annotation域。}比如：
-  
+
   \verb|\renewcommand*{\finentrypunct}{\iffieldundef{annotation}{\addperiod}{}}|
 
   测试文档见：\href{run:./example/opt-gbannote.tex}{opt-gbannote.tex}。
@@ -2011,11 +2011,11 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 \hline
   GB/T 7714-2015中的条目类型 &  biblatex中的条目类型 &  类型标识代码\\ \hline
   专著& book & M\\
-  标准& standard/book or inbook with note=standard& S\\
+  标准& standard/book|inbook(note|entrysubtype=standard)& S\\
   专著中的析出文献& inbook & M\\
   连续出版物& periodical& J\\
   连续出版物的析出文献& article& J\\
-  报纸析出的文献& newspaper/article with note=news& N\\
+  报纸析出的文献& newspaper/article(note|entrysubtype=news)& N\\
   专利& patent& P\\
   电子资源或电子公告& online/www/electronic& EB\\
   会议录或会议文集& proceedings& C\\
@@ -2076,7 +2076,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
 需要注意的是，
 \begin{itemize}
-  \item note域在本样式中也做特殊用途，即在book类型的note域中输入standard表示标准，在aritcle类型的note域中输入news表示报纸，当然也可以不做特殊用，而只是表示杂项信息，因为标准和报纸也可以用standard和newspaper类型表示，尽管这两种类型不是biblatex原生支持的条目类型。
+  \item note域在本样式中也做特殊用途，即在book类型的note域中输入standard表示标准，在aritcle类型的note域中输入news或newspaper表示报纸，当然也可以不做特殊用，而只是表示杂项信息。因为报纸和标准也可以在entrysubtype域中输入new|newspaper和standard表示，或者标准和报纸直接用standard 和newspaper 类型表示，尽管这两种类型不是biblatex 原生支持的条目类型。
 
   \item usera域用于表示参考文献类型和载体标识符（为兼容Lee zeping 的bst样式使用的bib文件也可以用mark和medium 表示）。一般情况下usera，mark，medium这些域不用在bib文件中输入，而由样式文件自动处理得到，既为了使bib文件更纯粹，也为了兼容不同的样式。想象一下如果在bib文件中给出usera域，但另一样式需要使用usera域且用途不同，那么就会有兼容性问题。不用手动输入更重要的目的是为用户减负，因为用户可以直接使用从网络（各种学术网站）导出参考文献信息而不用再额外添加一个参考文献类型和载体标识符。
 
@@ -2173,7 +2173,8 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
       且处理断行可以由\verb|\url|命令的内部逻辑处理，通过\verb|\UrlBreaks|设置可以自动实现比较合适的断行。当然因为biblatex已经做了进一步的处理，所以\verb|\url|中的文本断行是由三个计数器控制: biburlnumpenalty、biburlucpenalty、biburllcpenalty，合理设置这三个计数器，即可得到满意的断行效果。
 
   \item[doi] 直接输入需要打印的DOI内容
-  \item[note] 在本样式中note域有特殊功能，当其内容为standard或news 时，判断条目类型为标准和报纸析出的文献。
+  \item[note] 在本样式中note域可以有特殊功能，当其内容为standard或news|newspaper 时，判断条目类型为标准和报纸析出的文献。
+  \item[entrysubtype] 当其内容为standard或news|newspaper 时，判断条目类型为标准和报纸析出的文献。
   \item[bookauthor] 用于析出文献时，作为析出文献来源文献的作者，其输入方式与author 相同。
   \item[editor] editor有时直接作为文献的责任者，比如连续出版物(periodical)类型。有时因为author缺失，editor被当做责任者。还有的时候bookauthor缺失，editor也被当做bookauthor，即析出文献来源文献的责任者。editor的输入方式与author相同。
   \item[editortype]  editortype作为editor的类型或角色说明域，可以用来在editor后面加上适当的表示角色的字符串，比如“主编”或“eds.”等。常见的角色包括：editor、compiler、founder、continuator, redactor、reviser 和collaborator等。当然这是西文环境中的情况，足够细分，中文情况下可以不用这么细分，而仅对editortype={editor}时的本地化字符串做设置，当然如果一篇文档中存在多种不同的角色editor文献的情况，也需要做细分。
@@ -2414,10 +2415,10 @@ author.title[usera].translator.edition.location:publisher,date或year:pages[urld
 
 其中标题相关的附加信息除了可以直接在title域中录入外，还可以在subtitle或titleaddon域中添加，后面出现的booktitle，journaltitle，也有类似情况，可以在booktitleaddon或者journalsubtitle中附加信息。其中出版地用location域表示，也可以用传统的address表示，biblatex将address作为location的别名处理，使用两者中的任何一个都可以表示出版地信息。\bc{特别强调: usera域不用录入，该域内容由bbx样式文件根据条目类型自动处理得到。}
 
-\qd{由于biblatex不支持standard条目类型，所以“标准”类型可以用book或inbook替代，但使用note域等于standard作为一个区分，当note域数据存在且内容等于standard时，就将其作为“标准”文献进行处理，其文献类型标识用S表示。这里为什么使用note域而不是type域和keywords域，是因为考虑到note域一般情况下没有什么特殊意义，使用它不会导致冲突，而type域在biblatex标准样式中没有被book和article条目类型当作支持的域，对于支持该域的条目比如thesis，type域又有特殊的意义，是用来区分master和doctor的，而keywords域在biblatex-gb7714-2015中用来存放entrykey以实现一些特殊的判断，所以也不便于使用它。}
+\qd{由于biblatex不支持standard条目类型，所以“标准”类型可以用book或inbook替代，但使用entrysubtype或note域等于standard作为一个区分，当entrysubtype或note域数据存在且内容等于standard时，就将其作为“标准”文献进行处理，其文献类型标识用S表示。这里为什么使用entrysubtype或note域而不是type域和keywords域，是因为考虑到entrysubtype通常标准样式不使用，而note域一般情况下没有什么特殊意义，使用它不会导致冲突，而type域在biblatex标准样式中没有被book和article条目类型当作支持的域，对于支持该域的条目比如thesis，type域又有特殊的意义，是用来区分master和doctor的，而keywords域在biblatex-gb7714-2015中用来存放entrykey以实现一些特殊的判断，所以也不便于使用它。}
 
 \subsubsection{标准/standard}\label{sec:standard}
-“标准”(standard)作为一种文献条目类型biblatex并不支持，因此直接利用book或inbook类型加note域等于standard代替。当然为了兼容传统BIBTeX格式存在standard类型的情况，也可以直接使用standard类型。
+“标准”(standard)作为一种文献条目类型biblatex并不支持，因此直接利用book或inbook类型加entrysubtype或note域等于standard代替。当然为了兼容传统BIBTeX格式存在standard类型的情况，也可以直接使用standard类型。
 为此本样式对standard条目类型做了特别支持。著录格式的处理原理与前一节所述相同，只是利用动态数据将standard类型转换为book/inbook类型。在bib文件中直接使用standard类型时注意使用其它biblatex样式时可能存在移植障碍，因为其它样式可能不支持standard类型。
 
 \begin{refentry}{}{}
@@ -2487,10 +2488,10 @@ author.title[usera].journaltitle或journal,year,volume(number):pages[urldate].ur
 \end{texlist}
 \end{example}
 
-\qd{由于biblatex不支持newspaper 条目类型，所以条目类型报纸析出的文献用article表示，但使用note域等于news作为一个区分，当note域数据存在且内容等于news时，就将其作为报纸的析出文献进行处理。报纸文献类型标识用N表示，报纸的版次用number域描述。}
+\qd{由于biblatex不支持newspaper 条目类型，所以条目类型报纸析出的文献用article表示，但使用entrysubtype或note域等于news|newspaper作为一个区分，当note域数据存在且内容等于news或newspaper时，就将其作为报纸的析出文献进行处理。报纸文献类型标识用N表示，报纸的版次用number域描述。}
 
 \subsubsection{报纸析出的文献/newspaper}\label{sec:standard}
-biblatex没有将报纸的析出文献(newspaper)作为一种文献条目类型，因此可以直接利用article类型加note域等于news代替，或者也可以直接使用newspaper类型。为方便使用考虑，本样式增加了对新条目类型newspaper的支持，这种支持通过类似于standard类型的方式实现，没有对数据模型进行改动或增加，而完全利用动态数据修改将newspaper类型转换为article类型。在bib文件中直接使用newspaper类型时需要注意可能存在移植障碍，因为其它biblatex样式可能不支持newspaper类型。
+biblatex没有将报纸的析出文献(newspaper)作为一种文献条目类型，因此可以直接利用article类型加newspaper或note域等于news代替，或者也可以直接使用newspaper类型。为方便使用考虑，本样式增加了对新条目类型newspaper的支持，这种支持通过类似于standard类型的方式实现，没有对数据模型进行改动或增加，而完全利用动态数据修改将newspaper类型转换为article类型。在bib文件中直接使用newspaper类型时需要注意可能存在移植障碍，因为其它biblatex样式可能不支持newspaper类型。
 
 \begin{refentry}{}{}
 报纸析出的文献对应一个新的entrytype为: newspaper。文献类型标识用N表示。

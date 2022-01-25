@@ -10,7 +10,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2021/12/11 v1.1b}
+\def\versionofgbtstyle{2022/01/24 v1.1c}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015ay.bbx}[\versionofgbtstyle biblatex bibliography style]
 %\RequireBiber[3]%显式指定用biber后端，当用bibtex时会报错，但其实不会影响编译，只是采用bibtex后无法达成格式需求
@@ -1014,10 +1014,34 @@
             \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后使用institution
             \step[fieldset=institution, origfieldval]
             }
-        \map{%根据增加一个新闻报纸的类型newspaper确定文献类型标识符
+        \map[overwrite]{%根据增加一个新闻报纸的类型newspaper确定文献类型标识符
             \pertype{newspaper}
             \step[fieldset=usera, fieldvalue={N}]
-            \step[fieldset=note, fieldvalue=news]%因为没有专门的驱动，记录note方便映射为article后判断
+            \step[fieldset=entrysubtype, fieldvalue=news]%因为没有专门的驱动，记录note方便映射为article后判断
+            }
+        \map[overwrite]{%
+            \pertype{article}
+            \step[fieldsource=note,match=\regexp{(n|N)(e|E)(w|W)(s|S)},final]%
+            \step[fieldset=usera, fieldvalue={N}]
+            \step[fieldset=entrysubtype, fieldvalue=news]%
+            }
+        \map[overwrite]{%
+            \pertype{article}
+            \step[fieldsource=note,match=\regexp{(n|N)(e|E)(w|W)(s|S)(p|P)(a|A)(p|P)(e|E)(r|R)},final]%
+            \step[fieldset=usera, fieldvalue={N}]
+            \step[fieldset=entrysubtype, fieldvalue=news]%
+            }
+        \map[overwrite]{%
+            \pertype{article}
+            \step[fieldsource=entrysubtype,match=\regexp{(n|N)(e|E)(w|W)(s|S)(p|P)(a|A)(p|P)(e|E)(r|R)},final]%
+            \step[fieldset=usera, fieldvalue={N}]
+            \step[fieldset=entrysubtype, fieldvalue=news]%
+            }
+        \map[overwrite]{%
+            \pertype{article}
+            \step[fieldsource=entrysubtype,match=\regexp{(n|N)(e|E)(w|W)(s|S)},final]%
+            \step[fieldset=usera, fieldvalue={N}]
+            \step[fieldset=entrysubtype, fieldvalue=news]%
             }
         \map{%对应增加的一个数据库类型database确定文献类型标识符
             \pertype{database}
@@ -1066,10 +1090,24 @@
             \step[fieldsource=version] %有时会把version和edition混淆，处理后直接用edition
             \step[fieldset=edition, origfieldval]
             }
-        \map{%兼容老的standard类型，确定文献类型标识符
+        \map[overwrite]{%兼容老的standard类型，确定文献类型标识符
             \pertype{standard}
             \step[fieldset=usera, fieldvalue={S}]
-            \step[fieldset=note, fieldvalue=standard]%因为没有专门的驱动，记录note方便映射为book和inbook后判断
+            \step[fieldset=entrysubtype, fieldvalue=standard]%因为没有专门的驱动，记录note方便映射为book和inbook后判断
+            }
+        \map[overwrite]{%根据standard
+            \pertype{inbook}
+            \pertype{book}
+            \step[fieldsource=entrysubtype,match=\regexp{(s|S)(t|T)(a|A)(n|N)(d|D)(a|A)(r|R)(d|D)},final]%\x80-\xFF
+            \step[fieldset=usera, fieldvalue={S}]
+            \step[fieldset=entrysubtype, fieldvalue=standard]%
+            }
+        \map[overwrite]{%根据standard
+            \pertype{inbook}
+            \pertype{book}
+            \step[fieldsource=note,match=\regexp{(s|S)(t|T)(a|A)(n|N)(d|D)(a|A)(r|R)(d|D)},final]%\x80-\xFF
+            \step[fieldset=usera, fieldvalue={S}]
+            \step[fieldset=entrysubtype, fieldvalue=standard]%
             }
         \map{
             \pertype{patent}
@@ -2362,9 +2400,9 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
        \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
         {\setunit{\subtitlepunct}\printfield{titleaddon}}%
         \iftoggle{bbx:gbtype}{%
-         \iffieldundef{note}{\printfield[gbtypeflag]{usera}}%在标题后直接给出文献标识字母，判断一下，是否是报纸和标准
-        {\iffieldequalstr{note}{standard}{\printfield[gbtypeflags]{usera}}%判断是否为标准
-                                         {\iffieldequalstr{note}{news}{\printfield[gbtypeflagn]{usera}}%判断是否为报纸
+         \iffieldundef{entrysubtype}{\printfield[gbtypeflag]{usera}}%在标题后直接给出文献标识字母，判断一下，是否是报纸和标准
+        {\iffieldequalstr{entrysubtype}{standard}{\printfield[gbtypeflags]{usera}}%判断是否为标准
+                                         {\iffieldequalstr{entrysubtype}{news}{\printfield[gbtypeflagn]{usera}}%判断是否为报纸
                                                                       {\printfield[gbtypeflag]{usera}}}%其它
         }}{}%
      %\iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
@@ -3043,13 +3081,13 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
 \iftoggle{bbx:gbpub}%
 {\testCJKfirst{userd}%
     \ifboolexpr{ test {\iflistundef{location}} and test {\iflistundef{publisher}} }%
-    {\iffieldequalstr{note}{standard}{}{\iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress}\space :\space\str@nopublisher]}{\printtext{[S.l.\space :\space s.n.\adddot]}}}}%
+    {\iffieldequalstr{entrysubtype}{standard}{}{\iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress}\space :\space\str@nopublisher]}{\printtext{[S.l.\space :\space s.n.\adddot]}}}}%
     {\iflistundef{location}{%\adddot
-        \iffieldequalstr{note}{standard}{}%%从gbt7714-2015标准第19页看到，标准存在出版项时输出，没有时完全省略。
+        \iffieldequalstr{entrysubtype}{standard}{}%%从gbt7714-2015标准第19页看到，标准存在出版项时输出，没有时完全省略。
         {\iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress]}\addcolon\addspace}{\printtext{[S.l.\adddot]}\publocpunct}}}%  \bibstring{noaddress}
         {\printlist{location}\publocpunct}%%\addcolon\addspace%
     \iflistundef{publisher}{%
-        \iffieldequalstr{note}{standard}{}%
+        \iffieldequalstr{entrysubtype}{standard}{}%
         {\iftoggle{ifCJKforgbt}{\printtext{[\str@nopublisher]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
         {\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}}}%
         {\printlist{publisher}}}%
@@ -3262,15 +3300,15 @@ incollection,proceedings,inproceedings]{number}{%
   \printtext{%去掉了[parens]
     \iffieldundef{issue}
       {%\usebibmacro{date}
-        \iffieldundef{note}{\usebibmacro{date}}%判断一下，是否是报纸
-        {\iffieldequalstr{note}{news}{\usebibmacro{newsdate}}%判断是否为报纸
+        \iffieldundef{entrysubtype}{\usebibmacro{date}}%判断一下，是否是报纸
+        {\iffieldequalstr{entrysubtype}{news}{\usebibmacro{newsdate}}%判断是否为报纸
                                      {\usebibmacro{date}}%
       }}%
       {\iftoggle{bbx:gbstrict}{}{\printfield{issue}%
        \setunit*{\addspace}}%
        %\usebibmacro{date}
-         \iffieldundef{note}{\usebibmacro{date}}%判断一下，是否是报纸
-        {\iffieldequalstr{note}{news}{\usebibmacro{newsdate}}%判断是否为报纸
+         \iffieldundef{entrysubtype}{\usebibmacro{date}}%判断一下，是否是报纸
+        {\iffieldequalstr{entrysubtype}{news}{\usebibmacro{newsdate}}%判断是否为报纸
                                      {\usebibmacro{date}}%
         }}}%
   %\newunit
@@ -3382,7 +3420,7 @@ incollection,proceedings,inproceedings]{number}{%
 %   调整页码前的标点和去掉期刊文章等页码后面的标点
 %
 \renewbibmacro*{note+pages}{%源来自standard.bbx
-  %\printfield{note}%不要note，note用来判断是否是报纸newspaper
+  %\printfield{note}%
   \iffieldundef{pages}{}{
   \setunit{\bibpagespunct}%
   \printfield{pages}}%
@@ -3776,7 +3814,7 @@ test {\ifentrytype{conference}}
 %  \usebibmacro{byeditor+others}%
 %  \newunit
   \usebibmacro{note+pages}%
-  \iffieldequalstr{note}{news}{}{%当是新闻时不输出修改或更新日期
+  \iffieldequalstr{entrysubtype}{news}{}{%当是新闻时不输出修改或更新日期
   \iffieldundef{url}{}{%当没有网址时也不输出
   \iftoggle{bbx:url}{%当url选项为false时，也不输出
   \usebibmacro{modifydate}}{}}}%带括号的修改或更新日期，
