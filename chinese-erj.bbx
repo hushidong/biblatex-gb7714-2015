@@ -5,11 +5,14 @@
 %% Maintained by huzhenzhen
 %% E-mail: hzzmail@163.com
 %% Released under the LaTeX Project Public License v1.3c or later
+%% history
+%% 2019/03/28 v1.0
+%% 2022/02/22 v1.0a
 %% ---------------------------------------------------------------
 %%
 %%用法：类似于标准的样式在biblatex加载时设置样式
 %%文献表正常处理，标注命令主要用cite和textcite
-\ProvidesFile{chinese-erj.bbx}[2019/03/28 v1.0 a biblatex bibliography style for ERJ]
+\ProvidesFile{chinese-erj.bbx}[2022/02/22 v1.0a a biblatex bibliography style for ERJ]
 
 
 %==================================================
@@ -23,6 +26,12 @@
 \MFUnocap{on}%
 \MFUnocap{and}%
 \MFUnocap{for}%
+
+%
+%   增加一个控制标点是英文还是中文的选项
+%   20220222,v1.0a,hzz
+\DeclareBibliographyOption{erjpunctcn}[true]{%biblatex低版本
+  \ifstrequal{#1}{false}{\execerjpuncten}{}}
 
 
 %==================================================
@@ -72,11 +81,33 @@
     }
 
 %==================================================
+%定义一些标点为中文全角标点
+%==================================================
+\def\erjpunctdot{。}%
+\def\erjpunctmark{、}%
+\def\erjpunctcomma{，}%
+\def\erjpunctcolon{：}%
+\def\erjpunctsemicolon{；}%
+\def\erjpunctttl{《}%
+\def\erjpunctttr{》}
+
+
+\def\execerjpuncten{%
+\def\erjpunctdot{\adddot}%
+\def\erjpunctmark{\addcomma\addspace}%
+\def\erjpunctcomma{\addcomma\addspace}%
+\def\erjpunctcolon{\addcolon\addspace}%
+\def\erjpunctsemicolon{\addsemicolon\addspace}%
+\def\erjpunctttl{《}%
+\def\erjpunctttr{》}%
+}
+
+%==================================================
 %为标注和文献表中标点格式，重设and本地化字符串
 %==================================================
 \DefineBibliographyStrings{english}{
     and         = { and},%and后面的空格在finalnamedelim已经加过了，所以这里去掉20191009
-    andcn       = {、},
+    andcn       = {\erjpunctmark\unspace},%\erjpunctmark
     andincitecn = {和},%将标注中的分开，便于与文献表中的区分
     andincite   = {\&},
     %andotherscn={等},
@@ -89,12 +120,12 @@
 %设置一些标点格式为中文的标点
 %==================================================
 \DeclareFieldFormat{titlecase}{\iffieldequalstr{userd}{chinese}{#1}{\capitalisewords{#1}}}
-\DeclareFieldFormat*{title}{\iffieldequalstr{userd}{chinese}{《#1》}{#1\isdot}}
-\DeclareFieldFormat[article]{title}{\iffieldequalstr{userd}{chinese}{《#1》}{\mkbibquote{#1}\isdot}}
-\DeclareFieldFormat*{journaltitle}{\iffieldequalstr{userd}{chinese}{《#1》}{\textit{#1}}}%
-%\DeclareFieldFormat*{booktitle}{《#1》}
-\renewcommand*{\revsdnamepunct}{，}%%来源biblatex.def
-\DeclareDelimFormat*{multinamedelim}{\iffieldequalstr{userd}{chinese}{、}{，}}%\addcomma\addspace
+\DeclareFieldFormat*{title}{\iffieldequalstr{userd}{chinese}{\erjpunctttl#1\erjpunctttr}{#1\isdot}}
+\DeclareFieldFormat[article]{title}{\iffieldequalstr{userd}{chinese}{\erjpunctttl#1\erjpunctttr}{\mkbibquote{#1}\isdot}}
+\DeclareFieldFormat*{journaltitle}{\iffieldequalstr{userd}{chinese}{\erjpunctttl#1\erjpunctttr}{\textit{#1}}}%
+%\DeclareFieldFormat*{booktitle}{\erjpunctttl#1\erjpunctttr}
+\renewcommand*{\revsdnamepunct}{\erjpunctcomma}%%来源biblatex.def
+\DeclareDelimFormat*{multinamedelim}{\iffieldequalstr{userd}{chinese}{\erjpunctmark}{\erjpunctcomma}}%\addcomma\addspace
 \DeclareDelimFormat{finalnamedelim}{%
   %\ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
   %\addspace%
@@ -137,11 +168,12 @@
   \or%
   \bibstring{and}\space%
   \fi}
-\DeclareDelimFormat{nameyeardelim}{，}%\addcomma\addspace
-\DeclareDelimFormat[bib,biblist]{nameyeardelim}{，}%\addcomma\addspace
-\DeclareDelimFormat{bibpagespunct}{\iffieldequalstr{userd}{chinese}{}{，}}%\addcomma\addspace
-\renewcommand*{\newunitpunct}{，}%\addcomma\space %，
-\renewcommand*{\finentrypunct}{\iffieldequalstr{userd}{chinese}{。}{\adddot}}
+\DeclareDelimFormat{nameyeardelim}{\erjpunctcomma}%\addcomma\addspace
+\DeclareDelimFormat[bib,biblist]{nameyeardelim}{\erjpunctcomma}%\addcomma\addspace
+\DeclareDelimFormat{bibpagespunct}{\iffieldequalstr{userd}{chinese}{}{\unspace\erjpunctcomma}}%\addcomma\addspace\mbox{}
+\renewcommand*{\newunitpunct}{\erjpunctcomma}%\addcomma\space %，
+\renewcommand*{\finentrypunct}{\iffieldequalstr{userd}{chinese}{\erjpunctdot}{\adddot}}
+
 
 %==================================================
 %调整部分域的输出格式
@@ -152,10 +184,10 @@
 \newcounter{numberwithoutzero}
 \DeclareFieldFormat[article,periodical]{number}%
     {\iffieldequalstr{userd}{chinese}{%
-        \iffieldint{number}{\setcounter{numberwithoutzero}{#1}\printtext{\bibstring{serialcn}\addthinspace\arabic{numberwithoutzero}\addthinspace 期}}
+        \iffieldint{number}{\setcounter{numberwithoutzero}{#1}\printtext{\bibstring{serialcn}\addthinspace\arabic{numberwithoutzero}\addthinspace 期}}%
         {\printtext{\bibstring{serialcn}\addthinspace#1\addthinspace 期}}%
     }%
-        {\printtext{(}#1\printtext{)}}}% %
+        {\printtext{(}#1\printtext{)}}}%\kern\z@
 \DeclareFieldFormat[article,periodical]{volume}%
     {\iffieldequalstr{userd}{chinese}{}%
     {#1}}% volume of a book
@@ -210,7 +242,7 @@
     test{\iffieldundef{subtitle}}%
   }%
     {}%
-    {\setunit{：}\printtext[title]{\bibtitlefont%增加字体控制命令%增加了标点：
+    {\setunit{\erjpunctcolon}\printtext[title]{\bibtitlefont%增加字体控制命令%增加了标点：
        \printfield[titlecase]{title}%
        \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
        {}{\setunit{\subtitlepunct}%

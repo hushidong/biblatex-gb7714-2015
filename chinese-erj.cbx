@@ -10,7 +10,7 @@
 %%用法：类似于标准的样式在biblatex加载时设置样式
 %%文献表正常处理，标注命令主要用cite和textcite
 
-\ProvidesFile{chinese-erj.cbx}[2019/03/28 v1.0 a biblatex citation style for ERJ]
+\ProvidesFile{chinese-erj.cbx}[2022/02/22 v1.0a a biblatex citation style for ERJ]
 
 %==================================================
 %加载gb样式
@@ -18,6 +18,22 @@
 \RequireCitationStyle{gb7714-2015ay} %
 
 
+%
+%   增加一个控制标注中标点是英文还是中文的选项
+%   20220222,v1.0a,hzz
+\DeclareBibliographyOption{erjcitepunctcn}[true]{%biblatex低版本
+  \ifstrequal{#1}{false}{\execerjpunctencite}{}}
+
+\def\erjpunctmarkcite{、}%
+\def\erjpunctsemicoloncite{；}%
+\def\erjpunctparenlcite{（}%
+\def\erjpunctparenrcite{）}
+\def\execerjpunctencite{%
+\def\erjpunctmarkcite{\addcomma\addspace}%
+\def\erjpunctsemicoloncite{\addsemicolon\addspace}%
+\def\erjpunctparenlcite{(}%
+\def\erjpunctparenrcite{)}
+}
 
 %==================================================
 %选项设置
@@ -31,13 +47,13 @@
 %引用命令设置，主要用cite和textcite
 %包括标点设置
 %==================================================
-\renewcommand*{\multicitedelim}{；}%\addsemicolon\addspace；
+\renewcommand*{\multicitedelim}{\erjpunctsemicoloncite}%\addsemicolon\addspace；
 \renewcommand*{\textcitedelim}{%
   \iffinalcitedelim
     {\ifnumgreater{\value{textcitetotal}}{2}
        {}{}%\iftextcitepunct{\finalandsemicolon}{\finalandcomma}
-     \addspace 、}%\addspace\bibstring{andincitecn}
-    {\iftextcitepunct{\addsemicolon\space}{\addspace 、}}%\addcomma
+     \addspace\erjpunctmarkcite}%\addspace\bibstring{andincitecn}
+    {\iftextcitepunct{\addsemicolon\space}{\addspace\erjpunctmarkcite}}%\addcomma
 }%\space
 
 \DeclareDelimFormat[textcite]{nameyeardelim}{\addspace}%\addcomma\space
@@ -51,7 +67,7 @@
 }
 
 %标注压缩时，直接用date+extradate代替extradate实现2006a，2006b的效果
-%\DeclareDelimFormat*{compcitedelim}{、}%\addcomma\addspace
+%\DeclareDelimFormat*{compcitedelim}{\erjpunctmarkcite}%\addcomma\addspace
 \newbibmacro*{cite:extradate}{%
   \iffieldundef{extradate}
     {}
@@ -65,12 +81,12 @@
 %添加前后空格
 \DeclareCiteCommand{\cite}%[\mkbibparens]
   {\usebibmacro{cite:init}%
-   \printtext{（}\usebibmacro{prenote}}%)\addspace
+   \unspace\printtext{\erjpunctparenlcite}\usebibmacro{prenote}}%\addspace
   {\usebibmacro{citeindex}%
    \usebibmacro{cite}}
   {}
-  {\usebibmacro{postnote}%(
-  ）}%\addspace
+  {\usebibmacro{postnote}%
+  \erjpunctparenrcite}%\addspace
 
 %原版
 %\DeclareCiteCommand{\cite}[\mkbibparens]
@@ -108,7 +124,7 @@
           {\usebibmacro{cite:label}%
            \setunit{%
              \global\booltrue{cbx:parens}%
-             \printdelim{nonameyeardelim}（}%\bibopenparen
+             \printdelim{nonameyeardelim}\unspace\erjpunctparenlcite}%\bibopenparen
            \ifnumequal{\value{citecount}}{1}
              {\usebibmacro{prenote}}
              {}%
@@ -117,7 +133,7 @@
        {\printnames{labelname}%
         \setunit{%
           \global\booltrue{cbx:parens}%
-          \printdelim{nameyeardelim}（}%\bibopenparen
+          \printdelim{nameyeardelim}\unspace\erjpunctparenlcite}%\bibopenparen
         \ifnumequal{\value{citecount}}{1}
           {\usebibmacro{prenote}}
           {}%
@@ -132,7 +148,7 @@
      \savefield{namehash}{\cbx@lasthash}}%
   \setunit{%
     \ifbool{cbx:parens}
-      {）\global\boolfalse{cbx:parens}}%\bibcloseparen
+      {\erjpunctparenrcite\global\boolfalse{cbx:parens}}%\bibcloseparen
       {}%
     \textcitedelim}}
 
@@ -142,10 +158,13 @@
     {\setunit{}%
      \printtext{%
        \ifbool{cbx:parens}
-         {）\global\boolfalse{cbx:parens}}%\bibcloseparen
+         {\erjpunctparenrcite\global\boolfalse{cbx:parens}}%\bibcloseparen
          {}}}
     {\setunit{%
        \ifbool{cbx:parens}
-         {）\global\boolfalse{cbx:parens}}%\bibcloseparen
+         {\erjpunctparenrcite\global\boolfalse{cbx:parens}}%\bibcloseparen
          {}%
        \textcitedelim}}}
+
+\let\citet=\textcite
+\let\citep=\cite
