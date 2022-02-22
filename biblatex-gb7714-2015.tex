@@ -675,6 +675,21 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \caption{析出文献标识符号控制选项}\label{fig:eg:optgbpunctin}
 \end{figure}
 
+
+  \pdfbookmark[4]{erjpunctcn}{erjpunctcn}
+  \item[erjpunctcn]=\textbf{true}，false. \hfill default is true
+
+  为chinese-erj样式控制文献表中的标点增加的选项。
+  \begin{itemize}
+    \item erjpunctcn=true，使用格式要求的中文标点(即全角标点)。
+    \item erjpunctcn=false，则将所有的文献中的标点改为英文标点(即半角标点)。
+  \end{itemize}
+  
+  需要注意的是：若只想修改英文文献的全部标点为半角标点，而中文文献的标点不变，仅需在导言区加上如下命令：
+  \lstinline[breaklines=true]!\def\erjpunctcommalanen{\addcomma\addspace}!,
+  \lstinline[breaklines=true]!\def\erjpunctcolonlanen{\addcolon\addspace}!。
+
+
   \pdfbookmark[4]{gbtitlelink}{gbtitlelink}
   \item[gbtitlelink]=true，\textbf{false}. \hfill default is false
 

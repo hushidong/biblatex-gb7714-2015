@@ -86,7 +86,9 @@
 \def\erjpunctdot{。}%
 \def\erjpunctmark{、}%
 \def\erjpunctcomma{，}%
+\def\erjpunctcommalanen{，}%
 \def\erjpunctcolon{：}%
+\def\erjpunctcolonlanen{：}%
 \def\erjpunctsemicolon{；}%
 \def\erjpunctttl{《}%
 \def\erjpunctttr{》}
@@ -96,7 +98,9 @@
 \def\erjpunctdot{\adddot}%
 \def\erjpunctmark{\addcomma\addspace}%
 \def\erjpunctcomma{\addcomma\addspace}%
+\def\erjpunctcommalanen{\addcomma\addspace}%
 \def\erjpunctcolon{\addcolon\addspace}%
+\def\erjpunctcolonlanen{\addcolon\addspace}%
 \def\erjpunctsemicolon{\addsemicolon\addspace}%
 \def\erjpunctttl{《}%
 \def\erjpunctttr{》}%
@@ -124,8 +128,8 @@
 \DeclareFieldFormat[article]{title}{\iffieldequalstr{userd}{chinese}{\erjpunctttl#1\erjpunctttr}{\mkbibquote{#1}\isdot}}
 \DeclareFieldFormat*{journaltitle}{\iffieldequalstr{userd}{chinese}{\erjpunctttl#1\erjpunctttr}{\textit{#1}}}%
 %\DeclareFieldFormat*{booktitle}{\erjpunctttl#1\erjpunctttr}
-\renewcommand*{\revsdnamepunct}{\erjpunctcomma}%%来源biblatex.def
-\DeclareDelimFormat*{multinamedelim}{\iffieldequalstr{userd}{chinese}{\erjpunctmark}{\erjpunctcomma}}%\addcomma\addspace
+\renewcommand*{\revsdnamepunct}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%%来源biblatex.def
+\DeclareDelimFormat*{multinamedelim}{\iffieldequalstr{userd}{chinese}{\erjpunctmark}{\erjpunctcommalanen}}%\addcomma\addspace
 \DeclareDelimFormat{finalnamedelim}{%
   %\ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
   %\addspace%
@@ -168,10 +172,10 @@
   \or%
   \bibstring{and}\space%
   \fi}
-\DeclareDelimFormat{nameyeardelim}{\erjpunctcomma}%\addcomma\addspace
-\DeclareDelimFormat[bib,biblist]{nameyeardelim}{\erjpunctcomma}%\addcomma\addspace
-\DeclareDelimFormat{bibpagespunct}{\iffieldequalstr{userd}{chinese}{}{\unspace\erjpunctcomma}}%\addcomma\addspace\mbox{}
-\renewcommand*{\newunitpunct}{\erjpunctcomma}%\addcomma\space %，
+\DeclareDelimFormat{nameyeardelim}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%\addcomma\addspace
+\DeclareDelimFormat[bib,biblist]{nameyeardelim}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%\addcomma\addspace
+\DeclareDelimFormat{bibpagespunct}{\iffieldequalstr{userd}{chinese}{}{\unspace\erjpunctcommalanen}}%\addcomma\addspace\mbox{}
+\renewcommand*{\newunitpunct}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%\addcomma\space %，
 \renewcommand*{\finentrypunct}{\iffieldequalstr{userd}{chinese}{\erjpunctdot}{\adddot}}
 
 
@@ -242,7 +246,7 @@
     test{\iffieldundef{subtitle}}%
   }%
     {}%
-    {\setunit{\erjpunctcolon}\printtext[title]{\bibtitlefont%增加字体控制命令%增加了标点：
+    {\setunit{\iffieldequalstr{userd}{chinese}{\erjpunctcolon}{\erjpunctcolonlanen}}\printtext[title]{\bibtitlefont%增加字体控制命令%增加了标点：
        \printfield[titlecase]{title}%
        \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
        {}{\setunit{\subtitlepunct}%

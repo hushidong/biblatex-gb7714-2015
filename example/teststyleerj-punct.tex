@@ -1,0 +1,49 @@
+\documentclass[a4paper,zihao=-4, linespread=1.67]{ctexart}
+\usepackage[left=1.1in, right=1.1in, top=1in, bottom=1in, includehead, includefoot]{geometry}
+\pagestyle{plain}
+
+\usepackage[backend=biber,style=chinese-erj]{biblatex}%,erjpunctcn=false,erjcitepunctcn=false
+\usepackage{filecontents}
+\begin{filecontents}{test.bib}
+@article{greenwood2014expectations,
+  title={Expectations of returns and expected returns},
+  author={Greenwood, Robin and Shleifer, Andrei},
+  journal={The Review of Financial Studies},
+  volume={27},
+  number={3},
+  pages={714--746},
+  year={2014},
+  publisher={Oxford University Press}
+}
+@Article{zhou2015shehui,
+	author = {周翔翼 and 杨光明 and 孔东民},
+	title = {社会变迁、风险规避与股权溢价之谜——来自晚清、民国与当代中国股票市场的经验证据},
+	journal = {金融研究},
+	year = {2015},
+	authoraddress = {西安交通大学金禾经济研究中心;中南财经政法大学金融学院;},
+	number = {10},
+	pages = {163-180},
+	keywords = {股权溢价;近代股市;风险规避程度},
+	ISSN = {1002-7246},
+	notes = {11-1268/F},
+	databaseprovider = {CNKI},
+}
+\end{filecontents}
+\addbibresource{test.bib}
+
+\def\erjpunctcommalanen{\addcomma\addspace}%
+\def\erjpunctcolonlanen{\addcolon\addspace}%
+
+\begin{document}
+\title{Test}
+\maketitle
+\cite{greenwood2014expectations}\cite{zhou2015shehui}
+
+\citep{greenwood2014expectations}\citep{zhou2015shehui}
+
+\textcite{greenwood2014expectations}\textcite{zhou2015shehui}
+
+\citet{greenwood2014expectations}\citet{zhou2015shehui}
+
+\printbibliography
+\end{document} 

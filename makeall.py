@@ -24,6 +24,7 @@ def compileall():
 	'gb7714-2005ay.cbx', 'gb7714-2015-gbk.def', 'gb7714-2015.bbx', 'gb7714-2015.cbx', 'gb7714-2015ay.bbx',
 	'gb7714-2015ay.cbx', 'gb7714-2015ms.bbx', 'gb7714-2015ms.cbx', 'gb7714-2015mx.bbx', 'gb7714-2015mx.cbx']
 
+
 	filelatexext=[".aux", ".bbl", ".blg", ".log", ".out", ".toc", ".bcf", 
 	".xml", ".synctex", ".nlo", ".nls", ".bak", ".ind", ".idx", 
 	".ilg", ".lof", ".lot", ".ent-x", ".tmp", ".ltx", ".los", 

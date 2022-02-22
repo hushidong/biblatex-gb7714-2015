@@ -23,6 +23,15 @@
 \ExecuteBibliographyOptions{gblabelref}
 
 %
+%   增加一个控制是否进行标注标签压缩的选项
+%   20220212,v1.1c,hzz
+\newtoggle{bbx:gbcitecomp}
+\DeclareBibliographyOption{gbcitecomp}[true]{%biblatex低版本
+  \settoggle{bbx:gbcitecomp}{#1}}
+\ExecuteBibliographyOptions{gbcitecomp}
+
+
+%
 %   增加标签包围符号格式处理选项
 %   20211030,1.1a,hzz
 %
@@ -519,3 +528,26 @@
 \DeclareMultiCiteCommand{\citecs}[\mkbibsuperscript]{\citec}{}
 
 \DeclareMultiCiteCommand{\authornumcites}[]{\authornumcite}{\multicitedelim}
+
+%如果标注标签不进行压缩可以则重定义如下：
+\iftoggle{bbx:gbcitecomp}%
+{\newbibmacro*{cite}{%
+  \printtext[bibhyperref]{%
+    \printfield{labelprefix}%
+    \printfield{labelnumber}%
+    \ifbool{bbx:subentry}
+      {\printfield{entrysetcount}}
+      {}}}
+\DeclareCiteCommand{\cite}[\mkbibsuperscript]%
+  {\mkbibleftborder\usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite}}
+  {\multicitedelim}
+  {\mkbibrightborder\usebibmacro{postnote}}
+\DeclareCiteCommand{\parencite}%
+  {\mkbibleftborder\usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite}}
+  {\multicitedelim}
+  {\mkbibrightborder\mkbibsuperscriptusp{\usebibmacro{postnote}}}
+}{}
