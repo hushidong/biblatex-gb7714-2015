@@ -530,7 +530,7 @@
 \DeclareMultiCiteCommand{\authornumcites}[]{\authornumcite}{\multicitedelim}
 
 %如果标注标签不进行压缩可以则重定义如下：
-\iftoggle{bbx:gbcitecomp}%
+\iftoggle{bbx:gbcitecomp}{}%
 {\newbibmacro*{cite}{%
   \printtext[bibhyperref]{%
     \printfield{labelprefix}%
@@ -550,4 +550,4 @@
    \usebibmacro{cite}}
   {\multicitedelim}
   {\mkbibrightborder\mkbibsuperscriptusp{\usebibmacro{postnote}}}
-}{}
+}

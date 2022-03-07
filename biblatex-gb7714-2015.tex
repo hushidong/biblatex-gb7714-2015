@@ -684,7 +684,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item erjpunctcn=true，使用格式要求的中文标点(即全角标点)。
     \item erjpunctcn=false，则将所有的文献中的标点改为英文标点(即半角标点)。
   \end{itemize}
-  
+
   需要注意的是：若只想修改英文文献的全部标点为半角标点，而中文文献的标点不变，仅需在导言区加上如下命令：
   \lstinline[breaklines=true]!\def\erjpunctcommalanen{\addcomma\addspace}!,
   \lstinline[breaklines=true]!\def\erjpunctcolonlanen{\addcolon\addspace}!。
@@ -2506,7 +2506,7 @@ author.title[usera].journaltitle或journal,year,volume(number):pages[urldate].ur
 \qd{由于biblatex不支持newspaper 条目类型，所以条目类型报纸析出的文献用article表示，但使用entrysubtype或note域等于news|newspaper作为一个区分，当note域数据存在且内容等于news或newspaper时，就将其作为报纸的析出文献进行处理。报纸文献类型标识用N表示，报纸的版次用number域描述。}
 
 \subsubsection{报纸析出的文献/newspaper}\label{sec:standard}
-biblatex没有将报纸的析出文献(newspaper)作为一种文献条目类型，因此可以直接利用article类型加newspaper或note域等于news代替，或者也可以直接使用newspaper类型。为方便使用考虑，本样式增加了对新条目类型newspaper的支持，这种支持通过类似于standard类型的方式实现，没有对数据模型进行改动或增加，而完全利用动态数据修改将newspaper类型转换为article类型。在bib文件中直接使用newspaper类型时需要注意可能存在移植障碍，因为其它biblatex样式可能不支持newspaper类型。
+biblatex没有将报纸的析出文献(newspaper)作为一种文献条目类型，因此可以直接利用article类型加entrysubtype或note域等于news|newspaper代替，或者也可以直接使用newspaper类型。为方便使用考虑，本样式增加了对新条目类型newspaper的支持，这种支持通过类似于standard类型的方式实现，没有对数据模型进行改动或增加，而完全利用动态数据修改将newspaper类型转换为article类型。在bib文件中直接使用newspaper类型时需要注意可能存在移植障碍，因为其它biblatex样式可能不支持newspaper类型。
 
 \begin{refentry}{}{}
 报纸析出的文献对应一个新的entrytype为: newspaper。文献类型标识用N表示。

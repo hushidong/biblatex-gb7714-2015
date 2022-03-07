@@ -248,7 +248,7 @@ maxcitenames=2,mincitenames=1,gbcitelocal=gb7714-2015,mergedate=none]{biblatex}%
 
     局部调整中文本地化字符串
     {%\makeatletter\csdef{abx@lstr@andothersincite}{et al.}\makeatother
-    \makeatletter\csdef{abx@sstr@andothersincitecn}{et al.}\csdef{abx@sstr@andincitecn}{and}\makeatother
+    \makeatletter\csdef{abx@sstr@andothersincitecn}{et al.\isdot}\csdef{abx@sstr@andincitecn}{and}\makeatother
     \cite{chu2004tushu}
     \cite{chen1980zhongguo}
     \cite{walls2013drought}
@@ -303,7 +303,8 @@ maxcitenames=2,mincitenames=1,gbcitelocal=gb7714-2015,mergedate=none]{biblatex}%
 
 \textcite{walls2013drought}根据\textcite{betts2005aging}的研究，首次提出...。其中关于...\cite{walls2013drought,betts2005aging}，是当前中国...得到迅速发展的研究领域\cite{chen1980zhongguo, bravo1990comparative}。引用同一著者在同一年份出版的多篇文献时,在出版年份之后用
 英文小写字母区别，如：\cite{yuan2012lana, yuan2012lanb, yuan2012lanc}。同一处引用多篇文献时,按出版年份由近及远依次标注,中间用
-分号分开。例如\cite{chen1980zhongguo,stamerjohanns2009mathml,hls2012jinji,niu2013zonghe}。
+分号分开。
+例如\cite{chen1980zhongguo,stamerjohanns2009mathml,hls2012jinji,niu2013zonghe}。
 
 使用著者-出版年制（authoryear）式参考文献样式时，中文文献必须在BibTeX索引信息的 \textbf{key} 域（请参考ref.bib文件）填写作者姓名的拼音，才能使得文献列表按照拼音排序。参考文献表中的条目（不排序号），先按语种分类排列，语种顺 序是：中文、日文、英文、俄文、其他文种。然后，中文按汉语拼音字母顺序排列，日文按第一著者的姓氏笔画排序，西文和 俄文按第一著者姓氏首字母顺序排列。
 如中\cite{niu2013zonghe}、日\cite{Bohan1928}、英\cite{stamerjohanns2009mathml}、俄\cite{Dubrovin1906}。
@@ -311,6 +312,14 @@ maxcitenames=2,mincitenames=1,gbcitelocal=gb7714-2015,mergedate=none]{biblatex}%
 如此，即完成了文献的索引，请查看下本文档的参考文献一章，看看是不是就是这么简单呢？是的，就是这么简单！
 
 不同文献样式和引用样式，如著者-出版年制（authoryear）、顺序编码制（numbers）、上标顺序编码制（super）可在Thesis.tex中对artratex.sty调用实现，
+
+
+\subsection{引用(标注)标签的顺序}
+
+\cite{chen1980zhongguo,stamerjohanns2009mathml,hls2012jinji,niu2013zonghe}
+
+\cite{hls2012jinji,niu2013zonghe,chen1980zhongguo,stamerjohanns2009mathml}
+
 
     \printbibliography
 

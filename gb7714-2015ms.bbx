@@ -11,7 +11,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2022/02/22 v1.1d}
+\def\versionofgbtstyle{2022/03/07 v1.1e}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015ms.bbx}[\versionofgbtstyle biblatex bibliography style]
 %\RequireBiber[3]%显式指定用biber后端，当用bibtex时会报错，但其实不会影响编译，只是采用bibtex后无法达成格式需求
@@ -2200,15 +2200,17 @@ incollection,proceedings,inproceedings]{number}{%
 %
 %   对edition版本信息格式做出修改
 %
-\DeclareFieldFormat{edition}{%源来自biblatex.DEF
-\testCJKfirst{userd}%
-\iftoggle{ifCJKforgbt}%
-{\ifinteger{##1}%
-{\printtext{##1\str@edition}}%
-{##1\isdot}}%
-{\ifinteger{##1}%
-{\mkbibordedition{##1}~\bibstring{edition}}%
-{##1\isdot}}}%
+\DeclareFieldFormat{edition}{\bibtitlefont%源来自biblatex.DEF
+\ifnumgreater{#1}{1}{%
+    \testCJKfirst{userd}%
+    \iftoggle{ifCJKforgbt}%
+        {\ifinteger{#1}%
+            {\printtext{#1\str@edition}}%
+            {#1\isdot}}%
+        {\ifinteger{#1}%
+            {\mkbibordedition{#1}~\bibstring{edition}}%
+            {#1\isdot}}}{}%
+}%
 %
 %   对version的版本信息做出修改
 %
