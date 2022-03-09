@@ -3147,17 +3147,18 @@ incollection,proceedings,inproceedings]{number}{%
 
 %
 %   对edition版本信息格式做出修改
-%
+%   注意实现逻辑：
+%   1. 不是整数时原样输出
+%   2. 当是整数且大于1时按版本格式输出
 \DeclareFieldFormat{edition}{\bibtitlefont%源来自biblatex.DEF
-\ifnumgreater{#1}{1}{%
     \testCJKfirst{userd}%
     \iftoggle{ifCJKforgbt}%
         {\ifinteger{#1}%
-            {\printtext{#1\str@edition}}%
+            {\ifnumgreater{#1}{1}{\printtext{#1\str@edition}}{}}%
             {#1\isdot}}%
         {\ifinteger{#1}%
-            {\mkbibordedition{#1}~\bibstring{edition}}%
-            {#1\isdot}}}{}%
+            {\ifnumgreater{#1}{1}{\mkbibordedition{#1}~\bibstring{edition}}{}}%
+            {#1\isdot}}%
 }
 
 
