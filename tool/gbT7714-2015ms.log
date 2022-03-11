@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/W32TeX) (preloaded format=xelatex 2020.9.17)  11 SEP 2021 13:00
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/W32TeX) (preloaded format=xelatex 2020.9.17)  11 MAR 2022 20:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -118,7 +118,7 @@ File: l3backend-xdvipdfmx.def 2020-03-12 L3 backend support: xdvipdfmx
 \g__pdf_backend_object_int=\count177
 \g__pdf_backend_annotation_int=\count178
 )
-(./gbT7714-2015ms.aux)
+No file gbT7714-2015ms.aux.
 \openout1 = `gbT7714-2015ms.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
@@ -132,7 +132,7 @@ LaTeX Font Info:    ... okay on input line 5.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 5.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 5
 .
- (d:/texlive/2020/texmf-dist/tex/latex/base/ts1cmr.fd
+(d:/texlive/2020/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 5.
@@ -308,8 +308,8 @@ File: ../egfigure/tgbbiblioms.pdf Graphic file (type pdf)
  [18]
 (./gbT7714-2015ms.aux) ) 
 Here is how much of TeX's memory you used:
- 2390 strings out of 479418
- 37265 string characters out of 5888105
+ 2388 strings out of 479418
+ 37227 string characters out of 5888105
  281389 words of memory out of 5000000
  19909 multiletter control sequences out of 15000+600000
  532346 words of font info for 25 fonts, out of 8000000 for 9000

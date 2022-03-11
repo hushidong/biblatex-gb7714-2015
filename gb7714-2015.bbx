@@ -630,6 +630,7 @@
       maxitems     = 1,%设置列表最大数量
       minitems     = 1, %设置缩减后的列表最小数量
       isbn=false,
+      usetranslator=true,
     }
 
     %
@@ -3572,7 +3573,7 @@ incollection,proceedings,inproceedings]{number}{%
     and
     not test {\ifnameundef{translator}}
   }
-    {\renewcommand{\aftertransdelim}{\adddot\addspace}{\adddot\addspace}\printnames{translator}%
+    {\renewcommand{\aftertransdelim}{\adddot\addspace}\printnames{translator}%
      \clearname{translator}}
     {}}
 

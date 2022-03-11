@@ -580,6 +580,7 @@
       urldate =gb7714-2015, %iso，针对3.10<=biblatex版本的选项设置，比如texlive2018中的3.11版
       eventdate =gb7714-2015,
       gblocal=gb7714-2015,
+      usetranslator=true,
     }
 
 
@@ -2205,12 +2206,12 @@ incollection,proceedings,inproceedings]{number}{%
 \DeclareFieldFormat{edition}{\bibtitlefont%源来自biblatex.DEF
     \testCJKfirst{userd}%
     \iftoggle{ifCJKforgbt}%
-        {\ifinteger{#1}%
-            {\ifnumgreater{#1}{1}{\printtext{#1\str@edition}}{}}%
-            {#1\isdot}}%
-        {\ifinteger{#1}%
-            {\ifnumgreater{#1}{1}{\mkbibordedition{#1}~\bibstring{edition}}{}}%
-            {#1\isdot}}%
+        {\ifinteger{##1}%
+            {\ifnumgreater{##1}{1}{\printtext{##1\str@edition}}{}}%
+            {##1\isdot}}%
+        {\ifinteger{##1}%
+            {\ifnumgreater{##1}{1}{\mkbibordedition{##1}~\bibstring{edition}}{}}%
+            {##1\isdot}}%
 }%
 %
 %   对version的版本信息做出修改

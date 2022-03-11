@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/W32TeX) (preloaded format=xelatex 2020.9.17)  11 SEP 2021 13:01
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/W32TeX) (preloaded format=xelatex 2020.9.17)  11 MAR 2022 20:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -238,7 +238,7 @@ File: l3backend-xdvipdfmx.def 2020-03-12 L3 backend support: xdvipdfmx
 \g__pdf_backend_object_int=\count189
 \g__pdf_backend_annotation_int=\count190
 )
-(./gbT7714-2015fmt.aux)
+No file gbT7714-2015fmt.aux.
 \openout1 = `gbT7714-2015fmt.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
@@ -252,7 +252,7 @@ LaTeX Font Info:    ... okay on input line 6.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 6.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 6
 .
- (d:/texlive/2020/texmf-dist/tex/latex/base/ts1cmr.fd
+(d:/texlive/2020/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 6.
@@ -283,11 +283,12 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 6.
 LaTeX Info: Redefining \pageref on input line 6.
 LaTeX Info: Redefining \nameref on input line 6.
-
-(./gbT7714-2015fmt.out) (./gbT7714-2015fmt.out)
 \@outlinefile=\write3
 \openout3 = `gbT7714-2015fmt.out'.
 
+
+
+Package hyperref Warning: Rerun to get /PageLabels entry.
 
 (d:/texlive/2020/texmf-dist/tex/latex/pdflscape/pdflscape.sty
 Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
@@ -488,15 +489,25 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 13.
  (./gbT7714-2015fmt.aux)
 Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 13.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 13.
-Package rerunfilecheck Info: File `gbT7714-2015fmt.out' has not changed.
-(rerunfilecheck)             Checksum: 043B8EB02AE6862BCFE78B4F94EDECDF;41.
+
+
+Package rerunfilecheck Warning: File `gbT7714-2015fmt.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `gbT7714-2015fmt.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  043B8EB02AE6862BCFE78B4F94EDECDF;41.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 13.
  ) 
 Here is how much of TeX's memory you used:
- 9479 strings out of 479418
- 138753 string characters out of 5888105
- 391490 words of memory out of 5000000
- 26902 multiletter control sequences out of 15000+600000
+ 9472 strings out of 479418
+ 138631 string characters out of 5888105
+ 391345 words of memory out of 5000000
+ 26901 multiletter control sequences out of 15000+600000
  532706 words of font info for 26 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  41i,18n,51p,274b,475s stack positions out of 5000i,500n,10000p,200000b,80000s

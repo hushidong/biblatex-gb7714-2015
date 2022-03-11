@@ -2430,6 +2430,19 @@ author.title[usera].translator.edition.location:publisher,date或year:pages[urld
 
 其中标题相关的附加信息除了可以直接在title域中录入外，还可以在subtitle或titleaddon域中添加，后面出现的booktitle，journaltitle，也有类似情况，可以在booktitleaddon或者journalsubtitle中附加信息。其中出版地用location域表示，也可以用传统的address表示，biblatex将address作为location的别名处理，使用两者中的任何一个都可以表示出版地信息。\bc{特别强调: usera域不用录入，该域内容由bbx样式文件根据条目类型自动处理得到。}
 
+\qd{需要注意的是，当文献没有作者(责任制)，但有编者、译者时，可以利用编者和译者替代责任者，这是需要使用选项useeditor或usetranslator。当前默认使用该上述选项，若不使用则可能出现标点问题。文献条目比如：}
+
+\begin{texlist}
+@Book{周鲁卫2011--,
+  translator = {周鲁卫},
+  title      = {软物质物理导论},
+  year       = {2011},
+  publisher  = {复旦大学出版社},
+  address    = {上海},
+  pages      = {1},
+}
+\end{texlist}
+
 \qd{由于biblatex不支持standard条目类型，所以“标准”类型可以用book或inbook替代，但使用entrysubtype或note域等于standard作为一个区分，当entrysubtype或note域数据存在且内容等于standard时，就将其作为“标准”文献进行处理，其文献类型标识用S表示。这里为什么使用entrysubtype或note域而不是type域和keywords域，是因为考虑到entrysubtype通常标准样式不使用，而note域一般情况下没有什么特殊意义，使用它不会导致冲突，而type域在biblatex标准样式中没有被book和article条目类型当作支持的域，对于支持该域的条目比如thesis，type域又有特殊的意义，是用来区分master和doctor的，而keywords域在biblatex-gb7714-2015中用来存放entrykey以实现一些特殊的判断，所以也不便于使用它。}
 
 \subsubsection{标准/standard}\label{sec:standard}

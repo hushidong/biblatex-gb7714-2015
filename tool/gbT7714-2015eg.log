@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/W32TeX) (preloaded format=xelatex 2020.9.17)  11 SEP 2021 13:00
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/W32TeX) (preloaded format=xelatex 2020.9.17)  11 MAR 2022 20:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -231,43 +231,47 @@ File: ppxetex.def 2020/01/28 v0.5q Pdfpages driver for XeTeX (AM)
 \c@AM@survey=\count187
 \AM@templatesizebox=\box47
 )
+(d:/texlive/2020/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2019/09/21 v2.5h e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count188
+)
 (d:/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-xdvipdfmx.def
 File: l3backend-xdvipdfmx.def 2020-03-12 L3 backend support: xdvipdfmx
-\g__graphics_track_int=\count188
+\g__graphics_track_int=\count189
 \l__pdf_internal_box=\box48
-\g__pdf_backend_object_int=\count189
-\g__pdf_backend_annotation_int=\count190
+\g__pdf_backend_object_int=\count190
+\g__pdf_backend_annotation_int=\count191
 )
-(./gbT7714-2015eg.aux)
+No file gbT7714-2015eg.aux.
 \openout1 = `gbT7714-2015eg.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 6.
-LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 6
-.
- (d:/texlive/2020/texmf-dist/tex/latex/base/ts1cmr.fd
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 18.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 1
+8.
+(d:/texlive/2020/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
 \AtBeginShipoutBox=\box49
-Package hyperref Info: Link coloring ON on input line 6.
+Package hyperref Info: Link coloring ON on input line 18.
 
 (d:/texlive/2020/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
@@ -278,16 +282,17 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 (d:/texlive/2020/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count191
+\c@section@level=\count192
 )
-LaTeX Info: Redefining \ref on input line 6.
-LaTeX Info: Redefining \pageref on input line 6.
-LaTeX Info: Redefining \nameref on input line 6.
-
-(./gbT7714-2015eg.out) (./gbT7714-2015eg.out)
+LaTeX Info: Redefining \ref on input line 18.
+LaTeX Info: Redefining \pageref on input line 18.
+LaTeX Info: Redefining \nameref on input line 18.
 \@outlinefile=\write3
 \openout3 = `gbT7714-2015eg.out'.
 
+
+
+Package hyperref Warning: Rerun to get /PageLabels entry.
 
 (d:/texlive/2020/texmf-dist/tex/latex/pdflscape/pdflscape.sty
 Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
@@ -371,329 +376,324 @@ File: ../example/cls-beameray.pdf Graphic file (type pdf)
 File: ../example/cls-beameray.pdf Graphic file (type pdf)
 <use ../example/cls-beameray.pdf, page 2>
  [7]
-File: ../example/codeopt-gbcodegbk.pdf Graphic file (type pdf)
-<use ../example/codeopt-gbcodegbk.pdf>
-File: ../example/codeopt-gbcodegbk.pdf Graphic file (type pdf)
-<use ../example/codeopt-gbcodegbk.pdf>
-File: ../example/codeopt-gbcodegbk.pdf Graphic file (type pdf)
-<use ../example/codeopt-gbcodegbk.pdf, page 1>
-File: ../example/codeopt-gbcodegbk.pdf Graphic file (type pdf)
-<use ../example/codeopt-gbcodegbk.pdf, page 1>
-File: ../example/codeopt-gbcodegbk.pdf Graphic file (type pdf)
-<use ../example/codeopt-gbcodegbk.pdf, page 1>
-File: ../example/codeopt-gbcodegbk.pdf Graphic file (type pdf)
-<use ../example/codeopt-gbcodegbk.pdf, page 1>
-File: ../example/codeopt-gbcodegbk.pdf Graphic file (type pdf)
-<use ../example/codeopt-gbcodegbk.pdf, page 1>
+File: ../example/eg-opt-gbstyle.pdf Graphic file (type pdf)
+<use ../example/eg-opt-gbstyle.pdf>
+File: ../example/eg-opt-gbstyle.pdf Graphic file (type pdf)
+<use ../example/eg-opt-gbstyle.pdf>
+File: ../example/eg-opt-gbstyle.pdf Graphic file (type pdf)
+<use ../example/eg-opt-gbstyle.pdf, page 1>
+File: ../example/eg-opt-gbstyle.pdf Graphic file (type pdf)
+<use ../example/eg-opt-gbstyle.pdf, page 1>
+File: ../example/eg-opt-gbstyle.pdf Graphic file (type pdf)
+<use ../example/eg-opt-gbstyle.pdf, page 1>
+File: ../example/eg-opt-gbstyle.pdf Graphic file (type pdf)
+<use ../example/eg-opt-gbstyle.pdf, page 1>
+File: ../example/eg-opt-gbstyle.pdf Graphic file (type pdf)
+<use ../example/eg-opt-gbstyle.pdf, page 1>
  [8]
 File: ../example/eg-opt-gbstyle.pdf Graphic file (type pdf)
-<use ../example/eg-opt-gbstyle.pdf>
+<use ../example/eg-opt-gbstyle.pdf, page 2>
 File: ../example/eg-opt-gbstyle.pdf Graphic file (type pdf)
-<use ../example/eg-opt-gbstyle.pdf>
+<use ../example/eg-opt-gbstyle.pdf, page 2>
 File: ../example/eg-opt-gbstyle.pdf Graphic file (type pdf)
-<use ../example/eg-opt-gbstyle.pdf, page 1>
-File: ../example/eg-opt-gbstyle.pdf Graphic file (type pdf)
-<use ../example/eg-opt-gbstyle.pdf, page 1>
-File: ../example/eg-opt-gbstyle.pdf Graphic file (type pdf)
-<use ../example/eg-opt-gbstyle.pdf, page 1>
-File: ../example/eg-opt-gbstyle.pdf Graphic file (type pdf)
-<use ../example/eg-opt-gbstyle.pdf, page 1>
-File: ../example/eg-opt-gbstyle.pdf Graphic file (type pdf)
-<use ../example/eg-opt-gbstyle.pdf, page 1>
+<use ../example/eg-opt-gbstyle.pdf, page 2>
  [9]
 File: ../example/eg-opt-gbstyle.pdf Graphic file (type pdf)
-<use ../example/eg-opt-gbstyle.pdf, page 2>
+<use ../example/eg-opt-gbstyle.pdf, page 3>
 File: ../example/eg-opt-gbstyle.pdf Graphic file (type pdf)
-<use ../example/eg-opt-gbstyle.pdf, page 2>
+<use ../example/eg-opt-gbstyle.pdf, page 3>
 File: ../example/eg-opt-gbstyle.pdf Graphic file (type pdf)
-<use ../example/eg-opt-gbstyle.pdf, page 2>
+<use ../example/eg-opt-gbstyle.pdf, page 3>
  [10]
-File: ../example/eg-opt-gbstyle.pdf Graphic file (type pdf)
-<use ../example/eg-opt-gbstyle.pdf, page 3>
-File: ../example/eg-opt-gbstyle.pdf Graphic file (type pdf)
-<use ../example/eg-opt-gbstyle.pdf, page 3>
-File: ../example/eg-opt-gbstyle.pdf Graphic file (type pdf)
-<use ../example/eg-opt-gbstyle.pdf, page 3>
+File: ../example/opt-gbalign-center.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-center.pdf>
+File: ../example/opt-gbalign-center.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-center.pdf>
+File: ../example/opt-gbalign-center.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-center.pdf, page 1>
+File: ../example/opt-gbalign-center.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-center.pdf, page 1>
+File: ../example/opt-gbalign-center.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-center.pdf, page 1>
+File: ../example/opt-gbalign-center.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-center.pdf, page 1>
+File: ../example/opt-gbalign-center.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-center.pdf, page 1>
  [11]
-File: ../example/opt-gbalign-center.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-center.pdf>
-File: ../example/opt-gbalign-center.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-center.pdf>
-File: ../example/opt-gbalign-center.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-center.pdf, page 1>
-File: ../example/opt-gbalign-center.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-center.pdf, page 1>
-File: ../example/opt-gbalign-center.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-center.pdf, page 1>
-File: ../example/opt-gbalign-center.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-center.pdf, page 1>
-File: ../example/opt-gbalign-center.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-center.pdf, page 1>
+File: ../example/opt-gbalign-gb.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-gb.pdf>
+File: ../example/opt-gbalign-gb.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-gb.pdf>
+File: ../example/opt-gbalign-gb.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-gb.pdf, page 1>
+File: ../example/opt-gbalign-gb.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-gb.pdf, page 1>
+File: ../example/opt-gbalign-gb.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-gb.pdf, page 1>
+File: ../example/opt-gbalign-gb.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-gb.pdf, page 1>
+File: ../example/opt-gbalign-gb.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-gb.pdf, page 1>
  [12]
-File: ../example/opt-gbalign-gb.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-gb.pdf>
-File: ../example/opt-gbalign-gb.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-gb.pdf>
-File: ../example/opt-gbalign-gb.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-gb.pdf, page 1>
-File: ../example/opt-gbalign-gb.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-gb.pdf, page 1>
-File: ../example/opt-gbalign-gb.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-gb.pdf, page 1>
-File: ../example/opt-gbalign-gb.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-gb.pdf, page 1>
-File: ../example/opt-gbalign-gb.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-gb.pdf, page 1>
+File: ../example/opt-gbalign-left.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-left.pdf>
+File: ../example/opt-gbalign-left.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-left.pdf>
+File: ../example/opt-gbalign-left.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-left.pdf, page 1>
+File: ../example/opt-gbalign-left.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-left.pdf, page 1>
+File: ../example/opt-gbalign-left.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-left.pdf, page 1>
+File: ../example/opt-gbalign-left.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-left.pdf, page 1>
+File: ../example/opt-gbalign-left.pdf Graphic file (type pdf)
+<use ../example/opt-gbalign-left.pdf, page 1>
  [13]
-File: ../example/opt-gbalign-left.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-left.pdf>
-File: ../example/opt-gbalign-left.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-left.pdf>
-File: ../example/opt-gbalign-left.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-left.pdf, page 1>
-File: ../example/opt-gbalign-left.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-left.pdf, page 1>
-File: ../example/opt-gbalign-left.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-left.pdf, page 1>
-File: ../example/opt-gbalign-left.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-left.pdf, page 1>
-File: ../example/opt-gbalign-left.pdf Graphic file (type pdf)
-<use ../example/opt-gbalign-left.pdf, page 1>
+File: ../example/opt-gbbiblabel.pdf Graphic file (type pdf)
+<use ../example/opt-gbbiblabel.pdf>
+File: ../example/opt-gbbiblabel.pdf Graphic file (type pdf)
+<use ../example/opt-gbbiblabel.pdf>
+File: ../example/opt-gbbiblabel.pdf Graphic file (type pdf)
+<use ../example/opt-gbbiblabel.pdf, page 1>
+File: ../example/opt-gbbiblabel.pdf Graphic file (type pdf)
+<use ../example/opt-gbbiblabel.pdf, page 1>
+File: ../example/opt-gbbiblabel.pdf Graphic file (type pdf)
+<use ../example/opt-gbbiblabel.pdf, page 1>
+File: ../example/opt-gbbiblabel.pdf Graphic file (type pdf)
+<use ../example/opt-gbbiblabel.pdf, page 1>
+File: ../example/opt-gbbiblabel.pdf Graphic file (type pdf)
+<use ../example/opt-gbbiblabel.pdf, page 1>
  [14]
-File: ../example/opt-gbbiblabel.pdf Graphic file (type pdf)
-<use ../example/opt-gbbiblabel.pdf>
-File: ../example/opt-gbbiblabel.pdf Graphic file (type pdf)
-<use ../example/opt-gbbiblabel.pdf>
-File: ../example/opt-gbbiblabel.pdf Graphic file (type pdf)
-<use ../example/opt-gbbiblabel.pdf, page 1>
-File: ../example/opt-gbbiblabel.pdf Graphic file (type pdf)
-<use ../example/opt-gbbiblabel.pdf, page 1>
-File: ../example/opt-gbbiblabel.pdf Graphic file (type pdf)
-<use ../example/opt-gbbiblabel.pdf, page 1>
-File: ../example/opt-gbbiblabel.pdf Graphic file (type pdf)
-<use ../example/opt-gbbiblabel.pdf, page 1>
-File: ../example/opt-gbbiblabel.pdf Graphic file (type pdf)
-<use ../example/opt-gbbiblabel.pdf, page 1>
+File: ../example/opt-gbfieldstd.pdf Graphic file (type pdf)
+<use ../example/opt-gbfieldstd.pdf>
+File: ../example/opt-gbfieldstd.pdf Graphic file (type pdf)
+<use ../example/opt-gbfieldstd.pdf>
+File: ../example/opt-gbfieldstd.pdf Graphic file (type pdf)
+<use ../example/opt-gbfieldstd.pdf, page 1>
+File: ../example/opt-gbfieldstd.pdf Graphic file (type pdf)
+<use ../example/opt-gbfieldstd.pdf, page 1>
+File: ../example/opt-gbfieldstd.pdf Graphic file (type pdf)
+<use ../example/opt-gbfieldstd.pdf, page 1>
+File: ../example/opt-gbfieldstd.pdf Graphic file (type pdf)
+<use ../example/opt-gbfieldstd.pdf, page 1>
+File: ../example/opt-gbfieldstd.pdf Graphic file (type pdf)
+<use ../example/opt-gbfieldstd.pdf, page 1>
  [15]
-File: ../example/opt-gbfieldstd.pdf Graphic file (type pdf)
-<use ../example/opt-gbfieldstd.pdf>
-File: ../example/opt-gbfieldstd.pdf Graphic file (type pdf)
-<use ../example/opt-gbfieldstd.pdf>
-File: ../example/opt-gbfieldstd.pdf Graphic file (type pdf)
-<use ../example/opt-gbfieldstd.pdf, page 1>
-File: ../example/opt-gbfieldstd.pdf Graphic file (type pdf)
-<use ../example/opt-gbfieldstd.pdf, page 1>
-File: ../example/opt-gbfieldstd.pdf Graphic file (type pdf)
-<use ../example/opt-gbfieldstd.pdf, page 1>
-File: ../example/opt-gbfieldstd.pdf Graphic file (type pdf)
-<use ../example/opt-gbfieldstd.pdf, page 1>
-File: ../example/opt-gbfieldstd.pdf Graphic file (type pdf)
-<use ../example/opt-gbfieldstd.pdf, page 1>
+File: ../example/opt-gbnamefmt.pdf Graphic file (type pdf)
+<use ../example/opt-gbnamefmt.pdf>
+File: ../example/opt-gbnamefmt.pdf Graphic file (type pdf)
+<use ../example/opt-gbnamefmt.pdf>
+File: ../example/opt-gbnamefmt.pdf Graphic file (type pdf)
+<use ../example/opt-gbnamefmt.pdf, page 1>
+File: ../example/opt-gbnamefmt.pdf Graphic file (type pdf)
+<use ../example/opt-gbnamefmt.pdf, page 1>
+File: ../example/opt-gbnamefmt.pdf Graphic file (type pdf)
+<use ../example/opt-gbnamefmt.pdf, page 1>
+File: ../example/opt-gbnamefmt.pdf Graphic file (type pdf)
+<use ../example/opt-gbnamefmt.pdf, page 1>
+File: ../example/opt-gbnamefmt.pdf Graphic file (type pdf)
+<use ../example/opt-gbnamefmt.pdf, page 1>
  [16]
 File: ../example/opt-gbnamefmt.pdf Graphic file (type pdf)
-<use ../example/opt-gbnamefmt.pdf>
+<use ../example/opt-gbnamefmt.pdf, page 2>
 File: ../example/opt-gbnamefmt.pdf Graphic file (type pdf)
-<use ../example/opt-gbnamefmt.pdf>
+<use ../example/opt-gbnamefmt.pdf, page 2>
 File: ../example/opt-gbnamefmt.pdf Graphic file (type pdf)
-<use ../example/opt-gbnamefmt.pdf, page 1>
-File: ../example/opt-gbnamefmt.pdf Graphic file (type pdf)
-<use ../example/opt-gbnamefmt.pdf, page 1>
-File: ../example/opt-gbnamefmt.pdf Graphic file (type pdf)
-<use ../example/opt-gbnamefmt.pdf, page 1>
-File: ../example/opt-gbnamefmt.pdf Graphic file (type pdf)
-<use ../example/opt-gbnamefmt.pdf, page 1>
-File: ../example/opt-gbnamefmt.pdf Graphic file (type pdf)
-<use ../example/opt-gbnamefmt.pdf, page 1>
+<use ../example/opt-gbnamefmt.pdf, page 2>
  [17]
-File: ../example/opt-gbnamefmt.pdf Graphic file (type pdf)
-<use ../example/opt-gbnamefmt.pdf, page 2>
-File: ../example/opt-gbnamefmt.pdf Graphic file (type pdf)
-<use ../example/opt-gbnamefmt.pdf, page 2>
-File: ../example/opt-gbnamefmt.pdf Graphic file (type pdf)
-<use ../example/opt-gbnamefmt.pdf, page 2>
+File: ../example/opt-gbnamefmt-default.pdf Graphic file (type pdf)
+<use ../example/opt-gbnamefmt-default.pdf>
+File: ../example/opt-gbnamefmt-default.pdf Graphic file (type pdf)
+<use ../example/opt-gbnamefmt-default.pdf>
+File: ../example/opt-gbnamefmt-default.pdf Graphic file (type pdf)
+<use ../example/opt-gbnamefmt-default.pdf, page 1>
+File: ../example/opt-gbnamefmt-default.pdf Graphic file (type pdf)
+<use ../example/opt-gbnamefmt-default.pdf, page 1>
+File: ../example/opt-gbnamefmt-default.pdf Graphic file (type pdf)
+<use ../example/opt-gbnamefmt-default.pdf, page 1>
+File: ../example/opt-gbnamefmt-default.pdf Graphic file (type pdf)
+<use ../example/opt-gbnamefmt-default.pdf, page 1>
+File: ../example/opt-gbnamefmt-default.pdf Graphic file (type pdf)
+<use ../example/opt-gbnamefmt-default.pdf, page 1>
 
 [18]
-File: ../example/opt-gbnamefmt-default.pdf Graphic file (type pdf)
-<use ../example/opt-gbnamefmt-default.pdf>
-File: ../example/opt-gbnamefmt-default.pdf Graphic file (type pdf)
-<use ../example/opt-gbnamefmt-default.pdf>
-File: ../example/opt-gbnamefmt-default.pdf Graphic file (type pdf)
-<use ../example/opt-gbnamefmt-default.pdf, page 1>
-File: ../example/opt-gbnamefmt-default.pdf Graphic file (type pdf)
-<use ../example/opt-gbnamefmt-default.pdf, page 1>
-File: ../example/opt-gbnamefmt-default.pdf Graphic file (type pdf)
-<use ../example/opt-gbnamefmt-default.pdf, page 1>
-File: ../example/opt-gbnamefmt-default.pdf Graphic file (type pdf)
-<use ../example/opt-gbnamefmt-default.pdf, page 1>
-File: ../example/opt-gbnamefmt-default.pdf Graphic file (type pdf)
-<use ../example/opt-gbnamefmt-default.pdf, page 1>
+File: ../example/opt-gbpub-true.pdf Graphic file (type pdf)
+<use ../example/opt-gbpub-true.pdf>
+File: ../example/opt-gbpub-true.pdf Graphic file (type pdf)
+<use ../example/opt-gbpub-true.pdf>
+File: ../example/opt-gbpub-true.pdf Graphic file (type pdf)
+<use ../example/opt-gbpub-true.pdf, page 1>
+File: ../example/opt-gbpub-true.pdf Graphic file (type pdf)
+<use ../example/opt-gbpub-true.pdf, page 1>
+File: ../example/opt-gbpub-true.pdf Graphic file (type pdf)
+<use ../example/opt-gbpub-true.pdf, page 1>
+File: ../example/opt-gbpub-true.pdf Graphic file (type pdf)
+<use ../example/opt-gbpub-true.pdf, page 1>
+File: ../example/opt-gbpub-true.pdf Graphic file (type pdf)
+<use ../example/opt-gbpub-true.pdf, page 1>
  [19]
-File: ../example/opt-gbpub-true.pdf Graphic file (type pdf)
-<use ../example/opt-gbpub-true.pdf>
-File: ../example/opt-gbpub-true.pdf Graphic file (type pdf)
-<use ../example/opt-gbpub-true.pdf>
-File: ../example/opt-gbpub-true.pdf Graphic file (type pdf)
-<use ../example/opt-gbpub-true.pdf, page 1>
-File: ../example/opt-gbpub-true.pdf Graphic file (type pdf)
-<use ../example/opt-gbpub-true.pdf, page 1>
-File: ../example/opt-gbpub-true.pdf Graphic file (type pdf)
-<use ../example/opt-gbpub-true.pdf, page 1>
-File: ../example/opt-gbpub-true.pdf Graphic file (type pdf)
-<use ../example/opt-gbpub-true.pdf, page 1>
-File: ../example/opt-gbpub-true.pdf Graphic file (type pdf)
-<use ../example/opt-gbpub-true.pdf, page 1>
+File: ../example/opt-gbpunctin.pdf Graphic file (type pdf)
+<use ../example/opt-gbpunctin.pdf>
+File: ../example/opt-gbpunctin.pdf Graphic file (type pdf)
+<use ../example/opt-gbpunctin.pdf>
+File: ../example/opt-gbpunctin.pdf Graphic file (type pdf)
+<use ../example/opt-gbpunctin.pdf, page 1>
+File: ../example/opt-gbpunctin.pdf Graphic file (type pdf)
+<use ../example/opt-gbpunctin.pdf, page 1>
+File: ../example/opt-gbpunctin.pdf Graphic file (type pdf)
+<use ../example/opt-gbpunctin.pdf, page 1>
+File: ../example/opt-gbpunctin.pdf Graphic file (type pdf)
+<use ../example/opt-gbpunctin.pdf, page 1>
+File: ../example/opt-gbpunctin.pdf Graphic file (type pdf)
+<use ../example/opt-gbpunctin.pdf, page 1>
  [20]
-File: ../example/opt-gbpunctin.pdf Graphic file (type pdf)
-<use ../example/opt-gbpunctin.pdf>
-File: ../example/opt-gbpunctin.pdf Graphic file (type pdf)
-<use ../example/opt-gbpunctin.pdf>
-File: ../example/opt-gbpunctin.pdf Graphic file (type pdf)
-<use ../example/opt-gbpunctin.pdf, page 1>
-File: ../example/opt-gbpunctin.pdf Graphic file (type pdf)
-<use ../example/opt-gbpunctin.pdf, page 1>
-File: ../example/opt-gbpunctin.pdf Graphic file (type pdf)
-<use ../example/opt-gbpunctin.pdf, page 1>
-File: ../example/opt-gbpunctin.pdf Graphic file (type pdf)
-<use ../example/opt-gbpunctin.pdf, page 1>
-File: ../example/opt-gbpunctin.pdf Graphic file (type pdf)
-<use ../example/opt-gbpunctin.pdf, page 1>
+File: ../example/opt-gbtitlelink.pdf Graphic file (type pdf)
+<use ../example/opt-gbtitlelink.pdf>
+File: ../example/opt-gbtitlelink.pdf Graphic file (type pdf)
+<use ../example/opt-gbtitlelink.pdf>
+File: ../example/opt-gbtitlelink.pdf Graphic file (type pdf)
+<use ../example/opt-gbtitlelink.pdf, page 1>
+File: ../example/opt-gbtitlelink.pdf Graphic file (type pdf)
+<use ../example/opt-gbtitlelink.pdf, page 1>
+File: ../example/opt-gbtitlelink.pdf Graphic file (type pdf)
+<use ../example/opt-gbtitlelink.pdf, page 1>
+File: ../example/opt-gbtitlelink.pdf Graphic file (type pdf)
+<use ../example/opt-gbtitlelink.pdf, page 1>
+File: ../example/opt-gbtitlelink.pdf Graphic file (type pdf)
+<use ../example/opt-gbtitlelink.pdf, page 1>
  [21]
-File: ../example/opt-gbtitlelink.pdf Graphic file (type pdf)
-<use ../example/opt-gbtitlelink.pdf>
-File: ../example/opt-gbtitlelink.pdf Graphic file (type pdf)
-<use ../example/opt-gbtitlelink.pdf>
-File: ../example/opt-gbtitlelink.pdf Graphic file (type pdf)
-<use ../example/opt-gbtitlelink.pdf, page 1>
-File: ../example/opt-gbtitlelink.pdf Graphic file (type pdf)
-<use ../example/opt-gbtitlelink.pdf, page 1>
-File: ../example/opt-gbtitlelink.pdf Graphic file (type pdf)
-<use ../example/opt-gbtitlelink.pdf, page 1>
-File: ../example/opt-gbtitlelink.pdf Graphic file (type pdf)
-<use ../example/opt-gbtitlelink.pdf, page 1>
-File: ../example/opt-gbtitlelink.pdf Graphic file (type pdf)
-<use ../example/opt-gbtitlelink.pdf, page 1>
+File: ../example/opt-gbfootbib.pdf Graphic file (type pdf)
+<use ../example/opt-gbfootbib.pdf>
+File: ../example/opt-gbfootbib.pdf Graphic file (type pdf)
+<use ../example/opt-gbfootbib.pdf>
+File: ../example/opt-gbfootbib.pdf Graphic file (type pdf)
+<use ../example/opt-gbfootbib.pdf, page 1>
+File: ../example/opt-gbfootbib.pdf Graphic file (type pdf)
+<use ../example/opt-gbfootbib.pdf, page 1>
+File: ../example/opt-gbfootbib.pdf Graphic file (type pdf)
+<use ../example/opt-gbfootbib.pdf, page 1>
+File: ../example/opt-gbfootbib.pdf Graphic file (type pdf)
+<use ../example/opt-gbfootbib.pdf, page 1>
+File: ../example/opt-gbfootbib.pdf Graphic file (type pdf)
+<use ../example/opt-gbfootbib.pdf, page 1>
  [22]
 File: ../example/opt-gbfootbib.pdf Graphic file (type pdf)
-<use ../example/opt-gbfootbib.pdf>
+<use ../example/opt-gbfootbib.pdf, page 2>
 File: ../example/opt-gbfootbib.pdf Graphic file (type pdf)
-<use ../example/opt-gbfootbib.pdf>
+<use ../example/opt-gbfootbib.pdf, page 2>
 File: ../example/opt-gbfootbib.pdf Graphic file (type pdf)
-<use ../example/opt-gbfootbib.pdf, page 1>
-File: ../example/opt-gbfootbib.pdf Graphic file (type pdf)
-<use ../example/opt-gbfootbib.pdf, page 1>
-File: ../example/opt-gbfootbib.pdf Graphic file (type pdf)
-<use ../example/opt-gbfootbib.pdf, page 1>
-File: ../example/opt-gbfootbib.pdf Graphic file (type pdf)
-<use ../example/opt-gbfootbib.pdf, page 1>
-File: ../example/opt-gbfootbib.pdf Graphic file (type pdf)
-<use ../example/opt-gbfootbib.pdf, page 1>
+<use ../example/opt-gbfootbib.pdf, page 2>
  [23]
 File: ../example/opt-gbfootbib.pdf Graphic file (type pdf)
-<use ../example/opt-gbfootbib.pdf, page 2>
+<use ../example/opt-gbfootbib.pdf, page 3>
 File: ../example/opt-gbfootbib.pdf Graphic file (type pdf)
-<use ../example/opt-gbfootbib.pdf, page 2>
+<use ../example/opt-gbfootbib.pdf, page 3>
 File: ../example/opt-gbfootbib.pdf Graphic file (type pdf)
-<use ../example/opt-gbfootbib.pdf, page 2>
+<use ../example/opt-gbfootbib.pdf, page 3>
  [24]
-File: ../example/opt-gbfootbib.pdf Graphic file (type pdf)
-<use ../example/opt-gbfootbib.pdf, page 3>
-File: ../example/opt-gbfootbib.pdf Graphic file (type pdf)
-<use ../example/opt-gbfootbib.pdf, page 3>
-File: ../example/opt-gbfootbib.pdf Graphic file (type pdf)
-<use ../example/opt-gbfootbib.pdf, page 3>
+File: ../example/opt-gbtype.pdf Graphic file (type pdf)
+<use ../example/opt-gbtype.pdf>
+File: ../example/opt-gbtype.pdf Graphic file (type pdf)
+<use ../example/opt-gbtype.pdf>
+File: ../example/opt-gbtype.pdf Graphic file (type pdf)
+<use ../example/opt-gbtype.pdf, page 1>
+File: ../example/opt-gbtype.pdf Graphic file (type pdf)
+<use ../example/opt-gbtype.pdf, page 1>
+File: ../example/opt-gbtype.pdf Graphic file (type pdf)
+<use ../example/opt-gbtype.pdf, page 1>
+File: ../example/opt-gbtype.pdf Graphic file (type pdf)
+<use ../example/opt-gbtype.pdf, page 1>
+File: ../example/opt-gbtype.pdf Graphic file (type pdf)
+<use ../example/opt-gbtype.pdf, page 1>
  [25]
-File: ../example/opt-gbtype.pdf Graphic file (type pdf)
-<use ../example/opt-gbtype.pdf>
-File: ../example/opt-gbtype.pdf Graphic file (type pdf)
-<use ../example/opt-gbtype.pdf>
-File: ../example/opt-gbtype.pdf Graphic file (type pdf)
-<use ../example/opt-gbtype.pdf, page 1>
-File: ../example/opt-gbtype.pdf Graphic file (type pdf)
-<use ../example/opt-gbtype.pdf, page 1>
-File: ../example/opt-gbtype.pdf Graphic file (type pdf)
-<use ../example/opt-gbtype.pdf, page 1>
-File: ../example/opt-gbtype.pdf Graphic file (type pdf)
-<use ../example/opt-gbtype.pdf, page 1>
-File: ../example/opt-gbtype.pdf Graphic file (type pdf)
-<use ../example/opt-gbtype.pdf, page 1>
+File: ../example/opt-gbctexset.pdf Graphic file (type pdf)
+<use ../example/opt-gbctexset.pdf>
+File: ../example/opt-gbctexset.pdf Graphic file (type pdf)
+<use ../example/opt-gbctexset.pdf>
+File: ../example/opt-gbctexset.pdf Graphic file (type pdf)
+<use ../example/opt-gbctexset.pdf, page 1>
+File: ../example/opt-gbctexset.pdf Graphic file (type pdf)
+<use ../example/opt-gbctexset.pdf, page 1>
+File: ../example/opt-gbctexset.pdf Graphic file (type pdf)
+<use ../example/opt-gbctexset.pdf, page 1>
+File: ../example/opt-gbctexset.pdf Graphic file (type pdf)
+<use ../example/opt-gbctexset.pdf, page 1>
+File: ../example/opt-gbctexset.pdf Graphic file (type pdf)
+<use ../example/opt-gbctexset.pdf, page 1>
  [26]
-File: ../example/opt-gbctexset.pdf Graphic file (type pdf)
-<use ../example/opt-gbctexset.pdf>
-File: ../example/opt-gbctexset.pdf Graphic file (type pdf)
-<use ../example/opt-gbctexset.pdf>
-File: ../example/opt-gbctexset.pdf Graphic file (type pdf)
-<use ../example/opt-gbctexset.pdf, page 1>
-File: ../example/opt-gbctexset.pdf Graphic file (type pdf)
-<use ../example/opt-gbctexset.pdf, page 1>
-File: ../example/opt-gbctexset.pdf Graphic file (type pdf)
-<use ../example/opt-gbctexset.pdf, page 1>
-File: ../example/opt-gbctexset.pdf Graphic file (type pdf)
-<use ../example/opt-gbctexset.pdf, page 1>
-File: ../example/opt-gbctexset.pdf Graphic file (type pdf)
-<use ../example/opt-gbctexset.pdf, page 1>
+File: ../example/opt-gbnoauthor-false.pdf Graphic file (type pdf)
+<use ../example/opt-gbnoauthor-false.pdf>
+File: ../example/opt-gbnoauthor-false.pdf Graphic file (type pdf)
+<use ../example/opt-gbnoauthor-false.pdf>
+File: ../example/opt-gbnoauthor-false.pdf Graphic file (type pdf)
+<use ../example/opt-gbnoauthor-false.pdf, page 1>
+File: ../example/opt-gbnoauthor-false.pdf Graphic file (type pdf)
+<use ../example/opt-gbnoauthor-false.pdf, page 1>
+File: ../example/opt-gbnoauthor-false.pdf Graphic file (type pdf)
+<use ../example/opt-gbnoauthor-false.pdf, page 1>
+File: ../example/opt-gbnoauthor-false.pdf Graphic file (type pdf)
+<use ../example/opt-gbnoauthor-false.pdf, page 1>
+File: ../example/opt-gbnoauthor-false.pdf Graphic file (type pdf)
+<use ../example/opt-gbnoauthor-false.pdf, page 1>
  [27]
-File: ../example/opt-gbnoauthor-false.pdf Graphic file (type pdf)
-<use ../example/opt-gbnoauthor-false.pdf>
-File: ../example/opt-gbnoauthor-false.pdf Graphic file (type pdf)
-<use ../example/opt-gbnoauthor-false.pdf>
-File: ../example/opt-gbnoauthor-false.pdf Graphic file (type pdf)
-<use ../example/opt-gbnoauthor-false.pdf, page 1>
-File: ../example/opt-gbnoauthor-false.pdf Graphic file (type pdf)
-<use ../example/opt-gbnoauthor-false.pdf, page 1>
-File: ../example/opt-gbnoauthor-false.pdf Graphic file (type pdf)
-<use ../example/opt-gbnoauthor-false.pdf, page 1>
-File: ../example/opt-gbnoauthor-false.pdf Graphic file (type pdf)
-<use ../example/opt-gbnoauthor-false.pdf, page 1>
-File: ../example/opt-gbnoauthor-false.pdf Graphic file (type pdf)
-<use ../example/opt-gbnoauthor-false.pdf, page 1>
+File: ../example/opt-gbnoauthor-true.pdf Graphic file (type pdf)
+<use ../example/opt-gbnoauthor-true.pdf>
+File: ../example/opt-gbnoauthor-true.pdf Graphic file (type pdf)
+<use ../example/opt-gbnoauthor-true.pdf>
+File: ../example/opt-gbnoauthor-true.pdf Graphic file (type pdf)
+<use ../example/opt-gbnoauthor-true.pdf, page 1>
+File: ../example/opt-gbnoauthor-true.pdf Graphic file (type pdf)
+<use ../example/opt-gbnoauthor-true.pdf, page 1>
+File: ../example/opt-gbnoauthor-true.pdf Graphic file (type pdf)
+<use ../example/opt-gbnoauthor-true.pdf, page 1>
+File: ../example/opt-gbnoauthor-true.pdf Graphic file (type pdf)
+<use ../example/opt-gbnoauthor-true.pdf, page 1>
+File: ../example/opt-gbnoauthor-true.pdf Graphic file (type pdf)
+<use ../example/opt-gbnoauthor-true.pdf, page 1>
  [28]
-File: ../example/opt-gbnoauthor-true.pdf Graphic file (type pdf)
-<use ../example/opt-gbnoauthor-true.pdf>
-File: ../example/opt-gbnoauthor-true.pdf Graphic file (type pdf)
-<use ../example/opt-gbnoauthor-true.pdf>
-File: ../example/opt-gbnoauthor-true.pdf Graphic file (type pdf)
-<use ../example/opt-gbnoauthor-true.pdf, page 1>
-File: ../example/opt-gbnoauthor-true.pdf Graphic file (type pdf)
-<use ../example/opt-gbnoauthor-true.pdf, page 1>
-File: ../example/opt-gbnoauthor-true.pdf Graphic file (type pdf)
-<use ../example/opt-gbnoauthor-true.pdf, page 1>
-File: ../example/opt-gbnoauthor-true.pdf Graphic file (type pdf)
-<use ../example/opt-gbnoauthor-true.pdf, page 1>
-File: ../example/opt-gbnoauthor-true.pdf Graphic file (type pdf)
-<use ../example/opt-gbnoauthor-true.pdf, page 1>
+File: ../example/opt-gblocal.pdf Graphic file (type pdf)
+<use ../example/opt-gblocal.pdf>
+File: ../example/opt-gblocal.pdf Graphic file (type pdf)
+<use ../example/opt-gblocal.pdf>
+File: ../example/opt-gblocal.pdf Graphic file (type pdf)
+<use ../example/opt-gblocal.pdf, page 1>
+File: ../example/opt-gblocal.pdf Graphic file (type pdf)
+<use ../example/opt-gblocal.pdf, page 1>
+File: ../example/opt-gblocal.pdf Graphic file (type pdf)
+<use ../example/opt-gblocal.pdf, page 1>
+File: ../example/opt-gblocal.pdf Graphic file (type pdf)
+<use ../example/opt-gblocal.pdf, page 1>
+File: ../example/opt-gblocal.pdf Graphic file (type pdf)
+<use ../example/opt-gblocal.pdf, page 1>
  [29]
-File: ../example/opt-gblocal.pdf Graphic file (type pdf)
-<use ../example/opt-gblocal.pdf>
-File: ../example/opt-gblocal.pdf Graphic file (type pdf)
-<use ../example/opt-gblocal.pdf>
-File: ../example/opt-gblocal.pdf Graphic file (type pdf)
-<use ../example/opt-gblocal.pdf, page 1>
-File: ../example/opt-gblocal.pdf Graphic file (type pdf)
-<use ../example/opt-gblocal.pdf, page 1>
-File: ../example/opt-gblocal.pdf Graphic file (type pdf)
-<use ../example/opt-gblocal.pdf, page 1>
-File: ../example/opt-gblocal.pdf Graphic file (type pdf)
-<use ../example/opt-gblocal.pdf, page 1>
-File: ../example/opt-gblocal.pdf Graphic file (type pdf)
-<use ../example/opt-gblocal.pdf, page 1>
- [30]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 114.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 114.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 129.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 129.
 
 (./gbT7714-2015eg.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 114.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 114.
-Package rerunfilecheck Info: File `gbT7714-2015eg.out' has not changed.
-(rerunfilecheck)             Checksum: D8C7884E2D7261B7B16B72D8DC91A420;1013.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 114.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 129.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 129.
+
+
+Package rerunfilecheck Warning: File `gbT7714-2015eg.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `gbT7714-2015eg.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  1D55F1956E78C93890C526CDC50C44FB;959.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 129.
  ) 
 Here is how much of TeX's memory you used:
- 9643 strings out of 479418
- 143582 string characters out of 5888105
- 393015 words of memory out of 5000000
- 27028 multiletter control sequences out of 15000+600000
+ 9938 strings out of 479418
+ 146773 string characters out of 5888105
+ 398420 words of memory out of 5000000
+ 27327 multiletter control sequences out of 15000+600000
  532706 words of font info for 26 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 41i,18n,51p,273b,476s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,18n,51p,937b,476s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on gbT7714-2015eg.pdf (30 pages).
+Output written on gbT7714-2015eg.pdf (29 pages).

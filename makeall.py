@@ -89,6 +89,7 @@ def compileall():
 			print('pf=',pf)
 			if pf:
 				for file in pf:
+					print('---------compile new file:---------')
 					print('file=',file)
 					print('file=',os.path.splitext(file))
 					jobname=os.path.splitext(file)[0]
@@ -117,6 +118,8 @@ def compileall():
 				jobname="tngbcitationaynew"
 			else:
 				jobname="tngbcitationay"
+			print('---------compile new file:---------')
+			print('file=',jobname)
 			subprocess.run(["xelatex", "-no-pdf",jobname])
 			subprocess.run(["biber",jobname])
 			subprocess.run(["xelatex",jobname])
