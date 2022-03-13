@@ -19,7 +19,8 @@ def compileall():
 
 	
 	pwd=os.getcwd()
-	filesneedcopy=['chinese-erj.bbx', 'chinese-erj.cbx','example.bib', 'gb7714-1987.bbx', 'gb7714-1987.cbx', 
+	filesneedcopy=['CCNUthesis.bbx','CCNUthesis.cbx','NWAFUthesis.bbx','NWAFUthesis.cbx','SEUthesis.bbx','SEUthesis.cbx',
+	'chinese-erj.bbx','chinese-erj.cbx','example.bib', 'gb7714-1987.bbx', 'gb7714-1987.cbx', 
 	'gb7714-1987ay.bbx', 'gb7714-1987ay.cbx', 'gb7714-2005.bbx', 'gb7714-2005.cbx', 'gb7714-2005ay.bbx',
 	'gb7714-2005ay.cbx', 'gb7714-2015-gbk.def', 'gb7714-2015.bbx', 'gb7714-2015.cbx', 'gb7714-2015ay.bbx',
 	'gb7714-2015ay.cbx', 'gb7714-2015ms.bbx', 'gb7714-2015ms.cbx', 'gb7714-2015mx.bbx', 'gb7714-2015mx.cbx']

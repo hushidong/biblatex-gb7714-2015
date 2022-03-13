@@ -115,10 +115,10 @@
     {}%
     {\printtext[title]{\bibtitlefont%
        \printfield[titlecase]{title}%
-       \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
+       \ifboolexpr{test {\iffieldundef{subtitle}}}%
        {}{\setunit{\subtitlepunct}%
        \printfield[titlecase]{subtitle}}%
-       \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
+       \iffieldundef{titleaddon}{}%
         {\setunit{\subtitlepunct}\printfield{titleaddon}}%
         \iftoggle{bbx:gbtype}{\printfield[gbtypeflag]{usera}}{}%
      %\iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点

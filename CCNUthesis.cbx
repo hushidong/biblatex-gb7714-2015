@@ -1,0 +1,34 @@
+%%
+%% ---------------------------------------------------------------
+%% biblatex-gb7714-2015 --- A biblatex implementation of the
+%% GBT7714-2015 citation style,numerical sequence
+%% Maintained by huzhenzhen
+%% E-mail: hzzmail@163.com
+%% Released under the LaTeX Project Public License v1.3c or later
+%% ---------------------------------------------------------------
+%%
+\ProvidesFile{CCNUthesis.cbx}[a biblatex citation style for CCNUthesis]
+
+%
+%   加载样式
+%
+\RequireCitationStyle{gb7714-2015} %numeric
+
+
+\DeclareCiteCommand{\parencite}%[\mkbibbrackets]
+  {\mkbibleftborder\usebibmacro{cite:init}%
+   \usebibmacro{prenote}}%
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:comp}}
+  {}
+  {\usebibmacro{cite:dump}\setunit{\addcomma\addspace}\printfield{postnote}\mkbibrightborder}
+
+
+\DeclareCiteCommand{\cite}[\mkbibsuperscript]%利用mkbibsuperbracket添加方括号
+  {\mkbibleftborder\usebibmacro{cite:init}%
+   \usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:comp}}
+  {}
+  {\usebibmacro{cite:dump}\setunit{\addcomma\addspace}%
+   \printfield{postnote}\mkbibrightborder}

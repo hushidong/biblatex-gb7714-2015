@@ -1,0 +1,338 @@
+%%
+%% ---------------------------------------------------------------
+%% SEUthesis.bbx --- A bibliography style for SEUthesis template
+%% ---------------------------------------------------------------
+%%
+%%用法：类似于标准的样式在biblatex加载时设置样式
+%%文献表正常处理，标注命令主要用cite和parencite
+\ProvidesFile{SEUthesis.bbx}
+  [2022/03/10 v0.1a a biblatex bibliography style for SEUthesis]
+
+
+%==================================================
+%加载gb样式
+%==================================================
+\RequireBibliographyStyle{gb7714-2015}
+
+
+%==================================================
+%选项设置
+%==================================================
+\ExecuteBibliographyOptions{
+    maxnames=3,
+    minnames=3,
+    %url=false,
+    doi=false,
+    gbfieldtype=true,
+    gbpunctin=false,
+    gbpub=false,
+    gbnamefmt=lowercase,
+    gbbiblabel=dot,
+}
+
+
+%==================================================
+%为标注和文献表中标点格式，重设and本地化字符串
+%==================================================
+\DefineBibliographyStrings{english}{
+    mathesiscn={[硕士学位论文]},
+    phdthesiscn={[博士学位论文]},
+    in={In:\addthinspace},
+    incn={见:\addthinspace},
+}
+
+
+%==================================================
+%设置一些标点格式为中文的标点
+%==================================================
+\renewcommand*{\bibpagespunct}{%
+\ifentrytype{article}{\addcolon\addthinspace}{\adddot\addthinspace}%
+}%
+
+
+%==================================================
+%调整部分域的输出格式
+%==================================================
+
+\DeclareFieldFormat%将thesis的标题格式重设
+  [thesis]
+  {title}{#1}%\mkbibquote{#1\isdot}
+
+%
+%   url和url日期格式
+%
+\renewbibmacro*{url+urldate}{%
+  \usebibmacro{url}%%更换url的位置，放到下面
+  \iffieldundef{urlyear}%
+    {}{%\setunit*{\addspace}%
+    \usebibmacro{urldate}}%
+     \setunit{\addperiod\addspace}%
+     }
+    \renewbibmacro*{urldate}{%
+    \setunit{\addcomma\addthinspace}\printtext{\printurldate}}%能用高层命令+选项尽量用命令(比如这里的\printurldate)，而不用\blx@edtfdate这种更底层的命令
+
+
+%
+%   修改作者数量超过限定值，做省略时的处理格式
+%   v1.0,20160701,hzz
+%   v1.0O,20190103,hzz,修改利用新定义的一个分隔符strandothersdelim
+%
+%   原理方法:判断作者或译者是否中文，若中文用字符等，否则用et al. 。
+\renewbibmacro*{name:andothers}{%
+  \ifboolexpr{
+    test {\ifnumequal{\value{listcount}}{\value{liststop}}}
+    and
+    test \ifmorenames
+  }{\ifnumgreater{\value{liststop}}{1}%
+       {\finalandcomma}%
+       {}%biblatex作者要区别单作者加等的情况，这里为符合gbt7714-2015第7.2节的要求加上了逗号。
+%\printdelim{andothersdelim}
+\printdelim{strandothersdelim}%
+}{%当是译者的时候需要特殊处理：从7.2节看等/译前面加逗号，但从示例看等和译同时出现时，译前的逗号没有，比如：
+%袁训来, 陈哲, 肖书海, 等.
+%胡泳, 范海燕, 译.
+%潘惠霞, 魏婧, 杨艳, 等译.
+%\ifcurrentname{translator}{\addcomma}{}%
+}}
+
+%
+%   修改省略作者后的本地化字符串，比如et al.
+%   v1.0o,20190103,hzz
+%
+%   原理方法:默认情况下判断作者或译者是否中文，若中文用字符andotherscn=“等”，否则用andothers=“et al.”。
+%   非默认情况，根据选项信息，选择选择强制中文或英文
+%   首先设置全局的，然后设置文献表中的，这一等价于将所有的cite命令环境都设置过了
+%   而不用对每一个引用命令单独设置，比如cite，parancite，textcite都设置
+\DeclareDelimFormat{strandothersdelim}{%
+  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
+  %\addspace%
+  \edef\userfieldabcde{userd}%
+  \ifcurrentname{translator}{\edef\userfieldabcde{usere}}{}%
+  \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
+  \ifcurrentname{author}{\edef\userfieldabcde{userf}}{}%
+  \ifcurrentname{bookauthor}{\edef\userfieldabcde{userb}}{}%
+  \ifcase\value{gbbiblocalcase}%
+    \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{andotherscn}}{}%
+    \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{andotherskr}}{}%
+    \iffieldequalstr{\userfieldabcde}{japnese}{\bibstring{andothersjp}}{}%
+    \iffieldequalstr{\userfieldabcde}{english}{\bibstring{andothers}}{}%
+    \iffieldequalstr{\userfieldabcde}{french}{\bibstring{andothers}}{}%
+    \iffieldequalstr{\userfieldabcde}{russian}{\bibstring{andothers}}{}%
+  \or%
+  \bibstring{andotherscn}%
+  \or%
+  \bibstring{andothers}%
+  \fi}
+
+%
+%   重设专利title的输出，将文献类型标识符输出出去
+%
+\newbibmacro*{patenttitle}{%原输出来自biblatex.def文件
+  \ifboolexpr{%
+    test{\iffieldundef{title}}%
+    and%
+    test{\iffieldundef{subtitle}}%
+  }%
+    {}%
+    {\printtext[title]{\bibtitlefont%
+       \printfield[titlecase]{title}%
+       \ifboolexpr{test {\iffieldundef{subtitle}}}%
+       {}{\setunit{\subtitlepunct}%
+       \printfield[titlecase]{subtitle}}%
+       \iffieldundef{titleaddon}{}%
+        {\setunit{\subtitlepunct}\printfield{titleaddon}}%
+        \iftoggle{bbx:gbtype}{\printfield[gbtypeflag]{usera}}{}%
+     %\iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
+     %\newunit
+     }%
+}%
+}
+
+
+%==================================================
+%调整部分类型驱动
+%==================================================
+
+
+\DeclareBibliographyAlias{conference}{inproceedings}%会议论文文献类型驱动
+\DeclareBibliographyAlias{incollection}{inproceedings}%文集中析出文献类型驱动
+
+%
+%%
+%%   专利文献驱动
+%%
+  \DeclareBibliographyDriver{patent}{%源来自standard.BBX
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author}%
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+  %\usebibmacro{title}%
+  \usebibmacro{patenttitle}%给出专利专用的标题输出
+  \iftoggle{bbx:gbstrict}{}{%
+  \newunit%
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}}%
+  \newunit\newblock
+  \printfield{type}%
+  \setunit*{\addcomma\addspace}%
+  \printfield{number}%已放到patenttitle中处理
+  \iflistundef{location}
+    {}
+    {\setunit*{\addspace}%
+     \printtext{%[parens]
+       \printlist[][-\value{listtotal}]{location}}}%
+  \newunit\newblock
+  \usebibmacro{byholder}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{newsdate}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
+
+
+\DeclareBibliographyDriver{thesis}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author}%
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}%增加的译者信息
+  \newunit\newblock
+  \iftoggle{bbx:gbfieldtype}{%
+  \setunit{\addcolon\addspace}
+  \printfield{type}%
+  \setunit*{\addspace}}{}%
+  \printfield{number}%
+  \newunit\newblock
+  \printfield{version}%
+  \newunit
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{institution+location+date}%
+  %\newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \iffieldundef{url}{}{%当没有网址时也不输出修改或更新日期
+  \usebibmacro{modifydate}}%修改或更新日期为带括号的时间
+  \usebibmacro{doi+eprint+url}%
+  \newunit
+  \printfield{pagetotal}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isrn}}
+    {}%
+  \newunit\newblock
+%  \usebibmacro{doi+eprint+url}%
+%  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
+%
+%   book条目类的驱动
+%
+  \DeclareBibliographyDriver{book}{%源来自standard.bbx文件
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+\usebibmacro{author/editor+others/translator+others}%
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+\usebibmacro{maintitle+title}%
+\iftoggle{bbx:gbstrict}{}{%
+\newunit
+\printlist{language}%
+\newunit\newblock%
+\usebibmacro{byauthor}%
+\newunit\newblock}%
+\printfield{edition}%
+\newunit
+\usebibmacro{byeditor+others}%
+\newunit\newblock%%
+\iftoggle{bbx:gbstrict}{}{%
+\iffieldundef{maintitle}%
+{\printfield{volume}%
+\printfield{part}}%
+{}%
+\newunit%
+\printfield{volumes}%
+\newunit\newblock%
+\usebibmacro{series+number}}%
+\newunit\newblock%
+%\printfield{note}%
+%\newunit\newblock%
+\usebibmacro{publisher+location+date}%
+%\newunit\newblock %这里标点去掉
+\usebibmacro{chapter+pages}%
+  \iffieldundef{url}{}{%当没有网址时也不输出
+  \usebibmacro{modifydate}}%带括号的修改或更新日期，
+\usebibmacro{doi+eprint+url}%从下面移动到上面来，因为gbt2015的url需直接放在页码后面。
+  \newunit\newblock%
+  \printfield{pagetotal}%
+  \newunit\newblock%
+  \iftoggle{bbx:isbn}
+    {\printfield{isbn}}
+    {}%
+  \newunit\newblock
+  %\usebibmacro{doi+eprint+url}%
+  %\newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
+
+\DeclareBibliographyDriver{inproceedings}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\printdelim{nametitledelim}}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{in:}%
+  \usebibmacro{editor}%
+  \newunit\newblock
+  \usebibmacro{maintitle+booktitle}%
+  \newunit\newblock
+  \newunit
+  \usebibmacro{publisher+location+date}%
+  \newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isbn}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
