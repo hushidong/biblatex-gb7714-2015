@@ -1,0 +1,30 @@
+%%
+%% ---------------------------------------------------------------
+%% gb7714-CCNU.cbx --- A bibliography style for CCNUthesis template
+%% ---------------------------------------------------------------
+%%
+\ProvidesFile{gb7714-CCNU.cbx}[a biblatex citation style for CCNUthesis]
+
+%
+%   加载样式
+%
+\RequireCitationStyle{gb7714-2015} %numeric
+
+
+\DeclareCiteCommand{\parencite}%[\mkbibbrackets]
+  {\mkbibleftborder\usebibmacro{cite:init}%
+   \usebibmacro{prenote}}%
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:comp}}
+  {}
+  {\usebibmacro{cite:dump}\setunit{\addcomma\addspace}\printfield{postnote}\mkbibrightborder}
+
+
+\DeclareCiteCommand{\cite}[\mkbibsuperscript]%利用mkbibsuperbracket添加方括号
+  {\mkbibleftborder\usebibmacro{cite:init}%
+   \usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:comp}}
+  {}
+  {\usebibmacro{cite:dump}\setunit{\addcomma\addspace}%
+   \printfield{postnote}\mkbibrightborder}

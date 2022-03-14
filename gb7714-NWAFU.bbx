@@ -1,0 +1,384 @@
+%%
+%% ---------------------------------------------------------------
+%% NWAFUthesis.bbx --- A bibliography style for NWAFUthesis template
+%% ---------------------------------------------------------------
+%%
+%%用法：类似于标准的样式在biblatex加载时设置样式
+%%文献表正常处理，标注命令主要用cite和parencite
+\ProvidesFile{gb7714-NWAFU.bbx}
+  [2022/03/10 v0.1 a biblatex bibliography style for NWAFUthesis]
+
+
+%==================================================
+%加载gb样式
+%==================================================
+\RequireBibliographyStyle{gb7714-2015ay}
+
+
+%==================================================
+%选项设置
+%==================================================
+\ExecuteBibliographyOptions{
+            sortlocale=zh__pinyin,
+            gbtype=false,
+            maxbibnames=99,% 著录所有作者
+            minbibnames=1,
+            gbnamefmt=familyahead,
+            %url=false,
+            doi=false,
+            isbn=false,
+            gbfieldtype=true,
+            gbpunctin=false,
+            uniquename=false,
+            uniquelist=false,
+            nohashothers=false,
+}
+
+
+%==================================================
+%一些字体设置
+%==================================================
+%\def\bibrangedash{$\sim$}% 表示范围的波浪线符号
+\DefineBibliographyExtras{english}{\renewcommand*{\bibrangedash}{$\sim$}}
+%\newcommand\nwafubibfont{\linespread{1.0}\zihao{-5}}% 字体
+\newcommand\nwafubibfont{\zihao{-5}}% 字体
+\renewcommand{\bibfont}{\nwafubibfont}% 全局字体设置
+
+\setlength{\bibitemsep}{2pt}%0ex
+\setlength{\bibnamesep}{0ex}
+\setlength{\bibinitsep}{0ex}
+
+%==================================================
+%为标注和文献表中标点格式，重设and本地化字符串
+%==================================================
+\DefineBibliographyStrings{english}{
+    andincitecn = {和},%将标注中的分开，便于与文献表中的区分
+    andincite   = {and},
+    mathesiscn={[硕士学位论文]},
+    phdthesiscn={[博士学位论文]},
+    in={In:\addspace},
+    incn={见:\addspace},
+}
+
+%==================================================
+%设置一些标点格式为中文的标点
+%==================================================
+
+\renewcommand{\postnotedelim}{\addcolon\space}
+\renewcommand*{\nameyeardelim}{\addspace}
+\DeclareDelimFormat[bib,biblist]{nameyeardelim}{\addperiod\space}
+\DeclareFieldFormat{postnote}{#1}
+
+
+%==================================================
+%调整部分域的输出格式
+%==================================================
+
+\DeclareFieldFormat[article]{journaltitle}{\iffieldequalstr{userd}{chinese}{#1}{\textit{#1}}\isdot}% 英文刊名用斜体
+
+
+% “和”与“and”前后的空格调整
+\DeclareDelimFormat{finalnamedelim}{%
+  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
+  %\addspace%
+  \edef\userfieldabcde{userd}%
+  \ifcurrentname{translator}{\edef\userfieldabcde{usere}}{}%
+  \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
+  \ifcurrentname{author}{\edef\userfieldabcde{userf}}{}%
+  \ifcurrentname{bookauthor}{\edef\userfieldabcde{userb}}{}%
+  \ifcase\value{gbcitelocalcase}%
+    \iffieldequalstr{\userfieldabcde}{chinese}{\bibstring{andincitecn}}{}%
+    \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{andkr}}{}%
+    \iffieldequalstr{\userfieldabcde}{japanese}{\bibstring{andjp}}{}%
+    \iffieldequalstr{\userfieldabcde}{english}{\addspace\bibstring{andincite}\addspace}{}%
+    \iffieldequalstr{\userfieldabcde}{french}{\addspace\bibstring{and}\addspace}{}%
+    \iffieldequalstr{\userfieldabcde}{russian}{\addspace\bibstring{and}\addspace}{}%
+  \or%
+  \bibstring{andincitecn}%
+  \or%
+  \addspace\bibstring{andincite}\addspace%
+  \fi
+}
+
+\newbibmacro*{origdate+extradate}{%
+  \printtext{\printorigdate}%
+  }
+
+  %
+%   修改译者位置格式
+%
+%   原理方法:修改来自biblatex.def文件的bytranslator+others宏的格式
+\renewbibmacro*{bytranslator+others}{%
+  \ifnameundef{translator}
+    {}
+    {%\usebibmacro{bytranslator+othersstrg}
+     %\setunit{\addspace}%
+     \printnames[bytranslator]{translator}%
+     %\clearname{translator}%
+     %从macro*{bytranslator+othersstrg}%中可以看到当地化字符串格式的引用前的代码处理
+     %比如生成cotranslator等用于调用cotranslator所代表的当地化字符串
+     \usebibmacro{bytranslator+othersstrg}%“译”的位置换到下面来，即放到译者后面。
+     %\setunit{\addspace}%
+     \newunit}%
+  \usebibmacro{withothers}%
+  \ifboolexpr{%
+    test {\iffieldundef{origyear}} or test {\ifnameundef{translator}}%%
+     }{}{\printtext{\printdate}}%
+  }
+
+%
+%   url和url日期格式
+%
+\renewbibmacro*{url+urldate}{%
+  %\usebibmacro{url}%%更换url的位置，放到下面
+     \usebibmacro{url}%
+     \iffieldundef{urlyear}%
+    {}{%\setunit*{\addspace}%
+    \usebibmacro{urldate}}}
+
+\DeclareFieldFormat{addnumflag}{%
+\ifentrytype{newspaper}{\setunit{\addcomma\addspace}\printtext{#1}}
+{\nobreak\printtext{(}\nobreak #1\nobreak\printtext{)}}}
+
+%
+%   重设专利title的输出，将文献类型标识符输出出去
+%
+\newbibmacro*{patenttitle}{%原输出来自biblatex.def文件
+  \ifboolexpr{%
+    test{\iffieldundef{title}}%
+    and%
+    test{\iffieldundef{subtitle}}%
+  }%
+    {}%
+    {\printtext[title]{\bibtitlefont%
+       \printfield[titlecase]{title}%
+       \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
+       {}{\setunit{\subtitlepunct}%
+       \printfield[titlecase]{subtitle}}%
+       \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
+        {\setunit{\subtitlepunct}\printfield{titleaddon}}%
+        \setunit{\adddot\addspace}\printfield{number}%写专利号
+        \iftoggle{bbx:gbtype}{\printfield[gbtypeflag]{usera}}{}%
+     %\iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
+     %\newunit
+     }%
+}%
+}
+
+%
+%   修改作者数量超过限定值，做省略时的处理格式
+%   v1.0,20160701,hzz
+%   v1.0O,20190103,hzz,修改利用新定义的一个分隔符strandothersdelim
+%
+%   原理方法:判断作者或译者是否中文，若中文用字符等，否则用et al. 。
+\renewbibmacro*{name:andothers}{%
+  \ifboolexpr{
+    test {\ifnumequal{\value{listcount}}{\value{liststop}}}
+    and
+    test \ifmorenames
+  }{\ifnumgreater{\value{liststop}}{1}%
+       {\finalandcomma}%
+       {}%biblatex作者要区别单作者加等的情况，这里为符合gbt7714-2015第7.2节的要求加上了逗号。
+\printdelim{andothersdelim}\printdelim{strandothersdelim}%
+}{%当是译者的时候需要特殊处理：从7.2节看等，译前面加逗号，但从示例看等和译同时出现时，译前的逗号没有，比如：
+%袁训来, 陈哲, 肖书海, 等.
+%胡泳, 范海燕, 译.
+%潘惠霞, 魏婧, 杨艳, 等译.
+%\ifcurrentname{translator}{\addcomma}{}%
+}}
+
+
+%
+%   对edition版本信息格式做出修改
+%
+\DeclareFieldFormat{edition}{%源来自biblatex.DEF
+\testCJKfirst{userd}%
+\iftoggle{ifCJKforgbt}%
+{\ifinteger{#1}%
+{\printtext{\bibstring{serialcn}\zhnumber{#1}\str@edition}}%
+{#1\isdot}}%
+{\ifinteger{#1}%
+{\mkbibordedition{#1}~\bibstring{edition}}%
+{#1\isdot}}}
+
+
+%注意这里当没有作者只有标题时在年份之前的标点是否需要标准并未涉及，所以未做处理。
+\renewbibmacro*{author}{%以前的date+extrayear变为date+extradate，所以对3.8以上版本重定义一下author
+  \ifboolexpr{
+    test \ifuseauthor
+    and
+    not test {\ifnameundef{author}}
+  }
+    {\usebibmacro{bbx:dashcheck}
+       {%\bibnamedash %去掉相同作者用横线代替的处理
+       \printnames{author}\setunit{\printdelim{nameyeardelim}}%把标点也带上
+       }
+       {\usebibmacro{bbx:savehash}%
+        \printnames{author}%
+        \iffieldundef{authortype}
+          {\setunit{\printdelim{nameyeardelim}}}
+          {\setunit{\printdelim{authortypedelim}}}}%
+     \iffieldundef{authortype}
+       {}
+       {\usebibmacro{authorstrg}%
+        \setunit{\printdelim{nameyeardelim}}}}%
+    {\global\undef\bbx@lasthash
+     \usebibmacro{labeltitle}%
+     \setunit*{\printdelim{nonameyeardelim}}}%
+     \ifboolexpr{%
+    test {\iffieldundef{origyear}} or test {\ifnameundef{translator}}%
+     }{\usebibmacro{date+extradate}}%
+  {\usebibmacro{origdate+extradate}}%
+  }
+
+%==================================================
+%调整部分类型驱动
+%==================================================
+
+
+%
+%   book条目类的驱动
+%
+  \DeclareBibliographyDriver{book}{%源来自standard.bbx文件
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+\usebibmacro{author/editor+others/translator+others}%
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+\usebibmacro{maintitle+title}%
+\iftoggle{bbx:gbstrict}{}{%
+\newunit
+\printlist{language}%
+\newunit\newblock%
+\usebibmacro{byauthor}%
+\newunit\newblock}%
+\newunit
+\printfield{edition}%
+\newunit
+\usebibmacro{byeditor+others}%
+\newunit\newblock%%
+\iftoggle{bbx:gbstrict}{}{%
+\iffieldundef{maintitle}%
+{\printfield{volume}%
+\printfield{part}}%
+{}%
+\newunit%
+\printfield{volumes}%
+\newunit\newblock%
+\usebibmacro{series+number}}%
+\newunit\newblock%
+%\printfield{note}%
+%\newunit\newblock%
+\usebibmacro{publisher+location+date}%
+%\newunit\newblock %这里标点去掉
+\usebibmacro{chapter+pages}%
+  \iffieldundef{url}{}{%当没有网址时也不输出
+  \usebibmacro{modifydate}}%带括号的修改或更新日期，
+\usebibmacro{doi+eprint+url}%从下面移动到上面来，因为gbt2015的url需直接放在页码后面。
+  \newunit\newblock%
+  \printfield{pagetotal}%
+  \newunit\newblock%
+  \iftoggle{bbx:isbn}
+    {\printfield{isbn}}
+    {}%
+  \newunit\newblock
+  %\usebibmacro{doi+eprint+url}%
+  %\newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
+%
+%   在线文献驱动
+%
+\DeclareBibliographyDriver{online}{%源来自standard.BBX
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/editor+others/translator+others}%
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+  \usebibmacro{title}%
+  \iftoggle{bbx:gbstrict}{}{%
+  \newunit%
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}%
+  \newunit\newblock
+  \printfield{note}}%
+  \newunit
+  \printfield{version}%
+  \newunit\newblock
+% \printlist{organization}%
+ \printlist{institution}%
+  \newunit\newblock
+\ifboolexpr{%
+test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{eventday}}%
+}{\usebibmacro{date}}%
+%{\usebibmacro{modifydate}}%修改或更新日期，为带括号的时间
+  \usebibmacro{url+urldate}%从下面移上来
+  \newunit\newblock
+  \iftoggle{bbx:eprint}
+    {\usebibmacro{eprint}}
+    {}%
+  \newunit\newblock
+  %\usebibmacro{url+urldate}%
+  %\newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
+
+%
+%   专利文献驱动
+%
+  \DeclareBibliographyDriver{patent}{%源来自standard.BBX
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author}%
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+  %\usebibmacro{title}%
+  \usebibmacro{patenttitle}%给出专利专用的标题输出
+  \iftoggle{bbx:gbstrict}{}{%
+  \newunit%
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}}%
+  \newunit\newblock
+  \printfield{type}%
+  \setunit*{\addspace}%
+  %\printfield{number}%已放到patenttitle中处理
+  \iflistundef{location}
+    {}
+    {\setunit*{\addspace}%
+     \printtext{%[parens]
+       \printlist[][-\value{listtotal}]{location}}}%
+  \newunit\newblock
+  \usebibmacro{byholder}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  %\usebibmacro{newsdate}%
+  %\newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}

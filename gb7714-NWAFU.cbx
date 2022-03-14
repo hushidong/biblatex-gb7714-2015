@@ -1,0 +1,52 @@
+%%
+%% ---------------------------------------------------------------
+%% NWAFUthesis.cbx --- A bibliography style for NWAFUthesis template
+%% ---------------------------------------------------------------
+%%
+\ProvidesFile{gb7714-NWAFU.cbx}[a biblatex citation style for NWAFUthesis]
+
+%
+%   加载样式
+%
+\RequireCitationStyle{gb7714-2015ay} %numeric
+
+\ExecuteBibliographyOptions{
+    maxcitenames=2,% 引用标注中最多显示2个作者
+    mincitenames=1,% 3个及3个以上的作者截断为1个作者
+}
+
+\DeclareDelimFormat[textcite,cite,parencite,citet,citep]{nameyeardelim}{\addspace}
+
+
+%之所以不用\DeclareDelimFormat{andothersdelim}{}这样的设置是因为gb7714-2015中为兼容老版本的biblatex做的处理就是这样的
+%所以用相同的方式
+\AtEveryCitekey{%
+\iffieldequalstr{userf}{chinese}{\renewcommand*{\andothersdelim}{}}%\addthinspace
+  {\renewcommand*{\andothersdelim}{\addspace}}%
+}
+
+%标注压缩时，直接用date+extradate代替extradate实现2006a，2006b的效果
+\newbibmacro*{cite:extradate}{%
+  \iffieldundef{extradate}
+    {}
+    {\printtext[bibhyperref]{\printlabeldateextra}}}%\printfield{extradate}
+
+
+\renewbibmacro*{date+extradate}{%
+    \iffieldundef{labelyear}
+      {}%
+      {\ifboolexpr{%
+        test {\ifentrytype{patent}}
+        or
+        (test {\ifentrytype{newspaper}} )%
+        }%
+        {\printtext{\blx@isodate{}{}}
+        %\printtext{\blx@edtfdate{}{}}%
+        }%
+        {\printtext{%
+                 \iflabeldateisdate
+                 %\iffieldsequal{year}{labelyear}%for biblatex<=3.7
+                   {\printdateextra}
+                   {\printlabeldateextra}}}%
+      }%
+}
