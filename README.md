@@ -14,7 +14,7 @@ Homepage: <https://github.com/hushidong/biblatex-gb7714-2015>
 
 ctan-pkg: <https://www.ctan.org/pkg/biblatex-gb7714-2015>
 
-License: LaTeX Project Public License 1.3 or later
+License: LaTeX Project Public License 1.3c or later
 
 
 A biblatex implementation of the `GB/T 7714-2015` bibliography style for Chinese users
@@ -41,11 +41,11 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 	* 注意：ms.bbx样式引入内容时需要特别注意空格的引入
 	* 注意：mx.cbx样式没有更新一些新的设置（比如2篇文献就压缩等），若有需要可以参考15.cbx和15ay.cbx修改。
 	* 应该说经过这些年的使用，很多corner case已经处理过了，但还是可能会存在一些，特别是ms和mx两个样式使用的少。
-    * special characters in all fields?
-    * entry without author: the delimiter between title and year?
-    * TEST FOR texlive 2015,2016,2017
+	* special characters in all fields?
+	* entry without author: the delimiter between title and year?
+	* TEST FOR texlive 2015,2016,2017
 	* 标注中包围符号的定义[]、()、圆圈、方框等，有些命令没有去修改。
-	
+
 
 
 ## Applications
@@ -777,6 +777,15 @@ biblatex-7714-2015的顺序编码制样式特别设计了这样的环境，以�
 
 biblatex的参考文献表的换行是由tex的断行机制决定的，处理行（盒子）溢出就要用tex的方式处理：
 
+直接使用`\sloppy`命令
+
+```
+{
+\sloppy
+\printbibliography[heading=subbibintoc,title=【参考文献】]
+}
+```
+或者自己设置具体断行相关的参数
 ```
  {
  %\hyphenation{Proce-edings}
@@ -931,7 +940,6 @@ biblatex-gb7714-2015设计了两种多语言对照参考文献的实现方式，
 
 
 * <b>在使用作者年制时，我希望文献表是按作者年份标题排序，而正文某处一个cite命令引用多个参考文献，且这些文献的标签是按年份作者标题排序，该怎么操作？</b>
-	
 
  有两种方法:
 
@@ -947,13 +955,13 @@ biblatex-gb7714-2015设计了两种多语言对照参考文献的实现方式，
 
  然后在文献打印前加
 
-```\newrefcontext[sorting=nyt]```
+```\newrefcontext[sorting=gb7714-2015]```
 
 （2） 二是手动给出排序
 
  宏包加载时使用
 
-```\usepackage[backend=biber,style=gb7714-2015ay]{biblatex}```
+```\usepackage[backend=biber,style=gb7714-2015ay,sortcites=false]{biblatex}```
 
  引用多个文献时按照年份顺序给出引用关键字，即正文中引用:
 
@@ -1007,9 +1015,9 @@ biblatex-gb7714-2015设计了两种多语言对照参考文献的实现方式，
 \DefineBibliographyExtras{english}{\def\finalandcomma{}}%
 ```
 
-		
-		
-		
+
+​		
+​		
 * <b>请问希望正文中作者年制的标注(引用)标签中作者数量只能是1个，且只用其作者的姓而不管是否存在歧义时，该怎么处理？</b>
 	
 
@@ -1158,7 +1166,6 @@ biblatex中处理顺序数字编码压缩的代码默认从3个连续编码开�
 	
 	代码见：![tgbbiblio.tex](egfigure/tgbbiblio.tex)
 	
-
 + 姓名的格式更改示例
 
 代码见：![opt-gbnamefmt.tex](example/opt-gbnamefmt.tex) ，![opt-gbnamefmt-default.tex](example/opt-gbnamefmt-default.tex) 
@@ -1562,7 +1569,6 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * 2022/02/22 v1.1d,ctan,github
 * 2022/03/07 v1.1e,ctan,github
 * 2022/03/13 v1.1f,ctan,github
-
 
 ---------------------------------------------------------
 ## Update history:
