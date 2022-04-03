@@ -11,7 +11,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2022/03/13 v1.1f}
+\def\versionofgbtstyle{2022/04/03 v1.1g}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015.bbx}[\versionofgbtstyle biblatex bibliography style]
 %\RequireBiber[3]%显式指定用biber后端，当用bibtex时会报错，但其实不会影响编译，只是采用bibtex后无法达成格式需求
@@ -2315,8 +2315,8 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %   因为titlecase is applied to the contents of the field directly，title is not
 %\DeclareFieldFormat{titlecase}{\MakeCapital#1}%重设标题格式，将其修改为首字母大写
 \DeclareFieldFormat{titlecase}{\iftoggle{bbx:titlelink}{%
-\iffieldundef{url}{\MakeCapital#1}{%
-\href{\thefield{url}}{#1}}}{\MakeCapital#1}}%重设标题格式，将其修改为首字母大写
+\iffieldundef{url}{#1}{%
+\href{\thefield{url}}{#1}}}{#1}}%重设标题格式，将其修改为首字母大写
 \DeclareFieldFormat{pages}{#1}%去掉前面引导页码的pp.等字符，\mkpageprefix[bookpagination]{#1}
 \DefineBibliographyExtras{english}{\renewcommand*{\bibrangedash}{-}}%将页码间隔符替换会英文的短横线
 \DefineBibliographyExtras{russian}{\renewcommand*{\bibrangedash}{-}}%将页码间隔符替换会英文的短横线

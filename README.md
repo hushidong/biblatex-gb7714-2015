@@ -1,4 +1,4 @@
-<b>Date of last change: 2022-03-13 to version v1.1f</b>
+<b>Date of last change: 2022-04-03 to version v1.1g</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -93,7 +93,7 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 * [biblatex 宏包中文手册 ](https://github.com/hushidong/biblatex-zh-cn)
 * [biblatex 简明使用手册](https://github.com/hushidong/biblatex-solution-to-latex-bibliography)
 * [biblatex-tutorial 摘译](https://github.com/hushidong/biblatex-tutorial-cn)
-* [biblatex-map bib文件修改工具](https://github.com/hushidong/biblatex-map/)
+* [bibmap  bib文件批量修改工具](https://github.com/hushidong/biblatex-map/)
 * [biblatex-check bib文件检查工具](https://github.com/Pezmc/BibLatex-Check)
 * [biblatex-caspervector: caspervector 设计的中文参考文献样式](https://github.com/CasperVector/biblatex-caspervector)
 * [gbt7714-bibtex-style: GB/T7714-2015 标准的bst实现版本](https://github.com/CTeX-org/gbt7714-bibtex-style)
@@ -790,14 +790,29 @@ biblatex的参考文献表的换行是由tex的断行机制决定的，处理行
  {
  %\hyphenation{Proce-edings}
  \hyphenpenalty=5000 %断词阈值， 值越大越不容易出现断词
- \tolerance=500 %丑度， 10000为最大无溢出盒子， 参考the texbook 第6章
- \hbadness=100 %如果丑度超过hbadness这一阀值， 那么就会发出警告
+ \tolerance=500      %丑度， 10000为最大无溢出盒子， 参考the texbook 第6章
+ \hbadness=100       %如果丑度超过hbadness这一阀值， 那么就会发出警告
  \printbibliography[heading=subbibintoc,title=【参考文献】]
 }
 ```
 
 当然如果不想这么设置，可以手动的修改参考文献条目的内容，在需要换行的内容前加上-符号。
 见：https://github.com/hushidong/biblatex-gb7714-2015/issues/89
+
+
+* <b>参考文献表的每一页的页面底部不对齐，怎么处理？</b>
+
+通常是由一条参考文献内部不分页导致的，默认情况下希望一条参考文献条件放在一个页面内，所以在页面底部的文献可能由于放不下跑到下一页。
+这种情况可以通过调整段内的分页阈值改变，即使得一条参考文献(即一个段内)更容易分页即可：
+
+```
+{
+  \interlinepenalty=5000  %分页阈值，越小越容易分页
+ \printbibliography[heading=subbibintoc,title=【参考文献】]
+}  
+```
+
+
 
 ​	
 * <b>当参考文献没有作者时，希望用佚名或Anon代替作者时，请问该怎么处理？</b>
@@ -849,6 +864,9 @@ biblatex的参考文献表的换行是由tex的断行机制决定的，处理行
 \iffieldundef{url}{#1}{%
 \href{\thefield{url}}{#1}}}{#1}}%重设标题格式，将去除首字母大写
 ```
+
+注意：v1.1g版本后不再默认修改标题的字母大小写，若需要修改可以手动修改bib文件，若需要批量修改，可以使用[bibmap](https://github.com/hushidong/biblatex-map/)工具。
+
 
 ​		
 * <b>请问如何使文献表中的期刊名是单词首字母大写的？</b>
@@ -1569,6 +1587,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * 2022/02/22 v1.1d,ctan,github
 * 2022/03/07 v1.1e,ctan,github
 * 2022/03/13 v1.1f,ctan,github
+* 2022/04/03 v1.1g,ctan,github
 
 ---------------------------------------------------------
 ## Update history:

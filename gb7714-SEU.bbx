@@ -127,7 +127,7 @@
 %
 %   重设专利title的输出，将文献类型标识符输出出去
 %
-\newbibmacro*{patenttitle}{%原输出来自biblatex.def文件
+\renewbibmacro*{patenttitle}{%原输出来自biblatex.def文件
   \ifboolexpr{%
     test{\iffieldundef{title}}%
     and%

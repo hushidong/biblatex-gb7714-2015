@@ -206,7 +206,7 @@
 %
 %   v1.0k，20180425，为出版信息增加字体控制命令，hzz
 %   %类似\newbibmacro*{publisher+location+date}
-\newbibmacro*{location+institution+date}{\bibpubfont%
+\renewbibmacro*{location+institution+date}{\bibpubfont%
 \iftoggle{bbx:gbpub}%
 {\testCJKfirst{userd}%
 \ifboolexpr{%
@@ -311,7 +311,7 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
 %   增加inbook:parent用于辅助crossref传统功能的实现
 %   用在{crosscite}宏中
 %   20210216,v1.0w,hzz
-\newbibmacro*{inbook:parent}{%
+\renewbibmacro*{inbook:parent}{%
 \usebibmacro{bybookauthor}%
 %\ifnameundef{bookauthor}{%
 %  \ifnameundef{editor}{}{\newunit}%
@@ -363,34 +363,18 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
 %   增加inbook:parent用于辅助crossref传统功能的实现
 %   用在{crosscite}宏中
 %   20210216,v1.0w,hzz
-\newbibmacro*{inbook:parent}{%
+\renewbibmacro*{inbook:parent}{%
 \usebibmacro{bybookauthor}%
-  \ifnameundef{bookauthor}{%
-  \ifnameundef{editor}{}{\newunit}%
-  }{\newunit}%替换下一句
+%\ifnameundef{bookauthor}{%
+%  \ifnameundef{editor}{}{\newunit}%
+%}{\newunit}%替换下一句
   %\newunit\newblock
 \iffieldundef{series}{}{\usebibmacro{series+number}\setunit{\addcolon\addspace}}%为处理一些存在series的情况而增加
-  \usebibmacro{maintitle+booktitle}%
+\usebibmacro{maintitle+booktitle}%
 \iffieldundef{volume}{}{\setunit{\addcolon\addspace}\printfield{volume}}%
 \iffieldundef{number}{}{\setunit{\addcolon\addspace}\printfield{number}}%增加卷和册信息
   \newunit\newblock%
-%  \usebibmacro{byeditor+others}%
-%  \newunit\newblock
   \printfield{edition}%
-  %\newunit
-  \iftoggle{bbx:gbstrict}{}{%
-%  \iffieldundef{maintitle}
-%    {\printfield{volume}%
-%     \printfield{part}}
-%    {}%
-%  \newunit
-%  \printfield{volumes}%
-%  \newunit\newblock
-%  \usebibmacro{series+number}
-    \newunit\newblock
-  }%
-  %\printfield{note}%
-  %\newunit\newblock
   \usebibmacro{publisher+location+date}}
 
 
