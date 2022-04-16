@@ -2,7 +2,29 @@
 %更新历史仅给出更新针对的问题，相应的处理代码和解释不在此给出，详见提示对应的说明文档内容
 
 %\updateinfo[latest]{date of update: }\label{up:latest}
-\updateinfo[2022-04-03]{date of update: 2022-04-03 to version v1.1f}\label{up:20220403}
+\updateinfo[2022-04-16]{date of update: 2022-04-16 to version v1.1h}\label{up:20220416}
+\begin{enumerate}
+
+\item 在文献表打印前增加hyphenpenalty等命令避免行溢出。(20220416)
+
+add cmds like hyphenpenalty at begin of bibliography to remove Overfull hbox
+
+\item 修改title宏使book类可以输出卷信息。(20220416)
+
+modify the title macro to output volume for book
+
+\item 在文献类型和载体标识前加入allowbreak使更好的断行。(20220416)
+
+add allowbreak before type flag to make linebreak better
+
+\item 修改部分说明文档内容。(20220416)
+
+refine the manual doc
+
+\end{enumerate}
+
+
+\updateinfo[2022-04-03]{date of update: 2022-04-03 to version v1.1g}\label{up:20220403}
 \begin{enumerate}
 
 \item 修正由makecapital的逻辑修改导致的数学公式标识符被吃的问题。(20220403)

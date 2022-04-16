@@ -276,18 +276,18 @@ showstringspaces=false}% no special string spaces
 \newcommand{\bibliofmt}[1]{\medskip\textcolor{gbforestgreen}{\heiti#1}}
 
 %序号如果带章节的话可以改为比如:\thesection.\arabic{myprop}
-\tcbmaketheorem{property}{方法}
+\newtcbtheorem{property}{方法}
 {enhanced jigsaw,breakable,pad at break*=1mm,left=2em,boxsep=0pt,
 %colback=gray!5,colframe=gbforestgreen,
  colback=gray!5,boxrule=0pt,frame hidden,coltitle=gborange,
  borderline west={1.5mm}{-2mm}{gbforestgreen},
  theorem style=plain,fonttitle=\bfseries\heiti,arc=0mm,
 %separator sign={\ $\blacktriangleright$},breakable,
-%theorem style=plain,fonttitle=\bfseries\upshape, fontupper=\slshape,boxrule=0mm,arc=0mm, %
+%theorem style=plain,fonttitle=\bfseries\upshape, fontupper=\slshape,boxrule=0mm,arc=0mm,
 %coltitle=black,colback=green!50!yellow!15!white,colframe=blue!50,%
 %description delimiters={}{},
 %terminator sign={\ }
-}{myprop}{pp}
+}{pp}
 %最后一个必须参数是prefix用来做label比如这里是pp:加上给出的标签名
 
 \newtcbtheorem[]{refentry}{条目类型}

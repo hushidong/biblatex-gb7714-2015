@@ -11,7 +11,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2022/04/03 v1.1g}
+\def\versionofgbtstyle{2022/04/16 v1.1h}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015ms.bbx}[\versionofgbtstyle biblatex bibliography style]
 %\RequireBiber[3]%显式指定用biber后端，当用bibtex时会报错，但其实不会影响编译，只是采用bibtex后无法达成格式需求
@@ -1249,13 +1249,20 @@
 %=====================================================================
 %   参考文献表环境
 %=====================================================================
+\AtBeginBibliography{%
+\hyphenpenalty=100 %断词阈值，值越大越不容易出现断词
+\tolerance=8000 %丑度， 10000为最大无溢出盒子，参考the texbook 第6章
+\hbadness=5000 %如果丑度超过hbadness这一阀值，那么就会发出警告
+\interlinepenalty=100\relax%
+\widowpenalty=100\relax%
+\clubpenalty=100\relax%
+} %设置断行阈值，避免行溢出
 %
 %   列表格式
 %
 %   增加一个\bibitemindent尺寸用于控制list环境的itemindent
 %   v1.0l，20180615，hzz
 %   v1.0t,20200319,hzz,增加尺寸\biblabelextend使某些字体下标签宽度不足时可增加标签宽度
-\setlength{\bibhang}{\biblabelsep}%
 \newlength{\bibitemindent}
 \setlength{\bibitemindent}{0pt}
 \newlength{\biblabelextend}
@@ -1270,8 +1277,9 @@
      {\addtolength{\labelnumberwidth}{\biblabelextend}%
      \setlength{\labelwidth}{\labelnumberwidth}%
       \setlength{\labelsep}{\biblabelsep}%
+      \setlength{\bibhang}{\biblabelsep}%
+      \addtolength{\bibhang}{\labelnumberwidth}%
       \setlength{\leftmargin}{\bibhang}%
-      \addtolength{\leftmargin}{\labelnumberwidth}%
       \setlength{\itemindent}{\bibitemindent}%
       \setlength{\itemsep}{\bibitemsep}%
       \setlength{\parsep}{\bibparsep}}%
@@ -1401,14 +1409,14 @@
 \iftoggle{bbx:gbmedium}%
 {\iftoggle{bbx:url}%
     {\iffieldundef{url}%当存在url时，增加一个OL标识符
-        {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}}%
-        {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\texttt{/}OL]}}%
+        {\allowbreak\printtext{[}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}}%
+        {\allowbreak\printtext{[}\nobreak#1\nobreak\printtext{\texttt{/}OL]}}%
     }%
     {\ifentrytype{online}%
-        {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\texttt{/}OL]}}%
-        {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}}%
+        {\allowbreak\printtext{[}\nobreak#1\nobreak\printtext{\texttt{/}OL]}}%
+        {\allowbreak\printtext{[}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}}%
     }}%
-    {\nobreak\printtext{[}\nobreak#1\nobreak\printtext{]}}%
+    {\allowbreak\printtext{[}\nobreak#1\nobreak\printtext{]}}%
 }
 
 %
@@ -1418,11 +1426,11 @@
 \iftoggle{bbx:gbmedium}%
 {\iftoggle{bbx:url}%
     {\iffieldundef{url}%当存在url时，增加一个OL标识符
-        {\nobreak\printtext{[}\nobreak N\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
-        {\nobreak\printtext{[}\nobreak N\printtext{\texttt{/}OL]}\nobreak}%
+        {\allowbreak\printtext{[}\nobreak N\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
+        {\allowbreak\printtext{[}\nobreak N\printtext{\texttt{/}OL]}\nobreak}%
     }%
-    {\nobreak\printtext{[}\nobreak N\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
-}{\nobreak\printtext{[}\nobreak N\printtext{]}\nobreak}%
+    {\allowbreak\printtext{[}\nobreak N\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
+}{\allowbreak\printtext{[}\nobreak N\printtext{]}\nobreak}%
 }
 
 %
@@ -1432,11 +1440,11 @@
 \iftoggle{bbx:gbmedium}%
 {\iftoggle{bbx:url}%
     {\iffieldundef{url}%当存在url时，增加一个OL标识符
-        {\nobreak\printtext{[}\nobreak S\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
-        {\nobreak\printtext{[}\nobreak S\printtext{\texttt{/}OL]}\nobreak}%
+        {\allowbreak\printtext{[}\nobreak S\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
+        {\allowbreak\printtext{[}\nobreak S\printtext{\texttt{/}OL]}\nobreak}%
     }%
-    {\nobreak\printtext{[}\nobreak S\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
-}{\nobreak\printtext{[}\nobreak S\printtext{]}\nobreak}%
+    {\allowbreak\printtext{[}\nobreak S\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
+}{\allowbreak\printtext{[}\nobreak S\printtext{]}\nobreak}%
 }
 
 %
@@ -2023,32 +2031,30 @@ togl{bbx:gbstyle} or test {\iffieldequalstr{userd}{chinese}}%
 %   重设title的输出
 %
 %   20180425，v1.0k，为标题增加字体控制命令，Hu Zhenzhen
+%   20220416，v1.1g，增加book类卷的输出
 %   原理方法:将文献类型标识符输出出去，原输出来自biblatex.def文件
 %   利用toggle做标识符是否输出的判断
 \renewbibmacro*{title}{%
-  \ifboolexpr{%
+\ifboolexpr{%
     test{\iffieldundef{title}}%
     and
-    test{\iffieldundef{subtitle}}%
-  }%
+    test{\iffieldundef{subtitle}}}%
     {}%
     {\printtext[title]{\bibtitlefont%增加字体控制命令
        \printfield[titlecase]{title}%
-       \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
-       {}{\setunit{\subtitlepunct}%
-       \printfield[titlecase]{subtitle}}%
-       \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
-        {\setunit{\subtitlepunct}\printfield{titleaddon}}%
-        \iftoggle{bbx:gbtype}{%
-         \iffieldundef{entrysubtype}{\printfield[gbtypeflag]{usera}}%在标题后直接给出文献标识字母，判断一下，是否是报纸和标准
-        {\iffieldequalstr{entrysubtype}{standard}{\printfield[gbtypeflags]{usera}}%判断是否为标准
-                                         {\iffieldequalstr{entrysubtype}{news}{\printfield[gbtypeflagn]{usera}}%判断是否为报纸
-                                                                      {\printfield[gbtypeflag]{usera}}}%其它
-        }}{}%
-     %\iffieldundef{booktitle}{\newunit}{}%当title是析出时，不要标点
-     %\newunit
+       \ifboolexpr{test {\iffieldundef{subtitle}}}%增加了对子标题的判断
+            {}{\setunit{\subtitlepunct}\printfield[titlecase]{subtitle}}%
+       \iffieldundef{titleaddon}{}{\setunit{\subtitlepunct}\printfield{titleaddon}}%判断一下titleaddon
+       \ifboolexpr{test{\ifentrytype{book}} and (not test{\iffieldundef{volume}})}%判断一下book类有没有volume
+            {\setunit{\subtitlepunct}\printfield{volume}}{}%
+       \iftoggle{bbx:gbtype}%
+            {\iffieldundef{entrysubtype}{\printfield[gbtypeflag]{usera}}%在标题后直接给出文献标识字母，判断一下，是否是报纸和标准
+            {\iffieldequalstr{entrysubtype}{standard}{\printfield[gbtypeflags]{usera}}%判断是否为标准
+                  {\iffieldequalstr{entrysubtype}{news}{\printfield[gbtypeflagn]{usera}}%判断是否为报纸
+                  {\printfield[gbtypeflag]{usera}}}}}{}%%其它
+       }%
+    }%
 }%
-}}%
 %
 %   日期信息的输出格式，针对biblatex<3.7版本
 %

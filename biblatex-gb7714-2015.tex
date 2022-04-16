@@ -250,8 +250,8 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 \addbibresource[location=local]{example.bib}
 \begin{document}%正文区开始:
     %正文内容，引用参考文献
-详见文献\cite{Peebles2001-100-100}\parencite{Babu2014--}
-另见文献\cite[49]{于潇2012-1518-1523}\parencite[106]{Babu2014--}
+详见文献\cite{Peebles2001-100-100}\parencite{Babu2014a}
+另见文献\cite[49]{于潇2012-1518-1523}\parencite[106]{Babu2014a}
     %打印参考文献表
 \printbibliography[heading=bibliography,title=参考文献]
 \end{document}
@@ -289,8 +289,8 @@ latexmk -xelatex jobname.tex
 %\deflength{\textparwd}{\linewidth-1.5cm}
 %\begin{minipage}{\textparwd}
 %\fbox{\parbox{\textparwd}{%\raggedright
-%详见文献\cite{Peebles2001-100-100}\parencite{Babu2014--}
-%另见文献\cite[49]{于潇2012-1518-1523}\parencite[106]{Babu2014--}
+%详见文献\cite{Peebles2001-100-100}\parencite{Babu2014a}
+%另见文献\cite[49]{于潇2012-1518-1523}\parencite[106]{Babu2014a}
 %\renewcommand{\bibfont}{\zihao{-5}}
 %{
 %\hyphenation{conference}
@@ -739,6 +739,17 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gblocal=chinese，强制设置所有的本地化字符串使用中文。
     \item gblocal=english，强制设置所有的本地化字符串使用英文。
   \end{itemize}
+  当使用gb7714-2015时，本质上是使用如下的本地化字符串，如果有更多的修改需求，可以直接修改它们：
+  \begin{texlist}
+  \DefineBibliographyStrings{english}{
+        andincite         = {和},
+        andincitecn       = {和},
+        andothersincitecn = {等},
+        andothersincite   = {等{\adddot}},%adddot才能避开标点追踪
+   }
+   \end{texlist}
+
+
   测试文件见：
   \href{run:egfigure/egcontentfmtc.tex}{egcontentfmtc.tex}。
   效果示例如图\ref{fig:eg:optgblocal}所示。
@@ -1380,25 +1391,28 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{texlist}
 \end{example}
 
-文献表的水平缩进控制，两种编制方式下是不同的。对于著者-出版年制文献表，bibitemindent表示
+文献表的水平缩进控制，两种编制方式下是不同的。对于\emph{著者-出版年}制文献表，bibitemindent表示
 \emph{一条文献中第一行相对后面各行的缩进}，bibhang 表示\emph{页边到文献各行起始位置的距离}。因此要调整缩进就是要设置这两尺寸。
 
-对于顺序编码制文献表，由于存在数字标签，且其宽度与参考文献数量相关，所以这个宽度是动态变的，无能提前设定的，而是在文献表生成时给出，所以调整缩进需要在文献表输出环境中调整。由于顺序编码样式使用了两类输出环境，所以需要根据设定的选项区分处理：
+对于\emph{顺序编码}制文献表，由于存在数字标签，且其宽度与参考文献数量相关，所以这个宽度是动态变的，无能提前设定的，而是在文献表生成时给出，所以调整缩进需要在文献表输出环境中调整。由于顺序编码样式使用了两类输出环境，所以需要根据设定的选项区分处理：
 
-一是采用list环境的文献表，即设置gbalign=left、right、center时（即顺序编码标签是左对齐、右对齐和居中对齐的情况），在重定义的文献表环境中，调整bibitemindent和bibhang两个尺寸，默认情况下bibhang+labelnumberwidth的长度是页边到各行起始位置的距离。当采用某些字体导致计算计算的标签宽度不足时，可以设置biblabelextend尺寸，来增加labelnumberwidth的宽度，避免缩进格式产生问题，默认情况下biblabelextend尺寸为0pt。
+一是采用list环境的文献表，即设置gbalign=left、right、center时（即顺序编码标签是左对齐、右对齐和居中对齐的情况），在重定义的文献表环境中，调整bibitemindent和biblabelsep两个尺寸，默认情况下bibhang=biblabelsep+labelnumberwidth的长度是页边到各行起始位置的距离。当采用某些字体导致计算计算的标签宽度不足时，可以设置biblabelextend尺寸，来增加labelnumberwidth的宽度，避免缩进格式产生问题，默认情况下biblabelextend尺寸为0pt。
 
 二是采用正常段落环境的文献表，即设置gbalign=gb7714-2015时（即项对齐情况，就是各条文献是自身对齐的情况），在重定义的命令中通过调整lengthid尺寸来设置\emph{每条参考文献第二行开始的缩进距离}。
 调整方法见例\ref{eg:biblist:hspace}。
 
-除了使用这种段落形式的文献表外，也有需求是要把文献表放到一个表格里面这样的需求，要求每一条文献占据表格的一行，这也是能实现的，但本宏包就不去实现了，具体有需求的用户可以在github 的biblatex下搜索tabular或者在tex.stackexchange上搜索biblatex tabular，已经有具体的实现了，这里不再赘述。
+除了使用这种段落形式的文献表外，也有生成\emph{表格文献表}的需求，即把文献表放到一个表格里面，要求每一条文献占据表格的一行。这也是能实现的，具体参考我的博客文章
+\href{https://blog.csdn.net/xenonhu/article/details/121696116}{latex中生成表格形式的参考文献表}。
 
 \begin{example}{文献表水平缩进控制}{eg:biblist:hspace}
 \begin{texlist}
-% 著者-出版年制文献表缩进控制
+%
+% 【著者-出版年制】文献表缩进控制
 \setlength{\bibitemindent}{0em} % bibitemindent表示一条文献中第一行相对后面各行的缩进
 \setlength{\bibhang}{0pt} % 著者-出版年制中 bibhang 表示的各行起始位置到页边的距离
 
-% 顺序编码制文献表缩进控制
+%
+% 【顺序编码制】文献表缩进控制
 % 调整顺序标签与文献内容的间距
 \setlength{\biblabelsep}{2mm}
 
@@ -1409,7 +1423,10 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
      {\printtext[labelnumberwidth]{%
         \printfield{labelprefix}%
         \printfield{labelnumber}}}
-{%
+{%默认设置
+    \setlength{\bibhang}{\biblabelsep}%
+    \addtolength{\bibhang}{\labelnumberwidth}%
+    %
 %这里是所做的调整，通过设置\bibitemindent，\bibhang调整缩进
 \addtolength{\bibitemindent}{\labelnumberwidth}%
 \addtolength{\bibitemindent}{\biblabelsep}%
