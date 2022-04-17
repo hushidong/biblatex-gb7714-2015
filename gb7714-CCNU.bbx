@@ -43,6 +43,28 @@
 \setlength{\bibhang}{1.2ex}
 \setlength{\bibparsep}{0em}
 
+%这里把\bibhang放外面设置的方式也有其优势
+%这里使用\bibhang+\labelnumberwidth来控制文献内容左边界与页边的间距
+%然后用\biblabelsep来设置标签域文献内容左边界的间距
+%gb7714-2015中则直接用\bibhang=\biblabelsep+\labelnumberwidth来控制文献内容左边界与页边的间距
+%这其实是两种控制方式，CCNU这里用下面重定义的方式
+\defbibenvironment{bibliography}
+  {\list
+     {\printtext[labelnumberwidth]{%
+        \printfield{labelprefix}%
+        \printfield{labelnumber}}}
+     {\addtolength{\labelnumberwidth}{\biblabelextend}%
+     \setlength{\labelwidth}{\labelnumberwidth}%
+      \setlength{\labelsep}{\biblabelsep}%
+      \setlength{\leftmargin}{\bibhang}%
+      \addtolength{\leftmargin}{\labelnumberwidth}%
+      \setlength{\itemindent}{\bibitemindent}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}}%
+      \renewcommand*{\makelabel}[1]{\hss##1}}
+  {\endlist}
+  {\item}
+
 %==================================================
 % 定义一些标点为中文全角标点
 %==================================================
@@ -85,6 +107,7 @@
     andothers     = {et al.},
     andotherscn   = {等},
     bytranslator  = {\addcomma\ 译},
+    bytranslatorcn = {译},
     editors       = {\MakeLowercase{eds}\adddot\isdot},
     editor        = {\MakeLowercase{ed}\adddot\isdot},
     in            = {In:\addspace},
@@ -107,7 +130,7 @@
 \renewrobustcmd*{\bibinitdelim}{}%
 }
 \renewcommand{\aftertransdelim}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}
-\DeclareDelimFormat*{multinamedelim}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%\addcomma\addspace
+\DeclareDelimFormat{multinamedelim}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%\addcomma\addspace
 \DeclareDelimFormat{finalnamedelim}{%
   \edef\userfieldabcde{userd}%
   \ifcurrentname{translator}{\edef\userfieldabcde{usere}}{}%
@@ -143,7 +166,13 @@
   \bibstring{andcn}%
   \or%
   \bibstring{and}%
-  \fi}
+  \fi
+  }
+\DeclareDelimFormat[bib,biblist]{andothersdelim}{%
+\ifcurrentname{translator}{\iffieldequalstr{usere}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}{}%
+\ifcurrentname{author}{\iffieldequalstr{userf}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}{}%
+\ifcurrentname{editor}{\iffieldequalstr{userc}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}{}%
+}
 \DeclareDelimFormat{nameyeardelim}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%\addcomma\addspace
 \DeclareDelimFormat[bib,biblist]{nameyeardelim}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%\addcomma\addspace
 \DeclareDelimFormat{bibpagespunct}{\iffieldequalstr{userd}{chinese}{\erjpunctcolon}{\erjpunctcolonlanen}}%\addcomma\addspace\mbox{}

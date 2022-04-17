@@ -2414,24 +2414,32 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %   v1.0,20160701,hzz
 %   v1.0O,20190103,hzz,修改利用新定义的一个分隔符strandothersdelim
 %   v1.0w,20210401,hzz,针对其它语言的译者后的标点与中文不同做处理
+%   v1.1h,20220416,hzz,修正远古bug：在使用中文标点时会在译者中输出多个标点
 %   原理方法:判断作者或译者是否中文，若中文用字符等，否则用et al. 。
 %   \printnames由start-stop控制项数，默认是1和maxnames/minnames
+%说明：multinamedelim是各姓名之间的标点
+%      finalnamedelim是最后一个姓名前的取代multinamedelim的标点
+%      这两个标点是由printnames固定输出的。
+%      而且name:andothers在namefmtselected中是针对每个姓名都做的处理，所以其内容的输出要根据姓名列表的计数来做判断
+%     而finalandcomma 只是习惯用于最后一个and前输出的标点，但与前两个固定输出不同
+%      finalandcomma 只是在宏中判断并输出的，修改宏去掉它即可使其不输出
 \newcommand{\aftertransdelim}{\addcomma\addthinspace}
 \renewbibmacro*{name:andothers}{\bibauthorfont%
-  \ifboolexpr{
-    test {\ifnumequal{\value{listcount}}{\value{liststop}}}
-    and
-    test \ifmorenames
-  }{\ifnumgreater{\value{liststop}}{1}%注意这里试图去区分姓名总数大于1的情况，当姓名总数大于1时，最后一个姓名后面先加入一个\finalandcomma
-       {\finalandcomma}%目前国标没有这样的区分要求，如果有需要也是可以这么去做的。
-       {}%
-\printdelim{andothersdelim}\printdelim{strandothersdelim}%
-}{%当是译者的时候需要特殊处理：从7.2节看等，译前面加逗号，但从示例看等和译同时出现时，译前的逗号没有，比如：
-%袁训来, 陈哲, 肖书海, 等.
-%胡泳, 范海燕, 译.
-%潘惠霞, 魏婧, 杨艳, 等译.
-\ifcurrentname{translator}{\iffieldequalstr{usere}{chinese}{\aftertransdelim}{}}{}%为了实现上述第二个示例情况做的处理
-}}
+\ifboolexpr{test {\ifnumequal{\value{listcount}}{\value{liststop}}}
+            and test \ifmorenames}
+    {\ifnumgreater{\value{liststop}}{1}%注意这里试图去区分姓名总数大于1的情况，当姓名总数大于1时，最后一个姓名后面先加入一个\finalandcomma
+        {}%\finalandcomma，目前国标没有这样的区分要求，如果有需要也是可以这么去做的。
+        {}%
+    \printdelim{andothersdelim}\printdelim{strandothersdelim}%
+    }%
+    {%当是译者的时候需要特殊处理：从7.2节看等，译前面加逗号，但从示例看等和译同时出现时，译前的逗号没有，比如：
+    %袁训来, 陈哲, 肖书海, 等.
+    %胡泳, 范海燕, 译.
+    %潘惠霞, 魏婧, 杨艳, 等译.
+    \ifnumequal{\value{listcount}}{\value{liststop}}%
+        {\ifcurrentname{translator}{\iffieldequalstr{usere}{chinese}{\aftertransdelim}{}}{}}{}%为了实现上述第二个示例情况做的处理
+    }%
+}
 
 
 
@@ -2668,6 +2676,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \DeclareNameAlias{default}{namefmtselected}%姓名的默认格式采用可选的模式
 \DeclareNameAlias{sortname}{default}% Used in the bibliography %family-given/given-family
 \DeclareNameAlias{citename}{default}% Default used by \citename
+\DeclareNameAlias{bytranslator}{default}
 
 \DeclareDelimFormat[bib,biblist]{andothersdelim}{\addcomma\addspace}
 %\DeclareDelimFormat[textcite]{andothersdelim}{\addspace}%
