@@ -40,7 +40,8 @@
 %一些字体设置
 %==================================================
 %\def\bibrangedash{$\sim$}% 表示范围的波浪线符号
-\DefineBibliographyExtras{english}{\renewcommand*{\bibrangedash}{$\sim$}}
+\DefineBibliographyExtras{english}{\renewcommand*{\bibrangedash}{\iffieldequalstr{userd}{chinese}%
+{$\sim$}{\textendash\penalty\hyphenpenalty}}}
 %\newcommand\nwafubibfont{\linespread{1.0}\zihao{-5}}% 字体
 \newcommand\nwafubibfont{\zihao{5}}% 字体
 \renewcommand{\bibfont}{\nwafubibfont}% 全局字体设置
