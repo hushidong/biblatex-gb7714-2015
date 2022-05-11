@@ -8,7 +8,7 @@
 \usepackage{toolbox}
 \usepackage[colorlinks]{hyperref}
 \usepackage{lipsum}
-\usepackage[paperwidth=14cm,paperheight=10.5cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
+\usepackage[paperwidth=14cm,paperheight=7cm,top=10pt,bottom=10pt,left=0.5cm,right=0.5cm]{geometry}
 \usepackage{xltxtra,mflogo,texnames}
 %\usepackage[backend=biber,style=gb7714-2015,gbnamefmt=givenahead,
 %gbpub=false,gbbiblabel=box,gbtitlelink=true]{biblatex}%sorting=nyt
@@ -16,12 +16,12 @@
 sortcites=false,sorting=gbynta]{biblatex}
  \renewcommand{\bibauthorfont}{\color{violet}}%
 \DefineBibliographyStrings{english}{
-        andincite         = {和},
+        andincite         = { 和},
         andincitecn       = {和},
         andothersincitecn = {等},
         andothersincite   = {等{\adddot}},%adddot才能避开标点追踪
 }
-%\renewcommand{\bibfont}{\small}
+\renewcommand{\bibfont}{\footnotesize}
 \setlength{\bibitemsep}{2pt}
 \usepackage{filecontents}
 \begin{filecontents}{\jobname.bib}

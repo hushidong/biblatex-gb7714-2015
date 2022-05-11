@@ -83,27 +83,27 @@
 %==================================================
 %定义一些标点为中文全角标点
 %==================================================
-\def\erjpunctdot{。}%
-\def\erjpunctmark{、}%
-\def\erjpunctcomma{，}%
-\def\erjpunctcommalanen{，}%
-\def\erjpunctcolon{：}%
-\def\erjpunctcolonlanen{：}%
-\def\erjpunctsemicolon{；}%
-\def\erjpunctttl{《}%
-\def\erjpunctttr{》}
+\def\gbpunctdot{。}%
+\def\gbpunctmark{、}%
+\def\gbpunctcomma{，}%
+\def\gbpunctcommalanen{，}%
+\def\gbpunctcolon{：}%
+\def\gbpunctcolonlanen{：}%
+\def\gbpunctsemicolon{；}%
+\def\gbpunctttl{《}%
+\def\gbpunctttr{》}
 
 
 \def\execerjpuncten{%
-\def\erjpunctdot{\adddot}%
-\def\erjpunctmark{\addcomma\addspace}%
-\def\erjpunctcomma{\addcomma\addspace}%
-\def\erjpunctcommalanen{\addcomma\addspace}%
-\def\erjpunctcolon{\addcolon\addspace}%
-\def\erjpunctcolonlanen{\addcolon\addspace}%
-\def\erjpunctsemicolon{\addsemicolon\addspace}%
-\def\erjpunctttl{《}%
-\def\erjpunctttr{》}%
+\def\gbpunctdot{\adddot}%
+\def\gbpunctmark{\addcomma\addspace}%
+\def\gbpunctcomma{\addcomma\addspace}%
+\def\gbpunctcommalanen{\addcomma\addspace}%
+\def\gbpunctcolon{\addcolon\addspace}%
+\def\gbpunctcolonlanen{\addcolon\addspace}%
+\def\gbpunctsemicolon{\addsemicolon\addspace}%
+\def\gbpunctttl{《}%
+\def\gbpunctttr{》}%
 }
 
 %==================================================
@@ -111,7 +111,7 @@
 %==================================================
 \DefineBibliographyStrings{english}{
     and         = { and},%and后面的空格在finalnamedelim已经加过了，所以这里去掉20191009
-    andcn       = {\erjpunctmark\unspace},%\erjpunctmark
+    andcn       = {\gbpunctmark\unspace},%\gbpunctmark
     andincitecn = {和},%将标注中的分开，便于与文献表中的区分
     andincite   = {\&},
     %andotherscn={等},
@@ -124,12 +124,12 @@
 %设置一些标点格式为中文的标点
 %==================================================
 \DeclareFieldFormat{titlecase}{\iffieldequalstr{userd}{chinese}{#1}{\capitalisewords{#1}}}
-\DeclareFieldFormat*{title}{\iffieldequalstr{userd}{chinese}{\erjpunctttl#1\erjpunctttr}{#1\isdot}}
-\DeclareFieldFormat[article]{title}{\iffieldequalstr{userd}{chinese}{\erjpunctttl#1\erjpunctttr}{\mkbibquote{#1}\isdot}}
-\DeclareFieldFormat*{journaltitle}{\iffieldequalstr{userd}{chinese}{\erjpunctttl#1\erjpunctttr}{\textit{#1}}}%
-%\DeclareFieldFormat*{booktitle}{\erjpunctttl#1\erjpunctttr}
-\renewcommand*{\revsdnamepunct}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%%来源biblatex.def
-\DeclareDelimFormat*{multinamedelim}{\iffieldequalstr{userd}{chinese}{\erjpunctmark}{\erjpunctcommalanen}}%\addcomma\addspace
+\DeclareFieldFormat*{title}{\iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{#1\isdot}}
+\DeclareFieldFormat[article]{title}{\iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{\mkbibquote{#1}\isdot}}
+\DeclareFieldFormat*{journaltitle}{\iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{\textit{#1}}}%
+%\DeclareFieldFormat*{booktitle}{\gbpunctttl#1\gbpunctttr}
+\renewcommand*{\revsdnamepunct}{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%%来源biblatex.def
+\DeclareDelimFormat*{multinamedelim}{\iffieldequalstr{userd}{chinese}{\gbpunctmark}{\gbpunctcommalanen}}%\addcomma\addspace
 \DeclareDelimFormat{finalnamedelim}{%
   %\ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
   %\addspace%
@@ -172,11 +172,11 @@
   \or%
   \bibstring{and}\space%
   \fi}
-\DeclareDelimFormat{nameyeardelim}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%\addcomma\addspace
-\DeclareDelimFormat[bib,biblist]{nameyeardelim}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%\addcomma\addspace
-\DeclareDelimFormat{bibpagespunct}{\iffieldequalstr{userd}{chinese}{}{\unspace\erjpunctcommalanen}}%\addcomma\addspace\mbox{}
-\renewcommand*{\newunitpunct}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%\addcomma\space %，
-\renewcommand*{\finentrypunct}{\iffieldequalstr{userd}{chinese}{\erjpunctdot}{\adddot}}
+\DeclareDelimFormat{nameyeardelim}{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%\addcomma\addspace
+\DeclareDelimFormat[bib,biblist]{nameyeardelim}{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%\addcomma\addspace
+\DeclareDelimFormat{bibpagespunct}{\iffieldequalstr{userd}{chinese}{}{\unspace\gbpunctcommalanen}}%\addcomma\addspace\mbox{}
+\renewcommand*{\newunitpunct}{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%\addcomma\space %，
+\renewcommand*{\finentrypunct}{\iffieldequalstr{userd}{chinese}{\gbpunctdot}{\adddot}}
 
 
 %==================================================
@@ -246,7 +246,7 @@
     test{\iffieldundef{subtitle}}%
   }%
     {}%
-    {\setunit{\iffieldequalstr{userd}{chinese}{\erjpunctcolon}{\erjpunctcolonlanen}}\printtext[title]{\bibtitlefont%增加字体控制命令%增加了标点：
+    {\setunit{\iffieldequalstr{userd}{chinese}{\gbpunctcolon}{\gbpunctcolonlanen}}\printtext[title]{\bibtitlefont%增加字体控制命令%增加了标点：
        \printfield[titlecase]{title}%
        \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
        {}{\setunit{\subtitlepunct}%

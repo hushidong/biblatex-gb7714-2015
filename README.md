@@ -1350,6 +1350,8 @@ biblatex中处理顺序数字编码压缩的代码默认从3个连续编码开�
 	- ![test-special-chars-in-fields.tex](example/test-special-chars-in-fields.tex) 测试不同域中存在的特殊字符处理
 	- ![test-gbt-7714-1987.tex](example/test-gbt-7714-1987.tex) 测试GB/T7714-1987标准的样式
 	- ![test-gbt-7714-2005.tex](example/test-gbt-7714-2005.tex) 测试GB/T7714-2005标准的样式
+	测试标注中本地化字符串、标点的中英文切换
+	- ![test-punct-quanjiao.tex](example/test-punct-quanjiao.tex) 测试标点中英文切换
 	
 	
 

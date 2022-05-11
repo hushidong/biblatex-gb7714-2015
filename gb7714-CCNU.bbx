@@ -68,30 +68,30 @@
 %==================================================
 % 定义一些标点为中文全角标点
 %==================================================
-\def\erjpunctdot{．}%
-\def\erjpunctdotlanen{\adddot\addspace}%
-\def\erjpunctmark{、}%
-\def\erjpunctcomma{，}%
-\def\erjpunctcommalanen{\addcomma\addspace}%
-\def\erjpunctcolon{：}%
-\def\erjpunctcolonlanen{\addcolon\addspace}%
-\def\erjpunctsemicolon{；}%
-\def\erjpunctsemicolonlanen{\addsemicolon\addspace}%
-\def\erjpunctparenl{（}%
-\def\erjpunctparenr{）}%
+\def\gbpunctdot{．}%
+\def\gbpunctdotlanen{\adddot\addspace}%
+\def\gbpunctmark{、}%
+\def\gbpunctcomma{，}%
+\def\gbpunctcommalanen{\addcomma\addspace}%
+\def\gbpunctcolon{：}%
+\def\gbpunctcolonlanen{\addcolon\addspace}%
+\def\gbpunctsemicolon{；}%
+\def\gbpunctsemicolonlanen{\addsemicolon\addspace}%
+\def\gbpunctparenl{（}%
+\def\gbpunctparenr{）}%
 
 \def\execpuncten{%
-\def\erjpunctdot{\adddot\addspace}%
-\def\erjpunctdotlanen{\adddot\addspace}%
-\def\erjpunctmark{\addcomma\addspace}%
-\def\erjpunctcomma{\addcomma\addspace}%
-\def\erjpunctcommalanen{\addcomma\addspace}%
-\def\erjpunctcolon{\addcolon\addspace}%
-\def\erjpunctcolonlanen{\addcolon\addspace}%
-\def\erjpunctsemicolon{\addcolon\addspace}%
-\def\erjpunctsemicolonlanen{\addsemicolon\addspace}%
-\def\erjpunctparenl{(}%
-\def\erjpunctparenr{)}%
+\def\gbpunctdot{\adddot\addspace}%
+\def\gbpunctdotlanen{\adddot\addspace}%
+\def\gbpunctmark{\addcomma\addspace}%
+\def\gbpunctcomma{\addcomma\addspace}%
+\def\gbpunctcommalanen{\addcomma\addspace}%
+\def\gbpunctcolon{\addcolon\addspace}%
+\def\gbpunctcolonlanen{\addcolon\addspace}%
+\def\gbpunctsemicolon{\addcolon\addspace}%
+\def\gbpunctsemicolonlanen{\addsemicolon\addspace}%
+\def\gbpunctparenl{(}%
+\def\gbpunctparenr{)}%
 }
 
 
@@ -101,7 +101,7 @@
 %==================================================
 \DefineBibliographyStrings{english}{
     and           = {\addcomma\space},
-    andcn         = {\erjpunctcomma},
+    andcn         = {\gbpunctcomma},
     andincitecn   = {和}, %将标注中的分开，便于与文献表中的区分
     andincite     = {\&},
     andothers     = {et al.},
@@ -111,7 +111,7 @@
     editors       = {\MakeLowercase{eds}\adddot\isdot},
     editor        = {\MakeLowercase{ed}\adddot\isdot},
     in            = {In:\addspace},
-    incn          = {见\iffieldequalstr{userd}{chinese}{\erjpunctcolon}{\erjpunctcolonlanen}},
+    incn          = {见\iffieldequalstr{userd}{chinese}{\gbpunctcolon}{\gbpunctcolonlanen}},
     mathesis      = {(Master dissertation)},
     mathesiscn    = {[硕士学位论文]},
     phdthesis     = {(Ph D dissertation)},
@@ -129,8 +129,8 @@
 \renewcommand*{\revsdnamepunct}{}%
 \renewrobustcmd*{\bibinitdelim}{}%
 }
-\renewcommand{\aftertransdelim}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}
-\DeclareDelimFormat{multinamedelim}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%\addcomma\addspace
+\renewcommand{\aftertransdelim}{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}
+\DeclareDelimFormat{multinamedelim}{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%\addcomma\addspace
 \DeclareDelimFormat{finalnamedelim}{%
   \edef\userfieldabcde{userd}%
   \ifcurrentname{translator}{\edef\userfieldabcde{usere}}{}%
@@ -169,16 +169,16 @@
   \fi%
   }
 \DeclareDelimFormat[bib,biblist]{andothersdelim}{%
-\ifcurrentname{translator}{\iffieldequalstr{usere}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}{}%
-\ifcurrentname{author}{\iffieldequalstr{userf}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}{}%
-\ifcurrentname{editor}{\iffieldequalstr{userc}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}{}%
+\ifcurrentname{translator}{\iffieldequalstr{usere}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}{}%
+\ifcurrentname{author}{\iffieldequalstr{userf}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}{}%
+\ifcurrentname{editor}{\iffieldequalstr{userc}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}{}%
 }
-\DeclareDelimFormat{nameyeardelim}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%\addcomma\addspace
-\DeclareDelimFormat[bib,biblist]{nameyeardelim}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%\addcomma\addspace
-\DeclareDelimFormat{bibpagespunct}{\iffieldequalstr{userd}{chinese}{\erjpunctcolon}{\erjpunctcolonlanen}}%\addcomma\addspace\mbox{}
-\renewcommand*{\newunitpunct}{\iffieldequalstr{userd}{chinese}{\erjpunctdot}{\erjpunctdotlanen}}%\addcomma\space %，
-\renewcommand*{\finentrypunct}{\iffieldequalstr{userd}{chinese}{\erjpunctdot}{\adddot}}
-\renewcommand{\publocpunct}{\iffieldequalstr{userd}{chinese}{\erjpunctcolon}{\addcolon\addspace}}%出版项中：出版社地址后面的标点
+\DeclareDelimFormat{nameyeardelim}{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%\addcomma\addspace
+\DeclareDelimFormat[bib,biblist]{nameyeardelim}{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%\addcomma\addspace
+\DeclareDelimFormat{bibpagespunct}{\iffieldequalstr{userd}{chinese}{\gbpunctcolon}{\gbpunctcolonlanen}}%\addcomma\addspace\mbox{}
+\renewcommand*{\newunitpunct}{\iffieldequalstr{userd}{chinese}{\gbpunctdot}{\gbpunctdotlanen}}%\addcomma\space %，
+\renewcommand*{\finentrypunct}{\iffieldequalstr{userd}{chinese}{\gbpunctdot}{\adddot}}
+\renewcommand{\publocpunct}{\iffieldequalstr{userd}{chinese}{\gbpunctcolon}{\addcolon\addspace}}%出版项中：出版社地址后面的标点
 
 
 %==================================================
@@ -191,7 +191,7 @@
 %   v1.0k,20180425,增加了字体控制命令，hzz
 \renewbibmacro*{journal+issuetitle}{\bibpubfont%源来自standard.bbx
   \usebibmacro{journal}%
-  \setunit*{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%修改为增加一个逗号
+  \setunit*{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%修改为增加一个逗号
   \iffieldundef{series}
     {}
     {\newunit
@@ -199,7 +199,7 @@
      \setunit{\addspace}}%
   \usebibmacro{issue+date}%
   %\setunit{\addcolon\space}%
-  \iffieldundef{volume}{}{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%
+  \iffieldundef{volume}{}{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%
   %换成逗号和空格
   \usebibmacro{issue}%
   \usebibmacro{volume+number+eid}%把卷期放到年份后面
@@ -222,7 +222,7 @@
   %\printfield{number}%
   \iffieldundef{number}{}{%
   \iffieldequalstr{entrysubtype}{news}{\printtext{\mkbibparens{\printfield{number}}}}{%
-  \iffieldequalstr{userd}{chinese}{\printtext{\erjpunctparenl\printfield{number}\erjpunctparenr}}%
+  \iffieldequalstr{userd}{chinese}{\printtext{\gbpunctparenl\printfield{number}\gbpunctparenr}}%
   {\printtext{\mkbibparens{\printfield{number}}}}}%
   }%增加一个圆括号
   \iffieldundef{eid}{}{%
@@ -249,7 +249,7 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
 \iflistundef{institution}{%
 \iftoggle{ifCJKforgbt}{\printtext{[\str@nopublisher]}}{\printtext{\mkbibbrackets{s.n.}}}}%
 {\printlist{institution}}}%
-\setunit{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%
+\setunit{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%
   %\usebibmacro{date}%
   \printfield{year}%
   \bibrangedash%
@@ -260,7 +260,7 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
     {\setunit*{\addcomma\space}}
     {\setunit*{\publocpunct}}%
   \printlist{institution}%
-  \setunit*{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%
+  \setunit*{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%
   \usebibmacro{date}%
   \newunit}%
 }
@@ -286,7 +286,7 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
         {\iftoggle{ifCJKforgbt}{\printtext{[\str@nopublisher]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
         {\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}}}%
         {\printlist{publisher}}}%
-\setunit*{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%\addcomma\addspace%
+\setunit*{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%\addcomma\addspace%
 \ifentrytype{report}{\printtext{\blx@gbdate{}{}}}%
 {\usebibmacro{date}}%
 }%
@@ -295,7 +295,7 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
     {\setunit*{\addcomma\space}}
     {\setunit*{\publocpunct}}%
   \printlist{publisher}%
-  \setunit*{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%
+  \setunit*{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%
 \ifentrytype{report}{\printtext{\blx@gbdate{}{}}}%
 {\usebibmacro{date}}%
   }%
@@ -312,7 +312,7 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
     {\setunit*{\addcomma\space}}
     {\setunit*{\publocpunct}}%
   \printlist{institution}%
-  \setunit*{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}%
+  \setunit*{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%
   \usebibmacro{date}%
   %\newunit
   }}
@@ -330,8 +330,8 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
   }
     {\printnames{editor}%
     \iffieldundef{editortype}%增加一个类型判断，用于存在editortype的情况
-    {\setunit{\iffieldequalstr{userd}{chinese}{\erjpunctdot}{\erjpunctdotlanen}}}%当没有editortype时，直接用句点
-    {\usebibmacro{editorstrg}\setunit{\iffieldequalstr{userd}{chinese}{\erjpunctcomma}{\erjpunctcommalanen}}}%
+    {\setunit{\iffieldequalstr{userd}{chinese}{\gbpunctdot}{\gbpunctdotlanen}}}%当没有editortype时，直接用句点
+    {\usebibmacro{editorstrg}\setunit{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}}%
      }%
     {}}
 
@@ -364,7 +364,7 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
 %   原理方法:使用bibmacro{in:}改变了以前在driver中直接输出//的方式，同时也简化了标点控制。
 \renewbibmacro*{in:}{%
  \iftoggle{bbx:gbpunctin}{\printtext{\allowbreak\texttt{//}\allowbreak}}%\addthinspace
-                         {\setunit{\iffieldequalstr{userd}{chinese}{\erjpunctdot}{\erjpunctdotlanen}}%
+                         {\setunit{\iffieldequalstr{userd}{chinese}{\gbpunctdot}{\gbpunctdotlanen}}%
                          \iffieldequalstr{userd}{chinese}%
                          {\printtext{\bibstring{incn}}}%
                          {\printtext{\bibstring{in}}}%

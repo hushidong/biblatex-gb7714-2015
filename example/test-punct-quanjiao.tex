@@ -1,0 +1,88 @@
+\documentclass{article}
+\usepackage{ctex}
+\usepackage[backend=biber,style=gb7714-2015ay,gbcitelocal=chinese]{biblatex}
+
+\DeclareDelimFormat[cite,parencite,pagescite]{nameyeardelim}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{\addcomma\addspace}{，}}
+\DeclareDelimFormat[textcite]{nameyeardelim}{\addthinspace}
+\renewcommand*{\multicitedelim}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{\addsemicolon\addspace}{；}}
+\renewcommand*{\compcitedelim}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{\addcomma\addspace}{，}}
+\renewcommand*{\compextradelim}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{\addcomma\addspace}{，}}
+\renewcommand*{\bibleftparen}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{(}{（}}
+\renewcommand*{\bibrightparen}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{)}{）}}
+\renewcommand*{\mkbibleftborder}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{(}{（}}
+\renewcommand*{\mkbibrightborder}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{)}{）}}
+
+\DefineBibliographyStrings{english}{
+        andincitecn       = {和},
+        andothersincitecn = {等},
+}
+
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+
+@article{Aaa_2021,
+author = {Aaa, A. A. and Bbb, B. B. and Ccc, C. C.},
+title = {Title title title title title},
+journal = {Nature},
+volume = {11},
+number = {1},
+pages = {11-12},
+year = {2021},
+type = {Journal Article}
+}
+
+@article{Aaa_2018,
+author = {Aaa, A. A. and Bcc, B. B. and Caa, C. C.},
+title = {Title title title title title},
+journal = {Science},
+volume = {11},
+number = {1},
+pages = {11-12},
+year = {2018},
+type = {Journal Article}
+}
+
+@article{Aaa_2018a,
+author = {Aaa, A. A. and Bcc, B. B. and Caa, C. C.},
+title = {Title title title title titleA},
+journal = {Science},
+volume = {11},
+number = {2},
+pages = {11-12},
+year = {2018},
+type = {Journal Article}
+}
+
+@article{Bbb_2019,
+author = {Bbb, A. A. and Bcc, B. B. and Ccc, C. C.},
+title = {Title title title title title},
+journal = {eCell},
+volume = {11},
+number = {1},
+pages = {11-12},
+year = {2018},
+type = {Journal Article}
+}
+
+
+\end{filecontents}
+\addbibresource[location=local]{\jobname.bib}
+
+\begin{document}
+
+
+中文段落\cite{Aaa_2018,Aaa_2018a}\cite{Aaa_2021,Aaa_2018}\cite{Aaa_2018,Bbb_2019}
+中文段落\textcite{Aaa_2018,Aaa_2018a}，\textcite{Aaa_2021,Aaa_2018} 发现 \parencite{Aaa_2018,Bbb_2019}
+
+
+{
+\defcounter{gbcitelocalcase}{2}
+english paragraph \cite{Aaa_2018,Aaa_2018a}\cite{Aaa_2021,Aaa_2018}\cite{Aaa_2018,Bbb_2019}
+english paragraph \textcite{Aaa_2018,Aaa_2018a},  \textcite{Aaa_2021,Aaa_2018} find \parencite{Aaa_2018,Bbb_2019}
+
+}
+
+
+
+\printbibliography
+\end{document} 

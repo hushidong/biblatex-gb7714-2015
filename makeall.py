@@ -3,9 +3,9 @@
 
 import os
 import shutil
-import subprocess
 import pathlib
 import re
+import subprocess
 
 
 def compileall():

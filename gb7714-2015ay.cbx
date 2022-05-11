@@ -123,6 +123,7 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
 \iffieldequalstr{userf}{chinese}{\renewcommand*{\andothersdelim}{\addthinspace}}%\addthinspace
   {\renewcommand*{\andothersdelim}{\addspace}}%
 }
+\newcommand{\compextradelim}{\addcomma\addthinspace} %标注中压缩后相同年份后附加标签a、b之间的标点
 
 %
 %   修订使可用选项gblabelref来控制是否将标准标签中的作者加上超链接
@@ -138,7 +139,7 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
        {\iffieldequals{namehash}{\cbx@lasthash}
           {\ifthenelse{\iffieldequals{labelyear}{\cbx@lastyear}\AND
                        \(\value{multicitecount}=0\OR\iffieldundef{postnote}\)}
-             {\setunit{\addcomma\addthinspace}%同一作者的年份之间的标点,示例见thesis-nwafu-ay
+             {\setunit{\compextradelim}%同一作者的年份之间的标点,示例见thesis-nwafu-ay%\addcomma\addthinspace
               \usebibmacro{cite:extradate}}
              {\setunit{\compcitedelim}%
               \usebibmacro{cite:labeldate+extradate}%
@@ -156,7 +157,7 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
     {\iffieldundef{shorthand}
        {\ifthenelse{\iffieldequals{labelyear}{\cbx@lastyear}\AND
                     \(\value{multicitecount}=0\OR\iffieldundef{postnote}\)}
-          {\setunit{\addcomma}%
+          {\setunit{\compextradelim}%
            \usebibmacro{cite:extradate}}
           {\setunit{\compcitedelim}%
            \usebibmacro{cite:labeldate+extradate}%

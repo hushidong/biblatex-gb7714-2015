@@ -1297,7 +1297,9 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \end{example}
 
 
+\paragraph{标注中的全半角标点设置}
 
+参考:\url{https://blog.csdn.net/xenonhu/article/details/124686522}
 
 
 
@@ -1327,7 +1329,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 \subsubsection{标题格式控制}
 
-标题内容的设置有三种方式，这里再重复一下：一是直接在printbibliography命令中利用选项title设置，二是gbctexset=true时，重定义bibname和refname来设置，三是gbctexset=true是false时，利用本地化字符串进行设置。具体参见gbctexset选项。
+标题内容的设置有三种方式，这里再重复一下：一是直接在printbibliography命令中利用选项title设置，二是gbctexset=true时，重定义bibname和refname来设置，三是gbctexset=false时，利用本地化字符串进行设置。具体参见gbctexset选项。
 
 标题格式的设置主要是通过重定义参考文献环境的heading进行，比如：
 
@@ -1345,12 +1347,11 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 \subsubsection{段落格式控制}
 
-\paragraph{\heiti 文献表字体、颜色、间距、缩进控制} 为方便用户改变文献表段落格式、内容字体和颜色等，在 biblatex 提供的 \verb|\bibfont| 命令基础上，
-增加了\verb|\bibauthorfont|、\verb|\bibtitlefont|、\verb|\bibpubfont| 等命令用于控制文献不同部分的格式，比如作者，标题，出版项等。
-增加了尺寸\verb|\bibitemindent| 用于控制参考文献条目在文献表中的缩进，
-其意义与 list 环境中 \verb|\itemindent| 相同。
+\paragraph{\heiti 文献表字体、颜色} 为方便用户改变文献表段落格式、内容字体和颜色等，在 biblatex 提供的 \verb|\bibfont| 命令基础上，
+增加了\verb|\bibauthorfont|、\verb|\bibtitlefont|、\verb|\bibpubfont| 等命令用于控制文献部分著录项的格式，比如作者，标题，出版项等。
 用法具体见例\ref{eg:biblist:fontset}，结果如图\ref{fig:par:fmt}所示。
 测试用例见\href{run:example/testfontinbiblio.tex}{testfontinbiblio.tex}。
+
 
 \begin{example}{文献表段落格式、字体、颜色}{eg:biblist:fontset}
 \begin{texlist}
@@ -1380,6 +1381,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \caption{文献表段落格式示例}\label{fig:par:fmt}
 \end{figure}
 
+\paragraph{\heiti 文献表竖直间距控制}
 文献表各条目之间的竖直间距控制如例\ref{eg:biblist:vspace}所示：
 
 \begin{example}{文献表竖直间距控制}{eg:biblist:vspace}
@@ -1391,6 +1393,10 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{texlist}
 \end{example}
 
+
+\paragraph{\heiti 文献表水平间距(缩进)控制}
+增加了尺寸\verb|\bibitemindent| 用于控制参考文献条目在文献表中的缩进，
+其意义与 list 环境中 \verb|\itemindent| 相同。
 文献表的水平缩进控制，两种编制方式下是不同的。对于\emph{著者-出版年}制文献表，bibitemindent表示
 \emph{一条文献中第一行相对后面各行的缩进}，bibhang 表示\emph{页边到文献各行起始位置的距离}。因此要调整缩进就是要设置这两尺寸。
 
@@ -1465,9 +1471,10 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{texlist}
 \end{example}
 
-文献表中有时需要调整标点为中文的全角标点，可以通过不同机制下的标点设置来调整。
+\paragraph{\heiti 文献表中的标点控制}  文献表中有时需要调整标点为中文的全角标点，可以通过不同机制下的标点设置来调整。
 调整方式如例\ref{eg:biblist:separator}所示。有时在本地化字符串中也可以实现标点调整，比如and，in等本地化字符串。有时在域格式中也可能出现标点调整，比如title域格式。而且因为不同语言的处理，可能内部也存在标点的调整。具体情况是比较复杂的，这里不再一一列举，一些修改示例可以参考：
 \href{run:./chinese-erj.bbx}{chinese-erj.bbx}，
+\href{run:./gb7714-CCNU.bbx}{gb7714-CCNU.bbx}，
 \href{run:./egthesis/thesis-uibe-numeric.tex}{thesis-uibe-numeric.tex}。具体的标点命令的意义详见biblatex手册。
 
 \begin{example}{文献表常见标点控制}{eg:biblist:separator}
@@ -1488,7 +1495,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{texlist}
 \end{example}
 
-\subsubsection{条目著录格式控制}\label{sec:entry:fmt}
+\subsubsection{条目著录格式的选项控制}\label{sec:entry:fmt}
 
 文献表输出的格式即参考文献著录样式，除了整体的段落格式外，还有条目内部的格式可以控制，条目内部的这些项称为著录项，这些著录项的格式通常可由选项控制。可用选项除了biblatex 提供的标准选项外，也包括样式包提供的选项。
 图\ref{fig:content:fmta}、\ref{fig:content:fmtb}、\ref{fig:content:fmtc}给出了一些选项设置后的格式控制效果，
@@ -1549,9 +1556,9 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \caption{文献表条目著录格式示例三}\label{fig:content:fmtc}
 \end{figure}
 
-\subsubsection{著录格式局部调整}\label{sec:entry:fmtlocal}
+\subsubsection{条目著录格式的局部调整}\label{sec:entry:fmtlocal}
 
-得益于biblatex利用tex宏控制著录格式的特点，加上tex语言本身编组的局部化特性，所以在利用biblatex生成参考文献的过程中可以有丰富手段，来进行参考文献著录格式的局部调整。也正因为局部的格式调整，因此通常局部格式都是结合refsection或者refsegment来操作的。前面提到过的一个很简单的例子，当在学位论文的写作中需要正文部分的参考文献使用顺序编码制，而附录中研究成果部分使用作者年制这样的需求就是一个典型的局部化格式调整。这一问题的解决方式为在研究成果部分使用一个refsection将其局部化，并结合gb7714-2015mx样式，并利用setaystylesection命令设置该refsection为作者年制样式。
+得益于biblatex利用tex宏控制著录格式的特点，加上tex语言本身编组的局部化特性，所以在利用biblatex生成参考文献的过程中可以有丰富手段来进行参考文献著录格式的局部调整。因为是局部的格式调整，所以通常是结合refsection或者refsegment来操作的。前面提到过的一个很简单的例子，当在学位论文的写作中需要正文部分的参考文献使用顺序编码制，而附录中研究成果部分使用作者年制这样的需求就是一个典型的局部化格式调整。这一问题的解决方式为：在研究成果部分使用refsection将其局部化，并结合gb7714-2015mx样式，并利用setaystylesection命令设置该refsection为作者年制样式。
 
 因为tex宏的局部化调整特性，因此几乎biblatex中所有格式设置都是可以做局部调整的，限于篇幅，这里仅介绍一些常见的简单的调整方式：
 
@@ -1582,7 +1589,10 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   \begin{example}{域格式的局部调整示例}{eg:bib:fieldsetlocal}
 	\begin{texlist}
-	\DeclareFieldFormat[article,periodical]{volume}{\textbf{#1}}% volume of a journal
+    %期刊文献的卷加粗
+	\DeclareFieldFormat[article,periodical]{volume}{\textbf{#1}}
+    %会议论文年份加粗
+    \DeclareFieldFormat[inproceedings]{date}{\mkbibbold{#1}}
 	\end{texlist}
  \end{example}
 
@@ -1979,53 +1989,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 具体例子则可以参考\href{run:./stdgbT7714-2015.pdf}{stdgbT7714-2015.pdf}。其中第8节中大量使用这种方式。
 
-
-
-\subsection{未分类说明}
-
-\subsubsection{biblatex 的优点}
-
-基于 biblatex 宏包的参考文献生成方法，具有很多明显的优点，读者可以从
-\href{https://github.com/CTeX-org/lshort-cn}{lshort-cn}、
-\href{https://github.com/latexstudio/LaTeXFAQ-cn}{LatexFAQ-CN}、
-\href{https://tex.stackexchange.com}{tex.stackexchange.com}
-了解到更多。
-
-笔者从最初开始学习latex时利用 thebibliography 环境生成参考文献，到对格式化有更多需求后开始寻求利用参考文献宏包，再到最后选择使用biblatex宏包，在不断实践过程中越发感觉到biblatex 在生成参考文献方面的巨大潜力。以笔者的观点其优点主要包括:
-
-%[也由于对bibtex语言不熟悉，偷懒不想学$( \hat{} \bot \hat{} )$]
-\begin{enumerate}
-\item 使用简单。代码结构很简单，格式控制很简单，功能设置很简单，编译方式很简单，编译命令无限制(xelatex、pdflatex等均可)。例\ref{eg:func:backref} 给出了后向超链接功能的设置。
-
-    \begin{example}{文献条目的后向超链接设置}{eg:func:backref}
-    \begin{texlist}
-    %加上后向超链接设置，需要4步编译。
-    \usepackage[backend=biber,style=gb7714-2015,backref=true]{biblatex}
-    \end{texlist}
-    \end{example}
-
-%使用够方便
-
-\item 划分自由。在一个文档中可以生成任意数量的文献表，无需用将分档划分成不同的文件来辅助生成分章参考文献。利用refsection 和refsegment方便划分，具有嵌套、遍历等多种灵活处理方式。
-%划分很自由，划分无限制
-
-\item 定制方便。使用是tex命令(宏)控制格式，定制和修改相比 bibtex 语言更为容易。全面提供适用于自然学科、人文学科的多种不同类型的参考文献样式，参考、引用、移植、定制均很便捷。
-%定制很容易
-
-%处理无限制，支持更全面
-\item 支持全面。后端处理程序biber处理大数据量毫无压力，不用担心内存不足问题，字符编码支持utf-8，完全支持中文的bibtex 键(引用关键字)。biber除了自身提供的大量功能，比如：动态数据修改、参考文献数据检查、引用文献数据的bib输出(例\ref{eg:bibercmd:outbibfile})等外，还可利用一些perl模块来实现一些特殊功能，比如：
-    实现文件编码的转换（perl 的Encode::CN 模块），
-    排序的本地化调整（perl的Unicode::Collation::locale 模块，
-    中文字符的拼音和笔画排序见例\ref{eg:sort:opts}、例\ref{eg:sort:bibercmd}）等。其中引用文献数据的bib输出常用于从一个大的bib文件中导出仅有引用文献信息的小的bib文件。
-
-    \begin{example}{输出引用文献数据时的biber选项}{eg:bibercmd:outbibfile}
-    \begin{texlist}
-    biber jobname --output-format=bibtex
-    \end{texlist}
-    \end{example}
-
-\end{enumerate}
-%上述这些优点也是笔者决定编写符合GB/T 7714-2015标准的参考文献样式文件的原因之一。
+\subsection{bib文件与文献条目数据}
 
 \subsubsection{数据库bib文件和文献条目}\label{sec:bib:bibtex}
 
@@ -2233,14 +2197,79 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 \item 页码:\ref{sec:fmt:pages}节
 \end{itemize}
 
-\subsubsection{其它注意事项}\label{sec:pkg:hints}
+
+
+
+
+
+\subsection{其它注意事项}\label{sec:pkg:hints}
 
 \begin{enumerate}
+    \item biblatex 的优点
 
-  \item 本样式包的设计与实现方法以及涉及到的一些biblatex功能介绍，以项目示例的形式总结在
-  \href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}{\LaTeX 文档中文参考文献的biblatex解决方案}中，本文档不再重复给出，有需要了解的用户可以参见其中的第3.1节。
+    基于 biblatex 宏包的参考文献生成方法，具有很多明显的优点，读者可以从
+    \href{https://github.com/CTeX-org/lshort-cn}{lshort-cn}、
+    \href{https://github.com/latexstudio/LaTeXFAQ-cn}{LatexFAQ-CN}、
+    \href{https://tex.stackexchange.com}{tex.stackexchange.com}
+    了解到更多。笔者从最初开始学习latex时利用 thebibliography 环境生成参考文献，到对格式化有更多需求后开始寻求利用参考文献宏包，再到最后选择使用biblatex宏包，在不断实践过程中越发感觉到biblatex 在生成参考文献方面的巨大潜力。以笔者的观点其优点主要包括:
 
-  \item tex源文档既可以用xelatex编译，也可以利用pdflatex或latex进行编译。但要注意的是pdflatex编译可能因为某些样式比如authoryear，使用了xstring宏包中的一些命令而导致错误，但numeric类样式通常没有问题。该问题在biblatex更新到3.12版本后取消xstring 宏包后得以解决。
+    %[也由于对bibtex语言不熟悉，偷懒不想学$( \hat{} \bot \hat{} )$]
+    \begin{itemize}
+    \item 使用简单。代码结构很简单，格式控制很简单，功能设置很简单，编译方式很简单，编译命令无限制(xelatex、pdflatex等均可)。例\ref{eg:func:backref} 给出了后向超链接功能的设置。
+
+        \begin{example}{文献条目的后向超链接设置}{eg:func:backref}
+        \begin{texlist}
+        %加上后向超链接设置，需要4步编译。
+        \usepackage[backend=biber,style=gb7714-2015,backref=true]{biblatex}
+        \end{texlist}
+        \end{example}
+
+    %使用够方便
+
+    \item 划分自由。在一个文档中可以生成任意数量的文献表，无需用将分档划分成不同的文件来辅助生成分章参考文献。利用refsection 和refsegment方便划分，具有嵌套、遍历等多种灵活处理方式。
+    %划分很自由，划分无限制
+
+    \item 定制方便。使用是tex命令(宏)控制格式，定制和修改相比 bibtex 语言更为容易。全面提供适用于自然学科、人文学科的多种不同类型的参考文献样式，参考、引用、移植、定制均很便捷。
+    %定制很容易
+
+    %处理无限制，支持更全面
+    \item 支持全面。后端处理程序biber处理大数据量毫无压力，不用担心内存不足问题，字符编码支持utf-8，完全支持中文的bibtex 键(引用关键字)。biber除了自身提供的大量功能，比如：动态数据修改、参考文献数据检查、引用文献数据的bib输出(例\ref{eg:bibercmd:outbibfile})等外，还可利用一些perl模块来实现一些特殊功能，比如：实现文件编码的转换（perl 的Encode::CN 模块），
+        排序的本地化调整（perl的Unicode::Collation::locale 模块，
+        中文字符的拼音和笔画排序见例\ref{eg:sort:opts}、例\ref{eg:sort:bibercmd}）等。
+    \end{itemize}
+    %上述这些优点也是笔者决定编写符合GB/T 7714-2015标准的参考文献样式文件的原因之一。
+
+  \item biber 输出引用文献bib文件
+  
+  利用biber可以实现引用文献数据的bib输出，常用于从一个大的bib文件中导出仅被引用的文献信息到一个小的bib 文件，比如：要提交一个小论文附带的bib文件时。
+  
+    \begin{example}{输出引用文献数据时的biber选项}{eg:bibercmd:outbibfile}
+    \begin{texlist}
+    biber jobname --output-format=bibtex
+    \end{texlist}
+    \end{example}
+  
+  
+  \item biber 控制特殊符号的tex宏的转换
+  
+  默认情况下biber为了实现更好的排序，会将一些latex提供的特殊宏转换为utf-8编码字符。但有时我们可能并不需要做这样的转换，因为转换后符号的形式就变了。由于biber依赖一个字符映射表recode\_data.xml进行转换，因此我们可以利用它来构建一个自定义映射表，从而避免biber 对一些特殊宏的转换。具体做法如下：
+    \begin{itemize}
+    \item 找到biber的临时工作路径中的，recode\_data.xml (搜索能找到)
+    \item 复制一个到其它位置，并定义为，比如\verb|c:\recodeudf.xml|
+    \item 打开该文件，并找到textquotesingle那一项删除，将所有的set修改为special，并保存
+    \item 编译的时候，xelatex正常编译，biber这一步则使用命令：
+
+    \begin{example}{使用自定义特殊字符宏映射表的biber选项}{eg:bibercmd:charmap}
+    \begin{texlist}
+    biber jobname.bcf --recodedata=c:\recodeudf.xml --decodecharsset=special
+    \end{texlist}
+    \end{example}
+    \end{itemize}
+    
+
+  \item 不同tex引擎下的编译
+  
+    tex源文档既可以用xelatex编译，也可以利用pdflatex或latex进行编译。但要注意的是pdflatex编译可能因为某些样式比如authoryear，使用了xstring宏包中的一些命令而导致错误，但numeric类样式通常没有问题。该问题在biblatex更新到3.12版本后取消xstring 宏包后得以解决。
 
       中文用户编译还需要注意编码问题。
       utf-8编码的文档，采用xelatex 编译没有任何注意事项，但使用pdflatex编译时，需要给ctex 宏包加载UTF8选项，比如 \verb|\usepackage[UTF8]{ctex}| 。
@@ -2248,29 +2277,44 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
       该选项在文档类加载时给出也可，比如 \verb|\documentclass[UTF8]{article}| ，
       同时\bc{文献引用时所用关键词应采用英文}，比如 \verb|\cite{zhangml2008}| 而不能包含中文，比如 \verb|\cite{张敏莉2008}|。
 
-      当文档使用其他编码时，可以利用notepad++ 或notepad2 等编辑器将其转换为UTF-8编码。若不进行转换，使用xelatex编译通常需要指定一个文档编码，比如windows 环境下的GB2312 编码的文档需要指定\verb|\XeTeXinputencoding "GBK"|，否则会显示乱码。使用pdflatex进行编译时，如果biblatex不能正确的处理编码问题，那么需要为其明确的指定texencoding和bibencoding 选项。比如windows环境下的GB2312编码的文档，需要指定\verb|\usepackge[texencoding=GBK]{biblatex}|。
+      当文档使用其他编码时，可以利用notepad++ 或notepad2 等编辑器将其转换为UTF-8编码。若不进行转换，使用xelatex编译通常需要指定一个文档编码，比如windows 环境下的GB2312 编码的文档需要指定\verb|\XeTeXinputencoding "GBK"|，否则会显示乱码。使用pdflatex 进行编译时，如果biblatex不能正确的处理编码问题，那么需要为其明确的指定texencoding 和bibencoding 选项。比如windows环境下的GB2312编码的文档，
+      需要指定\verb|\usepackge[texencoding=GBK]{biblatex}|。
 
       %增加了对GBK支持的说明，2018-05-11
 
-  \item 当顺序编码和著者-出版年制切换，或者biblatex版本切换，或者不同样式切换时，如果编译出错，可先清理一下辅助文件，完成后再重新编译。
+  \item 容易出现的错误和解决
+    \begin{itemize}
+    \item 当顺序编码和著者-出版年制切换，或者biblatex版本切换，或者不同样式切换时，如果编译出错，可先清理一下辅助文件，完成后再重新编译。
 
   \item 当bibtex键中含有中文的时候，texlive2015中的biblatex3.0版的对参考文献条目的超链接会出现问题，而texlive2016中的biblatex3.4或以后的版本则没有问题。
 
-  \item GB/T 7714-2015中的著者-出版年制要求参考文献按文种集合，且中文在前英文在后。主要通过gblanorder选项、排序模板DeclareSortingScheme\{gb7714-2015\} (biblatex3.7 以前版本) 或 DeclareSortingTemplate\{gb7714-2015\} (biblatex3.8以后版本)、以及自动判断的language 域实现。一般情况下样式能够正确区分不同语言文献，如果出现错误，用户可以手动修改bib源文件，将language 域设置为正确的语言，详见\ref{sec:usage:bbx} 节的说明。
+  \item GB/T 7714-2015中的著者-出版年制要求参考文献按文种集合，且中文在前英文在后。主要通过gblanorder选项、排序模板DeclareSortingScheme\{gb7714-2015\} (biblatex3.7 以前版本) 或 DeclareSortingTemplate\{gb7714-2015\} (biblatex3.8 以后版本)、以及自动判断的language 域实现。一般情况下样式能够正确区分不同语言文献，如果出现错误，用户可以手动修改bib源文件，将language 域设置为正确的语言(比如设置成：chinese，english，russian，japanese等)，详见\ref{sec:usage:bbx} 节的说明。
 
-%上一段2016-1114更新，下面这段是旧的说法，
-%通过定义DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现中文在前英文在后但两个文种的文献各自也是降序的。还有一种变通的方法是，在录入bib文件时，在userb域填入用于排序的信息，比如需要排前面中文文献填cn，排后面的英文文献用en。这样因为修改后的排序格式nyt会在author域前先用userb进行排序，自然会把中文文献放在前面。
+    %上一段2016-1114更新，下面这段是旧的说法，
+    %通过定义DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现中文在前英文在后但两个文种的文献各自也是降序的。还有一种变通的方法是，在录入bib文件时，在userb域填入用于排序的信息，比如需要排前面中文文献填cn，排后面的英文文献用en。这样因为修改后的排序格式nyt会在author域前先用userb进行排序，自然会把中文文献放在前面。
 
   \item 对于出版地和出版者同时缺省的替换处理，GB/T 7714-2015中没有给出明确说明，但给出了一个英文文献示例(见GB/T 7714-2015 附录A.3)，形式为: [S.l. : s.n.]，尽管中文没有示例，这里也考虑类似的格式，比如: [出版地不详 : 出版者不详]。
-
+      
       %，这种形式本样式没有给出，而直接用两者分开的形式，[S.l.] : [s.n.]
-
       %事实上这里作者认为没有必要把s.l.和s.n. 合起来，不仅与缺省两者之一的情况不统一，样式处理起来也增加不必要的麻烦。
+  
+  \item 由于biblatex宏包的组成比较复杂，所以当遇到具体问题时，查找具体命令的代码会比较麻烦。出现问题首先可以从biblatex-gb7714-2015，biblatex-solution-to-latex-bibliography里面查找说明。若没有则可以从github上的readme，wiki，issue里面查找问题，当找不到解决方案可以提issue。
+      若要自己去解决问题，则可以从如下查找顺序来研究。      
+      biblatex自身相关的包括各种bbx，cbx文件，重点是biblatex.sty，biblatex.def，standard.bbx，还有blx-dm.def 等一些设置文件。另外不要忘记lbx文件，这里面也有一些语言相关的命令，
+      比如\verb|\bibrangedash|，\verb|\finalandcomma|等。至于其它一些tex 原始命令可以从tex、xetex的相关书籍文档查找，latex 相关代码则可以从latex2e，etoolbox等说明文档或latex.ltx，etoolbox.STY等源代码文档中查找。注意多使用meaning 命令来获取命令的定义。
+  
+  \end{itemize}
 
-  \item 目前符合 GB/T 7714-2005 或 GB/T 7714-2015 参考文献著录规则的biblatex 样式有多个实现，除本样式外，还有李志奇(icetea)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}} 和沈周(szsdk)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152561&extra=page\%3D1}} ，其效果是类似的。此外，Casper Ti. Vector提供的biblatex 样式caspervector 也是不错的中文参考文献样式
+  \item 宏包设计方法说明
+  
+  关于宏包的设计说明，读者可以直接查看bbx,cbx文件，其中有详细的注释说明。
+  更一般的思路性质的设计与实现方法以及涉及到的一些biblatex功能介绍，以项目示例的形式总结在
+  \href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}{\LaTeX 文档中文参考文献的biblatex解决方案}中，本文档不再重复给出，有需要了解的用户参考。
+
+  \item 其它biblatex中文样式
+  
+  目前符合 GB/T 7714-2005 或 GB/T 7714-2015 参考文献著录规则的 biblatex 样式有多个实现，除本样式外，还有李志奇(icetea)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}} 和沈周(szsdk)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152561&extra=page\%3D1}} ，其效果是类似的。此外，Casper Ti. Vector提供的biblatex 样式caspervector 也是不错的中文参考文献样式
       \footnote{\url{https://gitlab.com/CasperVector/biblatex-caspervector}}。感谢各位作者的分享!
-
-  \item 由于biblatex宏包的组成比较复杂，所以查找具体命令的代码会比较麻烦。总体来说，包括各种bbx，cbx文件，重点是biblatex.sty，biblatex.def，standard.bbx，还有blx-dm.def 等一些设置文件。另外不要忘记lbx文件，这里面也有一些语言相关的命令，比如\verb|\bibrangedash|，\verb|\finalandcomma|等。至于其它一些tex 原始命令可以从tex、xetex的相关书籍文档查找，latex 相关代码则可以从latex2e，etoolbox等说明文档或latex.ltx，etoolbox.STY等源代码文档中查找。注意多使用meaning命令来获取命令的定义。
 
 
 %  \item 本文档根据GB/T 7714-2015提供的参考文献表著录格式示例做了测试和验证，详见第\ref{sec:eg:gb77142015}节。
@@ -2288,8 +2332,6 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 %    \end{itemize}
 
 \end{enumerate}
-
-
 
 
 \section{参考文献著录格式示例}\label{sec:eg:gb77142015}
