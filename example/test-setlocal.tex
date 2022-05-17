@@ -12,7 +12,7 @@
 \usepackage{bicaption}
 \captionsetup[bi-first]{name={图},labelsep=period}
 \captionsetup[bi-second]{name={Fig},labelsep=period}
-\usepackage[backend=biber,style=gb7714-2015ay,%citestyle=authoryear-comp,%
+\usepackage[backend=biber,style=gb7714-2015ay,gbpub=true,%citestyle=authoryear-comp,%
 maxcitenames=2,mincitenames=1,mergedate=none]{biblatex}%,sortcites=false,mergedate=none
 
 \DefineBibliographyStrings{english}{
@@ -71,7 +71,7 @@ maxcitenames=2,mincitenames=1,mergedate=none]{biblatex}%,sortcites=false,mergeda
     %
 
     \begin{document}
-    
+
 \section{作者年制引用标签的本地化字符串临时调整}
 
 (1) 标注默认的设置是DefineBibliographyStrings设置的本地化字符串，带cn的用于中文的本地化字符串，因此有结果：
@@ -82,11 +82,11 @@ maxcitenames=2,mincitenames=1,mergedate=none]{biblatex}%,sortcites=false,mergeda
     \cite{walls2013drought}
     \cite{betts2005aging}
     }
-    
+
 (2) 可以在标注命令中局部调整选择使用中文或英文的本地化字符串，比如：
 
     局部强迫中文本地化字符串：
-    
+
     {\defcounter{gbcitelocalcase}{1}
     \cite{chu2004tushu}
     \cite{chen1980zhongguo}
@@ -95,7 +95,7 @@ maxcitenames=2,mincitenames=1,mergedate=none]{biblatex}%,sortcites=false,mergeda
     }
 
     局部强迫英文本地化字符串：
-    
+
     {\defcounter{gbcitelocalcase}{2}
     \cite{chu2004tushu}
     \cite{chen1980zhongguo}
@@ -108,7 +108,7 @@ maxcitenames=2,mincitenames=1,mergedate=none]{biblatex}%,sortcites=false,mergeda
 (3) 如果要做局部调整字符串的内容，那么可以在内部命令中局部设置，比如：
 
     局部调整中文本地化字符串：
-    
+
     {%\makeatletter\csdef{abx@lstr@andothersincite}{et al.}\makeatother
     \makeatletter\csdef{abx@sstr@andothersincitecn}{et al.}\csdef{abx@sstr@andincitecn}{and}\makeatother
     \cite{chu2004tushu}
@@ -118,7 +118,7 @@ maxcitenames=2,mincitenames=1,mergedate=none]{biblatex}%,sortcites=false,mergeda
 
 
     局部调整英文本地化字符串：
-    
+
     {%\makeatletter\csdef{abx@lstr@andothersincite}{et al.}\makeatother
     \makeatletter\csdef{abx@sstr@andothersincite}{et al.}\csdef{abx@sstr@andincite}{and}\makeatother
     \cite{chu2004tushu}

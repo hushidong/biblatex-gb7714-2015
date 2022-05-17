@@ -84,6 +84,7 @@ def compileall():
 			fileuniset=["test*.tex","cls*.tex","opt*.tex","eg*.tex","tgb*.tex","thesis*.tex","gbt*.tex"]
 		else:
 			fileuniset=["test*.tex","cls*.tex","opt*.tex","code*.tex","eg*.tex","tgb*.tex","thesis*.tex","gbt*.tex"]
+
 		for fileuni in fileuniset:
 			pf1=pathlib.Path('.').glob(fileuni)
 			pf=[str(x) for x in pf1]
@@ -106,7 +107,10 @@ def compileall():
 					if dirname !="tool":
 						subprocess.run([latexcmd,"-no-pdf",file])
 						subprocess.run(["biber",jobname])
-					subprocess.run([latexcmd,file])
+						subprocess.run([latexcmd,file])
+					else:
+						subprocess.run([latexcmd,file]) # 插入pdf的pdfpages宏包要使用目录，需要两次编译
+						subprocess.run([latexcmd,file])
 
 		#根据biber的版本区别编译文档
 		if dirname=="egfigure":

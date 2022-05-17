@@ -127,8 +127,9 @@
 \def\gbcaselocalset{%
 \renewrobustcmd*{\bibinitperiod}{}%
 \renewcommand*{\revsdnamepunct}{}%
-\renewrobustcmd*{\bibinitdelim}{}%
+%\renewrobustcmd*{\bibinitdelim}{}%
 }
+
 \renewcommand{\aftertransdelim}{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}
 \DeclareDelimFormat{multinamedelim}{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%\addcomma\addspace
 \DeclareDelimFormat{finalnamedelim}{%

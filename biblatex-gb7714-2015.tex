@@ -685,9 +685,9 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item erjpunctcn=false，则将所有的文献中的标点改为英文标点(即半角标点)。
   \end{itemize}
 
-  需要注意的是：若只想修改英文文献的全部标点为半角标点，而中文文献的标点不变，仅需在导言区加上如下命令：
-  \lstinline[breaklines=true]!\def\erjpunctcommalanen{\addcomma\addspace}!,
-  \lstinline[breaklines=true]!\def\erjpunctcolonlanen{\addcolon\addspace}!。
+  需要注意的是：若只想修改英文文献的全部标点为半角标点，而中文文献的标点不变，可在导言区采用如下方式修改英文文献的标点：
+  \lstinline[breaklines=true]!\def\gbpunctcommalanen{\addcomma\addspace}!,
+  \lstinline[breaklines=true]!\def\gbpunctcolonlanen{\addcolon\addspace}!。
 
 
   \pdfbookmark[4]{gbtitlelink}{gbtitlelink}
@@ -739,11 +739,11 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gblocal=chinese，强制设置所有的本地化字符串使用中文。
     \item gblocal=english，强制设置所有的本地化字符串使用英文。
   \end{itemize}
-  当使用gb7714-2015时，本质上是使用如下的本地化字符串，如果有更多的修改需求，可以直接修改它们：
+  标注和文献表中如：等、和等字符，本质上是由andincite等本地化字符串所控制的，直接修改它们可以得到不同的效果，比如：
   \begin{texlist}
   \DefineBibliographyStrings{english}{
-        andincite         = {和},
-        andincitecn       = {和},
+        andincite         = {和},  %判断为英文的文献使用的字符串
+        andincitecn       = {和},  %判断为中文的文献使用的字符串
         andothersincitecn = {等},
         andothersincite   = {等{\adddot}},%adddot才能避开标点追踪
    }
@@ -2240,18 +2240,18 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
     %上述这些优点也是笔者决定编写符合GB/T 7714-2015标准的参考文献样式文件的原因之一。
 
   \item biber 输出引用文献bib文件
-  
+
   利用biber可以实现引用文献数据的bib输出，常用于从一个大的bib文件中导出仅被引用的文献信息到一个小的bib 文件，比如：要提交一个小论文附带的bib文件时。
-  
+
     \begin{example}{输出引用文献数据时的biber选项}{eg:bibercmd:outbibfile}
     \begin{texlist}
     biber jobname --output-format=bibtex
     \end{texlist}
     \end{example}
-  
-  
+
+
   \item biber 控制特殊符号的tex宏的转换
-  
+
   默认情况下biber为了实现更好的排序，会将一些latex提供的特殊宏转换为utf-8编码字符。但有时我们可能并不需要做这样的转换，因为转换后符号的形式就变了。由于biber依赖一个字符映射表recode\_data.xml进行转换，因此我们可以利用它来构建一个自定义映射表，从而避免biber 对一些特殊宏的转换。具体做法如下：
     \begin{itemize}
     \item 找到biber的临时工作路径中的，recode\_data.xml (搜索能找到)
@@ -2265,10 +2265,10 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
     \end{texlist}
     \end{example}
     \end{itemize}
-    
+
 
   \item 不同tex引擎下的编译
-  
+
     tex源文档既可以用xelatex编译，也可以利用pdflatex或latex进行编译。但要注意的是pdflatex编译可能因为某些样式比如authoryear，使用了xstring宏包中的一些命令而导致错误，但numeric类样式通常没有问题。该问题在biblatex更新到3.12版本后取消xstring 宏包后得以解决。
 
       中文用户编译还需要注意编码问题。
@@ -2294,25 +2294,25 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
     %通过定义DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现中文在前英文在后但两个文种的文献各自也是降序的。还有一种变通的方法是，在录入bib文件时，在userb域填入用于排序的信息，比如需要排前面中文文献填cn，排后面的英文文献用en。这样因为修改后的排序格式nyt会在author域前先用userb进行排序，自然会把中文文献放在前面。
 
   \item 对于出版地和出版者同时缺省的替换处理，GB/T 7714-2015中没有给出明确说明，但给出了一个英文文献示例(见GB/T 7714-2015 附录A.3)，形式为: [S.l. : s.n.]，尽管中文没有示例，这里也考虑类似的格式，比如: [出版地不详 : 出版者不详]。
-      
+
       %，这种形式本样式没有给出，而直接用两者分开的形式，[S.l.] : [s.n.]
       %事实上这里作者认为没有必要把s.l.和s.n. 合起来，不仅与缺省两者之一的情况不统一，样式处理起来也增加不必要的麻烦。
-  
+
   \item 由于biblatex宏包的组成比较复杂，所以当遇到具体问题时，查找具体命令的代码会比较麻烦。出现问题首先可以从biblatex-gb7714-2015，biblatex-solution-to-latex-bibliography里面查找说明。若没有则可以从github上的readme，wiki，issue里面查找问题，当找不到解决方案可以提issue。
-      若要自己去解决问题，则可以从如下查找顺序来研究。      
+      若要自己去解决问题，则可以从如下查找顺序来研究。
       biblatex自身相关的包括各种bbx，cbx文件，重点是biblatex.sty，biblatex.def，standard.bbx，还有blx-dm.def 等一些设置文件。另外不要忘记lbx文件，这里面也有一些语言相关的命令，
       比如\verb|\bibrangedash|，\verb|\finalandcomma|等。至于其它一些tex 原始命令可以从tex、xetex的相关书籍文档查找，latex 相关代码则可以从latex2e，etoolbox等说明文档或latex.ltx，etoolbox.STY等源代码文档中查找。注意多使用meaning 命令来获取命令的定义。
-  
+
   \end{itemize}
 
   \item 宏包设计方法说明
-  
+
   关于宏包的设计说明，读者可以直接查看bbx,cbx文件，其中有详细的注释说明。
   更一般的思路性质的设计与实现方法以及涉及到的一些biblatex功能介绍，以项目示例的形式总结在
   \href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}{\LaTeX 文档中文参考文献的biblatex解决方案}中，本文档不再重复给出，有需要了解的用户参考。
 
   \item 其它biblatex中文样式
-  
+
   目前符合 GB/T 7714-2005 或 GB/T 7714-2015 参考文献著录规则的 biblatex 样式有多个实现，除本样式外，还有李志奇(icetea)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}} 和沈周(szsdk)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152561&extra=page\%3D1}} ，其效果是类似的。此外，Casper Ti. Vector提供的biblatex 样式caspervector 也是不错的中文参考文献样式
       \footnote{\url{https://gitlab.com/CasperVector/biblatex-caspervector}}。感谢各位作者的分享!
 

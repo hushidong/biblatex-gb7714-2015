@@ -67,7 +67,7 @@
   %sorting   = none        ,
   maxcitenames=1,
   mincitenames=1,
-  uniquename=init,%因为使用了名字缩写选项，所以需要设置uniquename=init而不是full避免冲突
+  uniquename=false,%uniquename=init
   uniquelist=minyear
 }
 
@@ -242,16 +242,11 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
 %
 \DeclareCiteCommand{\parencite}%[\mkbibparens]
   {\usebibmacro{cite:init}%
-  \renewbibmacro*{postnote}{%
-  \iffieldundef{postnote}%
-    {}%
-    {\nopunct%
-     \printfield{postnote}}}%
    \mkbibleftborder\usebibmacro{prenote}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite}}
   {}
-  {\mkbibrightborder\mkbibsuperscript{\usebibmacro{postnote}}}
+  {\usebibmacro{postnote}\mkbibrightborder}
 
 %
 %   重定义footcite需要使用的命令
