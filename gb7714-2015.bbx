@@ -3387,10 +3387,11 @@ incollection,proceedings,inproceedings]{number}{%
 %   调整期刊名的格式
 %
 %   v1.0k,20180425,增加了字体控制命令，hzz
+%   v1.1j,20220527,修复期刊名不存在时多余的标点
 \renewbibmacro*{journal+issuetitle}{\bibpubfont%源来自standard.bbx
   \usebibmacro{journal}%
   %\setunit*{\addspace}%
-  \setunit*{\addcomma\addspace}%修改为增加一个逗号
+  \iffieldundef{journaltitle}{}{\setunit*{\addcomma\addspace}}%修改为增加一个逗号
   \iffieldundef{series}
     {}
     {\newunit
@@ -3398,9 +3399,9 @@ incollection,proceedings,inproceedings]{number}{%
      \setunit{\addspace}}%
   %\usebibmacro{volume+number+eid}%
   %\setunit{\addspace}%
-  \usebibmacro{issue+date}%
+  \printtext{\usebibmacro{issue+date}}%使用printtext配合后面的\setunit*来实现后面的逗号的自动处理
   %\setunit{\addcolon\space}%
-  \iffieldundef{volume}{}{\setunit{\addcomma\space}}%
+  \iffieldundef{volume}{}{\setunit*{\addcomma\space}}%
   %换成逗号和空格
   \usebibmacro{issue}%
   \usebibmacro{volume+number+eid}%把卷期放到年份后面
