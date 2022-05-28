@@ -71,6 +71,54 @@
 \DeclareDelimFormat[bib,biblist]{nameyeardelim}{\addperiod\space}
 \DeclareFieldFormat{postnote}{#1}
 
+\def\gbcaselocalset{%
+    \renewrobustcmd*{\bibinitperiod}{}%
+    \renewcommand*{\revsdnamepunct}{}%
+    %\renewrobustcmd*{\bibinitdelim}{}%
+}
+
+
+\renewbibmacro*{name:family-given}[4]{%
+  \gbcaselocalset%
+  \ifuseprefix
+    {\usebibmacro{name:delim}{#3#1}%
+     \usebibmacro{name:hook}{#3#1}%
+     \mkbibcompletenamefamilygiven{%
+       \ifdefvoid{#3}
+         {}
+         {\ifcapital
+            {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
+            {\mkbibnameprefix{#3}\isdot}%
+          \ifprefchar{}{\bibnamedelimc}}%
+       \mkbibnamefamily{#1}\isdot
+       \ifdefvoid{#4}
+         {}
+         {\bibnamedelimd\mkbibnamesuffix{#4}\isdot}%
+       \ifdefvoid{#2}
+         {}
+         {\revsdnamepunct\bibnamedelimd\mkbibnamegiven{#2}\isdot}}}
+    {\usebibmacro{name:delim}{#1}%
+     \usebibmacro{name:hook}{#1}%
+     \mkbibcompletenamefamilygiven{%
+       \mkbibnamefamily{#1}\isdot
+       \ifdefvoid{#4}
+         {}
+         {\bibnamedelimd\mkbibnamesuffix{#4}\isdot}%
+       \ifboolexpe{%
+         test {\ifdefvoid{#2}}
+         and
+         test {\ifdefvoid{#3}}}
+         {}
+         {\revsdnamepunct}%
+       \ifdefvoid{#2}
+         {}
+         {\bibnamedelimd\mkbibnamegiven{#2}\isdot}%
+       \ifdefvoid{#3}
+         {}
+         {\bibnamedelimd\mkbibnameprefix{#3}\isdot}}}}
+
+
+
 
 %==================================================
 %调整部分域的输出格式

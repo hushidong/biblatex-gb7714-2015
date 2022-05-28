@@ -192,17 +192,15 @@
 %   v1.0k,20180425,增加了字体控制命令，hzz
 \renewbibmacro*{journal+issuetitle}{\bibpubfont%源来自standard.bbx
   \usebibmacro{journal}%
-  \setunit*{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%修改为增加一个逗号
+  \iffieldundef{journaltitle}{}{\setunit*{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}}%修改为增加一个逗号
   \iffieldundef{series}
     {}
     {\newunit
      \printfield{series}%
      \setunit{\addspace}}%
   \usebibmacro{issue+date}%
-  %\setunit{\addcolon\space}%
   \iffieldundef{volume}{}{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}%
   %换成逗号和空格
-  \usebibmacro{issue}%
   \usebibmacro{volume+number+eid}%把卷期放到年份后面
   %\newunit
   }
