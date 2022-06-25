@@ -401,7 +401,8 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 
 
 \subsubsection{新增选项}\label{sec:added:opt}
-样式包新增了一些选项，用于标签对齐方式、出版项缺省处理、责任者(作者)缺省处理等功能的控制，其使用方式与biblatex宏包选项完全相同:
+样式包新增了一些选项和命令，新增选项更常用一些，所以在本节集中介绍，而新增命令往往涉及更细节的修改，所以在后面介绍各类格式调整的内容中介绍。
+新增选项用于标签对齐方式、出版项缺省处理、责任者(作者)缺省处理等功能的控制，其使用方式与biblatex宏包选项完全相同:
 \begin{description}
 
   \pdfbookmark[4]{gbalign}{gbalign}
@@ -1348,7 +1349,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subsubsection{段落格式控制}
 
 \paragraph{\heiti 文献表字体、颜色} 为方便用户改变文献表段落格式、内容字体和颜色等，在 biblatex 提供的 \verb|\bibfont| 命令基础上，
-增加了\verb|\bibauthorfont|、\verb|\bibtitlefont|、\verb|\bibpubfont| 等命令用于控制文献部分著录项的格式，比如作者，标题，出版项等。
+增加了\verb|\bibauthorfont|、\verb|\bibtitlefont|、\verb|\bibpubfont| 等命令用于控制文献部分著录项的格式，比如作者，标题，出版项等。增加了\verb|\SlashFont|
 用法具体见例\ref{eg:biblist:fontset}，结果如图\ref{fig:par:fmt}所示。
 测试用例见\href{run:example/testfontinbiblio.tex}{testfontinbiblio.tex}。
 
@@ -1366,7 +1367,9 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \renewcommand{\bibtitlefont}{\ttfamily\color{blue}}%
 \renewcommand{\bibpubfont}{\itshape\color{violet}}%
     % url和doi字体
-\def\UrlFont{\ttfamily} %\urlstyle{sf} %\def\UrlFont{\bfseries}
+\def\UrlFont{\ttfamily}%\rmfamily %\urlstyle{sf} %\def\UrlFont{\bfseries}
+    %斜杠的字体，比如[J/OL]中的斜杠
+\def\SlashFont{\ttfamily}%\rmfamily等
 \end{texlist}
 \end{example}
 

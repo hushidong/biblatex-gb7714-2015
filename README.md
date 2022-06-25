@@ -65,7 +65,6 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 * [nputhesis（NPU 博士、硕士学位论文 \LaTeX 模板）](https://github.com/NPUSCG/nputhesis)
 * [nuaa-thesis（南京航空航天大学本科、硕士和博士学位论文的样式模板）](https://github.com/nuaa803/nuaa-thesis)
 * [nudtpaper(nudt学位论文模板)](https://github.com/liubenyuan/nudtpaper)
-* [nwafuthesis(西北农林科技大学学位论文LaTeX文档类)](https://github.com/registor/nwafuthesis)
 * [shtthesis (ShangHaiTech university THESIS)](https://github.com/lirundong/shtthesis)
 * [SHMTUThesis（上海海事大学 LaTeX 学位论文模板）](https://github.com/hellckt/SHMTUThesis)
 * [SJTUThesis(上海交通大学学位论文模板)](https://github.com/sjtug/SJTUThesis) (母校的论文模板，不得不说缘分真的很神奇，16年一出来就用上)

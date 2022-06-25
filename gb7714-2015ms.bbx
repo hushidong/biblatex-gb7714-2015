@@ -91,6 +91,7 @@
     \DeclareDatamodelFields[type=field,datatype=literal]{shortbooktitle}
     \DeclareDatamodelFields[type=field,datatype=literal]{lansortorder}
     \DeclareDatamodelFields[type=field,datatype=literal]{languageid}
+    \DeclareDatamodelFields[type=field,datatype=integer]{refnumber}
 
     %因为biblatex更新3.14版本以后，biber对于为声明数据模型的条目类型
     %不再默认读取，而是以空字符串作为条目类型名，自然在条目定义alias时
@@ -99,6 +100,19 @@
     \@ifpackagelater{biblatex}{2019/11/30}{%2019/12/01 v3.14
     \DeclareDatamodelEntrytypes{newspaper}%
     }{}
+
+%%
+%%符号的垂直位置调整一下
+%% 20220625,hzz,v1.1i
+\renewcommand*{\bibleftparen}{\blx@postpunct\raise0.2ex\hbox{(}}
+\renewcommand*{\bibrightparen}{\blx@postpunct\raise0.2ex\hbox{)}\midsentence}
+\renewcommand*{\bibleftbracket}{\blx@postpunct\raise0.2ex\hbox{[}}
+\renewcommand*{\bibrightbracket}{\blx@postpunct\raise0.2ex\hbox{]}\midsentence}
+\newcommand*{\gbleftparen}{\raise0.2ex\hbox{(}}
+\newcommand*{\gbrightparen}{\raise0.2ex\hbox{)}}
+\newcommand*{\gbleftbracket}{\raise0.2ex\hbox{[}}
+\newcommand*{\gbrightbracket}{\raise0.2ex\hbox{]}}
+
 
 %=====================================================================
 %   设置宏包选项
@@ -122,7 +136,7 @@
 	%用于在文献条目后面输出注释信息的宏
     %FieldFormat{annotation}用于设置注释信息的格式
 	\DeclareFieldFormat{annotation}{%
-		\printtext{\addspace(#1)}%
+		\printtext{\addspace\gbleftparen#1\gbrightparen}%
 	}
 	\renewbibmacro*{annotation}{%
 		\iftoggle{bbx:gbannote}%
@@ -344,6 +358,7 @@
     \def\str@references{参考文献}
     \def\str@bytranslator{译}
     \def\str@andotherscn{等}
+    \def\str@andcn{和}
     \def\str@backrefpage{引用页}
     \def\str@backrefpages{引用页}
     \def\str@noaddress{出版地不详}
@@ -1350,7 +1365,7 @@
 \addvspace{\bibitemsep}%恢复\bibitemsep的作用
 %\parshape 2 0em \textwidth \lengthid \lengthlw
 \hangindent\lengthid%
-\mkgbnumlabel{\printfield{labelnumber}}%
+\leavevmode\mkgbnumlabel{\printfield{labelnumber}}%
 \hspace{\biblabelsep}}
 %
 %   简单的段落环境
@@ -1409,14 +1424,14 @@
 \iftoggle{bbx:gbmedium}%
 {\iftoggle{bbx:url}%
     {\iffieldundef{url}%当存在url时，增加一个OL标识符
-        {\allowbreak\printtext{[}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}}%
-        {\allowbreak\printtext{[}\nobreak#1\nobreak\printtext{\texttt{/}OL]}}%
+        {\allowbreak\printtext{\gbleftbracket}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{{\SlashFont/}\thefield{medium}}\gbrightbracket}}%
+        {\allowbreak\printtext{\gbleftbracket}\nobreak#1\nobreak\printtext{{\SlashFont/}OL\gbrightbracket}}%
     }%
     {\ifentrytype{online}%
-        {\allowbreak\printtext{[}\nobreak#1\nobreak\printtext{\texttt{/}OL]}}%
-        {\allowbreak\printtext{[}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}}%
+        {\allowbreak\printtext{\gbleftbracket}\nobreak#1\nobreak\printtext{{\SlashFont/}OL\gbrightbracket}}%
+        {\allowbreak\printtext{\gbleftbracket}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{{\SlashFont/}\thefield{medium}}\gbrightbracket}}%
     }}%
-    {\allowbreak\printtext{[}\nobreak#1\nobreak\printtext{]}}%
+    {\allowbreak\printtext{\gbleftbracket}\nobreak#1\nobreak\printtext{\gbrightbracket}}%
 }
 
 %
@@ -1426,11 +1441,11 @@
 \iftoggle{bbx:gbmedium}%
 {\iftoggle{bbx:url}%
     {\iffieldundef{url}%当存在url时，增加一个OL标识符
-        {\allowbreak\printtext{[}\nobreak N\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
-        {\allowbreak\printtext{[}\nobreak N\printtext{\texttt{/}OL]}\nobreak}%
+        {\allowbreak\printtext{\gbleftbracket}\nobreak N\printtext{\iffieldundef{medium}{}{{\SlashFont/}\thefield{medium}}\gbrightbracket}\nobreak}%
+        {\allowbreak\printtext{\gbleftbracket}\nobreak N\printtext{{\SlashFont/}OL\gbrightbracket}\nobreak}%
     }%
-    {\allowbreak\printtext{[}\nobreak N\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
-}{\allowbreak\printtext{[}\nobreak N\printtext{]}\nobreak}%
+    {\allowbreak\printtext{\gbleftbracket}\nobreak N\printtext{\iffieldundef{medium}{}{{\SlashFont/}\thefield{medium}}\gbrightbracket}\nobreak}%
+}{\allowbreak\printtext{\gbleftbracket}\nobreak N\printtext{\gbrightbracket}\nobreak}%
 }
 
 %
@@ -1440,11 +1455,11 @@
 \iftoggle{bbx:gbmedium}%
 {\iftoggle{bbx:url}%
     {\iffieldundef{url}%当存在url时，增加一个OL标识符
-        {\allowbreak\printtext{[}\nobreak S\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
-        {\allowbreak\printtext{[}\nobreak S\printtext{\texttt{/}OL]}\nobreak}%
+        {\allowbreak\printtext{\gbleftbracket}\nobreak S\printtext{\iffieldundef{medium}{}{{\SlashFont/}\thefield{medium}}\gbrightbracket}\nobreak}%
+        {\allowbreak\printtext{\gbleftbracket}\nobreak S\printtext{{\SlashFont/}OL\gbrightbracket}\nobreak}%
     }%
-    {\allowbreak\printtext{[}\nobreak S\printtext{\iffieldundef{medium}{}{\texttt{/}\thefield{medium}}]}\nobreak}%
-}{\allowbreak\printtext{[}\nobreak S\printtext{]}\nobreak}%
+    {\allowbreak\printtext{\gbleftbracket}\nobreak S\printtext{\iffieldundef{medium}{}{{\SlashFont/}\thefield{medium}}\gbrightbracket}\nobreak}%
+}{\allowbreak\printtext{\gbleftbracket}\nobreak S\printtext{\gbrightbracket}\nobreak}%
 }
 
 %
@@ -1684,6 +1699,7 @@
 
 
 \def\UrlFont{\rmfamily}%设置url字体为roman字体%\ttfamily
+\def\SlashFont{\ttfamily}%设置斜杠的字体，比如：[J/OL]中的斜杠;\rmfamily
 %\urlstyle{rm} %使用这句也一样
 \setcounter{biburlnumpenalty}{100} %让url可以在数字后断行
 \setcounter{biburlucpenalty}{100} %让url可以在大写字母后断行
@@ -1730,10 +1746,10 @@
         }%
         {}%更新或修改日期通常有day信息
         {\iffieldundef{year}{%
-                \iffieldundef{endyear}{\iffieldundef{eventyear}{}{\printtext{(}\printeventdate\printtext{)}}}%
-                {\printtext{(}\printenddate\printtext{)}}%
+                \iffieldundef{endyear}{\iffieldundef{eventyear}{}{\printtext{\gbleftparen}\printeventdate\printtext{\gbrightparen}}}%
+                {\printtext{\gbleftparen}\printenddate\printtext{\gbrightparen}}%
         }{\iffieldequalstr{year}{}{%因为year存在，但为空
-            }{\printtext{(}\blx@gbdate{}{}\printtext{)}}%
+            }{\printtext{\gbleftparen}\blx@gbdate{}{}\printtext{\gbrightparen}}%
          }%
     }}%
 
@@ -2066,7 +2082,7 @@ togl{bbx:gbstyle} or test {\iffieldequalstr{userd}{chinese}}%
 %
 \DeclareFieldFormat{urldate}{##1}%
 \renewbibmacro*{urldate}{%
-\addthinspace\printtext{[}\printurldate\printtext{]}}%能用高层命令+选项尽量用命令(比如这里的\printurldate)，而不用\blx@edtfdate这种更底层的命令
+\addthinspace\printtext{\gbleftbracket}\printurldate\printtext{\gbrightbracket}}%能用高层命令+选项尽量用命令(比如这里的\printurldate)，而不用\blx@edtfdate这种更底层的命令
 %
 %   调整doi+eprint+url格式
 %
@@ -2116,14 +2132,14 @@ togl{bbx:gbstyle} or test {\iffieldequalstr{userd}{chinese}}%
 {\testCJKfirst{userd}%
 \ifboolexpr{%
 test {\iflistundef{location}} and test {\iflistundef{institution}}%
-}{\iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress}\space :\space\str@nopublisher]}%
-{\printtext{[S.l.\space :\space s.n.\adddot]}}%
+}{\iftoggle{ifCJKforgbt}{\printtext{\gbleftbracket\str@noaddress}\space :\space\str@nopublisher\gbrightbracket}%
+{\printtext{\gbleftbracket S.l.\space :\space s.n.\adddot\gbrightbracket}}%
 }{%
-\iflistundef{location}{\iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress]}}{\printtext{[S.l.\adddot]}}}%
+\iflistundef{location}{\iftoggle{ifCJKforgbt}{\printtext{\gbleftbracket\str@noaddress\gbrightbracket}}{\printtext{\gbleftbracket S.l.\adddot\gbrightbracket}}}%
   {\printlist{location}}%
 \publocpunct%
 \iflistundef{institution}{%
-\iftoggle{ifCJKforgbt}{\printtext{[\str@nopublisher]}}{\printtext{\mkbibbrackets{s.n.}}}}% \bibstring{nopublisher}%[s.n.\adddot]
+\iftoggle{ifCJKforgbt}{\printtext{\gbleftbracket\str@nopublisher\gbrightbracket}}{\printtext{\mkbibbrackets{s.n.}}}}% \bibstring{nopublisher}%[s.n.\adddot]
 {\printlist{institution}}}%
 \setunit{\addcomma\addspace}%
   %\usebibmacro{date}%
@@ -2150,14 +2166,16 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
 \iftoggle{bbx:gbpub}%
 {\testCJKfirst{userd}%
     \ifboolexpr{ test {\iflistundef{location}} and test {\iflistundef{publisher}} }%
-    {\iffieldequalstr{entrysubtype}{standard}{}{\iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress}\space :\space\str@nopublisher]}{\printtext{[S.l.\space :\space s.n.\adddot]}}}}%
+    {\iffieldequalstr{entrysubtype}{standard}{}%
+        {\iftoggle{ifCJKforgbt}{\printtext{\gbleftbracket\str@noaddress}\space :\space\str@nopublisher\gbrighttbracket}%
+            {\printtext{\gbleftbracket S.l.\space :\space s.n.\adddot\gbrightbracket}}}}%
     {\iflistundef{location}{%\adddot
         \iffieldequalstr{entrysubtype}{standard}{}%%从gbt7714-2015标准第19页看到，标准存在出版项时输出，没有时完全省略。
-        {\iftoggle{ifCJKforgbt}{\printtext{[\str@noaddress]}\addcolon\addspace}{\printtext{[S.l.\adddot]}\publocpunct}}}%  \bibstring{noaddress}
+        {\iftoggle{ifCJKforgbt}{\printtext{\gbleftbracket\str@noaddress\gbrightbracket}\addcolon\addspace}{\printtext{\gbleftbracket S.l.\adddot\gbrightbracket}\publocpunct}}}%  \bibstring{noaddress}
         {\printlist{location}\publocpunct}%%\addcolon\addspace%
     \iflistundef{publisher}{%
         \iffieldequalstr{entrysubtype}{standard}{}%
-        {\iftoggle{ifCJKforgbt}{\printtext{[\str@nopublisher]}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
+        {\iftoggle{ifCJKforgbt}{\printtext{\gbleftbracket\str@nopublisher\gbrightbracket}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
         {\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}}}%
         {\printlist{publisher}}}%
 \setunit*{\addcomma\addspace}%\addcomma\addspace%
@@ -2471,8 +2489,9 @@ incollection,proceedings,inproceedings]{number}{%
 %   20190212,v1.0q,增加中英文区分，by hzz
 %
 %   原理方法:使用bibmacro{in:}改变了以前在driver中直接输出//的方式，同时也简化了标点控制。
+%   需要注意\bibstring命令会把首字母大写的。
 \renewbibmacro*{in:}{%
- \iftoggle{bbx:gbpunctin}{\printtext{\allowbreak\texttt{//}\allowbreak}}%\addthinspace
+ \iftoggle{bbx:gbpunctin}{\printtext{\allowbreak{\SlashFont//}\allowbreak}}%\addthinspace
                          {\setunit{\adddot\addspace}%
                          \iffieldequalstr{userd}{chinese}%
                          {\printtext{\bibstring{incn}}}%
