@@ -210,14 +210,16 @@
 %%
 %%符号的垂直位置调整一下
 %% 20220625,hzz,v1.1i
-\renewcommand*{\bibleftparen}{\blx@postpunct\raise0.2ex\hbox{(}}
-\renewcommand*{\bibrightparen}{\blx@postpunct\raise0.2ex\hbox{)}\midsentence}
-\renewcommand*{\bibleftbracket}{\blx@postpunct\raise0.2ex\hbox{[}}
-\renewcommand*{\bibrightbracket}{\blx@postpunct\raise0.2ex\hbox{]}\midsentence}
-\newcommand*{\gbleftparen}{\raise0.2ex\hbox{(}}
-\newcommand*{\gbrightparen}{\raise0.2ex\hbox{)}}
-\newcommand*{\gbleftbracket}{\raise0.2ex\hbox{[}}
-\newcommand*{\gbrightbracket}{\raise0.2ex\hbox{]}}
+\newlength{\BracketLift}
+\setlength{\BracketLift}{0.0ex}
+\renewcommand*{\bibleftparen}{\blx@postpunct\raise\BracketLift\hbox{(}}
+\renewcommand*{\bibrightparen}{\blx@postpunct\raise\BracketLift\hbox{)}\midsentence}
+\renewcommand*{\bibleftbracket}{\blx@postpunct\raise\BracketLift\hbox{[}}
+\renewcommand*{\bibrightbracket}{\blx@postpunct\raise\BracketLift\hbox{]}\midsentence}
+\newcommand*{\gbleftparen}{\raise\BracketLift\hbox{(}}
+\newcommand*{\gbrightparen}{\raise\BracketLift\hbox{)}}
+\newcommand*{\gbleftbracket}{\raise\BracketLift\hbox{[}}
+\newcommand*{\gbrightbracket}{\raise\BracketLift\hbox{]}}
 
 
 %=====================================================================

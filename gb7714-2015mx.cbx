@@ -30,6 +30,9 @@
   sortcites,
 }
 
+\newrobustcmd{\mkbibleftborder}{\gbleftbracket}
+\newrobustcmd{\mkbibrightborder}{\gbrightbracket}
+
 %修改\mkbibsuperscript宏在最后加上一个空白使得xeCJK不会自动在引用标签后面加上中英文之间的空白
 %hzz,v1.0w,2021-0401
 \renewrobustcmd{\mkbibsuperscript}[1]{%
@@ -56,12 +59,12 @@
 %   方法:\DeclareCiteCommand{\cite}[\mkbibparens]{precode}{loopcode}{sepcode}{postcode}
 %    v1.0p版后将cite的处理方式修改为类似pagescite，而不再使用biblatex的标准方式
 \DeclareCiteCommand{\cite}[\mkbibsuperscript]%利用mkbibsuperbracket添加方括号
-  {[\usebibmacro{cite:init}%
+  {\mkbibleftborder\usebibmacro{cite:init}%
    \usebibmacro{prenote}}
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:comp}}
   {}
-  {\usebibmacro{cite:dump}]%
+  {\usebibmacro{cite:dump}\mkbibrightborder%
    \printfield{postnote}}
 %   v1.0p 以前用的方式
 %\DeclareCiteCommand{\cite}[\mkbibsuperbracket]%利用mkbibsuperbracket添加方括号
@@ -85,13 +88,13 @@
 %   重定义parencite命令，以满足标签带页码的国标要求
 %
 \DeclareCiteCommand{\parencite}%[\mkbibbrackets]
-  {[\usebibmacro{cite:init}%]
+  {\mkbibleftborder\usebibmacro{cite:init}%]
    \usebibmacro{prenote}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:comp}}
   {}
   {%[
-  \usebibmacro{cite:dump}]%
+  \usebibmacro{cite:dump}\mkbibrightborder%
    \mkbibsuperscript{\printfield{postnote}}}
 
 %
@@ -105,26 +108,26 @@
     {\printfield{postnote}}}
 %   2.新增\pagescite引用命令
 \DeclareCiteCommand{\pagescite}[\mkbibsuperscript]%\mkbibbrackets,仍然用上标
-  {[\usebibmacro{cite:init}%]直接添加方括号
+  {\mkbibleftborder\usebibmacro{cite:init}%]直接添加方括号
    \usebibmacro{prenote}%
    }
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:comp}}
   {}
-  {\usebibmacro{cite:dump}]%
+  {\usebibmacro{cite:dump}\mkbibrightborder%
    \usebibmacro{postpages}}
 
 %
 %   定义yearpagescite，为与ay样式兼容，等同于\pagescite
 %
 \DeclareCiteCommand{\yearpagescite}[\mkbibsuperscript]%\mkbibbrackets,仍然用上标
-  {[\usebibmacro{cite:init}%]直接添加方括号
+  {\mkbibleftborder\usebibmacro{cite:init}%]直接添加方括号
    \usebibmacro{prenote}%
    }
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:comp}}
   {}
-  {\usebibmacro{cite:dump}]%
+  {\usebibmacro{cite:dump}\mkbibrightborder%
    \usebibmacro{postpages}}
 
 %
@@ -132,13 +135,13 @@
 %
 %   原理方法:等同于\pagescite，但不要页码
 \DeclareCiteCommand{\yearcite}[\mkbibsuperscript]%\mkbibbrackets,仍然用上标
-  {[\usebibmacro{cite:init}%]直接添加方括号
+  {\mkbibleftborder\usebibmacro{cite:init}%]直接添加方括号
    \usebibmacro{prenote}%
    }
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:comp}}
   {}
-  {\usebibmacro{cite:dump}]}
+  {\usebibmacro{cite:dump}\mkbibrightborder}
 
 %
 %   定义\authornumcite命令，输出作者信息，然后在后面带上顺序编码
@@ -180,12 +183,12 @@
 
 
 \DeclareCiteCommand{\citep}[\mkbibsuperscript]%利用mkbibsuperbracket添加方括号
-  {[\usebibmacro{cite:init}%
+  {\mkbibleftborder\usebibmacro{cite:init}%
    \usebibmacro{prenote}}
   {\usebibmacro{citeindex}%
    \usebibmacro{cite:comp}}
   {}
-  {\usebibmacro{cite:dump}]%
+  {\usebibmacro{cite:dump}\mkbibrightborder%
    \printfield{postnote}}
 
 \newrobustcmd*{\citetns}%
@@ -375,12 +378,11 @@
   \iffieldundef{postnote}%
     {}%
     {\thefield{postnote}}}%
-    (\usebibmacro{prenote}}%)
+    \gbleftparen\usebibmacro{prenote}}%)
   {\usebibmacro{citeindex}%
    \usebibmacro{cite}}
   {}
-  {%(
-  )\mkbibsuperscript{\usebibmacro{postnote}}%\usebibmacro{postnote}
+  {\gbrightparen\mkbibsuperscript{\usebibmacro{postnote}}%\usebibmacro{postnote}
   }
 
 \DeclareCiteCommand{\parencite}[\mkbibparens]
@@ -413,7 +415,7 @@
               \savefield{labelyear}{\cbx@lastyear}}}
           {\printnames{labelname}%
            %\setunit{\printdelim{nameyeardelim}}%
-           (\usebibmacro{cite:labeldate+extradate})%
+           \gbleftparen\usebibmacro{cite:labeldate+extradate}\gbrightparen%
            \savefield{namehash}{\cbx@lasthash}%
            \savefield{labelyear}{\cbx@lastyear}}}}
     {\usebibmacro{cite:shorthand}%
@@ -460,12 +462,11 @@
   \iffieldundef{postnote}%
     {}%
     {\thefield{postnote}}}%
-    (\usebibmacro{prenote}}%)
+    \gbleftparen\usebibmacro{prenote}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite}}
   {}
-  {%(
-  )\mkbibsuperscript{\usebibmacro{postnote}}%\usebibmacro{postnote}
+  {\gbrightparen\mkbibsuperscript{\usebibmacro{postnote}}%\usebibmacro{postnote}
   }
 
 

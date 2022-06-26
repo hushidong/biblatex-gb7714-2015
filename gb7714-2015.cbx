@@ -35,8 +35,8 @@
 %   增加标签包围符号格式处理选项
 %   20211030,1.1a,hzz
 %
-\newrobustcmd{\mkbibleftborder}{[}
-\newrobustcmd{\mkbibrightborder}{]}
+\newrobustcmd{\mkbibleftborder}{\gbleftbracket}
+\newrobustcmd{\mkbibrightborder}{\gbrightbracket}
 \DeclareBibliographyOption[string]{gbcitelabel}[bracket]{%
     \csuse{gbcitelabelopt@#1}
 }
@@ -51,12 +51,12 @@
     #1\endgroup}\kern\z@}%
 
 \def\gbcitelabelopt@bracket{%
-\renewrobustcmd{\mkbibleftborder}{[}%
-\renewrobustcmd{\mkbibrightborder}{]}%
+\renewrobustcmd{\mkbibleftborder}{\gbleftbracket}%
+\renewrobustcmd{\mkbibrightborder}{\gbrightbracket}%
 }
 \def\gbcitelabelopt@parens{%
-\renewrobustcmd{\mkbibleftborder}{(}%
-\renewrobustcmd{\mkbibrightborder}{)}%
+\renewrobustcmd{\mkbibleftborder}{\gbleftparen}%
+\renewrobustcmd{\mkbibrightborder}{\gbrightparen}%
 }
 \def\gbcitelabelopt@dot{%
 \renewrobustcmd{\mkbibleftborder}{}%

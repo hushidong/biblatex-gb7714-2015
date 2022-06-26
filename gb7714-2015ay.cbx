@@ -28,20 +28,20 @@
 %   增加标签包围符号格式处理选项
 %   20211030,1.1a,hzz
 %
-\newrobustcmd{\mkbibleftborder}{(}
-\newrobustcmd{\mkbibrightborder}{)}
+\newrobustcmd{\mkbibleftborder}{\gbleftparen}
+\newrobustcmd{\mkbibrightborder}{\gbrightparen}
 \DeclareBibliographyOption[string]{gbcitelabel}[bracket]{%
     \csuse{gbcitelabelopt@#1}
 }
 \ExecuteBibliographyOptions{gbcitelabel}
 
 \def\gbcitelabelopt@bracket{%
-\renewrobustcmd{\mkbibleftborder}{[}%
-\renewrobustcmd{\mkbibrightborder}{]}%
+\renewrobustcmd{\mkbibleftborder}{\gbleftbracket}%
+\renewrobustcmd{\mkbibrightborder}{\gbrightbracket}%
 }
 \def\gbcitelabelopt@parens{%
-\renewrobustcmd{\mkbibleftborder}{(}%
-\renewrobustcmd{\mkbibrightborder}{)}%
+\renewrobustcmd{\mkbibleftborder}{\gbleftparen}%
+\renewrobustcmd{\mkbibrightborder}{\gbrightparen}%
 }
 \def\gbcitelabelopt@dot{%
 \renewrobustcmd{\mkbibleftborder}{}%
@@ -332,7 +332,7 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
               \savefield{labelyear}{\cbx@lastyear}}}
           {\iftoggle{bbx:gblabelref}{\printtext[bibhyperref]{\printnames{labelname}}}{\printnames{labelname}}%%
            %\setunit{\printdelim{nameyeardelim}}%
-           (\usebibmacro{cite:labeldate+extradate})%
+           \gbleftparen\usebibmacro{cite:labeldate+extradate}\gbrightparen%
            \savefield{namehash}{\cbx@lasthash}%
            \savefield{labelyear}{\cbx@lastyear}}}}
     {\usebibmacro{cite:shorthand}%
