@@ -966,6 +966,16 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   对于表格环境中的引用无法产生脚注文献表的问题，可以将其置于小页环境中实现或者采用前述图标标题中的类似处理方式。
   注意：latex核心代码参考latex.ltx，而hyperref代码参考hyperref.STY。
 
+  \pdfbookmark[4]{gbfootbibfmt}{gbfootbibfmt}
+  \item[gbfootbibfmt]=true，\textbf{false}. \hfill default is false
+
+  如果要实现脚注文献表，但不想要国标要求的脚注符号和缩进，但要求相同文献用标签替代，则可使用gbfootbibfmt代替上面的gbfootbib选项。
+  \begin{itemize}
+    \item gbfootbibfmt=true，处理使脚注文献表中的相同的文献用标签代替。
+    \item gbfootbibfmt=false，不做任何附加处理。
+  \end{itemize}
+
+
   \pdfbookmark[4]{gbfnperpage}{gbfnperpage}
   \item[gbfnperpage]=true，\textbf{false}. \hfill default is false
 

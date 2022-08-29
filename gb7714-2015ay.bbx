@@ -10,7 +10,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2022/05/17 v1.1i}
+\def\versionofgbtstyle{2022/08/29 v1.1j}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015ay.bbx}[\versionofgbtstyle biblatex bibliography style]
 %\RequireBiber[3]%显式指定用biber后端，当用bibtex时会报错，但其实不会影响编译，只是采用bibtex后无法达成格式需求
@@ -278,20 +278,25 @@
     %   当前面的脚注中已经存在当前文献，那么当前文献内容不再输出而用同(4)这样的方式
     %   需要注意的是由于小页环境和表格中的脚注本身的问题，可能会有一些问题
     \DeclareBibliographyOption{gbfootbib}[false]{%
-      \ifstrequal{#1}{false}{}{\execgbfootbib}}
+      \ifstrequal{#1}{false}{}{\execgbfootbib\execgbfootbibfmt}}
     \ExecuteBibliographyOptions{gbfootbib}
+    %
+    %   增加一个选项，用于控制分离后的脚注的格式
+    %   20220829,v1.1j,hzz
+    %   将原来的一个gbfootbib选项控制所有格式分离为由两个选项gbfootbib和gbfootbibfmt控制
+    %   分离后，gbfootbibfmt实现同(4)这样的方式，gbfootbib则实现全部的格式
+    \DeclareBibliographyOption{gbfootbibfmt}[false]{%
+      \ifstrequal{#1}{false}{}{\execgbfootbib}}
+    \ExecuteBibliographyOptions{gbfootbibfmt}
 
-        %%
+    %%
     \newlength{\footbibmargin}
     \newlength{\footbiblabelsep}
     \setlength{\footbibmargin}{1em}%脚注的段落左侧缩进距离
     \setlength{\footbiblabelsep}{0.5em}%脚注中标记号与脚注段落的间距
-    \def\execgbfootbib%
-    {%
-    %开启引用跟踪计数器，为使用\ifciteseen等测试命令
-    \ExecuteBibliographyOptions{citetracker=true}
-    %
-    %利用footmisc宏包来实现脚注文献的悬挂对齐
+
+    \def\execgbfootbibfmt%
+    {%利用footmisc宏包来实现脚注文献的悬挂对齐
     \AtEndPreamble{
     \@ifclassloaded{beamer}{}{
     %beamer类因为其特殊性，为避免冲突不调footmisc。
@@ -307,7 +312,7 @@
     \iftoggle{bbx:gbfnperpage}%
     {\@addtoreset{footnote}{page}}{}%重设计数器
 
-\@ifpackageloaded{hyperref}{%加载hyperref则对\H@@footnotetext做重定义
+    \@ifpackageloaded{hyperref}{%加载hyperref则对\H@@footnotetext做重定义
     \long\def\H@@footnotetext##1{\insert\footins{%
     \reset@font\footnotesize
     \interlinepenalty\interfootnotelinepenalty
@@ -323,6 +328,7 @@
         \rule\z@\footnotesep\ignorespaces##1\@finalstrut\strutbox%
         }%
     \color@endgroup}}%
+
   \long\def\H@@mpfootnotetext##1{%
   \global\setbox\@mpfootins\vbox{%
     \unvbox\@mpfootins
@@ -383,6 +389,12 @@
     }%
     }{}{}
     }
+    }
+
+    \def\execgbfootbib%
+    {%
+    %开启引用跟踪计数器，为使用\ifciteseen等测试命令
+    \ExecuteBibliographyOptions{citetracker=true}
 
     %
     %判断当前文献是否已经引用过且是做的footfullcite(即已经作为脚注输出文献内容)
@@ -411,7 +423,7 @@
       {\defcounter{maxnames}{\blx@maxbibnames}%局部定义maxnames和minnames计数器
        \defcounter{minnames}{\blx@minbibnames}%使footfullcite内的作者输出与正文文献表中的一致。
        \usebibmacro{prenote}%
-       \renewbibmacro*{postnote}{%
+        \renewbibmacro*{postnote}{%
             \iffieldundef{postnote}%
             {}{\setunit{\addcolon\addspace}\printtext{\thefield{postnote}}}}%由于ay样式中没有修改postnote域，此处因为格式需要不使用默认域格式
        }%
@@ -422,8 +434,8 @@
       }%
       {\multicitedelim}%
       {\usebibmacro{postnote}}
-
     }
+
 
     %
     %   增加一个选项，用于控制gb7714的使用范围，即英文文献和中文文献使用不同的样式

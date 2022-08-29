@@ -1,4 +1,4 @@
-<b>Date of last change: 2022-05-17 to version v1.1i</b>
+<b>Date of last change: 2022-08-29 to version v1.1j</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -1591,6 +1591,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * 2022/04/03 v1.1g,ctan,github
 * 2022/04/16 v1.1h,ctan,github
 * 2022/05/17 v1.1i,ctan,github
+* 2022/08/29 v1.1j,ctan,github
 
 ---------------------------------------------------------
 ## Update history:
