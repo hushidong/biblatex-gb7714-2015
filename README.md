@@ -651,7 +651,7 @@ gbyntd 以语言、年份、作者、标题、降序排列
 \addvspace{\bibitemsep}%恢复\bibitemsep的作用
 %\parshape 2 0em \textwidth \lengthid \lengthlw
 \hangindent\lengthid
-\mkgbnumlabel{\printfield{labelnumber}}%
+\leavevmode\mkgbnumlabel{\printfield{labelnumber}}%
 \hspace{\biblabelsep}}
 ```
 
