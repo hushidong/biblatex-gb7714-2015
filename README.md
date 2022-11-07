@@ -1,4 +1,4 @@
-<b>Date of last change: 2022-08-29 to version v1.1j</b>
+<b>Date of last change: 2022-11-07 to version v1.1k</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -651,7 +651,7 @@ gbyntd 以语言、年份、作者、标题、降序排列
 \addvspace{\bibitemsep}%恢复\bibitemsep的作用
 %\parshape 2 0em \textwidth \lengthid \lengthlw
 \hangindent\lengthid
-\leavevmode\mkgbnumlabel{\printfield{labelnumber}}%
+\mkgbnumlabel{\printfield{labelnumber}}%
 \hspace{\biblabelsep}}
 ```
 
@@ -1592,6 +1592,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * 2022/04/16 v1.1h,ctan,github
 * 2022/05/17 v1.1i,ctan,github
 * 2022/08/29 v1.1j,ctan,github
+* 2022/11/07 v1.1k,ctan,github
 
 ---------------------------------------------------------
 ## Update history:

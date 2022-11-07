@@ -416,7 +416,8 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
     \item gbalign=gb7714-2015，数字序号标签，是项对齐方式，即段落环境中标签使用原始宽度，标签与条目内容等间距。
     \item gbalign=gb7714-2015ay，无数字序号标签，是author-year风格的文献表，是gb7714-2015ay样式的默认选项。
   \end{itemize}
-  该选项对\textbf{著者年份制、顺序编码制均有效}。使用序号标签对齐方式的测试，
+  该选项对\textbf{著者年份制、顺序编码制均有效}，也就是说当使用著者年份制时，加上gbalign选项后同样可以实现文献表的顺序序号标签(比如：
+  \lstinline[breaklines=true]!\usepackage[style=gb7714-2015ay, gbalign=left]{biblatex}!，可以实现\emph{著者年份制格式的带左对齐的顺序序号标签的文献表})。 序号标签对齐方式的测试，包括：
   数字在标签内居中见:
   \href{run:./example/opt-gbalign-center.tex}{opt-gbalign-center.tex}，
   标签左对齐见:
@@ -1412,18 +1413,35 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \paragraph{\heiti 文献表水平间距(缩进)控制}
 增加了尺寸\verb|\bibitemindent| 用于控制参考文献条目在文献表中的缩进，
 其意义与 list 环境中 \verb|\itemindent| 相同。
-文献表的水平缩进控制，两种编制方式下是不同的。对于\emph{著者-出版年}制文献表，bibitemindent表示
-\emph{一条文献中第一行相对后面各行的缩进}，bibhang 表示\emph{页边到文献各行起始位置的距离}。因此要调整缩进就是要设置这两尺寸。
+文献表的水平缩进控制，两种编制方式下是不同的。
 
-对于\emph{顺序编码}制文献表，由于存在数字标签，且其宽度与参考文献数量相关，所以这个宽度是动态变的，无能提前设定的，而是在文献表生成时给出，所以调整缩进需要在文献表输出环境中调整。由于顺序编码样式使用了两类输出环境，所以需要根据设定的选项区分处理：
+(a) 对于\emph{著者-出版年}制文献表，bibitemindent表示
+\emph{一条文献中第一行相对后面各行的缩进}，bibhang 表示\emph{页边到文献各行起始位置的距离}。因此要调整缩进则直接设置这两尺寸。
 
-一是采用list环境的文献表，即设置gbalign=left、right、center时（即顺序编码标签是左对齐、右对齐和居中对齐的情况），在重定义的文献表环境中，调整bibitemindent和biblabelsep两个尺寸，默认情况下bibhang=biblabelsep+labelnumberwidth的长度是页边到各行起始位置的距离。当采用某些字体导致计算计算的标签宽度不足时，可以设置biblabelextend尺寸，来增加labelnumberwidth的宽度，避免缩进格式产生问题，默认情况下biblabelextend尺寸为0pt。
+当使用著者-出版年样式又需要使用顺序编码数字标签的文献表时(此时使用gbalign选项)，缩进方式与顺序编码制文献表类似，但又略有差异。
+数字标签盒子默认宽度为2em，可以调整biblabelextend来增大或缩小(使用正或负的长度)该宽度，数字标签的盒子与文献内容之间的间距为4.5pt，通过直接设置biblabelsep尺寸来调整。
 
-二是采用正常段落环境的文献表，即设置gbalign=gb7714-2015时（即项对齐情况，就是各条文献是自身对齐的情况），在重定义的命令中通过调整lengthid尺寸来设置\emph{每条参考文献第二行开始的缩进距离}。
+
+(b) 对于\emph{顺序编码}制文献表，由于存在数字标签，且其宽度与参考文献数量相关，所以这个宽度是动态变化的，不能提前设定，而是在文献表生成时给出，所以调整缩进需要根据文献表输出环境的情况做针对性处理。
+
+顺序编码样式使用了两类输出环境，所以设定选项也区分两类：
+
+一是采用list环境的文献表，即设置gbalign=left、right、center时（即顺序编码标签是左对齐、右对齐和居中对齐的情况）。
+
+此时文献表环境，数字标签盒子默认宽度为labelnumberwidth，由biblatex根据文献数量自动计算后设定，因此改变缩进主要通过调整biblabelsep和bibitemindent两个尺寸来实现。biblabelsep设置数字标签的盒子与文献内容之间的间距。bibitemindent设置第一行和后面其它行的缩进，默认情况下bibitemindent为0pt，则一条文献内所有行缩进相同，若bibitemindent>0pt则第一行相比后面各行缩进，若bibitemindent<0pt则后面各行相比第一行缩进。
+
+顺序编码样式下bibitemindent与bibhang的意义与著者-出版年制下相同，但由于数字标签盒子的存在，所以页边到各行起始位置的距离bibhang=labelnumberwidth +biblabelsep -bibitemindent。
+
+当采用某些字体导致计算的标签宽度不足时，可以设置biblabelextend尺寸，来增加labelnumberwidth的宽度避免缩进格式产生问题，使得：bibhang=labelnumberwidth +biblabelextend +biblabelsep -bibitemindent。默认情况下biblabelextend尺寸为0pt。
+
+二是采用正常段落环境的文献表，即设置gbalign=gb7714-2015时（即项对齐情况，就是各条文献是自身对齐的情况）。
+
+此时数字标签盒子默认宽度根据标签实际宽度自动设定，因此不会存在数字标签盒子宽度不足的情况，所以不用设置biblabelextend尺寸。数字标签的盒子与文献内容之间的间距通过调整biblabelsep可设置。\emph{每条参考文献第二行开始的缩进距离}通过调整bibitemindent尺寸设置，bibitemindent默认为0pt，则一条文献内所有行缩进相同，若bibitemindent>0pt则第一行相比后面各行缩进，若bibitemindent<0pt则后面各行相比第一行缩进。
+
+
 调整方法见例\ref{eg:biblist:hspace}。
 
-除了使用这种段落形式的文献表外，也有生成\emph{表格文献表}的需求，即把文献表放到一个表格里面，要求每一条文献占据表格的一行。这也是能实现的，具体参考我的博客文章
-\href{https://blog.csdn.net/xenonhu/article/details/121696116}{latex中生成表格形式的参考文献表}。
+
 
 \begin{example}{文献表水平缩进控制}{eg:biblist:hspace}
 \begin{texlist}
@@ -1436,55 +1454,64 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 % 【顺序编码制】文献表缩进控制
 % 调整顺序标签与文献内容的间距
 \setlength{\biblabelsep}{2mm}
-
-% 调整各条文献的缩进：
-%-1-----gbalign=left、right、center时，重定义 bibenvironment
-\defbibenvironment{bibliography}%修改对齐环境-调整缩进
-  {\list
-     {\printtext[labelnumberwidth]{%
-        \printfield{labelprefix}%
-        \printfield{labelnumber}}}
-{%默认设置
-    \setlength{\bibhang}{\biblabelsep}%
-    \addtolength{\bibhang}{\labelnumberwidth}%
-    %
-%这里是所做的调整，通过设置\bibitemindent，\bibhang调整缩进
-\addtolength{\bibitemindent}{\labelnumberwidth}%
-\addtolength{\bibitemindent}{\biblabelsep}%
-\addtolength{\bibhang}{-\labelnumberwidth} %
-\addtolength{\bibhang}{-\biblabelsep}%
-    %
-    %以下是默认的设置
-     \setlength{\labelwidth}{\labelnumberwidth}%
-      \setlength{\labelsep}{\biblabelsep}%
-      \setlength{\leftmargin}{\bibhang}%
-      \addtolength{\leftmargin}{\labelnumberwidth}%
-      \setlength{\itemindent}{\bibitemindent}%
-      \setlength{\itemsep}{\bibitemsep}%
-      \setlength{\parsep}{\bibparsep}}%
-      \renewcommand*{\makelabel}[1]{\hss##1}}
-  {\endlist}
-  {\item}
-
-%-2-----gbalign=gb7714-2015时，重定义 \itemcmd命令
-\renewcommand{\itemcmd}{%%修改对齐环境-调整缩进
-\settowidth{\lengthid}{\mkgbnumlabel{\printfield{labelnumber}}}
-%
-%%这里是所做的调整，以下两句通过调整\lengthid来调整缩进
-\setlength{\lengthid}{0pt}
-\addtolength{\lengthid}{-\biblabelsep}
-%
-%如下是默认设置
-\addtolength{\lengthid}{\biblabelsep}
-\setlength{\lengthlw}{\textwidth}
-\addtolength{\lengthlw}{-\lengthid}
-\addvspace{\bibitemsep}%恢复\bibitemsep的作用
-%\parshape 2 0em \textwidth \lengthid \lengthlw
-\hangindent\lengthid
-\mkgbnumlabel{\printfield{labelnumber}}%
-\hspace{\biblabelsep}}
+\setlength{\bibitemindent}{0pt}
+\setlength{\biblabelextend}{0pt}
 \end{texlist}
 \end{example}
+
+(c) 其它形式的文献表。
+
+除了使用这种段落形式的文献表外，也有生成\emph{表格文献表}的需求，即把文献表放到一个表格里面，要求每一条文献占据表格的一行。这也是能实现的，具体参考我的博客文章
+\href{https://blog.csdn.net/xenonhu/article/details/121696116}{latex中生成表格形式的参考文献表}。
+
+
+%% 调整各条文献的缩进：
+%%-1-----gbalign=left、right、center时，重定义 bibenvironment
+%\defbibenvironment{bibliography}%修改对齐环境-调整缩进
+%  {\list
+%     {\printtext[labelnumberwidth]{%
+%        \printfield{labelprefix}%
+%        \printfield{labelnumber}}}
+%{%默认设置
+%    \setlength{\bibhang}{\biblabelsep}%
+%    \addtolength{\bibhang}{\labelnumberwidth}%
+%    %
+%%这里是所做的调整，通过设置\bibitemindent，\bibhang调整缩进
+%\addtolength{\bibitemindent}{\labelnumberwidth}%
+%\addtolength{\bibitemindent}{\biblabelsep}%
+%\addtolength{\bibhang}{-\labelnumberwidth} %
+%\addtolength{\bibhang}{-\biblabelsep}%
+%    %
+%    %以下是默认的设置
+%     \setlength{\labelwidth}{\labelnumberwidth}%
+%      \setlength{\labelsep}{\biblabelsep}%
+%      \setlength{\leftmargin}{\bibhang}%
+%      \addtolength{\leftmargin}{\labelnumberwidth}%
+%      \setlength{\itemindent}{\bibitemindent}%
+%      \setlength{\itemsep}{\bibitemsep}%
+%      \setlength{\parsep}{\bibparsep}}%
+%      \renewcommand*{\makelabel}[1]{\hss##1}}
+%  {\endlist}
+%  {\item}
+%
+%%-2-----gbalign=gb7714-2015时，重定义 \itemcmd命令
+%\renewcommand{\itemcmd}{%%修改对齐环境-调整缩进
+%\settowidth{\lengthid}{\mkgbnumlabel{\printfield{labelnumber}}}
+%%
+%%%这里是所做的调整，以下两句通过调整\lengthid来调整缩进
+%\setlength{\lengthid}{0pt}
+%\addtolength{\lengthid}{-\biblabelsep}
+%%
+%%如下是默认设置
+%\addtolength{\lengthid}{\biblabelsep}
+%\setlength{\lengthlw}{\textwidth}
+%\addtolength{\lengthlw}{-\lengthid}
+%\addvspace{\bibitemsep}%恢复\bibitemsep的作用
+%%\parshape 2 0em \textwidth \lengthid \lengthlw
+%\hangindent\lengthid
+%\mkgbnumlabel{\printfield{labelnumber}}%
+%\hspace{\biblabelsep}}
+
 
 \paragraph{\heiti 文献表中的标点控制}  文献表中有时需要调整标点为中文的全角标点，可以通过不同机制下的标点设置来调整。
 调整方式如例\ref{eg:biblist:separator}所示。有时在本地化字符串中也可以实现标点调整，比如and，in等本地化字符串。有时在域格式中也可能出现标点调整，比如title域格式。而且因为不同语言的处理，可能内部也存在标点的调整。具体情况是比较复杂的，这里不再一一列举，一些修改示例可以参考：
