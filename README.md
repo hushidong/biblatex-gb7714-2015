@@ -1310,7 +1310,9 @@ biblatex中处理顺序数字编码压缩的代码默认从3个连续编码开�
 + example
 	- ![cls-beamer.tex](example/cls-beamer.tex)			测试beamer中的使用（gb7714-2015样式）
 	- ![cls-beameray.tex](example/cls-beameray.tex)			测试beamer中的使用（gb7714-2015ay样式）
-	- ![codeopt-gbcodegbk.tex](example/codeopt-gbcodegbk.tex)		测试gb7714-2015、ay样式，对于GBK编码文档的兼容性
+	- ![codeopt-gbcodegbk.tex](example/codeopt-gbcodegbk.tex)	测试gb7714-2015、ay样式，对于GBK编码文档的兼容性
+	- ![teststyleerj.tex](example/teststyleerj.tex)			测试chinese-erj样式
+	- ![teststylecss.tex](example/teststylecss.tex)			测试chinese-css样式
 	- ![eg-opt-gbstyle.tex](example/eg-opt-gbstyle.tex)		测试gb7714-2015ms样式一篇文档中中英文两种格式设置，多语言对照，多语言混合文献表
 	- ![testallformat.tex](example/testallformat.tex)			测试全面的类型、格式
 	- ![egtest.tex](example/egtest.tex)				测试示例
@@ -1333,9 +1335,11 @@ biblatex中处理顺序数字编码压缩的代码默认从3个连续编码开�
 	- ![opt-gblocal.tex](example/opt-gblocal.tex)				测试本地化字符串设置（引用标注标签、文献表）
 	- ![test-setlocal.tex](example/test-setlocal.tex)				测试本地化字符串设置（多种方法局部调整）
 	- ![test-setlocal-multilan.tex](example/test-setlocal-multilan.tex)	测试本地化字符串设置（多种语言的局部调整）
+	- ![test-resume.tex](example/test-resume.tex)	测试研究成果、学术成果(文献表)的局部化格式调整
 	- ![opt-gbnamefmt.tex](example/opt-gbnamefmt.tex)			测试gbnamefmt对于作者姓名格式的控制
 	- ![opt-gbnamefmt-default.tex](example/opt-gbnamefmt-default.tex)	测试gbnamefmt对于作者姓名格式的控制
 	- ![opt-gbnamefmt-quanpin.tex](example/opt-gbnamefmt-quanpin.tex)	测试gbnamefmt对于作者姓名格式的控制
+	- ![test-addfieldnameformat.tex](example/test-addfieldnameformat.tex) 测试给指定的文献设定nameformat域
 	- ![opt-gbnoauthor-false.tex](example/opt-gbnoauthor-false.tex)		测试gbnoauthor选项
 	- ![opt-gbnoauthor-true.tex](example/opt-gbnoauthor-true.tex)		测试gbnoauthor选项
 	- ![opt-gbpub-true.tex](example/opt-gbpub-true.tex)		测试gbpub选项
@@ -1343,7 +1347,6 @@ biblatex中处理顺序数字编码压缩的代码默认从3个连续编码开�
 	- ![opt-gbtitlelink.tex](example/opt-gbtitlelink.tex)		测试gbtitlelink选项
 	- ![opt-gbtype.tex](example/opt-gbtype.tex)			测试gbtype选项
 	- ![opt-hyperref-backref.tex](example/opt-hyperref-backref.tex)	测试backrref选项，反向超链接
-	- ![teststyleerj.tex](example/teststyleerj.tex)			测试chinese-erj样式
 	- ![test-translator-in-other-lan.tex](example/test-translator-in-other-lan.tex)	测试译著的其它语言的译者格式
 	- ![test-space-after-citelabel-inCJKline.tex](example/test-space-after-citelabel-inCJKline.tex)		测试删除标注后因为xeCJK加入的空格
 	- ![test-special-chars-in-fields.tex](example/test-special-chars-in-fields.tex) 测试不同域中存在的特殊字符处理

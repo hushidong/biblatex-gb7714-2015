@@ -5,17 +5,17 @@
 %
 
 \documentclass[twoside]{article}
-    \usepackage{ctex}
-    \usepackage{fontspec}
+\usepackage{ctex}
+\usepackage{fontspec}
 \setmainfont{CMU Serif}
-    \IfFileExists{SourceHanSerifSC-Regular.otf}
-    {\setCJKmainfont{SourceHanSerifSC-Regular.otf}}{}
-    %\IfFontExistsTF{⟨font name⟩}{⟨true branch⟩}{⟨false branch⟩}
-    \usepackage{xcolor}
-    \usepackage{toolbox}
-    \usepackage[colorlinks,citecolor=blue]{hyperref}
-    \usepackage{lipsum}
-    \usepackage{geometry}%,showframe,showcrop
+\IfFileExists{SourceHanSerifSC-Regular.otf}
+{\setCJKmainfont{SourceHanSerifSC-Regular.otf}}{}
+%\IfFontExistsTF{⟨font name⟩}{⟨true branch⟩}{⟨false branch⟩}
+\usepackage{xcolor}
+\usepackage{toolbox}
+\usepackage[colorlinks,citecolor=blue]{hyperref}
+\usepackage{lipsum}
+\usepackage{geometry}%,showframe,showcrop
 \geometry{paper=a4paper,left=31.7mm,right=31.7mm,top=25.4mm,bottom=25.4mm}
 \usepackage{bicaption}
 \captionsetup[bi-first]{name={图},labelsep=period}
@@ -37,6 +37,15 @@ maxcitenames=2,mincitenames=1,gbcitelocal=gb7714-2015,mergedate=none]{biblatex}%
 %        andothersincitecn = {等},
 %        andothersincite   = {等{\adddot}},%adddot才能避开标点追踪
 %}
+
+%如果要求mergedate=none时年份后面加上abc等做区分
+%则取消注释如下代码
+%\renewbibmacro*{date}{%
+%    \iffieldundef{labelyear}%
+%      {\printdate}%
+%      {\printtext{\iflabeldateisdate%
+%           {\printdateextra}
+%           {\printlabeldateextra}}}}
 
 \usepackage{filecontents}
 \begin{filecontents}{\jobname.bib}

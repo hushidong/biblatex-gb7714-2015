@@ -1,0 +1,92 @@
+
+
+% !Mode:: "TeX:UTF-8"
+% 用于测试ucasthesis中应用biblatex-gb7714-2015的情况
+%
+
+\documentclass[twoside]{article}
+    \usepackage{ctex}
+    \usepackage{xcolor}
+    \usepackage[colorlinks,citecolor=blue]{hyperref}
+    \usepackage[style=gb7714-2015]{biblatex}
+    \usepackage{geometry}
+
+    \begin{filecontents}{resume.bib}
+    @article{ref-1-1-Yang,
+    author    = {Yang, Y and Ren, T L and Zhang, L T and others},
+    title     = {Miniature microphone with silicon-based ferroelectric thin films},
+    journal   = {Integrated Ferroelectrics},
+    date      = {2003},
+    pages      = {229-235},
+    volume      = {52},
+    annotation      = {SCI 收录, 检索号:758FZ},
+    AUTHOR+an={1=thesisauthor},
+    OPTIONS = {maxbibnames=1,minbibnames=1}
+    }
+
+    @article{ref-2-1-杨轶,
+    author    = {杨轶 and 张宁欣 and 任天令 and others},
+    title     = {硅基铁电微声学器件中薄膜残余应力的研究},
+    journal   = {中国机械工程},
+    pages= {1289-1291},
+    date      = {2005},
+    volume      = {16},
+    number ={14},
+    annotation ={EI 收录, 检索号:0534931 2907},
+    AUTHOR+an={1=thesisauthor}
+    }
+
+    @patent{ref-8-1-任天令,
+    author    = {任天令 and 杨轶 and 朱一平 and others},
+    title     = {硅基铁电微声学传感器畴极化区域控制和电极连接的方法},
+    number ={中国, CN1602118A},
+    annotation      = {中国专利公开号.},
+    }
+
+    @patent{ref-9-1-Ren,
+    author    = {Ren, T L and Yang, Y and Zhu, Y P and others},
+    title     = {Piezoelectric micro acoustic sensor based on ferroelectric materials},
+    number ={USA, No.11/215, 102},
+    annotation      = {美国发明专利申请号.},
+    }
+    \end{filecontents}
+    \addbibresource{resume.bib}
+    %
+
+    \begin{document}
+
+	\begin{refsection}[resume.bib]
+	\nocite{ref-8-1-任天令,ref-9-1-Ren}%
+	\printbibliography[heading=subbibliography,title={研究成果}]
+    \end{refsection}
+
+
+	\begin{refsection}[resume.bib]
+	\settoggle{bbx:gbtype}{false}%局部设置不输出文献类型和载体标识符
+	\settoggle{bbx:gbannote}{true}%局部设置输出注释信息
+	\setcounter{gbnamefmtcase}{1}%局部设置作者的格式为familyahead格式
+    \makeatletter
+    \renewcommand*{\mkbibnamegiven}[1]{%通过作者注释局部调整作者的格式需与bib配合
+    \ifitemannotation{thesisauthor}
+    {\ifbibliography{\textcolor{blue}{\textbf{#1}}}{#1}}%
+    {#1}\ifbibliography{\ifitemannotation{corresponding}{\textsuperscript{*}}{}}{}%
+    }
+    \renewcommand*{\mkbibnamefamily}[1]{%
+    \ifitemannotation{thesisauthor}
+    {\ifbibliography{\textcolor{blue}{\textbf{#1}}}{#1}}
+    {#1}}
+    \def\blx@maxbibnames{2}
+    \def\blx@minbibnames{2}
+    %\defcounter{gbbiblocalcase}{1} %局部强迫中文本地化字符串
+    %\defcounter{gbbiblocalcase}{2} %局部强迫英文本地化字符串
+    \setlocalbibstring{andotherscn}{et al.}
+    \setlocalbibstring{andothers}{等}
+    \makeatother
+
+	\nocite{ref-1-1-Yang,ref-2-1-杨轶}
+	
+	\setlength{\biblabelsep}{12pt}
+	\printbibliography[heading=subbibliography,title={发表的学术论文}] %发表和录用的
+	\end{refsection}
+
+\end{document} 

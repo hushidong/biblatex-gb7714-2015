@@ -6,13 +6,13 @@
     \usepackage{lipsum}
     \usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
 
-\usepackage[backend=biber,style=chinese-erj,erjpunctcn=false]{biblatex}
+\usepackage[backend=biber,style=chinese-erj,gbpunctcn=false]{biblatex}
 
 %加入如下命令可使英文的文献输出全部的英文的标点
 \def\erjpunctcommalanen{\addcomma\addspace}%
 \def\erjpunctcolonlanen{\addcolon\addspace}%
 %若需要将中文文献的标点也改为英文则应该使用选项：
-%erjpunctcn=false
+%gbpunctcn=false
 
 \usepackage{filecontents}
 \begin{filecontents}{\jobname.bib}

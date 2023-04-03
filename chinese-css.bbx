@@ -1,0 +1,647 @@
+%%
+%% ---------------------------------------------------------------
+%% css.bbx --- A citation style of Society sciences in china
+%% modified from gb7714-2015
+%% Maintained by huzhenzhen
+%% E-mail: hzzmail@163.com
+%% Released under the LaTeX Project Public License v1.3c or later
+%% history
+%% 2019/03/28 v1.0
+%% 2022/02/22 v1.0a
+%% ---------------------------------------------------------------
+%%
+%%用法：类似于标准的样式在biblatex加载时设置样式
+%%文献表正常处理，标注命令主要用cite和textcite
+\ProvidesFile{chinese-css.bbx}[2023/03/31 v1.0a a biblatex bibliography style for CSS]
+
+
+%==================================================
+%加载gb样式
+%==================================================
+\RequireBibliographyStyle{gb7714-2015}
+
+
+%
+%   增加一个控制标点是英文还是中文的选项
+%   20220222,v1.0a,hzz
+\DeclareBibliographyOption{gbpunctcn}[true]{%biblatex低版本
+  \ifstrequal{#1}{false}{\execgbpuncten}{}}
+
+
+
+%==================================================
+%选项设置
+%==================================================
+\ExecuteBibliographyOptions{
+    gbtype=false,
+    gbpub=false,
+    doi=false,
+    url=false,
+    gbfieldtype=true,
+    %datezeros=false,
+    }
+
+%==================================================
+%定义一些标点为中文全角标点
+%==================================================
+\def\gbpunctdot{。}%
+\def\gbpunctmark{、}%
+\def\gbpunctcomma{，}%
+\def\gbpunctcommalanen{\addcomma\addspace}%
+\def\gbpunctcolon{：}%
+\def\gbpunctcolonlanen{\addcolon\addspace}%
+\def\gbpunctsemicolon{；}%
+\def\gbpunctttl{《}%
+\def\gbpunctttr{》}
+\def\gbpunctprl{（}%
+\def\gbpunctprr{）}
+
+
+\def\execgbpuncten{%
+\def\gbpunctdot{\adddot}%
+\def\gbpunctmark{\addcomma\addspace}%
+\def\gbpunctcomma{\addcomma\addspace}%
+\def\gbpunctcommalanen{\addcomma\addspace}%
+\def\gbpunctcolon{\addcolon\addspace}%
+\def\gbpunctcolonlanen{\addcolon\addspace}%
+\def\gbpunctsemicolon{\addsemicolon\addspace}%
+\def\gbpunctttl{《}%
+\def\gbpunctttr{》}%
+}
+
+%==================================================
+%为标注和文献表中标点格式，重设and本地化字符串
+%==================================================
+\DefineBibliographyStrings{english}{
+%    and         = { and},%and后面的空格在finalnamedelim已经加过了，所以这里去掉20191009
+%    andcn       = {\gbpunctmark\unspace},%\gbpunctmark
+%    andincitecn = {和},%将标注中的分开，便于与文献表中的区分
+%    andincite   = {\&},
+    %andotherscn={等},
+    mathesiscn={硕士学位论文},
+    phdthesiscn={博士学位论文},
+}
+
+
+
+
+%==================================================
+%设置一些标点格式为中文的标点
+%==================================================
+%\DeclareFieldFormat{titlecase}{\iffieldequalstr{userd}{chinese}{#1}{\capitalisewords{#1}}}
+%\DeclareFieldFormat*{booktitle}{\gbpunctttl#1\gbpunctttr}
+\DeclareFieldFormat*{title}{%
+\ifcitation{\iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{\textit{#1}\isdot}}{#1\isdot}}
+\DeclareFieldFormat[article]{title}{%
+\ifcitation{\iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{\mkbibquote{#1}\isdot}}%
+{#1\adddot\addthinspace}}
+\DeclareFieldFormat*{journaltitle}{%
+\ifcitation{\iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{\textit{#1}}}{#1\isdot}}%
+\renewcommand*{\revsdnamepunct}{%
+\ifcitation{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}{}}
+\DeclareDelimFormat{multinamedelim}{%
+\ifcitation{\iffieldequalstr{userd}{chinese}{\gbpunctmark}{\gbpunctcommalanen}}%
+{\addcomma\space}}
+\DeclareDelimFormat{finalnamedelim}{%
+  %\ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
+  %\addspace%
+  \edef\userfieldabcde{userd}%
+  \ifcurrentname{translator}{\edef\userfieldabcde{usere}}{}%
+  \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
+  \ifcurrentname{author}{\edef\userfieldabcde{userf}}{}%
+  \ifcurrentname{bookauthor}{\edef\userfieldabcde{userb}}{}%
+  \ifcase\value{gbcitelocalcase}%
+    \iffieldequalstr{\userfieldabcde}{chinese}{\ifcitation{\gbpunctmark}{\bibstring{andincitecn}}}{}%
+    \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{andkr}}{}%
+    \iffieldequalstr{\userfieldabcde}{japanese}{\bibstring{andjp}}{}%
+    \iffieldequalstr{\userfieldabcde}{english}{\space\bibstring{andincite}\space}{}%
+    \iffieldequalstr{\userfieldabcde}{french}{\bibstring{and}}{}%
+    \iffieldequalstr{\userfieldabcde}{russian}{\bibstring{and}}{}%
+%\space%
+  \or%
+  \bibstring{andincitecn}\space%
+  \or%
+  \bibstring{andincite}\space%
+  \fi}
+\DeclareDelimFormat[bib,biblist]{finalnamedelim}{%
+%  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
+  \edef\userfieldabcde{userd}%
+  \ifcurrentname{translator}{\edef\userfieldabcde{usere}}{}%
+  \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
+  \ifcurrentname{author}{\edef\userfieldabcde{userf}}{}%
+  \ifcurrentname{bookauthor}{\edef\userfieldabcde{userb}}{}%
+  \ifcase\value{gbbiblocalcase}%
+    \iffieldequalstr{\userfieldabcde}{chinese}{\ifcitation{\gbpunctmark}{\bibstring{andcn}}}{}%
+    \iffieldequalstr{\userfieldabcde}{korean}{\bibstring{andkr}}{}%
+    \iffieldequalstr{\userfieldabcde}{japanese}{\bibstring{andjp}}{}%
+    \iffieldequalstr{\userfieldabcde}{english}{\bibstring{and}}{}%
+    \iffieldequalstr{\userfieldabcde}{french}{\bibstring{and}}{}%
+    \iffieldequalstr{\userfieldabcde}{russian}{\bibstring{and}}{}%
+\space%
+  \or%
+\ifcitation{\gbpunctmark}{\bibstring{andcn}\space}%
+  \or%
+  \bibstring{and}\space%
+  \fi}
+\DeclareDelimFormat{nameyeardelim}{%
+\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}
+\DeclareDelimFormat[bib,biblist]{nameyeardelim}{%
+\ifcitation{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}{\addspace}%
+}
+\DeclareDelimFormat{bibpagespunct}{%
+\ifcitation{\iffieldequalstr{userd}{chinese}{\unspace\gbpunctcomma}{\unspace\gbpunctcommalanen}}%
+{\addcolon\addthinspace}%
+}
+\DeclareFieldFormat{pages}{%%前面引导页码的pp.等字符
+\ifcitation{\iffieldequalstr{userd}{chinese}{%
+\printtext{\bibstring{serialcn} #1\addthinspace 页}}%
+{\mkpageprefix[bookpagination]{#1}}}{#1}}
+
+%
+%   调整页码前的标点和去掉期刊文章等页码后面的标点
+%
+\renewbibmacro*{note+pages}{%源来自standard.bbx
+    \ifcitation{\iffieldundef{postnote}{\iffieldundef{pages}{}{%
+                  \setunit{\bibpagespunct}%
+                  \printfield{pages}}}{}%
+    }{%
+      \iffieldundef{pages}{}{%
+      \setunit{\bibpagespunct}%
+      \printfield{pages}}%
+}}
+
+
+%
+%   调整页码的格式，即chapter+pages格式
+%
+\renewbibmacro*{chapter+pages}{%
+\ifcitation{\iffieldundef{postnote}{\iffieldundef{pages}{}{%
+                  \setunit{\bibpagespunct}%
+                  \printfield{pages}}}{}}%
+{\iftoggle{bbx:gbstrict}{}{%
+  \printfield{chapter}}%
+  \iffieldundef{pages}{}{%这里增加一个判断，当没有页码时就不输出
+  \setunit{\bibpagespunct}%
+  \printfield{pages}}}%
+}
+
+
+\renewcommand*{\newunitpunct}{%
+\ifcitation{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\gbpunctcommalanen}}{\addperiod\space}%
+}
+\renewcommand*{\finentrypunct}{%
+\ifcitation{\printdelim{finalpunct}}{\addperiod}%
+}
+%调整标注的注释中的条目结尾标点
+\DeclareDelimFormat{finalpunct}{\iffieldequalstr{userd}{chinese}{\gbpunctdot}{\adddot}}
+\DeclareDelimFormat[fullinnercite]{finalpunct}{}
+
+\DeclareFieldFormat{booktitle}{%
+\ifcitation{\iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{#1}}{#1}}
+
+%出版项中：出版社地址后面的标点
+\renewcommand{\publocpunct}{%
+\ifcitation{\iffieldequalstr{userd}{chinese}{\gbpunctcolon}{\addcolon\addspace}}{\addcolon\addspace}%
+}
+%调整出版社与年份之间的标点
+\renewcommand{\pubdatadelim}{%
+\ifcitation{\iffieldequalstr{userd}{chinese}{\gbpunctcomma}{\setunit*{\addcomma\space}}}%
+{\setunit*{\addcomma\space}}%
+}
+
+%==================================================
+%调整部分域的输出格式
+%==================================================
+
+%增加年字
+\renewbibmacro*{date}{%
+\ifcitation{\iffieldequalstr{userd}{chinese}{\printdate 年}{\printdate}}%
+{\printdate}%
+}
+
+
+
+\newrobustcmd*{\blx@gbdatecn}[3][]{%
+  \dateeraprintpre{#2#3year}%
+  \blx@imc@forcezerosy{\thefield{#2#3year}年}\ifblank{#1}{}{\printfield{#1}}%
+    \iffieldundef{#2#3month}{}{{\thefield{#2#3month}}月}%
+     \iffieldundef{#2#3day}{}{{\thefield{#2#3day}}日}}
+
+\renewbibmacro*{newsdate}{%%
+\ifboolexpr{%
+    test{\ifcitation} and test{\iffieldequalstr{userd}{chinese}}%
+    }%
+    {\printtext{\blx@gbdatecn{}{}}}%
+    {\printtext{\blx@gbdate{}{}}}%%
+}
+
+
+%
+\renewbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示电子资源的更新和修改日期，而公告日期则按日期格式
+\ifboolexpr{%
+test{\ifcitation} and test{\iffieldequalstr{userd}{chinese}}%
+}%
+{%
+\printtext{\blx@gbdatecn{}{}}%
+}%
+    {\ifboolexpr{%
+    test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{eventday}}%
+    }%
+    {}%更新或修改日期通常有day信息
+    {\iffieldundef{year}{%
+            \iffieldundef{endyear}{\iffieldundef{eventyear}{}{\printtext{\gbleftparen}\printeventdate\printtext{\gbrightparen}}}%
+            {\printtext{\gbleftparen}\printenddate\printtext{\gbrightparen}}%
+    }{\iffieldequalstr{year}{}{%因为year存在，但为空
+        }{\printtext{\gbleftparen}\blx@gbdate{}{}\printtext{\gbrightparen}}%
+     }}%
+}}%
+
+
+\DeclareFieldFormat{type}%
+{\ifcitation{\iffieldequalstr{userd}{chinese}%
+    {\ifbibxstring{#1cn}{\bibxstring{#1cn}}{#1}}%
+    {\ifbibstring{#1}{\bibstring{#1}}{#1}}}{}%
+}
+
+
+\renewbibmacro*{in:}{%
+\iftoggle{bbx:gbpunctin}{\ifcitation{\gbpunctcomma}{\printtext{\allowbreak{\SlashFont//}\allowbreak}}}%\addthinspace
+                         {\setunit{\adddot\addspace}%
+                             \iffieldequalstr{userd}{chinese}%
+                             {\ifcitation{\gbpunctcomma}{\printtext{\bibstring{incn}}}}%
+                             {\printtext{\bibstring{in}}}%
+                         }}%\newunit\newblock\intitlepunct
+
+
+%
+%   修改number和volume的格式
+%
+\newcounter{numberwithoutzero}
+\DeclareFieldFormat[newspaper,article,periodical]{number}%
+{\ifcitation{%
+    \iffieldequalstr{userd}{chinese}{%
+        \iffieldequalstr{entrysubtype}{news}{\printtext{\gbpunctcomma\bibstring{serialcn} #1 版}}
+        {\iffieldint{number}{\setcounter{numberwithoutzero}{#1}%
+        \printtext{\bibstring{serialcn}\addthinspace\arabic{numberwithoutzero}\addthinspace\bibstring{numbercn}}}%
+        {\printtext{\bibstring{serialcn}\addthinspace #1\addthinspace\bibstring{numbercn}}}%
+        }}%
+        {\setcounter{numberwithoutzero}{#1}\printtext{(}\arabic{numberwithoutzero}\printtext{)}}%
+    }%
+    {\setcounter{numberwithoutzero}{#1}\arabic{numberwithoutzero}}%
+}
+
+\DeclareFieldFormat[article,periodical]{volume}%
+{\ifcitation{%
+\iffieldequalstr{userd}{chinese}{\bibstring{serialcn}#1\bibstring{volumecn}}%
+                                {\bibstring{volume}~#1}}%
+{#1}%
+}
+
+\DeclareFieldFormat[book]{volume}%
+{\iffieldequalstr{userd}{chinese}{\iffieldint{volume}%
+    {\bibstring{serialcn}#1\bibstring{volumecn}}{#1}%
+    }%
+    {\bibstring{volume}~#1}%
+}
+
+%
+%   调整期刊名的格式
+%
+%   v1.0k,20180425,增加了字体控制命令，hzz
+%   v1.1j,20220527,修复期刊名不存在时多余的标点
+\renewbibmacro*{journal+issuetitle}{%
+\ifcitation{\bibpubfont%
+  \usebibmacro{journal}%
+  \iffieldundef{series}%
+    {}%
+    {\printfield{series}%
+     \setunit{\addspace}}%
+    \iffieldundef{volume}%
+      {\ifciteseen{}{\usebibmacro{issue+date}%
+      \usebibmacro{volume+number+eid}}}%
+      {\ifciteseen{}{\usebibmacro{volume+number+eid}%
+      \newunit%
+      \usebibmacro{issue+date}}}%
+    }%
+  {\bibpubfont%源来自standard.bbx
+  \usebibmacro{journal}%
+  \iffieldundef{journaltitle}{}{\setunit*{\addcomma\addspace}}%修改为增加一个逗号
+  \iffieldundef{series}
+    {}
+    {\newunit
+     \printfield{series}%
+     \setunit{\addspace}}%
+  \printtext{\usebibmacro{issue+date}}%使用printtext配合后面的\setunit*来实现后面的逗号的自动处理
+  \iffieldundef{volume}{}{\setunit*{\addcomma\space}}%
+  \usebibmacro{issue}%
+  \usebibmacro{volume+number+eid}}%把卷期放到年份后面
+  }
+
+
+%去掉期刊名后的标点
+\renewbibmacro*{journal}{%
+  \ifboolexpr{
+    test {\iffieldundef{journaltitle}}
+    and
+    test {\iffieldundef{journalsubtitle}}
+  }
+    {}
+    {\printtext[journaltitle]{%
+       \printfield[titlecase]{journaltitle}%
+       \ifcitation{}{\setunit{\subtitlepunct}}%
+       \printfield[titlecase]{journalsubtitle}}%
+     \ifcitation{}{\newunit}}%
+  \iffieldundef{journaltitleaddon}
+    {}
+    {\printfield{journaltitleaddon}}}
+
+
+
+
+%
+%   调整期刊卷和期的格式
+%
+\renewbibmacro*{volume+number+eid}{%源来自standard.bbx
+\ifcitation{%
+\iffieldequalstr{userd}{chinese}%
+  {\iffieldundef{volume}{}{\printfield{volume}}%
+    \iffieldundef{number}{}{\printfield{number}}}%区别于顺序编码制
+  {\newunit\printfield{volume}%
+  \printfield{number}%
+  \setunit{\addcomma\space}%
+  \printfield{eid}}%
+}%
+{\iftoggle{bbx:gbfieldstd}{%
+  \printfield{volume}%
+  \setunit*{\adddot}%
+  \printfield{number}%
+  \setunit{\addcomma\space}%
+  \printfield{eid}}{%
+  \printfield{volume}%
+  %\setunit*{\adddot}%去掉点号
+  %\printfield{number}%
+  \iffieldundef{number}{}{\printtext{\mkbibparens{\printfield{number}}}}%增加一个圆括号
+  \iffieldundef{eid}{}{%
+  \setunit{\addcomma\space}%
+  \printfield{eid}}}}}
+
+
+%
+%   期刊的标题做修改
+%
+\renewbibmacro*{title+issuetitle}{%源来自standard.BBX
+  \usebibmacro{periodical}%
+  \ifcitation{\iffieldequalstr{userd}{chinese}{\setunit*{\gbpunctcomma}}{\setunit*{\adddot\addspace}}}%
+  {\setunit*{\adddot\addspace}}%标点修改为句点
+  \iffieldundef{series}%
+    {}%
+    {\newunit%
+     \printfield{series}%
+     \setunit{\addspace}}%
+  \usebibmacro{periodical+issue}%将issue调整到上面来，并修改
+\ifcitation{\usebibmacro{issue+date}%
+        \usebibmacro{issue}%
+        \usebibmacro{volume+number+eid}}%
+    {\iffieldundef{number}{}{%%进一步处理有范围的数字
+  \multinumberparser{\thefield{number}}}%
+  \iffieldundef{volume}%
+  {\printfield{year}%
+  \printtext{\mkbibparens{\multinumberfirst}}%
+  \bibrangedash%
+  \iffieldundef{endyear}{}{\printfield{endyear}\printtext{\mkbibparens{\multinumbersecond}}}%
+  }%
+  {\multivolparser{\thefield{volume}}%
+  \printfield{year}%
+  \setunit{\addcomma\space}%将冒号修改为逗号
+  \printtext{\multivolfirst}%
+  \printtext{\mkbibparens{\multinumberfirst}}%
+  \bibrangedash%
+  \iffieldundef{endyear}{}{%
+  \printfield{endyear}%
+  \setunit{\addcomma\space}%将冒号修改为逗号
+  \printtext{\multivolsecond}%
+  \printtext{\mkbibparens{\multinumbersecond}}}%
+  }%
+  \setunit{\addcomma\space}%
+  \printfield{eid}%
+  \setunit{\addspace}%
+  \usebibmacro{issue}%
+  \newunit}%
+}
+
+
+
+
+%
+%   重设title的输出
+%
+%   20180425，v1.0k，为标题增加字体控制命令，Hu Zhenzhen
+%   原理方法:将文献类型标识符输出出去，原输出来自biblatex.def文件
+%   利用toggle做标识符是否输出的判断
+\renewbibmacro*{title}{%
+\ifcitation{%
+  \ifboolexpr{%
+    test{\iffieldundef{title}}%
+    and
+    test{\iffieldundef{subtitle}}%
+  }%
+    {}%
+    {\setunit{\iffieldequalstr{userd}{chinese}{\gbpunctcolon}{\gbpunctcolonlanen}}%
+    \printtext[title]{\bibtitlefont%增加字体控制命令%增加了标点：
+       \printfield[titlecase]{title}%
+       \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
+       {}{\setunit{\subtitlepunct}%
+       \printfield[titlecase]{subtitle}}%
+       \iffieldundef{titleaddon}{}%判断一下titleaddon，否则直接加可能多一个空格
+        {\setunit{\subtitlepunct}\printfield{titleaddon}}%
+        \iftoggle{bbx:gbtype}{%
+         \iffieldundef{entrysubtype}{\printfield[gbtypeflag]{usera}}%在标题后直接给出文献标识字母，判断一下，是否是报纸和标准
+        {\iffieldequalstr{entrysubtype}{standard}{\printfield[gbtypeflags]{usera}}%判断是否为标准
+                                         {\iffieldequalstr{entrysubtype}{news}{\printfield[gbtypeflagn]{usera}}% 判断是否为报纸
+                                                                      {\printfield[gbtypeflag]{usera}}}% 其它
+        }}{}%
+     }\ifboolexpr{test{\ifentrytype{book}} and (not test{\iffieldundef{volume}})}%判断一下book类有没有volume
+            {\ifcitation{}{\setunit{\subtitlepunct}}\printfield{volume}}{}%%
+}}{\ifboolexpr{%
+    test{\iffieldundef{title}}%
+    and
+    test{\iffieldundef{subtitle}}}%
+    {}%
+    {\printtext[title]{\bibtitlefont%增加字体控制命令
+       \printfield[titlecase]{title}%
+       \ifboolexpr{test {\iffieldundef{subtitle}}}%增加了对子标题的判断
+            {}{\setunit{\subtitlepunct}\printfield[titlecase]{subtitle}}%
+       \iffieldundef{titleaddon}{}{\setunit{\subtitlepunct}\printfield{titleaddon}}%判断一下titleaddon
+       \ifboolexpr{test{\ifentrytype{book}} and (not test{\iffieldundef{volume}})}%判断一下book类有没有volume
+            {\setunit{\subtitlepunct}\printfield{volume}}{}%
+       \iftoggle{bbx:gbtype}%
+            {\iffieldundef{entrysubtype}{\printfield[gbtypeflag]{usera}}%在标题后直接给出文献标识字母，判断一下，是否是报纸和标准
+            {\iffieldequalstr{entrysubtype}{standard}{\printfield[gbtypeflags]{usera}}%判断是否为标准
+                  {\iffieldequalstr{entrysubtype}{news}{\printfield[gbtypeflagn]{usera}}%判断是否为报纸
+                  {\printfield[gbtypeflag]{usera}}}}}{}%%其它
+       }%
+    }%
+}%
+}
+
+%给注释的英文姓名调整为given-ahead
+\AtEveryCite{\defcounter{gbnamefmtcase}{2}}
+
+
+%=====================================================================
+%设置驱动格式
+%=====================================================================
+
+
+\DeclareBibliographyAlias{citeseen:newspaper}{citeseen:article}%
+\DeclareBibliographyAlias{citeseen:inproceedings}{citeseen:inbook}%会议论文文献类型驱动
+\DeclareBibliographyAlias{citeseen:conference}{citeseen:inbook}%会议论文文献类型驱动
+\DeclareBibliographyAlias{citeseen:incollection}{citeseen:inbook}%文集中析出文献类型驱动
+\DeclareBibliographyAlias{citeseen:collection}{citeseen:book}%%文集类型驱动
+\DeclareBibliographyAlias{citeseen:proceedings}{citeseen:book}%会议论文集文献类型驱动
+\DeclareBibliographyAlias{citeseen:thesis}{citeseen:manual}%学位论文驱动
+\DeclareBibliographyAlias{citeseen:unpublished}{citeseen:manual}%其它类型驱动
+\DeclareBibliographyAlias{citeseen:archive}{citeseen:manual}
+
+
+%
+%   book条目类的驱动
+%
+\DeclareBibliographyDriver{citeseen:book}{%源来自standard.bbx文件
+\usebibmacro{bibindex}%
+\usebibmacro{begentry}%
+\usebibmacro{author/editor+others/translator+others}%
+\ifnameundef{namea}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+\usebibmacro{maintitle+title}%
+\usebibmacro{chapter+pages}%
+\usebibmacro{finentry}}
+
+
+%
+%   期刊文章，连续出版物中的析出文献的格式
+%
+\DeclareBibliographyDriver{citeseen:article}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+\ifnameundef{author}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+  \usebibmacro{title}%
+  \newunit\newblock%
+  \usebibmacro{journal+issuetitle}%
+  \usebibmacro{note+pages}%
+  \usebibmacro{finentry}}
+
+
+
+%
+%   连续出版物的驱动
+%
+  \DeclareBibliographyDriver{citeseen:periodical}{%源来自standard.BBX
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{editor}%
+  \newunit\newblock %删除上面一行，添加这一行
+  \usebibmacro{title+issuetitle}%
+\usebibmacro{finentry}}
+
+
+
+%
+%   在线文献驱动
+%
+\DeclareBibliographyDriver{citeseen:online}{%源来自standard.BBX
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/editor+others/translator+others}%
+\ifnameundef{namea}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+  \usebibmacro{title}%
+\usebibmacro{finentry}}
+
+
+%
+%   报告类型驱动
+%   当有网址无出版项时，用online输出
+%
+\DeclareBibliographyDriver{citeseen:report}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/editor+others/translator+others}%
+\ifnameundef{namea}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+  \usebibmacro{title}%
+  \usebibmacro{chapter+pages}%
+\usebibmacro{finentry}}
+
+%
+%   论文、手册类型驱动
+%   2016-11-11，增加了译者信息
+%
+\DeclareBibliographyDriver{citeseen:manual}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/editor+others/translator+others}%
+\ifnameundef{namea}{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+  \usebibmacro{title}%
+  \usebibmacro{chapter+pages}%
+  \iffieldundef{url}{}{%当没有网址时也不输出修改或更新日期
+  \usebibmacro{modifydate}}%修改或更新日期为带括号的时间
+  \usebibmacro{doi+eprint+url}%
+  \newunit
+  \printfield{pagetotal}%
+\usebibmacro{finentry}}
+
+%
+%   增加inbook:parent用于辅助crossref传统功能的实现
+%   用在{crosscite}宏中
+%   20210216,v1.0w,hzz
+\newbibmacro*{citeseen:inbook:parent}{%
+\usebibmacro{bybookauthor}%
+\ifnameundef{bookauthor}{%
+  \ifnameundef{editor}{}{\printdelim{authotitledelim}}%
+  }{\printdelim{authotitledelim}}%
+\iffieldundef{series}{}{\usebibmacro{series+number}\setunit{\addcolon\addspace}}%为处理一些存在series的情况而增加
+  \usebibmacro{maintitle+booktitle}%
+}
+
+%
+%   专著中的析出文献的格式修改
+%
+\DeclareBibliographyDriver{citeseen:inbook}{%源来自standard.bbx
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \ifboolexpr{
+    test {\ifnameundef{author}}
+    and
+    test {\ifnameundef{translator}}
+  }{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
+\usebibmacro{title}%
+\usebibmacro{in:}%
+\usebibmacro{crosscite}{citeseen:inbook:parent}%
+\usebibmacro{chapter+pages}%
+\usebibmacro{finentry}}
+
+
+\DeclareDelimFormat{authotitledelim}
+{%
+\ifcitation{\iffieldequalstr{userd}{chinese}{\gbpunctcolon}{\addperiod\space}}{\addperiod\space}%
+}
+
+
+%
+%   增加inbook:parent用于辅助crossref传统功能的实现
+%   用在{crosscite}宏中
+%   20210216,v1.0w,hzz
+\newbibmacro*{inbook:parent}{%
+\usebibmacro{bybookauthor}%
+\ifnameundef{bookauthor}{%
+  \ifnameundef{editor}{}{\printdelim{authotitledelim}}%
+  }{\printdelim{authotitledelim}}%
+\iffieldundef{series}{}{\usebibmacro{series+number}\setunit{\addcolon\addspace}}%为处理一些存在series的情况而增加
+  \usebibmacro{maintitle+booktitle}%
+\iffieldundef{volume}{}{\setunit{\addcolon\addspace}\printfield{volume}}%
+\iffieldundef{number}{}{\setunit{\addcolon\addspace}\printfield{number}}%增加卷和册信息
+  \newunit\newblock%
+  \printfield{edition}%
+  \newunit
+  \newunit\newblock
+  \usebibmacro{publisher+location+date}}

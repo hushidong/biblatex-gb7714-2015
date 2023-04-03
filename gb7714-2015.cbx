@@ -198,7 +198,7 @@
 
 \newrobustcmd{\mkbibsuperscriptusp}[1]{%
   \unspace\allowhyphens\textsuperscript{%
-    \begingroup
+    \begingroup%
     \protected\long\def\mkbibsuperscriptusp##1{%
       \blx@warning{Nested superscript}%
       \mkbibbrackets{##1}}%
@@ -352,7 +352,7 @@
     {\usebibmacro{cite:comp}}%
     {\usebibmacro{cite:dump}%
      \ifbool{cbx:parens}%
-       {\mkbibsuperscript{\printtext{\bibclosebracket}}\global\boolfalse{cbx:parens}}%
+       {\mkbibsuperscript{{\hspace{-0.075em}\bibclosebracket}}\global\boolfalse{cbx:parens}}%\printtext
        {}%
      \iffirstcitekey
        {}
@@ -376,12 +376,15 @@
    \ifbool{cbx:incitet}{\usebibmacro{citet}}{\usebibmacro{textcite}}%
    }%
   {}%
-  {\ifbool{cbx:incitet}{\mkbibsuperscript{\usebibmacro{cite:dump}\usebibmacro{postnote}}}%
-        {\usebibmacro{cite:dump}\usebibmacro{postnote}}%
-   \ifbool{cbx:parens}%
-     {\ifbool{cbx:incitet}{\mkbibsuperscript{\bibclosebracket}}{\bibclosebracket}%
-     \global\boolfalse{cbx:parens}}%
-     {}}
+  {\ifbool{cbx:incitet}%
+        {\mkbibsuperscript{\usebibmacro{cite:dump}\usebibmacro{postnote}%
+        \ifbool{cbx:parens}{\hspace{-0.075em}\bibclosebracket\global\boolfalse{cbx:parens}}{}%
+        }%
+        }%
+        {\usebibmacro{cite:dump}\usebibmacro{postnote}%
+        \ifbool{cbx:parens}{\bibclosebracket\global\boolfalse{cbx:parens}}{}%
+        }%
+   }
 
   \newrobustcmd{\cbx@citet@init}[2]{%
   \global\booltrue{cbx:incitet}%

@@ -1,0 +1,95 @@
+%%
+%% ---------------------------------------------------------------
+%% css.cbx --- A citation style of Society sciences in china
+%% modified from gb7714-2015
+%% Maintained by huzhenzhen
+%% E-mail: hzzmail@163.com
+%% Released under the LaTeX Project Public License v1.3c or later
+%% ---------------------------------------------------------------
+%%
+%%用法：类似于标准的样式在biblatex加载时设置样式
+%%文献表正常处理，标注命令主要用cite和textcite
+
+\ProvidesFile{chinese-css.cbx}[2023/03/31 v1.0a a biblatex citation style for CSS]
+
+%==================================================
+%加载gb样式
+%==================================================
+\RequireCitationStyle{gb7714-2015} %
+
+
+%==================================================
+%选项设置
+%==================================================
+%\ExecuteBibliographyOptions{
+%    maxcitenames=2,
+%    mincitenames=1,
+%}
+
+%==================================================
+%引用命令设置，主要用cite和textcite
+%包括标点设置
+%==================================================
+
+%修改注释后的标点
+\renewcommand{\bibfootnotewrapper}[1]{%
+  \bibsentence#1}%
+
+%修改脚注注释的实现
+\def\execgbfootbib%
+    {%
+    %开启引用跟踪计数器，为使用\ifciteseen等测试命令
+    \ExecuteBibliographyOptions{citetracker=true}
+
+    %
+    %重定义\footfullcite使完成css的脚注文献要求
+    \DeclareCiteCommand{\footfullcite}[\mkbibfootnote]%
+      {\defcounter{maxnames}{\blx@maxbibnames}%局部定义maxnames和minnames计数器
+       \defcounter{minnames}{\blx@minbibnames}%使footfullcite内的作者输出与正文文献表中的一致。
+       \usebibmacro{prenote}%
+        \renewbibmacro*{postnote}{%
+            \iffieldundef{postnote}%
+            {}{\setunit{\iffieldequalstr{userd}{chinese}{\unspace\gbpunctcomma}{\addcolon\addspace}}%
+            \printfield{postnote}}}%与ay样式不同，由于已修改postnote域格式，直接用printfield
+       }%
+      {\ifciteseen%
+          {\usedriver{\DeclareNameAlias{sortname}{default}}{citeseen:\thefield{entrytype}}}%\nopunct
+          {\usedriver{\DeclareNameAlias{sortname}{default}}{\thefield{entrytype}}}%
+      }%
+      {\multicitedelim}%
+      {\usebibmacro{postnote}\usebibmacro{finentry}}
+
+    \DeclareCiteCommand{\fullcite}
+      {\usebibmacro{prenote}}
+      {\ifciteseen%
+          {\usedriver{\DeclareNameAlias{sortname}{default}}{citeseen:\thefield{entrytype}}}%\nopunct
+          {\usedriver{\DeclareNameAlias{sortname}{default}}{\thefield{entrytype}}}%
+      }
+      {\multicitedelim}
+      {\usebibmacro{postnote}\usebibmacro{finentry}}
+
+      \DeclareCiteCommand{\fullinnercite}
+      {\usebibmacro{prenote}}
+      {\ifciteseen%
+          {\usedriver{\DeclareNameAlias{sortname}{default}}{citeseen:\thefield{entrytype}}}%\nopunct
+          {\usedriver{\DeclareNameAlias{sortname}{default}}{\thefield{entrytype}}}%
+      }
+      {\multicitedelim}
+      {\usebibmacro{postnote}\usebibmacro{finentry}}
+    }
+
+
+%为先秦文献夹注做处理
+\DeclareFieldFormat*{citejz}{%
+\iffieldequalstr{userd}{chinese}{\gbpunctprl\gbpunctttl#1\gbpunctttr\gbpunctprr}%
+{\mkbibemph{#1}}}
+\DeclareCiteCommand{\citejz}
+  {\boolfalse{citetracker}%
+   \boolfalse{pagetracker}%
+   \usebibmacro{prenote}}
+  {\ifciteindex
+     {\indexfield{indextitle}}
+     {}%
+   \printfield[citejz]{labeltitle}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}

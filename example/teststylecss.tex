@@ -1,0 +1,794 @@
+\documentclass[twoside]{article}
+    \usepackage{ctex}
+    \usepackage{xcolor}
+    \usepackage{toolbox}
+    \usepackage[colorlinks]{hyperref}
+    \usepackage{lipsum}
+    \usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
+
+\usepackage[backend=biber,style=chinese-css,gbfootbib=true,gbfnperpage=true,url=false]{biblatex} %gbfootbibfmt
+
+
+\begin{filecontents}[force]{\jobname.bib}
+
+@book{庄子天下,
+title={庄子·天下},
+}
+
+@book{尚书泰誓,
+title={尚书·泰誓},
+}
+
+@book{尚书皋陶谟,
+title={尚书·皋陶谟},
+}
+
+
+@article{zhangkun1994,
+  author     = {张昆 and 冯立群 and 余昌钰 and others},
+  title      = {机器人柔性手腕的球面齿轮设计研究},
+  journal    = {清华大学学报: 自然科学版},
+  volume     = {34},
+  number     = {2},
+  pages      = {1--7},
+  year       = {1994},
+  key        = {zhang1 kun1},
+}
+
+@book{zhukezhen1973,
+  author     = {竺可桢},
+  title      = {物理学论},
+  address    = {北京},
+  publisher  = {科学出版社},
+  year       = {1973},
+  pages      = {56--60},
+  key        = {zhu2 ke3 zhen1},
+}
+
+@inproceedings{dupont1974bone,
+  author     = {Dupont, B},
+  title      = {Bone marrow transplantation in severe combined immunodeficiency with an unrelated MLC compatible donor},
+  editor     = {White, H J and Smith, R},
+  booktitle  = {Proceedings of the third annual meeting of the International Society for Experimental Hematology},
+  address    = {Houston},
+  publisher  = {International Society for Experimental Hematology},
+  year       = {1974},
+  pages      = {44--46},
+}
+
+@mastersthesis{zhengkaiqing1987,
+  author     = {郑开青},
+  title      = {通讯系统模拟及软件},
+  address    = {北京},
+  school     = {清华大学无线电系},
+  year       = {1987},
+  key        = {zheng4 kai1 qing1},
+}
+
+@PhdThesis{Deverell2013-21-22a,
+  author  = {Deverell, William and Igler, David},
+  title   = {A Companion to {California} History},
+  year    = {2013},
+  date    = {2013-11-15},
+  pages   = {21--22},
+  doi     = {10.1002/9781444305036.ch2},
+  url     = {http://onlinelibrary.wiley.com/doi/10.1002/9781444305036.ch2/summary},
+  urldate = {2014-06-24},
+  address = {New York},
+  school  = {John Wiley \& Sons},
+}
+
+@patent{jiangxizhou1980,
+  author     = {姜锡洲},
+  title      = {一种温热外敷药制备方案},
+  address    = {中国},
+  number     = {88105607.3},
+  date       = {1980-07-26},
+  key        = {jiang1 xi1 zhou1},
+}
+
+@standard{jianduju1994,
+  author     = {中华人民共和国国家技术监督局},
+  title      = {GB3100-3102. 中华人民共和国国家标准-量与单位},
+  address    = {北京},
+  publisher  = {中国标准出版社},
+  year       = {1994},
+  key        = {zhong1 hua2 ren2 min2 gong4 he2 guo2},
+}
+
+@article{merkt1995rotational,
+  author     = {Merkt, Fr{\'e}d{\'e}ric and Mackenzie, S R and Softley, Timothy P},
+  title      = {Rotational Autoionization Dynamics in High Rydberg States of Nitrogen},
+  journal    = {J Chem Phys},
+  year       = {1995},
+  volume     = {103},
+  pages      = {4509--4518},
+}
+
+@article{mellinger1996laser,
+  author     = {Mellinger, A and Vidal, C R and Jungen, {Ch}},
+  title      = {Laser reduced fluorescence study of the carbon monoxide nd triplet Rydberg series - Experimental results and multichannel quantum defect analysis},
+  journal    = {J Chem Phys},
+  year       = {1996},
+  volume     = {104},
+  pages      = {8913--8921},
+}
+
+@article{bixon1996dynamics,
+  author     = {Bixon, M and Jortner, Joshua},
+  title      = {The dynamics of predissociating high {Rydberg} states of {NO}},
+  journal    = {J Chem Phys},
+  year       = {1996},
+  volume     = {105},
+  pages      = {1363--1382},
+}
+
+@article{mahui1995,
+  author     = {马辉 and 李俭 and 刘耀明 and others},
+  title      = {利用 {REMPI} 方法测量 {BaF} 高里德堡系列光谱},
+  journal    = {化学物理学报},
+  year       = {1995},
+  volume     = {8},
+  pages      = {308--311},
+  key        = {ma3 hui1},
+}
+
+@article{carlson1981two,
+  author     = {Carlson, N W and Taylor, A J and Jones, K M and Schawlow, A L},
+  title      = {Two-step polarization-labeling spectroscopy of excited states of {Na2}},
+  journal    = {Phys Rev A},
+  year       = {1981},
+  volume     = {24},
+  pages      = {822--834},
+}
+
+@article{taylor1983scanning,
+  author     = {Taylor, A J and Jones, K M and Schawlow, A L},
+  title      = {Scanning pulsed-polarization spectrometer applied to {Na2}},
+  journal    = {J Opt Soc Am},
+  year       = {1983},
+  volume     = {73},
+  pages      = {994--998},
+}
+
+@article{taylor1981study,
+  author     = {Taylor, A J and Jones, K M and Schawlow, A L},
+  title      = {A study of the excited {1$\Sigma$g+} states in {Na2}},
+  journal    = {Opt Commun},
+  year       = {1981},
+  volume     = {39},
+  pages      = {47--50},
+}
+
+@article{shimizu1983laser,
+  author     = {Shimizu, Kazuko and Shimizu, Fujio},
+  title      = {Laser induced fluorescence spectra of the a {3$\Pi$u--X 1$\Sigma$g+} band of {Na2} by molecular beam},
+  journal    = {J Chem Phys},
+  year       = {1983},
+  volume     = {78},
+  pages      = {1126--1131},
+}
+
+@article{atkinson1982experimental,
+  author     = {Atkinson, J B and Becker, J and Demtr{\"o}der, W},
+  title      = {Experimental observation of the a {3$\Pi$u} state of {Na2}},
+  journal    = {Chem Phys Lett},
+  year       = {1982},
+  volume     = {87},
+  pages      = {92--97},
+}
+
+@article{kusch1975perturbations,
+  author     = {Kusch, P and Hessel, M M},
+  title      = {Perturbations in the A {1$\Sigma$u+} state of {Na2}},
+  journal    = {J Chem Phys},
+  year       = {1975},
+  volume     = {63},
+  pages      = {4087--4088},
+}
+
+@book{guangxi1993,
+  author     = {广西壮族自治区林业厅},
+  title      = {广西自然保护区},
+  address    = {北京},
+  publisher  = {中国林业出版社},
+  year       = {1993},
+  key        = {guang3 xi1 zhuang4 zu2 zi4 zhi4 qu1},
+}
+
+@book{huosini1989guwu,
+  author     = {霍斯尼},
+  title      = {谷物科学与工艺学原理},
+  translator = {李庆龙},
+  edition    = {2},
+  address    = {北京},
+  publisher  = {中国食品出版社},
+  year       = {1989},
+  pages      = {15--20},
+  key        = {huo4 si1 ni2},
+}
+
+@book{wangfuzhi1865songlun,
+  author     = {王夫之},
+  title      = {宋论},
+  edition    = {刻本},
+  address    = {金陵},
+  publisher  = {曾氏},
+  year       = {1865（清同治四年）},
+  key        = {wang2 fu1 zhi1},
+}
+
+@book{zhaoyaodong1998xinshidai,
+  author     = {赵耀东},
+  title      = {新时代的工业工程师},
+  address    = {台北},
+  publisher  = {天下文化出版社},
+  year       = {1998},
+  urldate    = {1998-09-26},
+  url        = {http://www.ie.nthu.edu.tw/info/ie.newie.htm},
+  key        = {zhao4 yao4 dong1},
+}
+
+@standard{biaozhunhua2002tushu,
+  author     = {全国信息与文献工作标准化技术委员会出版物格式分委员会},
+  title      = {GB/T 12450-2001 图书书名页},
+  address    = {北京},
+  publisher  = {中国标准出版社},
+  year       = {2002},
+  pages      = {1},
+  key        = {quan2 guo2 xin4 xi1},
+}
+
+@book{chubanzhuanye2004,
+  author     = {全国出版专业职业资格考试办公室},
+  title      = {全国出版专业职业资格考试辅导教材: 出版专业理论与实务•中级},
+  edition    = {2014},
+  address    = {上海},
+  publisher  = {上海辞书出版社},
+  year       = {2004},
+  pages      = {299--307},
+  key        = {quan2 guo2 chu1 ban3 ye4},
+}
+
+@techreport{who1970factors,
+  author     = {{World Health Organization}},
+  title      = {Factors Regulating the Immune Response: Report of {WHO Scientific Group}},
+  address    = {Geneva},
+  publisher  = {WHO},
+  year       = {1970},
+}
+
+@book{peebles2001probability,
+  author     = {Peebles, Jr, Peyton Z.},
+  title      = {Probability, Random Variables, and Random Signal Principles},
+  edition    = {4},
+  address    = {New York},
+  publisher  = {McGraw Hill},
+  year       = {2001},
+}
+
+@incollection{baishunong1998zhiwu,
+  author     = {白书农},
+  title      = {植物开花研究},
+  editor     = {李承森},
+  booktitle  = {植物科学进展},
+  address    = {北京},
+  publisher  = {高等教育出版社},
+  year       = {1998},
+  pages      = {146--163},
+  key        = {bai2 shu1 nong2},
+}
+
+@incollection{weinstein1974pathogenic,
+  author     = {Weinstein, L and Swertz, M N},
+  title      = {Pathogenic Properties of Invading Microorganism},
+  editor     = {Sodeman, Jr, William A and Sodeman, William A},
+  booktitle  = {Pathologic physiology: mechanisms of disease},
+  address    = {Philadelphia},
+  publisher  = {Saunders},
+  year       = {1974},
+  pages      = {745--772},
+}
+
+@inproceedings{hanjiren1985lun,
+  author     = {韩吉人},
+  title      = {论职工教育的特点},
+  editor     = {中国职工教育研究会},
+  booktitle  = {职工教育研究论文集},
+  address    = {北京},
+  publisher  = {人民教育出版社},
+  year       = {1985},
+  pages      = {90--99},
+  key        = {han2 ji2 ren2},
+}
+
+@periodical{dizhi1936dizhi,
+  author     = {中国地质学会},
+  title      = {地质评论},
+  year       = {1936},
+  volume     = {1},
+  number     = {1},
+  address    = {北京},
+  publisher  = {地质出版社},
+  key        = {zhong1 guo2 di4 zhi3 xue2 hui4},
+}
+
+@periodical{tushuguan1957tushuguanxue,
+  author     = {中国图书馆学会},
+  title      = {图书馆学通讯},
+  year       = {1957/1990},
+  number     = {1--4},
+  address    = {北京},
+  publisher  = {北京图书馆},
+  key        = {zhong1 guo2 tu2 shu1 guan3 xue2 hui4},
+}
+
+@periodical{aaas1883science,
+  author     = {{American Association for the Advancement of Science}},
+  title      = {Science},
+  year       = {1883},
+  volume     = {1},
+  number     = {1},
+  address    = {Washington, D.C.},
+  publisher  = {American Association for the Advancement of Science},
+}
+
+@newspaper{fugang2000fengsha,
+  author     = {傅刚 and 赵承 and 李佳路},
+  title      = {大风沙过后的思考},
+  journal    = {北京青年报},
+  date       = {2000-04-12},
+  number     = {14},
+  urldate    = {2002-03-06},
+  url        = {http://www.bjyouth.com.cn/Bqb/20000412/B/4216%5ED0412B1401.htm},
+  key        = {fu4 gang1},
+}
+
+@online{xiaoyu2001chubanye,
+  author     = {萧钰},
+  title      = {出版业信息化迈入快车道},
+  year       = {2001},
+  date       = {2001-12-19},
+  urldate    = {2002-04-15},
+  url        = {http://www.creader.com/news/20011219/200112190019.htm},
+  key        = {xiao1 yu4},
+}
+
+@online{oclc2000about,
+  author     = {{Online Computer Library Center, Inc}},
+  title      = {About {OCLC}: History of Cooperation},
+  urldate    = {2000-01-08},
+  url        = {http://www.oclc.org/about/cooperation.en.htm},
+}
+
+@software{scitor2000project,
+  author     = {{Scitor Corporation}},
+  title      = {Project scheduler},
+  address    = {Sunnyvale, Calif.},
+  publisher  = {Scitor Corporation},
+  year       = {1983},
+  medium     = {DK},
+}
+
+
+@ARTICLE{方军雄2007所有制,
+  AUTHOR = {方军雄},
+  DATE = {2007},
+  JOURNALTITLE = {经济研究},
+  PAGES = {82--92},
+  TITLE = {所有制, 制度环境与信贷资金配置},
+  VOLUME = {12},
+  key={fang1}
+}
+
+@ARTICLE{李晓西1994转轨过程中的结构性通货膨胀,
+  AUTHOR = {李晓西},
+  DATE = {1994},
+  JOURNALTITLE = {经济研究},
+  KEYWORDS = {李晓西1994转轨过程中的结构性通货膨胀},
+  NUMBER = {10},
+  PAGES = {28--32},
+  TITLE = {转轨过程中的结构性通货膨胀},
+  key={li1}
+}
+
+@ARTICLE{刘凤良2017,
+  AUTHOR = {刘凤良 and 章潇萌 and 于泽},
+  DATE = {2017},
+  JOURNALTITLE = {金融研究},
+  KEYWORDS = {刘凤良2017},
+  NUMBER = {02},
+  PAGES = {54--69},
+  TITLE = {高投资、结构失衡与价格指数二元分化},
+  key={liu1}
+}
+
+@ARTICLE{楼继伟2016改革,
+  AUTHOR = {楼继伟},
+  DATE = {2016},
+  JOURNALTITLE = {求是},
+  KEYWORDS = {楼继伟2016改革},
+  NUMBER = {1},
+  PAGES = {24--26},
+  TITLE = {中国经济最大潜力在于改革},
+  key={low2}
+}
+
+@ARTICLE{吕捷2015cpi,
+  AUTHOR = {吕捷 and 王高望},
+  DATE = {2015},
+  JOURNALTITLE = {经济研究},
+  KEYWORDS = {吕捷2015cpi},
+  PAGES = {011},
+  TITLE = {CPI 与 PPI “背离” 的结构性解释},
+  VOLUME = {4},
+  key={lv3}
+}
+
+@ARTICLE{罗德明2012要素市场扭曲,
+  AUTHOR = {罗德明 and 李晔 and 史晋川},
+  DATE = {2012},
+  JOURNALTITLE = {经济研究},
+  KEYWORDS = {罗德明2012要素市场扭曲},
+  NUMBER = {3},
+  PAGES = {4--14},
+  TITLE = {要素市场扭曲、资源错置与生产率},
+  key={luo2}
+}
+
+@ARTICLE{王国静2014金融冲击,
+  AUTHOR = {王国静 and 田国强},
+  DATE = {2014},
+  JOURNALTITLE = {经济研究},
+  KEYWORDS = {王国静2014金融冲击},
+  NUMBER = {3},
+  PAGES = {20--34},
+  TITLE = {金融冲击和中国经济波动},
+  VOLUME = {49},
+  key={wang2}
+}
+
+@ARTICLE{王文甫2010价格粘性,
+  AUTHOR = {王文甫},
+  DATE = {2010},
+  JOURNALTITLE = {管理世界},
+  KEYWORDS = {王文甫2010价格粘性},
+  NUMBER = {9},
+  PAGES = {11--25},
+  TITLE = {价格粘性, 流动性约束与中国财政政策的宏观效应——动态新凯恩斯主义视角},
+  key={wang2}
+}
+
+@ARTICLE{徐伟康2010对,
+  AUTHOR = {徐伟康},
+  DATE = {2010},
+  JOURNALTITLE = {经济研究},
+  KEYWORDS = {徐伟康2010对},
+  NUMBER = {5},
+  PAGES = {139--148},
+  TITLE = {对《 消费者价格指数与生产者价格指数: 谁带动谁?》 一文的质疑},
+  key={xu2}
+}
+
+@ARTICLE{杨光2010经济波动,
+  AUTHOR = {杨光 and 孙浦阳 and 龚刚},
+  DATE = {2010},
+  JOURNALTITLE = {经济研究},
+  NUMBER = {02},
+  PAGES = {47--60},
+  TITLE = {经济波动问题一},
+  VOLUME = {50},
+  key={yang2}
+}
+
+@ARTICLE{杨光2017经济波动,
+  AUTHOR = {杨光 and 孙浦阳 and 龚刚},
+  DATE = {2017},
+  JOURNALTITLE = {经济研究},
+  NUMBER = {02},
+  PAGES = {47--60},
+  TITLE = {经济波动问题三},
+  VOLUME = {50},
+  key={yang2}
+}
+
+
+@ARTICLE{杨光2015经济波动,
+  AUTHOR = {杨光 and 孙浦阳 and 龚刚},
+  DATE = {2015},
+  JOURNALTITLE = {经济研究},
+  KEYWORDS = {杨光2015经济波动},
+  NUMBER = {02},
+  PAGES = {47--60},
+  TITLE = {经济波动, 成本约束与资源配置一},
+  VOLUME = {50},
+  key={yang2}
+}
+
+@ARTICLE{杨光2015经济波动b,
+  AUTHOR = {杨光 and 孙浦阳 and 龚刚},
+  DATE = {2015},
+  JOURNALTITLE = {经济研究},
+  KEYWORDS = {杨光2015经济波动},
+  NUMBER = {02},
+  PAGES = {47--60},
+  TITLE = {经济波动, 成本约束与资源配置二},
+  VOLUME = {50},
+  key={yang2}
+}
+
+@ARTICLE{杨汝岱2015中国制造,
+  AUTHOR = {杨汝岱},
+  DATE = {2015},
+  JOURNALTITLE = {经济研究},
+  KEYWORDS = {杨汝岱2015中国制造},
+  PAGES = {61--74},
+  TITLE = {中国制造业企业全要素生产率研究},
+  VOLUME = {2},
+  key={yang2}
+}
+
+@ARTICLE{张成思2010长期均衡,
+  AUTHOR = {张成思},
+  DATE = {2010},
+  JOURNALTITLE = {经济研究},
+  KEYWORDS = {张成思2010长期均衡},
+  PAGES = {42--52},
+  TITLE = {长期均衡, 价格倒逼与货币驱动},
+  VOLUME = {6},
+  key={zhang1}
+}
+
+@ARTICLE{bernanke1989agency,
+  AUTHOR = {Bernanke, Ben and Gertler, Mark},
+  PUBLISHER = {JSTOR},
+  DATE = {1989},
+  JOURNALTITLE = {The American Economic Review},
+  volume={33},
+  number={4},
+  PAGES = {14--31},
+  TITLE = {Agency costs, net worth, and business fluctuations},
+}
+
+@ARTICLE{Carlson2000,
+  AUTHOR = {Carlson, C. D. and M. Cropper and K． Palmer},
+  DATE = {2000},
+  JOURNALTITLE = {Discussion Paper No. 98-44-REV. Resources for Future},
+  TITLE = {Sulfur Dioxide Control by Electric Utilities: What Are the Gains from
+Trade?},
+location={Washington, DC}
+}
+
+@BOOK{李四1991--,
+  AUTHOR = {李四},
+  PUBLISHER = {经济出版社},
+  DATE = {1991},
+  TITLE = {论经济},
+  key={li3}
+}
+
+@BOOK{李四1991b--,
+  AUTHOR = {李四},
+  PUBLISHER = {经济出版社},
+  DATE = {1991},
+  TITLE = {论计划与市场},
+  edition={载于王五编辑《计划与市场》论文集},
+  Pages  = {59-69},
+  key={li3}
+}
+
+@BOOK{约翰1978--,
+  AUTHOR = {约翰},
+  PUBLISHER = {译文出版社},
+  edition={中译本},
+  DATE = {1978},
+  TITLE = {论需求},
+  key={yue1}
+}
+
+@BOOK{曾约翰1978--,
+  AUTHOR = {曾约翰},
+  PUBLISHER = {经济出版社},
+  DATE = {1978},
+  TITLE = {论计划和需求},
+  key={zeng1}
+}
+
+@BOOK{John1978--,
+  AUTHOR = {John, D.},
+  PUBLISHER = {Oxfiord Press},
+  DATE = {1978},
+  TITLE = {On Demand},
+}
+
+
+@ARTICLE{lucas1987money,
+  AUTHOR = {Lucas, Robert and Stokey, Nancy},
+  PUBLISHER = {Econometric Society},
+  DATE = {1987},
+  JOURNALTITLE = {Econometrica},
+  KEYWORDS = {lucas1987money},
+  NUMBER = {3},
+  PAGES = {491--513},
+  TITLE = {Money and Interest in a Cash-in-Advance Economy},
+  VOLUME = {55},
+}
+
+@ARTICLE{quadrini2011financial,
+  AUTHOR = {Quadrini, Vincenzo},
+  DATE = {2011},
+  JOURNALTITLE = {Economic Quarterly},
+  KEYWORDS = {quadrini2011financial},
+  NUMBER = {3},
+  PAGES = {209--254},
+  TITLE = {Financial Frictions in Macroeconomic Fluctuations},
+  VOLUME = {79},
+}
+
+@ARTICLE{saiz2010geographic,
+  AUTHOR = {Saiz, Albert},
+  PUBLISHER = {JSTOR},
+  DATE = {2010},
+  JOURNALTITLE = {quarterly Journal of Economics},
+  KEYWORDS = {saiz2010geographic},
+  NUMBER = {3},
+  TITLE = {The geographic determinants of housing supply},
+  VOLUME = {125},
+}
+
+@ARTICLE{wang2006another,
+  AUTHOR = {Wang, Peng-fei and Wen, Yi},
+  PUBLISHER = {Elsevier},
+  DATE = {2006},
+  JOURNALTITLE = {Journal of Economic Dynamics and Control},
+  KEYWORDS = {wang2006another},
+  NUMBER = {12},
+  PAGES = {2533--2552},
+  TITLE = {Another look at sticky prices and output persistence},
+  VOLUME = {30},
+}
+
+@REPORT{xu2012role,
+  AUTHOR = {Xu, TengTeng},
+  INSTITUTION = {Faculty of Economics, University of Cambridge},
+  DATE = {2012},
+  KEYWORDS = {xu2012role},
+  TITLE = {The role of credit in international business cycles},
+}
+
+@ARTICLE{zhang2009china,
+  AUTHOR = {Zhang, Wen Lang},
+  PUBLISHER = {Elsevier},
+  DATE = {2009},
+  JOURNALTITLE = {Journal of Macroeconomics},
+  KEYWORDS = {zhang2009china},
+  NUMBER = {3},
+  PAGES = {473--484},
+  TITLE = {China’s monetary policy: Quantity versus price rules},
+  VOLUME = {31},
+}
+
+@Archive{中国第一历史档案馆2001--,
+  author    = {中国第一历史档案馆 and 辽宁省档案馆},
+  title     = {中国明朝档案总汇},
+  year      = {2001},
+  address   = {桂林},
+  publisher = {广西师范大学出版社},
+}
+
+@article{章太炎演说,
+ author    = {章太炎},
+  title     = {在长沙晨光学校演说},
+  date      = {1925-10},
+}
+
+@book{汤志钧长编,
+author    = {汤志钧},
+  title     = {章太炎年谱长编},
+  volume={下册},
+  date      = {1979},
+  year      = {2001},
+  address   = {北京},
+  publisher = {中华书局},
+  pages={823}
+}
+
+
+\end{filecontents}
+    \addbibresource{\jobname.bib}
+    %
+
+    \begin{document}
+\section{社会科学参考文献格式示例}
+
+\subsection*{(1)带页码和不带页码}
+
+带页码：
+1. 非连续出版物：
+（1）著作\footfullcite[第43页]{李四1991--}\footfullcite[pp.33-38]{peebles2001probability}
+（2）析出文献\footfullcite[第5页]{baishunong1998zhiwu}
+\footfullcite[p.26]{weinstein1974pathogenic}
+2. 连续出版物
+（1）期刊\footfullcite{dizhi1936dizhi}\footfullcite{aaas1883science}
+（2）期刊论文\footfullcite[第34页]{吕捷2015cpi}
+\footfullcite{李晓西1994转轨过程中的结构性通货膨胀}
+\footfullcite[p.55]{bernanke1989agency}
+（3）报纸\footfullcite{fugang2000fengsha}
+3.  未刊文献
+学位论文\footfullcite[第5页]{zhengkaiqing1987}\footfullcite[p.3]{Deverell2013-21-22a}
+会议论文\footfullcite[第5页]{hanjiren1985lun}\footfullcite[pp.21-24]{dupont1974bone}
+档案\footfullcite[第5页]{中国第一历史档案馆2001--}
+电子文献\footfullcite{xiaoyu2001chubanye}\footfullcite{oclc2000about}
+
+\newpage
+不带页码
+1. 非连续出版物：
+（1）著作\footfullcite{李四1991--}\footfullcite{peebles2001probability}
+（2）析出文献\footfullcite{baishunong1998zhiwu}
+\footfullcite{weinstein1974pathogenic}
+2. 连续出版物
+（1）期刊\footfullcite{dizhi1936dizhi}\footfullcite{aaas1883science}
+（2）期刊论文\footfullcite{吕捷2015cpi}
+\footfullcite{李晓西1994转轨过程中的结构性通货膨胀}
+\footfullcite{bernanke1989agency}
+（3）报纸\footfullcite{fugang2000fengsha}
+3.  未刊文献
+学位论文\footfullcite{zhengkaiqing1987}\footfullcite{Deverell2013-21-22a}
+会议论文\footfullcite{hanjiren1985lun}\footfullcite{dupont1974bone}
+档案\footfullcite{中国第一历史档案馆2001--}
+电子文献\footfullcite{xiaoyu2001chubanye}\footfullcite{oclc2000about}
+
+\newpage
+
+\subsection*{(2)转引与夹住}
+无法直接引用的文献，转引自他人著作时，须标明。标注顺序：责任者/原文献题名/原文献版本信息/原页码（或卷期）/转引文献责任者/转引文献题名/版本信息/页码。
+示例：章太炎：《在长沙晨光学校演说》，1925 年 10 月，转引自汤志钧：《章太炎年谱长编》下册，北京：中华书局，1979 年，第 823 页。
+
+
+方式一：\footnote{\fullinnercite{章太炎演说}，转引自\fullcite{汤志钧长编}}
+
+方式二：\footfullcite{李四1991b--}
+
+
+
+引用先秦诸子等常用经典古籍，可使用夹注，夹注应使用不同于正文的字体。
+ 示例 1：
+
+ 庄子说惠子非常博学，“惠施多方，其书五车。”\citejz{庄子天下}
+
+ 示例 2：
+
+ 天神所具有道德，也就是“保民”、“裕民”的道德；天神所具有的道德意志，代表的是人民的意志。这也就是所谓“天聪明自我民聪明，天明畏自我民明畏”\citejz{尚书皋陶谟}，“民之所 欲，天必从之”\citejz{尚书泰誓}。
+
+
+\newpage
+\subsection*{(2) 脚注中引用和同时引用多篇文献}
+
+脚注中的引用\footnote{参见\fullcite{方军雄2007所有制}}
+
+文献\footfullcite{吕捷2015cpi,方军雄2007所有制,李晓西1994转轨过程中的结构性通货膨胀}
+
+文献\footfullcite{吕捷2015cpi,方军雄2007所有制,bernanke1989agency}
+
+
+
+\newpage
+\subsection*{(3) 引用同一作者的多篇文献}
+
+文献\footfullcite{杨光2010经济波动,杨光2015经济波动,杨光2015经济波动b,杨光2017经济波动}
+
+文献\footfullcite{李四1991--,李四1991b--}
+
+\nocite{*}
+
+\newpage
+{
+%\hyphenation{Proce-edings}
+\hyphenpenalty=100 %断词阈值， 值越大越不容易出现断词
+\tolerance=5000 %丑度， 10000为最大无溢出盒子， 参考the texbook 第6章
+\hbadness=100 %如果丑度超过hbadness这一阀值， 那么就会发出警告
+    \printbibliography
+
+}
+
+    \end{document} 

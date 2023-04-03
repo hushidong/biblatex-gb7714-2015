@@ -1,0 +1,61 @@
+\documentclass{article}
+\usepackage{ctex}
+
+\begin{filecontents}[force]{\jobname.bib}
+@Book{董肇君2007--,
+  Title                    = {系统工程与运筹学},
+  Author                   = {董肇君},
+  Date                     = {2007-06},
+  Address                  = {北京},
+  Publisher                = {国防工业出版社},
+  edition  ={2},
+  pages={297-310}
+}
+
+@Book{董肇君2007en--,
+  Title                    = {Systems engineering and operations research},
+  Author                   = {Dong, Zhao Jun},
+  Date                     = {2007-06},
+  Address                  = {Beijing},
+  Publisher                = {National Defense Industry Press},
+  edition  ={2},
+  pages={297-310}
+}
+
+@Book{越民义2014en--,
+  Title                    = {Introduction to combinatorial optimization},
+  Author                   = {Yue, Yi Min and Li, Rong Yan},
+  Date                     = {2014-05},
+  Address                  = {Beijing},
+  Publisher                = {Science Press},
+  edition  ={2},
+  pages={10-25}
+}
+
+
+@Book{越民义2014--,
+  Title                    = {组合优化导论},
+  Author                   = {越民义 and 李荣珩},
+  Date                     = {2014-05},
+  Address                  = {北京},
+  Publisher                = {科学出版社},
+  edition  ={2},
+  pages={10-25}
+}
+\end{filecontents}
+
+\usepackage[style=gb7714-2015ay,gbnamefmt=familyahead]{biblatex} %,defernumbers=true
+\addbibresource{\jobname}
+
+\addEntryField{董肇君2007en--,越民义2014en--}{nameformat}{quanpin}
+
+
+\begin{document}
+
+\section{mainbody}
+text\nocite{*}
+text
+\printbibliography
+
+
+\end{document} 

@@ -11,7 +11,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2022/11/07 v1.1k}
+\def\versionofgbtstyle{2023/03/31 v1.1l}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015.bbx}[\versionofgbtstyle biblatex bibliography style]
 %\RequireBiber[3]%显式指定用biber后端，当用bibtex时会报错，但其实不会影响编译，只是采用bibtex后无法达成格式需求
@@ -1054,6 +1054,11 @@
         \step[fieldsource=address,final]
         \step[fieldset=location,origfieldval]
         }
+        \map{%eventtitle映射为booktitle
+            \pertype{inproceedings}
+            \step[fieldsource=eventtitle,final]
+            \step[fieldsource=techreport, fieldtarget=booktitle]
+        }
         \map{%处理在bib文件用mark标记文献类型标识符的情况
             \step[fieldsource=mark,final]
             \step[fieldset=usera, origfieldval]
@@ -1800,6 +1805,40 @@
       }
   }
 }
+%用于人工的为条目或条目集添加域
+\newcommand{\addEntryField}[3]{%
+    \edef\entrykeya{#1}
+    \edef\entrykeyb{#2}
+    \edef\entrykeyc{#3}
+        \DeclareStyleSourcemap{
+          \maps[datatype=bibtex]{
+            \map[foreach={#1}]{
+              \step[fieldsource=entrykey, match=\regexp{$MAPLOOP}, final]
+              \step[fieldset=\entrykeyb, fieldvalue=\entrykeyc]
+            }
+            \map{%处理在bib文件中直接给出文献的姓名格式为lowercase的情况
+                \step[fieldsource=nameformat,match=lowercase,final]
+                \step[fieldset=namefmtid,fieldvalue={1}]
+                }
+            \map{%处理在bib文件中直接给出文献的姓名格式为givenahead的情况
+                \step[fieldsource=nameformat,match=givenahead,final]
+                \step[fieldset=namefmtid,fieldvalue={2}]
+                }
+            \map{%处理在bib文件中直接给出文献的姓名格式为familyahead的情况
+                \step[fieldsource=nameformat,match=familyahead,final]
+                \step[fieldset=namefmtid,fieldvalue={3}]
+                }
+            \map{%处理在bib文件中直接给出文献的姓名格式为pinyin的情况
+                \step[fieldsource=nameformat,match=pinyin,final]
+                \step[fieldset=namefmtid,fieldvalue={4}]
+                }
+            \map{%处理在bib文件中直接给出文献的姓名格式为全拼的情况
+                \step[fieldsource=nameformat,match=quanpin,final]
+                \step[fieldset=namefmtid,fieldvalue={6}]
+                }
+          }
+       }
+    }
 
 %
 %驱动别名等价于驱动层映射
@@ -3257,6 +3296,9 @@ test{\iftoggle{iftlnine}}
 \DeclareListAlias{institution}{location}
 \DeclareListAlias{publisher}{location}
 
+%定义出版社与年份之间的标点便于后面重定义
+\newcommand{\pubdatadelim}{\setunit*{\addcomma\space}}
+
 %   新增一个样式用于输出连续出版物的地址，单位，时间，
 %   用于periodical连续出版物的出版社和地址的处理
 %
@@ -3277,7 +3319,7 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
 \iflistundef{institution}{%
 \iftoggle{ifCJKforgbt}{\printtext{\gbleftbracket\str@nopublisher\gbrightbracket}}{\printtext{\mkbibbrackets{s.n.}}}}%
 {\printlist{institution}}}%
-\setunit{\addcomma\addspace}%
+  \pubdatadelim%
   %\usebibmacro{date}%
   \printfield{year}%
   \bibrangedash%
@@ -3288,7 +3330,7 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
     {\setunit*{\addcomma\space}}
     {\setunit*{\publocpunct}}%
   \printlist{institution}%
-  \setunit*{\addcomma\space}%
+  \pubdatadelim%
   \usebibmacro{date}%
   \newunit}%
 }
@@ -3315,7 +3357,7 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
         {\iftoggle{ifCJKforgbt}{\printtext{\gbleftbracket\str@nopublisher\gbrightbracket}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}%
         {\printtext{\mkbibbrackets{s.n.}}\setunit{\adddot\addspace}\setunit*{\addcomma\addspace}}}}%
         {\printlist{publisher}}}%
-\setunit*{\addcomma\addspace}%\addcomma\addspace%
+\pubdatadelim%\addcomma\addspace%
 \usebibmacro{date}%%\newunit %去掉这个标点
 }%
 {\printlist{location}%
@@ -3323,7 +3365,7 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
     {\setunit*{\addcomma\space}}
     {\setunit*{\publocpunct}}%
   \printlist{publisher}%
-  \setunit*{\addcomma\space}%
+  \pubdatadelim%
   \usebibmacro{date}%%\newunit
   }%
 }
@@ -3339,7 +3381,7 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
     {\setunit*{\addcomma\space}}
     {\setunit*{\publocpunct}}%
   \printlist{institution}%
-  \setunit*{\addcomma\space}%
+  \pubdatadelim%
   \usebibmacro{date}%
   %\newunit
   }}
@@ -3485,7 +3527,7 @@ incollection,proceedings,inproceedings]{number}{%
 %
 \renewbibmacro*{note+pages}{%源来自standard.bbx
   %\printfield{note}%
-  \iffieldundef{pages}{}{
+  \iffieldundef{pages}{}{%
   \setunit{\bibpagespunct}%
   \printfield{pages}}%
   %\newunit
@@ -3634,9 +3676,8 @@ incollection,proceedings,inproceedings]{number}{%
        \printfield[titlecase]{title}%
        %\setunit{\subtitlepunct}%
        \ifboolexpr{test {\iffieldundef{subtitle}}}%这里增加了对子标题的判断，解决不判断多一个点的问题
-       {}{\setunit{\subtitlepunct}
+       {}{\setunit{\subtitlepunct}%
        \printfield[titlecase]{subtitle}}%
-       %}%把编组结束移到后面去
        \iftoggle{bbx:gbtype}{%
        \iffieldundef{usera}{}{%在标题后直接给出文献标识字母
         \printfield[gbtypeflag]{usera}}}{}
@@ -3697,7 +3738,6 @@ incollection,proceedings,inproceedings]{number}{%
        %\usebibmacro{date}%修改为下一句
        }%
        }%
-  %\newunit
 }
 
 %

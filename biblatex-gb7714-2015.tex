@@ -180,6 +180,7 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 \node[below of=mscbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (mxcbbx) {\tiny \textcolor{black}{gb7715-2015mx.c/bbx}};
 \node[below of=mxcbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (gbkdef) {\tiny \textcolor{black}{gb7715-2005/ay.c/bbx}};
 \node[below of=gbkdef,fill=gbgrey!20,yshift=8mm,text width=2cm] (erjcbbx) {\tiny \textcolor{black}{chinese-erj.c/bbx}};
+\node[below of=erjcbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (csscbbx) {\tiny \textcolor{black}{chinese-css.c/bbx}};
 %\node[below of=msbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (mscbx) {\tiny \textcolor{black}{gb7715-2015ms.cbx}};
 
 \draw[color=blue,semithick] (numcbbx.west) -- ($(numcbbx.west)+(-3mm,0mm)$) ;
@@ -188,9 +189,10 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 \draw[color=blue,semithick] (mxcbbx.west) -- ($(mxcbbx.west)+(-3mm,0mm)$) ;
 \draw[color=blue,semithick] (gbkdef.west) -- ($(gbkdef.west)+(-3mm,0mm)$) ;
 \draw[color=blue,semithick] (erjcbbx.west) -- ($(erjcbbx.west)+(-3mm,0mm)$) ;
+\draw[color=blue,semithick] (csscbbx.west) -- ($(csscbbx.west)+(-3mm,0mm)$) ;
 %\draw[color=blue,semithick] (mscbx.west) -- ($(mscbx.west)+(-3mm,0mm)$) ;
 
-\draw[color=blue,semithick] ($(erjcbbx.west)+(-3mm,0mm)$) -- ($(style.center)+(-12mm,-2.5mm)$) ;
+\draw[color=blue,semithick] ($(csscbbx.west)+(-3mm,0mm)$) -- ($(style.center)+(-12mm,-2.5mm)$);
 
 \node[below of=manual,fill=gbsteelblue!15,yshift=0.5cm,xshift=2mm,text width=2.8cm] (mtex) {\tiny \textcolor{black}{biblatex-gb7714-2015.tex}};
 \node[below of=mtex,fill=gbsteelblue!15,yshift=8mm,text width=2.8cm] (mpdf) {\tiny \textcolor{black}{biblatex-gb7714-2015.pdf}};
@@ -370,13 +372,21 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 
 其中，v1.0m版本增加的gb7714-2015ms样式文件，主要是为了在一个文献表中针对不同语言使用不同多种样式，比如中文文献使用GB/T 7714-2015规定的著录格式，而其它语言文献使用biblatex提供的标准样式。v1.0r版本增加了gb7714-2015mx样式，主要是为了在一个文档中针对不同参考文献分节使用不同的参考文献样式，比如某些节使用著者年份制，某些节使用顺序编码制。尽管这些方式不常用，但偶尔也有需求，所以都做了实现。
 
-另外应东升要求，v1.0r版本增加了chinese-erj样式用于生成经济研究期刊的文献。且在egthesis文件夹内，针对国内一些大学的学位论文文献要求，基于国标样式做了一些定制和测试。
+另外根据需求，v1.0r版本增加了chinese-erj样式用于生成经济研究期刊的文献，v1.1l版本增加了chinese-css样式用于生成社会科学期刊的脚注注释。且在egthesis文件夹内，针对国内一些大学的学位论文文献要求，基于国标样式做了一些定制和测试。
 
 \pdfbookmark[4]{chinese-erj}{chinese-erj}
 \begin{example}{经济研究期刊文献样式(chinese-erj)}{eg:gbchineseerj}
 \begin{texlist}
 %使用经济研究期刊文献样式
 \usepackage[backend=biber,style=chinese-erj]{biblatex}
+\end{texlist}
+\end{example}
+
+\pdfbookmark[4]{chinese-css}{chinese-css}
+\begin{example}{社会科学期刊文献样式(chinese-css)}{eg:gbchinesecss}
+\begin{texlist}
+%使用社会科学期刊文献样式
+\usepackage[backend=biber,style=chinese-css,gbfootbib=true,gbfnperpage=true]{biblatex}
 \end{texlist}
 \end{example}
 
@@ -678,13 +688,13 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{figure}
 
 
-  \pdfbookmark[4]{erjpunctcn}{erjpunctcn}
-  \item[erjpunctcn]=\textbf{true}，false. \hfill default is true
+  \pdfbookmark[4]{gbpunctcn}{gbpunctcn}
+  \item[gbpunctcn]=\textbf{true}，false. \hfill default is true
 
-  为chinese-erj样式控制文献表中的标点增加的选项。
+  为chinese-erj、chinese-css样式控制文献表中的标点增加的选项。
   \begin{itemize}
-    \item erjpunctcn=true，使用格式要求的中文标点(即全角标点)。
-    \item erjpunctcn=false，则将所有的文献中的标点改为英文标点(即半角标点)。
+    \item gbpunctcn=true，chinese-erj使用格式要求的中文标点(即全角标点)，chinese-css注释中的中文文献使用中文标点。
+    \item gbpunctcn=false，则将所有的文献中的标点改为英文标点(即半角标点)。
   \end{itemize}
 
   需要注意的是：若只想修改英文文献的全部标点为半角标点，而中文文献的标点不变，可在导言区采用如下方式修改英文文献的标点：
@@ -1005,6 +1015,26 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbfieldstd=false，即默认使用GB/T 7714-2015要求的样式。
     \item gbfieldstd=true，即还原使用标准样式的格式，比如使用引号，字体，加引导词等。当然要调整这些格式也可采用biblatex提供的更为直接的设置域格式的方式。
   \end{itemize}
+
+\end{description}
+
+
+\subsubsection{新增的重要命令}\label{sec:add:cmd}
+
+\begin{description}
+  \item[defdoublelangentry] \{entrykey1\}\{entrykey2\}
+
+  用于定义双语对照文献，将entrykey2条目和entrykey1条目关联起来，在文献表中对照输出。比如：
+  \verb|\defdoublelangentry{entrykey1}{entrykey2}|，若entrykey1条目是中文的文献，entrykey2条目是对应entrykey1条目的英文形式，那么该命令会使得在文献表中，entrykey2的英文内容紧跟在entrykey1的中文内容后对照输出。该命令也只能出现在导言区中。
+
+  \item[addEntryField] \{entrykey or entrykey comma list\}\{field\}\{fieldvalue\}
+
+  用于给指定的文献条目(集)添加域。即将field=\{fieldvalue\}这样的域信息添加到指定的entrykey条目或者entrykey comma list条目集中。比如：
+
+  \verb|\addEntryField{author2007en,author2014en}{nameformat}{quanpin}|
+
+  将会为author2007en,author2014en两个条目添加nameformat域信息。
+  该命令也只能出现在导言区中。
 
 \end{description}
 
@@ -1759,7 +1789,7 @@ biber -l zh__stroke jobname
 
 其中，排序模板优先使用persort域进行排序，接着是与文种相关的lansortorder域，接着是sortkey域(该域在biblatex中就是key域的别名)，接着是sortname等作者姓名相关的域，要让文献根据多音字习惯音进行排序，那么就在key域中设置文献作者姓名的习惯音。比如三篇文献作者分别是[李四]、[J. B. Conway]、[曾三]。在设置sorting=multipinyin, gblanorder=chineseahead, sortlocale=zh\_\_pinyin的情况下，根据上述的multipinyin排序模板，首先根据文种和作者信息将中文文献[曾三][李四]排在前面，接着是[J. B. Conway]，因为默认情况下，曾字考虑的读音是ceng2，但这不是我们希望得到的。
 
-所以需要手动将key域设置为中文的拼音，比如[李四]文献设置key=\{li3si4\}，而[曾三]文献设置key=\{zeng1san1\}，那么中文文献仍然排在前面，但根据key域的设置会将[李四]文献排列在[曾三]前面。因此手动设置作者姓名的习惯拼音后，文献排列正确，顺序为:[李四][曾三][J. B. Conway]。 需要注意的是：手动设置拼音是一个不轻松的活，所以我们可以使用自动设置拼音的工具，详见
+所以需要手动将key域设置为中文的拼音，比如[李四]文献设置key=\{li3si4\}，而[曾三]文献设置key=\{zeng1san1\}，那么中文文献仍然排在前面，但根据key域的设置会将[李四]文献排列在[曾三]前面。因此手动设置作者姓名的习惯拼音后，文献排列正确，顺序为:[李四][曾三][J. B. Conway]。 需要注意的是：若要手动设置拼音则需要对文献表中的全部中文文献设置否则利用key域排序就会失效，而这并是一个轻松的活，此时我们可以使用自动设置拼音的工具，详见
 \href{https://www.latexstudio.net/index/details/index/ids/1546}{为中文参考文献自动添加排序用的拼音信息域}，\href{https://github.com/hushidong/biblatex-map}{bibmap宏包}。
 
 
@@ -1767,6 +1797,19 @@ biber -l zh__stroke jobname
 其中，与文种相关的排序域lansortorder是由gblanorder选项设置的，当选项值为chineseahead时，语言顺序为cn;jp;kr;en;fr;ru，会将中文文献的lansortorder域设置为1，日语文献设置为2，韩语文献设置为3，英文文献设置为4，法语文献设置为5，俄语文献设置为6。排序过程中按升序排序，那么自然中文文献在前英文文献在后。若对gblanorder选择设置一个自定义的字符串如:cn;en;ru;fr;jp;kr，那么文种的排列顺序为中文、英文、俄语、法语、日语、韩语。
 
 根据上述的排序逻辑可知，要做排序的调整首先可以考虑合理地设置选项，来选择合适的排序模板、文种顺序和本地化字符排序调整方案。当不满足要求时，可以自定义排序模板，并设置sorting选项为该模板，来实现用户需要的排序方式。
+
+
+\subsubsection{姓名中的多音字排序调整}
+
+前一小节在介绍排序模板时，附带介绍了姓名多音字处理的一种方法，具体来说，就是人工或者利用bibmap工具为bib文件中的各个中文条目添加key域，用于指定中文的多音字的拼音，从而使排序时使用这个在key域指定的拼音进行排序。
+
+为避免这一添加拼音到key域的操作，这里提供另一种可能更为方便的方法。biber在做排序时实际上是利用 perl 的 Unicode::Collation::locale 模块，其中的Pinyin.pm提供了汉字的拼音顺序，对该文件做临时的修改，可以调整多音字的顺序。
+
+因为在参考文献排序中通常会使用字的姓名音，所以我们对这个文件做非正式的修改，并放到github上(\href{https://github.com/hushidong/biblatex-gb7714-2015/files/11120449/Pinyin.zip}{Pinyin.zip})，若用户需要正确的姓的多音字排序，那么只要用该文件替换biber临时工作目录中的文件即可。注意：目前该文件只修改了“曾”“沈”两个字，而“翟”“仇”等没有做修改，若用户有需求后面再增加。
+
+通常biber在第一次运行的时候，会构建一个依赖目录，这也是biber的临时工作路径，而所有的依赖文件就在其中。
+在windows下通常会在临时目录temp下构建类似\verb|par-<hex_encoded_username>/cache-|的目录(其它系统也是类似命名，可以搜索一下)，所有的依赖包括Pinyin.pm都会在其内部，找到并替换即可(Pinyin.pm文件通常在\verb|cache-<hex-code-string>\inc\lib\Unicode\Collate\CJK|下)。
+
 
 
 \subsection{多语言支持}
@@ -1970,13 +2013,49 @@ language={chinese}
 \end{texlist}
 \end{example}
 
-使用该命令后，可以引用主条目“易仕和2013--”生成双语文献。但要注意由于\verb|\DeclareStyleSourcemap|命令只能在导言区中使用，因此\verb|\defdoublelangentry|命令也只能出现在导言区中，这也是相比条目集动态方法的唯一遗憾。
+使用该命令后，可以引用主条目“易仕和2013--”生成双语文献。
+但要注意由于\verb|\DeclareStyleSourcemap|命令只能在导言区中使用，
+因此\verb|\defdoublelangentry|命令也只能出现在导言区中，这也是相比条目集动态方法的唯一遗憾。
 实现的具体细节见
 \href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}%
 {biblatex-solution-to-latex-bibliography}。
 
 双语对照文献的两种动态方法基于set和related的方法测试，参见:
 \href{run:./example/opt-eg-authoryear.tex}{opt-eg-authoryear.tex}。
+
+\paragraph{\heiti 双语文献表的格式调整}
+
+不同期刊对于双语文献表可能有不同的格式要求，主要是附加一些信息，修改一些标点，或者调换中英文的顺序等。例\ref{eg:refdblan:fmt}给出的一个简单的修改示例。
+
+\begin{example}{双语文献表的格式调整示例}{eg:refdblan:fmt}
+\begin{texlist}
+%%%%%%%%%%%%%%%%%
+%define double lang entry here
+%%%%%%%%%%%%%%%%%
+\defbibentryset{张敏莉2007dblan}{Zhang2007-500-503,张敏莉2007-500-503}
+\defdoublelangentry{Yi2013--}{易仕和2013--}
+
+%%%%%%%%%%%%%%%%%
+%modify delim here
+%%%%%%%%%%%%%%%%%
+%for defbibentryset
+\renewcommand{\entrysetpunct}{(in chinese)\newline\nobreak(}
+%for defdoublelangentry (biblatex <2.11)
+\renewcommand{\relateddelim}{(in chinese)\newline\nobreak(}
+%for defdoublelangentry (biblatex >=2.11)
+\renewcommand{\begrelateddelim}{(in chinese)\newline\nobreak(}
+
+%note the difference between defbibentryset and defdoublelangentry
+\DeclareBibliographyCategory{Endpuncparen}
+\addtocategory{Endpuncparen}{张敏莉2007-500-503,Yi2013--}
+\renewcommand{\finentrypunct}{\ifentrycategory{\thefield{keywords}}{Endpuncparen}{)}{\addperiod}}
+
+\apptocmd{\gbquanpinlocalset}{\renewrobustcmd*{\bibnamedelima}{\mbox{-}}}{}{}
+\end{texlist}
+\end{example}
+
+更多的示例可以参考：\href{https://github.com/hushidong/biblatex-gb7714-2015/issues/154}
+{双语参考文献中note注释}。
 
 \subsection{多样式支持}
 
@@ -2022,6 +2101,93 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{figure}
 
 测试见文档\href{run:egfigure/egmsindfrefsec.tex}{egmsindfrefsec.tex}。
+
+\subsubsection{局部定义的不同文献表的样式}
+
+在一些学位论文中，除了正文后面的全局文献表外，有时需要给出攻读学位期间的学术成果，这部分内容可以直接按正文的方式写，有时也可以利用文献表的方式写，即将学术成果内容写成bibtex格式，然后利用类似生成参考文献的方式输出。
+
+该文献表可以利用不同的形式来得到，比如使用refsection分节，或者使用category/type等筛选输出指定的文献。若该文献表的格式不同于正文的文献表，那么就需要做局部调整，此时利用一些能够局部调整的选项来实现会比较方便，如果需要的话也可以引入一些其它设置来实现特殊的格式，比如论文作者加粗等。例\ref{eg:resume:localset}给出了一个简单示例，其中故意做了一些局部设置，使用时需注意局部选项设置和数据注解与bib文件内容的配合。
+
+\begin{example}{为研究成果表局部设置格式}{eg:resume:localset}
+\begin{texlist}
+    \begin{filecontents}{resume.bib}
+    @article{ref-1-1-Yang,
+    author    = {Yang, Y and Ren, T L and Zhang, L T and others},
+    title     = {Miniature microphone with silicon-based ferroelectric thin films},
+    journal   = {Integrated Ferroelectrics},
+    date      = {2003},
+    pages      = {229-235},
+    volume      = {52},
+    annotation      = {SCI 收录, 检索号:758FZ},
+    AUTHOR+an={1=thesisauthor},
+    OPTIONS = {maxbibnames=1,minbibnames=1}
+    }
+
+    @article{ref-2-1-杨轶,
+    author    = {杨轶 and 张宁欣 and 任天令 and others},
+    title     = {硅基铁电微声学器件中薄膜残余应力的研究},
+    journal   = {中国机械工程},
+    pages= {1289-1291},
+    date      = {2005},
+    volume      = {16},
+    number ={14},
+    annotation ={EI 收录, 检索号:0534931 2907},
+    AUTHOR+an={1=thesisauthor}
+    }
+
+    @patent{ref-8-1-任天令,
+    author    = {任天令 and 杨轶 and 朱一平 and others},
+    title     = {硅基铁电微声学传感器畴极化区域控制和电极连接的方法},
+    number ={中国, CN1602118A},
+    annotation      = {中国专利公开号.},
+    }
+
+    @patent{ref-9-1-Ren,
+    author    = {Ren, T L and Yang, Y and Zhu, Y P and others},
+    title     = {Piezoelectric micro acoustic sensor based on ferroelectric materials},
+    number ={USA, No.11/215, 102},
+    annotation      = {美国发明专利申请号.},
+    }
+    \end{filecontents}
+
+	\begin{refsection}[resume.bib]
+	\nocite{ref-8-1-任天令,ref-9-1-Ren}%
+	\printbibliography[heading=subbibliography,title={研究成果}]
+    \end{refsection}
+
+
+	\begin{refsection}[ref/resume.bib]
+	\settoggle{bbx:gbtype}{false}%局部设置不输出文献类型和载体标识符
+	\settoggle{bbx:gbannote}{true}%局部设置输出注释信息
+	\setcounter{gbnamefmtcase}{1}%局部设置作者的格式为familyahead格式
+    \makeatletter
+    \renewcommand*{\mkbibnamegiven}[1]{%通过作者注释局部调整作者的格式需与bib配合
+    \ifitemannotation{thesisauthor}
+    {\ifbibliography{\textcolor{blue}{\textbf{#1}}}{#1}}%
+    {#1}\ifbibliography{\ifitemannotation{corresponding}{\textsuperscript{*}}{}}{}%
+    }
+    \renewcommand*{\mkbibnamefamily}[1]{%
+    \ifitemannotation{thesisauthor}
+    {\ifbibliography{\textcolor{blue}{\textbf{#1}}}{#1}}
+    {#1}}
+    \def\blx@maxbibnames{2} %局部调整作者数量，bib文件中加入选项也可以调整
+    \def\blx@minbibnames{2}
+    %\defcounter{gbbiblocalcase}{1} %局部强迫中文本地化字符串
+    %\defcounter{gbbiblocalcase}{2} %局部强迫英文本地化字符串
+    \setlocalbibstring{andotherscn}{et al.} %另一种调整方式
+    \setlocalbibstring{andothers}{等}
+    \makeatother
+
+	\nocite{ref-1-1-Yang,ref-2-1-杨轶}
+	
+	\setlength{\biblabelsep}{12pt}
+	\printbibliography[heading=subbibliography,title={发表的学术论文}] % 发表的和录用的合在一起
+	\end{refsection}
+\end{texlist}
+\end{example}
+
+其它示例可以参考：\href{https://blog.csdn.net/xenonhu/article/details/120853247}{修改指定作者的格式来突出显示}，nudtpaper，BIThesis等。
+测试文档见\href{run:example/test-resume.tex}{test-resume.tex}。
 
 
 \subsubsection{完全自定义的条目内容样式}
@@ -2868,7 +3034,7 @@ gb7714-2015实现了GB/T 7714-2015第8.8节要求的析出文献相关格式。
 %读者若查看样式文件内容可以看到作者对各目标要求所做的修改及，读者也可以根据自己的需求进行修改，作者设计样式文件的思路以及在设计过程中用到的一些biblatex宏包功能说明，详见第\ref{sec:biblatex:mech}节和LaTeX文档中文参考文献的biblatex解决方案的第2.7节。
 
 最后要感谢如下各位师长和朋友，正是在各位的帮助建议下，本样式不断升级逐渐完善。包括: moewew (biblatex 现在的维护者之一，给予不少有益的建议和指导)、 李志奇(基于biblatex的符合GBT7714-2005的中文文献生成工具的作者，工具中的一些设计如usera域的使用/卷期范围解析等带来很多启发，本人之前一直使用该工具，之所以开发biblatex-gb7714-2015其实主要是因为该工具因biblatex升级而无法使用)、caspervector(虽然未曾真正交流，但从biblatex-caspervector样式包中学到很多，包括排序/GBK编码等问题的解决思路)、LeoLiu(刘海洋，给出的CJK字符判断函数
-\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152663&extra=page\%3D3}} 对本宏包非常有帮助)、chinatex(china tex版主，给了很多建议和帮助，并且一起合作)、Sheng wenbo(biblatex用户手册合作译者，LaTeX2e 插图指南第三版译者，我们一起翻译的过程相互激励相互促进)、zepinglee(gbt7714-2015 bst样式作者，给了很多建议和讨论)、Harry Chen(ctex套件维护者之一，给了不少好的建议)、liubenyuan(关于项目组织给出了很好的建议)、刘小涛（讨论了关于zotero的使用并提出了建议）、ghiclgi(讨论了GB中著者-出版年制标注标签的一些问题)、秀文工作组、leipility、qingkuan、湘厦人、秋平、任蒲军、fredericky123、qiuzhu、chaoxiaosu、Old Jack、Wu Nailong、Yibai Zhang、wayne508、 钟乙源、Xiaodong Yao、dsycircle、rpjshu、zjsdut、谢澜涛、Zutian Luo、海阔天空、zzqzyx、程晨、xmtangjun、蔡伟 等等。当然还有更多朋友提供了bug报告，提出了issue，提供了热心帮助，限于篇幅这里不再一一列举，在此一并表示感谢!
+\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152663&extra=page\%3D3}} 对本宏包非常有帮助)、chinatex(china tex版主，给了很多建议和帮助，并且一起合作)、Sheng wenbo(biblatex用户手册合作译者，LaTeX2e 插图指南第三版译者，我们一起翻译的过程相互激励相互促进)、zepinglee(gbt7714-2015 bst样式作者，给了很多建议和讨论)、Harry Chen(ctex套件维护者之一，给了不少好的建议)、liubenyuan(关于项目组织给出了很好的建议)、刘小涛（讨论了关于zotero的使用并提出了建议）、ghiclgi(讨论了GB中著者-出版年制标注标签的一些问题)、邓东升(很很多建议和讨论)、秀文工作组、leipility、qingkuan、湘厦人、秋平、任蒲军、fredericky123、qiuzhu、chaoxiaosu、Old Jack、Wu Nailong、Yibai Zhang、wayne508、 钟乙源、Xiaodong Yao、dsycircle、rpjshu、zjsdut、谢澜涛、Zutian Luo、海阔天空、zzqzyx、程晨、xmtangjun、蔡伟 等等。当然还有更多朋友提供了bug报告，提出了issue，提供了热心帮助，限于篇幅这里不再一一列举，在此一并表示感谢!
 
 
 \section{存在的问题和下一步工作}
