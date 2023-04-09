@@ -2526,7 +2526,8 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
       {\namepartgiven}
       {\namepartprefix}
       {\namepartsuffix}}%
-\or
+\or%
+\renewrobustcmd*{\bibinithyphendelim}{.\mbox{-}}%
   \ifgiveninits
     {\usebibmacro{name:given-family}
       {\namepartfamily}
@@ -2538,7 +2539,8 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
       {\namepartgiven}
       {\namepartprefix}
       {\namepartsuffix}}%
-\or
+\or%
+\renewrobustcmd*{\bibinithyphendelim}{.\mbox{-}}%
     \ifgiveninits
        {\usebibmacro{name:family-given}
          {\namepartfamily}
@@ -2556,7 +2558,8 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
       {\namepartgiven}
       {\namepartprefix}
       {\namepartsuffix}%
-\or
+\or%
+\renewrobustcmd*{\bibinithyphendelim}{.\mbox{-}}%
   \ifnumequal{\value{listcount}}{1}
     {\ifgiveninits
        {\usebibmacro{name:family-given}

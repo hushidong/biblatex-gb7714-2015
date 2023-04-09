@@ -6,6 +6,9 @@
 \documentclass[11pt]{article} %用draft选项找到badbox的位置 twoside,
 \input{biblatex-gb7714-2015-preamble} %宏包和一些格式设置
 \usepackage{microtype}
+\usepackage{datetime}
+\renewcommand{\dateseparator}{-}
+\yyyymmdddate
 %\usepackage[russian,french,english]{babel}
 %\DefineHyphenationExceptions{english}{conf-erence}
 \begin{document}
@@ -22,13 +25,13 @@
 \pagenumbering{Roman}
 
 \titleformanual{符合GB/T 7714-2015标准的biblatex参考文献样式
-\footnote{This Manual was created with biblatex v\versionofbiblatex, last revised at \today;\\%
+\footnote{This Manual was first created at 2016-07-01 and revised at \today ~with biblatex v\versionofbiblatex;\\%
 Style Files (gb7714-2015*.*) have version number: \versionofgbtstyle.}
 \footnote{repository address: \url{https://github.com/hushidong/biblatex-gb7714-2015}}}
 
 \authorformanual{胡振震\setcounter{footnote}{0}\footnote{Email: hzzmail@163.com}}
 
-\dateformanual{2016-07-01}
+\dateformanual{\today}
 
 \titleandauthor
 
