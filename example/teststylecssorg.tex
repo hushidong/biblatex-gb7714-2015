@@ -1,0 +1,958 @@
+\documentclass{article}
+    \usepackage{ctex}
+    \usepackage{xcolor}
+    \usepackage{toolbox}
+    \usepackage[colorlinks]{hyperref}
+    \usepackage{lipsum}
+    \usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
+
+\usepackage[backend=biber,style=chinese-css,gbfootbib=true,gbfnperpage=true,url=false]{biblatex} %gbfootbibfmt
+
+
+\begin{filecontents}[force]{\jobname.bib}
+
+@book{庄子天下,
+title={庄子·天下},
+}
+
+@book{尚书泰誓,
+title={尚书·泰誓},
+}
+
+@book{尚书皋陶谟,
+title={尚书·皋陶谟},
+}
+
+
+@article{Chamberlain1993,
+	title = {On the search for civil society in {China}},
+	volume = {19},
+	doi = {10/d5gx4j},
+	number = {2},
+	journal = {Modern China},
+	author = {{Heath B. Chamberlain}},
+	date = {1993-04},
+	pages = {199--215},
+}
+
+@online{扬之水2007,
+	title = {两宋茶诗与茶事},
+	url = {http://www.literature.org.cn/Article.asp?ID=199},
+	urldate = {2007-09-13},
+	version = {《文学遗产通讯》（网络版试刊）2006年第1期},
+	author = {扬之水},
+}
+
+@book{杨钟羲1991,
+	address = {沈阳},
+	edition = {影印本},
+	title = {雪桥诗话续集},
+	volume = {5},
+	publisher = {辽沈书社},
+	author = {杨钟羲},
+	year = {1991},
+    entrysubtype={classic},
+	note = {Type: classic},
+}
+
+@book{姚际恒,
+	edition = {光绪三年苏州文学山房活字本},
+	title = {古今伪书考},
+	volume = {3},
+	author = {姚际恒},
+    entrysubtype={classic},
+	note = {Type: classic},
+}
+
+@book{晚清洋务1998,
+	address = {北京},
+	title = {晚清洋务运动事类汇钞五十七种},
+	volume = {上册},
+	publisher = {全国图书馆文献缩微复制中心},
+	author = {佚名},
+	year = {1998},
+}
+
+@book{赵景深1948,
+	address = {上海},
+	title = {文坛忆旧},
+	publisher = {北新书局},
+	author = {赵景深},
+	year = {1948}
+}
+
+@book{邱陵1984,
+	title = {书籍装帧艺术简史},
+    address = {哈尔滨},
+	publisher = {黑龙江人民出版社},
+	editor = {邱陵},
+    editortype={founder},
+	year = {1984},
+    pages={28-29}
+}
+
+
+@book{张树年1991,
+	title = {张元济年谱},
+    address = {北京},
+	publisher = {商务印书馆},
+	editor = {张树年},
+    editortype={editor},
+	year = {1991}
+}
+
+
+@newspaper{上海各路,
+	address = {上海},
+	title = {上海各路商界总联合会致外交部电},
+	journal = {民国日报},
+	date = {1925-08-14},
+	number = {4},
+}
+
+@newspaper{四川会议厅暂行章程,
+	chapter = {新章},
+	title = {四川会议厅暂行章程},
+	journal = {广益丛报},
+    volume={第8卷第19期},
+	date = {1910-09-03},
+	note = {Issue: 第8卷第19期},
+	pages = {1--2},
+}
+
+@archive{傅良佐致国务院电,
+	title = {傅良佐致国务院电},
+	date = {1917-09-15},
+    number={北洋档案1011—5961，中国第二历史档案馆藏}
+}
+
+@book{谢兴尧1986,
+	address = {西安},
+	title = {荣庆日记},
+	language = {zh},
+	publisher = {西北大学出版社},
+	year = {1986},
+	editor= {谢兴尧},
+    editortype={compiler}
+}
+
+@book{马克思恩格斯全集,
+	address = {北京},
+	title = {马克思恩格斯全集},
+	volume = {31},
+	publisher = {人民出版社},
+	year = {1998},
+}
+
+@incollection{管志道1997,
+	address = {济南},
+	edition = {影印本},
+	series = {四库全书存目丛书},
+	title = {答屠仪部赤水丈书},
+	volume = {2},
+	booktitle = {续问辨牍},
+	publisher = {齐鲁书社},
+	author = {管志道},
+	year = {1997},
+    entrysubtype={classic},
+	note = {Type: classic},
+}
+
+@article{何龄修1998,
+	title = {读顾诚〈南明史〉},
+	number = {3},
+	journal = {中国史研究},
+	author = {何龄修},
+	year = {1998},
+}
+
+@incollection{黄仁宇1997,
+	address = {北京},
+	title = {为什么称为“中国大历史”？——中文版自序},
+	booktitle = {中国大历史},
+	publisher = {三联书店},
+	author = {黄仁宇},
+	year = {1997},
+	pages = {2},
+}
+
+@book{蒋大兴2001,
+	address = {北京},
+	title = {公司法的展开与评判——方法·判例·制度},
+	publisher = {法律出版社},
+	author = {蒋大兴},
+	year = {2001},
+}
+
+@book{金冲及1989,
+	address = {北京},
+	title = {周恩来传},
+	publisher = {人民出版社、中央文献出版社},
+	editor = {金冲及},
+	year = {1989},
+}
+
+@newspaper{李眉1986,
+	title = {李劼人轶事},
+	journal = {四川工人日报},
+	author = {李眉},
+	date = {1986-08-22},
+	number = {2},
+}
+
+@book{李鹏程1994,
+	address = {北京},
+	title = {当代文化哲学沉思},
+	publisher = {人民出版社},
+	author = {李鹏程},
+	year = {1994},
+    note={序言}
+}
+
+@incollection{唐振常1997,
+	address = {上海},
+	title = {师承与变法},
+	booktitle = {识史集},
+	publisher = {上海古籍出版社},
+	author = {唐振常},
+	year = {1997},
+	pages = {65},
+}
+
+@online{王明亮1998,
+	title = {关于中国学术期刊标准化数据库系统工程的进展},
+	url = {http://www.cajcd.cn/pub/wml.txt/980810-2.html},
+	urldate = {1998-10-04},
+	author = {王明亮},
+    date = {1998-08-16},
+}
+
+@article{魏丽英1990,
+	title = {论近代西北人口波动的主要原因},
+	number = {6},
+	journal = {社会科学},
+    address={兰州},
+	author = {魏丽英},
+	year = {1990},
+	note = {Place: 兰州},
+}
+
+
+@article{费成康1999,
+	title = {葡萄牙人如何进入澳门问题辨证},
+	number = {9},
+	journal = {社会科学},
+    address={上海},
+	author = {费成康},
+	year = {1999},
+	note = {Place: 上海},
+}
+
+@BOOK{李四1991b--,
+  AUTHOR = {李四},
+  PUBLISHER = {经济出版社},
+  DATE = {1991},
+  TITLE = {论计划与市场},
+  edition={载于王五编辑《计划与市场》论文集},
+  Pages  = {59-69},
+  key={li3}
+}
+
+
+@book{Polo1997,
+	address = {Hertfordshire},
+	title = {The travels of {Marco} {Polo}},
+	language = {en},
+	publisher = {Cumberland House},
+	author = {Polo, Marco},
+	translator = {{William Marsden}},
+	year = {1997},
+    pages={58,88}
+}
+
+
+
+@incollection{楼适夷1988,
+	address = {北京},
+	edition = {增补本},
+	title = {读家书，想傅雷（代序）},
+	booktitle = {傅雷家书},
+	publisher = {三联书店},
+	author = {楼适夷},
+	editor = {傅敏},
+    editortype={reviser},
+	year = {1988},
+	pages = {2},
+}
+
+@incollection{鲁迅1981,
+	address = {北京},
+	title = {中国小说的历史的变迁},
+	volume = {第9册},
+	booktitle = {鲁迅全集},
+	publisher = {人民文学出版社},
+	author = {鲁迅},
+	year = {1981},
+	pages = {325},
+}
+
+@article{倪素香2002,
+	title = {德育学科的比较研究与理论探索},
+	number = {4},
+	journal = {武汉大学学报},
+    series={社会科学版},
+	author = {倪素香},
+	year = {2002},
+	note = {Section: 社会科学版},
+}
+
+@article{麦孟华,
+	title = {说奴隶},
+	journal = {清议报},
+	author = {伤心人（麦孟华）},
+    volume={第69册，光绪二十六年十一月二十一日},
+	note = {Volume: 第69册
+Original Date: 光绪二十六年十一月二十一日},
+	pages = {1},
+}
+
+@book{实藤惠秀1982,
+	address = {香港},
+	title = {中国人留学日本史},
+	publisher = {香港中文大学出版社},
+	author = {实藤惠秀},
+	translator = {谭汝谦 and 林启彦},
+	year = {1982},
+}
+
+@book{任继愈1983,
+	address = {北京},
+	title = {中国哲学发展史（先秦卷）},
+	publisher = {人民出版社},
+	editor = {任继愈},
+    editortype={editor},
+	year = {1983},
+}
+
+@book{狄葆贤,
+	address = {上海},
+	title = {平等阁笔记},
+	publisher = {有正书局},
+	author = {狄葆贤},
+}
+
+@phdthesis{方明东2000,
+	address = {北京},
+	type = {博士学位论文},
+	title = {罗隆基政治思想研究（1913—1949）},
+	school = {北京师范大学历史系},
+	author = {方明东},
+	year = {2000},
+}
+
+@incollection{佛克马1999,
+	address = {北京},
+	title = {走向新世界主义},
+	booktitle = {全球化与后殖民批评},
+	publisher = {中央编译出版社},
+	author = {杜威·佛克马},
+	editor = {王宁 and 薛晓源},
+	year = {1999},
+	pages = {247--266},
+}
+
+@book{Brooks2000,
+	address = {Chicago},
+	title = {Troubling confessions: {Speaking} guilt in law and literature},
+	publisher = {University of Chicago Press},
+	author = {Brooks, Peter},
+	year = {2000},
+}
+
+@book{Starn1992,
+	author = {Randolph Starn and Loren Partridge},
+	title = {The Arts of Power: Three Halls of State in Italy, 1300-1600},
+    address = {Berkeley},
+	publisher = {California University Press},
+	year = {1992},
+    pages={19-28}
+}
+
+
+@archive{NixontoKissinger,
+	title = {Nixon to {Kissinger}},
+	date = {1969-02-01},
+	number = {Box 1032, NSC Files, Nixon Presidential Material Project (NPMP), National Archives II, College Park, MD}
+}
+
+
+@incollection{Schfield1983,
+	address = {Cambridge, Mass.},
+	title = {The impact of scarcity and plenty on population change in {England}},
+	booktitle = {Hunger and history: {The} impact of changing food production and consumption pattern on society},
+	publisher = {Cambridge University Press},
+	author = {Schfield, R. S.},
+	editor = {Rotberg, R. I. and Rabb, T. K.},
+    editortype={editor},
+	year = {1983},
+	pages = {55--88},
+}
+
+@book{清德宗实录,
+    entrysubtype={classic},
+	address = {北京},
+	edition = {影印本},
+	title = {清德宗实录},
+	volume = {卷435，光绪二十四年十二月上},
+	publisher = {中华书局},
+	year = {1987},
+	note = {Type: classic
+Original Date: 光绪二十四年十二月上},
+}
+
+@book{广东通志,
+    entrysubtype={classic},
+    origyear={万历},
+	address = {北京},
+	edition = {影印本},
+	title = {广东通志},
+	volume = {卷15《郡县志二·广州府·城池》，《稀见中国地方志汇刊》},
+	publisher = {中国书店},
+	year = {1992},
+}
+
+@book{太平御览,
+	address = {北京},
+	edition = {影印本},
+	title = {太平御览},
+	volume = {卷690《服章部七》引《魏台访议》},
+	publisher = {中华书局},
+	year = {1985},
+    entrysubtype={classic},
+	note = {Type: classic
+volume-title: 服章部七},
+}
+
+@book{旧唐书,
+    entrysubtype={classic},
+	address = {北京},
+	edition = {标点本},
+	title = {旧唐书},
+	volume = {卷9《玄宗纪下》},
+	publisher = {中华书局},
+	year = {1975},
+	note = {Type: classic
+volume-title: 玄宗纪下},
+}
+
+@book{方苞集,
+    entrysubtype={classic},
+	address = {上海},
+	edition = {标点本},
+	title = {方苞集},
+	volume = {卷6《答程夔州书》},
+	publisher = {上海古籍出版社},
+	year = {1983},
+	note = {Type: classic
+volume-title: 答程夔州书},
+}
+
+@archive{党外人士座谈会记录,
+	title = {党外人士座谈会记录},
+	date = {1950-07},
+    number={李劼人档案，中共四川省委统战部档案室藏}
+}
+
+
+@newspaper{西南中委,
+	address = {上海},
+	title = {西南中委反对在宁召开五全会},
+	journal = {民国日报},
+	date = {1933-08-11},
+	number = {第1张第4版},
+}
+
+@book{上海县续志,
+    entrysubtype={classic},
+    origyear={民国},
+	title = {上海县续志},
+	volume = {卷1《疆域》},
+	note = {Type: classic
+Original Date: 民国
+volume-title: 疆域},
+}
+
+@book{嘉定县志,
+    entrysubtype={classic},
+    origyear={乾隆},
+	title = {嘉定县志},
+	volume = {卷12《风俗》},
+	note = {Type: classic
+Original Date: 乾隆
+volume-title: 风俗},
+}
+
+@article{汪疑今1936,
+	title = {江苏的小农及其副业},
+	volume = {4},
+	number = {6},
+	journal = {中国经济},
+	author = {汪疑今},
+	date = {1936-06-15},
+}
+
+@inproceedings{任东来2000,
+	address = {天津},
+	title = {对国际体制和国际制度的理解和翻译},
+	booktitle = {全球化与亚太区域化国际研讨会论文集},
+	author = {任东来},
+	date = {2000-06},
+	pages = {9},
+}
+
+@book{毛祥麟1985,
+	address = {上海},
+	title = {墨余录},
+	publisher = {上海古籍出版社},
+	author = {毛祥麟},
+	year = {1985},
+    entrysubtype={classic},
+	note = {Type: classic},
+}
+
+@article{黄义豪1997,
+	title = {评黄龟年四劾秦桧},
+	number = {3},
+	journal = {福建论坛},
+    series={文史哲版},
+	author = {黄义豪},
+	year = {1997},
+	note = {Section: 文史哲版},
+}
+
+
+@article{章太炎演说,
+ author    = {章太炎},
+  title     = {在长沙晨光学校演说},
+  date      = {1925-10},
+}
+
+@book{汤志钧长编,
+author    = {汤志钧},
+  title     = {章太炎年谱长编},
+  volume={下册},
+  date      = {1979},
+  address   = {北京},
+  publisher = {中华书局},
+  pages={823}
+}
+
+@book{北京安徽会馆,
+  title     = {北京安徽会馆志稿},
+  date      = {2001},
+  address   = {北京},
+  publisher = {北京燕山出版社}
+}
+
+
+
+\end{filecontents}
+    \addbibresource{\jobname.bib}
+    %
+
+\title{关于引文注释的规定}
+
+%注意编者的类型：
+%editor：主编
+%compiler：整理
+%redactor：校订
+%reviser：修订
+%founder：创建
+%continuator：继承者
+%collaborator：合作者
+
+    \begin{document}
+
+\maketitle
+
+为便于学术交流和推进本社期刊编辑工作的规范化，在研究和 借鉴其他人文社会科学学术期刊注释规定的基础上，我们对原有引文注释规范进行了补充和完善，特制定新的规定。本规定适用于《中国社会科学》和《中国社会科学内部文稿》。
+
+\section*{（一）注释体例及标注位置}
+
+文献引证方式采用注释体例。
+注释放置于当页下（脚注）。注释序号用①，②……标识，每页单独排序。正文中的注释序号统一置于包含引文的句子（有时候 也可能是词或词组）或段落标点符号之后。
+
+\section*{（二）注释的标注格式}
+
+\subsection*{1. 非连续出版物}
+
+\subsubsection*{（1）著作}
+标注顺序：责任者与责任方式/ 文献题名/ 出版地点/ 出版者/ 出版时间/ 页码。
+责任方式为著时，“著”可省略，其他责任方式不可省略。
+引用翻译著作时，将译者作为第二责任者置于文献题名之后。引用《马克思恩格斯全集》、《列宁全集》等经典著作应使用最新版本。
+    
+示例：
+        
+赵景深：《文坛忆旧》，上海：北新书局，1948 年，第 43 页。
+\footfullcite[第 43 页]{赵景深1948}
+
+谢兴尧整理：《荣庆日记》，西安：西北大学出版社，1986年，第 175 页。
+\footfullcite[第 175 页]{谢兴尧1986}
+
+蒋大兴：《公司法的展开与评判——方法·判例·制度》，北京：法律出版社，2001 年，第 3 页。
+\footfullcite[第 3 页]{蒋大兴2001}
+
+任继愈主编：《中国哲学发展史（先秦卷）》，北京：人民出版社，1983 年，第 25 页。
+\footfullcite[第 25 页]{任继愈1983}
+
+实藤惠秀：《中国人留学日本史》，谭汝谦、林启彦译，香港：中文大学出版社，1982年，第11—12页。
+\footfullcite[第11—12页]{实藤惠秀1982}
+
+金冲及主编：《周恩来传》，北京：人民出版社、中央文献出版社，1989年，第9页。
+\footfullcite[第9页]{金冲及1989}
+
+佚名：《晚清洋务运动事类汇钞五十七种》上册，北京：全国图书馆文献缩微复制中心，1998 年，第56页。
+\footfullcite[第56页]{晚清洋务1998}
+
+狄葆贤：《平等阁笔记》，上海：有正书局，出版时间不详，第 8 页。
+\footfullcite[第 8 页]{狄葆贤}
+
+《马克思恩格斯全集》第31卷，北京：人民出版社，1998年，第 46 页。
+\footfullcite[第 46 页]{马克思恩格斯全集}
+
+
+\subsubsection*{（2）析出文献}
+标注顺序：责任者/ 析出文献题名/ 文集责任者与责任方式/ 文集题名/ 出版地点/ 出版者/ 出版时间/ 页码。
+文集责任者与析出文献责任者相同时，可省去文集责任者。
+
+示例：
+杜威·佛克马：《走向新世界主义》，王宁、薛晓源编：《全球化与后殖民批评》，北京：中央编译出版社，1999年，第 247—266 页。
+\footfullcite[第 247—266 页]{佛克马1999}
+
+鲁迅：《中国小说的历史的变迁》，《鲁迅全集》第9册，北 京：人民文学出版社，1981 年，第325页。
+\footfullcite[第325页]{鲁迅1981}
+
+唐振常：《师承与变法》，《识史集》，上海：上海古籍出版社，1997年，第65页。
+\footfullcite[第65页]{唐振常1997}
+
+\subsubsection*{（3）著作、文集的序言、引论、前言、后记}
+
+1）序言、前言作者与著作、文集责任者相同。
+
+示例：
+
+李鹏程：《当代文化哲学沉思》，北京：人民出版社，1994年，“序言”，第1页。
+\footfullcite[“序言”，第1页]{李鹏程1994}
+
+2）序言有单独的标题，可作为析出文献来标注。
+
+示例：
+
+楼适夷：《读家书，想傅雷（代序）》，傅敏编：《傅雷家书》（增补本），北京：三联书店，1988 年，第2页。
+\footfullcite{楼适夷1988}
+
+黄仁宇：《为什么称为“中国大历史”？——中文版自序》，《中国大历史》，北京：三联书店，1997年，第2页。
+\footfullcite{黄仁宇1997}
+
+3）责任者层次关系复杂时，可以通过叙述表明对序言的引证。为了表述紧凑和语气连贯，责任者与文献题名之间的冒号可省去，出版信息可括注起来。
+
+示例：
+
+见戴逸为北京市宣武区档案馆编、王灿炽纂《北京安徽会馆志稿》（北京：北京燕山出版社，2001年）所作的序，第2页。
+\footnote{见戴逸为北京市宣武区档案馆编、王灿炽纂\citetitle{北京安徽会馆}（\citepub{北京安徽会馆}）所作的序，第2页。}
+
+
+\subsubsection*{（4）古籍}
+
+1）刻本
+
+标注顺序：责任者与责任方式/文献题名/卷次、篇名、部类（选项）/版本、页码。 部类名及篇名用书名号表示，其中不同层次可用中圆点隔开，原序号仍用汉字数字，下同。页码应注明 a、b 面。
+
+示例：
+
+姚际恒：《古今伪书考》卷3，光绪三年苏州文学山房活字本，第9页 a。
+\footfullcite[第9页 a]{姚际恒}
+
+2）点校本、整理本 标注顺序：
+
+责任者与责任方式/文献题名/卷次、篇名、部类（选项）/出版地点/出版者/出版时间/页码。可在出版时间后 注明“标点本”、“整理本”等。
+
+示例：
+
+毛祥麟：《墨余录》，上海：上海古籍出版社，1985年，第35页。
+\footfullcite[第35页]{毛祥麟1985}
+
+3）影印本 标注顺序：
+
+责任者与责任方式/文献题名/卷次、篇名、部类（选项）/出版地点/出版者/出版时间/（影印）页码。可在出版时间后注明“影印本”。为便于读者查找，缩印的古籍，引用页 码还可标明上、中、下栏（选项）。
+
+示例：
+
+杨钟羲：《雪桥诗话续集》卷5，沈阳：辽沈书社，1991年影印本，上册，第461 页下栏。
+\footfullcite[上册，第461 页下栏]{杨钟羲1991}
+
+《太平御览》卷690《服章部七》引《魏台访议》，北京：中华书局，1985年影印本，第3册，第3080页下栏。
+\footfullcite[第3册，第3080页下栏]{太平御览}
+
+4）析出文献
+
+标注顺序：责任者/析出文献题名/文集责任者与责任方式/文集题名/卷次/丛书项（选项，丛书名用书名号）/版本或出版 信息/页码。
+
+示例：
+
+管志道：《答屠仪部赤水丈书》，《续问辨牍》卷2，《四库全书存目丛书》，济南：齐鲁书社，1997年影印本，子部，第88册，第73页。
+\footfullcite[子部，第88册，第73页]{管志道1997}
+
+5）地方志
+
+唐宋时期的地方志多系私人著作，可标注作者；明清以后的地方志一般不标注作者，书名前冠以修纂成书时的年代（年号）；民国地方志，在书名前冠加“民国”二字。新影印（缩印）的地方志 可采用新页码。
+
+示例：
+
+乾隆《嘉定县志》卷 12《风俗》，第7 页 b。
+\footfullcite[第7 页 b]{嘉定县志}
+
+民国《上海县续志》卷 1《疆域》，第10 页 b。
+\footfullcite[第10 页 b]{上海县续志}
+
+万历《广东通志》卷 15《郡县志二·广州府·城池》，《稀见中国地方志汇刊》，北京：中国书店，1992年影印本，第42册，第 367 页。
+\footfullcite[第42册，第 367 页]{广东通志}
+
+
+6）常用基本典籍，官修大型典籍以及书名中含有作者姓名的文集可不标注作者，如《论语》、二十四史、《资治通鉴》、《全唐文》、《册府元龟》、《清实录》、《四库全书总目提要》、《陶渊明集》等。
+
+示例：
+
+《旧唐书》卷9《玄宗纪下》，北京：中华书局，1975年标点本，第 233 页。
+\footfullcite[第 233 页]{旧唐书}
+
+《方苞集》卷6《答程夔州书》，上海：上海古籍出版社，1983年标点本，上册，第166 页。
+\footfullcite[上册，第166 页]{方苞集}
+
+7）编年体典籍，如需要，可注出文字所属之年月甲子（日）。
+
+示例：
+
+《清德宗实录》卷 435，光绪二十四年十二月上，北京：中华书局， 1987 年影印本，第 6 册，第 727 页。
+\footfullcite[第 6 册，第 727 页]{清德宗实录}
+
+
+\subsection*{2. 连续出版物}
+
+\subsubsection*{（1）期刊}
+
+标注顺序：责任者/ 文献题名/ 期刊名/ 年期（或卷期，出版年月）。
+        刊名与其他期刊相同，也可括注出版地点，附于刊名后，以示区别；同一种期刊有两个以上的版别时，引用时须注明版别。
+
+示例：
+
+何龄修：《读顾诚〈南明史〉》，《中国史研究》1998 年第 3 期。
+\footfullcite{何龄修1998}
+
+汪疑今：《江苏的小农及其副业》，《中国经济》第 4 卷第 6 期， 1936 年 6 月 15 日。
+\footfullcite{汪疑今1936}
+
+魏丽英：《论近代西北人口波动的主要原因》，《社会科学》（兰州）1990 年第 6 期。
+\footfullcite{魏丽英1990}
+
+费成康：《葡萄牙人如何进入澳门问题辨证》，《社会科学》（上海）1999 年第 9 期。
+\footfullcite{费成康1999}
+
+董一沙：《回忆父亲董希文》，《传记文学》（北京）2001年第3 期。
+
+李济：《创办史语所与支持安阳考古工作的贡献》，《传记文学》（台北）第 28 卷第 1 期，1976 年 1 月。
+
+黄义豪：《评黄龟年四劾秦桧》，《福建论坛》（文史哲版）1997年第3期。
+\footfullcite{黄义豪1997}
+
+苏振芳：《新加坡推行儒家伦理道德教育的社会学思考》，《福建论坛》（经济社会版）1996 年第 3 期。
+
+叶明勇：《英国议会圈地及其影响》，《武汉大学学报》（人文科学版）2001 年第 2 期。
+
+倪素香：《德育学科的比较研究与理论探索》，《武汉大学学报》（社会科学版）2002 年第 4 期。
+\footfullcite{倪素香2002}
+
+\subsubsection*{（2）报纸}
+
+标注顺序：责任者/ 篇名/ 报纸名称/ 出版年月日/ 版次。
+早期中文报纸无版次，可标识卷册、时间或栏目及页码（选注项）。同名报纸应标示出版地点以示区别。
+
+示例：
+
+李眉：《李劼人轶事》，《四川工人日报》1986 年 8 月 22 日，第 2 版。
+\footfullcite{李眉1986}
+
+伤心人（麦孟华）：《说奴隶》，《清议报》第 69 册，光绪二十六年十一月二十一日，第 1 页。
+\footfullcite{麦孟华}
+
+《四川会议厅暂行章程》，《广益丛报》第 8 年第 19 期，1910 年9 月 3 日，“新章”，第 1—2 页。
+\footfullcite[“新章”，第 1—2 页]{四川会议厅暂行章程}
+
+《上海各路商界总联合会致外交部电》，《民国日报》（上海）1925 年 8 月 14 日，第 4 版。
+\footfullcite{上海各路}
+
+《西南中委反对在宁召开五全会》，《民国日报》（广州）1933年8月 11 日，第1 张第4 版。
+\footfullcite{西南中委}
+
+\subsection*{ 3.  未刊文献}
+
+\subsubsection*{（1）学位论文、会议论文等}
+
+标注顺序：责任者 / 文献标题 / 论文性质 / 地点或学校 / 文献形成时间 / 页码。
+
+示例：
+
+方明东：《罗隆基政治思想研究（1913—1949）》，博士学位论文，北京师范大学历史系，2000 年，第 67 页。
+\footfullcite{方明东2000}
+
+任东来：《对国际体制和国际制度的理解和翻译》，全球化与亚太区域化国际研讨会论文，天津，2000 年 6 月，第 9 页。
+\footfullcite{任东来2000}
+
+\subsubsection*{（2）手稿、档案文献}
+
+标注顺序：文献标题 / 文献形成时间 / 卷宗号或其他编号 / 收藏机构或单位。
+
+示例：
+
+《傅良佐致国务院电》，1917 年 9 月 15 日，北洋档案1011—5961，中国第二历史档案馆藏。
+\footfullcite{傅良佐致国务院电}
+
+《党外人士座谈会记录》，1950 年7月，李劼人档案，中共四川省委统战部档案室藏。
+\footfullcite{党外人士座谈会记录}
+
+
+\subsection*{ 4. 转引文献}
+
+无法直接引用的文献，转引自他人著作时，须标明。标注顺序：责任者/原文献题名/原文献版本信息/原页码（或卷期）/转引文献责任者/转引文献题名/版本信息/页码。
+
+示例：
+
+章太炎：《在长沙晨光学校演说》，1925 年 10 月，转引自汤志钧：《章太炎年谱长编》下册，北京：中华书局，1979 年，第 823 页。
+\footnote{\fullinnercite{章太炎演说}，转引自\fullcite{汤志钧长编}}
+
+另一种方式：\footfullcite{李四1991b--}
+
+
+\subsection*{5. 电子文献}
+
+电子文献包括以数码方式记录的所有文献（含以胶片、磁带等介质记录的电影、录像、录音等音像文献）。
+标注项目与顺序：责任者/电子文献题名/更新或修改日期/ 获取和访问路径/引用日期。
+示例：
+
+王明亮：《关于中国学术期刊标准化数据库系统工程的进展》，1998年8月16日， \url{http://www.cajcd.cn/pub/wml.txt/980810-2.html}，1998 年 10 月4日。 
+\footfullcite{王明亮1998}
+
+扬之水：《两宋茶诗与茶事》，《文学遗产通讯》（网络版试刊）2006年 第1期， \url{http://www.literature.org.cn/Article.asp?ID=199}，2007 年 9 月 13 日。
+\footfullcite{扬之水2007}
+
+\subsection*{6.  外文文献}
+（1）引证外文文献，原则上使用该语种通行的引证标注方式。
+
+（2）本规范仅列举英文文献的标注方式如下：
+
+1）专著
+
+标注顺序：责任者与责任方式/ 文献题名/ 出版地点/ 出版者/ 出版时间/ 页码。文献题名用斜体，出版地点后用英文冒号，其余各标注项目之间，用英文逗点隔开，下同。
+
+示例：
+
+Peter Brooks, \emph{Troubling Confessions: Speaking Guilt in Law and Literature}, Chicago: University of Chicago Press, 2000, p. 48.
+\footfullcite{Brooks2000}
+
+
+Randolph Starn and Loren Partridge, \emph{The Arts of Power: Three Halls of State in Italy, 1300-1600}, Berkeley: California University Press, 1992, pp.19-28.
+\footfullcite{Starn1992}
+
+2）译著
+
+标注顺序：责任者/ 文献题名/ 译者/ 出版地点/ 出版者/ 出版时间 /页码。
+
+示例：
+
+M. Polo, \emph{The Travels of Marco Polo}, trans. William Marsden, Hertfordshire: Cumberland House, 1997, pp. 55, 88.
+\footfullcite{Polo1997}
+
+ 3）期刊析出文献
+
+标注顺序：责任者/ 析出文献题名 /期刊名/ 卷册及出版时间/ 页码。析出文献题名用英文引号标识，期刊名用斜体，下同。
+
+示例：
+
+Heath B. Chamberlain, “On the Search for Civil Society in China”,
+\emph{Modern China}, vol. 19, no. 2 (April 1993), pp. 199-215.
+\footfullcite{Chamberlain1993}
+
+4）文集析出文献
+
+标注顺序：责任者/析出文献题名/ 文集题名/ 编者/ 出版地点/出版者/ 出版时间/ 页码。
+
+示例：
+
+R. S. Schfield, “The Impact of Scarcity and Plenty on Population Change in England,” in R. I. Rotberg and T. K. Rabb, eds., \emph{Hunger and History: The Impact of Changing Food Production and Consumption Pattern on Society}, Cambridge, Mass.: Cambridge University Press, 1983, p. 79.
+\footfullcite{Schfield1983}
+
+5）档案文献
+
+标注顺序：文献标题/ 文献形成时间/ 卷宗号或其他编号/ 藏所。
+
+Nixon to Kissinger, February 1, 1969, Box 1032, NSC Files, Nixon Presidential Material Project (NPMP), National Archives II, College Park, MD.
+\footfullcite{NixontoKissinger}
+
+
+
+\section*{（三）其他}
+
+\subsection*{1. 再次引证时的项目简化}
+
+同一文献再次引证时只需标注责任者、题名、页码，出版信息可以省略。
+
+示例：
+
+赵景深：《文坛忆旧》，第 24 页。
+\footfullcite[第 24 页]{赵景深1948}
+
+鲁迅：《中国小说的历史的变迁》，《鲁迅全集》第 9 册，第326 页。
+\footfullcite[第326 页]{鲁迅1981}
+
+\subsection*{2. 间接引文的标注}
+间接引文通常以“参见”或“详见”等引领词引导，反映出与正文行文的呼应，标注时应注出具体参考引证的起止页码或章节。标注项目、顺序与格式同直接引文。
+
+示例：
+参见邱陵编著：《书籍装帧艺术简史》，哈尔滨：黑龙江人民出版社，1984 年，第 28—29 页。
+\footnote{参见\fullcite{邱陵1984}}
+
+详见张树年主编：《张元济年谱》，北京：商务印书馆，1991年，第 6 章。
+\footnote{详见\fullcite[第 6 章]{张树年1991}}
+
+
+\subsection*{3. 引用先秦诸子等常用经典古籍}
+
+可使用夹注，夹注应使用不同于正文的字体。
+
+ 示例 1：
+
+ 庄子说惠子非常博学，“惠施多方，其书五车。”\citejz{庄子天下}
+
+ 示例 2：
+
+ 天神所具有道德，也就是“保民”、“裕民”的道德；天神所具有的道德意志，代表的是人民的意志。这也就是所谓“天聪明自我民聪明，天明畏自我民明畏”\citejz{尚书皋陶谟}，“民之所 欲，天必从之”\citejz{尚书泰誓}。
+
+
+
+
+
+
+
+
+
+\newpage
+{
+%\hyphenation{Proce-edings}
+\hyphenpenalty=100 %断词阈值， 值越大越不容易出现断词
+\tolerance=5000 %丑度， 10000为最大无溢出盒子， 参考the texbook 第6章
+\hbadness=100 %如果丑度超过hbadness这一阀值， 那么就会发出警告
+    \printbibliography
+
+}
+
+    \end{document} 

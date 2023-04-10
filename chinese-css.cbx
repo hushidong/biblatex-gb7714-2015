@@ -10,7 +10,7 @@
 %%用法：类似于标准的样式在biblatex加载时设置样式
 %%文献表正常处理，标注命令主要用cite和textcite
 
-\ProvidesFile{chinese-css.cbx}[2023/03/31 v1.0a a biblatex citation style for CSS]
+\ProvidesFile{chinese-css.cbx}[2022/02/22 v1.0a a biblatex citation style for CSS]
 
 %==================================================
 %加载gb样式
@@ -21,10 +21,10 @@
 %==================================================
 %选项设置
 %==================================================
-%\ExecuteBibliographyOptions{
-%    maxcitenames=2,
-%    mincitenames=1,
-%}
+\ExecuteBibliographyOptions{
+    maxcitenames=2,
+    mincitenames=1,
+}
 
 %==================================================
 %引用命令设置，主要用cite和textcite
@@ -35,6 +35,20 @@
 \renewcommand{\bibfootnotewrapper}[1]{%
   \bibsentence#1}%
 
+%避免去除前面的空白
+\renewrobustcmd{\blx@mkbibfootnote}[2]{%
+  \iftoggle{blx@footnote}
+    {\blx@warning{Nested notes}%
+     \addspace\mkbibparens{#2}}
+    {%\unspace
+     \ifnum\blx@notetype=\tw@
+       \expandafter\@firstoftwo
+     \else
+       \expandafter\@secondoftwo
+     \fi
+       {\csuse{blx@theendnote#1}{\protecting{\blxmkbibnote{end}{#2}}}}
+       {\csuse{footnote#1}{\protecting{\blxmkbibnote{foot}{#2}}}}}}
+
 %修改脚注注释的实现
 \def\execgbfootbib%
     {%
@@ -44,8 +58,8 @@
     %
     %重定义\footfullcite使完成css的脚注文献要求
     \DeclareCiteCommand{\footfullcite}[\mkbibfootnote]%
-      {\defcounter{maxnames}{\blx@maxbibnames}%局部定义maxnames和minnames计数器
-       \defcounter{minnames}{\blx@minbibnames}%使footfullcite内的作者输出与正文文献表中的一致。
+      {\defcounter{maxnames}{\blx@maxcitenames}%局部定义maxnames和minnames计数器
+       \defcounter{minnames}{\blx@mincitenames}%使footfullcite内的作者输出与正文文献表中的一致。
        \usebibmacro{prenote}%
         \renewbibmacro*{postnote}{%
             \iffieldundef{postnote}%
@@ -59,8 +73,14 @@
       {\multicitedelim}%
       {\usebibmacro{postnote}\usebibmacro{finentry}}
 
+
     \DeclareCiteCommand{\fullcite}
-      {\usebibmacro{prenote}}
+      {\usebibmacro{prenote}%
+        \renewbibmacro*{postnote}{%
+            \iffieldundef{postnote}%
+            {}{\setunit{\iffieldequalstr{userd}{chinese}{\unspace\gbpunctcomma}{\addcolon\addspace}}%
+            \printfield{postnote}}}%与ay样式不同，由于已修改postnote域格式，直接用printfield
+      }
       {\ifciteseen%
           {\usedriver{\DeclareNameAlias{sortname}{default}}{citeseen:\thefield{entrytype}}}%\nopunct
           {\usedriver{\DeclareNameAlias{sortname}{default}}{\thefield{entrytype}}}%
@@ -68,8 +88,14 @@
       {\multicitedelim}
       {\usebibmacro{postnote}\usebibmacro{finentry}}
 
+
       \DeclareCiteCommand{\fullinnercite}
-      {\usebibmacro{prenote}}
+      {\usebibmacro{prenote}%
+        \renewbibmacro*{postnote}{%
+            \iffieldundef{postnote}%
+            {}{\setunit{\iffieldequalstr{userd}{chinese}{\unspace\gbpunctcomma}{\addcolon\addspace}}%
+            \printfield{postnote}}}%与ay样式不同，由于已修改postnote域格式，直接用printfield
+      }
       {\ifciteseen%
           {\usedriver{\DeclareNameAlias{sortname}{default}}{citeseen:\thefield{entrytype}}}%\nopunct
           {\usedriver{\DeclareNameAlias{sortname}{default}}{\thefield{entrytype}}}%
@@ -91,5 +117,32 @@
      {\indexfield{indextitle}}
      {}%
    \printfield[citejz]{labeltitle}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+
+\DeclareFieldFormat{citetitle}{%
+\iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}%
+{\mkbibemph{#1}}%
+}
+
+\DeclareFieldFormat
+  [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
+  {citetitle}{%
+  \iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}%
+  {\mkbibquote{#1\isdot}}%
+  }
+
+
+%为文献输出出版信息
+\DeclareCiteCommand{\citepub}
+  {\boolfalse{citetracker}%
+   \boolfalse{pagetracker}%
+   \usebibmacro{prenote}}
+  {\ifciteindex
+     {\indexfield{indextitle}}
+     {}%
+    \ifentrytype{online}{\usebibmacro{institution+location+date}}{\usebibmacro{publisher+location+date}}%
+   }
   {\multicitedelim}
   {\usebibmacro{postnote}}

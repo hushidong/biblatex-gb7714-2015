@@ -492,6 +492,13 @@
     \def\str@mathesiscn{硕士学位论文}
     \def\str@phdthesiscn{博士学位论文}
     \def\str@editorcn{主编}
+    \def\str@editorscn{主编}
+    \def\str@compilerscn{整理}
+    \def\str@compilercn{整理}
+    \def\str@revisercn{编}
+    \def\str@reviserscn{编}
+    \def\str@foundercn{编著}
+    \def\str@founderscn{编著}
 
     \AtEndOfPackage{%
 	\iftoggle{bbx:codegbk}{%
@@ -876,6 +883,12 @@
     \NewBibliographyString{editorcn}
     \NewBibliographyString{editorscn}
     \NewBibliographyString{bytranslatorcn}
+    \NewBibliographyString{compilercn}
+    \NewBibliographyString{compilerscn}
+    \NewBibliographyString{revisercn}
+    \NewBibliographyString{reviserscn}
+    \NewBibliographyString{foundercn}
+    \NewBibliographyString{founderscn}
 
     %
     %   修改一些当地化字符串
@@ -910,6 +923,12 @@
        phdthesiscn={\str@phdthesiscn},
        editorscn={\str@editorcn},
        editorcn={\str@editorcn},
+       compilerscn={\str@compilerscn},
+       compilercn={\str@compilercn},
+       reviserscn={\str@reviserscn},
+       revisercn={\str@revisercn},
+       founderscn={\str@founderscn},
+       foundercn={\str@foundercn},
     }
 
     %
