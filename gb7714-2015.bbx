@@ -3420,6 +3420,12 @@ test {\iflistundef{location}} and test {\iflistundef{institution}}%
 {\bibstring{serialcn}#1\bibstring{volumecn}}%
 {\bibstring{volume}~#1}%
 }% volume of a book
+\DeclareFieldFormat[book,inbook,incollection]{volume}%
+{\iffieldequalstr{userd}{chinese}{\iffieldint{volume}%
+        {\bibstring{serialcn}#1\bibstring{volumecn}%
+        }{#1}}%
+    {\bibstring{volume}~#1}%
+}
 \DeclareFieldFormat[article,periodical]{volume}{#1}% volume of a journal
 
 %
