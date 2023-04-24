@@ -1,7 +1,7 @@
 %%
 %% ---------------------------------------------------------------
-%% erj.cbx --- A citation style of Economic Research Journal in china
-%% modified from gb7714-2015ay for the request by ddswhu
+%% css.cbx --- A citation style of journal of management world in china
+%% modified from gb7714-2015
 %% Maintained by huzhenzhen
 %% E-mail: hzzmail@163.com
 %% Released under the LaTeX Project Public License v1.3c or later
@@ -10,7 +10,7 @@
 %%用法：类似于标准的样式在biblatex加载时设置样式
 %%文献表正常处理，标注命令主要用cite和textcite
 
-\ProvidesFile{chinese-erj.cbx}[v1.0a a biblatex citation style for ERJ]
+\ProvidesFile{chinese-jmw.cbx}[v1.0a a biblatex citation style for jmw]
 
 %==================================================
 %加载gb样式
@@ -22,13 +22,15 @@
 %   增加一个控制标注中标点是英文还是中文的选项
 %   20220222,v1.0a,hzz
 \DeclareBibliographyOption{gbcitepunctcn}[true]{%biblatex低版本
-  \ifstrequal{#1}{false}{\exegbpunctencite}{}}
+  \ifstrequal{#1}{false}{\execgbpunctencite}{}}
 
+\def\gbpunctcommacite{，}%
 \def\gbpunctmarkcite{、}%
 \def\gbpunctsemicoloncite{；}%
 \def\gbpunctparenlcite{（}%
 \def\gbpunctparenrcite{）}
-\def\exegbpunctencite{%
+\def\execgbpunctencite{%
+\def\gbpunctcommacite{\addcomma\addspace}%
 \def\gbpunctmarkcite{\addcomma\addspace}%
 \def\gbpunctsemicoloncite{\addsemicolon\addspace}%
 \def\gbpunctparenlcite{(}%
@@ -41,6 +43,20 @@
 \ExecuteBibliographyOptions{
     maxcitenames=2,
     mincitenames=1,
+}
+
+\DeclareDelimFormat[textcite]{delimandincitecn}{和}%\addcomma\space
+\DeclareDelimFormat[parencite]{delimandincitecn}{\gbpunctmarkcite}%\addcomma\space
+\DeclareDelimFormat[textcite]{delimandincite}{和}%\addcomma\space
+\DeclareDelimFormat[parencite]{delimandincite}{ and }%\addcomma\space
+\DeclareDelimFormat[textcite]{delimandothersincite}{\str@andotherscn}%\addcomma\space
+\DeclareDelimFormat[parencite]{delimandothersincite}{et al\adddot}%\addcomma\space
+
+\DefineBibliographyStrings{english}{
+    andincitecn = {\printdelim{delimandincitecn}},
+    andincite   = {\printdelim{delimandincite}},
+    %andothersincitecn={\str@andotherscn},
+    andothersincite={\printdelim{delimandothersincite}},
 }
 
 %==================================================
@@ -57,14 +73,10 @@
 }%\space
 
 \DeclareDelimFormat[textcite]{nameyeardelim}{\addspace}%\addcomma\space
-\DeclareDelimFormat[textcite]{andothersdelim}{\iffieldequalstr{userf}{chinese}{}{\addspace}}%
+\DeclareDelimFormat[parencite]{nameyeardelim}{\gbpunctcommacite}
+\DeclareDelimFormat[textcite]{andothersdelim}{\addspace}%
+\DeclareDelimFormat[parencite]{andothersdelim}{\iffieldequalstr{userf}{chinese}{}{\addspace}}%
 
-%之所以不用\DeclareDelimFormat{andothersdelim}{}这样的设置是因为gb7714-2015中为兼容老版本的biblatex做的处理就是这样的
-%所以用相同的方式
-\AtEveryCitekey{%
-\iffieldequalstr{userf}{chinese}{\renewcommand*{\andothersdelim}{}}%\addthinspace
-  {\renewcommand*{\andothersdelim}{\addspace}}%
-}
 
 %标注压缩时，直接用date+extradate代替extradate实现2006a，2006b的效果
 %\DeclareDelimFormat*{compcitedelim}{\gbpunctmarkcite}%\addcomma\addspace
@@ -79,7 +91,7 @@
 %\let\bibcloseparen=）}
 
 %添加前后空格
-\DeclareCiteCommand{\cite}%[\mkbibparens]
+\DeclareCiteCommand{\parencite}%[\mkbibparens]
   {\usebibmacro{cite:init}%
    \unspace\printtext{\gbpunctparenlcite}\usebibmacro{prenote}}%\addspace
   {\usebibmacro{citeindex}%
@@ -167,4 +179,5 @@
        \textcitedelim}}}
 
 \let\citet=\textcite
-\let\citep=\cite
+\let\citep=\parencite
+\let\cite=\parencite

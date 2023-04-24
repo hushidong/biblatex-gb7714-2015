@@ -1,4 +1,4 @@
-<b>Date of last change: 2023-03-31 to version v1.1l</b>
+<b>Date of last change: 2023-04-24 to version v1.1m</b>
 
 
 # biblatex-gb7714-2015: a biblatex style  package
@@ -1313,6 +1313,8 @@ biblatex中处理顺序数字编码压缩的代码默认从3个连续编码开�
 	- ![codeopt-gbcodegbk.tex](example/codeopt-gbcodegbk.tex)	测试gb7714-2015、ay样式，对于GBK编码文档的兼容性
 	- ![teststyleerj.tex](example/teststyleerj.tex)			测试chinese-erj样式
 	- ![teststylecss.tex](example/teststylecss.tex)			测试chinese-css样式
+	- ![teststylecss.tex](example/teststylecssorg.tex)			测试chinese-css样式
+	- ![teststylecss.tex](example/teststylejmw.tex)			测试chinese-jmw样式
 	- ![eg-opt-gbstyle.tex](example/eg-opt-gbstyle.tex)		测试gb7714-2015ms样式一篇文档中中英文两种格式设置，多语言对照，多语言混合文献表
 	- ![testallformat.tex](example/testallformat.tex)			测试全面的类型、格式
 	- ![egtest.tex](example/egtest.tex)				测试示例
@@ -1597,6 +1599,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * 2022/08/29 v1.1j,ctan,github
 * 2022/11/07 v1.1k,ctan,github
 * 2023/03/31 v1.1l,ctan,github
+* 2023/04/24 v1.1m,ctan,github
 
 ---------------------------------------------------------
 ## Update history:

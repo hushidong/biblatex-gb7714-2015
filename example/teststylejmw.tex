@@ -1,0 +1,296 @@
+\documentclass{article}
+    \usepackage{ctex}
+    \usepackage{xcolor}
+    \usepackage{toolbox}
+    \usepackage[colorlinks]{hyperref}
+    \usepackage{lipsum}
+    \usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
+
+\usepackage[backend=biber,style=chinese-jmw,gbfootbib=true,gbfnperpage=true,url=false]{biblatex} 
+
+\begin{filecontents}[force]{\jobname.bib}
+@article{Weiss2010,
+	title = {Cost behavior and analysts’ earnings forecasts},
+	volume = {85},
+	doi = {10.2308/accr.2010.85.4.1441},
+	journal = {The Accounting Review},
+	author = {Weiss, D.},
+	year = {2010},
+	pages = {1441--1471},
+}
+
+@article{Banker2013,
+	title = {Employment protection legislation, adjustment costs and cross-country differences in cost behavior},
+	volume = {55},
+	issn = {0165-4101},
+	url = {https://www.sciencedirect.com/science/article/pii/S0165410112000614},
+	doi = {10/ghvxsx},
+	number = {1},
+	urldate = {2022-11-17},
+	journal = {Journal of Accounting and Economics},
+	author = {Banker, Rajiv D. and Byzalov, Dmitri and Chen, Lei Tony},
+	year = {2013},
+	pages = {111--127},
+}
+
+@article{王化成2015,
+	title = {监督还是掏空：大股东持股比列与股价崩盘风险},
+	number = {2},
+	journal = {管理世界},
+	author = {王化成 and 曹丰 and 叶康涛},
+	year = {2015},
+}
+
+@article{戴治勇2014,
+	title = {法治、信任与企业激励薪酬设计},
+	issn = {1002-5502},
+	url = {https://kns.cnki.net/kcms/detail/frame/list.aspx?dbcode=CJFD&filename=glsj201402011&dbname=CJFDLAST2015&RefType=1&vl=utztcWkJCfgpXOdHpPRrTzeJ4gZY4knPFX_azlr1TYX-KcEl_kKZe5fQaLHjSi8N},
+	doi = {10/grvn5k},
+	number = {2},
+	urldate = {2022-11-17},
+	journal = {管理世界},
+	author = {戴治勇},
+	year = {2014},
+	pages = {102--110},
+}
+
+@book{李实2004,
+	title = {经济转型的代价──中国城市失业、贫困、收入差距的经验分析},
+	publisher = {北京中国财政经济出版社},
+	editor = {李实 and 佐藤宏},
+	year = {2004},
+}
+
+@article{林乐2017,
+	title = {分析师荐股更新利用管理层语调吗?——基于业绩说明会的文本分析},
+	shorttitle = {分析师荐股更新利用管理层语调吗?},
+	number = {11},
+	journal = {管理世界},
+	author = {林乐 and 谢德仁},
+	year = {2017},
+	pages = {125--145},
+}
+
+@incollection{Fama1989,
+	title = {Perspectives on {October} 1987, or what did we learn from the crash?},
+	language = {en},
+	booktitle = {Black monday and the future of the financial markets},
+	publisher = {Irwin, Homewood, III},
+	author = {Fama, Eugene Francis},
+	editor = {Barro, Robert J. and Kamphuis, Robert W. and Kormendi, Roger C. and Watson, J. W. Henry},
+    editortype={editor},
+	year = {1989},
+}
+
+@article{Kang2008,
+	title = {The geography of block acquisitions},
+	volume = {63},
+	doi = {10.1111/j.1540-6261.2008.01414.x},
+	number = {6},
+	journal = {The Journal of Finance},
+	author = {Kang, Jun Koo and Kim, Jin Mo},
+	year = {2008},
+	pages = {2817--2858},
+}
+
+@book{Skolnik1990,
+	address = {New York},
+	title = {Radar handbook},
+	publisher = {McGraw-Hill},
+	author = {Skolnik, Merrill I.},
+	year = {1990},
+}
+
+@misc{Krugman2006,
+	type = {{NBER} {Working} {Paper}},
+	title = {Title of the article},
+	author = {Krugman, P.},
+    number={4567},
+	year = {2006},
+}
+
+@phdthesis{黄超2017,
+	type = {博士学位论文},
+	title = {管理层利用语调管理配合盈余管理了吗？——来自我国上市公司年报的文本分析},
+	school = {上海财经大学},
+	author = {黄超},
+	year = {2017},
+}
+
+@book{高琳2016,
+	title = {分税制、地方财政自主权与经济发展绩效研究},
+	url = {https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CDFD&dbname=CDFDLAST2015&filename=1014448470.nh&uniplatform=NZKPT&v=-UqoEpfWi8NUeI8GEqkOHQVdQjdObNdVrbdyS4fiwlOthpQaAioRCwpg1qpW5m3v},
+	urldate = {2022-11-17},
+	publisher = {上海人民出版社},
+	author = {高琳},
+	year = {2016},
+}
+
+@incollection{佐藤宏2004,
+	address = {北京},
+	title = {外出务工、谋职和城市劳动力市场——市场支撑机制的社会网络分析},
+	booktitle = {经济转型的代价──中国城市失业、贫困、收入差距的经验分析},
+	publisher = {中国财政经济出版社},
+	author = {佐藤宏},
+	editor = {李实 and 佐藤宏},
+	year = {2004},
+}
+
+
+
+\end{filecontents}
+    \addbibresource{\jobname.bib}
+    %
+
+%注意编者的类型：
+%editor：主编
+%compiler：整理
+%redactor：校订
+%reviser：修订
+%founder：创建
+%continuator：继承者
+%collaborator：合作者
+
+\begin{document}
+
+\section{引用标注格式}
+
+\subsection{中文}
+正文中中文参考文献的格式：
+
+（1）当作者为一个人时：作者姓名（2018）或者（作者姓名，2018）
+
+\citet{戴治勇2014}  或者 \cite{戴治勇2014}
+
+（2）作者为两个人时：作者1和作者2（2018）或者（作者1、作者2，2018）
+
+\citet{林乐2017}  或者 \cite{林乐2017}
+
+（3）作者为三个及以上时： 第一作者\ 等(2018)或者（第一作者等，2018）
+
+\citet{王化成2015}  或者 \cite{王化成2015}
+
+
+（4）当引用多个作者时: （第一作者等，2018；作者1、作者2，2018；作者姓名，2018）
+
+\cite{高琳2016,佐藤宏2004,黄超2017}
+
+\cite{戴治勇2014,林乐2017,黄超2017}
+
+\subsection{英文}
+
+正文中英文参考文献的格式：
+
+（1）当作者为一个人时：Betts（2018）或者（Betts，2018）
+
+\citet{Weiss2010}  或者 \cite{Weiss2010}
+
+（2）当作者为两个人时：Betts和Taylor（2018）或者（Betts and Taylor，2018）
+
+\citet{Kang2008}  或者 \cite{Kang2008}
+
+（3）当作者为三个及以上时：Betts等(2018)或者（Betts et al.，2018）
+
+\citet{Banker2013}  或者 \cite{Banker2013}
+
+
+（4）当引用多个作者时：（Betts et al.，2018；Betts and Taylor，2018；Betts，2018）
+
+\cite{Weiss2010,Kang2008,Krugman2006}
+
+\cite{Fama1989,Skolnik1990}
+
+
+
+\section{文后参考文献著录格式}
+
+\subsection{中文}
+（1）一个中文作者的参考文献的格式：
+
+戴治勇：《法治、信任与企业激励薪酬设计》，《管理世界》，2014年第2期。
+\footfullcite{戴治勇2014}
+
+（2）两个中文作者的参考文献的格式：
+
+林乐、谢德仁：《分析师荐股更新利用管理层语调吗？——基于业绩说明会的文本分析》，《管
+理世界》，2017年第11期。
+\footfullcite{林乐2017}
+
+（3）三个中文作者的参考文献的格式：
+
+王化成、曹丰、叶康涛：《监督还是掏空：大股东持股比列与股价崩盘风险》，《管理世
+界》，2015年第2期。
+\footfullcite{王化成2015}
+
+（4）参考文献为中文专著时的格式：
+
+高琳：《分税制、地方财政自主权和经济发展绩效研究》，上海人民出版社，2016年。
+\footfullcite{高琳2016}
+
+（5）参考文献为中文论文集中的一篇论文时的格式：
+
+佐藤宏：《外出务工、谋职和城市劳动力市场——市场支撑机制的社会网络分析》，载李实、佐
+藤宏主编，《经济转型的代价──中国城市失业、贫困、收入差距的经验分析》，中国财政经济出版
+社，2004年。
+\footfullcite{佐藤宏2004}
+
+（6）参考文献为毕业论文的格式：
+
+黄超：《管理层利用语调管理配合盈余管理了吗？——来自我国上市公司年报的文本分析》，上
+海财经大学博士学位论文，2017年。
+\footfullcite{黄超2017}
+
+\subsection{英文}
+
+
+作者姓写在前，名写在后缩写为首字母；杂志名、书名需斜体；如同
+一作者在同一年刊登两篇以上文章，请在年份后区分a，b，……。）
+
+（1）一个英文作者的参考文献的格式：
+
+Weiss，D.，2010，“Cost Behavior and Analysts’ Earnings Forecasts”，\textbf{\textit{The
+Accounting Review}}，vol.85，pp.1441\verb|~|1471.
+\footfullcite{Weiss2010}
+
+（2）两个英文作者的参考文献的格式：
+
+Kang，J. K. and Kim，J. M.，2008，“The Geography of Block Acquisitions”，\textbf{\textit{Journal
+of Finance}}，63(6)，pp.2817\verb|~|2858.
+\footfullcite{Kang2008}
+
+
+（3）两个以上英文作者的参考文献的格式：
+
+Banker，R. D.，Byzalov，D. and Chen，L. T.，2013，“Employment Protection
+Legislation，Adjustment Costs and Cross-country Differences in Cost Behavior”，\textbf{\textit{Journal
+of Accounting and Economics}}，vol.55，pp.111$\sim$127.
+\footfullcite{Banker2013}
+
+（4）引用文献是工作论文的参考文献格式：
+
+Krugman，P.，2006，“Title of the Article”，NBER Working Paper，No.4567.
+\footfullcite{Krugman2006}
+
+（5）引用文献是论文集或合集中的某一篇论文的参考文献格式：
+
+Fama，E. F.，1989，“Perspectives on October 1987，or What did We Learn from the
+Crash?”，in Barro，R. J.，R. W. Kamphuis，R. C. Kormendi and J. W. H. Watson，eds:
+\textbf{\textit{Black Monday and the Future of the Financial Markets}}，Irwin，Homewood，III.
+\footfullcite{Fama1989}
+
+（6）引用文献是专著时的参考文献格式：
+
+Skolnik，M. I.，1990，\textbf{\textit{Radar handbook}}，New York：McGraw-Hill.
+\footfullcite{Skolnik1990}Skolnik1990
+
+\newpage
+{
+%\hyphenation{Proce-edings}
+\hyphenpenalty=100 %断词阈值， 值越大越不容易出现断词
+\tolerance=5000 %丑度， 10000为最大无溢出盒子， 参考the texbook 第6章
+\hbadness=100 %如果丑度超过hbadness这一阀值， 那么就会发出警告
+    \printbibliography
+
+}
+
+    \end{document} 

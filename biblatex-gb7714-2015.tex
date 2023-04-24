@@ -36,7 +36,8 @@ Style Files (gb7714-2015*.*) have version number: \versionofgbtstyle.}
 \titleandauthor
 
 \begin{quotation}
-biblatex-gb7714-2015 宏包是为满足《GB/T 7714-2015~~信息与文献~~参考文献著录规则》要求而开发的 biblatex 样式包。宏包提供两种编制样式: 一、顺序编码制（gb7714-2015）；二、著者-出版年制（gb7714-2015ay），能够精确地实现国标提出的著录和标注格式，且具备易用、兼容、灵活等特点，能为国内\LaTeX{}用户提供一个可靠的参考文献生成工具。
+biblatex-gb7714-2015 宏包是为满足《GB/T 7714-2015~~信息与文献~~参考文献著录规则》要求而开发的 biblatex 样式包。宏包主要提供两种编制样式: 一、顺序编码制（gb7714-2015）；二、著者-出版年制（gb7714-2015ay），能够精确地实现国标提出的著录和标注格式。另外提供gb7714-2005和gb7714-1987两个老版本的国标样式，和经济学研究(chinese-erj)、社会科学(chinese-css)、管理世界(chinese-jmw)等期刊的文献样式，以及西北农林(gb7714-NWAFU)、华中师范(gb7714-CCNU)、东南大学(gb7714-SEU)等几个明显有别于国标的特殊学位论文文献样式。
+具备灵活、易用、兼容性好等特点，能为国内\LaTeX{}用户提供一个可靠的参考文献生成工具。
 %old：
 %biblatex-gb7714-2015 样式宏包提供了符合《GB/T 7714-2015 信息与文献 参考文献
 %著录规则》要求的 biblatex 参考文献样式。分为两种编制方式: 一、顺序编码制；二、著
@@ -155,7 +156,7 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 \zd{gb7714-2015ms.bbx/cbx}是混合样式，支持区分中英文语言分设不同标准的著录格式。
 \zd{gb7714-2015mx.bbx/cbx}是混合样式，支持在不同的参考文献分节中使用不同的编制样式，比如有的节使用顺序编码制，有的节使用著者年份制。
 \zd{gb7715-2015-gbk.def}为GBK编码文档编译所需的支撑文件。
-\zd{chinese-erj.bbx/cbx} 是经济学研究期刊的文献样式。后三者仅支持较新的biblatex版本。
+\zd{chinese-erj.bbx/cbx}、\zd{chinese-css.bbx/cbx}、\zd{chinese-jmw.bbx/cbx} 是经济学研究、社会科学、管理世界期刊的文献样式。%后三者仅支持较新的biblatex版本。
 \zd{biblatex-gb7714-2015.tex} 为宏包说明文档，\zd{example}目录下为各种选项的测试用例，
 \zd{egfigure}目录下为说明文档中的图例文档，\zd{egthesis}为国内一些大学学位论文文献样式的测试用例，包括完全按照国标的BUPT、CAU、ECNU、FDU、SJTU、THU、USTC、XJTU、ZJU，与国标略有差异的UCAS，以及与国标有较大差异的NWAFU、SEU等。\zd{*.bat}、\zd{*.sh}分别为windows和linux下说明文档的编译脚本。\zd{*.pl}为gb7714格式著录文献表到bib文件的perl转换脚本，\zd{*.dat}为转换测试文献表。
 
@@ -177,13 +178,13 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 \draw[color=cyan,thick] (script.north) -- ($(script.north)+(0mm,3mm)$) ;
 \draw[color=cyan,thick] ($(style.north)+(0mm,3mm)$) -- ($(script.north)+(0mm,3mm)$);
 
-\node[below of=style,fill=gbgrey!20,yshift=0.5cm,xshift=2mm,text width=2cm] (numcbbx) {\tiny \textcolor{black}{gb7715-2015/ay.c/bbx}};
-\node[below of=numcbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (aycbbx) {\tiny \textcolor{black}{gb7715-1987/ay.c/bbx}};
-\node[below of=aycbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (mscbbx) {\tiny \textcolor{black}{gb7715-2015ms.c/bbx}};
-\node[below of=mscbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (mxcbbx) {\tiny \textcolor{black}{gb7715-2015mx.c/bbx}};
-\node[below of=mxcbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (gbkdef) {\tiny \textcolor{black}{gb7715-2005/ay.c/bbx}};
-\node[below of=gbkdef,fill=gbgrey!20,yshift=8mm,text width=2cm] (erjcbbx) {\tiny \textcolor{black}{chinese-erj.c/bbx}};
-\node[below of=erjcbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (csscbbx) {\tiny \textcolor{black}{chinese-css.c/bbx}};
+\node[below of=style,fill=gbgrey!20,yshift=0.5cm,xshift=2mm,text width=2.5cm] (numcbbx) {\tiny \textcolor{black}{gb7715-2015/ay.c/bbx}};
+\node[below of=numcbbx,fill=gbgrey!20,yshift=8mm,text width=2.5cm] (aycbbx) {\tiny \textcolor{black}{gb7715-1987/ay.c/bbx}};
+\node[below of=aycbbx,fill=gbgrey!20,yshift=8mm,text width=2.5cm] (mscbbx) {\tiny \textcolor{black}{gb7715-2015ms.c/bbx}};
+\node[below of=mscbbx,fill=gbgrey!20,yshift=8mm,text width=2.5cm] (mxcbbx) {\tiny \textcolor{black}{gb7715-2015mx.c/bbx}};
+\node[below of=mxcbbx,fill=gbgrey!20,yshift=8mm,text width=2.5cm] (gbkdef) {\tiny \textcolor{black}{gb7715-2005/ay.c/bbx}};
+\node[below of=gbkdef,fill=gbgrey!20,yshift=8mm,text width=2.5cm] (erjcbbx) {\tiny \textcolor{black}{chinese-erj.c/bbx}};
+\node[below of=erjcbbx,fill=gbgrey!20,yshift=8mm,text width=2.5cm] (csscbbx) {\tiny \textcolor{black}{chinese-css.c/bbx等}};
 %\node[below of=msbbx,fill=gbgrey!20,yshift=8mm,text width=2cm] (mscbx) {\tiny \textcolor{black}{gb7715-2015ms.cbx}};
 
 \draw[color=blue,semithick] (numcbbx.west) -- ($(numcbbx.west)+(-3mm,0mm)$) ;
@@ -195,7 +196,7 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 \draw[color=blue,semithick] (csscbbx.west) -- ($(csscbbx.west)+(-3mm,0mm)$) ;
 %\draw[color=blue,semithick] (mscbx.west) -- ($(mscbx.west)+(-3mm,0mm)$) ;
 
-\draw[color=blue,semithick] ($(csscbbx.west)+(-3mm,0mm)$) -- ($(style.center)+(-12mm,-2.5mm)$);
+\draw[color=blue,semithick] ($(csscbbx.west)+(-3mm,0mm)$) -- ($(style.center)+(-14.5mm,-2.5mm)$);
 
 \node[below of=manual,fill=gbsteelblue!15,yshift=0.5cm,xshift=2mm,text width=2.8cm] (mtex) {\tiny \textcolor{black}{biblatex-gb7714-2015.tex}};
 \node[below of=mtex,fill=gbsteelblue!15,yshift=8mm,text width=2.8cm] (mpdf) {\tiny \textcolor{black}{biblatex-gb7714-2015.pdf}};
@@ -230,16 +231,7 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 \subsection{最小示例}
 
 基于biblatex宏包的参考文献生成方法非常简单，例 \ref{code:doc:structrue} 是一个最小工作示例。示例代码中给出了详细注释，介绍了使用biblatex 的tex源文档基本结构，其中gb7714-2015 样式随biblatex宏包加载，
-参考文献数据文件example.bib（bib文件需另外准备，详见\ref{sec:bib:bibtex}节）利用 \verb|\addbibresource|加载，文献表利用 \verb|\printbibliography| 命令输出(可在正文任意位置)。所有基于 biblatex 生成参考文献的文档无论大小万变不离其宗。
-若需更全面了解biblatex及参考文献生成高级功能另可参考:
-\href{https://github.com/plk/biblatex}{biblatex宏包手册}
-\footnote{地址:\url{https://github.com/plk/biblatex}}、
-\href{https://github.com/hushidong/biblatex-zh-cn}{中文版}
-\footnote{地址:\url{https://github.com/hushidong/biblatex-zh-cn}}
-或者
-\href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}{LaTeX 文档中文参考文献的biblatex解决方案}
-\footnote{地址:%
-\url{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}}。
+参考文献数据文件example.bib利用 \verb|\addbibresource|加载 （注意：bib文件需另外准备，详见\ref{sec:bib:bibtex}节），文献表利用 \verb|\printbibliography| 命令输出(可在正文任意位置)。
 
 \begin{example}{biblatex参考文献生成的最小工作示例}{code:doc:structrue}
 \begin{texlist}
@@ -263,29 +255,8 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 \end{texlist}
 \end{example}
 
-
-
-\subsection{编译方式}
-
-与基于bibtex传统方法的四步编译不同，基于biblatex生成参考文献一般只需三步编译，第一遍xelatex，第二遍biber，第三遍xelatex。如若需要后向超链接，则除设置backref 选项外，还需第四遍 xelatex 编译。例\ref{eg:compile:cmd} 给出编译命令，其中\verb|--synctex=-1| 选项也可以是-synctex=1。另外四步命令可以用一条 latexmk 命令代替。
-关于非utf-8编码文档和使用pdflatex命令编译的细节另见第\ref{sec:pkg:hints}节。
-
-\begin{example}{文档编译命令}{eg:compile:cmd}
-\begin{texlist}
-%四步编译命令
-xelatex --synctex=-1 jobname.tex
-biber jobname
-xelatex --synctex=-1 jobname.tex
-xelatex --synctex=-1 jobname.tex
-%或采用latexmk，则仅需一条命令
-latexmk -xelatex jobname.tex
-\end{texlist}
-\end{example}
-
-前述的最小工作示例的编译结果如图\ref{fig:eg:ref}所示。
-
-\begin{refsection}
-\begin{figure}[!htb]
+%\begin{refsection}
+\begin{figure}[!h]
 \centering
 %\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
 %width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
@@ -308,7 +279,36 @@ latexmk -xelatex jobname.tex
 %\end{tcolorbox}
 \caption{最小工作示例编译生成的PDF文档}\label{fig:eg:ref}
 \end{figure}
-\end{refsection}
+%\end{refsection}
+
+上述最小工作示例的编译结果如图\ref{fig:eg:ref}所示。所有基于 biblatex 生成参考文献的文档无论大小万变不离其宗，
+若需更全面了解biblatex及参考文献生成高级功能另可参考:
+\href{https://github.com/plk/biblatex}{biblatex宏包手册}
+\footnote{地址:\url{https://github.com/plk/biblatex}}、
+\href{https://github.com/hushidong/biblatex-zh-cn}{中文版}
+\footnote{地址:\url{https://github.com/hushidong/biblatex-zh-cn}}
+或者
+\href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}{LaTeX 文档中文参考文献的biblatex解决方案}
+\footnote{地址:%
+\url{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}}。
+
+
+\subsection{编译方式}
+
+与基于bibtex传统方法的四步编译不同，基于biblatex生成参考文献一般只需三步编译，第一遍xelatex，第二遍biber，第三遍xelatex。如若需要后向超链接，则除设置backref 选项外，还需第四遍 xelatex 编译。例\ref{eg:compile:cmd} 给出编译命令，其中\verb|--synctex=-1| 选项也可以是-synctex=1。另外四步命令可以用一条 latexmk 命令代替。
+关于非utf-8编码文档和使用pdflatex命令编译的细节另见第\ref{sec:pkg:hints}节。
+
+\begin{example}{文档编译命令}{eg:compile:cmd}
+\begin{texlist}
+%四步编译命令
+xelatex --synctex=-1 jobname.tex
+biber jobname
+xelatex --synctex=-1 jobname.tex
+xelatex --synctex=-1 jobname.tex
+%或采用latexmk，则仅需一条命令
+latexmk -xelatex jobname.tex
+\end{texlist}
+\end{example}
 
 
 \section{使用说明}
@@ -373,25 +373,10 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 \end{texlist}
 \end{example}
 
-其中，v1.0m版本增加的gb7714-2015ms样式文件，主要是为了在一个文献表中针对不同语言使用不同多种样式，比如中文文献使用GB/T 7714-2015规定的著录格式，而其它语言文献使用biblatex提供的标准样式。v1.0r版本增加了gb7714-2015mx样式，主要是为了在一个文档中针对不同参考文献分节使用不同的参考文献样式，比如某些节使用著者年份制，某些节使用顺序编码制。尽管这些方式不常用，但偶尔也有需求，所以都做了实现。
-
-另外根据需求，v1.0r版本增加了chinese-erj样式用于生成经济研究期刊的文献，v1.1l版本增加了chinese-css样式用于生成社会科学期刊的脚注注释。且在egthesis文件夹内，针对国内一些大学的学位论文文献要求，基于国标样式做了一些定制和测试。
-
-\pdfbookmark[4]{chinese-erj}{chinese-erj}
-\begin{example}{经济研究期刊文献样式(chinese-erj)}{eg:gbchineseerj}
-\begin{texlist}
-%使用经济研究期刊文献样式
-\usepackage[backend=biber,style=chinese-erj]{biblatex}
-\end{texlist}
-\end{example}
-
-\pdfbookmark[4]{chinese-css}{chinese-css}
-\begin{example}{社会科学期刊文献样式(chinese-css)}{eg:gbchinesecss}
-\begin{texlist}
-%使用社会科学期刊文献样式
-\usepackage[backend=biber,style=chinese-css,gbfootbib=true,gbfnperpage=true]{biblatex}
-\end{texlist}
-\end{example}
+其中，
+v1.0m版本增加的gb7714-2015ms样式文件，主要是为了在一个文献表中针对不同语言使用不同的样式，比如中文文献使用GB/T 7714-2015规定的著录格式，而其它语言文献使用biblatex提供的标准样式。
+v1.0r版本增加了gb7714-2015mx样式，主要是为了在一个文档中针对不同参考文献分节使用不同的参考文献样式，比如某些节使用著者年份制，某些节使用顺序编码制。
+%尽管这些方式不常用，但偶尔也有需求，所以都做了实现。
 
 尽管国标1987和2005版本已经过时，但仍然有些地方还在使用，所以1.0z版本增加了gb7714-1987和gb7714-2005两个版本的样式，也分顺序编码和著者年份制：
 
@@ -411,6 +396,41 @@ perl gb7714texttobib.pl in=textfilename out=bibfilename
 \usepackage[backend=biber,style=gb7714-2005ay]{biblatex}
 \end{texlist}
 \end{example}
+
+
+另外，根据国内大学的学位论文的文献生成需求，增加了几个与国标有明显区别的样式，包括：西北农林(gb7714-NWAFU)、华中师范(gb7714-CCNU)、东南大学(gb7714-SEU)等。其他大学的文献样式与国标基本一致，比如上海交大、浙大、复旦等，直接使用即可。另外一些大学与国标略有差别，可以通过简单的设置满足要求，比如清华、科学院大学、中科大、国防科大等，通常在学位论文模板中实现，在egthesis文件夹内，针对一些大学的学位论文参考文献做了测试。
+
+此外，根据期刊文献生成需求，为文科类期刊增加了如下样式：
+v1.0r版本增加了chinese-erj样式用于生成经济研究期刊的文献; 
+v1.1l版本增加了chinese-css样式用于生成社会科学期刊的脚注注释; 
+v1.1m版本增加了chinese-jmw样式用于生成管理世界期刊的文献。
+而理工类期刊文献通常与国标差别不大，部分期刊与国标的最大的差异主要是在双语对照文献中，比如计算机学报等，可以通过简单的设置来满足要求，具体可以参考github上的问题。
+
+\pdfbookmark[4]{chinese-erj}{chinese-erj}
+\begin{example}{经济研究期刊文献样式(chinese-erj)}{eg:gbchineseerj}
+\begin{texlist}
+%使用经济研究期刊文献样式
+\usepackage[backend=biber,style=chinese-erj]{biblatex}
+\end{texlist}
+\end{example}
+
+\pdfbookmark[4]{chinese-css}{chinese-css}
+\begin{example}{社会科学期刊文献样式(chinese-css)}{eg:gbchinesecss}
+\begin{texlist}
+%使用社会科学期刊文献样式
+\usepackage[backend=biber,style=chinese-css,gbfootbib=true,gbfnperpage=true]{biblatex}
+\end{texlist}
+\end{example}
+
+
+\pdfbookmark[4]{chinese-jmw}{chinese-jmw}
+\begin{example}{管理世界期刊文献样式(chinese-jmw)}{eg:gbchinesejmw}
+\begin{texlist}
+%使用社会科学期刊文献样式
+\usepackage[backend=biber,style=chinese-jmw]{biblatex}
+\end{texlist}
+\end{example}
+
 
 
 \subsubsection{新增选项}\label{sec:added:opt}
@@ -983,9 +1003,9 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \pdfbookmark[4]{gbfootbibfmt}{gbfootbibfmt}
   \item[gbfootbibfmt]=true，\textbf{false}. \hfill default is false
 
-  如果要实现脚注文献表，但不想要国标要求的脚注符号和缩进，但要求相同文献用标签替代，则可使用gbfootbibfmt代替上面的gbfootbib选项。
+  如果不想要默认的脚注符号和缩进，但要实现脚注文献表且脚注中相同文献用标签替代等国标要求，则可使用gbfootbibfmt代替上面的gbfootbib选项。
   \begin{itemize}
-    \item gbfootbibfmt=true，处理使脚注文献表中的相同的文献用标签代替。
+    \item gbfootbibfmt=true，实现脚注文献表及相同文献用标签代替等国标要求，但不设置脚注符号和缩进，用户可自行通过其它方式或宏包设置需要的符号和缩进形式。
     \item gbfootbibfmt=false，不做任何附加处理。
   \end{itemize}
 
