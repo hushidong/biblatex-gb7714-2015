@@ -27,6 +27,11 @@
 \DeclareBibliographyOption{gbpunctcn}[true]{%biblatex低版本
   \ifstrequal{#1}{false}{\execgbpuncten}{}}
 
+\newtoggle{bbx:gbvolnum}
+\DeclareBibliographyOption{gbvolnum}[false]{%
+    \settoggle{bbx:gbvolnum}{#1}}
+    \ExecuteBibliographyOptions{gbvolnum}
+
 \newbibmacro*{bbx:ifmergeddate}{\@secondoftwo}
 
 \newbibmacro*{date+extradate}{}
@@ -41,18 +46,12 @@
            {\printdateextra}
            {\printlabeldateextra}}}}%
   \renewbibmacro*{bbx:ifmergeddate}{\iflabeldateisdate}%
-%  \renewbibmacro*{issue+date}{%
-%    \ifboolexpr{test {\usebibmacro{bbx:ifmergeddate}}
-%                and
-%                test {\iffieldundef{issue}}}
-%      {}
-%      {\printtext[parens]{%
-%         \printfield{issue}%
-%         \setunit*{\addspace}%
-%         \usebibmacro{bbx:ifmergeddate}
-%           {}
-%           {\printdate}}}%
-%    \newunit}
+  \renewbibmacro*{issue+date}{%去掉括号
+    \iffieldundef{issue}
+      {\usebibmacro{date}}%
+      {\iftoggle{bbx:gbstrict}{}{\printfield{issue}%
+       \setunit*{\addspace}}%
+       \usebibmacro{date}}}%
 }
 
 
@@ -91,6 +90,7 @@
     dateabbrev=false,
     maxbibnames=99,
     mergedate=true,
+    gbfootbibfmt =true,
     %datezeros=false,
     }
 
@@ -122,7 +122,7 @@
 \def\gbpunctttr{》}%
 }
 
-\DefineBibliographyExtras{english}{\renewcommand*{\bibrangedash}{$\sim$}}%将页码间隔符替换会英文的短横线
+\DefineBibliographyExtras{english}{\renewcommand*{\bibrangedash}{\textasciitilde}}%将页码间隔符替换会英文的短横线
 
 %==================================================
 %为标注和文献表中标点格式，重设and本地化字符串
@@ -130,10 +130,10 @@
 \DefineBibliographyStrings{english}{
     and         = { and},%and后面的空格在finalnamedelim已经加过了，所以这里去掉20191009
     andcn       = {\gbpunctmark\unspace},%\gbpunctmark
-    %andotherscn={等},
     mathesiscn={硕士学位论文},
     phdthesiscn={博士学位论文},
     bytranslator= {trans\adddot\ \lbx@sfromlang\ by},
+    in={in\space},
 }
 
 
@@ -153,7 +153,10 @@
 \DeclareFieldFormat[article,incollection,inbook,inproceedings,misc]{title}{%
 \iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{\mkbibquote{#1}\isdot}}
 \DeclareFieldFormat*{journaltitle}{%
-\iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{\textbf{\textit{#1}}}}%
+\iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}%
+{\iffieldequalstr{entrysubtype}{workpaper}{#1}%
+{\textbf{\textit{#1}}}%
+}}%
 \DeclareFieldFormat{booktitle}{%
 \iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{\textbf{\textit{#1}}}}
 \renewcommand*{\revsdnamepunct}{%
@@ -216,9 +219,10 @@
 %   调整页码前的标点和去掉期刊文章等页码后面的标点
 %
 \renewbibmacro*{note+pages}{%源来自standard.bbx
-%    \iffieldundef{postnote}{\iffieldundef{pages}{}{%
-%              \setunit{\bibpagespunct}%
-%              \printfield{pages}}}{}%
+\iffieldequalstr{userd}{chinese}{}%
+        {\iffieldundef{pages}{}{%
+              \setunit{\bibpagespunct}%
+              \printfield{pages}}}%
 }
 
 
@@ -239,7 +243,13 @@
 \printdelim{finalpunct}}
 %调整标注的注释中的条目结尾标点
 \DeclareDelimFormat{finalpunct}{\iffieldequalstr{userd}{chinese}{\gbpunctdot}{\adddot}}
-\DeclareDelimFormat[fullinnercite]{finalpunct}{}
+%注意由于usedriver中biblatex自动把\finenty定义为\blx@finentry@usedrv
+%而\blx@finentry@usedrv的标点默认设置为空，所以userdriver最后本来没有标点
+%这里将其恢复成文献表中的标点\blx@imc@finentry，所以会与文献表一致
+\AtUsedriver{%
+  \let\finentry\blx@imc@finentry%\blx@finentry@usedrv
+}
+
 
 %出版项中：出版社地址后面的标点
 \renewcommand{\publocpunct}{%
@@ -408,7 +418,9 @@
 
 
 \renewbibmacro*{in:}{%
-\iftoggle{bbx:gbpunctin}{\gbpunctcomma}%\addthinspace
+\iftoggle{bbx:gbpunctin}{\iffieldequalstr{userd}{chinese}%
+                             {\gbpunctcomma}%
+                             {\newunit\printtext{\bibstring{in}}}}%\addthinspace
                          {\setunit{\adddot\addspace}%
                              \iffieldequalstr{userd}{chinese}%
                              {\gbpunctcomma}%
@@ -431,11 +443,12 @@
         \printtext{\bibstring{serialcn}\addthinspace\arabic{numberwithoutzero} 期}}%
         {\printtext{\bibstring{serialcn}\addthinspace #1 期}}%
         }}%
-        {\newunit\setcounter{numberwithoutzero}{#1}\printtext{\bibstring{number}}\arabic{numberwithoutzero}}%
+        {\setcounter{numberwithoutzero}{#1}\printtext{\bibstring{number}}~\arabic{numberwithoutzero}}%
 }
 
 \DeclareFieldFormat[book,inbook,incollection,misc]{number}%
-{\iffieldequalstr{userd}{chinese}{\iffieldint{number}%
+{\iffieldequalstr{userd}{chinese}
+    {\iffieldint{number}%
         {%
         \bibstring{serialcn}#1\bibstring{numbercn}%
         }{#1}%
@@ -516,10 +529,28 @@
 \iffieldequalstr{userd}{chinese}%
   {\iffieldundef{volume}{}{\printfield{volume}}%
     \iffieldundef{number}{}{\printfield{number}}}%区别于顺序编码制
-  {\newunit\printfield{volume}%
-  \printfield{number}%
-  \setunit{\addcomma\space}%
+  {\newunit%
+  \iftoggle{bbx:gbvolnum}%
+      {\usebibmacro{gb+volume+number}}%
+      {\iffieldundef{volume}{}{\printfield{volume}}%
+       \newunit\iffieldundef{number}{}{\printfield{number}}}%
   \printfield{eid}}%
+}
+
+
+\DeclareFieldFormat{plainvolume}{#1}%
+
+
+\newbibmacro*{gb+volume+number}
+{%
+\ifboolexpr{
+   not test {\iffieldundef{volume}} and  not test {\iffieldundef{number}}
+    }
+    {\printfield[plainvolume]{volume}\printfield[parens]{number}}
+    {%
+        \iffieldundef{volume}{}{\printfield{volume}}%
+        \iffieldundef{number}{}{\printfield{number}}%
+    }%
 }
 
 

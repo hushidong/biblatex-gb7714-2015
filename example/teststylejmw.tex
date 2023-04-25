@@ -6,7 +6,7 @@
     \usepackage{lipsum}
     \usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
 
-\usepackage[backend=biber,style=chinese-jmw,gbfootbib=true,gbfnperpage=true,url=false]{biblatex} 
+\usepackage[backend=biber,style=chinese-jmw,gbvolnum=false]{biblatex}
 
 \begin{filecontents}[force]{\jobname.bib}
 @article{Weiss2010,
@@ -108,6 +108,25 @@
     number={4567},
 	year = {2006},
 }
+
+@article{Krugman2006a,
+	journal = {{NBER} {Working} {Paper}},
+	title = {Title of the article},
+	author = {Krugman, P.},
+    number={4567},
+	year = {2006},
+}
+
+
+@article{Krugman2006b,
+    entrysubtype={workpaper},
+	journal = {{NBER} {Working} {Paper}},
+	title = {Title of the article},
+	author = {Krugman, P.},
+    number={4567},
+	year = {2006},
+}
+
 
 @phdthesis{黄超2017,
 	type = {博士学位论文},
@@ -255,7 +274,7 @@ Accounting Review}}，vol.85，pp.1441\verb|~|1471.
 （2）两个英文作者的参考文献的格式：
 
 Kang，J. K. and Kim，J. M.，2008，“The Geography of Block Acquisitions”，\textbf{\textit{Journal
-of Finance}}，63(6)，pp.2817\verb|~|2858.
+of Finance}}，63(6)，pp.2817\textasciitilde 2858.
 \footfullcite{Kang2008}
 
 
@@ -270,6 +289,9 @@ of Accounting and Economics}}，vol.55，pp.111$\sim$127.
 
 Krugman，P.，2006，“Title of the Article”，NBER Working Paper，No.4567.
 \footfullcite{Krugman2006}
+\footfullcite{Krugman2006a}
+\footfullcite{Krugman2006b}
+
 
 （5）引用文献是论文集或合集中的某一篇论文的参考文献格式：
 
@@ -281,7 +303,7 @@ Crash?”，in Barro，R. J.，R. W. Kamphuis，R. C. Kormendi and J. W. H. Wats
 （6）引用文献是专著时的参考文献格式：
 
 Skolnik，M. I.，1990，\textbf{\textit{Radar handbook}}，New York：McGraw-Hill.
-\footfullcite{Skolnik1990}Skolnik1990
+\footfullcite{Skolnik1990}
 
 \newpage
 {

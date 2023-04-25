@@ -78,6 +78,13 @@
 \DeclareDelimFormat[parencite]{andothersdelim}{\iffieldequalstr{userf}{chinese}{}{\addspace}}%
 
 
+%去掉footfullcite后面的点
+%注意由于usedriver中biblatex自动把\finenty设置为空，所以userdriver最后本来没有标点
+%默认了加了period所以把它去掉
+\renewcommand{\bibfootnotewrapper}[1]{%
+  \bibsentence#1}%
+
+
 %标注压缩时，直接用date+extradate代替extradate实现2006a，2006b的效果
 %\DeclareDelimFormat*{compcitedelim}{\gbpunctmarkcite}%\addcomma\addspace
 \newbibmacro*{cite:extradate}{%
