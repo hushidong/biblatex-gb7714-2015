@@ -33,7 +33,7 @@
 %\colorlet{gbemphcolor}{violet}
 
 %定义版面，showframe,
-\usepackage[paperwidth=210mm,paperheight=290mm,left=35mm,right=20mm,top=25mm, bottom=20mm,showcrop]{geometry}%,showframe
+\usepackage[paperwidth=210mm,paperheight=290mm,left=40mm,right=15mm,top=25mm, bottom=20mm,showcrop]{geometry}%,showframe
 \renewcommand{\baselinestretch}{1.35}
 %页面布局的标尺
 \usepackage[type=none]{fgruler}
@@ -96,6 +96,7 @@
 \usepackage[colorlinks=true,%
 pdfstartview=FitH,allcolors=gbemphcolor,
 bookmarksopenlevel=4,%
+bookmarksnumbered=true,
 bookmarksdepth=4,]{hyperref}
 %linkcolor=gbblue,anchorcolor=gbblue,citecolor=gbblue
 %linkcolor=black,linkcolor=green,blue,red,cyan, magenta,
@@ -331,7 +332,7 @@ theorem style=plain,fonttitle=\bfseries\heiti,coltitle=gbforestgreen
 
 %--------------列表环境---------------------------------------------
 \usepackage[inline]{enumitem} %重设list环境
-\setlist[enumerate]{label=\bfseries\textcolor{gbemphcolor}{(\arabic*)},topsep=2pt,partopsep=0pt,parsep=0pt,%
+\setlist[enumerate]{label=\textbf{(\arabic*)},topsep=2pt,partopsep=0pt,parsep=0pt,%
 align=left,leftmargin=0em,itemsep=0.5em,labelwidth=0.1em,itemindent=2.6em,listparindent=2em}%label=$\triangleright$,itemindent=1em
 \setlist[itemize]{topsep=2pt,partopsep=0pt,parsep=0pt,%
 leftmargin=3em,itemindent=0em}
@@ -394,13 +395,13 @@ itemsep=0pt,leftmargin=0em,itemindent=0em}%注意，font或format中的最后一
 \setlength{\parsep}{0pt}
 \setlength{\leftmargin}{0pt}%
 \setlength{\itemindent}{0pt}%
-\renewcommand*{\makelabel}[1]{\hss\llap{\footnotesize\color{orange}\bfseries##1}}}}
+\renewcommand*{\makelabel}[1]{\hss\llap{\footnotesize\color{gblabelcolor}\bfseries##1}}}}
 {\endlist}
 
 \makeatletter
 \newcommand{\updateinfo}[2][\@empty]{%
 \par\small\addvspace{2ex plus 1ex}%
-\noindent{\color{gbemphcolor}\rule{\linewidth}{2pt}}
+\noindent{\color{gblabelcolor}\rule{\linewidth}{2pt}}
 \vskip -\parskip
 \ifx\@empty#1 \begin{marglist} \item #2\end{marglist}
 \else \begin{marglist} \item[#1] #2\end{marglist} \fi}
