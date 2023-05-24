@@ -28,6 +28,8 @@
 %   增加标签包围符号格式处理选项
 %   20211030,1.1a,hzz
 %
+\def\gbpunctcommacite{\addcomma\addspace}
+\def\gbpunctsemicoloncite{\addsemicolon\addspace}
 \newrobustcmd{\mkbibleftborder}{\gbleftparen}
 \newrobustcmd{\mkbibrightborder}{\gbrightparen}
 \DeclareBibliographyOption[string]{gbcitelabel}[bracket]{%
@@ -38,10 +40,27 @@
 \def\gbcitelabelopt@bracket{%
 \renewrobustcmd{\mkbibleftborder}{\gbleftbracket}%
 \renewrobustcmd{\mkbibrightborder}{\gbrightbracket}%
+\def\CharParenLeft{[}%
+\def\CharParenRight{]}%
 }
 \def\gbcitelabelopt@parens{%
 \renewrobustcmd{\mkbibleftborder}{\gbleftparen}%
 \renewrobustcmd{\mkbibrightborder}{\gbrightparen}%
+}
+\def\gbcitelabelopt@parensqj{%
+\def\CharParenLeft{\allowbreak（}%
+\def\CharParenRight{）\unspace}%
+}
+\def\gbcitelabelopt@bracketqj{%
+\def\CharParenLeft{\allowbreak【}%
+\def\CharParenRight{】\unspace}%
+}
+\def\gbcitelabelopt@quanjiao{%
+\def\CharParenLeft{\allowbreak（}%
+\def\CharParenRight{）\unspace}%
+\def\gbpunctcommacite{，}%
+\def\gbpunctmarkcite{、}%
+\def\gbpunctsemicoloncite{；}%
 }
 \def\gbcitelabelopt@dot{%
 \renewrobustcmd{\mkbibleftborder}{}%
@@ -116,14 +135,15 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
 % v1.0t，20200320，hzz，修改如下
 % 在cbx中增加标注中的nameyeardelim标点定义，避免bbx使用其它样式时出现问题
 % 同时设置textcite的nameyeardelim为一个短空格，似乎原来直接连上去的不够美观
-\DeclareDelimFormat[cite,parencite,pagescite]{nameyeardelim}{\addcomma\space}%\addcomma\space
+\renewcommand*{\multicitedelim}{\gbpunctsemicoloncite}%\addsemicolon\addspace；
+\DeclareDelimFormat[cite,parencite,pagescite]{nameyeardelim}{\gbpunctcommacite}%\addcomma\space
 \DeclareDelimFormat[textcite]{nameyeardelim}{\addthinspace}%\addcomma\space
 \DeclareDelimFormat[textcite]{andothersdelim}{\iffieldequalstr{userf}{chinese}{\addthinspace}{\addspace}}%
 \AtEveryCitekey{%
 \iffieldequalstr{userf}{chinese}{\renewcommand*{\andothersdelim}{\addthinspace}}%\addthinspace
   {\renewcommand*{\andothersdelim}{\addspace}}%
 }
-\newcommand{\compextradelim}{\addcomma\addthinspace} %标注中压缩后相同年份后附加标签a、b之间的标点
+\newcommand{\compextradelim}{\gbpunctcommacite} %标注中压缩后相同年份后附加标签a、b之间的标点
 
 %
 %   修订使可用选项gblabelref来控制是否将标准标签中的作者加上超链接

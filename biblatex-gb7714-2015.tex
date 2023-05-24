@@ -570,8 +570,11 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbcitelabel=plain，标注标签无装饰，比如1；
     \item gbcitelabel=box，标注标签由方框包围，比如\framebox{1}；
     \item gbcitelabel=circle，标注标签由圆圈包围，比如\textcircled{1}。
+    \item gbcitelabel=bracketqj，用于作者年制，标签由全角方括号包围，比如【作者, 2001】
+    \item gbcitelabel=parensqj，用于作者年制，标签由全角圆括号包围，比如（作者,　2001）
+    \item gbcitelabel=quanjiao，用于作者年制，标签由全角圆括号包围且内部标点为全角标点，比如（作者，2001）
   \end{itemize}
-  顺序编码制和作者年制存在一定的差异，作者年制主要是方括号、圆括号、无括号的选择。
+  注意顺序编码制和作者年制存在一定的差异，作者年制主要是方括号、圆括号以及全角半角的选择。
   顺序编码制默认是方括号，作者年制默认是圆括号。
 
 
@@ -1509,7 +1512,7 @@ bibitemindent表示
 
 \begin{itemize}
 \item 一是采用list环境的文献表，即设置gbalign=left、right、center时（即顺序编码标签是左对齐、右对齐和居中对齐的情况）。此时需要调整的尺寸包括三个：biblabelsep，bibitemindent，biblabelextend。
-    
+
 
 \hspace{2em}此时的文献表环境中，数字标签盒子默认宽度为labelnumberwidth，由biblatex根据文献数量自动计算后设定，因此改变缩进主要通过调整biblabelsep和bibitemindent两个尺寸来实现。biblabelsep设置数字标签盒子与文献内容之间的间距。bibitemindent设置第一行相对后面其它行的缩进，默认情况下bibitemindent为0pt，则一条文献内所有行缩进相同，若bibitemindent>0pt则第一行相比后面各行缩进，若bibitemindent<0pt则后面各行相比第一行缩进。
 
