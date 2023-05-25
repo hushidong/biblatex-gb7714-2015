@@ -40,24 +40,22 @@
 \def\gbcitelabelopt@bracket{%
 \renewrobustcmd{\mkbibleftborder}{\gbleftbracket}%
 \renewrobustcmd{\mkbibrightborder}{\gbrightbracket}%
-\def\CharParenLeft{[}%
-\def\CharParenRight{]}%
 }
 \def\gbcitelabelopt@parens{%
 \renewrobustcmd{\mkbibleftborder}{\gbleftparen}%
 \renewrobustcmd{\mkbibrightborder}{\gbrightparen}%
 }
 \def\gbcitelabelopt@parensqj{%
-\def\CharParenLeft{\allowbreak（}%
-\def\CharParenRight{）\unspace}%
+\renewrobustcmd{\mkbibleftborder}{\allowbreak（}%
+\renewrobustcmd{\mkbibrightborder}{）\unspace}%
 }
 \def\gbcitelabelopt@bracketqj{%
-\def\CharParenLeft{\allowbreak【}%
-\def\CharParenRight{】\unspace}%
+\renewrobustcmd{\mkbibleftborder}{\allowbreak【}%
+\renewrobustcmd{\mkbibrightborder}{】\unspace}%
 }
 \def\gbcitelabelopt@quanjiao{%
-\def\CharParenLeft{\allowbreak（}%
-\def\CharParenRight{）\unspace}%
+\renewrobustcmd{\mkbibleftborder}{\allowbreak（}%
+\renewrobustcmd{\mkbibrightborder}{）\unspace}%
 \def\gbpunctcommacite{，}%
 \def\gbpunctmarkcite{、}%
 \def\gbpunctsemicoloncite{；}%
@@ -190,7 +188,7 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
           {\usebibmacro{cite:label}%
            \setunit{%
              \global\booltrue{cbx:parens}%
-             \printdelim{nonameyeardelim}\bibopenparen}%
+             \printdelim{nonameyeardelim}\mkbibleftborder}%\bibopenparen
            \ifnumequal{\value{citecount}}{1}
              {\usebibmacro{prenote}}
              {}%
@@ -199,7 +197,7 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
        {\iftoggle{bbx:gblabelref}{\printtext[bibhyperref]{\printnames{labelname}}}{\printnames{labelname}}%
         \setunit{%
           \global\booltrue{cbx:parens}%
-          \printdelim{nameyeardelim}\bibopenparen}%
+          \printdelim{nameyeardelim}\bibopenparen}%\bibopenparen
         \ifnumequal{\value{citecount}}{1}
           {\usebibmacro{prenote}}
           {}%
@@ -214,7 +212,7 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
      \savefield{namehash}{\cbx@lasthash}}%
   \setunit{%
     \ifbool{cbx:parens}
-      {\bibcloseparen\global\boolfalse{cbx:parens}}
+      {\mkbibrightborder\global\boolfalse{cbx:parens}}%\bibcloseparen
       {}%
     \textcitedelim}}}{}
 
@@ -352,7 +350,7 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
               \savefield{labelyear}{\cbx@lastyear}}}
           {\iftoggle{bbx:gblabelref}{\printtext[bibhyperref]{\printnames{labelname}}}{\printnames{labelname}}%%
            %\setunit{\printdelim{nameyeardelim}}%
-           \gbleftparen\usebibmacro{cite:labeldate+extradate}\gbrightparen%
+           \mkbibleftborder\usebibmacro{cite:labeldate+extradate}\mkbibrightborder%
            \savefield{namehash}{\cbx@lasthash}%
            \savefield{labelyear}{\cbx@lastyear}}}}
     {\usebibmacro{cite:shorthand}%

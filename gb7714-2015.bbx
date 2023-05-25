@@ -215,14 +215,17 @@
 %% 20220625,hzz,v1.1i
 \newlength{\BracketLift}
 \setlength{\BracketLift}{0.0ex}
+%如下4个字符可以做全局性的改变，无论是在citation还是bibliography中
 \def\CharParenLeft{(}
 \def\CharParenRight{)}
 \def\CharBracketLeft{[}
 \def\CharBracketRight{]}
+%如下4个用于改变biblatex提供的括号命令中的字符的位置抬升
 \renewcommand*{\bibleftparen}{\blx@postpunct\raise\BracketLift\hbox{\CharParenLeft}}
 \renewcommand*{\bibrightparen}{\blx@postpunct\raise\BracketLift\hbox{\CharParenRight}\midsentence}
 \renewcommand*{\bibleftbracket}{\blx@postpunct\raise\BracketLift\hbox{\CharBracketLeft}}
 \renewcommand*{\bibrightbracket}{\blx@postpunct\raise\BracketLift\hbox{\CharBracketRight}\midsentence}
+%如下4个用于改变biblatex-gb7714-2015相关的括号命令中的字符的位置抬升
 \newcommand*{\gbleftparen}{\raise\BracketLift\hbox{\CharParenLeft}}
 \newcommand*{\gbrightparen}{\raise\BracketLift\hbox{\CharParenRight}}
 \newcommand*{\gbleftbracket}{\raise\BracketLift\hbox{\CharBracketLeft}}
@@ -693,7 +696,10 @@
     %为数字标签格式选择增加的计数器/命令
     \newcommand{\mkgbnumlabel}[1]{\mkbibbrackets{#1}}
     \def\gbbiblabelopt@bracket{\renewcommand{\mkgbnumlabel}[1]{\mkbibbrackets{##1}}}
+    \def\gbbiblabelopt@bracketqj{\renewcommand{\mkgbnumlabel}[1]{【##1】}}
+    \def\gbbiblabelopt@quanjiao{\renewcommand{\mkgbnumlabel}[1]{【##1】}}
     \def\gbbiblabelopt@parens{\renewcommand{\mkgbnumlabel}[1]{\mkbibparens{##1}}}
+    \def\gbbiblabelopt@parensqj{\renewcommand{\mkgbnumlabel}[1]{（##1）}}
     \def\gbbiblabelopt@dot{\renewcommand{\mkgbnumlabel}[1]{##1\adddot}}
     \def\gbbiblabelopt@plain{\renewcommand{\mkgbnumlabel}[1]{##1}}
     \def\gbbiblabelopt@box{\renewcommand{\mkgbnumlabel}[1]{\framebox{##1}}}
@@ -805,6 +811,7 @@
         \ifstrequal{#1}{right}{\setcounter{gbalignlabel}{0}}{}
         \ifstrequal{#1}{left}{\setcounter{gbalignlabel}{1}}{}
         \ifstrequal{#1}{center}{\setcounter{gbalignlabel}{2}}{}
+        \ifstrequal{#1}{centpos}{\setcounter{gbalignlabel}{3}}{}
         \ifstrequal{#1}{gb7714-2015}{\setaligngbstyle}{}
         \ifstrequal{#1}{gb7714-2015ay}{\setaligngbstyleay}{}
     }
@@ -849,6 +856,7 @@
         \ifstrequal{#1}{right}{\setcounter{gbalignlabel}{0}}{}
         \ifstrequal{#1}{left}{\setcounter{gbalignlabel}{1}}{}
         \ifstrequal{#1}{center}{\setcounter{gbalignlabel}{2}}{}
+        \ifstrequal{#1}{centpos}{\setcounter{gbalignlabel}{3}}{}
         \ifstrequal{#1}{gb7714-2015}{}{}
         \ifstrequal{#1}{gb7714-2015ay}{\setaligngbstyleay}{}
     }
@@ -2233,6 +2241,8 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     \mkgbnumlabel{#1}\hfill%
 \or%中间对齐，比如：序号数字居于[]中间
     \hfil\mkgbnumlabel{\hfill#1\hfill}\hfil%
+\or%中间对齐，但是整个标签位于中间，比如：[1]位于中间
+    \hfil\mkgbnumlabel{#1}\hfil%
 \fi}
 
 %

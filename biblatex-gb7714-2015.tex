@@ -452,10 +452,11 @@ v1.1m版本增加了chinese-jmw样式用于生成管理世界期刊的文献。
 
   为控制文献表数字序号标签增加的选项，用于选择是否生成序号标签及其对齐方式。
   \begin{itemize}
-    \item gbalign=right，数字序号标签，是list环境中的标签右对齐，是gb7714-2015样式的默认选项；
-    \item gbalign=left，数字序号标签，是list环境中的标签左对齐；
-    \item gbalign=center，数字序号标签，是list环境中的等宽标签，数字在[]内居中；
-    \item gbalign=gb7714-2015，数字序号标签，是项对齐方式，即段落环境中标签使用原始宽度，标签与条目内容等间距。
+    \item gbalign=right，是list环境中的右对齐数字序号标签，是gb7714-2015样式的默认选项；
+    \item gbalign=left，是list环境中的左对齐数字序号标签；
+    \item gbalign=center，是list环境中的等宽数字序号标签，数字在[]内居中；
+    \item gbalign=centpos，是list环境中的局中数字序号标签，带括号标签[1]在标签盒子内居中；
+    \item gbalign=gb7714-2015，是项对齐方式数字序号标签，即段落环境中标签使用原始宽度，标签与条目内容等间距。
     \item gbalign=gb7714-2015ay，无数字序号标签，是author-year风格的文献表，是gb7714-2015ay样式的默认选项。
   \end{itemize}
   该选项对\textbf{著者年份制、顺序编码制均有效}，也就是说当使用著者年份制时，加上gbalign选项后同样可以实现文献表的顺序序号标签(比如：
@@ -536,6 +537,9 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \begin{itemize}
     \item gbbiblabel=bracket，序号数字由方括号包围，比如[1]；
     \item gbbiblabel=parens，序号数字由圆括号包围，比如(1)；
+    \item gbcitelabel=bracketqj，标注标签由全角方括号包围，比如【1】；
+    \item gbcitelabel=parensqj，标注标签由全角圆括号包围，比如（1）；
+    \item gbcitelabel=quanjiao，标注标签由全角方括号包围，比如【1】；
     \item gbbiblabel=dot，序号数字数字后面加点，比如1.；
     \item gbbiblabel=plain，序号数字无装饰，比如1；
     \item gbbiblabel=box，序号数字由方框包围，比如\framebox{1}；
@@ -570,9 +574,9 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbcitelabel=plain，标注标签无装饰，比如1；
     \item gbcitelabel=box，标注标签由方框包围，比如\framebox{1}；
     \item gbcitelabel=circle，标注标签由圆圈包围，比如\textcircled{1}。
-    \item gbcitelabel=bracketqj，用于作者年制，标签由全角方括号包围，比如【作者, 2001】
-    \item gbcitelabel=parensqj，用于作者年制，标签由全角圆括号包围，比如（作者,　2001）
-    \item gbcitelabel=quanjiao，用于作者年制，标签由全角圆括号包围且内部标点为全角标点，比如（作者，2001）
+    \item gbcitelabel=bracketqj，标签由全角方括号包围，比如【作者, 2001】
+    \item gbcitelabel=parensqj，标签由全角圆括号包围，比如（作者, 2001）
+    \item gbcitelabel=quanjiao，标签由全角圆括号包围且内部标点为全角标点，比如（作者，2001）
   \end{itemize}
   注意顺序编码制和作者年制存在一定的差异，作者年制主要是方括号、圆括号以及全角半角的选择。
   顺序编码制默认是方括号，作者年制默认是圆括号。

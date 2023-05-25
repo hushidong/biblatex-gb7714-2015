@@ -58,6 +58,18 @@
 \renewrobustcmd{\mkbibleftborder}{\gbleftparen}%
 \renewrobustcmd{\mkbibrightborder}{\gbrightparen}%
 }
+\def\gbcitelabelopt@parensqj{%
+\renewrobustcmd{\mkbibleftborder}{\allowbreak（}%
+\renewrobustcmd{\mkbibrightborder}{）\unspace}%
+}
+\def\gbcitelabelopt@bracketqj{%
+\renewrobustcmd{\mkbibleftborder}{\allowbreak【}%
+\renewrobustcmd{\mkbibrightborder}{】\unspace}%
+}
+\def\gbcitelabelopt@quanjiao{%
+\renewrobustcmd{\mkbibleftborder}{\allowbreak（}%
+\renewrobustcmd{\mkbibrightborder}{）\unspace}%
+}
 \def\gbcitelabelopt@dot{%
 \renewrobustcmd{\mkbibleftborder}{}%
 \renewrobustcmd{\mkbibrightborder}{.}%
@@ -105,7 +117,7 @@
     {\usebibmacro{cite:comp}}
     {\usebibmacro{cite:dump}%
      \ifbool{cbx:parens}
-       {\printtext{\bibclosebracket}\global\boolfalse{cbx:parens}}
+       {\printtext{\mkbibrightborder}\global\boolfalse{cbx:parens}}%\bibclosebracket
        {}%
      \iffirstcitekey
        {}
@@ -115,7 +127,7 @@
        {\printfield[citetitle]{labeltitle}}
        {\iftoggle{bbx:gblabelref}{\printtext[bibhyperref]{\printnames{labelname}}}{\printnames{labelname}}}%
      \setunit*{\printdelim{namelabeldelim}}%
-     \printtext{\bibopenbracket}\global\booltrue{cbx:parens}%
+     \printtext{\mkbibleftborder}\global\booltrue{cbx:parens}%\bibopenbracket
      \ifnumequal{\value{citecount}}{1}
        {\usebibmacro{prenote}}
        {}%
@@ -178,7 +190,7 @@
 %   定义一个上标方括号wrapper
 %
 \newcommand*\mkbibsuperbracket[1]{%
-  \mkbibsuperscript{\mkbibbrackets{#1}}%
+  \mkbibsuperscript{\mkbibleftborder{#1}\mkbibrightborder}%
 }
 
 %   修改postnote的输出格式
@@ -201,7 +213,7 @@
     \begingroup%
     \protected\long\def\mkbibsuperscriptusp##1{%
       \blx@warning{Nested superscript}%
-      \mkbibbrackets{##1}}%
+      \mkbibleftborder{##1}\mkbibrightborder}%
     #1\endgroup}}
 
 
@@ -352,7 +364,8 @@
     {\usebibmacro{cite:comp}}%
     {\usebibmacro{cite:dump}%
      \ifbool{cbx:parens}%
-       {\mkbibsuperscript{{\hspace{-0.075em}\bibclosebracket}}\global\boolfalse{cbx:parens}}%\printtext
+       {\mkbibsuperscript{{\hspace{-0.075em}\mkbibrightborder}}%\bibclosebracket
+       \global\boolfalse{cbx:parens}}%\printtext
        {}%
      \iffirstcitekey
        {}
@@ -362,7 +375,8 @@
        {\printfield[citetitle]{labeltitle}}
        {\printnames{labelname}}%
      %\setunit*{\printdelim{namelabeldelim}}%
-     \mkbibsuperscript{\printtext{\bibopenbracket}\global\booltrue{cbx:parens}%
+     \mkbibsuperscript{\printtext{\mkbibleftborder}%\bibopenbracket
+     \global\booltrue{cbx:parens}%
      \ifnumequal{\value{citecount}}{1}
        {\usebibmacro{prenote}}%
        {}%
@@ -378,11 +392,13 @@
   {}%
   {\ifbool{cbx:incitet}%
         {\mkbibsuperscript{\usebibmacro{cite:dump}\usebibmacro{postnote}%
-        \ifbool{cbx:parens}{\hspace{-0.075em}\bibclosebracket\global\boolfalse{cbx:parens}}{}%
+        \ifbool{cbx:parens}{\hspace{-0.075em}\mkbibrightborder%\bibclosebracket
+        \global\boolfalse{cbx:parens}}{}%
         }%
         }%
         {\usebibmacro{cite:dump}\usebibmacro{postnote}%
-        \ifbool{cbx:parens}{\bibclosebracket\global\boolfalse{cbx:parens}}{}%
+        \ifbool{cbx:parens}{\mkbibrightborder%\bibclosebracket
+        \global\boolfalse{cbx:parens}}{}%
         }%
    }
 
