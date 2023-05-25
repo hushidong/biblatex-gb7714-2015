@@ -1,24 +1,61 @@
 \documentclass{article}
 \usepackage{ctex}
-\usepackage[backend=biber,style=gb7714-2015ay,gbcitelocal=chinese]{biblatex}
+\usepackage[backend=biber,style=gb7714-2015ay]{biblatex} %,gbcitelocal=chinese
 
-\DeclareDelimFormat[cite,parencite,pagescite]{nameyeardelim}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{\addcomma\addspace}{，}}
-\DeclareDelimFormat[textcite]{nameyeardelim}{\addthinspace}
-\renewcommand*{\multicitedelim}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{\addsemicolon\addspace}{；}}
-\renewcommand*{\compcitedelim}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{\addcomma\addspace}{，}}
-\renewcommand*{\compextradelim}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{\addcomma\addspace}{，}}
-\renewcommand*{\bibleftparen}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{(}{（}}
-\renewcommand*{\bibrightparen}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{)}{）}}
-\renewcommand*{\mkbibleftborder}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{(}{（}}
-\renewcommand*{\mkbibrightborder}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{)}{）}}
+%\DeclareDelimFormat[cite,parencite,pagescite]{nameyeardelim}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{\addcomma\addspace}{，}}
+%\DeclareDelimFormat[textcite]{nameyeardelim}{\addthinspace}
+%\renewcommand*{\multicitedelim}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{\addsemicolon\addspace}{；}}
+%\renewcommand*{\compcitedelim}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{\addcomma\addspace}{，}}
+%\renewcommand*{\compextradelim}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{\addcomma\addspace}{，}}
+%\renewcommand*{\bibleftparen}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{(}{（}}
+%\renewcommand*{\bibrightparen}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{)}{）}}
+%\renewcommand*{\mkbibleftborder}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{(}{（}}
+%\renewcommand*{\mkbibrightborder}{\ifnumcomp{\value{gbcitelocalcase}}{=}{2}{)}{）}}
 
-\DefineBibliographyStrings{english}{
-        andincitecn       = {和},
-        andothersincitecn = {等},
-}
 
-\usepackage{filecontents}
-\begin{filecontents}{\jobname.bib}
+%\renewcommand*{\multicitedelim}{\iffieldequalstr{userf}{chinese}{；}{\addsemicolon\addspace}}%；
+%\renewcommand*{\compcitedelim}{\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}}
+%\renewcommand{\compextradelim}{\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}}
+%\DeclareDelimFormat[cite,parencite,pagescite,citep]{nameyeardelim}
+%{\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}}%
+%\DeclareDelimFormat[textcite,authornumcite,citet]{nameyeardelim}
+%{\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}}%
+%\DeclareDelimFormat[cite,parencite,pagescite,citep]{andothersdelim}
+%{\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}}%
+%\DeclareDelimFormat[textcite,authornumcite,citet]{andothersdelim}
+%{\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}}%
+
+
+\renewcommand*{\multicitedelim}
+{\ifcase\value{gbcitelocalcase}\iffieldequalstr{userf}{chinese}{；}{\addsemicolon\addspace}%
+\or ；\or\addsemicolon\addspace\fi}%；
+\renewcommand*{\compcitedelim}
+{\ifcase\value{gbcitelocalcase}\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}%
+\or ，\or\addcomma\space\fi}
+\renewcommand{\compextradelim}
+{\ifcase\value{gbcitelocalcase}\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}%
+\or ，\or\addcomma\space\fi}
+\DeclareDelimFormat[cite,parencite,pagescite,citep]{nameyeardelim}
+{\ifcase\value{gbcitelocalcase}\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}%
+\or ，\or\addcomma\space\fi}
+\DeclareDelimFormat[textcite,authornumcite,citet]{nameyeardelim}
+{\ifcase\value{gbcitelocalcase}\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}%
+\or ，\or\addcomma\space\fi}
+\DeclareDelimFormat[cite,parencite,pagescite,citep]{andothersdelim}
+{\ifcase\value{gbcitelocalcase}\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}%
+\or ，\or\addcomma\space\fi}
+\DeclareDelimFormat[textcite,authornumcite,citet]{andothersdelim}
+{\ifcase\value{gbcitelocalcase}\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}%
+\or ，\or\addcomma\space\fi}
+
+
+%\DefineBibliographyStrings{english}{
+%        andincitecn       = {和},
+%        andothersincitecn = {等},
+%}
+
+
+\begin{filecontents}[force]{\jobname.bib}
 
 @article{Aaa_2021,
 author = {Aaa, A. A. and Bbb, B. B. and Ccc, C. C.},
@@ -64,22 +101,62 @@ year = {2018},
 type = {Journal Article}
 }
 
+@INCOLLECTION{陈晋镳1980,
+  AUTHOR = {陈晋镳 and 张惠民 and 朱士兴 and 赵震 and 王振刚},
+  EDITOR = {中国地质科学院天津地质矿产研究所},
+  LOCATION = {天津},
+  PUBLISHER = {天津科学技术出版社},
+  BOOKTITLE = {中国震旦亚界},
+  DATE = {1980},
+  PAGES = {56--114},
+  TITLE = {蓟县震旦亚界研究},
+}
+
+@BOOK{初景利2004,
+  AUTHOR = {初景利 and 陈浩元},
+  LOCATION = {北京},
+  PUBLISHER = {北京图书馆出版社},
+  DATE = {2004},
+  TITLE = {图书馆数字参考咨询服务研究},
+}
+
 
 \end{filecontents}
 \addbibresource[location=local]{\jobname.bib}
 
 \begin{document}
 
+\parindent=0pt
 
-中文段落\cite{Aaa_2018,Aaa_2018a}\cite{Aaa_2021,Aaa_2018}\cite{Aaa_2018,Bbb_2019}
-中文段落\textcite{Aaa_2018,Aaa_2018a}，\textcite{Aaa_2021,Aaa_2018} 发现 \parencite{Aaa_2018,Bbb_2019}
+\textcite{Aaa_2018}
+
+\textcite{Aaa_2018a}
 
 
 {
-\defcounter{gbcitelocalcase}{2}
-english paragraph \cite{Aaa_2018,Aaa_2018a}\cite{Aaa_2021,Aaa_2018}\cite{Aaa_2018,Bbb_2019}
-english paragraph \textcite{Aaa_2018,Aaa_2018a},  \textcite{Aaa_2021,Aaa_2018} find \parencite{Aaa_2018,Bbb_2019}
+中文段落\cite{Aaa_2018,Aaa_2018a}\cite{Aaa_2021,Aaa_2018}\\
+中文段落\textcite{Aaa_2018,Aaa_2018a}，\textcite{Aaa_2021,Aaa_2018}\\
+中文段落\cite{Aaa_2018,Bbb_2019}\parencite{Aaa_2018,Bbb_2019}\\
+中文段落\citet{Aaa_2018}\citep{Bbb_2019}\\
+中文段落\citet{陈晋镳1980}\citep{初景利2004}
+}
+\bigskip
 
+{\defcounter{gbcitelocalcase}{1}
+中文段落\cite{Aaa_2018,Aaa_2018a}\cite{Aaa_2021,Aaa_2018}\\
+中文段落\textcite{Aaa_2018,Aaa_2018a}，\textcite{Aaa_2021,Aaa_2018}\\
+中文段落\cite{Aaa_2018,Bbb_2019}\parencite{Aaa_2018,Bbb_2019}\\
+中文段落\citet{Aaa_2018}\citep{Bbb_2019}\\
+中文段落\citet{陈晋镳1980}\citep{初景利2004}
+}
+\bigskip
+
+
+{\defcounter{gbcitelocalcase}{2}
+english paragraph \cite{Aaa_2018,Aaa_2018a}\cite{Aaa_2021,Aaa_2018}\\
+english paragraph \textcite{Aaa_2018,Aaa_2018a},  \textcite{Aaa_2021,Aaa_2018} \\
+english paragraph \cite{Aaa_2018,Bbb_2019}\parencite{Aaa_2018,Bbb_2019}
+english paragraph \citet{陈晋镳1980}\citep{初景利2004}
 }
 
 

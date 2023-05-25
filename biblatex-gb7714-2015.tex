@@ -1037,7 +1037,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   注意，若要让脚注计数器与其它计数器比如chapter等关联，那么采用latex的常规方法就能解决，比如使用latex内核常用的\verb|\@addtoreset|命令。
 
-
+    
   \item[gbstrict]=\textbf{true}，false. \hfill default is true
 
   为避免输出bib文件中多余的域信息而增加选项，目的是为了兼容一些bib文件，因为某些bst样式文件进行中英文判断需要在bib文件中增加类似language这样的域作为支撑，而其中某些域在标准的biblatex样式文件中是默认输出的。
@@ -1061,11 +1061,13 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subsubsection{新增重要命令}\label{sec:add:cmd}
 
 \begin{description}
+  \pdfbookmark[4]{defdblanentry}{defdblanentry}
   \item[defdblanentry] \{entrykey1\}\{entrykey2\}
 
   用于定义双语对照文献，将entrykey2条目和entrykey1条目关联起来，在文献表中对照输出。比如：\verb|\defdblanentry{entrykey1}{entrykey2}|或
   \verb|\defdoublelangentry{entrykey1}{entrykey2}|，若entrykey1条目是中文的文献，entrykey2条目是对应entrykey1条目的英文形式，那么该命令会使得在文献表中，entrykey2的英文内容紧跟在entrykey1的中文内容后对照输出。该命令也只能出现在导言区中。
-
+  
+  \pdfbookmark[4]{addEntryField}{addEntryField}
   \item[addEntryField] \{entrykey or entrykey comma list\}\{field\}\{fieldvalue\}
 
   用于给指定的文献条目(集)添加域。即将field=\{fieldvalue\}这样的域信息添加到指定的entrykey条目或者entrykey comma list条目集中。比如：
@@ -1074,7 +1076,9 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   将会为author2007en,author2014en两个条目添加nameformat域信息。
   该命令也只能出现在导言区中。
-
+  
+  
+  \pdfbookmark[4]{setlocalbibstring}{setlocalbibstring}
   \item[setlocalbibstring] \{bibstringkey\}\{bibstringval\}
 
   用于局部调整本地化字符串的内容。比如\verb|\setlocalbibstring{andothersincite}{et al.}|，就是临时将本地化字符串andothersincite的内容调整为“et al.”。
@@ -1367,12 +1371,16 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 除了利用命令来调整标注格式外，还有更多方法可进行局部格式调整。这利用了tex的编组特性，编组内的局部格式不影响编组外的格式，所以可利用编组内的局部设置来调整标注的格式。类似的，文献表的著录格式也可局部调整，详见下一节。
 
-引用文献所产生标注标签的格式包括很多内容，包括作者数量、标点、本地化字符串等。最常见的局部调整需求是标点和本地化字符串。这里以双语图题中的引用标注标签的不同本地化字符串需求为例来展示局部调整的方法。
+引用文献所产生标注标签的格式包括很多内容，包括作者数量、标点、本地化字符串等。最常见的局部调整需求是本地化字符串和标点。这里以双语图题中的引用标注标签的不同本地化字符串需求为例来展示局部调整的方法。
+
+\paragraph{标注中“等”“和”等本地化字符串调整}
 
 在中科院某类学位论文中，正文的标注标签要求两个英文作者之间用“和”而不是“and”连接，多个英文作者则截断成一个作者时后面用“等.”而不是“et al.”表示。这可以容易通过设置本地化字符串来实现。然而对于双语的图题，英文图题中不适合出现“等”与“和”这样的字符，所以又要求在这种全英文的环境中将“和”与“等.”更换为英文符号，这就需要利用本地化字符串的局部调整。这种本地化字符串的局部调整其实已经是比较深入的内容，因为biblatex提供的接口DefineBibliographyStrings是全局的设置，而局部调整则需要使用其它方式。
 %如何进行局部调整并没有非常方便的接口，要解决这一需求，需要对biblatex以及gb7714-2015样式有比较深入的了解。
 
-因为gb7714-2015通过gbcitelocalcase计数器来选择使用中文或英文的本地化字符串，因此通过局部设置gbcitelocalcase可以局部的选择不同语言的本地化字符串，然而因为本地化字符串的内容通常是全局设置的，所以当中文的或者英文的本地化字符串设置都不满足要求时，就需要局部的调整本地化字符串的内容，如例\ref{eg:str:localset}所示，对本地化字符串andothersincite的内容做了调整，从全局设置的“等.”转换为“et al.”，“和”转换为“and”，这种局部设置可通过csdef对保存字符串信息的命令直接做的调整，比如\verb|\csdef{abx@sstr@andothersincite}{et al.}|就是将andothersincite本地化字符串的内容临时调整为“et al.”。
+因为gb7714-2015通过gbcitelocalcase计数器来选择使用中文或英文的本地化字符串，因此通过局部设置gbcitelocalcase可以局部的选择不同语言的本地化字符串，比如在一个编组内，局部化设置计数器为：\verb|\defcounter{gbcitelocalcase}{1}|，那么这个编组内的所有本地化字符串会使用默认的中文字符串，反之若设置为2，则本地化字符串会使用默认的英文字符串。
+
+然而因为本地化字符串的内容通常是全局设置的，所以当中文的或者英文的本地化字符串设置都不满足要求时，就需要局部的调整本地化字符串的内容，如例\ref{eg:str:localset}所示，对本地化字符串andothersincite的内容做了调整，从全局设置的“等.”转换为“et al.”，“和”转换为“and”，这种局部设置可通过csdef对保存字符串信息的命令直接做的调整，比如\verb|\csdef{abx@sstr@andothersincite}{et al.}|就是将andothersincite本地化字符串的内容临时调整为“et al.”。
 但为方便用户使用，提供了
 宏包提供了\verb|\setlocalbibstring|命令来替代上述直接定义的csdef命令，
 如例\ref{eg:str:localset}所示。
@@ -1391,8 +1399,82 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \end{example}
 
 
-\paragraph{标注中的全半角标点设置}
+\paragraph{标注中的全半角标点和括号调整}
 
+除了本地化字符串外，标注中的括号和标点也是需要调整的内容。这里两个默认采用英文的半角符号。首先可以通过选项调整，gbcitelabel选项提供了不同的选择，可以设置标注的括号，为全局或半角，同时提供了一个gbcitelabel=quanjiao，可以将标点和括号全部改为全角。
+
+如果选项提供的效果还不够，那么可以局部调整mkbibleftborder和mkbibrightborder，来更换需要的括号。例\ref{eg:parens:localset}中的局部调整可以将标注中的括号改变为『和』。
+
+\begin{example}{局部调整标注标签中的括号}{eg:parens:localset}
+\begin{texlist}
+{\renewrobustcmd{\mkbibleftborder}{『}%
+\renewrobustcmd{\mkbibrightborder}{』}%
+中文段落\cite{Aaa_2018,Aaa_2018a}\cite{Aaa_2021,Aaa_2018}\\
+中文段落\textcite{Aaa_2018,Aaa_2018a}，\textcite{Aaa_2021,Aaa_2018} \\
+中文段落\cite{Aaa_2018,Bbb_2019}\parencite{Aaa_2018,Bbb_2019}}
+\end{texlist}
+\end{example}
+
+对于标点来说，若默认的设定不满足要求，则可以在导言区进行调整，
+如例\ref{eg:punct:globalset}中的第一段代码所示，除了其中标点外，有时还需要设置finalnamedelim。这是标签中除姓名外的标点调整，至于姓名内的标点调整则是需要从另外的接口修改，比如：通过gbcaselocalset等来修改revsdnamepunct，bibinitperiod等等，这些在标注标签中通常不太需要修改。
+
+但有的时候，我们需要对中英文文献的标注标签使用不同的符号，比如中文的标签使用中文全角标点，而英文的标签使用英文的标点，那么可以在标点设置时做一个判断，如例
+\ref{eg:punct:globalset}中的第二段代码所示。
+
+而还有的时候，文档中存在独立的中文段落和英文段落，期望在中文段落中使用中文的标点，而在英文段落中则使用英文的标点，此时可以利用gbcitelocal选项的内部设置的计数器gbcitelocalcase来局部化调整。如例
+\ref{eg:punct:globalset}中的第三段代码所示，做如此设置后，那么只要在指定的段落局部化计数器gbcitelocalcase的值就可以达到临时调整标点的目的。
+
+\begin{example}{标注标签中的标点的全局和局部设置}{eg:punct:globalset}
+\begin{texlist}
+%第一段代码：导言区重设标注标签的标点
+\renewcommand*{\multicitedelim}{；}%\addsemicolon\addspace；
+\renewcommand*{\compcitedelim}{，}
+\renewcommand{\compextradelim}{，}
+\DeclareDelimFormat[cite,parencite,pagescite]{nameyeardelim}{，}%\addcomma\space
+\DeclareDelimFormat[textcite]{nameyeardelim}{，}%\addcomma\space
+\DeclareDelimFormat[cite,parencite,pagescite]{andothersdelim}{，}%
+\DeclareDelimFormat[textcite]{andothersdelim}{，}%
+
+%第二段代码：导言区重设标注标签的标点，根据文献的中英文调整标点形式
+\renewcommand*{\multicitedelim}{\iffieldequalstr{userf}{chinese}{；}{\addsemicolon\addspace}}%；
+\renewcommand*{\compcitedelim}{\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}}
+\renewcommand{\compextradelim}{\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}}
+\DeclareDelimFormat[cite,parencite,pagescite,citep]{nameyeardelim}
+{\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}}%
+\DeclareDelimFormat[textcite,authornumcite,citet]{nameyeardelim}
+{\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}}%
+\DeclareDelimFormat[cite,parencite,pagescite,citep]{andothersdelim}
+{\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}}%
+\DeclareDelimFormat[textcite,authornumcite,citet]{andothersdelim}
+{\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}}%
+
+%第二段代码：导言区重设标注标签的标点，可根据计数器gbcitelocalcase局部设置调整中英文标点
+\renewcommand*{\multicitedelim}
+{\ifcase\value{gbcitelocalcase}\iffieldequalstr{userf}{chinese}{；}{\addsemicolon\addspace}%
+\or ；\or\addsemicolon\addspace\fi}%；
+\renewcommand*{\compcitedelim}
+{\ifcase\value{gbcitelocalcase}\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}%
+\or ，\or\addcomma\space\fi}
+\renewcommand{\compextradelim}
+{\ifcase\value{gbcitelocalcase}\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}%
+\or ，\or\addcomma\space\fi}
+\DeclareDelimFormat[cite,parencite,pagescite,citep]{nameyeardelim}
+{\ifcase\value{gbcitelocalcase}\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}%
+\or ，\or\addcomma\space\fi}
+\DeclareDelimFormat[textcite,authornumcite,citet]{nameyeardelim}
+{\ifcase\value{gbcitelocalcase}\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}%
+\or ，\or\addcomma\space\fi}
+\DeclareDelimFormat[cite,parencite,pagescite,citep]{andothersdelim}
+{\ifcase\value{gbcitelocalcase}\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}%
+\or ，\or\addcomma\space\fi}
+\DeclareDelimFormat[textcite,authornumcite,citet]{andothersdelim}
+{\ifcase\value{gbcitelocalcase}\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}%
+\or ，\or\addcomma\space\fi}
+\end{texlist}
+\end{example}
+
+
+示例可以参考：\href{run:example/test-punct-quanjiao.tex}{test-punct-quanjiao.tex}
 参考:\url{https://blog.csdn.net/xenonhu/article/details/124686522}
 
 
@@ -1614,12 +1696,20 @@ bibitemindent表示
 \renewcommand*{\finentrypunct}{\iffieldequalstr{userd}{chinese}{。}{\adddot}}
 
 %姓名格式相关的标点
-\DeclareDelimFormat{nameyeardelim}{，}%\addcomma\addspace
-%\DeclareDelimFormat[bib,biblist]{nameyeardelim}{，}%\addcomma\addspace
-\DeclareDelimFormat{multinamedelim}{，}%[bib,biblist]
-\DeclareDelimFormat{finalnamedelim}{，}
-\DeclareDelimFormat{andothersdelim}{，}
-\renewcommand*{\revsdnamepunct}{，}%
+\DeclareDelimFormat[bib,biblist]{nameyeardelim}{，}%\addcomma\addspace
+\DeclareDelimFormat[bib,biblist]{multinamedelim}{，}%[bib,biblist]
+\DeclareDelimFormat[bib,biblist]{finalnamedelim}{，}
+\DeclareDelimFormat[bib,biblist]{andothersdelim}{，}
+
+%姓名内部的相关标点，包括如下等设置
+%注意这类设置与gbnamefmt选项相关，不同的选项值对应不同的gb...localset
+%除了如下命令外还有其它设置，有需要可以查biblatex文档
+\def\gbcaselocalset{%
+\renewcommand*{\revsdnamepunct}{，}%%
+\renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉
+\renewrobustcmd*{\bibinithyphendelim}{}%.\mbox{-}
+\renewrobustcmd*{\bibnamedelima}{} %%\mbox{-}
+}
 \end{texlist}
 \end{example}
 

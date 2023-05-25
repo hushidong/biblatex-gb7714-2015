@@ -112,7 +112,8 @@
 %   20210121,v1.0w,hzz
 %
 \iftoggle{iftlatest}%
-{\renewbibmacro*{textcite}{%
+{%
+\renewbibmacro*{textcite}{%
   \iffieldequals{namehash}{\cbx@lasthash}
     {\usebibmacro{cite:comp}}
     {\usebibmacro{cite:dump}%
@@ -133,8 +134,31 @@
        {}%
      \usebibmacro{cite:comp}%
      \stepcounter{textcitecount}%
-     \savefield{namehash}{\cbx@lasthash}}}%
-     }
+     \savefield{namehash}{\cbx@lasthash}}}
+%这是老版本的textcite，上面是新版本的，使用新版本后，对于老版本的biblatex的兼容性可能会受影响
+%\renewbibmacro*{textcite}{%
+%  \iffieldequals{namehash}{\cbx@lasthash}
+%    {\usebibmacro{cite:comp}}
+%    {\usebibmacro{cite:dump}%
+%     \ifbool{cbx:parens}
+%       {\printtext{\mkbibrightborder}\global\boolfalse{cbx:parens}}%\bibclosebracket
+%       {}%
+%     \iffirstcitekey
+%       {}
+%       {\setunit{\textcitedelim}}%
+%     \usebibmacro{cite:init}%
+%     \ifnameundef{labelname}
+%       {\printfield[citetitle]{labeltitle}}
+%       {\iftoggle{bbx:gblabelref}{\printtext[bibhyperref]{\printnames{labelname}}}{\printnames{labelname}}}%
+%     \setunit*{\printdelim{namelabeldelim}}%
+%     \printtext{\mkbibleftborder}\global\booltrue{cbx:parens}%\bibopenbracket
+%     \ifnumequal{\value{citecount}}{1}
+%       {\usebibmacro{prenote}}
+%       {}%
+%     \usebibmacro{cite:comp}%
+%     \stepcounter{textcitecount}%
+%     \savefield{namehash}{\cbx@lasthash}}}%
+}
 
 
 %

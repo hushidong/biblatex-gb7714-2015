@@ -29,6 +29,7 @@
 %   20211030,1.1a,hzz
 %
 \def\gbpunctcommacite{\addcomma\addspace}
+\def\gbpunctmarkcite{\addcomma\addspace}%
 \def\gbpunctsemicoloncite{\addsemicolon\addspace}
 \newrobustcmd{\mkbibleftborder}{\gbleftparen}
 \newrobustcmd{\mkbibrightborder}{\gbrightparen}
@@ -134,14 +135,19 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
 % 在cbx中增加标注中的nameyeardelim标点定义，避免bbx使用其它样式时出现问题
 % 同时设置textcite的nameyeardelim为一个短空格，似乎原来直接连上去的不够美观
 \renewcommand*{\multicitedelim}{\gbpunctsemicoloncite}%\addsemicolon\addspace；
-\DeclareDelimFormat[cite,parencite,pagescite]{nameyeardelim}{\gbpunctcommacite}%\addcomma\space
-\DeclareDelimFormat[textcite]{nameyeardelim}{\addthinspace}%\addcomma\space
-\DeclareDelimFormat[textcite]{andothersdelim}{\iffieldequalstr{userf}{chinese}{\addthinspace}{\addspace}}%
-\AtEveryCitekey{%
-\iffieldequalstr{userf}{chinese}{\renewcommand*{\andothersdelim}{\addthinspace}}%\addthinspace
-  {\renewcommand*{\andothersdelim}{\addspace}}%
-}
+\renewcommand*{\compcitedelim}{\gbpunctmarkcite}
 \newcommand{\compextradelim}{\gbpunctcommacite} %标注中压缩后相同年份后附加标签a、b之间的标点
+\DeclareDelimFormat[cite,parencite,pagescite,citep]{nameyeardelim}{\gbpunctcommacite}%\addcomma\space
+\DeclareDelimFormat[textcite,authornumcite,citet]{nameyeardelim}{\addthinspace}%\addcomma\space
+\DeclareDelimFormat[cite,parencite,pagescite,citep]{andothersdelim}
+    {\iffieldequalstr{userf}{chinese}{\addthinspace}{\addspace}}%
+\DeclareDelimFormat[textcite,authornumcite,citet]{andothersdelim}
+    {\iffieldequalstr{userf}{chinese}{\addthinspace}{\addspace}}%
+%\AtEveryCitekey{%
+%\iffieldequalstr{userf}{chinese}{\renewcommand*{\andothersdelim}{\addthinspace}}%\addthinspace
+%  {\renewcommand*{\andothersdelim}{\addspace}}%
+%}
+
 
 %
 %   修订使可用选项gblabelref来控制是否将标准标签中的作者加上超链接
@@ -170,12 +176,12 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
     {\usebibmacro{cite:shorthand}%
      \usebibmacro{cite:reinit}}%
   \setunit{\multicitedelim}}
-\renewbibmacro*{textcite}{%
+\newbibmacro*{textcite}{%
   \iffieldequals{namehash}{\cbx@lasthash}
     {\iffieldundef{shorthand}
        {\ifthenelse{\iffieldequals{labelyear}{\cbx@lastyear}\AND
                     \(\value{multicitecount}=0\OR\iffieldundef{postnote}\)}
-          {\setunit{\compextradelim}%
+          {\setunit{\addcomma}%
            \usebibmacro{cite:extradate}}
           {\setunit{\compcitedelim}%
            \usebibmacro{cite:labeldate+extradate}%
@@ -197,7 +203,7 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
        {\iftoggle{bbx:gblabelref}{\printtext[bibhyperref]{\printnames{labelname}}}{\printnames{labelname}}%
         \setunit{%
           \global\booltrue{cbx:parens}%
-          \printdelim{nameyeardelim}\bibopenparen}%\bibopenparen
+          \printdelim{nameyeardelim}\mkbibleftborder}%\bibopenparen
         \ifnumequal{\value{citecount}}{1}
           {\usebibmacro{prenote}}
           {}%
@@ -214,7 +220,67 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
     \ifbool{cbx:parens}
       {\mkbibrightborder\global\boolfalse{cbx:parens}}%\bibcloseparen
       {}%
-    \textcitedelim}}}{}
+    \textcitedelim}}
+\newbibmacro*{textcite:postnote}{%
+  \usebibmacro{postnote}%
+  \ifthenelse{\value{multicitecount}=\value{multicitetotal}}
+    {\setunit{}%
+     \printtext{%
+       \ifbool{cbx:parens}
+         {\mkbibrightborder\global\boolfalse{cbx:parens}}%\bibcloseparen
+         {}}}
+    {\setunit{%
+       \ifbool{cbx:parens}
+         {\mkbibrightborder\global\boolfalse{cbx:parens}}%\bibcloseparen
+         {}%
+       \textcitedelim}}}
+%这是老版本的textcite，上面是新版本的，使用新版本后，对于老版本的biblatex的兼容性可能会受影响
+%\renewbibmacro*{textcite}{%
+%  \iffieldequals{namehash}{\cbx@lasthash}
+%    {\iffieldundef{shorthand}
+%       {\ifthenelse{\iffieldequals{labelyear}{\cbx@lastyear}\AND
+%                    \(\value{multicitecount}=0\OR\iffieldundef{postnote}\)}
+%          {\setunit{\compextradelim}%
+%           \usebibmacro{cite:extradate}}
+%          {\setunit{\compcitedelim}%
+%           \usebibmacro{cite:labeldate+extradate}%
+%           \savefield{labelyear}{\cbx@lastyear}}}
+%       {\setunit{\compcitedelim}%
+%        \usebibmacro{cite:shorthand}%
+%        \global\undef\cbx@lastyear}}
+%    {\ifnameundef{labelname}
+%       {\iffieldundef{shorthand}
+%          {\usebibmacro{cite:label}%
+%           \setunit{%
+%             \global\booltrue{cbx:parens}%
+%             \printdelim{nonameyeardelim}\bibopenparen}%\bibopenparen\mkbibleftborder
+%           \ifnumequal{\value{citecount}}{1}
+%             {\usebibmacro{prenote}}
+%             {}%
+%           \usebibmacro{cite:labeldate+extradate}}
+%          {\usebibmacro{cite:shorthand}}}
+%       {\iftoggle{bbx:gblabelref}{\printtext[bibhyperref]{\printnames{labelname}}}{\printnames{labelname}}%
+%        \setunit{%
+%          \global\booltrue{cbx:parens}%
+%          \printdelim{nameyeardelim}\bibopenparen}%\mkbibleftborder
+%        \ifnumequal{\value{citecount}}{1}
+%          {\usebibmacro{prenote}}
+%          {}%
+%        \iffieldundef{shorthand}
+%          {\iffieldundef{labelyear}
+%             {\usebibmacro{cite:label}}
+%             {\usebibmacro{cite:labeldate+extradate}}%
+%           \savefield{labelyear}{\cbx@lastyear}}
+%          {\usebibmacro{cite:shorthand}%
+%           \global\undef\cbx@lastyear}}%
+%     \stepcounter{textcitecount}%
+%     \savefield{namehash}{\cbx@lasthash}}%
+%  \setunit{%
+%    \ifbool{cbx:parens}
+%      {\bibcloseparen\global\boolfalse{cbx:parens}}%\bibcloseparen\mkbibrightborder
+%      {}%
+%    \textcitedelim}}%
+}{}
 
 
 
@@ -246,6 +312,7 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
   {}
   {\mkbibrightborder\mkbibsuperscript{\usebibmacro{postnote}}%\usebibmacro{postnote}
   }
+
 
 %
 %   定义upcite命令
@@ -403,11 +470,11 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
     {\setunit{}%
      \printtext{%
        \ifbool{cbx:parens}
-         {\bibcloseparen\global\boolfalse{cbx:parens}}
+         {\mkbibrightborder\global\boolfalse{cbx:parens}}%\bibcloseparen
          {}}}
     {\setunit{%
        \ifbool{cbx:parens}
-         {\bibcloseparen\global\boolfalse{cbx:parens}}
+         {\mkbibrightborder\global\boolfalse{cbx:parens}}%\bibcloseparen
          {}%
        \textcitedelim}}%
        \renewbibmacro*{postnote}{%
