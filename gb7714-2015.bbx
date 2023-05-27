@@ -2336,6 +2336,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %=====================================================================
 %   修改域的格式，重定义域的输出宏
 %=====================================================================
+\DeclareDelimFormat{titletypedelim}{\allowbreak} %标题内容和文献标识符之间的标点
 %
 %   新增文献类型标识符的格式
 %   []前的nobreak，从GB4.1节的例子看不应该加，所以去掉
@@ -2346,14 +2347,14 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \iftoggle{bbx:gbmedium}%
 {\iftoggle{bbx:url}%
     {\iffieldundef{url}%当存在url时，增加一个OL标识符
-        {\allowbreak\printtext{\gbleftbracket}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{{\SlashFont/}\thefield{medium}}\gbrightbracket}}%
-        {\allowbreak\printtext{\gbleftbracket}\nobreak#1\nobreak\printtext{{\SlashFont/}OL\gbrightbracket}}%
+        {\printdelim{titletypedelim}\printtext{\gbleftbracket}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{{\SlashFont/}\thefield{medium}}\gbrightbracket}}%
+        {\printdelim{titletypedelim}\printtext{\gbleftbracket}\nobreak#1\nobreak\printtext{{\SlashFont/}OL\gbrightbracket}}%
     }%
     {\ifentrytype{online}%
-        {\allowbreak\printtext{\gbleftbracket}\nobreak#1\nobreak\printtext{{\SlashFont/}OL\gbrightbracket}}%
-        {\allowbreak\printtext{\gbleftbracket}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{{\SlashFont/}\thefield{medium}}\gbrightbracket}}%
+        {\printdelim{titletypedelim}\printtext{\gbleftbracket}\nobreak#1\nobreak\printtext{{\SlashFont/}OL\gbrightbracket}}%
+        {\printdelim{titletypedelim}\printtext{\gbleftbracket}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{{\SlashFont/}\thefield{medium}}\gbrightbracket}}%
     }}%
-    {\allowbreak\printtext{\gbleftbracket}\nobreak#1\nobreak\printtext{\gbrightbracket}}%
+    {\printdelim{titletypedelim}\printtext{\gbleftbracket}\nobreak#1\nobreak\printtext{\gbrightbracket}}%
 }
 
 %
@@ -2363,11 +2364,11 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \iftoggle{bbx:gbmedium}%
 {\iftoggle{bbx:url}%
     {\iffieldundef{url}%当存在url时，增加一个OL标识符
-        {\allowbreak\printtext{\gbleftbracket}\nobreak N\printtext{\iffieldundef{medium}{}{{\SlashFont/}\thefield{medium}}\gbrightbracket}\nobreak}%
-        {\allowbreak\printtext{\gbleftbracket}\nobreak N\printtext{{\SlashFont/}OL\gbrightbracket}\nobreak}%
+        {\printdelim{titletypedelim}\printtext{\gbleftbracket}\nobreak N\printtext{\iffieldundef{medium}{}{{\SlashFont/}\thefield{medium}}\gbrightbracket}\nobreak}%
+        {\printdelim{titletypedelim}\printtext{\gbleftbracket}\nobreak N\printtext{{\SlashFont/}OL\gbrightbracket}\nobreak}%
     }%
-    {\allowbreak\printtext{\gbleftbracket}\nobreak N\printtext{\iffieldundef{medium}{}{{\SlashFont/}\thefield{medium}}\gbrightbracket}\nobreak}%
-}{\allowbreak\printtext{\gbleftbracket}\nobreak N\printtext{\gbrightbracket}\nobreak}%
+    {\printdelim{titletypedelim}\printtext{\gbleftbracket}\nobreak N\printtext{\iffieldundef{medium}{}{{\SlashFont/}\thefield{medium}}\gbrightbracket}\nobreak}%
+}{\printdelim{titletypedelim}\printtext{\gbleftbracket}\nobreak N\printtext{\gbrightbracket}\nobreak}%
 }
 
 %
@@ -2377,11 +2378,11 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \iftoggle{bbx:gbmedium}%
 {\iftoggle{bbx:url}%
     {\iffieldundef{url}%当存在url时，增加一个OL标识符
-        {\allowbreak\printtext{\gbleftbracket}\nobreak S\printtext{\iffieldundef{medium}{}{{\SlashFont/}\thefield{medium}}\gbrightbracket}\nobreak}%
-        {\allowbreak\printtext{\gbleftbracket}\nobreak S\printtext{{\SlashFont/}OL\gbrightbracket}\nobreak}%
+        {\printdelim{titletypedelim}\printtext{\gbleftbracket}\nobreak S\printtext{\iffieldundef{medium}{}{{\SlashFont/}\thefield{medium}}\gbrightbracket}\nobreak}%
+        {\printdelim{titletypedelim}\printtext{\gbleftbracket}\nobreak S\printtext{{\SlashFont/}OL\gbrightbracket}\nobreak}%
     }%
-    {\allowbreak\printtext{\gbleftbracket}\nobreak S\printtext{\iffieldundef{medium}{}{{\SlashFont/}\thefield{medium}}\gbrightbracket}\nobreak}%
-}{\allowbreak\printtext{\gbleftbracket}\nobreak S\printtext{\gbrightbracket}\nobreak}%
+    {\printdelim{titletypedelim}\printtext{\gbleftbracket}\nobreak S\printtext{\iffieldundef{medium}{}{{\SlashFont/}\thefield{medium}}\gbrightbracket}\nobreak}%
+}{\printdelim{titletypedelim}\printtext{\gbleftbracket}\nobreak S\printtext{\gbrightbracket}\nobreak}%
 }
 
 %
