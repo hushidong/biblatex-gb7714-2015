@@ -11,7 +11,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2023/05/24 v1.1n}
+\def\versionofgbtstyle{2023/09/10 v1.1o}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015.bbx}[\versionofgbtstyle biblatex bibliography style]
 %\RequireBiber[3]%显式指定用biber后端，当用bibtex时会报错，但其实不会影响编译，只是采用bibtex后无法达成格式需求
@@ -800,6 +800,7 @@
         \ifstrequal{#1}{pinyin}{\setcounter{gbnamefmtcase}{4}}{}%family-given
         \ifstrequal{#1}{reverseorder}{\setcounter{gbnamefmtcase}{5}}{}%family-given/given-family
         \ifstrequal{#1}{quanpin}{\setcounter{gbnamefmtcase}{6}}{}%全拼
+        \ifstrequal{#1}{fullname}{\setcounter{gbnamefmtcase}{7}}{}%英文的全拼，名在前-姓在后
     }
     \ExecuteBibliographyOptions{gbnamefmt}
 
@@ -2774,6 +2775,12 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
       {\namepartgiven}
       {\namepartprefix}
       {\namepartsuffix}%
+\or
+\usebibmacro{name:gbfullname}
+      {\namepartfamily}
+      {\namepartgiven}
+      {\namepartprefix}
+      {\namepartsuffix}%
 \fi
   \usebibmacro{name:andothers}}
 
@@ -2900,6 +2907,30 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
        {\revsdnamepunct}%
      \ifdefvoid{#2}{}{\bibnamedelimd\mkbibnamegiven{\MakeCapital{#2}}\isdot}%\MakeCapital
      \ifdefvoid{#3}{}{\bibnamedelimd\mkbibnameprefix{#3}\isdot}
+     \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}%
+}
+
+%英文风格，全名模式
+\def\gbfullnamelocalset{\renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉，%来源biblatex2.STY
+\renewcommand*{\revsdnamepunct}{}%%来源biblatex.def
+\renewrobustcmd*{\bibnamedelima}{}}
+\newbibmacro*{name:gbfullname}[4]{\bibauthorfont%
+\gbfullnamelocalset%
+  \ifuseprefix
+    {\usebibmacro{name:delim}{#3#1}%
+     \usebibmacro{name:hook}{#3#1}%
+     \ifdefvoid{#2}{}{\mkbibnamegiven{\MakeSentenceCase{#2}}\isdot\bibnamedelimd}%\MakeCapital
+     \ifdefvoid{#3}{}{%
+       \ifcapital
+         {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
+         {\mkbibnameprefix{#3}\isdot}%
+       \ifprefchar{}{\bibnamedelimc}}%
+     \mkbibnamefamily{\MakeCapital{#1}}\isdot%
+     \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}
+    {\usebibmacro{name:delim}{#1}%
+     \usebibmacro{name:hook}{#1}%
+     \ifdefvoid{#2}{}{\mkbibnamegiven{\MakeCapital{#2}}\isdot\bibnamedelimd}%\MakeCapital
+     \ifdefvoid{#2}{\mkbibnamefamily{\MakeCapital{#1}}}{\mkbibnamefamily{\MakeUppercase{#1}}}\isdot%
      \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnamesuffix{#4}\isdot}}%
 }
 
