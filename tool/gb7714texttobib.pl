@@ -8,6 +8,7 @@
 ##% history:
 ##% 	2017/02/26 v1.0g
 ##% 	2021/09/04 add compatablity for text with no space after punctuations.
+##%     2023/09/13 change CJK punctuations to EN punct and add final dot.
 ##% E-mail: 
 ##% 	hzzmail@163.com
 ##% Released under the LaTeX Project Public License v1.3c or later
@@ -30,7 +31,8 @@
 #            可以在bib文件中完善，尽管从实用角度并不需要这么做。
 #
 ##% ---------------------------------------------------------------
-##% todo: 1. pdf 的比较？
+##% note: 
+##% 	  1. 对于英文的姓名若非标准的国标写法，通常当做机构作者处理，所以生成的bib文件需要自己手动处理
 ##% obsolete intro:
 ##% 	  1.源文件文档如果个别地方不符合规范，可以修改一下
 ##% 	   (a):inbook/standard类中，当出现//后面第二项是booktitle且其中存在:时，先把父标题的冒号改成colon，比如
@@ -56,17 +58,47 @@ print FHW '% Encoding: UTF-8',"\n";
 @references=<FHR>;#将所有的文献存为@references数组，各文献以<行>为单位进行区分
 
 
+#20230913,hzz,将条目中的中文全角标点转换为英文的
+foreach $stra (@references) {
+	print "orig: $stra\n";
+	$stra=~s/，/\,/g;
+	$stra=~s/：/\:/g;
+	$stra=~s/；/\,/g;
+	print "modf: $stra\n";
+}
+
+
+#20230913,hzz,若条目最后没有点先加上点
+foreach $stra (@references) {
+	print "orig: $stra\n";
+	if ($stra=~m/\.$/ || $stra=~m/\.\s*$/)
+	{
+		print "str ened with dot\n";
+	}
+	else
+	{
+		#$stra=$stra+'.'; #不能这么直接加
+		$stra=~s/(.*)/$1\./;
+		print "add dot for str end without dot\n";
+		print "modf: $stra\n";
+	}
+}
+
+
 #有些文本标点后面没有空格，所以先对这个问题进行处理
 #在所有的关键标点后面加上空格
 #20210904,HZZ
 foreach $stra (@references) {
-	print "$stra\n";
+	print "orig: $stra\n";
 	$stra=~s/\.(\S)/\. $1/g;
 	$stra=~s/\,(\S)/\, $1/g;
 	$stra=~s/\:(\S)/\: $1/g;
-	print "$stra\n";
+	print "modf: $stra\n";
 	}
 print "@references\n";
+
+
+
 
 
 
@@ -1001,8 +1033,10 @@ foreach $reference(@references){
 			}
 			#最后输出
 			print "\n";
+			print 'authorlabel=',$authorlabel,"\n";
 			#print '@',"$entrytype",'{',"ref-$nline-$sn",',',"\n";
-			print '@',"$entrytype",'{',"$author$date",',',"\n";
+			#print '@',"$entrytype",'{',"$author$date",',',"\n";
+			print '@',"$entrytype",'{',"$authorlabel$date",',',"\n";
 			$author&& print 'author    = {',$author,'},',"\n";
 			$title&& print 'title     = {',$title,'},',"\n";
 			$journal&& print 'journal   = {',$journal,'},',"\n";
@@ -1023,7 +1057,7 @@ foreach $reference(@references){
 			$doi&& print 'doi       = {',$doi,'},',"\n";
 			$note&& print 'note       = {',$note,'},',"\n";
 			print '}',"\n";
-			print 'authorlabel=',$authorlabel,"\n";
+			
 		
 				
 			#print FHW "\n@","$entrytype",'{',"ref-$nline-$sn-$authorlabel",',',"\n";
@@ -1092,6 +1126,7 @@ foreach $reference(@references){
 			print 'sn    =',"$sn \n";
 			print 'title =',"$title \n";
 		}
+		$title=~s/(^\s+|\s+$)//g; #将title前后的空格去掉
 		
 		#进一步处理责任者的姓名,主要针对英文名需要有一些符号进行区分姓，名，前缀和后缀。
 		@names=split('and',$author);
@@ -1222,7 +1257,7 @@ foreach $reference(@references){
 					}
 				}
 				
-				if($translator=~m/译/){#当译者真实存在
+				if($translator=~m/,\s*译/){#当译者真实存在
 					$translator=~s/,\s*译//;#将译去掉
 					if($translator=~m/等/){
 						$translator=~s/等/others/;#将等换成others
@@ -1233,7 +1268,21 @@ foreach $reference(@references){
 						$translator=~s/,/ and /;#将逗号换成and
 					}
 					print 'translator  =',"$translator \n";
-				}else {#当译者不存在，那么translator中信息可能是非数字的版本信息
+				}
+				elsif($translator=~m/译$/)#若最后一个字是译
+				{
+					$translator=~s/译//;#将译去掉
+					if($translator=~m/等/){
+						$translator=~s/等/others/;#将等换成others
+					}else{
+						$translator=~s/,\s*$//;#将最后一个逗号去掉
+					}
+					while($translator=~m/,/){
+						$translator=~s/,/ and /;#将逗号换成and
+					}
+					print 'translator  =',"$translator \n";
+				}
+				else {#当译者不存在，那么translator中信息可能是非数字的版本信息
 					unless($version) {#除非version没有信息
 					$version=$translator;
 					$translator="";
@@ -1396,7 +1445,7 @@ foreach $reference(@references){
 		if ($pospublisher=~m/.*\[s\.n\.\].*/) {#当存在英文的[s.n.]
 			$pospublisher=~s/\[s\.n\.\]/\[s-n-\]/; #先将[s.n.]换成[s-n-]然后换回来
 		}
-			if ($pospublisher=~m/.*,\s*\d{4}\S+/){#匹配存在年份的话
+			if ($pospublisher=~m/.*,\s*\d{4}\S*/){#匹配存在年份的话
 				($publisher, $year, $posyear)=($pospublisher=~m/(.*),\s*(\d{4})(.*)/);
 				print 'publisher=',"$publisher \n";
 				print 'year     =',"$year \n";
