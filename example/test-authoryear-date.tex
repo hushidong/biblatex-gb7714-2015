@@ -1,0 +1,82 @@
+\documentclass{article}
+\usepackage{ctex}
+\usepackage[backend=biber,style=gb7714-2015ay,sorting=none]{biblatex}%,mergedate=false
+
+\usepackage{circledtext}
+\circledtextset{resize=real,height=1.5ex}
+%\DeclareFieldFormat{labelurlyear}{#1}
+%\DeclareFieldFormat{labelyear}{【#1】}
+
+\makeatletter
+\renewcommand\thefootnote{\textbf{\circledtext*{\@arabic\c@footnote}}}
+%\renewcommand\thefootnote{\textcircled{\@arabic\c@footnote}}
+\makeatother
+
+\begin{filecontents}[force,noheader]{\jobname.bib}
+@legislation{gbt7714.04.6.2:02,
+  title = {关于转发北京市企业投资项目核准暂行实施办法的通知},
+  author = {北京市人民政府办公厅},
+  date = {2005-07-12},
+  number = {京政办发[2005]37号},
+  url = {http://china.findlaw.cn/fagui/p_1/39934.html},
+  urldate = {2011-07-12},
+}
+
+@online{gbt7714.04.6.2:04,
+  title = {About {OCLC}: History of Cooperation},
+  shorttitle = {About {OCLC}},
+  author = {{Online Computer Library Center, Inc.}},
+  url = {http://www.oclc.org/about/cooperation.en.html},
+  urldate = {2012-03-27},
+}
+
+@article{gbt7714.A.09:04,
+  entrysubtype = {newspaper},
+  title = {雾霾来袭, 如何突围?},
+  author = {刘, 裕国 and 杨, 柳 and 张, 洋 and 王, 汉超 and 靳, 博 and 田, 豆豆 and 付, 文},
+  date = {2013-01-12},
+  journaltitle = {人民日报},
+  url = {http://paper.people.com.cn/rmrb/html/2013-01/12/nw.D110000renmrb_20130112_2-04.htm},
+  urldate = {2013-11-06},
+}
+
+@Newspaper{张田勤2000--,
+  Title                    = {犯罪DNA库与生命伦理学计划},
+  Author                   = {张田勤},
+  Date                     = {2000-11-12},
+  Journaltitle             = {大众科技报},
+  pages                   = {7}
+}
+
+@Article{丁文祥2000--,
+  Title                    = {数字革命与竞争国际化},
+  Author                   = {丁文祥},
+  Date                     = {2000-11-20},
+  Journaltitle             = {中国青年报},
+  Number                   = {15},
+  entrysubtype = {newspaper},
+}
+
+@Article{陈建军2010-93-93,
+  Title                    = {从数字地球到智慧地球},
+  Author                   = {陈建军},
+  Journal                  = {国图资源导刊},
+  Number                   = {10},
+  Pages                    = {93},
+  Volume                   = {7},
+  Doi                      = {10.3969/j.issn.1672-5603.2010.10.038},
+  Url                      = {http://d.g.wanfangdata.com.cn},
+  Urldate                  = {2013-03-20},
+  Year                     = {2010}
+}
+\end{filecontents}
+\addbibresource{\jobname.bib}
+
+
+\begin{document}
+\nocite{*}
+文本\footnote{安保部}
+文本\footnote{circledtext}
+
+\printbibliography[heading=bibliography]
+\end{document} 

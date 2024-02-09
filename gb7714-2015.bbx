@@ -11,7 +11,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2023/09/10 v1.1o}
+\def\versionofgbtstyle{2024/02/10 v1.1p}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015.bbx}[\versionofgbtstyle biblatex bibliography style]
 %\RequireBiber[3]%显式指定用biber后端，当用bibtex时会报错，但其实不会影响编译，只是采用bibtex后无法达成格式需求
@@ -796,8 +796,8 @@
         \ifstrequal{#1}{uppercase}{\setcounter{gbnamefmtcase}{0}}{}%
         \ifstrequal{#1}{lowercase}{\setcounter{gbnamefmtcase}{1}}{}%
         \ifstrequal{#1}{givenahead}{\setcounter{gbnamefmtcase}{2}}{}%given-family
-        \ifstrequal{#1}{familyahead}{\setcounter{gbnamefmtcase}{3}}{}
-        \ifstrequal{#1}{pinyin}{\setcounter{gbnamefmtcase}{4}}{}%family-given
+        \ifstrequal{#1}{familyahead}{\setcounter{gbnamefmtcase}{3}}{}%family-given
+        \ifstrequal{#1}{pinyin}{\setcounter{gbnamefmtcase}{4}}{}
         \ifstrequal{#1}{reverseorder}{\setcounter{gbnamefmtcase}{5}}{}%family-given/given-family
         \ifstrequal{#1}{quanpin}{\setcounter{gbnamefmtcase}{6}}{}%全拼
         \ifstrequal{#1}{fullname}{\setcounter{gbnamefmtcase}{7}}{}%英文的全拼，名在前-姓在后
@@ -1181,6 +1181,10 @@
             \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后使用institution
             \step[fieldset=institution, origfieldval]
             }
+        \map{
+            \pertype{legislation}
+            \step[typesource=legislation, typetarget=archive]
+            }
         \map{%对应增加的一个档案类型archive确定文献类型标识符
             \pertype{archive}
             \step[fieldset=usera, fieldvalue={A}]
@@ -1196,6 +1200,10 @@
         \map{%对应增加的一个备选类型misc确定文献类型标识符
             \pertype{misc}
             \step[fieldset=usera, fieldvalue={Z}]%
+            }
+        \map{\pertype{mvbook}
+            \step[typesource=mvbook,typetarget=book]
+            \step[fieldset=usera, fieldvalue={M}]%
             }
         \map{
             \pertype{book}
@@ -2664,6 +2672,8 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
        \iffieldundef{titleaddon}{}{\setunit{\subtitlepunct}\printfield{titleaddon}}%判断一下titleaddon
        \ifboolexpr{test{\ifentrytype{book}} and (not test{\iffieldundef{volume}})}%判断一下book类有没有volume
             {\setunit{\subtitlepunct}\printfield{volume}}{}%
+       \ifboolexpr{(test{\ifentrytype{archive}} or  test{\ifentrytype{online}}) and (not test{\iffieldundef{number}})}%判断一下archive类有没有number
+            {\setunit{\subtitlepunct}\printfield{number}}{}%
        \iftoggle{bbx:gbtype}%
             {\iffieldundef{entrysubtype}{\printfield[gbtypeflag]{usera}}%在标题后直接给出文献标识字母，判断一下，是否是报纸和标准
             {\iffieldequalstr{entrysubtype}{standard}{\printfield[gbtypeflags]{usera}}%判断是否为标准
@@ -3604,9 +3614,23 @@ incollection,proceedings,inproceedings]{number}{%
 %
 \renewbibmacro*{note+pages}{%源来自standard.bbx
   %\printfield{note}%
-  \iffieldundef{pages}{}{%
-  \setunit{\bibpagespunct}%
-  \printfield{pages}}%
+  \iffieldundef{entrysubtype}{%
+      \iffieldundef{pages}{}{%
+      \setunit{\bibpagespunct}%
+      \printfield{pages}}%
+      }%
+      {%
+      \ifboolexpr{test{\iffieldequalstr{entrysubtype}{news}} and test{\iffieldundef{number}}}%判断一下archive类有没有number
+        {%
+            \iffieldundef{pages}{}{%
+            \printtext[parens]{\printfield{pages}}}%
+        }%
+        {%
+            \iffieldundef{pages}{}{%
+            \setunit{\bibpagespunct}%
+            \printfield{pages}}%
+        }%
+      }%
   %\newunit
   }
 
@@ -3903,7 +3927,7 @@ incollection,proceedings,inproceedings]{number}{%
 \newunit\newblock%%
 \iftoggle{bbx:gbstrict}{}{%
 \iffieldundef{maintitle}%
-{\printfield{volume}%
+{%\printfield{volume}%
 \printfield{part}}%
 {}%
 \newunit%
@@ -4194,7 +4218,7 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
   \usebibmacro{institution+location+date}%
   %\newunit\newblock
   \usebibmacro{chapter+pages}%
-  \iffieldundef{url}{}{%当没有网址时也不输出修改或更新日期
+  \iffieldundef{url}{}{a%当没有网址时也不输出修改或更新日期
   \usebibmacro{modifydate}}%修改或更新日期为带括号的时间
   \usebibmacro{doi+eprint+url}%
   \newunit

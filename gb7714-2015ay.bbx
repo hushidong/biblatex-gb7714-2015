@@ -10,7 +10,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2023/09/10 v1.1o}
+\def\versionofgbtstyle{2024/02/10 v1.1p}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015ay.bbx}[\versionofgbtstyle biblatex bibliography style]
 %\RequireBiber[3]%显式指定用biber后端，当用bibtex时会报错，但其实不会影响编译，只是采用bibtex后无法达成格式需求
@@ -1133,6 +1133,10 @@
             \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后使用institution
             \step[fieldset=institution, origfieldval]
             }
+        \map{
+            \pertype{legislation}
+            \step[typesource=legislation, typetarget=archive]
+            }
         \map{%对应增加的一个档案类型archive确定文献类型标识符
             \pertype{archive}
             \step[fieldset=usera, fieldvalue={A}]
@@ -1148,6 +1152,10 @@
         \map{%对应增加的一个备选类型misc确定文献类型标识符
             \pertype{misc}
             \step[fieldset=usera, fieldvalue={Z}]%
+            }
+        \map{\pertype{mvbook}
+            \step[typesource=mvbook,typetarget=book]
+            \step[fieldset=usera, fieldvalue={M}]%
             }
         \map{
             \pertype{book}
@@ -2520,6 +2528,8 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
        \iffieldundef{titleaddon}{}{\setunit{\subtitlepunct}\printfield{titleaddon}}%判断一下titleaddon
        \ifboolexpr{test{\ifentrytype{book}} and (not test{\iffieldundef{volume}})}%判断一下book类有没有volume
             {\setunit{\subtitlepunct}\printfield{volume}}{}%
+       \ifboolexpr{(test{\ifentrytype{archive}} or  test{\ifentrytype{online}}) and (not test{\iffieldundef{number}})}%判断一下archive类有没有number
+            {\setunit{\subtitlepunct}\printfield{number}}{}%
        \iftoggle{bbx:gbtype}%
             {\iffieldundef{entrysubtype}{\printfield[gbtypeflag]{usera}}%在标题后直接给出文献标识字母，判断一下，是否是报纸和标准
             {\iffieldequalstr{entrysubtype}{standard}{\printfield[gbtypeflags]{usera}}%判断是否为标准
@@ -3365,6 +3375,22 @@ incollection,proceedings,inproceedings]{number}{%
   \usebibmacro{date+extrayear}
   }
 
+
+\DeclareFieldFormat{Labelyear}{%
+\ifboolexpr{%
+    (test{\iffieldundef{year}}%
+    and %
+    test{\iffieldundef{endyear}}%
+    and
+    test{\iffieldundef{eventyear}}) and (not test{\iffieldundef{urlyear}})%
+    }%
+    {\printtext[labelurlyear]{#1}}%
+    {\printtext[labelyear]{#1}}%
+}
+
+\DeclareFieldFormat{labelurlyear}{\mkbibbrackets{#1}}
+\DeclareFieldFormat{labelyear}{#1}
+ %\mkbibbrackets{#1}/\mkbibparens{#1}/【#1】等
 %
 %   设置标注和文献表中作者和年份之间的分隔符
 %
@@ -3377,7 +3403,7 @@ incollection,proceedings,inproceedings]{number}{%
     \renewbibmacro*{date+extrayear}{%%重设date+extrayear格式，源来自authoryear.BBX
         \iffieldundef{\thefield{datelabelsource}year}
           {}
-          {\printtext{%[parens]%这里把括号去掉
+          {\printtext[Labelyear]{%[parens]%这里把括号去掉
              \iffieldsequal{year}{\thefield{datelabelsource}year}
                {\printdateextralabel}%
                {\printfield{labelyear}%
@@ -3391,7 +3417,7 @@ incollection,proceedings,inproceedings]{number}{%
     \renewbibmacro*{date+extrayear}{%%重设date+extrayear格式，源来自authoryear.BBX
         \iffieldundef{\thefield{datelabelsource}year}
           {}
-          {\printtext{%[parens]%这里把括号去掉
+          {\printtext[Labelyear]{%[parens]%这里把括号去掉
              \iffieldsequal{year}{\thefield{datelabelsource}year}
                {\printdateextralabel}%
                {\printfield{labelyear}%
@@ -3404,7 +3430,7 @@ incollection,proceedings,inproceedings]{number}{%
   \renewbibmacro*{date+extrayear}{%以前的\printdateextralabel宏变为了\printlabeldateextra
     \iffieldundef{labelyear}
       {}
-      {\printtext{%[parens]
+      {\printtext[Labelyear]{%[parens]
          \iffieldsequal{year}{labelyear}
            {\printlabeldateextra}%
            {\printfield{labelyear}%
@@ -3441,7 +3467,7 @@ incollection,proceedings,inproceedings]{number}{%
   \renewbibmacro*{date+extradate}{%
     \iffieldundef{labelyear}
       {}
-      {\printtext{%[parens]%这里去掉括号
+      {\printtext[Labelyear]{%[parens]%这里去掉括号
          \iflabeldateisdate
            {\printdateextra}
            {\printlabeldateextra}}}}%
@@ -3458,6 +3484,35 @@ incollection,proceedings,inproceedings]{number}{%
     \iffieldundef{labelyear}
       {}
       {}}%[parens]\printtext{\printlabeldateextra}
+\renewbibmacro*{bbx:ifmergeddate}{\@secondoftwo}%这一句用于3.12版本
+\renewbibmacro*{date}{\printdate}%这一句用于biblatex3.11以下版本
+\renewbibmacro*{issue+date}{%去掉括号
+  \printtext{%去掉了[parens]
+    \iffieldundef{issue}
+      {%\usebibmacro{date}
+        \iffieldundef{entrysubtype}{\usebibmacro{date}}%判断一下，是否是报纸
+        {\iffieldequalstr{entrysubtype}{news}{\usebibmacro{newsdate}}%判断是否为报纸
+                                     {\usebibmacro{date}}%
+      }}%
+      {\iftoggle{bbx:gbstrict}{}{\printfield{issue}%
+       \setunit*{\addspace}}%
+       %\usebibmacro{date}
+         \iffieldundef{entrysubtype}{\usebibmacro{date}}%判断一下，是否是报纸
+        {\iffieldequalstr{entrysubtype}{news}{\usebibmacro{newsdate}}%判断是否为报纸
+                                     {\usebibmacro{date}}%
+        }}}%
+  %\newunit
+  }%
+  }
+
+\def\bbx@opt@mergedate@false{%
+  \renewbibmacro*{date+extradate}{%
+    \iffieldundef{labelyear}
+      {}
+      {\printtext[Labelyear]{%[parens]%这里去掉括号
+         \iflabeldateisdate
+           {\printdateextra}
+           {\printlabeldateextra}}}}%
 \renewbibmacro*{bbx:ifmergeddate}{\@secondoftwo}%这一句用于3.12版本
 \renewbibmacro*{date}{\printdate}%这一句用于biblatex3.11以下版本
 \renewbibmacro*{issue+date}{%去掉括号
@@ -3575,9 +3630,21 @@ incollection,proceedings,inproceedings]{number}{%
 %   原理方法:原在authoryear.BBX中\bbx@opt@mergedate@compact中定义
 %   当issue存在时，才设置newunit。避免直接设置标点后，当volume不存在是需要使用\nopuct去标点进而引入不必要的空格
   \renewbibmacro*{issue+date}{%
+    \printtext{%去掉了[parens]
     \iffieldundef{issue}%
-      {}%
-      {\iftoggle{bbx:gbstrict}{}{\printtext[parens]{\printfield{issue}}\newunit}}}
+      {%\usebibmacro{date}
+        \iffieldundef{entrysubtype}{}%判断一下，是否是报纸
+        {\iffieldequalstr{entrysubtype}{news}{\usebibmacro{newsdate}}{}%判断是否为报纸
+      }}%
+      {\iftoggle{bbx:gbstrict}{}{\printfield{issue}%
+       \setunit*{\addspace}}%
+       %\usebibmacro{date}
+         \iffieldundef{entrysubtype}{}%判断一下，是否是报纸
+        {\iffieldequalstr{entrysubtype}{news}{\usebibmacro{newsdate}}{}%判断是否为报纸
+        }}}%
+      }
+
+
 
 
 
@@ -3586,9 +3653,23 @@ incollection,proceedings,inproceedings]{number}{%
 %
 \renewbibmacro*{note+pages}{%源来自standard.bbx
   %\printfield{note}%
-  \iffieldundef{pages}{}{%
-  \setunit{\bibpagespunct}%
-  \printfield{pages}}%
+  \iffieldundef{entrysubtype}{%
+      \iffieldundef{pages}{}{%
+      \setunit{\bibpagespunct}%
+      \printfield{pages}}%
+      }%
+      {%
+      \ifboolexpr{test{\iffieldequalstr{entrysubtype}{news}} and test{\iffieldundef{number}}}%判断一下archive类有没有number
+        {%
+            \iffieldundef{pages}{}{%
+            \printtext[parens]{\printfield{pages}}}%
+        }%
+        {%
+            \iffieldundef{pages}{}{%
+            \setunit{\bibpagespunct}%
+            \printfield{pages}}%
+        }%
+      }%
   %\newunit
   }
 
@@ -3917,7 +3998,7 @@ test {\ifentrytype{conference}}
 \newunit\newblock%%
 \iftoggle{bbx:gbstrict}{}{%
 \iffieldundef{maintitle}%
-{\printfield{volume}%
+{%\printfield{volume}%
 \printfield{part}}%
 {}%
 \newunit%
@@ -3980,7 +4061,8 @@ test {\ifentrytype{conference}}
 %  \usebibmacro{byeditor+others}%
 %  \newunit
   \usebibmacro{note+pages}%
-  \iffieldequalstr{entrysubtype}{news}{}{%当是新闻时不输出修改或更新日期
+  \iffieldequalstr{entrysubtype}{news}{}%当是新闻时不输出修改或更新日期
+  {%
   \iffieldundef{url}{}{%当没有网址时也不输出
   \iftoggle{bbx:url}{%当url选项为false时，也不输出
   \usebibmacro{modifydate}}{}}}%带括号的修改或更新日期，

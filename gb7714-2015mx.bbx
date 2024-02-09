@@ -11,7 +11,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2022/11/07 v1.1k}
+\def\versionofgbtstyle{2024/02/10 v1.1p}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015mx.bbx}[\versionofgbtstyle biblatex bibliography style]
 %\RequireBiber[3]%显式指定用biber后端，当用bibtex时会报错，但其实不会影响编译，只是采用bibtex后无法达成格式需求
@@ -904,6 +904,10 @@
             \step[fieldsource=publisher] %有时会把publisher和institution混淆，处理后使用institution
             \step[fieldset=institution, origfieldval]
             }
+        \map{
+            \pertype{legislation}
+            \step[typesource=legislation, typetarget=archive]
+            }
         \map{%对应增加的一个档案类型archive确定文献类型标识符
             \pertype{archive}
             \step[fieldset=usera, fieldvalue={A}]
@@ -919,6 +923,10 @@
         \map{%对应增加的一个备选类型misc确定文献类型标识符
             \pertype{misc}
             \step[fieldset=usera, fieldvalue={Z}]%
+            }
+        \map{\pertype{mvbook}
+            \step[typesource=mvbook,typetarget=book]
+            \step[fieldset=usera, fieldvalue={M}]%
             }
         \map{
             \pertype{book}
@@ -2055,6 +2063,8 @@
        \iffieldundef{titleaddon}{}{\setunit{\subtitlepunct}\printfield{titleaddon}}%判断一下titleaddon
        \ifboolexpr{test{\ifentrytype{book}} and (not test{\iffieldundef{volume}})}%判断一下book类有没有volume
             {\setunit{\subtitlepunct}\printfield{volume}}{}%
+       \ifboolexpr{(test{\ifentrytype{archive}} or  test{\ifentrytype{online}}) and (not test{\iffieldundef{number}})}%判断一下archive类有没有number
+            {\setunit{\subtitlepunct}\printfield{number}}{}%
        \iftoggle{bbx:gbtype}%
             {\iffieldundef{entrysubtype}{\printfield[gbtypeflag]{usera}}%在标题后直接给出文献标识字母，判断一下，是否是报纸和标准
             {\iffieldequalstr{entrysubtype}{standard}{\printfield[gbtypeflags]{usera}}%判断是否为标准
@@ -2946,7 +2956,7 @@ incollection,proceedings,inproceedings]{number}{%
 \newunit\newblock%%
 \iftoggle{bbx:gbstrict}{}{%
 \iffieldundef{maintitle}%
-{\printfield{volume}%
+{%\printfield{volume}%
 \printfield{part}}%
 {}%
 \newunit%
