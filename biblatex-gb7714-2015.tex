@@ -2540,7 +2540,7 @@ biber -l zh__stroke jobname
 
 其中，排序模板优先使用persort域进行排序，接着是与文种相关的lansortorder域，接着是sortkey域(该域在biblatex中就是key域的别名)，接着是sortname等作者姓名相关的域，要让文献根据多音字习惯音进行排序，那么就在key域中设置文献作者姓名的习惯音。比如三篇文献作者分别是[李四]、[J. B. Conway]、[曾三]。在设置sorting=multipinyin, gblanorder=chineseahead, sortlocale=zh\_\_pinyin的情况下，根据上述的multipinyin排序模板，首先根据文种和作者信息将中文文献[曾三][李四]排在前面，接着是[J. B. Conway]，因为默认情况下，曾字考虑的读音是ceng2，但这不是我们希望得到的。
 
-所以需要手动将key域设置为中文的拼音，比如[李四]文献设置key=\{li3si4\}，而[曾三]文献设置key=\{zeng1san1\}，那么中文文献仍然排在前面，但根据key域的设置会将[李四]文献排列在[曾三]前面。因此手动设置作者姓名的习惯拼音后，文献排列正确，顺序为:[李四][曾三][J. B. Conway]。 需要注意的是：若要手动设置拼音则需要对文献表中的全部中文文献设置否则利用key域排序就会失效，而这并是一个轻松的活，此时我们可以使用自动设置拼音的工具，详见
+所以需要手动将key域设置为中文的拼音，比如[李四]文献设置key=\{li3si4\}，而[曾三]文献设置key=\{zeng1san1\}，那么中文文献仍然排在前面，但根据key域的设置会将[李四]文献排列在[曾三]前面。因此手动设置作者姓名的习惯拼音后，文献排列正确，顺序为:[李四][曾三][J. B. Conway]。 需要注意的是：若要手动设置拼音则需要对文献表中的全部中文文献设置否则利用key域排序就会失效，而这并不是一个轻松的活，此时我们可以使用自动设置拼音的工具，详见
 \href{https://www.latexstudio.net/index/details/index/ids/1546}{为中文参考文献自动添加排序用的拼音信息域}，\href{https://github.com/hushidong/biblatex-map}{bibmap宏包}。
 
 
