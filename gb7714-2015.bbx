@@ -2355,7 +2355,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \DeclareFieldFormat{gbtypeflag}{%
 \iftoggle{bbx:gbmedium}%
 {\iftoggle{bbx:url}%
-    {\ifboolexpr{ test {\iffieldundef{url}} and test {\iffieldundef{doi}} and test {\iffieldundef{eprint}} }%\iffieldundef{url}%当存在url时，增加一个OL标识符->改为当存在doi或eprint时增加OL标识符
+    {\ifboolexpr{ test {\iffieldundef{url}} and test {\iffieldundef{doi}} and test {\iffieldundef{eprint}} }%\iffieldundef{url}%当存在url时，增加一个OL标识符->改为当存在doi或eprint或url时增加OL标识符
         {\printdelim{titletypedelim}\printtext{\gbleftbracket}\nobreak#1\nobreak\printtext{\iffieldundef{medium}{}{{\SlashFont/}\thefield{medium}}\gbrightbracket}}%
         {\printdelim{titletypedelim}\printtext{\gbleftbracket}\nobreak#1\nobreak\printtext{{\SlashFont/}OL\gbrightbracket}}%
     }%
