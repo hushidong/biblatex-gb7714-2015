@@ -1650,7 +1650,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{figure}
 
 \paragraph{\heiti 文献表竖直间距控制}
-文献表各条目之间的竖直间距控制如例\ref{eg:biblist:vspace}所示，此外，还可以调整方括号和圆括号的竖直位置，使其与使用无基线以下部分字体的文本相配合。
+文献表各条目之间的竖直间距控制如例\ref{eg:biblist:vspace}所示。注意，这些竖直间距设置不是行距设置，而是行距基础上附加设置，行距默认采用正文的设置，若要局部调整参考文献的行距，则在局部编组中采用linespread命令或者调整 baselinestretch 实现。此外，还可以调整方括号和圆括号的竖直位置，使其与使用无基线以下部分字体的文本相配合。
 
 \begin{example}{文献表竖直间距控制}{eg:biblist:vspace}
 \begin{texlist}
@@ -1779,7 +1779,7 @@ bibitemindent表示
 其它一些修改示例可以参考：
 \href{run:./chinese-erj.bbx}{chinese-erj.bbx}，
 \href{run:./gb7714-CCNU.bbx}{gb7714-CCNU.bbx}，
-\href{run:./egthesis/thesis-uibe-numeric.tex}{thesis-uibe-numeric.tex}。各标点命令的意义详见biblatex手册。
+\href{run:./egthesis/thesis-uibe-numeric.tex}{thesis-uibe-numeric.tex}。各标点命令的意义详见biblatex手册。一些示例见：\url{https://github.com/TheNetAdmin/zjuthesis/issues/374}。
 
 \begin{example}{文献表常见标点(间隔符)控制}{eg:biblist:separator}
 \begin{texlist}
@@ -1806,12 +1806,16 @@ bibitemindent表示
 
 %姓名内部的相关标点，包括如下等设置
 %注意这类设置与gbnamefmt选项相关，不同的选项值对应不同的gb...localset
+%包括：gbcaselocalset，gbpinyinlocalset，gbquanpinlocalset，gbfullnamelocalset
+%如果是familyahead,givenahead选项，则直接使用内部的重设命令即可。
 %除了如下命令外还有其它设置，有需要可以查biblatex文档
 \def\gbcaselocalset{%
 \renewcommand*{\revsdnamepunct}{，}%%
 \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉
 \renewrobustcmd*{\bibinithyphendelim}{}%.\mbox{-}
-\renewrobustcmd*{\bibnamedelima}{} %%\mbox{-}
+\renewrobustcmd*{\bibnamedelima}{} %%全拼名后的标点\mbox{-}
+\renewrobustcmd*{\bibnamedelimi}{} %名缩写点后的标点,Initials in the bib file
+\renewrobustcmd*{\bibinitdelim}{} %名缩写点后的标点
 }
 \end{texlist}
 \end{example}
