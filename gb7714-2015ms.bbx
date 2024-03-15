@@ -120,6 +120,14 @@
 %   设置宏包选项
 %=====================================================================
     %
+    %   增加一个控制是否输出and others信息的选项
+    %   20240315,v1.1p,hzz
+    \newtoggle{bbx:gbnoothers}
+    \DeclareBibliographyOption{gbnoothers}[false]{%biblatex低版本
+      \settoggle{bbx:gbnoothers}{#1}}
+    \ExecuteBibliographyOptions{gbnoothers}
+
+    %
     %   增加一个控制是否输出文献载体的选项
     %   20191125,v1,0s,hzz
     \newtoggle{bbx:gbmedium}
@@ -1263,6 +1271,35 @@
         }
     }
 
+%用于人工的为条目或条目集添加域
+\newcommand{\addEntryField}[3]{%
+    \edef\entrykeya{#1}%
+    \edef\entrykeyb{#2}%
+    \edef\entrykeyc{#3}%
+        \DeclareStyleSourcemap{
+          \maps[datatype=bibtex]{
+            \map[foreach={#1}]{
+              \step[fieldsource=entrykey, match=\regexp{$MAPLOOP}, final]
+              \step[fieldset=\entrykeyb, fieldvalue=\entrykeyc]
+            }
+          }
+       }%
+    }
+
+%用于人工的为条目或条目集删除域
+\newcommand{\delEntryField}[2]{%
+    \edef\entrykeya{#1}%
+    \edef\entrykeyb{#2}%
+        \DeclareStyleSourcemap{
+          \maps[datatype=bibtex,overwrite]{
+            \map[foreach={#1}]{
+              \step[fieldsource=entrykey, match=\regexp{$MAPLOOP}, final]
+              \step[fieldset=\entrykeyb, fieldvalue={}]
+            }
+          }
+       }%
+    }
+
 %
 %驱动别名等价于驱动层映射
 %
@@ -1590,8 +1627,10 @@
       {\namepartgiven}
       {\namepartprefix}
       {\namepartsuffix}%
-\fi
-  \usebibmacro{name:andothers}}
+\fi%
+\iftoggle{bbx:gbnoothers}{}%
+  {\usebibmacro{name:andothers}}%
+}
 
 \DeclareNameAlias{default}{namefmtselected}%姓名的默认格式采用可选的模式
 \DeclareNameAlias{sortname}{default}% Used in the bibliography %family-given/given-family

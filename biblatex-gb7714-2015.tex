@@ -538,6 +538,20 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \caption{文献表作者缺失处理选项gbnoauthor效果}\label{fig:eg:optgbnoauthor}
 \end{figure}
 
+
+
+  \pdfbookmark[4]{gbnoothers}{gbnoothers}
+  \item[gbnoothers]=true，\textbf{false}. \hfill default is false
+
+  为控制是否输出作者列表截断后的等/et al. 信息增加的选项。
+  \begin{itemize}
+    \item gbnoothers=false，默认输出等、et al.信息；
+    \item gbnoothers=true，不输出。
+  \end{itemize}
+  该选项是全局选项，设置为true后，全文的作者列表都将不输出。若需要再局部调整，则利用编组局部设置\verb|\settoggle{bbx:gbnoothers}{true}|即可。
+
+
+
   \pdfbookmark[4]{gbbiblabel}{gbbiblabel}
   \item[gbbiblabel]=\textbf{bracket}，parens，plain，dot，box，circle. \hfill default is bracket
 
@@ -1098,6 +1112,16 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   将会为author2007en,author2014en两个条目添加nameformat域信息。
   该命令也只能出现在导言区中。
+  
+  \pdfbookmark[4]{delEntryField}{delEntryField}
+  \item[delEntryField] \{entrykey or entrykey comma list\}\{field\}
+
+  用于给指定的文献条目(集)删除域。即将指定的entrykey 条目或者entrykey comma list 中的各个条目中的 field 域删除。
+  
+  \verb|\delEntryField{author2007en,author2014en}{usera}|
+
+  将会把author2007en,author2014en两个条目中usera域信息删除。
+
 
 
   \pdfbookmark[4]{setlocalbibstring}{setlocalbibstring}
@@ -2011,6 +2035,20 @@ annotation      = {美国发明专利申请号.},
 }
 \end{filecontents}
 
+%导言区
+%去掉文献Zhang2007-500-503的usera域
+\delEntryField{Zhang2007-500-503}{usera}
+%在第1个refsection中去掉article类的文献标识符
+%利用AtEveryBibitem在对refsection和entrytype判断后局部做设置
+\AtEveryBibitem{%
+\ifnumequal{\value{refsection}}{1}
+    {%
+    \ifentrytype{article}{\settoggle{bbx:gbtype}{false}}{\settoggle{bbx:gbtype}{true}}%
+    }%
+    {}%
+}
+
+%正文区
 \begin{refsection}[resume.bib]
 \nocite{ref-8-1-任天令,ref-9-1-Ren}%
 \printbibliography[heading=subbibliography,title={研究成果}]
@@ -2174,7 +2212,7 @@ annotation      = {美国发明专利申请号.},
 \href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography/blob/master/biblatex-solution-to-latex-bibliography.pdf}%
 {biblatex-solution-to-latex-bibliography}中的第2.10节。
 
-具体例子则可以参考\href{run:./stdgbT7714-2015.pdf}{stdgbT7714-2015.pdf}。其中第8节中大量使用这种方式。
+具体例子则可以参考\href{run:./stdgbT7714-2015.pdf}{stdgbT7714-2015.pdf}，其中第8节中大量使用这种方式。
 
 
 
