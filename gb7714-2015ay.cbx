@@ -322,16 +322,20 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
 \newrobustcmd*{\upcite}{%
     \cite}
 
+\newrobustcmd{\mkbiboutparens}[1]{%
+  \unspace\allowhyphens%
+\begingroup\mkbibleftborder#1\mkbibrightborder\endgroup}%
+
 %
 %   重定义parencite命令
 %
-\DeclareCiteCommand{\parencite}%[\mkbibparens]
+\DeclareCiteCommand{\parencite}[\mkbiboutparens]%
   {\usebibmacro{cite:init}%
-   \mkbibleftborder\usebibmacro{prenote}}%
+   \usebibmacro{prenote}}%
   {\usebibmacro{citeindex}%
    \usebibmacro{cite}}
   {}
-  {\usebibmacro{postnote}\mkbibrightborder}
+  {\usebibmacro{postnote}}
 
 %
 %   重定义footcite需要使用的命令

@@ -11,7 +11,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2024/02/10 v1.1p}
+\def\versionofgbtstyle{2024/03/27 v1.1q}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015.bbx}[\versionofgbtstyle biblatex bibliography style]
 %\RequireBiber[3]%显式指定用biber后端，当用bibtex时会报错，但其实不会影响编译，只是采用bibtex后无法达成格式需求
@@ -968,6 +968,7 @@
         bibliography     = {\str@bibliography},
         references       = {\str@references},
         bytranslatorcn = {\str@bytranslator},%\addperiod，%将trans. by 改成 译\addcomma\
+        byeditor={\iffieldequalstr{userd}{chinese}{\str@editorcn}{ed\adddotspace by}},
         and         = {\addcomma},%将第2和3人名间的and符号改成逗号，用\finalnamedelim命令也可以定义，参见3.9.1节
         andcn       = {\addcomma},%and本地化字符串的中文对应词
         andincitecn = {\str@andcn},%将标注中的分开，便于与文献表中的区分
@@ -2478,6 +2479,18 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     \patchcmd{\abx@macro@title}{\newunitpunct}{}{}{}}}{}
   }
 
+%
+\newbibmacro*{byeditor+others}{%
+  \ifnameundef{editor}
+    {}
+    {\iffieldequalstr{userd}{chinese}{}{\usebibmacro{byeditor+othersstrg}%
+     \setunit{\addspace}}%
+     \printnames[byeditor]{editor}%
+     \iffieldequalstr{userd}{chinese}{\usebibmacro{byeditor+othersstrg}}{}%
+     \clearname{editor}%
+     \newunit}%
+  \usebibmacro{byeditorx}%
+  \usebibmacro{bytranslator+others}}
 
 %
 %   修改译者位置格式
@@ -4223,7 +4236,7 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
   \usebibmacro{institution+location+date}%
   %\newunit\newblock
   \usebibmacro{chapter+pages}%
-  \iffieldundef{url}{}{a%当没有网址时也不输出修改或更新日期
+  \iffieldundef{url}{}{%当没有网址时也不输出修改或更新日期
   \usebibmacro{modifydate}}%修改或更新日期为带括号的时间
   \usebibmacro{doi+eprint+url}%
   \newunit
