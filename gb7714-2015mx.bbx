@@ -1923,7 +1923,7 @@
     \patchcmd{\abx@macro@title}{\newunitpunct}{}{}{}}}{}
   }
 
-\newbibmacro*{byeditor+others}{%
+\renewbibmacro*{byeditor+others}{%
   \ifnameundef{editor}
     {}
     {\iffieldequalstr{userd}{chinese}{}{\usebibmacro{byeditor+othersstrg}%

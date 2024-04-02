@@ -2480,7 +2480,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
   }
 
 %
-\newbibmacro*{byeditor+others}{%
+\renewbibmacro*{byeditor+others}{%
   \ifnameundef{editor}
     {}
     {\iffieldequalstr{userd}{chinese}{}{\usebibmacro{byeditor+othersstrg}%
