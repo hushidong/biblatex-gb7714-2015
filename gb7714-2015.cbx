@@ -168,7 +168,9 @@
 %\DeclareDelimFormat[textcite]{andothersdelim}{\addspace}%
 \renewcommand*{\compcitedelim}{\addcomma}%\addcomma\addthinspace
 \renewcommand*{\supercitedelim}{\addcomma}
-\renewcommand*{\multicitedelim}{\addcomma}
+\DeclareDelimFormat{multicitedelimiter}{\addcomma}%新定义一个multicitedelim来区分不同标注命令下的空格处理
+\DeclareDelimFormat[parencite]{multicitedelimiter}{\addcomma\addthinspace}%太窄则用addspace
+\renewcommand*{\multicitedelim}{\printdelim{multicitedelimiter}}
 
 %
 %将连续3篇文献压缩改为连续2篇文献压缩
