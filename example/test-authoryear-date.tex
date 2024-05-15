@@ -2,15 +2,6 @@
 \usepackage{ctex}
 \usepackage[backend=biber,style=gb7714-2015ay,sorting=none]{biblatex}%,mergedate=false
 
-\usepackage{circledtext}
-\circledtextset{resize=real,height=1.5ex}
-%\DeclareFieldFormat{labelurlyear}{#1}
-%\DeclareFieldFormat{labelyear}{【#1】}
-
-\makeatletter
-\renewcommand\thefootnote{\textbf{\circledtext*{\@arabic\c@footnote}}}
-%\renewcommand\thefootnote{\textcircled{\@arabic\c@footnote}}
-\makeatother
 
 \begin{filecontents}[force,noheader]{\jobname.bib}
 @legislation{gbt7714.04.6.2:02,
@@ -69,14 +60,47 @@
   Urldate                  = {2013-03-20},
   Year                     = {2010}
 }
+
+@Article{杨洪升2013-56-75,
+  Title                    = {四库馆私家抄校书考略},
+  Author                   = {杨洪升},
+  Journal                  = {文献},
+  Number                   = {1},
+  Pages                    = {56-75},
+  Year                     = {2013}
+}
+
+@Patent{刘加林1993--,
+  Title                    = {多功能一次性压舌板},
+  Author                   = {刘加林},
+  Date                     = {1993-04-14},
+  Number                   = {92214985.2},
+  Location                 = {中国}
+}
+
+@Patent{张凯军2012-04-05--,
+  Title                    = {轨道火车及高速轨道火车紧急安全制动辅助装置},
+  Author                   = {张凯军},
+  Number                   = {201220158825.2},
+  Year                     = {2012-04-05}
+}
+
+@Patent{河北绿洲生态环境科技有限公司2001--,
+  Title                    = {一种荒漠化地区生态植被综合培育种植方法},
+  Author                   = {河北绿洲生态环境科技有限公司},
+  Date                     = {2001-10-24},
+  Number                   = {01129210.5},
+  Url                      = {http://211.152.9.47/sipoasp/zlijs/hyjs-yx-new.asp?recid=01129210.5&leixin},
+  Urldate                  = {2002-05-28}
+}
+
+
 \end{filecontents}
 \addbibresource{\jobname.bib}
 
 
 \begin{document}
 \nocite{*}
-文本\footnote{安保部}
-文本\footnote{circledtext}
 
 \printbibliography[heading=bibliography]
 \end{document} 

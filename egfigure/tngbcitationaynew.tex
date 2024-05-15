@@ -9,8 +9,10 @@
 \usepackage{lipsum}
 \usepackage[paperwidth=21cm,paperheight=29cm,top=3cm,bottom=2cm,left=1.5cm,right=1.5cm]{geometry}
 \usepackage{xltxtra,mflogo,texnames}
-\usepackage[backend=biber,style=gb7714-2015ay,gbnoauthor,nohashothers=true,gbpub=true
-%,sortlocale=zh__stroke,nosortothers=true
+\usepackage[backend=biber,style=gb7714-2015ay,gbnoauthor,gbpub=true,
+sorting=none
+%mergedate=none
+%,sortlocale=zh__stroke,nosortothers=true,nohashothers=true,
 ]{biblatex}%sorting=nyt
 
 %\usepackage{filecontents}
@@ -82,6 +84,28 @@ the notion of an invisible college has been explored in thesciences\cite{CRANE19
 ……对编辑方针，1981年中国科协副主席裴丽生曾有过科学的论断—“自然科学学术期刊必须坚持以马列主义、毛泽东思想为指导，贯彻为国民经济发展服务，理论与实践相结合，普及与提高相结合，‘百花齐放，百家争鸣’的方针。” \cite{裴丽生1981-2-10}它完整地回答了为谁服务怎样服务，如何服务得更好的间题。
 
 \printbibliography[heading=subbibliography]
+\end{refsection}
+
+
+\newpage
+
+
+\section*{怎样著录著者 － 出版年制联机网络文献的“出版年”?}
+\begin{refsection}
+依据 GB/T 7714-2015《信息与文献 参考文献著录规则》， 釆用著录著者 4 出版年制著录参考文献， “出版年”应置于题名前， 并列出了示例; 但对联机网络文献的“出版年”如何著录， 既没有说明， 也未列出示例。现依据段明莲、陈浩元编著的《文后参考文献著录指南》，对这类文献“出版年”的著录提出如下供参考的规范:
+
+1) 在联机网络文献著录项目齐全的情况下， “出版年”选取“( 更新或修改日期) ”中的年份;
+
+2) 当“( 更新或修改日期) ”不明时， 则选取“［引用日期］”中的年份， 并在年份上加方括号;
+
+3) 联机网络文献为报纸中析出的文献时， 其“出版年”著录为报纸“出版日期”中的年份。
+
+例如:
+\nocite{北京市人民政府办公厅2005--,OCLC--,刘裕国2013-01-12--,张田勤2000--,丁文祥2000--,陈建军2010-93-93,杨洪升2013-56-75,刘加林1993--,张凯军2012-04-05--,河北绿洲生态环境科技有限公司2001--}
+
+\printbibliography[heading=none]
+
+需要提示的是: 采用著者 4 出版年制著录的文献，“出版年”前的标识符号，GB/T 7714-2005 规定为“. ”，而 GB/T 7714-2015 已经修改为“，”。在著录实践中， 仍存在不少使用“X ”的错误， 应予纠正。(陈浩元)
 \end{refsection}
 
 \end{document}

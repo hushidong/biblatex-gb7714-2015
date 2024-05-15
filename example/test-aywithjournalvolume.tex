@@ -1,0 +1,124 @@
+%--
+%测试author-year样式在没有期刊名，没有volume时，与mergedate选项的标点处理
+%
+
+\documentclass{article}
+\usepackage{ctex}
+\usepackage[margin=1cm]{geometry}
+\usepackage[backend=biber,style=gb7714-2015ay,gbnoauthor,nohashothers=true,gbpub=true,
+sorting=none
+%mergedate=true
+%,sortlocale=zh__stroke,nosortothers=true
+]{biblatex}%sorting=nyt
+
+%\ExecuteBibliographyOptions{mergedate=none} 只能用于导言区，但可以设置全局和pertype选项。
+
+\begin{filecontents}[force]{\jobname.bib}
+
+@Article{刘彻东1998A,
+  Title                    = {中国的青年刊物},
+  Author                   = {刘彻东},
+  Date                     = {1998},
+  Journaltitle             = {中国出版},
+  volume={13},
+  Number                   = {5},
+  Pages                    = {38-39},
+  Titleaddon               = {个性特色为本}
+}
+
+@Article{刘彻东1998B,
+  Title                    = {中国的青年刊物},
+  Author                   = {刘彻东},
+  Date                     = {1998},
+  volume={13},
+  Number                   = {5},
+  Pages                    = {38-39},
+  Titleaddon               = {个性特色为本}
+}
+
+
+@Article{刘彻东1998C,
+  Title                    = {中国的青年刊物},
+  Author                   = {刘彻东},
+  Date                     = {1998},
+  Journaltitle             = {中国出版},
+  Number                   = {5},
+  Pages                    = {38-39},
+  Titleaddon               = {个性特色为本}
+}
+
+@Article{刘彻东1998D,
+  Title                    = {中国的青年刊物},
+  Author                   = {刘彻东},
+  YEAR                     = {1998},
+  Journaltitle             = {中国出版},
+  volume={13},
+  Number                   = {5},
+  Pages                    = {38-39},
+  Titleaddon               = {个性特色为本}
+}
+
+@Article{刘彻东1998E,
+  Title                    = {中国的青年刊物},
+  Author                   = {刘彻东},
+  YEAR                     = {1998},
+  volume={13},
+  Number                   = {5},
+  Pages                    = {38-39},
+  Titleaddon               = {个性特色为本}
+}
+
+
+@Article{刘彻东1998F,
+  Title                    = {中国的青年刊物},
+  Author                   = {刘彻东},
+  YEAR                     = {1998},
+  Journaltitle             = {中国出版},
+  Number                   = {5},
+  Pages                    = {38-39},
+  Titleaddon               = {个性特色为本}
+}
+
+\end{filecontents}
+\addbibresource{\jobname.bib}
+
+\begin{document}
+
+
+\begin{refsection}
+\nocite{*}
+\printbibliography[heading=subbibliography,title="no mergedate"]
+\end{refsection}
+
+
+\begin{refsection}
+
+\makeatletter
+\bbx@opt@mergedate@none
+\makeatother
+\nocite{*}
+\printbibliography[heading=subbibliography,title="mergedate: none"]
+\end{refsection}
+
+
+\begin{refsection}
+
+\makeatletter
+\bbx@opt@mergedate@false
+\makeatother
+\nocite{*}
+\printbibliography[heading=subbibliography,title="mergedate: false"]
+\end{refsection}
+
+
+\begin{refsection}
+
+\makeatletter
+\bbx@opt@mergedate@true
+\makeatother
+\nocite{*}
+\printbibliography[heading=subbibliography,title="mergedate: true"]
+\end{refsection}
+
+
+\end{document} 

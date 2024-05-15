@@ -2,12 +2,17 @@
 %更新历史仅给出更新针对的问题，相应的处理代码和解释不在此给出，详见提示对应的说明文档内容
 
 %\updateinfo[latest]{date of update: }\label{up:latest}
-
+\updateinfo[2024-05-15]{date of update: 2024-05-15 to version v1.1r}\label{up:20240515}
 \begin{enumerate}
 
 \item 增加内部间隔符multicitedelimiter用于控制单个引用命令引用多篇文献时产生的多个不同文献标注之间的间隔符。(20240407)
 
 add internal delim: multicitedelimiter to control the delimiter between multiple citations in one single cite command.
+
+
+\item 修复authoryear样式mergedate不同选项下期刊析出文献卷不存在时期之前的标点。(20240515)
+
+repair the delimiters before number when volume is absent of article for author year style with different  mergedate options.
 
 \end{enumerate}
 

@@ -1,4 +1,4 @@
-<b>Date of last change: 2024-03-27 to version v1.1q</b>
+<b>Date of last change: 2024-05-15 to version v1.1r</b>
 
 
 
@@ -1362,9 +1362,10 @@ biblatex中处理顺序数字编码压缩的代码默认从3个连续编码开�
 	- ![test-special-chars-in-fields.tex](example/test-special-chars-in-fields.tex) 测试不同域中存在的特殊字符处理
 	- ![test-gbt-7714-1987.tex](example/test-gbt-7714-1987.tex) 测试GB/T7714-1987标准的样式
 	- ![test-gbt-7714-2005.tex](example/test-gbt-7714-2005.tex) 测试GB/T7714-2005标准的样式
-	测试标注中本地化字符串、标点的中英文切换
 	- ![test-punct-quanjiao.tex](example/test-punct-quanjiao.tex) 测试标点中英文切换
     - ![test-authoryear-date.tex](example/test-authoryear-date.tex) 测试著者-出版年制联机网络文献的“出版年”
+    - ![test-aywithjournalvolume.tex](example/test-aywithjournalvolume.tex) 测试著者-出版年制期刊析出文献出版年与卷和期之间的间隔符，特别当某些项缺失时
+    
 
 	
 	
@@ -1614,6 +1615,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * 2023/09/10 v1.1o,ctan,github
 * 2024/02/10 v1.1p,ctan,github
 * 2024/03/27 v1.1q,ctan,github
+* 2024/05/15 v1.1r,ctan,github
 
 
 
