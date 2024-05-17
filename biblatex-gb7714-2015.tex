@@ -538,6 +538,14 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \caption{文献表作者缺失处理选项gbnoauthor效果}\label{fig:eg:optgbnoauthor}
 \end{figure}
 
+  \pdfbookmark[4]{gbnosameeditor}{gbnosameeditor}
+  \item[gbnosameeditor]=true，\textbf{false}. \hfill default is false
+
+  用于控制inbook,incollection等类型中bookauthor/editor与author相同时是否输出bookauthor/editor。
+  \begin{itemize}
+    \item gbnosameeditor=false，默认方式，正常输出；
+    \item gbnosameeditor=true，不输出。
+  \end{itemize}
 
 
   \pdfbookmark[4]{gbnoothers}{gbnoothers}
@@ -1112,12 +1120,12 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   将会为author2007en,author2014en两个条目添加nameformat域信息。
   该命令也只能出现在导言区中。
-  
+
   \pdfbookmark[4]{delEntryField}{delEntryField}
   \item[delEntryField] \{entrykey or entrykey comma list\}\{field\}
 
   用于给指定的文献条目(集)删除域。即将指定的entrykey 条目或者entrykey comma list 中的各个条目中的 field 域删除。
-  
+
   \verb|\delEntryField{author2007en,author2014en}{usera}|
 
   将会把author2007en,author2014en两个条目中usera域信息删除。

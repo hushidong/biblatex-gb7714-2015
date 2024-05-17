@@ -233,6 +233,14 @@
 %   设置宏包选项
 %=====================================================================
     %
+    %   增加一个控制是否输出与author相同的editor或bookauthor的选项
+    %   20240517,v1.1r,hzz
+    \newtoggle{bbx:gbnosameeditor}
+    \DeclareBibliographyOption{gbnosameeditor}[false]{%biblatex低版本
+      \settoggle{bbx:gbnosameeditor}{#1}}
+    \ExecuteBibliographyOptions{gbnosameeditor}
+
+    %
     %   增加一个控制是否输出and others信息的选项
     %   20240315,v1.1p,hzz
     \newtoggle{bbx:gbnoothers}
@@ -3811,15 +3819,19 @@ test {\ifentrytype{conference}}
 %   v1.0q 2019-03-01 hzz
 % 不再对editor和bookauthor做sourcemap，而是下面的宏内逻辑代替，
 % 使得除使用bookauthor外也可以使用editor，便于在使用editor时使用editortype
+%   v1.1r 2024-05-17 hzz
+% 增加选项gbnosameeditor后根据其来确定是否输出与author相同的editor或bookauthor
 \renewbibmacro*{bybookauthor}{%
     \ifnameundef{bookauthor}%
         {\ifnameundef{editor}%
             {}%
             {\ifnamesequal{author}{editor}%
-                {}{\usebibmacro{editor}}}%
+                {\iftoggle{bbx:gbnosameeditor}{\clearname{editor}}{\usebibmacro{editor}}%
+                }{\usebibmacro{editor}}}%
         }%
         {\ifnamesequal{author}{bookauthor}%
-            {}{\printnames{bookauthor}}%
+            {\iftoggle{bbx:gbnosameeditor}{\clearname{bookauthor}}{\printnames{bookauthor}}%
+            }{\printnames{bookauthor}}%
         }%
 }
 
