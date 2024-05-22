@@ -181,7 +181,7 @@ test {\iftoggle{iftlseven}}%3.7=biblatex
     {\iffieldundef{shorthand}
        {\ifthenelse{\iffieldequals{labelyear}{\cbx@lastyear}\AND
                     \(\value{multicitecount}=0\OR\iffieldundef{postnote}\)}
-          {\setunit{\addcomma}%
+          {\setunit{\compextradelim}%\addcomma
            \usebibmacro{cite:extradate}}
           {\setunit{\compcitedelim}%
            \usebibmacro{cite:labeldate+extradate}%
