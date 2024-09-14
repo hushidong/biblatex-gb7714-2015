@@ -84,3 +84,21 @@ del *.pdf /Q
 cd ..
 
 
+cd egstyle
+
+call makeclearph
+
+
+del *.bbx /Q
+
+del *.cbx /Q
+
+del *.def /Q
+
+del *.bib /Q
+
+del *.pdf /Q
+
+cd ..
+
+

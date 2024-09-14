@@ -26,6 +26,15 @@ del *.pdf /Q
 
 cd ..
 
+
+cd egstyle
+
+del *.pdf /Q
+
+cd ..
+
+
+
 cd tool
 
 del gbT*.pdf /Q

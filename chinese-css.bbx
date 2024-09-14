@@ -229,7 +229,7 @@
 
 %重新调整输出编者的类型
 \renewbibmacro*{editor+others}{%
-  \ifcitation{\ifboolexpr{
+  \ifboolexpr{
     test \ifuseeditor
     and
     not test {\ifnameundef{editor}}
@@ -238,15 +238,7 @@
      \setunit{\printdelim{editortypedelim}}%
      \usebibmacro{editor+othersstrg}%
      \clearname{editor}}%
-    {}}%
-  {\ifboolexpr{%
-    test \ifuseeditor
-    and
-    not test {\ifnameundef{editor}}
-    }%
-    {\printnames{editor}%
-     \clearname{editor}}
-    {}}%
+    {}%
     }
 
 \renewbibmacro*{editor+othersstrg}{%

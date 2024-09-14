@@ -21,7 +21,7 @@ def compileall(task='all'): #'all','compare'
 		pwd=os.getcwd()
 		filesneedcopy=['gb7714-CCNU.bbx','gb7714-CCNU.cbx','gb7714-NWAFU.bbx','gb7714-NWAFU.cbx','gb7714-SEU.bbx','gb7714-SEU.cbx',
 		'chinese-erj.bbx','chinese-erj.cbx','chinese-css.bbx','chinese-css.cbx',
-		'chinese-jmw.bbx','chinese-jmw.cbx',
+		'chinese-jmw.bbx','chinese-jmw.cbx','chinese-cajhss.bbx','chinese-cajhss.cbx',
 		'example.bib', 'gb7714-1987.bbx', 'gb7714-1987.cbx', 
 		'gb7714-1987ay.bbx', 'gb7714-1987ay.cbx', 'gb7714-2005.bbx', 'gb7714-2005.cbx', 'gb7714-2005ay.bbx',
 		'gb7714-2005ay.cbx', 'gb7714-2015-gbk.def', 'gb7714-2015.bbx', 'gb7714-2015.cbx', 'gb7714-2015ay.bbx',
@@ -49,7 +49,7 @@ def compileall(task='all'): #'all','compare'
 		
 
 		#进入相关文件夹进行编译
-		for dirname in ["example","egthesis","egphoto","egfigure","tool"]: #
+		for dirname in ["egstyle","example","egthesis","egphoto","egfigure","tool"]: #
 			subdir=pwd+os.sep+dirname
 			os.chdir(subdir)
 			pwd=os.getcwd()

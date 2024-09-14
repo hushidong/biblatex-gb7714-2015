@@ -126,7 +126,7 @@
     \DeclareBibliographyOption{gbnosameeditor}[false]{%biblatex低版本
       \settoggle{bbx:gbnosameeditor}{#1}}
     \ExecuteBibliographyOptions{gbnosameeditor}
-    
+
     %
     %   增加一个控制是否输出and others信息的选项
     %   20240315,v1.1p,hzz
@@ -1855,7 +1855,7 @@
         \DeclareStyleSourcemap{
           \maps[datatype=bibtex]{
             \map{
-              \step[fieldsource=entrykey, match=\entrykeya, final]
+              \step[fieldsource=entrykey, match=\regexp{^}\entrykeya\regexp{$}, final]
               \step[fieldset=related, fieldvalue=\entrykeyb]
             }
           }

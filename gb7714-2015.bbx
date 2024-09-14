@@ -3255,13 +3255,16 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
     %为了实现v3.8以上版本的双语文献，采用related的方法代替set方法，因为set方法已经无法实现了，
     %因为set不再复制其第一个成员的信息。于是定义一个命令，用于动态的修改数据，即添加related域的信息
     %其中使用了\DeclareStyleSourcemap，但由于其只能出现在导言区中，因此\defdoublelangentry命令也只能出现在导言区中
+    %20240911-修改
+    %修正match多次匹配related文献的问题，当要文献A关联文献B时，若B的entrykey中包含A的entrykey的信息
+    %之前因为不是全词匹配，则B也会被加上related域，因此采用全词匹配的方式避免该问题
     \newcommand{\defdoublelangentry}[2]{%
     \edef\entrykeya{##1}
     \edef\entrykeyb{##2}
         \DeclareStyleSourcemap{
           \maps[datatype=bibtex]{
             \map{
-              \step[fieldsource=entrykey, match=\entrykeya, final]
+              \step[fieldsource=entrykey, match=\regexp{^}\entrykeya\regexp{$}, final]
               \step[fieldset=related, fieldvalue=\entrykeyb]
             }
           }

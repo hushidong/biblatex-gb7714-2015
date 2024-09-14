@@ -29,6 +29,11 @@ del /q *.otf *.ttf *.ttc
 
 cd ..
 
+cd egstyle
+
+del /q *.otf *.ttf *.ttc 
+
+cd ..
 
 
 del /q *.otf *.ttf *.ttc 

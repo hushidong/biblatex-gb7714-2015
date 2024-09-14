@@ -14,11 +14,15 @@ mkdir egthesis
 
 mkdir egphoto
 
+mkdir egstyle
+
 mkdir tool
 
 cd ..
 
 copy biblatex-gb7714-2015-master\*.* biblatex-gb7714-2015-github\*.* /Y
+
+copy biblatex-gb7714-2015-master\egstyle\*.* biblatex-gb7714-2015-github\egstyle\*.* /Y
 
 copy biblatex-gb7714-2015-master\example\*.* biblatex-gb7714-2015-github\example\*.* /Y
 
