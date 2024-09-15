@@ -134,7 +134,7 @@
 \DeclareFieldFormat{titlecase}{\iffieldequalstr{userd}{chinese}{#1}{\capitalisewords{#1}}}
 \DeclareFieldFormat*{title}{\iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{#1\isdot}}
 \DeclareFieldFormat[book,collection]{title}{\iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{\textit{#1}\isdot}}
-\DeclareFieldFormat[article]{title}{\iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{\mkbibquote{#1}\isdot}}
+\DeclareFieldFormat[article,inproceedings,incollection]{title}{\iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{\mkbibquote{#1}\isdot}}
 \DeclareFieldFormat*{journaltitle}{\iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{\textit{#1}}}%
 \DeclareFieldFormat{booktitle}{%
 \iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{\textit{#1}}}
@@ -465,6 +465,7 @@ test{\ifcitation} and test{\iffieldequalstr{userd}{chinese}}%
 %   v1.0k,20180425,增加了字体控制命令，hzz
 \renewbibmacro*{journal+issuetitle}{\bibpubfont%源来自standard.bbx
   \usebibmacro{journal}%
+  \iffieldequalstr{userd}{chinese}{}{\newunit}%
   \iffieldundef{series}%
     {}%
     {\printfield{series}}%
@@ -795,7 +796,6 @@ test{\ifnameundef{translator}}) and test{\iffieldequalstr{entrysubtype}{classic}
   \usebibmacro{institution+location+date}%
   \ifboolexpr{test{\ifentrytype{archive}}}%
   {\newunit\printfield{number}}{}%
-  %\newunit\newblock
   \usebibmacro{chapter+pages}%
   \iffieldundef{url}{}{%当没有网址时也不输出修改或更新日期
   \usebibmacro{modifydate}}%修改或更新日期为带括号的时间
