@@ -10,7 +10,7 @@
 %%用法：类似于标准的样式在biblatex加载时设置样式
 %%文献表正常处理，标注命令主要用cite和textcite
 
-\ProvidesFile{chinese-cajhss.cbx}[v1.0a a biblatex citation style for ERJ]
+\ProvidesFile{chinese-cajhssay.cbx}[v1.0a a biblatex citation style for ERJ]
 
 %==================================================
 %加载gb样式
@@ -24,13 +24,18 @@
 \DeclareBibliographyOption{gbcitepunctcn}[true]{%biblatex低版本
   \ifstrequal{#1}{false}{\exegbpunctencite}{}}
 
+\def\gbpunctcommacite{，}%
 \def\gbpunctmarkcite{、}%
 \def\gbpunctsemicoloncite{；}%
 \def\gbpunctparenlcite{（}%
 \def\gbpunctparenrcite{）}
+\def\gbpunctcoloncite{：}%
+
 \def\exegbpunctencite{%
+\def\gbpunctcommacite{\addcomma\addspace}%
 \def\gbpunctmarkcite{\addcomma\addspace}%
 \def\gbpunctsemicoloncite{\addsemicolon\addspace}%
+\def\gbpunctcoloncite{\addcolon\addspace}%
 \def\gbpunctparenlcite{(}%
 \def\gbpunctparenrcite{)}
 }
@@ -41,11 +46,21 @@
 \ExecuteBibliographyOptions{
     maxcitenames=2,
     mincitenames=1,
+    %gbcitepunctcn=true,
 }
 
+\DeclareDelimFormat[textcite]{delimandincitecn}{和}%\addcomma\space
+\DeclareDelimFormat[parencite,cite]{delimandincitecn}{\gbpunctmarkcite}%\addcomma\space
+\DeclareDelimFormat[textcite]{delimandincite}{和}%\addcomma\space
+\DeclareDelimFormat[parencite,cite]{delimandincite}{ \& }%\addcomma\space
+\DeclareDelimFormat[textcite]{delimandothersincite}{\str@andotherscn}%\addcomma\space
+\DeclareDelimFormat[parencitem,cite]{delimandothersincite}{et al\adddot}%\addcomma\space
+
 \DefineBibliographyStrings{english}{
-    andincitecn = {和},%将标注中的分开，便于与文献表中的区分
-    andincite   = {\&},
+    andincitecn = {\printdelim{delimandincitecn}},
+    andincite   = {\printdelim{delimandincite}},
+    %andothersincitecn={\str@andotherscn},
+    %andothersincite={\printdelim{delimandothersincite}},
 }
 
 %==================================================
@@ -59,37 +74,72 @@
        {}{}%\iftextcitepunct{\finalandsemicolon}{\finalandcomma}
      \addspace\gbpunctmarkcite}%\addspace\bibstring{andincitecn}
     {\iftextcitepunct{\addsemicolon\space}{\addspace\gbpunctmarkcite}}%\addcomma
-}%\space
+}
+
+%注意在renewbibmacro*{cite}里面使用了compcitedelim,compextradelim
+%但其实在cite命令里面若在sepcode里面指定了multicitedelim，则这两个间隔符有时是多余的
+%在这个样式中我们直接将其定义为空了，然后再cite命令中设置了multicitedelim
+\renewcommand*{\compcitedelim}{}
 
 \DeclareDelimFormat[textcite]{nameyeardelim}{\addspace}%\addcomma\space
-\DeclareDelimFormat[textcite]{andothersdelim}{\iffieldequalstr{userf}{chinese}{}{\addspace}}%
+\DeclareDelimFormat[cite,parencite]{nameyeardelim}{\gbpunctcommacite}%
+\DeclareDelimFormat[textcite]{andothersdelim}{\addspace}%
+\DeclareDelimFormat[cite,parencite]{andothersdelim}{\iffieldequalstr{userf}{chinese}{}{\addspace}}%
+\DeclareDelimFormat[cite,parencite,textcite]{bibpagespunct}{\gbpunctcoloncite}%
 
-%之所以不用\DeclareDelimFormat{andothersdelim}{}这样的设置是因为gb7714-2015中为兼容老版本的biblatex做的处理就是这样的
-%所以用相同的方式
-\AtEveryCitekey{%
-\iffieldequalstr{userf}{chinese}{\renewcommand*{\andothersdelim}{}}%\addthinspace
-  {\renewcommand*{\andothersdelim}{\addspace}}%
-}
 
 
 %标注压缩时，直接用date+extradate代替extradate实现2006a，2006b的效果
 %\DeclareDelimFormat*{compcitedelim}{\gbpunctmarkcite}%\addcomma\addspace
+%\printfield{extradate}\printlabeldateextra\printfield{labelyear}\printfield{extradate}
 \newbibmacro*{cite:extradate}{%
   \iffieldundef{extradate}
     {}
-    {\printtext[bibhyperref]{\addspace\printlabeldateextra}}}%\printfield{extradate}\printlabeldateextra \printfield{labelyear}\printfield{extradate}
+    {\printtext[bibhyperref]{\addspace\printlabeldateextra}}}%
 
-%\AtEveryCite{%
-%\let\parentext=\parentexttrack%
-%\let\bibopenparen=（%
-%\let\bibcloseparen=）}
 
 %添加前后空格
 \DeclareCiteCommand{\cite}%[\mkbibparens]
   {\usebibmacro{cite:init}%
-   \unspace\printtext{\gbpunctparenlcite}\usebibmacro{prenote}}%\addspace
+   \unspace\printtext{\gbpunctparenlcite}\usebibmacro{prenote}%
+   \renewbibmacro*{postnote}{%
+      \iffieldundef{postnote}%
+        {}%
+        {\printdelim{bibpagespunct}\thefield{postnote}}}%
+   }%\addspace
   {\usebibmacro{citeindex}%
    \usebibmacro{cite}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}%
+  \gbpunctparenrcite}%\addspace
+
+
+%添加前后空格
+\DeclareCiteCommand{\parencite}%[\mkbibparens]
+  {\usebibmacro{cite:init}%
+   \renewbibmacro*{postnote}{%
+      \iffieldundef{postnote}%
+        {}%
+        {\printdelim{bibpagespunct}\thefield{postnote}}}%
+   }%\addspace
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}%
+
+
+
+%重定义citeyear来得到不需要作者时的引用标注标签
+\DeclareCiteCommand{\citeyear}%[\mkbibparens]
+  {\usebibmacro{cite:init}%
+   \unspace\printtext{\gbpunctparenlcite}\usebibmacro{prenote}%
+   \renewbibmacro*{postnote}{%
+      \iffieldundef{postnote}%
+        {}%
+        {\printdelim{bibpagespunct}\thefield{postnote}}}%
+   }%\addspace
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:labeldate+extradate}}
   {}
   {\usebibmacro{postnote}%
   \gbpunctparenrcite}%\addspace
@@ -290,5 +340,8 @@
          {}%
        \textcitedelim}}}
 
-\let\citet=\textcite
+\let\citet=\parencite
 \let\citep=\cite
+\DeclareMultiCiteCommand{\cites}{\cite}{\multicitedelim}
+\DeclareMultiCiteCommand{\parencites}{\parencite}{\multicitedelim}
+\let\citets=\parencites

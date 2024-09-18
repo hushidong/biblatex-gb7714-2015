@@ -12,7 +12,7 @@
 %%
 %%用法：类似于标准的样式在biblatex加载时设置样式
 %%文献表正常处理，标注命令主要用cite和textcite
-\ProvidesFile{chinese-cajhss.bbx}[2024/09/12 v1.0a a biblatex bibliography style for ERJ]
+\ProvidesFile{chinese-cajhssay.bbx}[2024/09/12 v1.0a a biblatex bibliography style for ERJ]
 
 
 %==================================================
@@ -74,11 +74,11 @@
     maxbibnames=99,
     gbtype=false,
     gbpub=false,
-    gbnamefmt=givenahead,
+    gbnamefmt=reverseorder, % givenahead,
     gbpunctin=false,
     gbfieldtype=true,
-    mergedate=none,
-    sorting=none,
+    %mergedate=true,
+    %sorting=none,
     doi=false,
     %url=false,
     }
@@ -119,9 +119,8 @@
 \DefineBibliographyStrings{english}{
     and         = { and},%and后面的空格在finalnamedelim已经加过了，所以这里去掉20191009
     andcn       = {\gbpunctmark\unspace},%\gbpunctmark
-    andincitecn = {和},%将标注中的分开，便于与文献表中的区分
-    andincite   = {\&},
     incn={\str@incn},
+    bytranslatorcn= {\str@bytranslator}, %将trans. by 改成 译
     %andotherscn={等},
     %mathesiscn={[硕士学位论文]},
     %phdthesiscn={[博士学位论文]},
@@ -134,7 +133,7 @@
 \DeclareFieldFormat{titlecase}{\iffieldequalstr{userd}{chinese}{#1}{\capitalisewords{#1}}}
 \DeclareFieldFormat*{title}{\iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{#1\isdot}}
 \DeclareFieldFormat[book,collection]{title}{\iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{\textit{#1}\isdot}}
-\DeclareFieldFormat[article,inproceedings,incollection]{title}{\iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{\mkbibquote{#1}\isdot}}
+\DeclareFieldFormat[article,inbook,inproceedings,incollection]{title}{\iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{\mkbibquote{#1}\isdot}}
 \DeclareFieldFormat*{journaltitle}{\iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{\textit{#1}}}%
 \DeclareFieldFormat{booktitle}{%
 \iffieldequalstr{userd}{chinese}{\gbpunctttl#1\gbpunctttr}{\textit{#1}}}
@@ -240,30 +239,7 @@
   %\newunit
   }}
 
-\def\bbx@opt@mergedate@none{%
-  \global\togglefalse{bbx:gbmergedate}
-  \renewbibmacro*{date+extradate}{%
-    \iffieldundef{labelyear}
-      {}
-      {}}%
-\renewbibmacro*{bbx:ifmergeddate}{\@secondoftwo}%这一句用于3.12版本
-\renewbibmacro*{date}{\printdate}%这一句用于biblatex3.11以下版本
-\renewbibmacro*{issue+date}{%去掉括号
-  \printtext{%去掉了[parens]
-    \iffieldundef{issue}
-      {\iffieldundef{entrysubtype}{\usebibmacro{date}}%判断一下，是否是报纸
-        {\iffieldequalstr{entrysubtype}{news}{\usebibmacro{newsdate}}%判断是否为报纸
-                                     {\usebibmacro{date}}%
-      }}%
-      {\iffieldundef{issue}{}{\printfield{issue}\newunit}%
-         \iffieldundef{entrysubtype}{\usebibmacro{date}}%判断一下，是否是报纸
-        {\iffieldequalstr{entrysubtype}{news}{\usebibmacro{newsdate}}%判断是否为报纸
-                                     {\usebibmacro{date}}%
-        }}}%
-  }%
-}
 
-\ExecuteBibliographyOptions{mergedate=none}
 
 %重新调整输出编者的类型
 % 责任者如果没有author用editor或translator替代
@@ -288,19 +264,6 @@
      \setunit*{\printdelim{nonameyeardelim}}}%
   \usebibmacro{date+extradate}}
 
-%\renewbibmacro*{editor+others}{%
-%\ifboolexpr{
-%    test \ifuseeditor
-%    and
-%    not test {\ifnameundef{editor}}
-%  }
-%    {\printnames{editor}%
-%     \setunit{\printdelim{editortypedelim}}%
-%     \usebibmacro{editor+othersstrg}%
-%     \clearname{editor}%
-%     }%
-%    {}%
-%    }
 
 \renewbibmacro*{editor}{%
 \ifboolexpr{
@@ -365,7 +328,7 @@
 %去掉译前的标点
 \renewbibmacro*{name:andothers}{\bibauthorfont%
     \ifboolexpr{test {\ifnumequal{\value{listcount}}{\value{liststop}}}
-            and test \ifmorenames}%
+            and test \ifmorenames}
     {\ifnumgreater{\value{liststop}}{1}%注意这里试图去区分姓名总数大于1的情况，当姓名总数大于1时，最后一个姓名后面先加入一个\finalandcomma
         {}{}%\finalandcomma，目前国标没有这样的区分要求，如果有需要也是可以这么去做的。
     \printdelim{andothersdelim}\printdelim{strandothersdelim}}%
@@ -375,13 +338,16 @@
 
 %增加年字
 \renewbibmacro*{date}{%
-    \iffieldequalstr{userd}{chinese}{%
+  \usebibmacro{bbx:ifmergeddate}%
+    {}%
+    {\iffieldequalstr{userd}{chinese}{%
         \ifboolexpr{test {\ifentrytype{article}} or test {\ifentrytype{inproceedings}}
                 or test {\ifentrytype{archive}} or test {\ifentrytype{online}}
                 or test {\ifentrytype{unpublished}}}
             {\printtext{\blx@gbdatecn{}{}}}%
             {\printdate\iffieldundef{year}{}{\iffieldint{year}{年}{}}}%
         }{\ifentrytype{archive}{\printtext{\blx@gbdateen{}{}}}{\printdate}}%
+    }%
 }%
 
 
@@ -421,7 +387,7 @@
 %
 \renewbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示电子资源的更新和修改日期，而公告日期则按日期格式
 \ifboolexpr{%
-    test{\iffieldequalstr{userd}{chinese}}%
+test{\iffieldequalstr{userd}{chinese}}%
 }%
 {%
 \printtext{\blx@gbdatecn{}{}}%
@@ -476,8 +442,7 @@
         {\bibstring{number}~#1}}%\kern\z@
 
 \DeclareFieldFormat[article,periodical,newspaper]{volume}%
-{
-\iffieldequalstr{userd}{chinese}{%
+{\iffieldequalstr{userd}{chinese}{%
     \iffieldint{volume}%
     {\bibstring{serialcn}#1\bibstring{volumecn}}%
     {#1}%

@@ -1,0 +1,26 @@
+[0] Config.pm:307> INFO - This is Biber 2.19
+[0] Config.pm:310> INFO - Logfile is 'teststylecajhss.blg'
+[297] biber-MSWIN64:340> INFO - === 
+[395] Biber.pm:419> INFO - Reading 'teststylecajhss.bcf'
+[503] Biber.pm:979> INFO - Found 59 citekeys in bib section 0
+[573] Biber.pm:4419> INFO - Processing section 0
+[613] Biber.pm:4610> INFO - Looking for bibtex file 'teststylecajhss.bib' for section 0
+[680] bibtex.pm:1713> INFO - LaTeX decoding ...
+[741] bibtex.pm:1519> INFO - Found BibTeX data source 'teststylecajhss.bib'
+[1173] UCollate.pm:68> INFO - Overriding locale 'zh__pinyin' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1173] UCollate.pm:68> INFO - Overriding locale 'zh__pinyin' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1196] Biber.pm:4239> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'zh__pinyin'
+[1265] bbl.pm:660> INFO - Writing 'teststylecajhss.bbl' with encoding 'UTF-8'
+[1290] bbl.pm:763> INFO - Output to teststylecajhss.bbl
+[1290] Biber.pm:131> WARN - legacy year field '1991年，第 4、5 卷合订本' in entry '马士1991' is not an integer - this will probably not sort properly.
+[1290] Biber.pm:131> WARN - book entry '马士1991' (teststylecajhss.bib): Invalid format '1991年，第 4、5 卷合订本' of date field 'date' - ignoring
+[1290] Biber.pm:131> WARN - legacy year field '1977年标点本' in entry '清史稿1977' is not an integer - this will probably not sort properly.
+[1290] Biber.pm:131> WARN - book entry '清史稿1977' (teststylecajhss.bib): Invalid format '1977年标点本' of date field 'date' - ignoring
+[1290] Biber.pm:131> WARN - book entry '屈大均1985' (teststylecajhss.bib): Invalid format '1985年标点本' of date field 'date' - ignoring
+[1290] Biber.pm:131> WARN - legacy year field '1991年影印本，上册' in entry '杨钟羲1991' is not an integer - this will probably not sort properly.
+[1290] Biber.pm:131> WARN - book entry '杨钟羲1991' (teststylecajhss.bib): Invalid format '1991年影印本，上册' of date field 'date' - ignoring
+[1290] Biber.pm:131> WARN - legacy year field '1985年影印本，第3册' in entry '太平御览1985' is not an integer - this will probably not sort properly.
+[1291] Biber.pm:131> WARN - book entry '太平御览1985' (teststylecajhss.bib): Invalid format '1985年影印本，第3册' of date field 'date' - ignoring
+[1291] Biber.pm:131> WARN - legacy year field '1956年标点本，第？册' in entry '资治通鉴' is not an integer - this will probably not sort properly.
+[1291] Biber.pm:131> WARN - book entry '资治通鉴' (teststylecajhss.bib): Invalid format '1956年标点本，第？册' of date field 'date' - ignoring
+[1291] Biber.pm:133> INFO - WARNINGS: 11
