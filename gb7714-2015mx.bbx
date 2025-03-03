@@ -11,7 +11,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2024/11/15 v1.1s}
+\def\versionofgbtstyle{2025/03/03 v1.1t}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015mx.bbx}[\versionofgbtstyle biblatex bibliography style]
 %\RequireBiber[3]%显式指定用biber后端，当用bibtex时会报错，但其实不会影响编译，只是采用bibtex后无法达成格式需求
@@ -2413,17 +2413,17 @@
 
     %
     \newbibmacro*{modifydate}{%新增加一个带括号的日期，用于表示电子资源的更新和修改日期，而公告日期则按日期格式
-        \ifboolexpr{%
-        test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{eventday}}%
-        }%
-        {}%更新或修改日期通常有day信息
-        {\iffieldundef{year}{%
-                \iffieldundef{endyear}{\iffieldundef{eventyear}{}{\printtext{\gbleftparen}\printeventdate\printtext{\gbrightparen}}}%
+        %更新或修改日期通常有day信息
+        \iffieldundef{eventday}%
+           {%
+             \iffieldundef{endday}{%
+                 \iffieldundef{day}{}{\iffieldequalstr{day}{}{}%因为day存在，但为空
+                    {\printtext{\gbleftparen}\blx@gbdate{}{}\printtext{\gbrightparen}}}%
+                 }%
                 {\printtext{\gbleftparen}\printenddate\printtext{\gbrightparen}}%
-        }{\iffieldequalstr{year}{}{%因为year存在，但为空
-            }{\printtext{\gbleftparen}\blx@gbdate{}{}\printtext{\gbrightparen}}%
-         }%
-    }}%
+           }%
+           {\printtext{\gbleftparen}\printeventdate\printtext{\gbrightparen}}%
+    }%
 
 
 %

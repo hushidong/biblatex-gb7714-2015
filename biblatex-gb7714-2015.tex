@@ -1025,7 +1025,9 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   二是实现国标要求的相同文献不输出内容，而是用标签代替，比如同\textcircled{4} ，主要利用citetracker 选项实现对文献引用的追踪，然后利用ifciteseen 判断和对footfullcite 命令做修改实现。
   测试文档见：\href{run:./example/opt-gbfootbib.tex}{opt-gbfootbib.tex}。
 
-  同时为了方便脚注的对齐格式控制增加了两个尺寸：\verb|\footbibmargin|和\verb|\footbiblabelsep|，分别表示脚注文本的左侧缩进距离和悬挂的脚注标记标签与脚注文本的间隔距离，默认分别是1em和0.5em。如果要修改悬挂对齐为其它对齐方式，那么需要重定义\verb|\@makefntext|宏，目前悬挂对齐的实现方式见bbx文件。比如示例中重定义这两个尺寸为2em 和1em：
+  同时为了方便脚注的对齐格式控制增加了两个尺寸：\verb|\footbibmargin|和
+  \verb|\footbiblabelsep|，分别表示脚注文本的左侧缩进距离和悬挂的脚注标记标签与脚注文本的间隔距离，默认分别是1em和0.5em。如果要修改悬挂对齐为其它对齐方式，那么需要重定义
+  \verb|\@makefntext|宏，目前悬挂对齐的实现方式见bbx文件。比如示例中重定义这两个尺寸为2em 和1em：
 
   {\small
   \vspace{1ex}
@@ -1140,6 +1142,71 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 注意：如果要在本地化字符串的内容设置中使用biblatex提供的一些标点命令，比如adddot 等，那么需要对其进行保护，避免直接展开导致命令未定义的错误，比如：
 \verb|\setlocalbibstring{andothersincite}{et al\protect\adddot}|
 
+
+\end{description}
+
+
+\subsubsection{新增的开关、计数器、尺寸、间隔符等设置项}\label{sec:setting:ele}
+
+\paragraph{开关}
+
+\begin{description}
+  \pdfbookmark[4]{gbNoAfPcSpace}{gbNoAfPcSpace}
+  \item[gbNoAfPcSpace] default is false
+
+  顺序编码制的toggle开关，设置\verb|\toggletrue{gbNoAfPcSpace}|表示去除parencite后面添加的中英文之间的空格，设置\verb|\togglefalse{gbNoAfPcSpace}| 则相反，表示不处理，由ctex/xeCJK自行添加。
+  
+  \item[其他]
+
+  注意：前面的一些选项也都有对应的toggle开关，若在局部环境中调整toggle开关，可以实现文献格式的临时调整。比如：
+  \verb|\settoggle{bbx:gbtype}{false}| 局部设置不输出文献类型和载体标识符，
+  \verb|\settoggle{bbx:gbannote}{true}| 局部设置输出注释信息
+  
+\end{description}
+
+
+\paragraph{计数器}
+
+\begin{description}
+  \pdfbookmark[4]{gbrefcompress}{gbrefcompress}
+  \item[gbrefcompress] default is 2
+  
+  顺序编码制的控制文献压缩的计数器，默认设置 \verb|\setcounter{gbrefcompress}{2}|表示从2篇文献开始压缩。若设置\verb|\setcounter{gbrefcompress}{3}|则表示从3篇文献开始压缩。
+  
+  
+  \item[其他]
+
+  注意：前面的一些选项也都有对应的计数器，若在局部环境中调整，可以实现文献格式的临时调整。比如：
+  \verb|\setcounter{gbnamefmtcase}{6}| 局部设置作者的格式为familyahead格式，
+  \verb|\def\blx@maxbibnames{9}\def\blx@minbibnames{2}| 局部设置作者的最大显示数量为9，若超过则显示2个。
+
+\end{description}
+
+
+\paragraph{尺寸}
+
+\begin{description}
+  \pdfbookmark[4]{ biblabelextend}{ biblabelextend}
+  \item[biblabelextend] default is 0pt
+
+  顺序编码制文献表编码标签盒子的扩展宽度，当设置某些字体导致默认盒子宽度不足导致对齐出现问题时，可以设置该值为一个正值，比如：\verb|\setlength{\biblabelextend}{5pt}|。
+  著者年份制中若使用顺序编码的文献表，也可以设置该值来拓宽编码标签盒子。
+
+\end{description}
+
+
+\paragraph{间隔符}
+
+\begin{description}
+  \pdfbookmark[4]{titletypedelim}{titletypedelim}
+  \item[titletypedelim] default is empty
+
+  用于控制文献表中文献标题与文献类型标识符之间的间隔符，默认为空，也就是两者是紧贴在一起的。若设置：\\
+  \lstinline[breaklines=true]!\DeclareDelimFormat[bib,biblist]{titletypedelim}{\iffieldequalstr{userd}{chinese}{}{\space}}!
+  则中文文献是紧贴在一起，而英文文献两者之间存在空格。
+
+
+  
 
 \end{description}
 
@@ -2496,7 +2563,66 @@ sorting=gb7714-2015,gblanorder=chineseahead,sortlocale=zh__pinyin
 \end{texlist}
 \end{example}
 
-这些设置是样式的默认设置，用户如果没有其他需求则无需调整，若需调整详见下一节。
+这些设置是样式的默认设置，用户如果没有其他需求则无需调整，若需调整详见后续各节。
+
+
+\subsubsection{引用标注标签中的排序}\label{sec:sort:citation}
+
+当同一处同时引用多篇文献时，多篇文献的标注标签存在排序问题。
+
+顺序编码制中标注标签按引用先后顺序排序，无需调整。
+
+著者年份制中标注标签默认按照引用先后顺序进行排序，
+当设置sortcites=true时，标注标签按照参考文献表中的顺序进行排序，参考文献表中的顺序按照sorting选项设定的顺序进行排序。
+若要使标注排序与文献表排序不关联，则可以使用refcontext来设置两种排序环境，即sorting选项设置的排序环境，以及refcontext及其sorting选项提供的排序环境，使得标注和文献表可以实现两种不同的排序。例\ref{eg:sort:decouple}中，sorting=gbynta表示全局按gbynta顺序(即年份、作者、标题)排序，使得标注会先按年份进行排序(但要注意同作者压缩可能会被打破)。而newrefcontext[sorting=gb7714-2015]中的排序表示文献表按gb7714-2015排序，这是国标的默认排序。
+
+\begin{example}{标注标签排序与文献表排序去关联}{eg:sort:decouple}
+\begin{texlist}
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage[backend=biber,style=gb7714-2015ay,sortcites=true,
+uniquelist=false,uniquename=false,sorting=gbynta]{biblatex}
+\addbibresource{biblatex-examples.bib}
+
+\begin{document}
+%如下文献的年份分别为：
+%1986,1984,1967,2000,1985,1978
+\cite{knuth:ct:e,knuth:ct:a,weinberg,westfahl:frontier,geer,chiu}
+%生成标注标签将按年份排序，注意knuth的文献压缩会打破，结果为：
+%(Weinberg, 1967; Chiu et al., 1978; Knuth, 1984; Geer, 1985; Knuth, 1986; Westfahl, 2000)
+\newrefcontext[sorting=gb7714-2015]
+\printbibliography
+\end{document} 
+\end{texlist}
+\end{example}
+
+若要使文献压缩不被打破，则可以采用手动设置顺序的方式，同时去除sortcites选项或设为false，如例\ref{eg:sort:decouple1}所示。
+
+\begin{example}{手动设置排序且去除sortcites同样与文献表排序不关联}{eg:sort:decouple1}
+\begin{texlist}
+\documentclass[twoside]{article}
+\usepackage{ctex}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage[backend=biber,style=gb7714-2015ay,sortcites=false,
+uniquelist=false,uniquename=false,sorting=gb7714-2015]{biblatex}
+\addbibresource{biblatex-examples.bib}
+
+\begin{document}
+%1967,1978,1984,1986,1985,2000
+%手动设置顺序，则不会打破压缩，结果为：
+%(Weinberg, 1967; Chiu et al., 1978; Knuth, 1984, 1986; Geer, 1985; Westfahl, 2000)
+\cite{weinberg,chiu,knuth:ct:a,knuth:ct:e,geer,westfahl:frontier}
+
+\printbibliography
+\end{document} 
+\end{texlist}
+\end{example}
+
 
 \subsubsection{排序的逻辑和调整方法}\label{sec:sort:adj}
 

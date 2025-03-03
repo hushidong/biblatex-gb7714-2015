@@ -15,7 +15,7 @@
 \RequireCitationStyle{numeric-comp} %numeric
 
 %
-%   增加一个控制是否将标准标签中的作者加上超链接的选项
+%   增加一个控制是否将标注标签中的作者加上超链接的选项
 %   20210121,v1.0w,hzz
 \newtoggle{bbx:gblabelref}
 \DeclareBibliographyOption{gblabelref}[false]{%biblatex低版本
@@ -30,6 +30,8 @@
   \settoggle{bbx:gbcitecomp}{#1}}
 \ExecuteBibliographyOptions{gbcitecomp}
 
+\newtoggle{gbNoAfPcSpace}%gb-no-after-parencite-space
+\togglefalse{gbNoAfPcSpace}
 
 %
 %   增加标签包围符号格式处理选项
@@ -242,7 +244,7 @@
     \protected\long\def\mkbibsuperscriptusp##1{%
       \blx@warning{Nested superscript}%
       \mkbibleftborder{##1}\mkbibrightborder}%
-    #1\endgroup}}
+    #1\endgroup}\iftoggle{gbNoAfPcSpace}{\kern\z@}{}}
 
 
 

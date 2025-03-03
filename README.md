@@ -1,4 +1,4 @@
-<b>Date of last change: 2024-11-15 to version v1.1s</b>
+<b>Date of last change: 2025/03/03 v1.1t</b>
 
 
 
@@ -1116,7 +1116,16 @@ biblatex-gb7714-2015 设计了两种多语言对照参考文献的实现方式�
 * <b>在顺序编码制标签中，希望数字编码从两个连续编码就开始压缩，比如 [1,2] 压缩成 [1-2]，该怎么处理？</b>
 	
 
-biblatex 中处理顺序数字编码压缩的代码默认从 3 个连续编码开始压缩，比如 [1,2,3] 压缩成 [1-3]。如果要修改为从 2 个连续编码开始压缩，只需要做一个很简单的修改即可:
+biblatex 中处理顺序数字编码压缩的代码默认从 3 个连续编码开始压缩，比如 [1,2,3] 压缩成 [1-3]。
+但biblatex-gb7714-2015 已将其修改为默认从2个连续编码开始。
+若需要修改，只需要做一个很简单的修改即可:
+
+```tex
+\setcounter{gbrefcompress}{3} %表示连续3篇文献开始
+%\setcounter{gbrefcompress}{2} %表示连续2篇文献开始
+```
+
+对于老版本的可以直接修改宏(注意其中的注释)：
 
 ```tex
 % 该宏的目的是抛弃压缩内部的编号，而仅输出最后一个编号，主要通过 cbx@tempcnta 来控制
@@ -1614,6 +1623,18 @@ A demonstration database is provided to show how to format input for the style. 
 please see the file 'biblatex-gb7714-2015.pdf' for further information!
 
 
+
+
+---------------------------------------------------------
+## Update history:
+
+[update: tex](example/updatehistory.tex)
+
+[update: tex](example/updatehistoryold.tex)
+
+
+
+
 ## Version history:
 
 * 2016/05/20 v1.0  
@@ -1662,18 +1683,10 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * 2024/03/27 v1.1q,ctan,github
 * 2024/05/15 v1.1r,ctan,github
 * 2024/11/15 v1.1s,ctan,github
+* 2025/03/03 v1.1t,ctan,github
 
 
 
-
-
-
----------------------------------------------------------
-## Update history:
-
-[update: tex](example/updatehistory.tex)
-
-[update: tex](example/updatehistoryold.tex)
 
 
 
