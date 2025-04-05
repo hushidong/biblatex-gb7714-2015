@@ -20,7 +20,7 @@ def compileall(task='all'): #'all','compare'
 	if task=='all':
 		pwd=os.getcwd()
 		filesneedcopy=['gb7714-CCNU.bbx','gb7714-CCNU.cbx','gb7714-NWAFU.bbx','gb7714-NWAFU.cbx','gb7714-SEU.bbx','gb7714-SEU.cbx',
-		'chinese-erj.bbx','chinese-erj.cbx','chinese-css.bbx','chinese-css.cbx',
+		'chinese-erj.bbx','chinese-erj.cbx','chinese-css.bbx','chinese-css.cbx','gb7714-CCNUay.bbx','gb7714-CCNUay.cbx',
 		'chinese-jmw.bbx','chinese-jmw.cbx','chinese-cajhss.bbx','chinese-cajhss.cbx','chinese-cajhssay.bbx','chinese-cajhssay.cbx',
 		'example.bib', 'gb7714-1987.bbx', 'gb7714-1987.cbx', 
 		'gb7714-1987ay.bbx', 'gb7714-1987ay.cbx', 'gb7714-2005.bbx', 'gb7714-2005.cbx', 'gb7714-2005ay.bbx',

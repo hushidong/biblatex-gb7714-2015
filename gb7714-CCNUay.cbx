@@ -1,0 +1,41 @@
+%%
+%% ---------------------------------------------------------------
+%% gb7714-CCNU.cbx --- A bibliography style for CCNUthesis template
+%% ---------------------------------------------------------------
+%%
+\ProvidesFile{gb7714-CCNU.cbx}[a biblatex citation style for CCNUthesis]
+
+%
+%   加载样式
+%
+\RequireCitationStyle{gb7714-2015ay} %numeric
+
+
+\ExecuteBibliographyOptions{
+  maxcitenames=3,
+  mincitenames=1,
+  uniquename=false,%uniquename=init
+  uniquelist=false
+}
+
+%==================================================
+%为标注和文献表中标点格式，重设and本地化字符串
+%==================================================
+\DefineBibliographyStrings{english}{
+    andincitecn   = {和}, %将标注中的分开，便于与文献表中的区分
+    andincite     = {and},
+}
+
+
+%\DeclareCiteCommand{\citep}
+%  {\usebibmacro{cite:init}%
+%  \renewbibmacro*{postnote}{%
+%  \iffieldundef{postnote}%
+%    {}%
+%    {\setunit{\printdelim{postnotedelim}}\printtext{\thefield{postnote}}}}%
+%    \mkbibleftborder\usebibmacro{prenote}}%
+%  {\usebibmacro{citeindex}%
+%   \usebibmacro{cite}}
+%  {}
+%  {\usebibmacro{postnote}\mkbibrightborder%\usebibmacro{postnote}
+%  }

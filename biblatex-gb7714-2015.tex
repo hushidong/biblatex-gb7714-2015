@@ -1155,13 +1155,13 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \item[gbNoAfPcSpace] default is false
 
   顺序编码制的toggle开关，设置\verb|\toggletrue{gbNoAfPcSpace}|表示去除parencite后面添加的中英文之间的空格，设置\verb|\togglefalse{gbNoAfPcSpace}| 则相反，表示不处理，由ctex/xeCJK自行添加。
-  
+
   \item[其他]
 
   注意：前面的一些选项也都有对应的toggle开关，若在局部环境中调整toggle开关，可以实现文献格式的临时调整。比如：
   \verb|\settoggle{bbx:gbtype}{false}| 局部设置不输出文献类型和载体标识符，
   \verb|\settoggle{bbx:gbannote}{true}| 局部设置输出注释信息
-  
+
 \end{description}
 
 
@@ -1170,10 +1170,10 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \begin{description}
   \pdfbookmark[4]{gbrefcompress}{gbrefcompress}
   \item[gbrefcompress] default is 2
-  
+
   顺序编码制的控制文献压缩的计数器，默认设置 \verb|\setcounter{gbrefcompress}{2}|表示从2篇文献开始压缩。若设置\verb|\setcounter{gbrefcompress}{3}|则表示从3篇文献开始压缩。
-  
-  
+
+
   \item[其他]
 
   注意：前面的一些选项也都有对应的计数器，若在局部环境中调整，可以实现文献格式的临时调整。比如：
@@ -1206,7 +1206,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   则中文文献是紧贴在一起，而英文文献两者之间存在空格。
 
 
-  
+
 
 \end{description}
 
@@ -1923,6 +1923,8 @@ bibitemindent表示
 
 文献表输出的格式即参考文献著录样式，除了各条目构成的文献表整体的格式外，还有条目内部的格式可以控制，包括：条目内部各个项(称为著录项); 项之间或内部的内容、标点、字体和颜色等。其中标点字体颜色等的修改已经部分包含在前一小节介绍的接口中，而更为复杂的著录项修改则需要通过域格式的修改来实现，前面介绍的接口实际就是定义在这些域格式中。
 
+\paragraph{\heiti 姓名、日期、卷期等著录项}  
+
 一些简单的域格式修改如例\ref{eg:bib:fieldsetlocal}所示，其中将期刊文献的volume域的格式设置为粗体，将会议论文的日期设置为粗体。
 
 \begin{example}{域格式的局部调整示例}{eg:bib:fieldsetlocal}
@@ -1974,8 +1976,17 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \caption{文献表条目著录格式示例二}\label{fig:content:fmtb}
 \end{figure}
 
+\paragraph{\heiti 标题类著录项的大小写} 文献名、期刊名等标题类著录项，若是中文的，则不涉及大小写的问题，但若是英文的，则可能要考虑 sentence case 和 title case 的问题。
 
+要对一个标题进行转化，除了 sentencecase 稍微简单一些外，实际上是比较复杂的。
+因为 titlecase 实际上有不同的标准(参考：\url{https://titlecaseconverter.com/})，
+sentencecase 虽然只有一个标准，但也涉及专有名词的识别和保护的问题。
 
+因此，利用tex宏来实现case转化则相对复杂，而更方便的方法是直接在 bib文件中修改case然后在tex中保持不变。所以本样式默认不修改标题类的case。
+
+因此，若需要修改标题的case，则需要直接对bib文件进行修改，将目标文献的内容修改为需要的case格式。可以使用jabref，zotero等可视化工具或者bibmap等命令行工具进行修改。
+
+ 
 \subsubsection{参考文献表的局部调整}\label{sec:entry:fmtlocal}
 
 文档中有时需要多个文献表，而且可能具有不同的格式，因此全局的设置不一定满足要求，所以需要进行局部的调整，调整的内容也包括：文献表的标题、段落格式和著录格式。
@@ -2595,7 +2606,7 @@ uniquelist=false,uniquename=false,sorting=gbynta]{biblatex}
 %(Weinberg, 1967; Chiu et al., 1978; Knuth, 1984; Geer, 1985; Knuth, 1986; Westfahl, 2000)
 \newrefcontext[sorting=gb7714-2015]
 \printbibliography
-\end{document} 
+\end{document}
 \end{texlist}
 \end{example}
 
@@ -2619,7 +2630,7 @@ uniquelist=false,uniquename=false,sorting=gb7714-2015]{biblatex}
 \cite{weinberg,chiu,knuth:ct:a,knuth:ct:e,geer,westfahl:frontier}
 
 \printbibliography
-\end{document} 
+\end{document}
 \end{texlist}
 \end{example}
 
