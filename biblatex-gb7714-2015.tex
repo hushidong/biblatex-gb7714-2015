@@ -235,7 +235,7 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 \begin{itemize}
 \item 参考文献样式(即cbx/bbx文件)随 biblatex 宏包加载(比如：style=gb7714-2015，加载了gb7714-2015.cbx和gb7714-2015.bbx);
 \item 参考文献数据库文件(即 bib 文件)利用 \verb|\addbibresource| 加载 （比如：
-\lstinline[breaklines=true]!\addbibresource[location=local]{example.bib}!，
+\lstinline[breaklines=true,basicstyle=\ttfamily]!\addbibresource[location=local]{example.bib}!，
 注意：bib文件需另外准备，详见~\ref{sec:bib:bibtex} 节）;
 \item 引用文献则使用 \verb|\cite| 等命令，即使用这些命令在正文中适当位置引用参考文献的唯一标识(即entrykey)，比如 \verb|\cite{entrykey}|;
 \item 打印文献表则使用 \verb|\printbibliography| 命令，该命令可放在正文任意位置(即文献表可在任意位置输出)。
@@ -468,7 +468,7 @@ v1.1m版本增加了chinese-jmw样式用于生成管理世界期刊的文献。
     \item gbalign=gb7714-2015ay，无数字序号标签，是author-year风格的文献表，是gb7714-2015ay样式的默认选项。
   \end{itemize}
   该选项对\textbf{著者年份制、顺序编码制均有效}，也就是说当使用著者年份制时，加上 gbalign 选项后同样可以实现文献表的顺序序号标签(比如：
-  \lstinline[breaklines=true]!\usepackage[style=gb7714-2015ay, gbalign=left]{biblatex}!，可以实现\emph{著者年份制格式的带左对齐的顺序序号标签的文献表})。 序号标签对齐方式的测试，包括：
+  \lstinline\[breaklines=true,basicstyle=\ttfamily\]!\usepackage[style=gb7714-2015ay, gbalign=left]{biblatex}!，可以实现\emph{著者年份制格式的带左对齐的顺序序号标签的文献表})。 序号标签对齐方式的测试，包括：
   数字在标签内居中见:
   \href{run:./example/opt-gbalign-center.tex}{opt-gbalign-center.tex}，
   标签左对齐见:
@@ -778,8 +778,8 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \end{itemize}
 
   需要注意的是：若只想修改英文文献的全部标点为半角标点，而中文文献的标点不变，可在导言区采用如下方式修改英文文献的标点：
-  \lstinline[breaklines=true]!\def\gbpunctcommalanen{\addcomma\addspace}!,
-  \lstinline[breaklines=true]!\def\gbpunctcolonlanen{\addcolon\addspace}!。
+  \lstinline[breaklines=true,basicstyle=\ttfamily]!\def\gbpunctcommalanen{\addcomma\addspace}!,
+  \lstinline[breaklines=true,basicstyle=\ttfamily]!\def\gbpunctcolonlanen{\addcolon\addspace}!。
 
 
   \pdfbookmark[4]{gbtitlelink}{gbtitlelink}
@@ -825,7 +825,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \item[gbbiblocal]=\textbf{gb7714-2015}，chinese，english. \hfill default is gb7714-2015
 
   为设置引用标注标签和文献表中的本地化字符串而增加的选项。其中gbcitelocal 用于控制标注中的本地化字符串，而 gbbiblocal 用于控制文献表中的本地化字符串，gblocal选项等价于同时设置gbcitelocal 和 gbbiblocal。
-  配合\lstinline[breaklines=true]!\DefineBibliographyStrings!命令对本地化字符串进行设置可以实现一些特殊的效果。图~\ref{fig:content:fmtc} 就是该选项的一个使用示例。
+  配合\lstinline[breaklines=true,basicstyle=\ttfamily]!\DefineBibliographyStrings!命令对本地化字符串进行设置可以实现一些特殊的效果。图~\ref{fig:content:fmtc} 就是该选项的一个使用示例。
   \begin{itemize}
     \item gblocal=gb7714-2015，即默认区分中英文，不同语言采用不同的字符串比如中文使用“等”“和”，而英文使用“et al.”“and”。
     \item gblocal=chinese，强制设置所有的本地化字符串使用中文。
@@ -870,9 +870,9 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item no mergedate，即不给出该选项，这是gb7714-2015ay默认的情况，仅在作者后输出日期且已经根据国标格式化。
   \end{itemize}
   效果示例如图~\ref{fig:eg:optmergedate} 所示。注意：对于在线资源当没有 date 等信息而只有 urldate 信息时，著者年份制要求使用 urldate 的年份作为标签，且要求加上方括号，默认就按这一要求处理。但若希望去掉方括号，则可以通过在导言区增加如下定义：
-  \lstinline[breaklines=true]!\DeclareFieldFormat{labelurlyear}{#1}!。
+  \lstinline[breaklines=true,basicstyle=\ttfamily]!\DeclareFieldFormat{labelurlyear}{#1}!。
   反过来，其它不使用 urldate 的标签默认不带方括号，若希望加上方括号或者其它符号，则可以通过增加如下定义实现：
-  \lstinline[breaklines=true]!\DeclareFieldFormat{labelyear}{【#1】}!。
+  \lstinline[breaklines=true,basicstyle=\ttfamily]!\DeclareFieldFormat{labelyear}{【#1】}!。
 
 \begin{figure}[!htb]
 \centering
@@ -975,12 +975,12 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
         \lstinline[breaklines]!\ctexset{bibname={title you want}}!
     \item gbctexset=false，参考文献标题内容可以通过重定义本地字符串设置，比如：
 
-  \lstinline[breaklines=true]!\DefineBibliographyStrings{english}{bibliography={title you want}}!
+  \lstinline[breaklines=true,basicstyle=\ttfamily]!\DefineBibliographyStrings{english}{bibliography={title you want}}!
 
-  \lstinline[breaklines=true]!\DefineBibliographyStrings{english}{references={title you want}}!。
+  \lstinline[breaklines=true,basicstyle=\ttfamily]!\DefineBibliographyStrings{english}{references={title you want}}!。
   \end{itemize}
   当然除此之外，利用 printbibliography 命令的 title 选项进行设置依然是最有效方式，比如:
-  \lstinline[breaklines=true]!\printbibliography[title=title you want]!。
+  \lstinline[breaklines=true,basicstyle=\ttfamily]!\printbibliography[title=title you want]!。
 
 
   \pdfbookmark[4]{gbcodegbk}{gbcodegbk}
@@ -1202,7 +1202,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \item[titletypedelim] default is empty
 
   用于控制文献表中文献标题与文献类型标识符之间的间隔符，默认为空，也就是两者是紧贴在一起的。若设置：\\
-  \lstinline[breaklines=true]!\DeclareDelimFormat[bib,biblist]{titletypedelim}{\iffieldequalstr{userd}{chinese}{}{\space}}!
+  \lstinline[breaklines=true,basicstyle=\ttfamily]!\DeclareDelimFormat[bib,biblist]{titletypedelim}{\iffieldequalstr{userd}{chinese}{}{\space}}!
   则中文文献是紧贴在一起，而英文文献两者之间存在空格。
 
 
