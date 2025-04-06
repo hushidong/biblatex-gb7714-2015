@@ -78,9 +78,9 @@ biblatex-gb7714-2015 宏包是为满足《GB/T 7714-2015~~信息与文献~~参�
 
 参考文献是\LaTeX{}自动化应用之一，尽可能让其自动完成，减少用户的人工干预，包括数据的准备、格式的调整等等。因此宏包试图减少用户对于 bib 文件的调整，只需要简单地输入文献本身的信息，或者从各类学术网站或利用 zotero 等工具下载参考文献数据即可，而不需要为了符合国标格式而去手动增添参考文献类型和载体标识等一些数据域，也不必为了文献语言分集、文献排序等去增加语言、排序关键字等数据域，所有这些工作都由宏包自动处理。
 
-为了符合国标要求以及中文参考文献标注习惯，提供丰富的标注（引用）命令，用户只需熟悉几个命令的特性即能够完成两种编制样式下多样的标注格式，包括：顺序编码制的 \verb|\cite| (上标可设置页码)、 \verb|\parencite| (非上标可设置页码)、 \verb|\pagescite| (上标加自动页码)、 \verb|\textcite| (提供作者为主语加非上标编号)、 \verb|\authornumcite| (提供作者为主语加上标编号)、\verb|\fullcite| (类似文献表的标注)、 \verb|\footfullcite| (脚注文献表)；著者-年份制的\verb|\cite| (作者加年份用括号包围可设置页码)、 \verb|\pagescite| (作者加年份用括号包围自动页码)、
-\verb|\yearcite| (提供年份用括号包围)、 \verb|\yearpagescite| (提供年份用括号包围自动页码)、
-\verb|\textcite| (提供主语作者加括号包围年份)、 \verb|\footfullcite| (脚注注释)。
+为了符合国标要求以及中文参考文献标注习惯，提供丰富的标注（引用）命令，用户只需熟悉几个命令的特性即能够完成两种编制样式下多样的标注格式，包括：顺序编码制的 \verb|\cite| (上标可设置页码)、\verb|\parencite| (非上标可设置页码)、\verb|\pagescite| (上标加自动页码)、\verb|\textcite| (提供作者为主语加非上标编号)、\verb|\authornumcite| (提供作者为主语加上标编号)、\verb|\fullcite| (类似文献表的标注)、\verb|\footfullcite| (脚注文献表)；著者-年份制的 \verb|\cite| (作者加年份用括号包围可设置页码)、\verb|\pagescite| (作者加年份用括号包围自动页码)、
+\verb|\yearcite| (提供年份用括号包围)、\verb|\yearpagescite| (提供年份用括号包围自动页码)、
+\verb|\textcite| (提供主语作者加括号包围年份)、\verb|\footfullcite| (脚注注释)。
 也提供与 natbib 宏包常用命令同名的命令 \verb|\citet| 和 \verb|\citep|，
 和一些惯常使用的命令，如 \verb|\citetns|、\verb|\citepns|、
 \verb|\upcite|、\verb|\inlinecite| 等，让用户可以无缝衔接从 bibtex 转到 biblatex，
@@ -237,7 +237,7 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 \item 参考文献数据库文件(即 bib 文件)利用 \verb|\addbibresource| 加载 （比如：
 \lstinline[breaklines=true]!\addbibresource[location=local]{example.bib}!，
 注意：bib文件需另外准备，详见~\ref{sec:bib:bibtex} 节）;
-\item 引用文献则使用 \verb|\cite| 等命令，即使用这些命令在正文中适当位置引用参考文献的唯一标识(即entrykey)，比如\verb|\cite{entrykey}|;
+\item 引用文献则使用 \verb|\cite| 等命令，即使用这些命令在正文中适当位置引用参考文献的唯一标识(即entrykey)，比如 \verb|\cite{entrykey}|;
 \item 打印文献表则使用 \verb|\printbibliography| 命令，该命令可放在正文任意位置(即文献表可在任意位置输出)。
 \end{itemize}
 
@@ -303,7 +303,7 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 
 \subsection{编译方式}
 
-与基于 bibtex 传统方法的四步编译不同，基于 biblatex 生成参考文献一般只需三步编译：第一遍 xelatex，第二遍 biber，第三遍 xelatex，如若需要反向超链接，除设置backref 选项外，则还需第四遍 xelatex 编译。例\ref{eg:compile:cmd} 给出编译命令，其中\verb|--synctex=-1| 选项也可以是-synctex=1。另外四步命令可以用一条 latexmk 命令代替。
+与基于 bibtex 传统方法的四步编译不同，基于 biblatex 生成参考文献一般只需三步编译：第一遍 xelatex，第二遍 biber，第三遍 xelatex，如若需要反向超链接，除设置backref 选项外，则还需第四遍 xelatex 编译。例\ref{eg:compile:cmd} 给出编译命令，其中 \verb|--synctex=-1| 选项也可以是-synctex=1。另外四步命令可以用一条 latexmk 命令代替。
 关于非utf-8编码文档和使用 pdflatex 命令编译的细节另见第~\ref{sec:pkg:hints} 节。
 
 \begin{example}{文档编译命令}{eg:compile:cmd}
@@ -1137,7 +1137,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \pdfbookmark[4]{setlocalbibstring}{setlocalbibstring}
   \item[setlocalbibstring] \{bibstringkey\}\{bibstringval\}
 
-  用于局部调整本地化字符串的内容。比如\verb|\setlocalbibstring{andothersincite}{et al.}|，就是临时将本地化字符串 andothersincite 的内容调整为“et al.”。
+  用于局部调整本地化字符串的内容。比如 \verb|\setlocalbibstring{andothersincite}{et al.}|，就是临时将本地化字符串 andothersincite 的内容调整为“et al.”。
 
 注意：如果要在本地化字符串的内容设置中使用 biblatex 提供的一些标点命令，比如adddot 等，那么需要对其进行保护，避免直接展开导致命令未定义的错误，比如：
 \verb|\setlocalbibstring{andothersincite}{et al\protect\adddot}|
@@ -1154,7 +1154,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \pdfbookmark[4]{gbNoAfPcSpace}{gbNoAfPcSpace}
   \item[gbNoAfPcSpace] default is false
 
-  顺序编码制的 toggle 开关，设置 \verb|\toggletrue{gbNoAfPcSpace}| 表示去除 parencite 后面添加的中英文之间的空格，设置\verb|\togglefalse{gbNoAfPcSpace}| 则相反，表示不处理，由ctex/xeCJK自行添加。
+  顺序编码制的 toggle 开关，设置 \verb|\toggletrue{gbNoAfPcSpace}| 表示去除 parencite 后面添加的中英文之间的空格，设置 \verb|\togglefalse{gbNoAfPcSpace}| 则相反，表示不处理，由ctex/xeCJK自行添加。
 
   \item[其他]
 
@@ -1353,11 +1353,11 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 \subsection{文献引用及标注格式}\label{sec:cbx:usage}
 
-要生成参考文献，第一步就是在正文中引用参考文献。正文中因引用文献所形成的标注的格式称为参考文献标注样式，也称引用样式或引用标签样式，分为两类: 顺序编码制和著者-出版年（作者年）制。引用文献的基本命令是 \verb|\cite|，但为了在一篇文档中实现不同的标签效果，通常还需要使用\verb|\parencite| 等其它命令，以及这些命令的复数形式以实现同一处引用多篇文献时的附加信息输出。
+要生成参考文献，第一步就是在正文中引用参考文献。正文中因引用文献所形成的标注的格式称为参考文献标注样式，也称引用样式或引用标签样式，分为两类: 顺序编码制和著者-出版年（作者年）制。引用文献的基本命令是 \verb|\cite|，但为了在一篇文档中实现不同的标签效果，通常还需要使用 \verb|\parencite| 等其它命令，以及这些命令的复数形式以实现同一处引用多篇文献时的附加信息输出。
 
-%比如 \verb|\parencite|, \verb|\textcite|, \verb|\pagescite|,\verb|\footfullcite| 等。此外为遵循 biblatex 对于复数形式标注命令的使用习惯，也提供上述命令的复数形式，比如 \verb|\cite| 命令的复数形式命令\verb|\cites|，便于输出单个文献的页码等前后注信息。
+%比如 \verb|\parencite|, \verb|\textcite|, \verb|\pagescite|,\verb|\footfullcite| 等。此外为遵循 biblatex 对于复数形式标注命令的使用习惯，也提供上述命令的复数形式，比如 \verb|\cite| 命令的复数形式命令 \verb|\cites|，便于输出单个文献的页码等前后注信息。
 %熟悉 natbib 的用户也可以直接使用使用 \verb|\citet|, \verb|\citep| 命令。
-%另外也可以使用一些惯用命令比如\verb|\citetns|、\verb|\citepns|、
+%另外也可以使用一些惯用命令比如 \verb|\citetns|、\verb|\citepns|、
 %\verb|\upcite|、\verb|\inlinecite|等。
 
 \subsubsection{两种编制的标注格式}
@@ -1425,9 +1425,9 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 注意：对于一个引用命令中同时给出多个文献 entrykey 的压缩形式，页码只会应用到最后一个参考文献后面。
 %这是不正确的，但这种情况其实本不应出现，因为指定页码本来就需要具体化指向某一文献。
 若要为每篇添加页码信息，则应多次使用标注命令
-\verb|\cite[p.2]{entrykey1}\cite[p.5]{entrykey2}|或使用复数形式的标注命令
+\verb|\cite[p.2]{entrykey1}\cite[p.5]{entrykey2}| 或使用复数形式的标注命令
 \verb|\cites[p.2]{entrykey1}[p.5]{entrykey2}|，
-而不是\verb|\cite[p.5]{entrykey1,entrykey2}|。
+而不是 \verb|\cite[p.5]{entrykey1,entrykey2}|。
 
 注意：在同一处引用多篇序号连续的文献时，标注标签默认是从两篇文献开始压缩的，比如同时连续引用两篇和三篇文献时标注分别为[1-2]和[1-3]。若需要修改从三篇文献开始压缩，比如：两篇和三篇文献分别标注为[1,2]和[1-3]，则只需要在导言区设置计数器 gbrefcompress 的值为3，即：
 \verb|\setcounter{gbrefcompress}{3}|。
@@ -1714,7 +1714,7 @@ gb7714-2015通过 gbcitelocalcase 计数器来选择使用中文或英文的本�
 \subsubsection{段落格式控制}
 
 \paragraph{\heiti 文献表字体、颜色} 为方便用户改变文献表段落格式、内容字体和颜色等，在 biblatex 提供的 \verb|\bibfont| 命令基础上，
-增加了 \verb|\bibauthorfont|、\verb|\bibtitlefont|、\verb|\bibpubfont| 等命令用于控制文献部分著录项的格式，比如作者，标题，出版项等。增加了\verb|\SlashFont| 用于控制斜杠的字体。
+增加了 \verb|\bibauthorfont|、\verb|\bibtitlefont|、\verb|\bibpubfont| 等命令用于控制文献部分著录项的格式，比如作者，标题，出版项等。增加了 \verb|\SlashFont| 用于控制斜杠的字体。
 具体用法见例~\ref{eg:biblist:fontset}，结果如图\ref{fig:par:fmt} 所示，
 测试用例见\href{run:example/testfontinbiblio.tex}{testfontinbiblio.tex}。
 
@@ -1764,7 +1764,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 
 \paragraph{\heiti 文献表水平间距(缩进)控制}
-增加了尺寸\verb|\bibitemindent| 用于控制参考文献条目在文献表中的缩进，
+增加了尺寸 \verb|\bibitemindent| 用于控制参考文献条目在文献表中的缩进，
 其意义与 list 环境中 \verb|\itemindent| 相同。
 文献表的水平缩进控制，两种编制方式下是不同的，调整方法见例\ref{eg:biblist:hspace}。
 
@@ -2056,7 +2056,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 gb7714-2015mx样式默认使用顺序编码样式，当要使用著者-出版年制样式时，则利用命令
 \verb|\setaystylesection|进行设置，该命令有一个必选参数，表示采用著者-出版年制样式的参考文献节的编号。注意该命令一次只能设置一个文献节，因此设置多个参考文献节时，需要多次使用 \verb|\setaystylesection| 命令，比如节2节4都采用著者-出版年制样式，
-那么设置\verb|\setaystylesection{2}\setaystylesection{4}|。
+那么设置 \verb|\setaystylesection{2}\setaystylesection{4}|。
 
 目前gb7714-2015mx样式中的两种格式：顺序编码和著者-出版年制样式默认都是符合GB/T 7714-2015 标准的，如果需要做格式的修改，则完全可以通过自定义实现。图~\ref{fig:eg:ms} 展示了3个参考文献分节的文档，其中节2使用了著者-出版年制。
 
@@ -2340,7 +2340,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \item 再次，还可设置 language 选项，用于区分是否在标注或文献表中采用多语言处理方案。当 language 选项等于 autobib 时仅在文献表中自动切换语言，等于 autocite 时仅在标注中自动切换语言，等于 auto 时则在文献表和标注中同时切换。
 
 \item 最后，需要在 tex 文档内加入 babel 宏包或 polyglossia，并设置需要使用的语言。注意：需要使用本地化字符串的西语都要加入，否则无法自动切换。比如需要自动切换的西文语言有英文、法文和俄文，
-那么需要将加入\verb|french,russian,english|。如例~\ref{eg:multi:lanset} 所示：
+那么需要将加入 \verb|french,russian,english|。如例~\ref{eg:multi:lanset} 所示：
 
 \begin{example}{babel/polyglossia设置西方语言的多语言支持}{eg:multi:lanset}
 \begin{texlist}
@@ -2478,7 +2478,7 @@ language={chinese}
 除上述给出的条目集方案外，关联条目方法则是另一种可行方案\footnote{Again about the \@ set label for authoryear style：\url{https://github.com/plk/biblatex/issues/681}}。该方案同样也有静态和动态两种方法，静态就是直接修改 bib 文件的内容，动态则是在 tex 源文档中做设置，然后通过 biblatex 的动态数据修改机制做临时修改。
 
 静态方法很简单，bib文件中条目设置如例~\ref{eg:related:staticright} 所示，它能解决双语同时显示的问题，也能解决排序和标注标签问题，唯一的问题在于修改了 bib 文件后，当不需要双语文献时还需改回来，这会带来不便，因此可以考虑下面的动态方法。
-但要注意动态方法需要利用多个\verb|\DeclareStyleSourcemap|，因此该方法只适用于biblatex v3.7及以上版本。
+但要注意动态方法需要利用多个 \verb|\DeclareStyleSourcemap|，因此该方法只适用于biblatex v3.7及以上版本。
 
 \begin{example}{在 bib 文件中正确设置关联条目的静态方法}{eg:related:staticright}
 \begin{texlist}
@@ -2926,7 +2926,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
   \item[urldate] urldate域与 date 域类似，只是解析时，存储到 urlday，urlmonth，urlyear，urlendday，urlendmonth，urlendyear域中。origdate和 eventdate 与 urldate 情况类似。
 
-  \item[pages] 可以格式化输入或输入需要打印的内容。格式化输入时，页码用整数，当有范围时，用单个或多个短横线-隔开。比如:59-60或\verb|59--60|。 当无法解析时，输入内容被认为是需要完整打印的内容。
+  \item[pages] 可以格式化输入或输入需要打印的内容。格式化输入时，页码用整数，当有范围时，用单个或多个短横线-隔开。比如:59-60或 \verb|59--60|。 当无法解析时，输入内容被认为是需要完整打印的内容。
 
   \item[url] 直接输入需要打印的网址内容。注意不需要在域内加上 \verb|\url| 命令来表示网址链接，仅需要输入网址本身即可，且特殊字符无需转义。即输入方式为:
 
@@ -3027,7 +3027,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
   默认情况下 biber 为了实现更好的排序，会将一些 latex 提供的特殊宏转换为utf-8编码字符。但有时我们可能并不需要做这样的转换，因为转换后符号的形式就变了。由于 biber 依赖一个字符映射表recode\_data.xml进行转换，因此我们可以利用它来构建一个自定义映射表，从而避免biber 对一些特殊宏的转换。具体做法如下：
     \begin{itemize}
     \item 找到 biber 的临时工作路径中的，recode\_data.xml (搜索能找到)
-    \item 复制一个到其它位置，并定义为，比如\verb|c:\recodeudf.xml|
+    \item 复制一个到其它位置，并定义为，比如 \verb|c:\recodeudf.xml|
     \item 打开该文件，并找到 textquotesingle 那一项删除，将所有的 set 修改为 special，并保存
     \item 编译的时候，xelatex正常编译，biber这一步则使用命令：
 
@@ -3050,8 +3050,8 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
       当文档使用其他编码时，可以利用notepad++ 或notepad2 等编辑器将其转换为UTF-8编码。
 
-      若不进行转换，使用 xelatex 编译通常需要指定一个文档编码，比如Windows 环境下的GB2312 编码的文档需要指定\verb|\XeTeXinputencoding "GBK"|，否则会显示乱码。使用pdflatex 进行编译时，如果 biblatex 不能正确的处理编码问题，那么需要为其明确的指定texencoding 和bibencoding 选项。比如 Windows 环境下的GB2312编码的文档，
-      需要指定\verb|\usepackge[texencoding=GBK]{biblatex}|。
+      若不进行转换，使用 xelatex 编译通常需要指定一个文档编码，比如Windows 环境下的GB2312 编码的文档需要指定 \verb|\XeTeXinputencoding "GBK"|，否则会显示乱码。使用pdflatex 进行编译时，如果 biblatex 不能正确的处理编码问题，那么需要为其明确的指定texencoding 和bibencoding 选项。比如 Windows 环境下的GB2312编码的文档，
+      需要指定 \verb|\usepackge[texencoding=GBK]{biblatex}|。
 
       %增加了对 GBK 支持的说明，2018-05-11
 
@@ -3203,7 +3203,7 @@ GB/T 7714-2015规定采用顺序编码制组织参考文献时，各篇文献应
 一、正文每个文献需要引用均生成脚注文献，因此一个引用命令只能带一个文献引用关键字。且正文中引用的标注标签格式不同，是带圈的上标数字而不是[]包围的数字。
 二、脚注中的文献表即便是遇到相同文献也需要重复输出，但可以简化为序号和页码。
 
-事实上如果不进行简化而只是简单重复输出，对于 biblatex 来说处理其实更方便，但为了与GB/T 7714-2015 标准给出的示例一致，biblatex-gb7714-2015也做了实现，注意：脚注方式文献表的引用命令为\verb|\footfullcite|，需要注意由于脚注本身表格中存在的问题，可能导致在其中使用该命令出现比较奇怪的现象，也要注意在图表标题中的使用情况。GB/T 7714-2015 标准中示例实现如图~\ref{fig:numeric:footnote} 所示：
+事实上如果不进行简化而只是简单重复输出，对于 biblatex 来说处理其实更方便，但为了与GB/T 7714-2015 标准给出的示例一致，biblatex-gb7714-2015也做了实现，注意：脚注方式文献表的引用命令为 \verb|\footfullcite|，需要注意由于脚注本身表格中存在的问题，可能导致在其中使用该命令出现比较奇怪的现象，也要注意在图表标题中的使用情况。GB/T 7714-2015 标准中示例实现如图~\ref{fig:numeric:footnote} 所示：
 
 \begin{figure}[!htb]
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
