@@ -472,7 +472,7 @@ v1.1m版本增加了chinese-jmw样式用于生成管理世界期刊的文献。
     \item gbalign=gb7714-2015ay，无数字序号标签，是author-year风格的文献表，是 gb7714-2015ay 样式的默认选项。
   \end{itemize}
   该选项对\textbf{著者年份制、顺序编码制均有效}，也就是说当使用著者年份制时，加上 gbalign 选项后同样可以实现文献表的顺序序号标签(比如：
-  \lstinline\[breaklines=true,basicstyle=\ttfamily\]!\usepackage[style=gb7714-2015ay, gbalign=left]{biblatex}!，可以实现\emph{著者年份制格式的带左对齐的顺序序号标签的文献表})。 序号标签对齐方式的测试，包括：
+  \lstinline[breaklines=true,basicstyle=\ttfamily]!\usepackage[style=gb7714-2015ay, gbalign=left]{biblatex}!，可以实现\emph{著者年份制格式的带左对齐的顺序序号标签的文献表})。 序号标签对齐方式的测试，包括：
   数字在标签内居中见:
   \href{run:./example/opt-gbalign-center.tex}{opt-gbalign-center.tex}，
   标签左对齐见:
@@ -1460,7 +1460,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \begin{table}[!htb]
 \centering
 \caption{著者年份制常用命令示例}\label{tab:cite:authoryear}
-\hspace{-1cm}{\parbox{\linewidth}{\includegraphics[scale=0.95,page=1]{egciteaytab.pdf}}}
+\hspace{-1cm}{\parbox{\linewidth}{\includegraphics[scale=0.95,page=1]{egfigure/egciteaytab.pdf}}}
 \end{table}
 
 
@@ -1538,7 +1538,7 @@ width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \centering
 \deflength{\textparwd}{\linewidth-1cm}
-\includegraphics[width=\textparwd]{egcontentfmtc.pdf}
+\includegraphics[width=\textparwd]{egfigure/egcontentfmtc.pdf}
 \end{tcolorbox}
 \caption{引用标注和文献表条目不同本地化字符串示例}\label{fig:content:fmtc}
 \end{figure}
@@ -1747,7 +1747,7 @@ width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \centering
 \deflength{\textparwd}{\linewidth-1cm}
-\includegraphics[width=\textparwd]{egparfmt.pdf}
+\includegraphics[width=\textparwd]{egfigure/egparfmt.pdf}
 \end{tcolorbox}
 \caption{文献表段落格式示例}\label{fig:par:fmt}
 \end{figure}
@@ -1927,7 +1927,7 @@ bibitemindent表示
 
 文献表输出的格式即参考文献著录样式，除了各条目构成的文献表整体的格式外，还有条目内部的格式可以控制，包括：条目内部各个项(称为著录项); 项之间或内部的内容、标点、字体和颜色等。其中标点字体颜色等的修改已经部分包含在前一小节介绍的接口中，而更为复杂的著录项修改则需要通过域格式的修改来实现，前面介绍的接口实际就是定义在这些域格式中。
 
-\paragraph{\heiti 姓名、日期、卷期等著录项}  
+\paragraph{\heiti 姓名、日期、卷期等著录项}
 
 一些简单的域格式修改如例~\ref{eg:bib:fieldsetlocal} 所示，其中将期刊文献的 volume 域的格式设置为粗体，将会议论文的日期设置为粗体。
 
@@ -1964,7 +1964,7 @@ width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \centering
 \deflength{\textparwd}{\linewidth-1cm}
-\includegraphics[width=\textparwd]{egcontentfmt.pdf}
+\includegraphics[width=\textparwd]{egfigure/egcontentfmt.pdf}
 \end{tcolorbox}
 \caption{文献表条目著录格式示例一}\label{fig:content:fmta}
 \end{figure}
@@ -1975,7 +1975,7 @@ width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \centering
 \deflength{\textparwd}{\linewidth-1cm}
-\includegraphics[width=\textparwd]{egcontentfmtb.pdf}
+\includegraphics[width=\textparwd]{egfigure/egcontentfmtb.pdf}
 \end{tcolorbox}
 \caption{文献表条目著录格式示例二}\label{fig:content:fmtb}
 \end{figure}
@@ -1990,7 +1990,7 @@ sentencecase 虽然只有一个标准，但也涉及专有名词的识别和保�
 
 因此，若需要修改标题的 case，则需要直接对 bib 文件进行修改，将目标文献的内容修改为需要的 case 格式。可以使用 jabref，zotero等可视化工具或者 bibmap 等命令行工具进行修改。
 
- 
+
 \subsubsection{参考文献表的局部调整}\label{sec:entry:fmtlocal}
 
 文档中有时需要多个文献表，而且可能具有不同的格式，因此全局的设置不一定满足要求，所以需要进行局部的调整，调整的内容也包括：文献表的标题、段落格式和著录格式。
@@ -2045,7 +2045,7 @@ width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \centering
 \deflength{\textparwd}{\linewidth-1cm}
-\includegraphics[width=\textparwd]{egmsinabiblio.pdf}
+\includegraphics[width=\textparwd]{egfigure/egmsinabiblio.pdf}
 \end{tcolorbox}
 \caption{一个文献表采用多种著录样式示例}\label{fig:eg:ms}
 \end{figure}
@@ -2070,7 +2070,7 @@ width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \centering
 \deflength{\textparwd}{\linewidth-1cm}
-\includegraphics[width=\textparwd]{egmsindfrefsec.pdf}
+\includegraphics[width=\textparwd]{egfigure/egmsindfrefsec.pdf}
 \end{tcolorbox}
 \caption{不同参考文献分节采用不同著录样式}\label{fig:eg:mx}
 \end{figure}
@@ -2323,7 +2323,7 @@ width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \centering
 \deflength{\textparwd}{\linewidth-1cm}
-\includegraphics[width=\textparwd]{egmultilan.pdf}
+\includegraphics[width=\textparwd]{egfigure/egmultilan.pdf}
 \end{tcolorbox}
 \caption{多语言混合文献表}\label{fig:multi:lan}
 \end{figure}
@@ -2391,7 +2391,7 @@ width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \centering
 \deflength{\textparwd}{\linewidth-1cm}
-\includegraphics[width=\textparwd]{egdoublelan.pdf}
+\includegraphics[width=\textparwd]{egfigure/egdoublelan.pdf}
 \end{tcolorbox}
 \caption{双语言对照文献表示例一}\label{fig:double:lana}
 \end{figure}
@@ -2402,7 +2402,7 @@ width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \centering
 \deflength{\textparwd}{\linewidth-1cm}
-\includegraphics[width=\textparwd]{egdoublelanb.pdf}
+\includegraphics[width=\textparwd]{egfigure/egdoublelanb.pdf}
 \end{tcolorbox}
 \caption{双语言对照文献表示例二}\label{fig:double:lanb}
 \end{figure}
@@ -2424,7 +2424,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 biblatex v3.7及之前版本，因为 set 带有第一个子条目的信息，所以会自动输出子条目信息作为标签。
 而biblatex v3.8及以上版本中，因为 set 条目类型除了子条目关键词信息外，并无其他信息，所以 set 的标注标签会存在问题。这个问题可以通过设置一个指定格式和内容且中间无空格无英文逗号的关键字来弥补，比如“易仕和，等，2013”，这时因为没有空格和英文逗号，该关键字会以一个整体字符串处理，而不会被分开解析，因此可以用它来作为标签}。比如：
 
-\begin{example}{设置 set 条目集用于双语文献动态方法}{eg:setforbilangentry}
+\begin{example}{设置 set 条目集用于双语文献动态方法}{eg:setforbilangentryA}
 \begin{texlist}
 \defbibentryset{易仕和，等，2013}{易仕和2013--,Yi2013--}
 专著，双语文献引用\cite{易仕和，等，2013}
@@ -3131,15 +3131,15 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
 \subsection{GB/T 7714-2015 标准示例}
 
-详见文档：\href{run:./stdGBT7714-2015.pdf}{stdGBT7714-2015.pdf}
+详见文档：\href{run:./tool/stdGBT7714-2015.pdf}{stdGBT7714-2015.pdf}
 
 \subsection{多语言支持相关测试示例}
 
-详见文档：\href{run:./stdgbT7714-2015lan.pdf}{stdgbT7714-2015lan.pdf}
+详见文档：\href{run:./tool/stdgbT7714-2015lan.pdf}{stdgbT7714-2015lan.pdf}
 
 \subsection{国内一些大学学位论文文献格式相关测试示例}
 
-详见文档：\href{run:./stdgbT7714-2015thesis.pdf}{stdgbT7714-2015thesis.pdf}
+详见文档：\href{run:./tool/stdgbT7714-2015thesis.pdf}{stdgbT7714-2015thesis.pdf}
 
 \subsection{更多示例}
 
@@ -3215,7 +3215,7 @@ width=\linewidth,colframe=gblabelcolor,colback=white,arc=0pt,%
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \centering
 \deflength{\textparwd}{\linewidth-1cm}
-\includegraphics[width=\textparwd]{egfootstyle.pdf}
+\includegraphics[width=\textparwd]{egfigure/egfootstyle.pdf}
 \end{tcolorbox}
 \caption{顺序编码制的脚注方式}\label{fig:numeric:footnote}
 \end{figure}
@@ -3357,7 +3357,7 @@ author.title[usera].journaltitle或journal,year,volume(number):pages[urldate].ur
 
 \qd{由于 biblatex 不支持newspaper 条目类型，所以条目类型报纸析出的文献用 article 表示，但使用 entrysubtype 或 note 域等于news|newspaper作为一个区分，当 note 域数据存在且内容等于 news 或 newspaper 时，就将其作为报纸的析出文献进行处理。报纸文献类型标识用 N 表示，报纸的版次用 number 域描述。}
 
-\subsubsection{报纸析出的文献/newspaper}\label{sec:standard}
+\subsubsection{报纸析出的文献/newspaper}\label{sec:newspaper}
 biblatex没有将报纸的析出文献(newspaper)作为一种文献条目类型，因此可以直接利用 article 类型加 entrysubtype 或 note 域等于news|newspaper代替，或者也可以直接使用 newspaper 类型。为方便使用考虑，本样式增加了对新条目类型 newspaper 的支持，这种支持通过类似于 standard 类型的方式实现，没有对数据模型进行改动或增加，而完全利用动态数据修改将 newspaper 类型转换为 article 类型。在 bib 文件中直接使用 newspaper 类型时需要注意可能存在移植障碍，因为其它 biblatex 样式可能不支持 newspaper 类型。
 
 \begin{refentry}{}{}
@@ -3516,7 +3516,7 @@ author.title[usera].translator.location:institution,date或year:pages[urldate].u
 \subsection{标准的其它细节要求}
 
 除了第~\ref{sec:numeric:data} 节针对不同条目类型的著录格式要求外，GB/T 7714-2015 还有一些细节规定比如文字、符号等，biblatex-gb7714-2015宏包做如下考虑，
-示例见文档\href{run:./stdGBT7714-2015.pdf}{stdGBT7714-2015}：
+示例见文档\href{run:./tool/stdGBT7714-2015.pdf}{stdGBT7714-2015}：
 
 \subsubsection{数字}\label{sec:fmt:number}
 

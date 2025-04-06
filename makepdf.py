@@ -49,7 +49,7 @@ def compileall(task='all'): #'all','compare'
         
 
         #进入相关文件夹进行编译
-        for dirname in ["example","egphoto","egfigure"]: #
+        for dirname in ["egphoto","egfigure"]: #
             subdir=pwd+os.sep+dirname
             os.chdir(subdir)
             pwd=os.getcwd()
@@ -58,19 +58,7 @@ def compileall(task='all'): #'all','compare'
 
 
             #--------编译latex---------
-            
-            if dirname=="example":
-                texlivestr=str(subprocess.check_output(["tex","--version"]))
-                print(texlivestr)
-                s=re.search(".*Copyright\s(\d*)\sD.E. Knuth.*",texlivestr)
-                print(s)
-                texlivever=int(s.group(1))
-                print(texlivever)
-
-            if dirname=="example" and texlivever>2020:
-                fileuniset=["test*.tex","cls*.tex","opt*.tex","eg*.tex","tgb*.tex","thesis*.tex","gbt*.tex"]
-            else:
-                fileuniset=["test*.tex","cls*.tex","opt*.tex","code*.tex","eg*.tex","tgb*.tex","thesis*.tex","gbt*.tex"]
+            fileuniset=["test*.tex","cls*.tex","opt*.tex","code*.tex","eg*.tex","tgb*.tex","thesis*.tex","gbt*.tex"]
 
             for fileuni in fileuniset:
                 pf1=pathlib.Path('.').glob(fileuni)
@@ -82,6 +70,71 @@ def compileall(task='all'): #'all','compare'
                         print('file=',file)
                         print('file=',os.path.splitext(file))
                         jobname=os.path.splitext(file)[0]
+
+                        '''
+                        if dirname=="egphoto" and jobname not in [
+                            'opt-gbalign-right',
+                            'opt-gbalign-left',
+                            'opt-gbalign-center',
+                            'opt-gbalign-gb',
+                            'opt-gbpub-false',
+                            'opt-gbpub-true',
+                            'opt-gbnoauthor-true',
+                            'opt-gbnoauthor-false',
+                            'opt-gbbiblabela',
+                            'opt-gbbiblabelb',
+                            'opt-gbbiblabelc',
+                            'opt-gbbiblabeld',
+                            'opt-gbbiblabele',
+                            'opt-gbbiblabelf',
+                            'opt-gbnamefmt-a',
+                            'opt-gbnamefmt-b',
+                            'opt-gbnamefmt-c',
+                            'opt-gbnamefmt-d',
+                            'opt-gbnamefmt-e',
+                            'opt-gbnamefmt-f',
+                            'opt-gbtype-true',
+                            'opt-gbtype-false',
+                            'opt-gbmedium-true',
+                            'opt-gbmedium-false',
+                            'opt-gbfieldtype-true',
+                            'opt-gbfieldtype-false',
+                            'opt-gbpunctin-true',
+                            'opt-gbpunctin-false',
+                            'opt-gbtitlelink-true',
+                            'opt-gbtitlelink-false',
+                            'opt-gblocal-gb',
+                            'opt-gblocal-chinese',
+                            'opt-gblocal-english',
+                            'opt-mergedate-a',
+                            'opt-mergedate-b',
+                            'opt-mergedate-c',
+                            'opt-mergedate-d',
+                            'opt-gblanorder-chineseahead',
+                            'opt-gblanorder-englishahead',
+                            'opt-gblanorder-udf',
+                            'opt-citexref-true',
+                            'opt-citexref-false',
+                            'opt-gbannote-true',
+                            'opt-gbannote-false']:
+                            continue
+                        '''
+                        
+                        if dirname=="egfigure" and jobname not in [
+                            'egmwe',
+                            'egciteaytab',
+                            'egcontentfmtc',
+                            'egparfmt',
+                            'egcontentfmt',
+                            'egcontentfmtb',
+                            'egmsinabiblio',
+                            'egmsindfrefsec',
+                            'egmultilan',
+                            'egdoublelan',
+                            'egdoublelanb',
+                            'egfootstyle']:
+                            continue
+
                         #删除辅助文件
                         for fileext in filelatexext:
                             fileaux=pwd+os.sep+jobname+fileext
@@ -89,32 +142,9 @@ def compileall(task='all'): #'all','compare'
                                 os.remove(fileaux)
                         #latex编译
                         latexcmd="xelatex"
-                        if dirname =="example" and re.match("code",file):
-                            latexcmd="pdflatex"
-                        if dirname !="tool":
-                            subprocess.run([latexcmd,"-no-pdf",file])
-                            subprocess.run(["biber",jobname])
-                            subprocess.run([latexcmd,file])
-                        else:
-                            subprocess.run([latexcmd,file]) # 插入pdf的pdfpages宏包要使用目录，需要两次编译
-                            subprocess.run([latexcmd,file])
-
-            #根据biber的版本区别编译文档
-            if dirname=="egfigure":
-                biberversion=str(subprocess.check_output(["biber", "--version"]))
-                print(biberversion)
-                vernumstr=biberversion.split(".")[1]
-                s=re.search('(\d*).*',vernumstr)
-                vernum=int(s.group(1))
-                if vernum>=13:
-                    jobname="tngbcitationaynew"
-                else:
-                    jobname="tngbcitationay"
-                print('---------compile new file:---------')
-                print('file=',jobname)
-                subprocess.run(["xelatex", "-no-pdf",jobname])
-                subprocess.run(["biber",jobname])
-                subprocess.run(["xelatex",jobname])
+                        subprocess.run([latexcmd,"-no-pdf",file])
+                        subprocess.run(["biber",jobname])
+                        subprocess.run([latexcmd,file])
 
             #--------编译latex结束---------
             os.chdir(os.pardir)
