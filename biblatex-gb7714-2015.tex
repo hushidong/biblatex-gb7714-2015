@@ -3,7 +3,7 @@
 %!TEX program = xelatex
 %!BIB program = biber
 
-\documentclass[11pt]{article} %用draft选项找到badbox的位置 twoside,
+\documentclass[11pt]{article} %用 draft 选项找到 badbox 的位置 twoside,
 \input{biblatex-gb7714-2015-preamble} %宏包和一些格式设置
 \usepackage{microtype}
 \usepackage{datetime}
@@ -14,7 +14,7 @@
 \begin{document}
 
 \hyphenpenalty=100 %断词阈值，值越大越不容易出现断词
-\tolerance=9000 %丑度，10000为最大无溢出盒子，参考the texbook 第6章
+\tolerance=9000 %丑度，10000为最大无溢出盒子，参考the texbook 第 6 章
 
 
 
@@ -24,7 +24,7 @@
 \pagestyle{plain}
 \pagenumbering{Roman}
 
-\titleformanual{符合GB/T 7714-2015标准的biblatex参考文献样式
+\titleformanual{符合 GB/T 7714-2015 标准的 biblatex 参考文献样式
 \footnote{This Manual was first created at 2016-07-01 and revised at \today ~with biblatex v\versionofbiblatex;\\%
 Style Files (gb7714-2015*.*) have version number: \versionofgbtstyle.}
 \footnote{repository address: \url{https://github.com/hushidong/biblatex-gb7714-2015}}}
@@ -62,37 +62,37 @@ biblatex-gb7714-2015 宏包是为满足《GB/T 7714-2015~~信息与文献~~参�
 \pagestyle{fancy}
 \section{概述}
 
-《GB/T 7714-2015~~信息与文献~~参考文献著录规则》是国内科技文档参考文献著录的一般标准，国内多数大学、出版社、期刊编辑部对于学位论文、出版物、期刊论文的参考文献要求通常都基于该标准。对于\LaTeX{}用户来说，参考文献生成是典型的自动化应用。主要有两种方法：一是基于bibtex的传统方法，二是基于biblatex的新方法。生成符合GB/T 7714 标准要求的参考文献，这两条路都已经实践多年。
-基于biblatex的方法，早期有李志奇(icetea)的gbtstyle实现以及Casper Ti. Vector的caspervector样式，然而由于biblatex宏包升级、样式包维护和完善等方面的问题，未能达到精确符合国标要求、且具备高可用性、兼容性和可维护性的理想状态。开发biblatex-gb7714-2015 样式包的初衷首先是基于当时这样的状态，其次也为解决很多实际应用中的问题，因此考虑如下原则：
+《GB/T 7714-2015~~信息与文献~~参考文献著录规则》是国内科技文档参考文献著录的一般标准，国内多数大学、出版社、期刊编辑部对于学位论文、出版物、期刊论文的参考文献要求通常都基于该标准。对于\LaTeX{}用户来说，参考文献生成是典型的自动化应用。主要有两种方法：一是基于 bibtex 的传统方法，二是基于 biblatex 的新方法。生成符合GB/T 7714 标准要求的参考文献，这两条路都已经实践多年。
+基于 biblatex 的方法，早期有李志奇(icetea)的 gbtstyle 实现以及Casper Ti. Vector的 caspervector 样式，然而由于 biblatex 宏包升级、样式包维护和完善等方面的问题，未能达到精确符合国标要求、且具备高可用性、兼容性和可维护性的理想状态。开发biblatex-gb7714-2015 样式包的初衷首先是基于当时这样的状态，其次也为解决很多实际应用中的问题，因此考虑如下原则：
 
 \subsection{设计原则}
 
 \begin{enumerate}
   \item 兼容性
 
-由于biblatex的持续升级，一些接口和功能的变化，会使得样式无法使用或者输出结果产生异变。因此biblatex-gb7714-2015宏包设计之初，就一直秉承兼容性原则，力图兼容各版本的biblatex，希望与biblatex v2.8 (in texlive2014) 以上所有版本适配(注意：使用ctex 2.9.4 套件的用户需升级 biblatex或更换使用最新版 texlive)。
+由于 biblatex 的持续升级，一些接口和功能的变化，会使得样式无法使用或者输出结果产生异变。因此 biblatex-gb7714-2015 宏包设计之初，就一直秉承兼容性原则，力图兼容各版本的 biblatex，希望与biblatex v2.8 (in texlive2014) 以上所有版本适配(注意：使用ctex 2.9.4 套件的用户需升级 biblatex或更换使用最新版 texlive)。
 
-出于兼容一些旧的bib文件的考虑，增加对传统参考文献条目类型比如www/electronic/conference/mastersthsis/phdthsis/techreport/standard等的支持。根据国标要求，考虑增加newspaper(报纸析出的文献)、database(数据库)、dataset(数据集)、 software(软件)、map(舆图)、archive(档案)等类型。也为兼容适用于不同样式的bib数据源，增加对一些自定义域的支持，比如gbt7714宏包的bst样式中mark和medium域。此外，也试图去完善样式在不同文档类包括beamer类中的使用问题。
+出于兼容一些旧的 bib 文件的考虑，增加对传统参考文献条目类型比如www/electronic/conference/mastersthsis/phdthsis/techreport/standard等的支持。根据国标要求，考虑增加newspaper(报纸析出的文献)、database(数据库)、dataset(数据集)、 software(软件)、map(舆图)、archive(档案)等类型。也为兼容适用于不同样式的 bib 数据源，增加对一些自定义域的支持，比如gbt7714宏包的 bst 样式中 mark 和 medium 域。此外，也试图去完善样式在不同文档类包括 beamer 类中的使用问题。
 
   \item 易用性
 
-参考文献是\LaTeX{}自动化应用之一，尽可能让其自动完成，减少用户的人工干预，包括数据的准备、格式的调整等等。因此宏包试图减少用户对于bib文件的调整，只需要简单地输入文献本身的信息，或者从各类学术网站或利用zotero等工具下载参考文献数据即可，而不需要为了符合国标格式而去手动增添参考文献类型和载体标识等一些数据域，也不必为了文献语言分集、文献排序等去增加语言、排序关键字等数据域，所有这些工作都由宏包自动处理。
+参考文献是\LaTeX{}自动化应用之一，尽可能让其自动完成，减少用户的人工干预，包括数据的准备、格式的调整等等。因此宏包试图减少用户对于 bib 文件的调整，只需要简单地输入文献本身的信息，或者从各类学术网站或利用 zotero 等工具下载参考文献数据即可，而不需要为了符合国标格式而去手动增添参考文献类型和载体标识等一些数据域，也不必为了文献语言分集、文献排序等去增加语言、排序关键字等数据域，所有这些工作都由宏包自动处理。
 
-为了符合国标要求以及中文参考文献标注习惯，提供丰富的标注（引用）命令，用户只需熟悉几个命令的特性即能够完成两种编制样式下多样的标注格式，包括：顺序编码制的 \verb|\cite|(上标可设置页码)、 \verb|\parencite|(非上标可设置页码)、 \verb|\pagescite|(上标加自动页码)、 \verb|\textcite|(提供作者为主语加非上标编号)、 \verb|\authornumcite|(提供作者为主语加上标编号)、\verb|\fullcite|(类似文献表的标注)、 \verb|\footfullcite|(脚注文献表)；著者-年份制的\verb|\cite|(作者加年份用括号包围可设置页码)、 \verb|\pagescite|(作者加年份用括号包围自动页码)、
-\verb|\yearcite|(提供年份用括号包围)、 \verb|\yearpagescite|(提供年份用括号包围自动页码)、
-\verb|\textcite|(提供主语作者加括号包围年份)、 \verb|\footfullcite|(脚注注释)。
-也提供与natbib宏包常用命令同名的命令 \verb|\citet| 和 \verb|\citep|，
-和一些惯常使用的命令，如\verb|\citetns|、\verb|\citepns|、
-\verb|\upcite|、\verb|\inlinecite|等，让用户可以无缝衔接从bibtex转到biblatex。
-另外，增加并完善对多语言混合文献表、多语言对照文献表的支持。不同语言文献可按文献自身语言录入，宏包自动识别语言并通过autolang选项自动完成语言切换，针对多语言对照文献表提供了基于条目集和关联条目概念的两种实现方式。
+为了符合国标要求以及中文参考文献标注习惯，提供丰富的标注（引用）命令，用户只需熟悉几个命令的特性即能够完成两种编制样式下多样的标注格式，包括：顺序编码制的 \verb|\cite| (上标可设置页码)、\verb|\parencite| (非上标可设置页码)、\verb|\pagescite| (上标加自动页码)、\verb|\textcite| (提供作者为主语加非上标编号)、\verb|\authornumcite| (提供作者为主语加上标编号)、\verb|\fullcite| (类似文献表的标注)、\verb|\footfullcite| (脚注文献表)；著者-年份制的 \verb|\cite| (作者加年份用括号包围可设置页码)、\verb|\pagescite| (作者加年份用括号包围自动页码)、
+\verb|\yearcite| (提供年份用括号包围)、\verb|\yearpagescite| (提供年份用括号包围自动页码)、
+\verb|\textcite| (提供主语作者加括号包围年份)、\verb|\footfullcite| (脚注注释)。
+也提供与 natbib 宏包常用命令同名的命令 \verb|\citet| 和 \verb|\citep|，
+和一些惯常使用的命令，如 \verb|\citetns|、\verb|\citepns|、
+\verb|\upcite|、\verb|\inlinecite| 等，让用户可以无缝衔接从 bibtex 转到 biblatex，
+另外，增加并完善对多语言混合文献表、多语言对照文献表的支持。不同语言文献可按文献自身语言录入，宏包自动识别语言并通过 autolang 选项自动完成语言切换，针对多语言对照文献表提供了基于条目集和关联条目概念的两种实现方式。
 
 
   \item 灵活性
 
-除严格实现符合GB/T 7714-2015标准的格式外，也希望能针对不同用户的特殊需求，提供方便的定制方式，比如通过选项来达到格式的调整。为此，增加了多个方面的设置选项，使用户可以根据自身需求灵活设置。主要包括：
+除严格实现符合 GB/T 7714-2015 标准的格式外，也希望能针对不同用户的特殊需求，提供方便的定制方式，比如通过选项来达到格式的调整。为此，增加了多个方面的设置选项，使用户可以根据自身需求灵活设置。主要包括：
 
 著录表排序选项：
-sorting选项值(gb7714-2015支持以语言著者-出版年标题升序排列，gbnytd支持以语言著者-出版年标题降序排列，gbynta支持以语言年份作者标题升序排列，gbyntd支持以语言年份作者标题降序排列)、gblanorder 选项(可以设置不同的文种(语言)文献的排列顺序)、sortlocale 选项(可以设置本地语言的排序调整方案，比如：zh\_\_pinyin 以拼音排序中文，zh\_\_stroke 以笔画排序，auto/zh 以unicode编码排序，zh\_\_gb2312han 以gb2312编码排序)。使用拼音排序时遇到多音字也可以利用添加key域或使用修改后的locale文件(即 pinyin.pm)解决。
+sorting选项值(gb7714-2015支持以语言著者-出版年标题升序排列，gbnytd支持以语言著者-出版年标题降序排列，gbynta支持以语言年份作者标题升序排列，gbyntd支持以语言年份作者标题降序排列)、gblanorder 选项(可以设置不同的文种(语言)文献的排列顺序)、sortlocale 选项(可以设置本地语言的排序调整方案，比如：zh\_\_pinyin 以拼音排序中文，zh\_\_stroke 以笔画排序，auto/zh 以 unicode 编码排序，zh\_\_gb2312han 以gb2312编码排序)。使用拼音排序时遇到多音字也可以利用添加 key 域或使用修改后的 locale 文件(即 pinyin.pm)解决。
 
 
 著录项格式选项：
@@ -109,22 +109,22 @@ sorting选项值(gb7714-2015支持以语言著者-出版年标题升序排列，
 标签对齐控制(gbalign选项，可设置左、右、居中、项对齐方式)、
 标签格式控制(gbbiblabel选项，可设置标签数字不同的包围符号)、
 条目格式控制(gbstyle选项，利用gb7714-2015ms样式可实现中英文献分设不同格式)、
-编制样式设置命令(利用\verb|\setaystylesection|和gb7714-2015mx样式实现不同文献节不同的编制方式)、
-文献标题控制(gbctexset选项，可设置标题内容由\verb|\bibname|或\verb|\refname|宏调整)、
-命令\verb|\bibauthorfont|可设置作者项字体等格式、
-命令\verb|\bibtitlefont|可设置标题项字体等格式、
-命令\verb|\bibpubfont|可设置出版项字体等格式、
-尺寸\verb|\bibitemindent|和\verb|\bibhang|可设置文献表的缩进等格式；
+编制样式设置命令(利用 \verb|\setaystylesection| 和gb7714-2015mx样式实现不同文献节不同的编制方式)、
+文献标题控制(gbctexset选项，可设置标题内容由 \verb|\bibname| 或 \verb|\refname| 宏调整)、
+命令 \verb|\bibauthorfont| 可设置作者项字体等格式、
+命令 \verb|\bibtitlefont| 可设置标题项字体等格式、
+命令 \verb|\bibpubfont| 可设置出版项字体等格式、
+尺寸 \verb|\bibitemindent| 和 \verb|\bibhang| 可设置文献表的缩进等格式；
 
 编码设置选项：
-GBK编码兼容(gbcodegbk选项，可设置GBK编码文档编译)等等。
+GBK编码兼容(gbcodegbk选项，可设置 GBK 编码文档编译)等等。
 
-配合biblatex提供的选项、\verb|\bibfont|命令、\verb|\bibitemsep|间距等可以实现丰富的格式调整，包括标注和文献表采用不同样式、url/doi/isbn输出控制、标注和文献表中作者数量控制、文献表按拼音或笔画排序等等。
+配合 biblatex 提供的选项、\verb|\bibfont|命令、\verb|\bibitemsep|间距等可以实现丰富的格式调整，包括标注和文献表采用不同样式、url/doi/isbn输出控制、标注和文献表中作者数量控制、文献表按拼音或笔画排序等等。
 
 
   \item 可维护性
 
-宏包的长期使用价值体现在宏包的维护和更新上，追求宏包具有高的可读性、可理解性、可维护性，可为宏包长期发挥作用提供帮助。由于biblatex已经是一个相当成熟完善的宏包，即使在样式方面考虑也相当全面，这可能与西方出版界对于参考文献的多样且细致的要求有关。而国内只有一个通用标准就是GB/T 7714标准，且除了部分特殊需求要额外实现外，标准中的大多数格式要求可借助biblatex提供的标准样式实现，因此完全不需要重新造轮子，而只需在biblatex原有样式基础上增加有限修改并加上详细注释来达成目标。如此，既可使gb7714-2015样式与biblatex宏包的标准样式保持一致的结构、风格和习惯，还可以大大增加代码的可读性和可维护性，读者只需通过学习biblatex，即可轻松理解gb7714-2015样式的代码。
+宏包的长期使用价值体现在宏包的维护和更新上，追求宏包具有高的可读性、可理解性、可维护性，可为宏包长期发挥作用提供帮助。由于 biblatex 已经是一个相当成熟完善的宏包，即使在样式方面考虑也相当全面，这可能与西方出版界对于参考文献的多样且细致的要求有关。而国内只有一个通用标准就是 GB/T 7714 标准，且除了部分特殊需求要额外实现外，标准中的大多数格式要求可借助 biblatex 提供的标准样式实现，因此完全不需要重新造轮子，而只需在 biblatex 原有样式基础上增加有限修改并加上详细注释来达成目标。如此，既可使 gb7714-2015 样式与 biblatex 宏包的标准样式保持一致的结构、风格和习惯，还可以大大增加代码的可读性和可维护性，读者只需通过学习 biblatex，即可轻松理解 gb7714-2015 样式的代码。
 %做的工作，比如做了哪些修改，为什么这么修改，实现了什么样的效果。维护者
 
 
@@ -136,30 +136,30 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 \href{https://github.com/hushidong/biblatex-gb7714-2015/wiki}{biblatex和样式包基本使用方法}、
 \href{https://github.com/plk/biblatex}{biblatex手册}、
 \href{https://github.com/hushidong/biblatex-zh-cn}{biblatex手册中文版}、
-\href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}{LaTeX 文档中文参考文献的biblatex解决方案}等手册，可为用户快速入门和深入理解提供有效帮助。
+\href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}{LaTeX 文档中文参考文献的 biblatex 解决方案}等手册，可为用户快速入门和深入理解提供有效帮助。
 
 \end{enumerate}
 
-%具体来讲，完成了4个方面的工作:
+%具体来讲，完成了 4 个方面的工作:
 %\begin{enumerate}
-%  \item 完成了GB/T 7714-2015标准的完整实现，包括两种编制方式下的各类型参考文献著录格式和标注格式等基本内容，还包括: 双语文献格式，带页码的标注格式，著者年份制下仅有年的标注格式和文献按语言集中并自动排序，起止卷期自动解析，增加gbnoauthor选项控制著者年份制责任者缺省的处理，增加gbpub选项控制出版信息缺省时的处理，增加gbalign选项控制顺序编码制文献表的标签对齐方式，提供右对齐、左对齐和项对齐三种方式。
-%  \item 实现了用户文献数据录入优化，用户在录入参考文献数据时，只需要录入文献的实际信息即可，不需要录入文献标识符和载体标识符，无需录入language或者其它域信息来区分中英文参考文献，实现中英文自动判断并处理。支持一些特殊或老的条目类型，比如standard，newspaper，www，mastersthesis，phdthesis等。
-%  \item 实现了对biblatex不同版本的兼容，能够应用于biblatex3.2以前的老版本，也能用于3.3版姓名处理方式改变后的版本。即可以与texlive2014/2015/2016/2017配合使用，无需升级biblatex情况下直接使用biblatex-gb7714-2015宏包(即本样式)。
-%      \bc{当然 ctex2.9.4 的用户可能要升级一下biblatex，因为ctex多年没有更新，其中的biblatex版本过低}。
-%  \item 测试了样式文件在book/report/article文档类以及beamer类下的适用性，结果表明均能满足要求。文档详细介绍了样式文件的使用方法和注意事项，说明了各条目类型的著录格式及其在biblatex 中对应信息域的构成，以及域信息的录入方法，并严格按照GB/T 7714-2015 标准测试了各种类型的文献。
+%  \item 完成了 GB/T 7714-2015 标准的完整实现，包括两种编制方式下的各类型参考文献著录格式和标注格式等基本内容，还包括: 双语文献格式，带页码的标注格式，著者年份制下仅有年的标注格式和文献按语言集中并自动排序，起止卷期自动解析，增加 gbnoauthor 选项控制著者年份制责任者缺省的处理，增加 gbpub 选项控制出版信息缺省时的处理，增加 gbalign 选项控制顺序编码制文献表的标签对齐方式，提供右对齐、左对齐和项对齐三种方式。
+%  \item 实现了用户文献数据录入优化，用户在录入参考文献数据时，只需要录入文献的实际信息即可，不需要录入文献标识符和载体标识符，无需录入 language 或者其它域信息来区分中英文参考文献，实现中英文自动判断并处理。支持一些特殊或老的条目类型，比如 standard，newspaper，www，mastersthesis，phdthesis等。
+%  \item 实现了对 biblatex 不同版本的兼容，能够应用于biblatex3.2以前的老版本，也能用于 3.3 版姓名处理方式改变后的版本。即可以与texlive2014/2015/2016/2017配合使用，无需升级 biblatex 情况下直接使用 biblatex-gb7714-2015 宏包(即本样式)。
+%      \bc{当然 ctex2.9.4 的用户可能要升级一下 biblatex，因为 ctex 多年没有更新，其中的 biblatex 版本过低}。
+%  \item 测试了样式文件在book/report/article文档类以及 beamer 类下的适用性，结果表明均能满足要求。文档详细介绍了样式文件的使用方法和注意事项，说明了各条目类型的著录格式及其在biblatex 中对应信息域的构成，以及域信息的录入方法，并严格按照GB/T 7714-2015 标准测试了各种类型的文献。
 %\end{enumerate}
 
 \subsection{宏包结构}
 
-宏包文件结构如图\ref{fig:pkg:structure}所示。
-\zd{gb7714-2015.bbx/cbx}、\zd{gb7714-2015ay.bbx/cbx}分别为国标参考文献样式2015版本的顺序编码制和著者年份制样式文件。
-对应的\zd{gb7714-1987/ay.bbx/cbx}、\zd{gb7714-2005/ay.bbx/cbx}则是1987和2005版本的国标样式。
-\zd{gb7714-2015ms.bbx/cbx}是混合样式，支持区分中英文语言文献分设不同的著录格式。
-\zd{gb7714-2015mx.bbx/cbx}是混合样式，支持在不同的参考文献分节中使用不同的编制样式，比如有的节使用顺序编码制，有的节使用著者年份制。
-\zd{gb7715-2015-gbk.def}为GBK编码文档编译所需的支撑文件。
-\zd{chinese-erj.bbx/cbx}、\zd{chinese-css.bbx/cbx}、\zd{chinese-jmw.bbx/cbx} 是经济学研究、社会科学、管理世界期刊的文献样式。%后三者仅支持较新的biblatex版本。
-\zd{biblatex-gb7714-2015.tex} 为宏包说明文档，\zd{example}目录下为各种选项的测试用例，
-\zd{egfigure}目录下为说明文档中的图例文档，\zd{egthesis}为国内一些大学学位论文文献样式的测试用例，包括完全按照国标的BUPT、CAU、ECNU、FDU、SJTU、THU、USTC、XJTU、ZJU，与国标略有差异的UCAS，以及与国标有较大差异的NWAFU、SEU等。\zd{*.bat}、\zd{*.sh}分别为windows和linux下说明文档的编译脚本。\zd{*.pl}为gb7714格式著录文献表到bib文件的perl转换脚本，\zd{*.dat}为转换测试文献表。
+宏包文件结构如图~\ref{fig:pkg:structure} 所示。
+\zd{gb7714-2015.bbx/cbx}、\zd{gb7714-2015ay.bbx/cbx}分别为国标参考文献样式 2015 版本的顺序编码制和著者年份制样式文件。
+对应的 \zd{gb7714-1987/ay.bbx/cbx}、\zd{gb7714-2005/ay.bbx/cbx} 则是 1987 和 2005 版本的国标样式。
+\zd{gb7714-2015ms.bbx/cbx} 是混合样式，支持区分中英文语言文献分设不同的著录格式。
+\zd{gb7714-2015mx.bbx/cbx} 是混合样式，支持在不同的参考文献分节中使用不同的编制样式，比如有的节使用顺序编码制，有的节使用著者年份制。
+\zd{gb7715-2015-gbk.def} 为 GBK 编码文档编译所需的支撑文件。
+\zd{chinese-erj.bbx/cbx}、\zd{chinese-css.bbx/cbx}、\zd{chinese-jmw.bbx/cbx} 是经济学研究、社会科学、管理世界期刊的文献样式。%后三者仅支持较新的 biblatex 版本。
+\zd{biblatex-gb7714-2015.tex} 为宏包说明文档，\zd{example} 目录下为各种选项的测试用例，
+\zd{egfigure} 目录下为说明文档中的图例文档，\zd{egthesis} 为国内一些大学学位论文文献样式的测试用例，包括完全按照国标的BUPT、CAU、ECNU、FDU、SJTU、THU、USTC、XJTU、ZJU，与国标略有差异的 UCAS，以及与国标有较大差异的NWAFU、SEU等。\zd{*.bat}、\zd{*.sh} 分别为 Windows 和 linux 下说明文档的编译脚本。\zd{*.pl} 为 gb7714 格式著录文献表到 bib 文件的 perl 转换脚本，\zd{*.dat} 为转换测试文献表。
 
 \begin{figure}[!htb]
 %\begin{tcolorbox}[left skip=0pt,right skip=0pt,%
@@ -231,27 +231,27 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 
 \subsection{最小示例}
 
-基于biblatex宏包生成参考文献非常简单，一个最小工作示例 (Minimum Work Example, MWE) 如例 \ref{code:doc:structrue}所示，其编译结果如图\ref{fig:eg:ref}所示。该Tex源文档给出了使用biblatex时的基本结构及其详细注释，其中：
+基于 biblatex 宏包生成参考文献非常简单，一个最小工作示例 (Minimum Work Example, MWE) 如例 \ref{code:doc:structrue}所示，其编译结果如图~\ref{fig:eg:ref} 所示。该 \TeX{} 源文档给出了使用 biblatex 时的基本结构及其详细注释，其中：
 \begin{itemize}
-\item 参考文献样式(即cbx/bbx文件)随biblatex宏包加载(比如：style=gb7714-2015，加载了gb7714-2015.cbx和gb7714-2015.bbx);
-\item 参考文献数据库文件(即bib文件)利用 \verb|\addbibresource| 加载 （比如：
-\lstinline[breaklines=true]!\addbibresource[location=local]{example.bib}!，
-注意：bib文件需另外准备，详见\ref{sec:bib:bibtex}节）;
-\item 引用文献则使用\verb|\cite|等命令，即使用这些命令在正文中适当位置引用参考文献的唯一标识(即entrykey)，比如\verb|\cite{entrykey}|;
+\item 参考文献样式(即 cbx/bbx 文件)随 biblatex 宏包加载(比如：style=gb7714-2015，加载了gb7714-2015.cbx和gb7714-2015.bbx);
+\item 参考文献数据库文件(即 bib 文件)利用 \verb|\addbibresource| 加载 （比如：
+\lstinline[breaklines=true,basicstyle=\ttfamily]!\addbibresource[location=local]{example.bib}!，
+注意：bib文件需另外准备，详见~\ref{sec:bib:bibtex} 节）;
+\item 引用文献则使用 \verb|\cite| 等命令，即使用这些命令在正文中适当位置引用参考文献的唯一标识(即entrykey)，比如 \verb|\cite{entrykey}|;
 \item 打印文献表则使用 \verb|\printbibliography| 命令，该命令可放在正文任意位置(即文献表可在任意位置输出)。
 \end{itemize}
 
 \begin{example}{biblatex参考文献生成的最小工作示例}{code:doc:structrue}
 \begin{texlist}
 \documentclass{article}%文档类 %导言区开始:
-\usepackage{ctex}%加载ctex宏包，中文支持
-    %加载geometry宏包，定义版面
+\usepackage{ctex}%加载 ctex 宏包，中文支持
+    %加载 geometry 宏包，定义版面
 \usepackage[left=20mm,right=20mm,top=25mm, bottom=15mm]{geometry}
-    %加载hyperref宏包，使用超链接
+    %加载 hyperref 宏包，使用超链接
 \usepackage[colorlinks=true,pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
-    %参考文献工具，加载biblatex宏包，,其后端backend使用biber，%标注(引用)样式citestyle，著录样式bibstyle都采用gb7714-2015样式，两者相同时可以合并为一个选项style
+    %参考文献工具，加载 biblatex 宏包，,其后端 backend 使用 biber，%标注(引用)样式 citestyle，著录样式 bibstyle 都采用 gb7714-2015 样式，两者相同时可以合并为一个选项style
 \usepackage[backend=biber,style=gb7714-2015]{biblatex}
-    %biblatex宏包的参考文献数据源即bib文件加载方式
+    %biblatex宏包的参考文献数据源即 bib 文件加载方式
 \addbibresource[location=local]{example.bib}
 \begin{document}%正文区开始:
     %正文内容，引用参考文献
@@ -279,18 +279,18 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 %{
 %\hyphenation{conference}
 %\hyphenpenalty=100 %断词阈值，值越大越不容易出现断词
-%\tolerance=100 %丑度，10000为最大无溢出盒子，参考the texbook 第6章
+%\tolerance=100 %丑度，10000为最大无溢出盒子，参考the texbook 第 6 章
 %\printbibliography[heading=subbibliography,title=参考文献]
 %\par}
 %}}
 %\end{minipage}
 %\end{tcolorbox}
-\caption{最小工作示例编译生成的PDF文档}\label{fig:eg:ref}
+\caption{最小工作示例编译生成的 PDF 文档}\label{fig:eg:ref}
 \end{figure}
 %\end{refsection}
 
 正所谓万变不离其宗，无论文档大小如何，结构如何变化，基于biblatex 生成参考文献的方式
-大体如例\ref{code:doc:structrue}一般。使用其它功能如分章参考文献表等时，所需的修改也极为有限。要全面了解更多高级功能可参考前述\hyperlink{lab:manual:hyper}{手册}。
+大体如例~\ref{code:doc:structrue} 一般。使用其它功能如分章参考文献表等时，所需的修改也极为有限。要全面了解更多高级功能可参考前述\hyperlink{lab:manual:hyper}{手册}。
 
 
 
@@ -303,8 +303,12 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 
 \subsection{编译方式}
 
-与基于bibtex传统方法的四步编译不同，基于biblatex生成参考文献一般只需三步编译：第一遍xelatex，第二遍biber，第三遍xelatex。如若需要反向超链接，除设置backref 选项外，则还需第四遍 xelatex 编译。例\ref{eg:compile:cmd} 给出编译命令，其中\verb|--synctex=-1| 选项也可以是-synctex=1。另外四步命令可以用一条 latexmk 命令代替。
-关于非utf-8编码文档和使用pdflatex命令编译的细节另见第\ref{sec:pkg:hints}节。
+与基于 bibtex 传统方法的四步编译不同，基于 biblatex 生成参考文献一般只需三步编译：
+第一遍 xelatex，第二遍 biber，第三遍 xelatex，如若需要反向超链接，
+除设置backref 选项外，则还需第四遍 xelatex 编译。例~\ref{eg:compile:cmd} 给出编译命令，
+其中 \verb|--synctex=-1| 选项也可以是 \verb|-synctex=1|。
+另外四步命令可以用一条 latexmk 命令代替。
+关于非 utf-8 编码文档和使用 pdflatex 命令编译的细节另见第~\ref{sec:pkg:hints} 节。
 
 \begin{example}{文档编译命令}{eg:compile:cmd}
 \begin{texlist}
@@ -313,7 +317,7 @@ xelatex --synctex=-1 jobname.tex
 biber jobname
 xelatex --synctex=-1 jobname.tex
 xelatex --synctex=-1 jobname.tex
-%或采用latexmk，则仅需一条命令
+%或采用 latexmk，则仅需一条命令
 latexmk -xelatex jobname.tex
 \end{texlist}
 \end{example}
@@ -325,9 +329,9 @@ latexmk -xelatex jobname.tex
 
 \subsubsection{几种样式}
 
-本样式包提供了两种基本样式：gb7714-2015样式实现顺序编码制国标(例\ref{eg:gb7714numeric})，gb7714-2015ay样式实现著者年份制国标(例\ref{eg:gb7714authoryear})，和其他一些样式以实现不同的应用目的和格式要求
-(例\ref{eg:gb7714ms},\ref{eg:gb7714mx},\ref{eg:gb87and2005}等)，
-以及一个将顺序编码制国标文本转换为bib文件的工具(例\ref{eg:transtobib})。
+本样式包提供了两种基本样式：gb7714-2015样式实现顺序编码制国标(例~\ref{eg:gb7714numeric})，gb7714-2015ay样式实现著者年份制国标(例~\ref{eg:gb7714authoryear})，和其他一些样式以实现不同的应用目的和格式要求
+(例~\ref{eg:gb7714ms}, \ref{eg:gb7714mx}, \ref{eg:gb87and2005} 等)，
+以及一个将顺序编码制国标文本转换为 bib 文件的工具(例~\ref{eg:transtobib})。
 
 
 \pdfbookmark[4]{gb7714-2015}{stygb7714-2015}
@@ -335,9 +339,9 @@ latexmk -xelatex jobname.tex
 \begin{texlist}
 %简单方式：
 \usepackage[backend=biber,style=gb7714-2015]{biblatex}
-%设置gbalign选项以改变文献表序号标签对齐方式，设置gbpub=false取消缺省出版项自填补信息，比如:
+%设置 gbalign 选项以改变文献表序号标签对齐方式，设置 gbpub=false 取消缺省出版项自填补信息，比如:
 \usepackage[backend=biber,style=gb7714-2015,gbalign=gb7714-2015,gbpub=false]{biblatex}
-%当文档为GBK编码且用pdflatex/latex编译时，应设置选项gbcodegbk=true：
+%当文档为 GBK 编码且用 pdflatex/latex 编译时，应设置选项 gbcodegbk=true：
 \usepackage[backend=biber,style=gb7714-2015,gbcodegbk=true]{biblatex}
 \end{texlist}
 \end{example}
@@ -348,7 +352,7 @@ latexmk -xelatex jobname.tex
 \begin{texlist}
 %简单方式：
 \usepackage[backend=biber,style=gb7714-2015ay]{biblatex}
-%设置gbnoauthor=true以使用佚名或Anon填补缺失的author信息:
+%设置 gbnoauthor=true 以使用佚名或 Anon 填补缺失的 author 信息:
 \usepackage[backend=biber,style=gb7714-2015ay,gbnoauthor=true]{biblatex}
 \end{texlist}
 \end{example}
@@ -357,13 +361,13 @@ latexmk -xelatex jobname.tex
 \pdfbookmark[4]{gb7714-2015ms}{stygb7714-2015ms}
 \begin{example}{同一文献表中不同语言区分著录格式的样式(gb7714-2015ms)}{eg:gb7714ms}
 \begin{texlist}
-%默认方式，所有文献使用一种著录格式，即GB/T 7714-2015样式
+%默认方式，所有文献使用一种著录格式，即 GB/T 7714-2015 样式
 \usepackage[backend=biber,style=gb7714-2015ms]{biblatex}
-%设置gbstyle=false，则中文文献使用GB/T 7714-2015著录格式，而其它语言文献使用biblatex标准样式
+%设置 gbstyle=false，则中文文献使用 GB/T 7714-2015 著录格式，而其它语言文献使用 biblatex 标准样式
 \usepackage[backend=biber,style=gb7714-2015ms,gbstyle=false]{biblatex}
 \end{texlist}
 \end{example}
-格式效果如图\ref{fig:eg:ms}所示。
+格式效果如图~\ref{fig:eg:ms} 所示。
 
 
 \pdfbookmark[4]{gb7714-2015mx}{stygb7714-2015mx}
@@ -371,23 +375,23 @@ latexmk -xelatex jobname.tex
 \begin{texlist}
 %默认方式使用顺序编码制样式
 \usepackage[backend=biber,style=gb7714-2015mx]{biblatex}
-%如需在某一参考文件分节使用著者年份制样式，比如第2个refsection中使用时，则在导言区设置：
+%如需在某一参考文件分节使用著者年份制样式，比如第 2 个 refsection 中使用时，则在导言区设置：
 \setaystylesection{2}
 \end{texlist}
 \end{example}
-格式效果如图\ref{fig:eg:mx}所示。
+格式效果如图~\ref{fig:eg:mx} 所示。
 
 
-\begin{example}{顺序编码参考文献文本转换为bib文件perl脚本使用方式}{eg:transtobib}
+\begin{example}{顺序编码参考文献文本转换为 bib 文件 perl 脚本使用方式}{eg:transtobib}
 \begin{texlist}
 perl gb7714texttobib.pl in=textfilename out=bibfilename
 \end{texlist}
 \end{example}
 
-其中，v1.0m版本增加的gb7714-2015ms样式文件，主要是为了在一个文献表中针对不同语言使用不同的样式，即中文文献使用GB/T 7714-2015规定的著录格式，而其它语言文献使用biblatex提供的标准样式。
+其中，v1.0m版本增加的gb7714-2015ms样式文件，主要是为了在一个文献表中针对不同语言使用不同的样式，即中文文献使用 GB/T 7714-2015 规定的著录格式，而其它语言文献使用 biblatex 提供的标准样式。
 v1.0r版本增加的gb7714-2015mx样式，主要是为了在一个文档中针对不同参考文献分节使用不同的样式，比如某些节使用著者年份制，某些节使用顺序编码制。
 v1.0z版本增加的gb7714-1987和gb7714-2005两个版本的顺序编码和著者年份制样式，用于仍在使用
-1987和2005版国标的情况，尽管两者已经过时。
+1987和 2005 版国标的情况，尽管两者已经过时。
 %尽管这些方式不常用，但偶尔也有需求，所以都做了实现。
 
 
@@ -395,21 +399,21 @@ v1.0z版本增加的gb7714-1987和gb7714-2005两个版本的顺序编码和著�
 \pdfbookmark[4]{gb7714-1987ay}{gb7714-1987ay}
 \pdfbookmark[4]{gb7714-2005}{gb7714-2005}
 \pdfbookmark[4]{gb7714-2005ay}{gb7714-2005ay}
-\begin{example}{1987和2005版的国标样式}{eg:gb87and2005}
+\begin{example}{1987和 2005 版的国标样式}{eg:gb87and2005}
 \begin{texlist}
-%国标1987顺序编码制
+%国标 1987 顺序编码制
 \usepackage[backend=biber,style=gb7714-1987]{biblatex}
-%国标1987著者年份制
+%国标 1987 著者年份制
 \usepackage[backend=biber,style=gb7714-1987ay]{biblatex}
-%国标2005顺序编码制
+%国标 2005 顺序编码制
 \usepackage[backend=biber,style=gb7714-2005]{biblatex}
-%国标2005著者年份制
+%国标 2005 著者年份制
 \usepackage[backend=biber,style=gb7714-2005ay]{biblatex}
 \end{texlist}
 \end{example}
 
 
-另外，根据国内大学的学位论文的文献生成需求，增加了几个与国标有明显区别的样式，包括：西北农林(gb7714-NWAFU)、华中师范(gb7714-CCNU)、东南大学(gb7714-SEU)等。其他大学的文献样式与国标基本一致，比如上海交大、浙大、复旦等，直接使用即可。另外一些大学与国标略有差别，可以通过简单的设置满足要求，比如清华、科学院大学、中科大、国防科大等，通常在学位论文模板中实现。而在egthesis文件夹内则对一些大学的学位论文参考文献做了测试。
+另外，根据国内大学的学位论文的文献生成需求，增加了几个与国标有明显区别的样式，包括：西北农林(gb7714-NWAFU)、华中师范(gb7714-CCNU)、东南大学(gb7714-SEU)等。其他大学的文献样式与国标基本一致，比如上海交大、浙大、复旦等，直接使用即可。另外一些大学与国标略有差别，可以通过简单的设置满足要求，比如清华、科学院大学、中科大、国防科大等，通常在学位论文模板中实现。而在 egthesis 文件夹内则对一些大学的学位论文参考文献做了测试。
 
 \pdfbookmark[4]{gb7714-NWAFU/CCNU/SEU}{gb7714-NWAFU/CCNU/SEU}
 \begin{example}{国内一些大学要求的特殊文献样式}{eg:gbchnuniversity}
@@ -427,7 +431,7 @@ v1.0z版本增加的gb7714-1987和gb7714-2005两个版本的顺序编码和著�
 v1.0r版本增加了chinese-erj样式用于生成经济研究期刊的文献;
 v1.1l版本增加了chinese-css样式用于生成社会科学期刊的脚注注释文献;
 v1.1m版本增加了chinese-jmw样式用于生成管理世界期刊的文献。
-而理工类期刊文献通常与国标差别不大，部分期刊与国标的最大的差异主要是双语对照文献的格式，比如计算机学报等，这可以通过简单的设置实现格式调整(可以参考github上的
+而理工类期刊文献通常与国标差别不大，部分期刊与国标的最大的差异主要是双语对照文献的格式，比如计算机学报等，这可以通过简单的设置实现格式调整(可以参考 github 上的
 \href{https://github.com/hushidong/biblatex-gb7714-2015/issues/154}{issue154})。
 
 
@@ -451,7 +455,7 @@ v1.1m版本增加了chinese-jmw样式用于生成管理世界期刊的文献。
 样式包新增了一些选项。
 %由于选项更为常用，所以在本节集中介绍。
 %而新增命令往往涉及更细节的修改，所以在后面各类格式调整的内容中介绍。
-新增选项用于处理标签对齐、缺省出版项、缺省责任者(作者)处理等，其使用方式与biblatex宏包选项完全相同。关于文献表排序，除了下面gblanorder和sorting选项外，也还需了解一些其它知识，详见第\ref{sec:sort:adj}节。
+新增选项用于处理标签对齐、缺省出版项、缺省责任者(作者)处理等，其使用方式与 biblatex 宏包选项完全相同。关于文献表排序，除了下面 gblanorder 和 sorting 选项外，也还需了解一些其它知识，详见第~\ref{sec:sort:adj} 节。
 
 \begin{description}
 
@@ -460,22 +464,22 @@ v1.1m版本增加了chinese-jmw样式用于生成管理世界期刊的文献。
 
   为控制文献表数字序号标签增加的选项，用于选择是否生成序号标签及其对齐方式。
   \begin{itemize}
-    \item gbalign=right，是list环境中的右对齐数字序号标签，是gb7714-2015样式的默认选项；
-    \item gbalign=left，是list环境中的左对齐数字序号标签；
-    \item gbalign=center，是list环境中的等宽数字序号标签，数字在[]内居中；
-    \item gbalign=centpos，是list环境中的局中数字序号标签，带括号标签[1]在标签盒子内居中；
+    \item gbalign=right，是 list 环境中的右对齐数字序号标签，是 gb7714-2015 样式的默认选项；
+    \item gbalign=left，是 list 环境中的左对齐数字序号标签；
+    \item gbalign=center，是 list 环境中的等宽数字序号标签，数字在[]内居中；
+    \item gbalign=centpos，是 list 环境中的局中数字序号标签，带括号标签[1]在标签盒子内居中；
     \item gbalign=gb7714-2015，是项对齐方式数字序号标签，即段落环境中标签使用原始宽度，标签与条目内容等间距。
-    \item gbalign=gb7714-2015ay，无数字序号标签，是author-year风格的文献表，是gb7714-2015ay样式的默认选项。
+    \item gbalign=gb7714-2015ay，无数字序号标签，是author-year风格的文献表，是 gb7714-2015ay 样式的默认选项。
   \end{itemize}
-  该选项对\textbf{著者年份制、顺序编码制均有效}，也就是说当使用著者年份制时，加上gbalign选项后同样可以实现文献表的顺序序号标签(比如：
-  \lstinline[breaklines=true]!\usepackage[style=gb7714-2015ay, gbalign=left]{biblatex}!，可以实现\emph{著者年份制格式的带左对齐的顺序序号标签的文献表})。 序号标签对齐方式的测试，包括：
+  该选项对\textbf{著者年份制、顺序编码制均有效}，也就是说当使用著者年份制时，加上 gbalign 选项后同样可以实现文献表的顺序序号标签(比如：
+  \lstinline\[breaklines=true,basicstyle=\ttfamily\]!\usepackage[style=gb7714-2015ay, gbalign=left]{biblatex}!，可以实现\emph{著者年份制格式的带左对齐的顺序序号标签的文献表})。 序号标签对齐方式的测试，包括：
   数字在标签内居中见:
   \href{run:./example/opt-gbalign-center.tex}{opt-gbalign-center.tex}，
   标签左对齐见:
   \href{run:./example/opt-gbalign-left.tex}{opt-gbalign-left.tex}，
   项对齐(标签与内容等间距)见:
   \href{run:./example/opt-gbalign-gb.tex}{opt-gbalign-gb.tex}。
-  效果示例如图\ref{fig:eg:optgbalign}所示。
+  效果示例如图~\ref{fig:eg:optgbalign} 所示。
 
 \begin{figure}[!htb]
 \centering
@@ -487,7 +491,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subfigure[\heiti gbalign=center 即中对齐]{\parbox{0.5\linewidth}{\includegraphics*[page=4,viewport=1cm 0cm 8cm 4.5cm,clip=true]{egphoto/opt-gbalign-center.pdf}}}
 \subfigure[\heiti gbalign=gb7714-2015 即项对齐]{\parbox{0.5\linewidth}{\includegraphics*[page=4,viewport=1cm 0cm 8cm 4.5cm,clip=true]{egphoto/opt-gbalign-gb.pdf}}}
 \end{tcolorbox}
-\caption{文献表标签对齐选项gbalign效果}\label{fig:eg:optgbalign}
+\caption{文献表标签对齐选项 gbalign 效果}\label{fig:eg:optgbalign}
 \end{figure}
 
   \pdfbookmark[4]{gbpub}{gbpub}
@@ -501,7 +505,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   顺序编码制测试（著者年份制类似）见:
   \href{run:./example/opt-gbpub-true.tex}{opt-gbpub-true.tex}，
   \href{run:./example/opt-gbpub-false.tex}{opt-gbpub-false.tex}。
-  效果示例如图\ref{fig:eg:optgbpub}所示。
+  效果示例如图~\ref{fig:eg:optgbpub} 所示。
 
 \begin{figure}[!htb]
 \centering
@@ -511,7 +515,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subfigure[\heiti gbpub=false 出版项缺省]{\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0cm 9cm 4.5cm,clip=true]{egphoto/opt-gbpub-false.pdf}}}
 \subfigure[\heiti gbpub=true 出版项补充]{\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0cm 10cm 4.5cm,clip=true]{egphoto/opt-gbpub-true.pdf}}}
 \end{tcolorbox}
-\caption{文献表出版项缺失处理选项gbpub效果}\label{fig:eg:optgbpub}
+\caption{文献表出版项缺失处理选项 gbpub 效果}\label{fig:eg:optgbpub}
 \end{figure}
 
   \pdfbookmark[4]{gbnoauthor}{gbnoauthor}
@@ -520,12 +524,12 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   为著者年份制增加的选项，用于控制责任者缺失时的处理。
   \begin{itemize}
     \item gbnoauthor=false，当作者信息缺失时默认不做处理，使用标准样式的处理方式；
-    \item gbnoauthor=true，则根据GB/T 7714-2015 的要求进行处理，中文文献使用“佚名”来代替author，英文文献用“Anon”来代替author。
+    \item gbnoauthor=true，则根据GB/T 7714-2015 的要求进行处理，中文文献使用“佚名”来代替 author，英文文献用“Anon”来代替 author，
   \end{itemize}
   测试结果见:
   \href{run:./example/opt-gbnoauthor-true.tex}{opt-gbnoauthor-true.tex}，
   \href{run:./example/opt-gbnoauthor-false.tex}{opt-gbnoauthor-false.tex}。
-  效果示例如图\ref{fig:eg:optgbnoauthor}所示。
+  效果示例如图~\ref{fig:eg:optgbnoauthor} 所示。
 
 \begin{figure}[!htb]
 \centering
@@ -535,13 +539,13 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subfigure[\heiti gbnoauthor=true] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.4cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gbnoauthor-true.pdf}}}
 \subfigure[\heiti gbnoauthor=false] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.4cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gbnoauthor-false.pdf}}}
 \end{tcolorbox}
-\caption{文献表作者缺失处理选项gbnoauthor效果}\label{fig:eg:optgbnoauthor}
+\caption{文献表作者缺失处理选项 gbnoauthor 效果}\label{fig:eg:optgbnoauthor}
 \end{figure}
 
   \pdfbookmark[4]{gbnosameeditor}{gbnosameeditor}
   \item[gbnosameeditor]=true，\textbf{false}. \hfill default is false
 
-  用于控制inbook,incollection等类型中bookauthor/editor与author相同时是否输出bookauthor/editor。
+  用于控制inbook,incollection等类型中 bookauthor/editor 与 author 相同时是否输出bookauthor/editor。
   \begin{itemize}
     \item gbnosameeditor=false，默认方式，正常输出；
     \item gbnosameeditor=true，不输出。
@@ -556,7 +560,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbnoothers=false，默认输出等、et al.信息；
     \item gbnoothers=true，不输出。
   \end{itemize}
-  该选项是全局选项，设置为true后，全文的作者列表都将不输出。若需要再局部调整，则利用编组局部设置\verb|\settoggle{bbx:gbnoothers}{true}|即可。
+  该选项是全局选项，设置为 true 后，全文的作者列表都将不输出。若需要再局部调整，则利用编组局部设置 \verb|\settoggle{bbx:gbnoothers}{true}| 即可。
 
 
 
@@ -575,7 +579,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbbiblabel=box，序号数字由方框包围，比如\framebox{1}；
     \item gbbiblabel=circle，序号数字由圆圈包围，比如\textcircled{1}。
   \end{itemize}
-  效果示例如图\ref{fig:eg:optgbbiblabel}所示。若上述效果并不满足需求，还可以自定义，比如：
+  效果示例如图~\ref{fig:eg:optgbbiblabel} 所示。若上述效果并不满足需求，还可以自定义，比如：
   \begin{texlist}
   \usepackage{circledtext}
   \renewcommand{\mkgbnumlabel}[1]{\circledtext*[height=2.0ex]{#1}}
@@ -593,7 +597,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subfigure[\heiti gbbiblabel=plain] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbbiblabele.pdf}}}
 \subfigure[\heiti gbbiblabel=circle] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbbiblabelf.pdf}}}\\
 \end{tcolorbox}
-\caption{文献表标签数字格式选项gbbiblabel效果}\label{fig:eg:optgbbiblabel}
+\caption{文献表标签数字格式选项 gbbiblabel 效果}\label{fig:eg:optgbbiblabel}
 \end{figure}
 
 
@@ -623,7 +627,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \begin{itemize}
     \item gbnamefmt=uppercase，使大小写符合GB/T 7714-2015 的要求；
     \item gbnamefmt=lowercase，大小写由输入信息确定不做改变；
-    \item gbnamefmt=givenahead，姓名的格式与biblatex标准样式的given-family格式一致，即名在前姓在后，类似于ieee的样式；
+    \item gbnamefmt=givenahead，姓名的格式与 biblatex 标准样式的given-family格式一致，即名在前姓在后，类似于 ieee 的样式；
     \item gbnamefmt=familyahead时，姓名的格式与biblatex 标准样式的family-given格式一致，即姓在前名在后，类似于APA 的样式；
     \item gbnamefmt=pinyin 时，姓名的格式采用一种常见的中文拼音方式，比如对于 Zhao, Yu Xin 或 Yu Xin Zhao 这个姓名拼音格式化为ZHAO Yu-xin。
     \item gbnamefmt=quanpin 时，姓名的格式采用另一种常见的中文拼音方式，比如对于 Zhao, Yu Xin 或 Yu Xin Zhao 这个姓名拼音格式化为Zhao Yuxin。
@@ -631,17 +635,17 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbnamefmt=fullname 时，姓名的格式采用英文默认的名在前姓在后的全拼模式。
         比如对于 Zhao, Yu Xin 或 Yu Xin Zhao 格式化后为YuXin Zhao
   \end{itemize}
-  \bc{注意：还可以利用 nameformat 域为某一具体条目设置该条目的姓名格式，比如：要在一个文献表中实现英文文献是givenahead 格式，而拼音的文献是pinyin风格，那么可以设置拼音文献的 nameformat 域为pinyin，而gbnamefmt设置为givenahead。条目中nameformat 域的局部设置优先于gbnamefmt的全局设置。}\par
-  \emph{注意：使用pinyin选项时，bib文件中文献的作者应给出完整的名而不是缩写，否则出来的效果未必令人满意}。
+  \bc{注意：还可以利用 nameformat 域为某一具体条目设置该条目的姓名格式，比如：要在一个文献表中实现英文文献是givenahead 格式，而拼音的文献是 pinyin 风格，那么可以设置拼音文献的 nameformat 域为 pinyin，而 gbnamefmt 设置为 givenahead，条目中nameformat 域的局部设置优先于 gbnamefmt 的全局设置。}\par
+  \emph{注意：使用 pinyin 选项时，bib文件中文献的作者应给出完整的名而不是缩写，否则出来的效果未必令人满意}。
   另外，pinyin格式中名之间的短横线可以用如下设置取消。
 
   \verb|\apptocmd{\gbpinyinlocalset}{\renewrobustcmd*{\bibnamedelima}{}}{}{}|
 
-  而quanpin格式的名中间的短横线可以用相反的设置加上。
+  而 quanpin 格式的名中间的短横线可以用相反的设置加上。
 
   \verb|\apptocmd{\gbquanpinlocalset}{\renewrobustcmd*{\bibnamedelima}{\mbox{-}}}{}{}|
 
-  而fullname格式的名中间也可以加上空格：
+  而 fullname 格式的名中间也可以加上空格：
 
   \verb|\apptocmd{\gbfullnamelocalset}{\renewrobustcmd*{\bibnamedelima}{\space}}{}{}|
 
@@ -649,7 +653,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   测试结果见：
   \href{run:./example/opt-gbnamefmt.tex}{opt-gbnamefmt.tex}，
   \href{run:./example/opt-gbnamefmt-default.tex}{opt-gbnamefmt-default.tex}。
-  效果示例如图\ref{fig:eg:optgbnamefmt}所示。
+  效果示例如图~\ref{fig:eg:optgbnamefmt} 所示。
 
 \begin{figure}[!htb]
 \centering
@@ -663,7 +667,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subfigure[\heiti gbnamefmt=pinyin] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbnamefmt-e.pdf}}}
 \subfigure[\heiti gbnamefmt=reverseorder] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 8cm 2.8cm,clip=true]{egphoto/opt-gbnamefmt-f.pdf}}}\\
 \end{tcolorbox}
-\caption{文献表姓名格式选项gbnamefmt效果}\label{fig:eg:optgbnamefmt}
+\caption{文献表姓名格式选项 gbnamefmt 效果}\label{fig:eg:optgbnamefmt}
 \end{figure}
 
 
@@ -675,7 +679,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbtype=true，根据GB/T 7714-2015 要求输出标识符，例如“在线的期刊析出文献题名[J/OL]”。
     \item gbtype=false，则不输出标识符，例如“在线的期刊析出文献题名”。
   \end{itemize}
-  效果示例如图\ref{fig:eg:optgbtype}所示。
+  效果示例如图~\ref{fig:eg:optgbtype} 所示。
 
 \begin{figure}[!htb]
 \centering
@@ -697,8 +701,8 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbmedium=true，根据GB/T 7714-2015 要求输出载体标识符，例如“在线的期刊析出文献题名[J/OL]”。
     \item gbmedium=false，则不输出标识符，例如“在线的期刊析出文献题名[J]”。
   \end{itemize}
-  注意：gbtype选项是更大范围的控制，包括了gbmedium。当gbtype=false时，无所谓gbmedium设置什么，因为整个文献类型和载体标识符整个都不显示，而gbmedium只是设置载体标识的。
-  效果示例如图\ref{fig:eg:optgbmedium}所示。
+  注意：gbtype选项是更大范围的控制，包括了 gbmedium，当 gbtype=false 时，无所谓 gbmedium 设置什么，因为整个文献类型和载体标识符整个都不显示，而 gbmedium 只是设置载体标识的。
+  效果示例如图~\ref{fig:eg:optgbmedium} 所示。
 
 \begin{figure}[!htb]
 \centering
@@ -715,22 +719,22 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \pdfbookmark[4]{gbfieldtype}{gbfieldtype}
   \item[gbfieldtype]=true，\textbf{false}. \hfill default is false
 
-  为控制是否输出type域而增加的选项。
+  为控制是否输出 type 域而增加的选项。
   \begin{itemize}
-    \item gbfieldtype=true，输出type域，例如学位论文的phdthesis或博士学位论文。输出该域时做中英文区分。
-    \item gbfieldtype=false，不输出type域。
+    \item gbfieldtype=true，输出 type 域，例如学位论文的 phdthesis 或博士学位论文。输出该域时做中英文区分。
+    \item gbfieldtype=false，不输出 type 域。
 
     要设置博士或硕士学位论文的输出，有两种途径: 一是设置本地化字符串： \\
      \lstinline!\DefineBibliographyStrings{english}{mathesis={str you want ma thesis}}!， \\
      \lstinline!\DefineBibliographyStrings{english}{mathesiscn={硕士学位论文}}!， \\
      \lstinline!\DefineBibliographyStrings{english}{phdthesis={str you want for phd thesis}}!， \\
      \lstinline!\DefineBibliographyStrings{english}{phdthesiscn={博士学位论文}}!， \\
-  之所以用加cn的本地化字符串是为了适应某些样式对中英文文献的区别设置。
+  之所以用加 cn 的本地化字符串是为了适应某些样式对中英文文献的区别设置。
 
-  二是设置type域，比如在bib文件直接设置需要输出的字符，比如type=\{[博士学位论文]\}。
+  二是设置 type 域，比如在 bib 文件直接设置需要输出的字符，比如type=\{[博士学位论文]\}。
 
   \end{itemize}
-  效果示例如图\ref{fig:eg:optgbfieldtype}所示。
+  效果示例如图~\ref{fig:eg:optgbfieldtype} 所示。
 
 \begin{figure}[!htb]
 \centering
@@ -752,9 +756,9 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbpunctin=false，则输出默认的本地字符串，
     在英语中是\texttt{in:}，若要完全去掉该符号则可以在导言区增加命令
   \lstinline!\DefineBibliographyStrings{english}{in={}}!，\lstinline!\DefineBibliographyStrings{english}{incn={}}!。
-  之所以用加cn的本地化字符串是为了适应某些样式对中英文文献的区别设置。
+  之所以用加 cn 的本地化字符串是为了适应某些样式对中英文文献的区别设置。
   \end{itemize}
-  效果示例如图\ref{fig:eg:optgbpunctin}所示。
+  效果示例如图~\ref{fig:eg:optgbpunctin} 所示。
 
 \begin{figure}[!htb]
 \centering
@@ -778,8 +782,8 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \end{itemize}
 
   需要注意的是：若只想修改英文文献的全部标点为半角标点，而中文文献的标点不变，可在导言区采用如下方式修改英文文献的标点：
-  \lstinline[breaklines=true]!\def\gbpunctcommalanen{\addcomma\addspace}!,
-  \lstinline[breaklines=true]!\def\gbpunctcolonlanen{\addcolon\addspace}!。
+  \lstinline[breaklines=true,basicstyle=\ttfamily]!\def\gbpunctcommalanen{\addcomma\addspace}!,
+  \lstinline[breaklines=true,basicstyle=\ttfamily]!\def\gbpunctcolonlanen{\addcolon\addspace}!。
 
 
   \pdfbookmark[4]{gbtitlelink}{gbtitlelink}
@@ -792,7 +796,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \end{itemize}
   测试文件见：
   \href{run:example/opt-gbtitlelink.tex}{opt-gbtitlelink.tex}。
-  效果示例如图\ref{fig:eg:optgbtitlelink}所示。
+  效果示例如图~\ref{fig:eg:optgbtitlelink} 所示。
 
 \begin{figure}[!htb]
 \centering
@@ -824,14 +828,14 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \item[gbcitelocal]=\textbf{gb7714-2015}，chinese，english. \hfill default is gb7714-2015
   \item[gbbiblocal]=\textbf{gb7714-2015}，chinese，english. \hfill default is gb7714-2015
 
-  为设置引用标注标签和文献表中的本地化字符串而增加的选项。其中gbcitelocal 用于控制标注中的本地化字符串，而gbbiblocal用于控制文献表中的本地化字符串，gblocal选项等价于同时设置gbcitelocal 和 gbbiblocal。
-  配合\lstinline[breaklines=true]!\DefineBibliographyStrings!命令对本地化字符串进行设置可以实现一些特殊的效果。图\ref{fig:content:fmtc}就是该选项的一个使用示例。
+  为设置引用标注标签和文献表中的本地化字符串而增加的选项。其中gbcitelocal 用于控制标注中的本地化字符串，而 gbbiblocal 用于控制文献表中的本地化字符串，gblocal选项等价于同时设置gbcitelocal 和 gbbiblocal。
+  配合\lstinline[breaklines=true,basicstyle=\ttfamily]!\DefineBibliographyStrings!命令对本地化字符串进行设置可以实现一些特殊的效果。图~\ref{fig:content:fmtc} 就是该选项的一个使用示例。
   \begin{itemize}
     \item gblocal=gb7714-2015，即默认区分中英文，不同语言采用不同的字符串比如中文使用“等”“和”，而英文使用“et al.”“and”。
     \item gblocal=chinese，强制设置所有的本地化字符串使用中文。
     \item gblocal=english，强制设置所有的本地化字符串使用英文。
   \end{itemize}
-  标注和文献表中如：等、和等字符，本质上是由andincite等本地化字符串所控制的，直接修改它们可以得到不同的效果，比如：
+  标注和文献表中如：等、和等字符，本质上是由 andincite 等本地化字符串所控制的，直接修改它们可以得到不同的效果，比如：
   \begin{texlist}
   \DefineBibliographyStrings{english}{
         andincite         = {和},  %判断为英文的文献使用的字符串
@@ -844,7 +848,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   测试文件见：
   \href{run:egfigure/egcontentfmtc.tex}{egcontentfmtc.tex}。
-  效果示例如图\ref{fig:eg:optgblocal}所示。
+  效果示例如图~\ref{fig:eg:optgblocal} 所示。
 
 \begin{figure}[!htb]
 \centering
@@ -862,17 +866,17 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \pdfbookmark[4]{mergedate}{mergedate}
   \item[mergedate]=true，false，none.
 
-  为著者年份制是否在文献表中作者后面输出日期信息而增加了选项值none。
+  为著者年份制是否在文献表中作者后面输出日期信息而增加了选项值 none，
   \begin{itemize}
     \item mergedate=true，著者年份制文献表仅在作者后输出日期
     \item mergedate=false，著者年份制文献表在作者后和出版项中输出日期
     \item mergedate=none，著者年份制文献表仅在出版项中输出日期。该选项用于满足中科院大学的著者年份制格式要求。
-    \item no mergedate，即不给出该选项，这是gb7714-2015ay默认的情况，仅在作者后输出日期且已经根据国标格式化。
+    \item no mergedate，即不给出该选项，这是 gb7714-2015ay 默认的情况，仅在作者后输出日期且已经根据国标格式化。
   \end{itemize}
-  效果示例如图\ref{fig:eg:optmergedate}所示。注意：对于在线资源当没有date等信息而只有urldate信息时，著者年份制要求使用urldate的年份作为标签，且要求加上方括号，默认就按这一要求处理。但若希望去掉方括号，则可以通过在导言区增加如下定义：
-  \lstinline[breaklines=true]!\DeclareFieldFormat{labelurlyear}{#1}!。
-  反过来，其它不使用urldate的标签默认不带方括号，若希望加上方括号或者其它符号，则可以通过增加如下定义实现：
-  \lstinline[breaklines=true]!\DeclareFieldFormat{labelyear}{【#1】}!。
+  效果示例如图~\ref{fig:eg:optmergedate} 所示。注意：对于在线资源当没有 date 等信息而只有 urldate 信息时，著者年份制要求使用 urldate 的年份作为标签，且要求加上方括号，默认就按这一要求处理。但若希望去掉方括号，则可以通过在导言区增加如下定义：
+  \lstinline[breaklines=true,basicstyle=\ttfamily]!\DeclareFieldFormat{labelurlyear}{#1}!。
+  反过来，其它不使用 urldate 的标签默认不带方括号，若希望加上方括号或者其它符号，则可以通过增加如下定义实现：
+  \lstinline[breaklines=true,basicstyle=\ttfamily]!\DeclareFieldFormat{labelyear}{【#1】}!。
 
 \begin{figure}[!htb]
 \centering
@@ -899,7 +903,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \end{itemize}
 
   测试文档见：\href{run:./example/opt-gblanorder.tex}{opt-gblanorder.tex}。
-  效果示例如图\ref{fig:eg:optgblanorder}所示。
+  效果示例如图~\ref{fig:eg:optgblanorder} 所示。
 
 \begin{figure}[!htb]
 \centering
@@ -917,15 +921,15 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \pdfbookmark[4]{citexref}{citexref}
   \item[citexref]=\textbf{true}，false. \hfill default is true
 
-  为顺序编码制样式控制是否使用传统的crossref功能而增加的选项。
+  为顺序编码制样式控制是否使用传统的 crossref 功能而增加的选项。
   \begin{itemize}
-    \item citexref=true，默认启用传统的crossref功能，即一个析出文献中给出crossref或xref 域来指定其析出来源文献，则在著录表中该析出文献的源用其来源文献在著录表中的序号如[1]等来代替。
-    \item citexref=false，则使用biblatex的默认方式，当存在crossref域时自动将来源文献的信息引入到当前析出文献中，而使用xref域时，则不引入来源文献的信息。
+    \item citexref=true，默认启用传统的 crossref 功能，即一个析出文献中给出 crossref 或xref 域来指定其析出来源文献，则在著录表中该析出文献的源用其来源文献在著录表中的序号如[1]等来代替。
+    \item citexref=false，则使用 biblatex 的默认方式，当存在 crossref 域时自动将来源文献的信息引入到当前析出文献中，而使用 xref 域时，则不引入来源文献的信息。
   \end{itemize}
 
   测试文档见：\href{run:./egphoto/opt-citexref-true.tex}{opt-citexref-true.tex}、
   \href{run:./egphoto/opt-citexref-false.tex}{opt-citexref-false.tex}。
-  效果示例如图\ref{fig:eg:optcitexref}所示。
+  效果示例如图~\ref{fig:eg:optcitexref} 所示。
 
 \begin{figure}[!htb]
 \centering
@@ -935,24 +939,24 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subfigure[\heiti citexref=true] {\parbox{7.5cm}{\includegraphics*[page=1,viewport=0.2cm 0.2cm 7.5cm 8cm,clip=true]{egphoto/opt-citexref-true.pdf}}}
 \subfigure[\heiti citexref=false] {\parbox{7.5cm}{\includegraphics*[page=1,viewport=0.5cm 0.2cm 8cm 8cm,clip=true]{egphoto/opt-citexref-false.pdf}}}
 \end{tcolorbox}
-\caption{控制传统crossref功能的citexref选项}\label{fig:eg:optcitexref}
+\caption{控制传统 crossref 功能的 citexref 选项}\label{fig:eg:optcitexref}
 \end{figure}
 
   \pdfbookmark[4]{gbannote}{gbannote}
   \item[gbannote]=true，\textbf{false}. \hfill default is false
 
-  为控制是否在文献条目后面输出由annotation或annote域提供的注释信息而增加的选项。
+  为控制是否在文献条目后面输出由 annotation 或 annote 域提供的注释信息而增加的选项。
   \begin{itemize}
     \item gbannote=false，即默认不输出。
     \item gbannote=true，输出注释信息。
   \end{itemize}
 
-  \emph{需要注意的是：bib文件中的annote域会自动转换为annotation域若需要进行判断则需要用annotation域。}比如：
+  \emph{需要注意的是：bib文件中的 annote 域会自动转换为 annotation 域若需要进行判断则需要用 annotation 域。}比如：
 
   \verb|\renewcommand*{\finentrypunct}{\iffieldundef{annotation}{\addperiod}{}}|
 
   测试文档见：\href{run:./example/opt-gbannote.tex}{opt-gbannote.tex}。
-  效果示例如图\ref{fig:eg:optgbannote}所示。
+  效果示例如图~\ref{fig:eg:optgbannote} 所示。
 
 \begin{figure}[!htb]
 \centering
@@ -971,27 +975,27 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   为控制参考文献标题内容的设置方式增加的选项。
   \begin{itemize}
-    \item gbctexset=true，参考文献标题内容可以通过重定义 bibname 或 refname 宏设置。比如利用ctex宏包进行设置：
+    \item gbctexset=true，参考文献标题内容可以通过重定义 bibname 或 refname 宏设置。比如利用 ctex 宏包进行设置：
         \lstinline[breaklines]!\ctexset{bibname={title you want}}!
     \item gbctexset=false，参考文献标题内容可以通过重定义本地字符串设置，比如：
 
-  \lstinline[breaklines=true]!\DefineBibliographyStrings{english}{bibliography={title you want}}!
+  \lstinline[breaklines=true,basicstyle=\ttfamily]!\DefineBibliographyStrings{english}{bibliography={title you want}}!
 
-  \lstinline[breaklines=true]!\DefineBibliographyStrings{english}{references={title you want}}!。
+  \lstinline[breaklines=true,basicstyle=\ttfamily]!\DefineBibliographyStrings{english}{references={title you want}}!。
   \end{itemize}
   当然除此之外，利用 printbibliography 命令的 title 选项进行设置依然是最有效方式，比如:
-  \lstinline[breaklines=true]!\printbibliography[title=title you want]!。
+  \lstinline[breaklines=true,basicstyle=\ttfamily]!\printbibliography[title=title you want]!。
 
 
   \pdfbookmark[4]{gbcodegbk}{gbcodegbk}
   \item[gbcodegbk]=true，\textbf{false}. \hfill default is false
 
-  为兼容GBK编码的文档增加的选项。
+  为兼容 GBK 编码的文档增加的选项。
   \begin{itemize}
     \item gbcodegbk=false，即默认是utf-8编码的文档。
-    \item gbcodegbk=true，为利用pdflatex/latex编译GBK编码文档时使用。
+    \item gbcodegbk=true，为利用 pdflatex/latex 编译 GBK 编码文档时使用。
   \end{itemize}
-  当在源文档前面增加 XeTeX 原语：\lstinline!\XeTeXinputencoding "GBK"! 后，GBK编码的文档也可以使用xelatex编译，这时应设置为false或不给出该选项。测试文件见：
+  当在源文档前面增加 XeTeX 原语：\lstinline!\XeTeXinputencoding "GBK"! 后，GBK编码的文档也可以使用 xelatex 编译，这时应设置为 false 或不给出该选项。测试文件见：
   \href{run:example/codeopt-gbcodegbk.tex}{codeopt-gbcodegbk.tex}。
 
 
@@ -1001,10 +1005,10 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   为实现多种样式并存而增加的选项。仅用于gb7714-2015ms样式中。
   \begin{itemize}
     \item gbstyle=true，即默认全部文献使用国标样式。
-    \item gbstyle=false，仅中文文献使用国标样式，其它语言文献使用biblatex默认样式。
+    \item gbstyle=false，仅中文文献使用国标样式，其它语言文献使用 biblatex 默认样式。
   \end{itemize}
 
-  该选项的实现原理是把所有国标格式设置局部化到每一条文献打印时，处理时首先判断gbstyle 选项及文献的语言，当满足要求则使用这些局部化格式，否则使用默认的标准样式。这种实现为一篇文档内实现两种样式提供解决思路，尽管目前非中文语言文献的著录格式是标准样式，但只要对标准样式做进一步的修改就可以形成符合某种格式规范的样式，比如像ieee，nature等的样式。因此存在中文使用GB/T 7714-2015 著录格式，而英文文献使用ieee等著录格式的可能性。测试文档见：\href{run:./example/opt-gbstyle.tex}{opt-gbstyle.tex}。
+  该选项的实现原理是把所有国标格式设置局部化到每一条文献打印时，处理时首先判断gbstyle 选项及文献的语言，当满足要求则使用这些局部化格式，否则使用默认的标准样式。这种实现为一篇文档内实现两种样式提供解决思路，尽管目前非中文语言文献的著录格式是标准样式，但只要对标准样式做进一步的修改就可以形成符合某种格式规范的样式，比如像 ieee，nature等的样式。因此存在中文使用GB/T 7714-2015 著录格式，而英文文献使用 ieee 等著录格式的可能性。测试文档见：\href{run:./example/opt-gbstyle.tex}{opt-gbstyle.tex}。
 
 
   \pdfbookmark[4]{gbfootbib}{gbfootbib}
@@ -1020,14 +1024,14 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   一是实现国标要求的脚注标签和段落格式，利用对
   \verb|\@makefnmark|重定义实现正文脚注标签带圈上标，
-  利用对\verb|\@makefntext|做patch局部化重设\verb|\@makefnmark|使得脚注中的标签不上标，利用对latex核心代码和hyperref宏包代码的重定义实现悬挂缩进的格式。
+  利用对 \verb|\@makefntext| 做 patch 局部化重设 \verb|\@makefnmark| 使得脚注中的标签不上标，利用对 latex 核心代码和 hyperref 宏包代码的重定义实现悬挂缩进的格式。
 
   二是实现国标要求的相同文献不输出内容，而是用标签代替，比如同\textcircled{4} ，主要利用citetracker 选项实现对文献引用的追踪，然后利用ifciteseen 判断和对footfullcite 命令做修改实现。
   测试文档见：\href{run:./example/opt-gbfootbib.tex}{opt-gbfootbib.tex}。
 
   同时为了方便脚注的对齐格式控制增加了两个尺寸：\verb|\footbibmargin|和
-  \verb|\footbiblabelsep|，分别表示脚注文本的左侧缩进距离和悬挂的脚注标记标签与脚注文本的间隔距离，默认分别是1em和0.5em。如果要修改悬挂对齐为其它对齐方式，那么需要重定义
-  \verb|\@makefntext|宏，目前悬挂对齐的实现方式见bbx文件。比如示例中重定义这两个尺寸为2em 和1em：
+  \verb|\footbiblabelsep|，分别表示脚注文本的左侧缩进距离和悬挂的脚注标记标签与脚注文本的间隔距离，默认分别是 1em 和0.5em。如果要修改悬挂对齐为其它对齐方式，那么需要重定义
+  \verb|\@makefntext|宏，目前悬挂对齐的实现方式见 bbx 文件。比如示例中重定义这两个尺寸为2em 和1em：
 
   {\small
   \vspace{1ex}
@@ -1044,7 +1048,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   }
 
 
-  需要注意的是，由于图表标题(caption)环境的特殊性，在其中使用footfullcite可能无法得到正常的脚注文献表。而通常的方法是利用footnotemark和footnotetext来实现脚注，对于文献表也是类似的，因此也不能简单使用footfullcite命令，而是要使用footnotemark和footnotetext以及fullcite命令配合来实现， 比如：
+  需要注意的是，由于图表标题(caption)环境的特殊性，在其中使用 footfullcite 可能无法得到正常的脚注文献表。而通常的方法是利用 footnotemark 和 footnotetext 来实现脚注，对于文献表也是类似的，因此也不能简单使用 footfullcite 命令，而是要使用 footnotemark 和 footnotetext 以及 fullcite 命令配合来实现， 比如：
 
   \begin{example}{图表标题中产生的脚注文献表}{eg:footbib:incaption}
   \begin{texlist}
@@ -1058,14 +1062,14 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \end{texlist}
   \end{example}
 
-  但要注意由于hyperref本身的原因，这种方式产生的脚注文献表可能没有超链接功能。
+  但要注意由于 hyperref 本身的原因，这种方式产生的脚注文献表可能没有超链接功能。
   对于表格环境中的引用无法产生脚注文献表的问题，可以将其置于小页环境中实现或者采用前述图标标题中的类似处理方式。
-  注意：latex核心代码参考latex.ltx，而hyperref代码参考hyperref.STY。
+  注意：latex核心代码参考latex.ltx，而 hyperref 代码参考hyperref.STY。
 
   \pdfbookmark[4]{gbfootbibfmt}{gbfootbibfmt}
   \item[gbfootbibfmt]=true，\textbf{false}. \hfill default is false
 
-  如果不想要默认的脚注符号和缩进，但要实现脚注文献表且脚注中相同文献用标签替代等国标要求，则可使用gbfootbibfmt代替上面的gbfootbib选项。
+  如果不想要默认的脚注符号和缩进，但要实现脚注文献表且脚注中相同文献用标签替代等国标要求，则可使用 gbfootbibfmt 代替上面的 gbfootbib 选项。
   \begin{itemize}
     \item gbfootbibfmt=true，实现脚注文献表及相同文献用标签代替等国标要求，但不设置脚注符号和缩进，用户可自行通过其它方式或宏包设置需要的符号和缩进形式。
     \item gbfootbibfmt=false，不做任何附加处理。
@@ -1077,16 +1081,16 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   为脚注计数器根据页码更新而增加的选项。
   \begin{itemize}
-    \item gbfnperpage=true，每页更新脚注编号，即根据page计数器重设footnote计数器。
+    \item gbfnperpage=true，每页更新脚注编号，即根据 page 计数器重设 footnote 计数器。
     \item gbfnperpage=false，不根据页码重设脚注计数器。
   \end{itemize}
 
-  注意，若要让脚注计数器与其它计数器比如chapter等关联，那么采用latex的常规方法就能解决，比如使用latex内核常用的\verb|\@addtoreset|命令。
+  注意，若要让脚注计数器与其它计数器比如 chapter 等关联，那么采用 latex 的常规方法就能解决，比如使用 latex 内核常用的 \verb|\@addtoreset| 命令。
 
 
   \item[gbstrict]=\textbf{true}，false. \hfill default is true
 
-  为避免输出bib文件中多余的域信息而增加选项，目的是为了兼容一些bib文件，因为某些bst样式文件进行中英文判断需要在bib文件中增加类似language这样的域作为支撑，而其中某些域在标准的biblatex样式文件中是默认输出的。
+  为避免输出 bib 文件中多余的域信息而增加选项，目的是为了兼容一些 bib 文件，因为某些 bst 样式文件进行中英文判断需要在 bib 文件中增加类似 language 这样的域作为支撑，而其中某些域在标准的 biblatex 样式文件中是默认输出的。
   \begin{itemize}
     \item gbstrict=true，即默认不输出。
     \item gbstrict=false，需要还原标准样式的输出情况时使用。
@@ -1097,8 +1101,8 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   为控制一些域如标题，网址，卷域的格式而增加选项。目的是使用一些标准样式的处理来增加格式多样性。
   \begin{itemize}
-    \item gbfieldstd=false，即默认使用GB/T 7714-2015要求的样式。
-    \item gbfieldstd=true，即还原使用标准样式的格式，比如使用引号，字体，加引导词等。当然要调整这些格式也可采用biblatex提供的更为直接的设置域格式的方式。
+    \item gbfieldstd=false，即默认使用 GB/T 7714-2015 要求的样式。
+    \item gbfieldstd=true，即还原使用标准样式的格式，比如使用引号，字体，加引导词等。当然要调整这些格式也可采用 biblatex 提供的更为直接的设置域格式的方式。
   \end{itemize}
 
 \end{description}
@@ -1116,11 +1120,11 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \pdfbookmark[4]{addEntryField}{addEntryField}
   \item[addEntryField] \{entrykey or entrykey comma list\}\{field\}\{fieldvalue\}
 
-  用于给指定的文献条目(集)添加域。即将field=\{fieldvalue\}这样的域信息添加到指定的entrykey条目或者entrykey comma list条目集中。比如：
+  用于给指定的文献条目(集)添加域。即将field=\{fieldvalue\}这样的域信息添加到指定的 entrykey 条目或者entrykey comma list条目集中。比如：
 
   \verb|\addEntryField{author2007en,author2014en}{nameformat}{quanpin}|
 
-  将会为author2007en,author2014en两个条目添加nameformat域信息。
+  将会为author2007en,author2014en两个条目添加 nameformat 域信息。
   该命令也只能出现在导言区中。
 
   \pdfbookmark[4]{delEntryField}{delEntryField}
@@ -1130,16 +1134,16 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   \verb|\delEntryField{author2007en,author2014en}{usera}|
 
-  将会把author2007en,author2014en两个条目中usera域信息删除。
+  将会把author2007en,author2014en两个条目中 usera 域信息删除。
 
 
 
   \pdfbookmark[4]{setlocalbibstring}{setlocalbibstring}
   \item[setlocalbibstring] \{bibstringkey\}\{bibstringval\}
 
-  用于局部调整本地化字符串的内容。比如\verb|\setlocalbibstring{andothersincite}{et al.}|，就是临时将本地化字符串andothersincite的内容调整为“et al.”。
+  用于局部调整本地化字符串的内容。比如 \verb|\setlocalbibstring{andothersincite}{et al.}|，就是临时将本地化字符串 andothersincite 的内容调整为“et al.”。
 
-注意：如果要在本地化字符串的内容设置中使用biblatex提供的一些标点命令，比如adddot 等，那么需要对其进行保护，避免直接展开导致命令未定义的错误，比如：
+注意：如果要在本地化字符串的内容设置中使用 biblatex 提供的一些标点命令，比如adddot 等，那么需要对其进行保护，避免直接展开导致命令未定义的错误，比如：
 \verb|\setlocalbibstring{andothersincite}{et al\protect\adddot}|
 
 
@@ -1154,11 +1158,11 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \pdfbookmark[4]{gbNoAfPcSpace}{gbNoAfPcSpace}
   \item[gbNoAfPcSpace] default is false
 
-  顺序编码制的toggle开关，设置\verb|\toggletrue{gbNoAfPcSpace}|表示去除parencite后面添加的中英文之间的空格，设置\verb|\togglefalse{gbNoAfPcSpace}| 则相反，表示不处理，由ctex/xeCJK自行添加。
+  顺序编码制的 toggle 开关，设置 \verb|\toggletrue{gbNoAfPcSpace}| 表示去除 parencite 后面添加的中英文之间的空格，设置 \verb|\togglefalse{gbNoAfPcSpace}| 则相反，表示不处理，由 ctex/xeCJK 自行添加。
 
   \item[其他]
 
-  注意：前面的一些选项也都有对应的toggle开关，若在局部环境中调整toggle开关，可以实现文献格式的临时调整。比如：
+  注意：前面的一些选项也都有对应的 toggle 开关，若在局部环境中调整 toggle 开关，可以实现文献格式的临时调整。比如：
   \verb|\settoggle{bbx:gbtype}{false}| 局部设置不输出文献类型和载体标识符，
   \verb|\settoggle{bbx:gbannote}{true}| 局部设置输出注释信息
 
@@ -1171,14 +1175,14 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \pdfbookmark[4]{gbrefcompress}{gbrefcompress}
   \item[gbrefcompress] default is 2
 
-  顺序编码制的控制文献压缩的计数器，默认设置 \verb|\setcounter{gbrefcompress}{2}|表示从2篇文献开始压缩。若设置\verb|\setcounter{gbrefcompress}{3}|则表示从3篇文献开始压缩。
+  顺序编码制的控制文献压缩的计数器，默认设置 \verb|\setcounter{gbrefcompress}{2}|表示从 2 篇文献开始压缩。若设置 \verb|\setcounter{gbrefcompress}{3}| 则表示从 3 篇文献开始压缩。
 
 
   \item[其他]
 
   注意：前面的一些选项也都有对应的计数器，若在局部环境中调整，可以实现文献格式的临时调整。比如：
-  \verb|\setcounter{gbnamefmtcase}{6}| 局部设置作者的格式为familyahead格式，
-  \verb|\def\blx@maxbibnames{9}\def\blx@minbibnames{2}| 局部设置作者的最大显示数量为9，若超过则显示2个。
+  \verb|\setcounter{gbnamefmtcase}{6}| 局部设置作者的格式为 familyahead 格式，
+  \verb|\def\blx@maxbibnames{9}\def\blx@minbibnames{2}| 局部设置作者的最大显示数量为9，若超过则显示 2 个。
 
 \end{description}
 
@@ -1202,7 +1206,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \item[titletypedelim] default is empty
 
   用于控制文献表中文献标题与文献类型标识符之间的间隔符，默认为空，也就是两者是紧贴在一起的。若设置：\\
-  \lstinline[breaklines=true]!\DeclareDelimFormat[bib,biblist]{titletypedelim}{\iffieldequalstr{userd}{chinese}{}{\space}}!
+  \lstinline[breaklines=true,basicstyle=\ttfamily]!\DeclareDelimFormat[bib,biblist]{titletypedelim}{\iffieldequalstr{userd}{chinese}{}{\space}}!
   则中文文献是紧贴在一起，而英文文献两者之间存在空格。
 
 
@@ -1212,7 +1216,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 
 \subsubsection{兼容的标准选项}\label{sec:old:opt}
-绝大部分biblatex标准样式选项可与gb7714-2015样式联合使用，下面给出一些经过兼容性测试的选项说明。需要注意的是:使用gb7714-2015样式时(即style=gb7714-2015)，backend选择应指定为biber，还有一些选项已经在样式设计中固定，如果要严格使用国标样式，一般不应做修改，比如sorting，maxnames，minnames，date，useprefix，giveninits等，但如果用户有自己的其它需求，则可按需修改。
+绝大部分 biblatex 标准样式选项可与 gb7714-2015 样式联合使用，下面给出一些经过兼容性测试的选项说明。需要注意的是:使用 gb7714-2015 样式时(即style=gb7714-2015)，backend选择应指定为 biber，还有一些选项已经在样式设计中固定，如果要严格使用国标样式，一般不应做修改，比如 sorting，maxnames，minnames，date，useprefix，giveninits等，但如果用户有自己的其它需求，则可按需修改。
 
 \begin{description}
   \item[url]=true, false. \hfill default: true
@@ -1225,9 +1229,9 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   \item[uniquelist]=true, false, minyear \hfill default: minyear
 
-  该选项用于著者-出版年制样式，用于正文中引用(标注)标签的作者列表控制(目的是消除歧义)。当uniquelist=true时，自动利用扩展作者姓名列表长度的方式消除labelname 列表的歧义; 当=false 时则禁用扩展，标签仅使用一个作者，消除歧义通过跟在年份后面的字母实现; 默认使用minyear，即当被截短的作者姓名列表存在歧义时，只有当年份相同，才会扩展列表长度以消除歧义。
+  该选项用于著者-出版年制样式，用于正文中引用(标注)标签的作者列表控制(目的是消除歧义)。当 uniquelist=true 时，自动利用扩展作者姓名列表长度的方式消除labelname 列表的歧义; 当=false 时则禁用扩展，标签仅使用一个作者，消除歧义通过跟在年份后面的字母实现; 默认使用 minyear，即当被截短的作者姓名列表存在歧义时，只有当年份相同，才会扩展列表长度以消除歧义。
 
-  注意当使用uniquelist=false后标签只有一个作者，但文中可能有同姓作者的文献，这时根据uniquename选项的设置，biblatex会使用姓名的其它部分比如名来消除歧义，但如果想强制要求仅用姓作为文中的标注标签，那么可以设置uniquename=false，但此时标注是可能存在歧义的。
+  注意当使用 uniquelist=false 后标签只有一个作者，但文中可能有同姓作者的文献，这时根据 uniquename 选项的设置，biblatex会使用姓名的其它部分比如名来消除歧义，但如果想强制要求仅用姓作为文中的标注标签，那么可以设置uniquename=false，但此时标注是可能存在歧义的。
 
   \item[maxnames]=整数 \hfill default: 3
 
@@ -1263,11 +1267,11 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   \item[refsection]=none, part, chapter, section, subsection. \hfill default: none
 
-  该选项自动在文档分段处（例如一章或一节）开始一个新的参考文献分节。是宏包的载入时选项，与样式无关，自然可以使用。需要注意与titlesec宏包联用时，该选项会失效。
+  该选项自动在文档分段处（例如一章或一节）开始一个新的参考文献分节。是宏包的载入时选项，与样式无关，自然可以使用。需要注意与 titlesec 宏包联用时，该选项会失效。
 
   \item[refsegment]=none, part, chapter, section, subsection. \hfill default: none
 
-  类似于refsection选项，但开始的是一个新的参考文献片段。
+  类似于 refsection 选项，但开始的是一个新的参考文献片段。
 
   \item[citereset]=none, part, chapter, section, subsection. \hfill default: none
 
@@ -1289,8 +1293,8 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   该选项控制排序的本地化调整方案。对于英文文献，该选项不需要设置。对于中文文献当有按拼音或笔划等进行排序的需求时，可以设置相应的本地化调整方案。主要的调整方案有：
   \begin{itemize}
-    \item \verb|sortlocale=auto| 或者不设置该选项，为unicode编码顺序
-    \item \verb|sortlocale=zh|，为unicode编码顺序
+    \item \verb|sortlocale=auto| 或者不设置该选项，为 unicode 编码顺序
+    \item \verb|sortlocale=zh|，为 unicode 编码顺序
     \item \verb|sortlocale=zh__pinyin|，为拼音顺序
     \item \verb|sortlocale=zh__big5han|，为big5 编码顺序
     \item \verb|sortlocale=zh__gb2312han|，为GB-2312 顺序
@@ -1300,32 +1304,32 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   \item[language]=autobib, autocite, auto, \prm{language}. \hfill default: autobib
 
-  详细说明见biblatex手册。
+  详细说明见 biblatex 手册。
 
   \item[autolang]=none, hyphen, other, other*, \prm{langname}. \hfill default:
 
-  结合langid/langidopts域，结合babel/polyglossia宏包，可以对西文做基于条目的本地化处理。详细说明见biblatex 手册。
+  结合 langid/langidopts 域，结合 babel/polyglossia 宏包，可以对西文做基于条目的本地化处理。详细说明见biblatex 手册。
 
   \item[sorting]=none 等. \hfill default: none/gb7714-2015
 
-  sorting可以使用biblatex提供的选项，也可以使用本样式包提供的选项，详见
-  第\ref{sec:sort:adj}节。
+  sorting可以使用 biblatex 提供的选项，也可以使用本样式包提供的选项，详见
+  第~\ref{sec:sort:adj} 节。
 
   \item[sortcites]=true, false. \hfill default: false
 
-  详细说明见biblatex手册。
+  详细说明见 biblatex 手册。
 
   \item[autocite]=plain, inline, footnote, superscript. \hfill default: plain
 
-  详细说明见biblatex手册。
+  详细说明见 biblatex 手册。
 
   \item[block]=none, space, par, nbpar, ragged. \hfill default: none
 
-  详细说明见biblatex手册。
+  详细说明见 biblatex 手册。
 
   \item[indexing]=true, false, cite, bib. \hfill default: false
 
-  详细说明见biblatex手册。
+  详细说明见 biblatex 手册。
 
   \item[其它]=下面还有很多选项，有些是宏包载入时选项，与样式无关，一般可以使用，但笔者没有做测试，各位用户可以测试使用。选项的作用可以参考biblatex 使用手册，以及文博与笔者翻译的中文版。
       \begin{itemize}
@@ -1353,18 +1357,18 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 \subsection{文献引用及标注格式}\label{sec:cbx:usage}
 
-要生成参考文献，第一步就是在正文中引用参考文献。正文中因引用文献所形成的标注的格式称为参考文献标注样式，也称引用样式或引用标签样式，分为两类: 顺序编码制和著者-出版年（作者年）制。引用文献的基本命令是\verb|\cite|，但为了在一篇文档中实现不同的标签效果，通常还需要使用\verb|\parencite|等其它命令，以及这些命令的复数形式以实现同一处引用多篇文献时的附加信息输出。
+要生成参考文献，第一步就是在正文中引用参考文献。正文中因引用文献所形成的标注的格式称为参考文献标注样式，也称引用样式或引用标签样式，分为两类: 顺序编码制和著者-出版年（作者年）制。引用文献的基本命令是 \verb|\cite|，但为了在一篇文档中实现不同的标签效果，通常还需要使用 \verb|\parencite| 等其它命令，以及这些命令的复数形式以实现同一处引用多篇文献时的附加信息输出。
 
-%比如\verb|\parencite|, \verb|\textcite|, \verb|\pagescite|,\verb|\footfullcite|等。此外为遵循biblatex对于复数形式标注命令的使用习惯，也提供上述命令的复数形式，比如\verb|\cite|命令的复数形式命令\verb|\cites|，便于输出单个文献的页码等前后注信息。
-%熟悉natbib的用户也可以直接使用使用\verb|\citet|, \verb|\citep|命令。
-%另外也可以使用一些惯用命令比如\verb|\citetns|、\verb|\citepns|、
+%比如 \verb|\parencite|, \verb|\textcite|, \verb|\pagescite|,\verb|\footfullcite| 等。此外为遵循 biblatex 对于复数形式标注命令的使用习惯，也提供上述命令的复数形式，比如 \verb|\cite| 命令的复数形式命令 \verb|\cites|，便于输出单个文献的页码等前后注信息。
+%熟悉 natbib 的用户也可以直接使用使用 \verb|\citet|, \verb|\citep| 命令。
+%另外也可以使用一些惯用命令比如 \verb|\citetns|、\verb|\citepns|、
 %\verb|\upcite|、\verb|\inlinecite|等。
 
 \subsubsection{两种编制的标注格式}
 
 %顺序编码制的标注样式文件大体使用标准引用样式numeric-comp的内容
 \paragraph{\heiti 顺序编码制的标注样式}
-为满足GB/T 7714-2015第10.1节的要求，考虑 \verb|\cite| 命令为上标模式，\verb|\parencite| 保留非上标模式。增加 \verb|\pagescite| 命令，用于输出上标顺序编号并自动加页码。
+为满足 GB/T 7714-2015 第10.1节的要求，考虑 \verb|\cite| 命令为上标模式，\verb|\parencite| 保留非上标模式。增加 \verb|\pagescite| 命令，用于输出上标顺序编号并自动加页码。
 为使用户免于输入文献作者，完善了 \verb|\textcite| 命令，提供作者为句子主语，并附带行内非上标的顺序编码，
 并增加了 \verb|\authornumcite| 命令，以输出作者作为句子主语，并附带上标的顺序编码。
 增加了 \verb|\citec| 命令，输出另一种形式的编码压缩标签，比如\textsuperscript{[2]-[4]}区别于一般的\textsuperscript{[2-4]}。
@@ -1373,8 +1377,8 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \verb|\authornumcite|、\verb|\cite|、\verb|\textcite|、\verb|\parencite|、
 \verb|\cite|、\verb|\parencite|。
 
-上述命令均可指定页码等信息用于输出，即在\{entrykey\}前面的[]内或第二个[]内(当有两个[]时)给出需要附加输出的信息，比如：\verb|\cite[p. 9]{entrykey}| 或 \verb|\cite[第九页]{中文entrykey}|。若不指定页码，则仅有\verb|\pagescite|命令默认提取参考文献的页码信息进行输出。
-各引用命令的使用方式及其效果如表\ref{tab:cite:num}所示。
+上述命令均可指定页码等信息用于输出，即在\{entrykey\}前面的[]内或第二个[]内(当有两个[]时)给出需要附加输出的信息，比如：\verb|\cite[p. 9]{entrykey}| 或 \verb|\cite[第九页]{中文entrykey}|。若不指定页码，则仅有 \verb|\pagescite| 命令默认提取参考文献的页码信息进行输出。
+各引用命令的使用方式及其效果如表~\ref{tab:cite:num} 所示。
 测试文档见\href{run:example/testallformat.tex}{testallformat.tex}。
 
 
@@ -1405,7 +1409,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
  同一处引用两篇文献： & 文献\cite{Peebles2001-100-100,Miroslav2004--} &  国标示例\\
  同一处引用多篇文献： & 文献\cite{蔡敏2006--,Miroslav2004--,赵学功2001--} &  国标示例：三篇以上\\
  同一处引用多篇文献： & 文献\citec{蔡敏2006--,Miroslav2004--,赵学功2001--} &
- 由\verb|\citec|实现的另一种压缩\\
+ 由 \verb|\citec| 实现的另一种压缩\\
  多次引用同一作者的同一文献： &
   文献\cite[20-22]{Miroslav2004--}，
  文献\cite[55-60]{Miroslav2004--} &  国标示例 \\
@@ -1419,25 +1423,25 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 %\end{table}
 
 
-%各命令使用方式如例\ref{eg:citefornumeric}所示。
-%各引用命令的效果如图\ref{fig:cite:num}所示。
+%各命令使用方式如例~\ref{eg:citefornumeric} 所示。
+%各引用命令的效果如图~\ref{fig:cite:num} 所示。
 
-注意：对于一个引用命令中同时给出多个文献entrykey的压缩形式，页码只会应用到最后一个参考文献后面。
+注意：对于一个引用命令中同时给出多个文献 entrykey 的压缩形式，页码只会应用到最后一个参考文献后面。
 %这是不正确的，但这种情况其实本不应出现，因为指定页码本来就需要具体化指向某一文献。
 若要为每篇添加页码信息，则应多次使用标注命令
-\verb|\cite[p.2]{entrykey1}\cite[p.5]{entrykey2}|或使用复数形式的标注命令
+\verb|\cite[p.2]{entrykey1}\cite[p.5]{entrykey2}| 或使用复数形式的标注命令
 \verb|\cites[p.2]{entrykey1}[p.5]{entrykey2}|，
-而不是\verb|\cite[p.5]{entrykey1,entrykey2}|。
+而不是 \verb|\cite[p.5]{entrykey1,entrykey2}|。
 
-注意：在同一处引用多篇序号连续的文献时，标注标签默认是从两篇文献开始压缩的，比如同时连续引用两篇和三篇文献时标注分别为[1-2]和[1-3]。若需要修改从三篇文献开始压缩，比如：两篇和三篇文献分别标注为[1,2]和[1-3]，则只需要在导言区设置计数器gbrefcompress的值为3，即：
+注意：在同一处引用多篇序号连续的文献时，标注标签默认是从两篇文献开始压缩的，比如同时连续引用两篇和三篇文献时标注分别为[1-2]和[1-3]。若需要修改从三篇文献开始压缩，比如：两篇和三篇文献分别标注为[1,2]和[1-3]，则只需要在导言区设置计数器 gbrefcompress 的值为3，即：
 \verb|\setcounter{gbrefcompress}{3}|。
 
 %当然除了这种多次使用标注命令外，也可以使用对应标注命令的复数形式来为每篇文献提供相应的页码信息。
 
 
-%著者-出版年制的标注样式文件大体使用标准引用样式authoryear的内容。
+%著者-出版年制的标注样式文件大体使用标准引用样式 authoryear 的内容。
 \paragraph{\heiti 著者-出版年制的标注样式}
-为满足GB/T 7714-2015第10.2节的要求，
+为满足 GB/T 7714-2015 第10.2节的要求，
 考虑 \verb|\cite| 和 \verb|\parencite| 命令将引用标签用圆括号括起来。增加了
 \verb|\pagescite|命令，用于自动加页码。增加了 \verb|\yearpagescite|， \verb|\yearcite| 命令用于处理文中已有作者信息只需要年份和页码的情况(为兼容性考虑，顺序编码制也给出该命令，但作用与
 \verb|\pagescite| 命令相同)，也完善了 \verb|\textcite| 命令，提供作者为句子主语，并附带行内非上标的页码，增加了 \verb|\authornumcite| 命令，以输出作者作为句子主语，并附带上标的页码。
@@ -1446,9 +1450,9 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \verb|\authornumcite|、\verb|\cite|、\verb|\textcite|、\verb|\parencite|、
 \verb|\cite|、\verb|\parencite|。
 
-%各命令使用方式如例\ref{eg:citeforauthoryear}所示。
-%各引用命令的效果如图\ref{fig:cite:ay}所示。
-各引用命令的使用方式如表\ref{tab:cite:authoryear}所示。
+%各命令使用方式如例~\ref{eg:citeforauthoryear} 所示。
+%各引用命令的效果如图~\ref{fig:cite:ay} 所示。
+各引用命令的使用方式如表~\ref{tab:cite:authoryear} 所示。
 测试文档见\href{run:example/testallformat.tex}{testallformat.tex}。
 
 
@@ -1499,18 +1503,18 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 标注在同一个文档中可能存在不同格式需求，比如：有的地方需要用上标，有的地方需要用行内，有的地方需要给出作者，有的地方需要给出页码等。一般情况下，不同标注格式可以通过使用不同的标注命令来得到，比如上一小节给出的不同命令。
 %，不同命令能够产生独特的标注标签。
 
-除了利用命令来调整标注格式外，还有更多方法可进行局部格式调整。这利用了tex的编组特性，编组内的局部格式不影响编组外的格式，所以可利用编组内的局部设置来调整标注的格式。类似的，文献表的著录格式也可局部调整，详见下一节。
+除了利用命令来调整标注格式外，还有更多方法可进行局部格式调整。这利用了 tex 的编组特性，编组内的局部格式不影响编组外的格式，所以可利用编组内的局部设置来调整标注的格式。类似的，文献表的著录格式也可局部调整，详见下一节。
 
 引用文献所产生标注标签的格式包括很多内容，包括作者数量、标点、本地化字符串等。最常见的局部调整需求是本地化字符串和标点(下面会以双语图题中的引用标注标签的不同本地化字符串需求为例来展示局部调整的方法)。
 
-\paragraph{标注中输出的作者数量} 可以通过宏包选项 maxcitenames 和 mincitenames 进行控制(文献表中的作者数量的控制选项则是maxbibnames 和 minbibnames)。 在著者年份制的样式中，有些出版物会要求当文献作者是两位时全部输出，而不是国标默认的只输出第一个作者。此时设置：maxcitenames=2,mincitenames=1 表示当作者数超过2则只输出1位作者，否则全部输出。
-注意：这一设置其实是全局的设置，若要局部调整作者数量，比如某篇文献单独调整数量或某个章节调整数量，则有两种方法可以实现：一是给指定文献附加选项; 二是在局部编组内调整内部计数器值。例\ref{eg:resume:localset}给出了文献表的作者数量局部调整的一个示例，标注中的调整原理相同，采用相同方法即可。
+\paragraph{标注中输出的作者数量} 可以通过宏包选项 maxcitenames 和 mincitenames 进行控制(文献表中的作者数量的控制选项则是maxbibnames 和 minbibnames)。 在著者年份制的样式中，有些出版物会要求当文献作者是两位时全部输出，而不是国标默认的只输出第一个作者。此时设置：maxcitenames=2,mincitenames=1 表示当作者数超过 2 则只输出 1 位作者，否则全部输出。
+注意：这一设置其实是全局的设置，若要局部调整作者数量，比如某篇文献单独调整数量或某个章节调整数量，则有两种方法可以实现：一是给指定文献附加选项; 二是在局部编组内调整内部计数器值。例~\ref{eg:resume:localset} 给出了文献表的作者数量局部调整的一个示例，标注中的调整原理相同，采用相同方法即可。
 
 
 \paragraph{标注中“等”“和”等本地化字符串调整}
 
-前述根据gbcitelocal选项可以选择本地化字符串使用默认的中文、英文或区分中英文选择中英文字符串的方式。但这可能还不足以满足更多的定制化需求，比如：
-在中科院某类学位论文中，正文的标注标签要求两个英文作者之间用“和”而不是“and”连接，多个英文作者截断成一个作者时后面用“等.”而不是“et al.”表示。这可以通过设置本地化字符串来实现，如例\ref{eg:localstr:diff}和图\ref{fig:content:fmtc}所示。
+前述根据 gbcitelocal 选项可以选择本地化字符串使用默认的中文、英文或区分中英文选择中英文字符串的方式。但这可能还不足以满足更多的定制化需求，比如：
+在中科院某类学位论文中，正文的标注标签要求两个英文作者之间用“和”而不是“and”连接，多个英文作者截断成一个作者时后面用“等.”而不是“et al.”表示。这可以通过设置本地化字符串来实现，如例~\ref{eg:localstr:diff} 和图~\ref{fig:content:fmtc} 所示。
 
 \begin{example}{著者-出版年制标注和文献表不同本地字符串效果}{eg:localstr:diff}
 \begin{texlist}
@@ -1539,16 +1543,16 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \caption{引用标注和文献表条目不同本地化字符串示例}\label{fig:content:fmtc}
 \end{figure}
 
-然而对于双语的图题，英文图题中不适合出现“等”与“和”这样的字符，所以又要求在这种全英文的环境中将“和”与“等.”更换为英文符号，这就需要对本地化字符串做局部调整。而这种局部调整其实已经是比较底层的处理，biblatex提供的接口DefineBibliographyStrings仅用于全局设置，因此局部调整则需采用其它方式。
-%如何进行局部调整并没有非常方便的接口，要解决这一需求，需要对biblatex以及gb7714-2015样式有比较深入的了解。
+然而对于双语的图题，英文图题中不适合出现“等”与“和”这样的字符，所以又要求在这种全英文的环境中将“和”与“等.”更换为英文符号，这就需要对本地化字符串做局部调整。而这种局部调整其实已经是比较底层的处理，biblatex提供的接口 DefineBibliographyStrings 仅用于全局设置，因此局部调整则需采用其它方式。
+%如何进行局部调整并没有非常方便的接口，要解决这一需求，需要对 biblatex 以及 gb7714-2015 样式有比较深入的了解。
 
-gb7714-2015通过gbcitelocalcase计数器来选择使用中文或英文的本地化字符串，因此通过局部设置gbcitelocalcase可以局部的选择不同语言的本地化字符串，比如在一个编组内，局部化设置计数器为：\verb|\defcounter{gbcitelocalcase}{1}|，那么这个编组内的所有本地化字符串会使用默认的中文字符串，反之若设置为2，则本地化字符串会使用默认的英文字符串。
+gb7714-2015通过 gbcitelocalcase 计数器来选择使用中文或英文的本地化字符串，因此通过局部设置 gbcitelocalcase 可以局部的选择不同语言的本地化字符串，比如在一个编组内，局部化设置计数器为：\verb|\defcounter{gbcitelocalcase}{1}|，那么这个编组内的所有本地化字符串会使用默认的中文字符串，反之若设置为2，则本地化字符串会使用默认的英文字符串。
 
-然而因为本地化字符串的默认内容通常是全局设置的，所以当中文的或者英文的本地化字符串设置都不满足要求时，就需要局部的调整本地化字符串的内容，如例\ref{eg:str:localset}所示，对本地化字符串andothersincite的内容做了调整，从全局设置的“等.”转换为“et al.”，“和”转换为“and”，这种局部设置可通过csdef直接重定义保存字符串信息的命令来进行调整，
-比如\verb|\csdef{abx@sstr@andothersincite}{et al.}|就是将andothersincite本地化字符串的内容临时调整为“et al.”。
+然而因为本地化字符串的默认内容通常是全局设置的，所以当中文的或者英文的本地化字符串设置都不满足要求时，就需要局部的调整本地化字符串的内容，如例~\ref{eg:str:localset} 所示，对本地化字符串 andothersincite 的内容做了调整，从全局设置的“等.”转换为“et al.”，“和”转换为“and”，这种局部设置可通过 csdef 直接重定义保存字符串信息的命令来进行调整，
+比如 \verb|\csdef{abx@sstr@andothersincite}{et al.}| 就是将 andothersincite 本地化字符串的内容临时调整为“et al.”。
 但为方便用户使用，
-宏包提供了\verb|\setlocalbibstring|命令来替代上述直接定义的csdef命令，
-如例\ref{eg:str:localset}所示。
+宏包提供了 \verb|\setlocalbibstring| 命令来替代上述直接定义的 csdef 命令，
+如例~\ref{eg:str:localset} 所示。
 具体的测试见\href{egthesis/thesis-ucas-m.tex}{thesis-ucas-m.tex}
 
 \begin{example}{双语图题内的标注标签的本地化字符串局部设置}{eg:str:localset}
@@ -1566,9 +1570,9 @@ gb7714-2015通过gbcitelocalcase计数器来选择使用中文或英文的本地
 
 \paragraph{标注中的全半角标点和括号调整}
 
-除了本地化字符串外，标注中的括号和标点(默认采用英文的半角符号)也常是需要调整的内容。这两者首先可以通过选项调整，gbcitelabel选项提供了不同的选择比如bracketqj等，用来设置标注的括号为全局或半角，同时提供了一个gbcitelabel=quanjiao，可以将标点和括号全部改为全角。
+除了本地化字符串外，标注中的括号和标点(默认采用英文的半角符号)也常是需要调整的内容。这两者首先可以通过选项调整，gbcitelabel选项提供了不同的选择比如 bracketqj 等，用来设置标注的括号为全局或半角，同时提供了一个gbcitelabel=quanjiao，可以将标点和括号全部改为全角。
 
-如果选项提供的效果还不够，那么可以通过局部调整mkbibleftborder和mkbibrightborder来更换需要的括号。例\ref{eg:parens:localset}中的局部调整将标注中的括号改变为『和』。
+如果选项提供的效果还不够，那么可以通过局部调整 mkbibleftborder 和 mkbibrightborder 来更换需要的括号。例~\ref{eg:parens:localset} 中的局部调整将标注中的括号改变为『和』。
 
 \begin{example}{局部调整标注标签中的括号}{eg:parens:localset}
 \begin{texlist}
@@ -1581,17 +1585,17 @@ gb7714-2015通过gbcitelocalcase计数器来选择使用中文或英文的本地
 \end{example}
 
 对于标点来说，若默认的设定不满足要求，则首先可以在导言区进行调整，
-如例\ref{eg:punct:globalset}中的第一段代码所示，主要是标签中非姓名内中(即姓名之间，姓名之后)的标点调整。
-至于姓名内的标点调整则需利用另外的接口，比如：通过gbcaselocalset等来修改revsdnamepunct，bibinitperiod等(见例\ref{eg:biblist:separator})，但这些在标注标签中通常不太需要修改。
+如例~\ref{eg:punct:globalset} 中的第一段代码所示，主要是标签中非姓名内中(即姓名之间，姓名之后)的标点调整。
+至于姓名内的标点调整则需利用另外的接口，比如：通过 gbcaselocalset 等来修改 revsdnamepunct，bibinitperiod等(见例~\ref{eg:biblist:separator})，但这些在标注标签中通常不太需要修改。
 
 
 第一段代码是一种全局的设置，不考虑中英文文献以及环境的差异。
 但有时我们需要对中英文文献的标注标签使用不同的符号，比如中文的标签使用中文全角标点，而英文的标签使用英文的标点，那么可以在标点设置时做一个判断(括号若有类似需求也可采用类似处理)，如例
 \ref{eg:punct:globalset}中的第二段代码所示。
-值得注意的是：当同一处引用多篇文献时，且起始和终止的两篇文献的中英文不同，则标注标签周围的括号会变得不一致。此时可以用例\ref{eg:punct:globalset}第三段代码所采用的方式，利用局部设置gbcitelocalcase来临时统一符号。
+值得注意的是：当同一处引用多篇文献时，且起始和终止的两篇文献的中英文不同，则标注标签周围的括号会变得不一致。此时可以用例~\ref{eg:punct:globalset} 第三段代码所采用的方式，利用局部设置 gbcitelocalcase 来临时统一符号。
 
-此外，当文档中存在独立的中文段落和英文段落时，期望在中文段落中使用中文的标点，而在英文段落中使用英文的标点，则可以利用gbcitelocal选项的内部设置的计数器gbcitelocalcase来局部化调整。如例
-\ref{eg:punct:globalset}中的第三段代码所示。做此设置后，只要在指定的段落局部化计数器gbcitelocalcase的值就可以达到临时调整标点的目的。
+此外，当文档中存在独立的中文段落和英文段落时，期望在中文段落中使用中文的标点，而在英文段落中使用英文的标点，则可以利用 gbcitelocal 选项的内部设置的计数器 gbcitelocalcase 来局部化调整。如例
+\ref{eg:punct:globalset}中的第三段代码所示。做此设置后，只要在指定的段落局部化计数器 gbcitelocalcase 的值就可以达到临时调整标点的目的。
 
 \begin{example}{标注标签中的标点的全局和局部设置}{eg:punct:globalset}
 \begin{texlist}
@@ -1606,9 +1610,9 @@ gb7714-2015通过gbcitelocalcase计数器来选择使用中文或英文的本地
 %最后一个姓名与等之间的符号(间隔符)
 \DeclareDelimFormat[cite,parencite,pagescite]{andothersdelim}{，}%
 \DeclareDelimFormat[textcite]{andothersdelim}{，}%
-%除此之外，有时还需要设置finalnamedelim等来调整姓名间的标点。
+%除此之外，有时还需要设置 finalnamedelim 等来调整姓名间的标点。
 % multinamedelim是各姓名之间的标点
-% finalnamedelim是最后一个姓名前的取代multinamedelim的标点
+% finalnamedelim是最后一个姓名前的取代 multinamedelim 的标点
 
 %第二段代码：导言区重设标注标签的标点，根据文献的中英文调整标点形式
 \renewrobustcmd{\mkbibleftborder}
@@ -1627,7 +1631,7 @@ gb7714-2015通过gbcitelocalcase计数器来选择使用中文或英文的本地
 \DeclareDelimFormat[textcite,authornumcite,citet]{andothersdelim}
 {\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}}%
 
-%第二段代码：导言区重设标注标签的标点，可根据计数器gbcitelocalcase局部设置调整中英文标点
+%第二段代码：导言区重设标注标签的标点，可根据计数器 gbcitelocalcase 局部设置调整中英文标点
 %也包括同时设置括号
 \renewrobustcmd{\mkbibleftborder}
 {\ifcase\value{gbcitelocalcase}\iffieldequalstr{userf}{chinese}{（}{(}%
@@ -1674,30 +1678,30 @@ gb7714-2015通过gbcitelocalcase计数器来选择使用中文或英文的本地
 \subsubsection{顺序编码制样式}
 
 文献表中各参考文献条目以数字序号按引用先后顺序组织。
-著录格式中序号格式见\ref{sec:bib:serialno}节，
-各类型文献条目的著录格式见\ref{sec:numeric:data}节，
-参考文献条目中各信息域及其录入方式见\ref{sec:bib:bibtex}节。
+著录格式中序号格式见~\ref{sec:bib:serialno} 节，
+各类型文献条目的著录格式见~\ref{sec:numeric:data} 节，
+参考文献条目中各信息域及其录入方式见~\ref{sec:bib:bibtex} 节。
 
 %著者-出版年制的参考文献样式则基于标准样式authoryear
 \subsubsection{著者-出版年制样式}
-文献表中各参考文献条目以作者-年为标签以一定的顺序排列。著者-出版年制的著录格式与顺序编码制基本相同，差别仅在于把年份提前到作者后面作为条目的标签。数据源bib文件中各条目的数据录入与顺序编码制完全一致。
+文献表中各参考文献条目以作者-年为标签以一定的顺序排列。著者-出版年制的著录格式与顺序编码制基本相同，差别仅在于把年份提前到作者后面作为条目的标签。数据源 bib 文件中各条目的数据录入与顺序编码制完全一致。
 
-注意：著者-出版年制有文献按文种集中的要求，因此gb7714-2015ay样式设计了gblanorder选项来配合专用的排序模板，可以方便地设置不同文种的先后顺序，默认文种顺序是中日韩英法俄。如需其他顺序则可利用gblanorder选项重设，设置方法见第\ref{sec:added:opt}节。此外，由于排序需要根据文献所使用的语言判断，因此使用language域，该域由biblatex-gb7714-2015宏包自动判断处理，一般不需过多关注，如果当语言判断出现问题，可以在bib文件中手动设置language域为正确的语言，比如chinese，japanese，english，french等。
+注意：著者-出版年制有文献按文种集中的要求，因此 gb7714-2015ay 样式设计了 gblanorder 选项来配合专用的排序模板，可以方便地设置不同文种的先后顺序，默认文种顺序是中日韩英法俄。如需其他顺序则可利用 gblanorder 选项重设，设置方法见第~\ref{sec:added:opt} 节。此外，由于排序需要根据文献所使用的语言判断，因此使用 language 域，该域由 biblatex-gb7714-2015 宏包自动判断处理，一般不需过多关注，如果当语言判断出现问题，可以在 bib 文件中手动设置 language 域为正确的语言，比如 chinese，japanese，english，french等。
 
-%前一段为20190331更新
-%\qd{著者-出版年制有分文种文献集中的要求，因此gb7714-2015排序模板以nyt模板为基础，增加 language 作为 name 前的排序域。默认情况下，本样式文件将标题(或作者)为中文的文献的 language 域设置成 chinese，英文的设置成 english。这一设置过程，在biber 处理时自动完成。当出现问题或者有更多文种分集且有特殊顺序时，可以在bib文件中为相应文种文献的 language 域手动设置适合排序的字符串。比如: 中文文献设置为 chinese，英文文献设置为 enlish，法文文献设置为 french，那么排序中，相应的中文文献排在最前面，英文文献在中间，法文文献最后，因为升序情况下字母顺序是c然后e然后f。}
+%前一段为 20190331 更新
+%\qd{著者-出版年制有分文种文献集中的要求，因此 gb7714-2015 排序模板以 nyt 模板为基础，增加 language 作为 name 前的排序域。默认情况下，本样式文件将标题(或作者)为中文的文献的 language 域设置成 chinese，英文的设置成 english。这一设置过程，在biber 处理时自动完成。当出现问题或者有更多文种分集且有特殊顺序时，可以在 bib 文件中为相应文种文献的 language 域手动设置适合排序的字符串。比如: 中文文献设置为 chinese，英文文献设置为 enlish，法文文献设置为 french，那么排序中，相应的中文文献排在最前面，英文文献在中间，法文文献最后，因为升序情况下字母顺序是 c 然后 e 然后 f，}
 
 %上一段2016-1114更新，下面是以前的说法。
-%\qd{根据文种文献集中的要求，修改了nyt排序格式，增加了userb作为name前的排序域，当有需求进行多文种分集且有特殊顺序时，在bib文件中给相应文种的文献设置适合排序的字符串。比如中文文献设置为cn，英文文献设置为en，法文文献设置为fr，那么排序中，相应的中文文献排在最前面，英文文献在中间，法文文献最后，因为升序情况下字母顺序是c然后e然后f。}
+%\qd{根据文种文献集中的要求，修改了 nyt 排序格式，增加了 userb 作为 name 前的排序域，当有需求进行多文种分集且有特殊顺序时，在 bib 文件中给相应文种的文献设置适合排序的字符串。比如中文文献设置为 cn，英文文献设置为 en，法文文献设置为 fr，那么排序中，相应的中文文献排在最前面，英文文献在中间，法文文献最后，因为升序情况下字母顺序是 c 然后 e 然后 f，}
 
 打印出的文献表主要有三个部分的格式需要控制，一是文献表的标题格式，二是文献表的段落格式，三是文献表中各条文献的著录格式：
 
 \subsubsection{标题格式控制}
 
 标题内容的设置有三种方式%，这里再重复一下
-：一是直接在printbibliography命令中利用选项title设置，二是gbctexset=true时，重定义bibname和refname来设置，三是gbctexset=false时，利用本地化字符串进行设置。具体参见gbctexset选项。
+：一是直接在 printbibliography 命令中利用选项 title 设置，二是 gbctexset=true 时，重定义 bibname 和 refname 来设置，三是 gbctexset=false 时，利用本地化字符串进行设置。具体参见 gbctexset 选项。
 
-标题格式的设置主要是通过重定义参考文献环境的heading进行，比如：
+标题格式的设置主要是通过重定义参考文献环境的 heading 进行，比如：
 
 \begin{example}{文献表标题格式}{eg:biblist:title}
 \begin{texlist}
@@ -1714,8 +1718,8 @@ gb7714-2015通过gbcitelocalcase计数器来选择使用中文或英文的本地
 \subsubsection{段落格式控制}
 
 \paragraph{\heiti 文献表字体、颜色} 为方便用户改变文献表段落格式、内容字体和颜色等，在 biblatex 提供的 \verb|\bibfont| 命令基础上，
-增加了\verb|\bibauthorfont|、\verb|\bibtitlefont|、\verb|\bibpubfont| 等命令用于控制文献部分著录项的格式，比如作者，标题，出版项等。增加了\verb|\SlashFont|用于控制斜杠的字体。
-具体用法见例\ref{eg:biblist:fontset}，结果如图\ref{fig:par:fmt}所示，
+增加了 \verb|\bibauthorfont|、\verb|\bibtitlefont|、\verb|\bibpubfont| 等命令用于控制文献部分著录项的格式，比如作者，标题，出版项等。增加了 \verb|\SlashFont| 用于控制斜杠的字体。
+具体用法见例~\ref{eg:biblist:fontset}，结果如图~\ref{fig:par:fmt} 所示，
 测试用例见\href{run:example/testfontinbiblio.tex}{testfontinbiblio.tex}。
 
 \begin{example}{文献表段落格式、字体、颜色}{eg:biblist:fontset}
@@ -1730,7 +1734,7 @@ gb7714-2015通过gbcitelocalcase计数器来选择使用中文或英文的本地
 \renewcommand{\bibauthorfont}{\bfseries\color{teal}}%
 \renewcommand{\bibtitlefont}{\ttfamily\color{blue}}%
 \renewcommand{\bibpubfont}{\itshape\color{violet}}%
-    % url和doi字体
+    % url和 doi 字体
 \def\UrlFont{\ttfamily}%\rmfamily %\urlstyle{sf} %\def\UrlFont{\bfseries}
     %斜杠的字体，比如[J/OL]或析出文献符号//中的斜杠
 \def\SlashFont{\ttfamily}%\rmfamily等
@@ -1749,7 +1753,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{figure}
 
 \paragraph{\heiti 文献表竖直间距控制}
-文献表各条目之间的竖直间距控制如例\ref{eg:biblist:vspace}所示。注意，这些竖直间距设置不是行距设置，而是行距基础上附加设置，行距默认采用正文的设置，若要局部调整参考文献的行距，则在局部编组中采用linespread命令或者调整 baselinestretch 实现。此外，还可以调整方括号和圆括号的竖直位置，使其与使用无基线以下部分字体的文本相配合。
+文献表各条目之间的竖直间距控制如例~\ref{eg:biblist:vspace} 所示。注意，这些竖直间距设置不是行距设置，而是行距基础上附加设置，行距默认采用正文的设置，若要局部调整参考文献的行距，则在局部编组中采用 linespread 命令或者调整 baselinestretch 实现。此外，还可以调整方括号和圆括号的竖直位置，使其与使用无基线以下部分字体的文本相配合。
 
 \begin{example}{文献表竖直间距控制}{eg:biblist:vspace}
 \begin{texlist}
@@ -1764,17 +1768,17 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 
 \paragraph{\heiti 文献表水平间距(缩进)控制}
-增加了尺寸\verb|\bibitemindent| 用于控制参考文献条目在文献表中的缩进，
+增加了尺寸 \verb|\bibitemindent| 用于控制参考文献条目在文献表中的缩进，
 其意义与 list 环境中 \verb|\itemindent| 相同。
-文献表的水平缩进控制，两种编制方式下是不同的，调整方法见例\ref{eg:biblist:hspace}。
+文献表的水平缩进控制，两种编制方式下是不同的，调整方法见例~\ref{eg:biblist:hspace}。
 
 \textbf{(a)} 对于\emph{著者-出版年}制文献表
 
 bibitemindent表示
 \emph{一条文献中第一行相对后面各行的缩进}，bibhang 表示\emph{页边到文献各行起始位置的距离}。因此要调整缩进则直接设置这两尺寸。
 
-当使用著者-出版年样式又需要使用顺序编码数字标签的文献表时(此时使用gbalign选项)，缩进方式与顺序编码制文献表类似，但又略有差异。
-数字标签盒子默认宽度为2em，可以调整biblabelextend来增大或缩小(使用正或负的长度)该宽度，数字标签的盒子与文献内容之间的间距为4.5pt，通过直接设置biblabelsep尺寸来调整。
+当使用著者-出版年样式又需要使用顺序编码数字标签的文献表时(此时使用 gbalign 选项)，缩进方式与顺序编码制文献表类似，但又略有差异。
+数字标签盒子默认宽度为2em，可以调整 biblabelextend 来增大或缩小(使用正或负的长度)该宽度，数字标签的盒子与文献内容之间的间距为4.5pt，通过直接设置 biblabelsep 尺寸来调整。
 
 
 \textbf{(b)} 对于\emph{顺序编码}制文献表
@@ -1784,17 +1788,17 @@ bibitemindent表示
 顺序编码样式使用了两类输出环境，所以设定选项也区分两类：
 
 \begin{itemize}
-\item 一是采用list环境的文献表，即设置gbalign=left、right、center时（即顺序编码标签是左对齐、右对齐和居中对齐的情况）。此时需要调整的尺寸包括三个：biblabelsep，bibitemindent，biblabelextend。
+\item 一是采用 list 环境的文献表，即设置gbalign=left、right、center时（即顺序编码标签是左对齐、右对齐和居中对齐的情况）。此时需要调整的尺寸包括三个：biblabelsep，bibitemindent，biblabelextend。
 
 
-\hspace{2em}此时的文献表环境中，数字标签盒子默认宽度为labelnumberwidth，由biblatex根据文献数量自动计算后设定，因此改变缩进主要通过调整biblabelsep和bibitemindent两个尺寸来实现。biblabelsep设置数字标签盒子与文献内容之间的间距。bibitemindent设置第一行相对后面其它行的缩进，默认情况下bibitemindent为0pt，则一条文献内所有行缩进相同，若bibitemindent>0pt则第一行相比后面各行缩进，若bibitemindent<0pt则后面各行相比第一行缩进。
+\hspace{2em}此时的文献表环境中，数字标签盒子默认宽度为 labelnumberwidth，由 biblatex 根据文献数量自动计算后设定，因此改变缩进主要通过调整 biblabelsep 和 bibitemindent 两个尺寸来实现。biblabelsep设置数字标签盒子与文献内容之间的间距。bibitemindent设置第一行相对后面其它行的缩进，默认情况下 bibitemindent 为0pt，则一条文献内所有行缩进相同，若bibitemindent>0pt则第一行相比后面各行缩进，若bibitemindent<0pt则后面各行相比第一行缩进。
 
-\hspace{2em}顺序编码样式下bibitemindent与bibhang的意义与著者-出版年制下相同，但由于数字标签盒子的存在，所以页边到各行起始位置的距离bibhang=labelnumberwidth +biblabelsep -bibitemindent。
-当采用某些字体导致默认计算的标签宽度不足时，可以设置biblabelextend尺寸，来增加labelnumberwidth的宽度避免缩进格式产生问题，使得：bibhang=labelnumberwidth +biblabelextend +biblabelsep -bibitemindent。默认情况下biblabelextend尺寸为0pt。
+\hspace{2em}顺序编码样式下 bibitemindent 与 bibhang 的意义与著者-出版年制下相同，但由于数字标签盒子的存在，所以页边到各行起始位置的距离bibhang=labelnumberwidth +biblabelsep -bibitemindent。
+当采用某些字体导致默认计算的标签宽度不足时，可以设置 biblabelextend 尺寸，来增加 labelnumberwidth 的宽度避免缩进格式产生问题，使得：bibhang=labelnumberwidth +biblabelextend +biblabelsep -bibitemindent。默认情况下 biblabelextend 尺寸为0pt。
 
 \item 二是采用正常段落环境的文献表，即设置gbalign=gb7714-2015时（即项对齐情况，每条文献严格按从左到右的顺序输出，顺序数字标签宽度等于实际宽度，文献内容与其间隔biblabelsep）。此时需要调整的尺寸包括两个：biblabelsep，bibitemindent。
 
-\hspace{2em}此时数字标签盒子默认宽度根据标签实际宽度自动设定，因此不存在数字标签盒子宽度不足的情况，因而无需设置biblabelextend尺寸。数字标签盒子与文献内容之间的间距可通过调整biblabelsep设置。\emph{每条参考文献第二行开始的缩进距离}通过调整bibitemindent尺寸设置，bibitemindent默认为0pt，则一条文献内所有行缩进相同，若bibitemindent>0pt则第一行相比后面各行缩进，若bibitemindent<0pt则后面各行相比第一行缩进。
+\hspace{2em}此时数字标签盒子默认宽度根据标签实际宽度自动设定，因此不存在数字标签盒子宽度不足的情况，因而无需设置 biblabelextend 尺寸。数字标签盒子与文献内容之间的间距可通过调整 biblabelsep 设置。\emph{每条参考文献第二行开始的缩进距离}通过调整 bibitemindent 尺寸设置，bibitemindent默认为0pt，则一条文献内所有行缩进相同，若bibitemindent>0pt则第一行相比后面各行缩进，若bibitemindent<0pt则后面各行相比第一行缩进。
 \end{itemize}
 
 
@@ -1870,15 +1874,15 @@ bibitemindent表示
 
 \paragraph{\heiti 文献表中的标点或间隔符控制}  文献表中有时需要调整标点为中文的全角标点等其它形式，则需要通过不同机制下的标点(或间隔符)设置来调整。
 有时通过间隔符设置直接调整，比如标题与类型标识符之间间隔符 titletypedelim;
-有时则通过设置本地化字符串进行，比如and，in等本地化字符串;
-有时则需要在域格式设置中进行调整，比如title，doi等域的DeclareFieldFormat格式定义。
-此外，因为不同语言的存在，可能需要区分语言进行调整，比如bibrangedash等符号。
+有时则通过设置本地化字符串进行，比如 and，in等本地化字符串;
+有时则需要在域格式设置中进行调整，比如 title，doi等域的 DeclareFieldFormat 格式定义。
+此外，因为不同语言的存在，可能需要区分语言进行调整，比如 bibrangedash 等符号。
 具体情况是比较复杂的，这里不再一一列举，
-常见的调整方式如例\ref{eg:biblist:separator}所示。
+常见的调整方式如例~\ref{eg:biblist:separator} 所示。
 其它一些修改示例可以参考：
 \href{run:./chinese-erj.bbx}{chinese-erj.bbx}，
 \href{run:./gb7714-CCNU.bbx}{gb7714-CCNU.bbx}，
-\href{run:./egthesis/thesis-uibe-numeric.tex}{thesis-uibe-numeric.tex}。各标点命令的意义详见biblatex手册。一些示例见：\url{https://github.com/TheNetAdmin/zjuthesis/issues/374}。
+\href{run:./egthesis/thesis-uibe-numeric.tex}{thesis-uibe-numeric.tex}。各标点命令的意义详见 biblatex 手册。一些示例见：\url{https://github.com/TheNetAdmin/zjuthesis/issues/374}。
 
 \begin{example}{文献表常见标点(间隔符)控制}{eg:biblist:separator}
 \begin{texlist}
@@ -1904,10 +1908,10 @@ bibitemindent表示
 \DeclareDelimFormat[bib,biblist]{andothersdelim}{，}
 
 %姓名内部的相关标点，包括如下等设置
-%注意这类设置与gbnamefmt选项相关，不同的选项值对应不同的gb...localset
+%注意这类设置与 gbnamefmt 选项相关，不同的选项值对应不同的gb...localset
 %包括：gbcaselocalset，gbpinyinlocalset，gbquanpinlocalset，gbfullnamelocalset
 %如果是familyahead,givenahead选项，则直接使用内部的重设命令即可。
-%除了如下命令外还有其它设置，有需要可以查biblatex文档
+%除了如下命令外还有其它设置，有需要可以查 biblatex 文档
 \def\gbcaselocalset{%
 \renewcommand*{\revsdnamepunct}{，}%%
 \renewrobustcmd*{\bibinitperiod}{}%将名字简写后的点去掉
@@ -1925,7 +1929,7 @@ bibitemindent表示
 
 \paragraph{\heiti 姓名、日期、卷期等著录项}  
 
-一些简单的域格式修改如例\ref{eg:bib:fieldsetlocal}所示，其中将期刊文献的volume域的格式设置为粗体，将会议论文的日期设置为粗体。
+一些简单的域格式修改如例~\ref{eg:bib:fieldsetlocal} 所示，其中将期刊文献的 volume 域的格式设置为粗体，将会议论文的日期设置为粗体。
 
 \begin{example}{域格式的局部调整示例}{eg:bib:fieldsetlocal}
 \begin{texlist}
@@ -1939,16 +1943,16 @@ bibitemindent表示
 值得注意的是，由于本样式包已经根据常见需求定义了很多著录项相关的格式控制，因此用户往往不需要关注域格式的定义，而通常只要使用前面介绍的接口和选项就能大体满足要求。
 
 可用选项除了样式包提供的选项外，也包括 biblatex 提供的标准选项。
-图\ref{fig:content:fmta}、\ref{fig:content:fmtb}、\ref{fig:content:fmtc}给出了一些选项设置后的格式控制效果，
-更多选项的详细说明见第\ref{sec:added:opt}、\ref{sec:old:opt}小节。
+图~\ref{fig:content:fmta}、\ref{fig:content:fmtb}、\ref{fig:content:fmtc} 给出了一些选项设置后的格式控制效果，
+更多选项的详细说明见第~\ref{sec:added:opt}、\ref{sec:old:opt} 小节。
 
-图\ref{fig:content:fmta}给出了选项设置为 style=gb7714-2015, gbnamefmt=givenahead,
+图~\ref{fig:content:fmta} 给出了选项设置为 style=gb7714-2015, gbnamefmt=givenahead,
 gbpub=false, gbbiblabel=dot, gbtitlelink=true 时的文献表，可以看到作者姓名、序号标签、标题超链接的设置。
 
-图\ref{fig:content:fmtb}给出了选项设置为 style=gb7714-2015ms, gbnamefmt=lowercase,
+图~\ref{fig:content:fmtb} 给出了选项设置为 style=gb7714-2015ms, gbnamefmt=lowercase,
 gbpub=false, gbtitlelink=true, gbstyle=false, sorting=nyt 时的文献表，可以看到作者姓名、标题超链接、中英文不同文献格式、文献排序的设置。
 
-图\ref{fig:content:fmtc}为选项和本地化字符串如例\ref{eg:localstr:diff}设置时的引用标注和文献表，注意其中引用标注和文献表中的不同本地化字符串输出效果，引用标注中英文作者和中文作者缩略词的不同。这是中科院大学资环类学位论文的要求格式，可以看到尽管有些特殊，但通过选项设置和本地化字符串设置也能实现。
+图~\ref{fig:content:fmtc} 为选项和本地化字符串如例~\ref{eg:localstr:diff} 设置时的引用标注和文献表，注意其中引用标注和文献表中的不同本地化字符串输出效果，引用标注中英文作者和中文作者缩略词的不同。这是中科院大学资环类学位论文的要求格式，可以看到尽管有些特殊，但通过选项设置和本地化字符串设置也能实现。
 
 
 
@@ -1982,26 +1986,26 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 因为 titlecase 实际上有不同的标准(参考：\url{https://titlecaseconverter.com/})，
 sentencecase 虽然只有一个标准，但也涉及专有名词的识别和保护的问题。
 
-因此，利用tex宏来实现case转化则相对复杂，而更方便的方法是直接在 bib文件中修改case然后在tex中保持不变。所以本样式默认不修改标题类的case。
+因此，利用 tex 宏来实现 case 转化则相对复杂，而更方便的方法是直接在 bib文件中修改 case 然后在 tex 中保持不变。所以本样式默认不修改标题类的 case，
 
-因此，若需要修改标题的case，则需要直接对bib文件进行修改，将目标文献的内容修改为需要的case格式。可以使用jabref，zotero等可视化工具或者bibmap等命令行工具进行修改。
+因此，若需要修改标题的 case，则需要直接对 bib 文件进行修改，将目标文献的内容修改为需要的 case 格式。可以使用 jabref，zotero等可视化工具或者 bibmap 等命令行工具进行修改。
 
  
 \subsubsection{参考文献表的局部调整}\label{sec:entry:fmtlocal}
 
 文档中有时需要多个文献表，而且可能具有不同的格式，因此全局的设置不一定满足要求，所以需要进行局部的调整，调整的内容也包括：文献表的标题、段落格式和著录格式。
-得益于biblatex利用tex宏控制著录格式的特点，加上tex语言本身编组的局部化特性，所以在利用biblatex生成参考文献的过程中可以有丰富手段来进行参考文献表的局部调整。因为是局部的格式调整，所以通常是结合refsection或者refsegment来操作的。前面提到过的一个很简单的例子的需求(在一篇学位论文的写作中需要正文部分的参考文献使用顺序编码制，而附录中研究成果部分使用作者年制)，是一个典型的局部化格式调整。这一需求的典型解决方式为：在研究成果部分使用refsection将其局部化，并结合gb7714-2015mx样式，并利用setaystylesection命令设置该refsection为作者年制样式。
+得益于 biblatex 利用 tex 宏控制著录格式的特点，加上 tex 语言本身编组的局部化特性，所以在利用 biblatex 生成参考文献的过程中可以有丰富手段来进行参考文献表的局部调整。因为是局部的格式调整，所以通常是结合 refsection 或者 refsegment 来操作的。前面提到过的一个很简单的例子的需求(在一篇学位论文的写作中需要正文部分的参考文献使用顺序编码制，而附录中研究成果部分使用作者年制)，是一个典型的局部化格式调整。这一需求的典型解决方式为：在研究成果部分使用 refsection 将其局部化，并结合gb7714-2015mx样式，并利用 setaystylesection 命令设置该 refsection 为作者年制样式。
 
-因为tex宏的局部化调整特性，因此几乎biblatex中所有格式设置，特别是前面介绍过的设置，都是可以做局部调整的。限于篇幅，这里仅介绍一些常用的方式：
+因为 tex 宏的局部化调整特性，因此几乎 biblatex 中所有格式设置，特别是前面介绍过的设置，都是可以做局部调整的。限于篇幅，这里仅介绍一些常用的方式：
 
 \begin{enumerate}
   \item 文献表标题
 
-  局部重定义bibname、refname或者局部重设printbibliography命令的选项可以设置文献表标题。
+  局部重定义bibname、refname或者局部重设 printbibliography 命令的选项可以设置文献表标题。
 	
   \item 文献表段落格式
 
-  局部重定义bibfont命令即可局部设置参考文献的字体颜色等，进一步重定义bibauthorfont、bibtitlefont、bibpubfont 等命令用于控制文献不同著录项的格式。
+  局部重定义 bibfont 命令即可局部设置参考文献的字体颜色等，进一步重定义bibauthorfont、bibtitlefont、bibpubfont 等命令用于控制文献不同著录项的格式。
 
   局部重定义bibitemindent 尺寸可以设置文献表的缩进
 
@@ -2010,11 +2014,11 @@ sentencecase 虽然只有一个标准，但也涉及专有名词的识别和保�
   \item 文献表条目著录项格式
 
   因为著录项格式可以由选项控制，因此也可以通过选项底层控制接口进行局部化。
-  biblatex中绝大部分的控制选项都是使用toggle的方式，比如url选项，gbtype选项，gbannote选项等，因此在局部设置选项对应的toggle 值可以局部设置选项控制的格式。
-  另外也有一些选项使用的是计数器，比如gbnamefmt选项，因此局部设置选项对应的计数器的值可以局部设置选项控制的格式。
-  当然由于一些选项的特殊性，它无法简单的进行利用toggle值或计数器值进行设置，而可能需要调整选项对应的宏的内容，因此复杂度会明显提升，如果不是非常必要，建议不要去局部化重设这些选项的所对应的格式。
+  biblatex中绝大部分的控制选项都是使用 toggle 的方式，比如 url 选项，gbtype选项，gbannote选项等，因此在局部设置选项对应的toggle 值可以局部设置选项控制的格式。
+  另外也有一些选项使用的是计数器，比如 gbnamefmt 选项，因此局部设置选项对应的计数器的值可以局部设置选项控制的格式。
+  当然由于一些选项的特殊性，它无法简单的进行利用 toggle 值或计数器值进行设置，而可能需要调整选项对应的宏的内容，因此复杂度会明显提升，如果不是非常必要，建议不要去局部化重设这些选项的所对应的格式。
 
-  除了选项提供的接口外，著录项和著录项之间的格式设置，可以使用前述介绍过的命令或者域格式来具体不调整，只要相关的设置命令不限制一定要在导言区中，就可以局部化调整。比如前面设置volume为粗体的调整，就可以在不同的refsection做不同形式的调整。
+  除了选项提供的接口外，著录项和著录项之间的格式设置，可以使用前述介绍过的命令或者域格式来具体不调整，只要相关的设置命令不限制一定要在导言区中，就可以局部化调整。比如前面设置 volume 为粗体的调整，就可以在不同的 refsection 做不同形式的调整。
 
   示例见\href{run:./example/opt-gbannote.tex}{opt-gbannote.tex}。
 
@@ -2031,9 +2035,9 @@ sentencecase 虽然只有一个标准，但也涉及专有名词的识别和保�
 
 \subsubsection{一个文献表采用多种著录样式}
 
-一个文献表采用多种著录样式主要针对的是在一个tex文档生成参考文献表中，不同语言的文献采用不同的著录格式，比如中文文献采用GB/T 7714-2015 样式，而西文文献采用西文习惯的样式。这种情况目前由gb7714-2015ms样式解决，选项加载方式如例\ref{eg:gb7714ms}所示。
+一个文献表采用多种著录样式主要针对的是在一个 tex 文档生成参考文献表中，不同语言的文献采用不同的著录格式，比如中文文献采用GB/T 7714-2015 样式，而西文文献采用西文习惯的样式。这种情况目前由gb7714-2015ms样式解决，选项加载方式如例~\ref{eg:gb7714ms} 所示。
 
-目前gb7714-2015ms样式中，有两种应用方式，一是全部文献都采用GB/T 7714-2015 标准样式，二是中文西文分别采用GB/T 7714-2015 标准样式和biblatex的默认样式。两种方式的选择通过gbstyle选项设置。区分语言使用不同样式的情况下，如有其它需要，完全可以通过定义中文和西文的格式做进一步的修改，比如将英文文献的样式修改为IEEE格式。图\ref{fig:eg:ms}展示了两种不同语言不同的著录格式。
+目前gb7714-2015ms样式中，有两种应用方式，一是全部文献都采用GB/T 7714-2015 标准样式，二是中文西文分别采用GB/T 7714-2015 标准样式和 biblatex 的默认样式。两种方式的选择通过 gbstyle 选项设置。区分语言使用不同样式的情况下，如有其它需要，完全可以通过定义中文和西文的格式做进一步的修改，比如将英文文献的样式修改为 IEEE 格式。图~\ref{fig:eg:ms} 展示了两种不同语言不同的著录格式。
 
 \begin{figure}[!htb]
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
@@ -2052,13 +2056,13 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 \subsubsection{不同参考文献分节采用不同著录样式}
 
-不同参考文献分节采用不同著录样式主要针对一个tex文档中存在多个参考文献表，且各参考文献表的格式需求不同。比如一些学位论文写作中，正文的参考文献表为著者-出版年制，而附录中的作者论著情况则用顺序编码制。这种情况目前由gb7714-2015mx样式解决，选项加载方式如例\ref{eg:gb7714mx}所示。
+不同参考文献分节采用不同著录样式主要针对一个 tex 文档中存在多个参考文献表，且各参考文献表的格式需求不同。比如一些学位论文写作中，正文的参考文献表为著者-出版年制，而附录中的作者论著情况则用顺序编码制。这种情况目前由gb7714-2015mx样式解决，选项加载方式如例~\ref{eg:gb7714mx} 所示。
 
 gb7714-2015mx样式默认使用顺序编码样式，当要使用著者-出版年制样式时，则利用命令
-\verb|\setaystylesection|进行设置，该命令有一个必选参数，表示采用著者-出版年制样式的参考文献节的编号。注意该命令一次只能设置一个文献节，因此设置多个参考文献节时，需要多次使用\verb|\setaystylesection|命令，比如节2节4都采用著者-出版年制样式，
-那么设置\verb|\setaystylesection{2}\setaystylesection{4}|。
+\verb|\setaystylesection|进行设置，该命令有一个必选参数，表示采用著者-出版年制样式的参考文献节的编号。注意该命令一次只能设置一个文献节，因此设置多个参考文献节时，需要多次使用 \verb|\setaystylesection| 命令，比如节 2 节 4 都采用著者-出版年制样式，
+那么设置 \verb|\setaystylesection{2}\setaystylesection{4}|。
 
-目前gb7714-2015mx样式中的两种格式：顺序编码和著者-出版年制样式默认都是符合GB/T 7714-2015 标准的，如果需要做格式的修改，则完全可以通过自定义实现。图\ref{fig:eg:ms}展示了3个参考文献分节的文档，其中节2使用了著者-出版年制。
+目前gb7714-2015mx样式中的两种格式：顺序编码和著者-出版年制样式默认都是符合GB/T 7714-2015 标准的，如果需要做格式的修改，则完全可以通过自定义实现。图~\ref{fig:eg:ms} 展示了 3 个参考文献分节的文档，其中节 2 使用了著者-出版年制。
 
 \begin{figure}[!htb]
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
@@ -2075,9 +2079,9 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 \subsubsection{局部定义的不同样式的文献表}\label{sec:local:biblist:set}
 
-在一些学位论文中，除了正文后面的全局文献表外，有时需要给出攻读学位期间的学术成果，这部分内容可以直接按正文的方式写，有时也可以利用文献表的方式写，即将学术成果内容写成bibtex格式，然后利用类似生成参考文献表的方式输出。
+在一些学位论文中，除了正文后面的全局文献表外，有时需要给出攻读学位期间的学术成果，这部分内容可以直接按正文的方式写，有时也可以利用文献表的方式写，即将学术成果内容写成 bibtex 格式，然后利用类似生成参考文献表的方式输出。
 
-这一局部定义的文献表可以利用不同的方式来得到，比如使用refsection分节，或者使用category/type等筛选输出指定的文献。若该文献表的格式不同于正文的文献表，那么就需要做局部调整，此时利用一些能够局部调整的选项来实现会比较方便，如果需要的话也可以引入一些其它设置来实现特殊的格式，比如论文作者加粗等。例\ref{eg:resume:localset}给出了一个简单示例，其中故意做了一些局部设置，使用时需注意局部选项设置和数据注解与bib文件内容的配合。
+这一局部定义的文献表可以利用不同的方式来得到，比如使用 refsection 分节，或者使用 category/type 等筛选输出指定的文献。若该文献表的格式不同于正文的文献表，那么就需要做局部调整，此时利用一些能够局部调整的选项来实现会比较方便，如果需要的话也可以引入一些其它设置来实现特殊的格式，比如论文作者加粗等。例~\ref{eg:resume:localset} 给出了一个简单示例，其中故意做了一些局部设置，使用时需注意局部选项设置和数据注解与 bib 文件内容的配合。
 
 \begin{example}{为研究成果表局部设置格式}{eg:resume:localset}
 \begin{texlist}
@@ -2122,10 +2126,10 @@ annotation      = {美国发明专利申请号.},
 \end{filecontents}
 
 %导言区
-%去掉文献Zhang2007-500-503的usera域
+%去掉文献Zhang2007-500-503的 usera 域
 \delEntryField{Zhang2007-500-503}{usera}
-%在第1个refsection中去掉article类的文献标识符
-%利用AtEveryBibitem在对refsection和entrytype判断后局部做设置
+%在第 1 个 refsection 中去掉 article 类的文献标识符
+%利用 AtEveryBibitem 在对 refsection 和 entrytype 判断后局部做设置
 \AtEveryBibitem{%
 \ifnumequal{\value{refsection}}{1}
     {%
@@ -2143,10 +2147,10 @@ annotation      = {美国发明专利申请号.},
 
 \begin{refsection}[ref/resume.bib]
 \settoggle{bbx:gbtype}{false}%局部设置不输出文献类型和载体标识符
-\settoggle{bbx:gbannote}{true}%局部设置输出附加的annote/annotation信息
-\setcounter{gbnamefmtcase}{1}%局部设置作者的格式为familyahead格式
+\settoggle{bbx:gbannote}{true}%局部设置输出附加的 annote/annotation 信息
+\setcounter{gbnamefmtcase}{1}%局部设置作者的格式为 familyahead 格式
 \makeatletter
-\renewcommand*{\mkbibnamegiven}[1]{%通过作者注释(AUTHOR+an)局部调整作者的格式需与bib配合
+\renewcommand*{\mkbibnamegiven}[1]{%通过作者注释(AUTHOR+an)局部调整作者的格式需与 bib 配合
 \ifitemannotation{thesisauthor}
 {\ifbibliography{\textcolor{blue}{\textbf{#1}}}{#1}}%
 {#1}\ifbibliography{\ifitemannotation{corresponding}{\textsuperscript{*}}{}}{}%
@@ -2185,7 +2189,7 @@ annotation      = {美国发明专利申请号.},
 主要责任者.题名:其他题名信息[EB/OL].预印本平台:预印本编号(更新或修改日期)[引用日期].获取和访问路径
 \end{texlist}
 
-若直接使用 arXiv 网站导出的bib信息，则文献类型是misc，通常无法生成需要的格式，此时我们可以arXiv文献根据上述要求做自定义调整。因为 arXiv 导出的bib信息中包含archivePrefix=\{arXiv\}的特殊域，该域在biber处理后还会转换为eprinttype域，所以可以作为识别的关键。由于 arXiv 网站导出的bib信息中不含有网址，访问日期等信息，也可以通过sourcemap批量添加。因此我们自定义的方式如例\ref{eg:arXiv:localset}所示，如此处理在不影响其它文献的情况下可以生成arXiv 文献的专门格式。
+若直接使用 arXiv 网站导出的 bib 信息，则文献类型是 misc，通常无法生成需要的格式，此时我们可以 arXiv 文献根据上述要求做自定义调整。因为 arXiv 导出的 bib 信息中包含archivePrefix=\{arXiv\}的特殊域，该域在 biber 处理后还会转换为 eprinttype 域，所以可以作为识别的关键。由于 arXiv 网站导出的 bib 信息中不含有网址，访问日期等信息，也可以通过 sourcemap 批量添加。因此我们自定义的方式如例~\ref{eg:arXiv:localset} 所示，如此处理在不影响其它文献的情况下可以生成arXiv 文献的专门格式。
 \begin{example}{arXiv 文献的特殊格式定制}{eg:arXiv:localset}
 \begin{texlist}
 %自动添加一些信息
@@ -2223,7 +2227,7 @@ annotation      = {美国发明专利申请号.},
 %
 %   备选类型驱动
 %
-%   利用biblatex的misc驱动
+%   利用 biblatex 的 misc 驱动
 \DeclareBibliographyDriver{misc}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
@@ -2255,7 +2259,7 @@ annotation      = {美国发明专利申请号.},
 \end{texlist}
 \end{example}
 
-第二类则是不完全(或无规范)的自定义输出，主要用于输出部分参考文献信息。这时可以采用文献缩略信息打印的方法实现。比如只输出题名信息如例\ref{eg:partial:info}所示。
+第二类则是不完全(或无规范)的自定义输出，主要用于输出部分参考文献信息。这时可以采用文献缩略信息打印的方法实现。比如只输出题名信息如例~\ref{eg:partial:info} 所示。
 
 \begin{example}{部分文献信息自定义输出}{eg:partial:info}
 \begin{texlist}
@@ -2298,7 +2302,7 @@ annotation      = {美国发明专利申请号.},
 \href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography/blob/master/biblatex-solution-to-latex-bibliography.pdf}%
 {biblatex-solution-to-latex-bibliography}中的第2.10节。
 
-具体例子则可以参考\href{run:./stdgbT7714-2015.pdf}{stdgbT7714-2015.pdf}，其中第8节中大量使用这种方式。
+具体例子则可以参考\href{run:./stdgbT7714-2015.pdf}{stdgbT7714-2015.pdf}，其中第 8 节中大量使用这种方式。
 
 
 
@@ -2311,7 +2315,7 @@ annotation      = {美国发明专利申请号.},
 
 \subsubsection{多语言混合文献表}\label{sec:multilan:combine}
 
-在国内的一般应用场景下，常见的多语言混合文献表是中英两种语言混合的文献表，但有时也可能会存在多种语言，比如存在中/英/日/俄等多种语言。图\ref{fig:multi:lan}给出了这样一个示例，其中不同语言的文献使用了不同的本地化字符串。
+在国内的一般应用场景下，常见的多语言混合文献表是中英两种语言混合的文献表，但有时也可能会存在多种语言，比如存在中/英/日/俄等多种语言。图~\ref{fig:multi:lan} 给出了这样一个示例，其中不同语言的文献使用了不同的本地化字符串。
 
 \begin{figure}[!htb]
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
@@ -2325,29 +2329,29 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{figure}
 
 \begin{enumerate}
-\item 多语言混合文献表首先要解决的是多语言文献的字符显示问题。使用xelatex编译时，由于其原生支持unicode的特性，在tex文档内显示多语言字符比较容易实现，正确显示的关键在于合适的字体设置。一般情况下西文如英/法/俄可以利用fontspec宏包选择合适的字体来解决，而中/日/韩语可以利用ctex宏包可以解决，但仍需注意要正确的显示中/日/韩语也需要字体支持，windows下常见的中文字体可能不支持日/韩字符，而思源宋体是一个不错的选择。本文的多语言示例编译均采用思源宋体常规(SourceHanSerifSC-Regular.otf)，
+\item 多语言混合文献表首先要解决的是多语言文献的字符显示问题。使用 xelatex 编译时，由于其原生支持 unicode 的特性，在 tex 文档内显示多语言字符比较容易实现，正确显示的关键在于合适的字体设置。一般情况下西文如英/法/俄可以利用 fontspec 宏包选择合适的字体来解决，而中/日/韩语可以利用 ctex 宏包可以解决，但仍需注意要正确的显示中/日/韩语也需要字体支持，Windows下常见的中文字体可能不支持日/韩字符，而思源宋体是一个不错的选择。本文的多语言示例编译均采用思源宋体常规(SourceHanSerifSC-Regular.otf)，
 请从其\href{https://github.com/adobe-fonts/source-han-serif/tree/release}{官网}下载。
 
 \item  除此之外，还要解决另外一个重要问题是本地化字符串问题。因为对于不同语言的文献，通常要求使用符合自身语言规范的本地化字符串。而且不同的语言，本地化字符串并不是一一对应的，特别是东亚语言，因此要考虑一个全面的解决方案：
 
-对于西方语言， biblatex基于 babel/polyglossia宏包，结合autolang/language等选项和langid/langidopt等域，提供了一套多语言解决方案。
+对于西方语言， biblatex基于 babel/polyglossia宏包，结合 autolang/language 等选项和 langid/langidopt 等域，提供了一套多语言解决方案。
 
 \begin{itemize}
-\item 首先，对不同语言的文献，设置langid域为文献所用语言，比如英文文献则设置langid域等于english，俄文文献则设置等于russian。
+\item 首先，对不同语言的文献，设置 langid 域为文献所用语言，比如英文文献则设置 langid 域等于 english，俄文文献则设置等于 russian，
 
-\item 其次，在biblatex加载时设置 autolang选项，等于none则不做多语言处理，等于hyphen则仅做不同语言的断词处理，等于other或other*则处理不同语言的断词和本地化字符串，other*选项等价于使用babel的otherlanguage*环境，与other的差别在于不忽略环境后的空白。从实践看，当要使用条目集时，使用other*选项更为合适。
+\item 其次，在 biblatex 加载时设置 autolang选项，等于 none 则不做多语言处理，等于 hyphen 则仅做不同语言的断词处理，等于 other 或other*则处理不同语言的断词和本地化字符串，other*选项等价于使用 babel 的otherlanguage*环境，与 other 的差别在于不忽略环境后的空白。从实践看，当要使用条目集时，使用other*选项更为合适。
 
-\item 再次，还可设置language选项，用于区分是否在标注或文献表中采用多语言处理方案。当language选项等于autobib时仅在文献表中自动切换语言，等于 autocite 时仅在标注中自动切换语言，等于 auto 时则在文献表和标注中同时切换。
+\item 再次，还可设置 language 选项，用于区分是否在标注或文献表中采用多语言处理方案。当 language 选项等于 autobib 时仅在文献表中自动切换语言，等于 autocite 时仅在标注中自动切换语言，等于 auto 时则在文献表和标注中同时切换。
 
-\item 最后，需要在tex文档内加入babel宏包或polyglossia，并设置需要使用的语言。注意：需要使用本地化字符串的西语都要加入，否则无法自动切换。比如需要自动切换的西文语言有英文、法文和俄文，
-那么需要将加入\verb|french,russian,english|。如例\ref{eg:multi:lanset}所示：
+\item 最后，需要在 tex 文档内加入 babel 宏包或 polyglossia，并设置需要使用的语言。注意：需要使用本地化字符串的西语都要加入，否则无法自动切换。比如需要自动切换的西文语言有英文、法文和俄文，
+那么需要将加入 \verb|french,russian,english|。如例~\ref{eg:multi:lanset} 所示：
 
 \begin{example}{babel/polyglossia设置西方语言的多语言支持}{eg:multi:lanset}
 \begin{texlist}
-    %使用babel的方式
+    %使用 babel 的方式
     \usepackage[russian,french,english]{babel}
 
-    %使用polyglossia的方式
+    %使用 polyglossia 的方式
     \usepackage{polyglossia}
     \setdefaultlanguage{english}
     \setotherlanguages{russian,french}
@@ -2356,15 +2360,15 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 \end{itemize}
 
-对于东亚语言，通常没有像西方语言那么多的本地化字符串的应用，只有有限几个字符串需要使用，而且习惯用法也与西文不同，因此无法与西文的本地化字符串一一对应，所以考虑的解决思路也不同于西文。即不使用类似西文的本地化字符串文件，而直接利用在英文本地化文件(english.lbx)基础上新增适用于东亚语言的本地化字符串的方式。在标注和著录格式处理过程中，根据当前处理的域或条目的语言做判断，然后使用对应语言的本地化字符串。如第\ref{sec:usage:bbx}节所述，本样式使用language域来标记文献的语言类型，langid域用来标记文献对应的本地化字符串文件，默认情况下都不需要人工输入，可由宏包根据文献信息自动判断，但也可以人工输入来指定。
+对于东亚语言，通常没有像西方语言那么多的本地化字符串的应用，只有有限几个字符串需要使用，而且习惯用法也与西文不同，因此无法与西文的本地化字符串一一对应，所以考虑的解决思路也不同于西文。即不使用类似西文的本地化字符串文件，而直接利用在英文本地化文件(english.lbx)基础上新增适用于东亚语言的本地化字符串的方式。在标注和著录格式处理过程中，根据当前处理的域或条目的语言做判断，然后使用对应语言的本地化字符串。如第~\ref{sec:usage:bbx} 节所述，本样式使用 language 域来标记文献的语言类型，langid域用来标记文献对应的本地化字符串文件，默认情况下都不需要人工输入，可由宏包根据文献信息自动判断，但也可以人工输入来指定。
 
 \end{enumerate}
 
 因此考虑东亚语言的特殊性，针对西文和东亚语言，整体解决方案做如下：
 \begin{itemize}
-  \item 如俄语/法语这样的西方语言，通过biblatex提供的方案自动解决。使用时，bib文件中的文献数据按文献本身的语言录入，在tex源文件中载入babel宏包并设置相应语言，然后设置biblatex的autolang和language选项。剩下所有工作比如自动语言判断和处理则交由gb7714-2015样式自动完成。
+  \item 如俄语/法语这样的西方语言，通过 biblatex 提供的方案自动解决。使用时，bib文件中的文献数据按文献本身的语言录入，在 tex 源文件中载入 babel 宏包并设置相应语言，然后设置 biblatex 的 autolang 和 language 选项。剩下所有工作比如自动语言判断和处理则交由 gb7714-2015 样式自动完成。
 
-  \item 日韩语采用类似中文的方式处理，即在英语本地化文件基础上通过增加新的本地化字符串实现处理，因此langid需设为english。在输出本地化字符串的宏中当做英文处理，但内部存在区分逻辑，当判断语言为中文时，则使用中文的本地化字符串比如andcn，andotherscn等， 当不是时，则判断不同的语言，是日文则输出本地化字符串如andjp，andothersjp，若是韩文则输出本地化字符串如andkr，andotherskr。而所有其它西文则输出本地化字符串比如and，andothers，由babel自动切换成对应语言的字符串。由于日文中作者这类信息通常用的汉字，因此常常判断为中文，所以可以使用符合中文习惯的字符串，但如果对日文有精确的判断，那么可以输出符合日文习惯的字符串。韩语由于大量使用表音的字符，所以通常使用专门的本地化字符串。中日韩语文献数据录入也不要特殊的处理，按文献本身语言输入即可，剩下所有其它工作均由gb7714-2015样式自动处理，用户无需过多关注。
+  \item 日韩语采用类似中文的方式处理，即在英语本地化文件基础上通过增加新的本地化字符串实现处理，因此 langid 需设为 english，在输出本地化字符串的宏中当做英文处理，但内部存在区分逻辑，当判断语言为中文时，则使用中文的本地化字符串比如 andcn，andotherscn等， 当不是时，则判断不同的语言，是日文则输出本地化字符串如 andjp，andothersjp，若是韩文则输出本地化字符串如 andkr，andotherskr。而所有其它西文则输出本地化字符串比如 and，andothers，由 babel 自动切换成对应语言的字符串。由于日文中作者这类信息通常用的汉字，因此常常判断为中文，所以可以使用符合中文习惯的字符串，但如果对日文有精确的判断，那么可以输出符合日文习惯的字符串。韩语由于大量使用表音的字符，所以通常使用专门的本地化字符串。中日韩语文献数据录入也不要特殊的处理，按文献本身语言输入即可，剩下所有其它工作均由 gb7714-2015 样式自动处理，用户无需过多关注。
 
 \end{itemize}
 
@@ -2375,11 +2379,11 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 \subsubsection{多语言对照的文献表}\label{sec:multilan:implement}
 
-国标GB/T 7714-2015有不同语言对照文献的要求(详见第6.1节)，某些期刊也有类似的需求。
+国标 GB/T 7714-2015 有不同语言对照文献的要求(详见第 6.1 节)，某些期刊也有类似的需求。
 多语言对照的文献表首先是多语言混合的文献表，所以本节的方法是在前一节基础上做的。
-对于biblatex宏包，多语言对照文献问题可以通过条目集类型(set)/或者条目关联(related)来解决，由于多语言对照的情况与双语言对照本质是一样的，因此下面主要讨论双语对照的情况。
-图\ref{fig:double:lana}和\ref{fig:double:lanb}给出中英双语对照文献示例，两个示例中英文文献的作者姓名做了不同的设置，前者为 gbnamefmt=uppercase，后者为gbnamefmt=pinyin，后者也是国内某期刊的参考文献样式。
-GB中的韩中两种语言对照文献见\href{run:./stdGBT7714-2015.pdf}{stdGBT7714-2015文件}第4页。
+对于 biblatex 宏包，多语言对照文献问题可以通过条目集类型(set)/或者条目关联(related)来解决，由于多语言对照的情况与双语言对照本质是一样的，因此下面主要讨论双语对照的情况。
+图~\ref{fig:double:lana} 和~\ref{fig:double:lanb}给出中英双语对照文献示例，两个示例中英文文献的作者姓名做了不同的设置，前者为 gbnamefmt=uppercase，后者为gbnamefmt=pinyin，后者也是国内某期刊的参考文献样式。
+GB中的韩中两种语言对照文献见\href{run:./stdGBT7714-2015.pdf}{stdGBT7714-2015文件}第 4 页。
 
 \begin{figure}[!htb]
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
@@ -2406,8 +2410,8 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \paragraph{\heiti 利用条目集类型满足双语文献要求}
 
 设置条目集类型(set)有静态和动态两种方法。其中动态方法使用更为方便，
-只需在写文档时利用\verb|\defbibentryset|将两条文献不同语言的文献设置成一个set条目，然后引用set的bibtex键。比如:
-\begin{example}{设置set条目集用于双语文献的动态方法}{eg:setforbilangentry}
+只需在写文档时利用 \verb|\defbibentryset| 将两条文献不同语言的文献设置成一个 set 条目，然后引用 set 的 bibtex 键。比如:
+\begin{example}{设置 set 条目集用于双语文献的动态方法}{eg:setforbilangentry}
 \begin{texlist}
 \defbibentryset{bilangyi2013}{易仕和2013--,Yi2013--}
 专著，双语文献引用\cite{bilangyi2013}
@@ -2416,49 +2420,49 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 测试见文档\href{run:example/testallformat.tex}{testallformat.tex}。
 
-\bc{需要注意：由于biblatex的升级，在著者-出版年制中应用动态条目集方法产生的标注标签存在版本差异。
+\bc{需要注意：由于 biblatex 的升级，在著者-出版年制中应用动态条目集方法产生的标注标签存在版本差异。
 biblatex v3.7及之前版本，因为 set 带有第一个子条目的信息，所以会自动输出子条目信息作为标签。
-而biblatex v3.8及以上版本中，因为set条目类型除了子条目关键词信息外，并无其他信息，所以set的标注标签会存在问题。这个问题可以通过设置一个指定格式和内容且中间无空格无英文逗号的关键字来弥补，比如“易仕和，等，2013”，这时因为没有空格和英文逗号，该关键字会以一个整体字符串处理，而不会被分开解析，因此可以用它来作为标签}。比如：
+而biblatex v3.8及以上版本中，因为 set 条目类型除了子条目关键词信息外，并无其他信息，所以 set 的标注标签会存在问题。这个问题可以通过设置一个指定格式和内容且中间无空格无英文逗号的关键字来弥补，比如“易仕和，等，2013”，这时因为没有空格和英文逗号，该关键字会以一个整体字符串处理，而不会被分开解析，因此可以用它来作为标签}。比如：
 
-\begin{example}{设置set条目集用于双语文献动态方法}{eg:setforbilangentry}
+\begin{example}{设置 set 条目集用于双语文献动态方法}{eg:setforbilangentry}
 \begin{texlist}
 \defbibentryset{易仕和，等，2013}{易仕和2013--,Yi2013--}
 专著，双语文献引用\cite{易仕和，等，2013}
 \end{texlist}
 \end{example}
 
-\bc{在biblatex3.8以上版本中，例\ref{eg:setforbilangentry}的作者年制标注标签会是“易仕和，等，2013”，注意到其中的逗号是中文全角逗号，与其它标签的英文逗号的存在差异，正因为此，该方法并没有完美解决问题。}
+\bc{在biblatex3.8以上版本中，例~\ref{eg:setforbilangentry} 的作者年制标注标签会是“易仕和，等，2013”，注意到其中的逗号是中文全角逗号，与其它标签的英文逗号的存在差异，正因为此，该方法并没有完美解决问题。}
 
 \bc{由于顺序编码制使用的是数字标签，前述的问题对于顺序编码制并不存在。而作者年制中的标签问题，可以采用下面的静态条目集方法和关联(related)方法来解决。}
 
-静态方法是在bib源文件中给出条目集(set)并使用biber后端进行解析，条目的域信息定义方法如下:
+静态方法是在 bib 源文件中给出条目集(set)并使用 biber 后端进行解析，条目的域信息定义方法如下:
 
-%当使用bibtex后端时，则需要进一步设置，具体参考biblatex宏包说明文档。
-\begin{example}{设置set条目集用于双语文献的静态方法}{eg:set:static}
+%当使用 bibtex 后端时，则需要进一步设置，具体参考 biblatex 宏包说明文档。
+\begin{example}{设置 set 条目集用于双语文献的静态方法}{eg:set:static}
 \begin{texlist}
 @Set{set1,
 entryset = {entrykey1,entrykey2,entrykey3},
 }
-%如果要达到上例动态设置set一样的结果，在bib文件中静态设置set条目如下:
+%如果要达到上例动态设置 set 一样的结果，在 bib 文件中静态设置 set 条目如下:
 @Set{bilangyi2013,
 entryset = {易仕和2013--,Yi2013--},
 }
 \end{texlist}
 \end{example}
 
-然而例\ref{eg:set:static}这般简单的静态条目集设置，还存在两个小的问题：
+然而例~\ref{eg:set:static} 这般简单的静态条目集设置，还存在两个小的问题：
 \begin{enumerate}
-  \item 中文排序会出现问题，条目集会出现在文献表末尾，这是因为条目集没有设置language域用于排序，而其它常规条目都会利用动态数据修改设置language域，但因为静态条目集需要在biber运行时解析，所以无法对language域进行处理。而使用动态条目集方法则没有这一问题，因为其解析过程直接会利用第一个子条目的排序信息。
-  \item 著者-出版年制中的标注标签问题，对于静态条目集，v3.8以上版本的biblatex同样不复制第一个子条目信息，因此著者- 出版年制中的引用也无法生成正确的标注标签，这也就是前面动态条目集方法中提到的问题。
+  \item 中文排序会出现问题，条目集会出现在文献表末尾，这是因为条目集没有设置 language 域用于排序，而其它常规条目都会利用动态数据修改设置 language 域，但因为静态条目集需要在 biber 运行时解析，所以无法对 language 域进行处理。而使用动态条目集方法则没有这一问题，因为其解析过程直接会利用第一个子条目的排序信息。
+  \item 著者-出版年制中的标注标签问题，对于静态条目集，v3.8以上版本的 biblatex 同样不复制第一个子条目信息，因此著者- 出版年制中的引用也无法生成正确的标注标签，这也就是前面动态条目集方法中提到的问题。
 \end{enumerate}
 
-但静态条目集方法有自己的解决之道，对于第一个问题，可以通过在set条目中手动设置language域来解决；第二个问题，也可以通过在set条目中手动设置label域来解决。比如：
+但静态条目集方法有自己的解决之道，对于第一个问题，可以通过在 set 条目中手动设置 language 域来解决；第二个问题，也可以通过在 set 条目中手动设置 label 域来解决。比如：
 
-\begin{example}{在bib文件中正确设置set条目集的静态方法}{eg:set:staticright}
+\begin{example}{在 bib 文件中正确设置 set 条目集的静态方法}{eg:set:staticright}
 \begin{texlist}
-%在bib文件中静态设置set条目如下，其中:
-%手动设置userb域用于解决排序问题
-%手动设置label域用于解决标注标签问题
+%在 bib 文件中静态设置 set 条目如下，其中:
+%手动设置 userb 域用于解决排序问题
+%手动设置 label 域用于解决标注标签问题
 @Set{bilangyi2013,
 entryset = {易仕和2013--,Yi2013--},
 label={易仕和, 等, 2013},
@@ -2467,23 +2471,23 @@ language={chinese}
 \end{texlist}
 \end{example}
 
-\bc{注意：由于动态set条目集设置等价于使用了 nocite命令，因此只要定义了动态条目集的文献都会出现在文献表中，因此如果不引用相应的文献，那么无需对其定义动态条目集}。
+\bc{注意：由于动态 set 条目集设置等价于使用了 nocite命令，因此只要定义了动态条目集的文献都会出现在文献表中，因此如果不引用相应的文献，那么无需对其定义动态条目集}。
 
-\bc{注意：biblatex提供的mcite模块提供了mcite类命令，其等价于定义动态条目集，因此除了使用上述defbibentryset方法外，也可以使用mcite类命令}。
+\bc{注意：biblatex提供的 mcite 模块提供了 mcite 类命令，其等价于定义动态条目集，因此除了使用上述 defbibentryset 方法外，也可以使用 mcite 类命令}。
 
 \bc{注意：条目集方法本质上是将多个文献条目集合成一个组一起在文献表中输出，且仅有一个标注标签。无论是否是多语言对照都是可以使用的，这里的多语言对照实现只是条目集方法的一个具体应用}。
 
 \paragraph{\heiti 利用条目关联满足双语文献要求}
 
-除上述给出的条目集方案外，关联条目方法则是另一种可行方案\footnote{Again about the \@ set label for authoryear style：\url{https://github.com/plk/biblatex/issues/681}}。该方案同样也有静态和动态两种方法，静态就是直接修改bib文件的内容，动态则是在tex源文档中做设置，然后通过biblatex的动态数据修改机制做临时修改。
+除上述给出的条目集方案外，关联条目方法则是另一种可行方案\footnote{Again about the \@ set label for authoryear style：\url{https://github.com/plk/biblatex/issues/681}}。该方案同样也有静态和动态两种方法，静态就是直接修改 bib 文件的内容，动态则是在 tex 源文档中做设置，然后通过 biblatex 的动态数据修改机制做临时修改。
 
-静态方法很简单，bib文件中条目设置如例\ref{eg:related:staticright}所示，它能解决双语同时显示的问题，也能解决排序和标注标签问题，唯一的问题在于修改了bib文件后，当不需要双语文献时还需改回来，这会带来不便，因此可以考虑下面的动态方法。
-但要注意动态方法需要利用多个\verb|\DeclareStyleSourcemap|，因此该方法只适用于biblatex v3.7及以上版本。
+静态方法很简单，bib文件中条目设置如例~\ref{eg:related:staticright} 所示，它能解决双语同时显示的问题，也能解决排序和标注标签问题，唯一的问题在于修改了 bib 文件后，当不需要双语文献时还需改回来，这会带来不便，因此可以考虑下面的动态方法。
+但要注意动态方法需要利用多个 \verb|\DeclareStyleSourcemap|，因此该方法只适用于biblatex v3.7及以上版本。
 
-\begin{example}{在bib文件中正确设置关联条目的静态方法}{eg:related:staticright}
+\begin{example}{在 bib 文件中正确设置关联条目的静态方法}{eg:related:staticright}
 \begin{texlist}
-%在bib文件中静态设置条目如下，注意:
-%易仕和2013--条目中增加了related域用于关联其对应的英文条目Yi2013--
+%在 bib 文件中静态设置条目如下，注意:
+%易仕和2013--条目中增加了 related 域用于关联其对应的英文条目Yi2013--
 @Book{易仕和2013--,
   Title                    = {超声速和高超声速喷管设计},
   Address                  = {北京},
@@ -2502,7 +2506,7 @@ language={chinese}
 \end{texlist}
 \end{example}
 
-动态方法利用动态数据修改自动添加related域，避免对bib文件做直接修改。本样式中对该过程进行了封装，定义一个新的命令\verb|\defdblanentry|和一个等价命令\verb|\defdoublelangentry|来实现，例如:
+动态方法利用动态数据修改自动添加 related 域，避免对 bib 文件做直接修改。本样式中对该过程进行了封装，定义一个新的命令 \verb|\defdblanentry| 和一个等价命令 \verb|\defdoublelangentry| 来实现，例如:
 \begin{example}{设置关联条目的动态方法}{eg:related:dynamic}
 \begin{texlist}
 \defdoublelangentry{易仕和2013--}{Yi2013--}
@@ -2510,18 +2514,18 @@ language={chinese}
 \end{example}
 
 使用该命令后，可以引用主条目“易仕和2013--”生成双语文献。
-但要注意由于\verb|\DeclareStyleSourcemap|命令只能在导言区中使用，
-因此\verb|\defdblanentry|或\verb|\defdoublelangentry|命令也只能出现在导言区中，这也是相比条目集动态方法的唯一遗憾。
+但要注意由于 \verb|\DeclareStyleSourcemap| 命令只能在导言区中使用，
+因此 \verb|\defdblanentry| 或 \verb|\defdoublelangentry| 命令也只能出现在导言区中，这也是相比条目集动态方法的唯一遗憾。
 实现的具体细节见
 \href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}%
 {biblatex-solution-to-latex-bibliography}。
 
-双语对照文献的两种动态方法基于set和related的方法测试，参见:
+双语对照文献的两种动态方法基于 set 和 related 的方法测试，参见:
 \href{run:./example/opt-eg-authoryear.tex}{opt-eg-authoryear.tex}。
 
 \paragraph{\heiti 双语文献表的格式调整}
 
-不同期刊对于双语文献表可能有不同的格式要求，主要是附加一些信息，修改一些标点，或者调换中英文的顺序等。例\ref{eg:refdblan:fmt}给出的一个简单的修改示例。
+不同期刊对于双语文献表可能有不同的格式要求，主要是附加一些信息，修改一些标点，或者调换中英文的顺序等。例~\ref{eg:refdblan:fmt} 给出的一个简单的修改示例。
 
 \begin{example}{双语文献表的格式调整示例}{eg:refdblan:fmt}
 \begin{texlist}
@@ -2551,7 +2555,7 @@ language={chinese}
 \end{example}
 
 更多的示例可以参考：\href{https://github.com/hushidong/biblatex-gb7714-2015/issues/154}
-{双语参考文献中note注释}。
+{双语参考文献中 note 注释}。
 
 
 
@@ -2562,7 +2566,7 @@ language={chinese}
 
 \subsubsection{国标要求的排序方式}
 
-排序是文献表格式的重要内容。国标的两种编制方式中，顺序编码制要求文献表中的文献按照正文中文献引用的先后顺序进行排序，而著者-出版年制则要求文献表首先按照文种对不同语言的文献进行分组，中文在前英文在后，分组内的中文文献则以拼音或笔画进行排序，而西文文献则按照字母顺序进行排列。在gb7714-2015国标样式中两种编制方式的排序分别以如下选项设置来实现:
+排序是文献表格式的重要内容。国标的两种编制方式中，顺序编码制要求文献表中的文献按照正文中文献引用的先后顺序进行排序，而著者-出版年制则要求文献表首先按照文种对不同语言的文献进行分组，中文在前英文在后，分组内的中文文献则以拼音或笔画进行排序，而西文文献则按照字母顺序进行排列。在 gb7714-2015 国标样式中两种编制方式的排序分别以如下选项设置来实现:
 
 \begin{example}{两种编制方式的排序设置}{eg:bib:sorting}
 \begin{texlist}
@@ -2584,8 +2588,8 @@ sorting=gb7714-2015,gblanorder=chineseahead,sortlocale=zh__pinyin
 顺序编码制中标注标签按引用先后顺序排序，无需调整。
 
 著者年份制中标注标签默认按照引用先后顺序进行排序，
-当设置sortcites=true时，标注标签按照参考文献表中的顺序进行排序，参考文献表中的顺序按照sorting选项设定的顺序进行排序。
-若要使标注排序与文献表排序不关联，则可以使用refcontext来设置两种排序环境，即sorting选项设置的排序环境，以及refcontext及其sorting选项提供的排序环境，使得标注和文献表可以实现两种不同的排序。例\ref{eg:sort:decouple}中，sorting=gbynta表示全局按gbynta顺序(即年份、作者、标题)排序，使得标注会先按年份进行排序(但要注意同作者压缩可能会被打破)。而newrefcontext[sorting=gb7714-2015]中的排序表示文献表按gb7714-2015排序，这是国标的默认排序。
+当设置 sortcites=true 时，标注标签按照参考文献表中的顺序进行排序，参考文献表中的顺序按照 sorting 选项设定的顺序进行排序。
+若要使标注排序与文献表排序不关联，则可以使用 refcontext 来设置两种排序环境，即 sorting 选项设置的排序环境，以及 refcontext 及其 sorting 选项提供的排序环境，使得标注和文献表可以实现两种不同的排序。例~\ref{eg:sort:decouple} 中，sorting=gbynta表示全局按 gbynta 顺序(即年份、作者、标题)排序，使得标注会先按年份进行排序(但要注意同作者压缩可能会被打破)。而newrefcontext[sorting=gb7714-2015]中的排序表示文献表按 gb7714-2015 排序，这是国标的默认排序。
 
 \begin{example}{标注标签排序与文献表排序去关联}{eg:sort:decouple}
 \begin{texlist}
@@ -2602,7 +2606,7 @@ uniquelist=false,uniquename=false,sorting=gbynta]{biblatex}
 %如下文献的年份分别为：
 %1986,1984,1967,2000,1985,1978
 \cite{knuth:ct:e,knuth:ct:a,weinberg,westfahl:frontier,geer,chiu}
-%生成标注标签将按年份排序，注意knuth的文献压缩会打破，结果为：
+%生成标注标签将按年份排序，注意 knuth 的文献压缩会打破，结果为：
 %(Weinberg, 1967; Chiu et al., 1978; Knuth, 1984; Geer, 1985; Knuth, 1986; Westfahl, 2000)
 \newrefcontext[sorting=gb7714-2015]
 \printbibliography
@@ -2610,9 +2614,9 @@ uniquelist=false,uniquename=false,sorting=gbynta]{biblatex}
 \end{texlist}
 \end{example}
 
-若要使文献压缩不被打破，则可以采用手动设置顺序的方式，同时去除sortcites选项或设为false，如例\ref{eg:sort:decouple1}所示。
+若要使文献压缩不被打破，则可以采用手动设置顺序的方式，同时去除 sortcites 选项或设为 false，如例~\ref{eg:sort:decouple1} 所示。
 
-\begin{example}{手动设置排序且去除sortcites同样与文献表排序不关联}{eg:sort:decouple1}
+\begin{example}{手动设置排序且去除 sortcites 同样与文献表排序不关联}{eg:sort:decouple1}
 \begin{texlist}
 \documentclass[twoside]{article}
 \usepackage{ctex}
@@ -2637,13 +2641,13 @@ uniquelist=false,uniquename=false,sorting=gb7714-2015]{biblatex}
 
 \subsubsection{排序的逻辑和调整方法}\label{sec:sort:adj}
 
-文献表中文献的排序通常是由处理bib文件的后端程序实施的，比如bibtex或biber程序。通常biblatex选择biber作为后端程序来实现更灵活的排序机制。biber在处理过程中读取bib文件信息并根据biblatex宏包和文献样式在bcf文件中输出设置信息执行排序。而bibtex程序则在读取bib文件后根据bst样式进行排序，尽管可以让bibtex读入特殊格式bib文件来提供一些设置参数，但总的来说基于bibtex的文献排序是由bst样式决定的。而biber程序则是提供了一套工具，具体的排序方式是由biblatex宏包和样式文件中的设置决定的，biber根据这些设置执行特定的逻辑来实现排序。
+文献表中文献的排序通常是由处理 bib 文件的后端程序实施的，比如 bibtex 或 biber 程序。通常 biblatex 选择 biber 作为后端程序来实现更灵活的排序机制。biber在处理过程中读取 bib 文件信息并根据 biblatex 宏包和文献样式在 bcf 文件中输出设置信息执行排序。而 bibtex 程序则在读取 bib 文件后根据 bst 样式进行排序，尽管可以让 bibtex 读入特殊格式 bib 文件来提供一些设置参数，但总的来说基于 bibtex 的文献排序是由 bst 样式决定的。而 biber 程序则是提供了一套工具，具体的排序方式是由 biblatex 宏包和样式文件中的设置决定的，biber根据这些设置执行特定的逻辑来实现排序。
 
-biblatex通过sorting选项选择排序模板来进行排序，而排序模板是可以自定义的。gb7714-2015及
-gb7714-2015ay样式提供了gblanorder选项来选择文种的排列顺序，其本质是对排序模板中与语言相关的域进行设置，因此它是与sorting选项选择的排序模板密切相关的，biblatex提供的标准样式排序模板并不支持该选项。
-而sortlocale选项则是针对字符排序选择本地化调整方案，比如选项zh\_\_pinyin就是选择针对中文字符根据拼音进行排序。本地化调整方案是由perl模块提供，中文字符排序的可用选项值详见前面的sortlocale选项说明。需要注意的是本地化字符排序调整方案设置也可以通过biber命令行选项提供，biblatex设置和biber命令行设置两种方式见例\ref{eg:sort:opts}、例\ref{eg:sort:bibercmd}。
+biblatex通过 sorting 选项选择排序模板来进行排序，而排序模板是可以自定义的。gb7714-2015及
+gb7714-2015ay样式提供了 gblanorder 选项来选择文种的排列顺序，其本质是对排序模板中与语言相关的域进行设置，因此它是与 sorting 选项选择的排序模板密切相关的，biblatex提供的标准样式排序模板并不支持该选项。
+而 sortlocale 选项则是针对字符排序选择本地化调整方案，比如选项zh\_\_pinyin就是选择针对中文字符根据拼音进行排序。本地化调整方案是由 perl 模块提供，中文字符排序的可用选项值详见前面的 sortlocale 选项说明。需要注意的是本地化字符排序调整方案设置也可以通过 biber 命令行选项提供，biblatex设置和 biber 命令行设置两种方式见例~\ref{eg:sort:opts}、例~\ref{eg:sort:bibercmd}。
 
-\begin{example}{中文字符排序调整可利用biblatex选项}{eg:sort:opts}
+\begin{example}{中文字符排序调整可利用 biblatex 选项}{eg:sort:opts}
 \begin{texlist}
 %按拼音排序，biblatex加载选项
 \usepackage[backend=biber,style=gb7714-2015ay,sortlocale=zh__pinyin]{biblatex}
@@ -2654,12 +2658,12 @@ biber jobname
 \end{texlist}
 \end{example}
 
-\begin{example}{中文字符排序调整也可利用biber选项}{eg:sort:bibercmd}
+\begin{example}{中文字符排序调整也可利用 biber 选项}{eg:sort:bibercmd}
 \begin{texlist}
 %biblatex正常加载，即不设置排序的本地化调整方案
 \usepackage[backend=biber,style=gb7714-2015ay]{biblatex}
 
-%此时需利用biber选项给出本地化排序调整方案：
+%此时需利用 biber 选项给出本地化排序调整方案：
 %按拼音排序，则设置-l zh__pinyin
 biber -l zh__pinyin jobname
 %按笔画排序，则设置-l zh__pinyin
@@ -2667,7 +2671,7 @@ biber -l zh__stroke jobname
 \end{texlist}
 \end{example}
 
-对于sorting选项，biblatex提供了标准的排序模板包括:
+对于 sorting 选项，biblatex提供了标准的排序模板包括:
 
 \begin{description}
   \item[nty]  按照姓名、标题、年份排序。
@@ -2680,7 +2684,7 @@ biber -l zh__stroke jobname
   \item[none]  不进行排序。所有的条目按照引用顺序处理。
 \end{description}
 
-而gb7741-2015和gb7741-2015ay样式提供了4个排序模板:
+而gb7741-2015和gb7741-2015ay样式提供了 4 个排序模板:
 
 \begin{description}
   \item[gb7714-2015]  以语言、作者、年份、标题、升序排列
@@ -2689,7 +2693,7 @@ biber -l zh__stroke jobname
   \item[gbyntd]  以语言、年份、作者、标题、降序排列
 \end{description}
 
-在使用gb7714-2015和gb7714-2015ay样式时可以使用上述排序模板。用户也可以增加自定义模板，比如为了处理多音字的问题，用户可以手动设置key域用来对中文文献进行排序，定义如下的排序模板:
+在使用 gb7714-2015 和 gb7714-2015ay 样式时可以使用上述排序模板。用户也可以增加自定义模板，比如为了处理多音字的问题，用户可以手动设置 key 域用来对中文文献进行排序，定义如下的排序模板:
 
 \begin{example}{针对多音字问题的排序模板}{eg:sort:multipinyin}
 \begin{texlist}
@@ -2725,29 +2729,29 @@ biber -l zh__stroke jobname
 \end{texlist}
 \end{example}
 
-其中，排序模板优先使用persort域进行排序，接着是与文种相关的lansortorder域，接着是sortkey域(该域在biblatex中就是key域的别名)，接着是sortname等作者姓名相关的域，要让文献根据多音字习惯音进行排序，那么就在key域中设置文献作者姓名的习惯音。比如三篇文献作者分别是[李四]、[J. B. Conway]、[曾三]。在设置sorting=multipinyin, gblanorder=chineseahead, sortlocale=zh\_\_pinyin的情况下，根据上述的multipinyin排序模板，首先根据文种和作者信息将中文文献[曾三][李四]排在前面，接着是[J. B. Conway]，因为默认情况下，曾字考虑的读音是ceng2，但这不是我们希望得到的。
+其中，排序模板优先使用 persort 域进行排序，接着是与文种相关的 lansortorder 域，接着是 sortkey 域(该域在 biblatex 中就是 key 域的别名)，接着是 sortname 等作者姓名相关的域，要让文献根据多音字习惯音进行排序，那么就在 key 域中设置文献作者姓名的习惯音。比如三篇文献作者分别是[李四]、[J. B. Conway]、[曾三]。在设置sorting=multipinyin, gblanorder=chineseahead, sortlocale=zh\_\_pinyin的情况下，根据上述的 multipinyin 排序模板，首先根据文种和作者信息将中文文献[曾三][李四]排在前面，接着是[J. B. Conway]，因为默认情况下，曾字考虑的读音是ceng2，但这不是我们希望得到的。
 
-所以需要手动将key域设置为中文的拼音，比如[李四]文献设置key=\{li3si4\}，而[曾三]文献设置key=\{zeng1san1\}，那么中文文献仍然排在前面，但根据key域的设置会将[李四]文献排列在[曾三]前面。因此手动设置作者姓名的习惯拼音后，文献排列正确，顺序为:[李四][曾三][J. B. Conway]。 需要注意的是：若要手动设置拼音则需要对文献表中的全部中文文献设置否则利用key域排序就会失效，而这并不是一个轻松的活，此时我们可以使用自动设置拼音的工具，详见
+所以需要手动将 key 域设置为中文的拼音，比如[李四]文献设置key=\{li3si4\}，而[曾三]文献设置key=\{zeng1san1\}，那么中文文献仍然排在前面，但根据 key 域的设置会将[李四]文献排列在[曾三]前面。因此手动设置作者姓名的习惯拼音后，文献排列正确，顺序为:[李四][曾三][J. B. Conway]。 需要注意的是：若要手动设置拼音则需要对文献表中的全部中文文献设置否则利用 key 域排序就会失效，而这并不是一个轻松的活，此时我们可以使用自动设置拼音的工具，详见
 \href{https://www.latexstudio.net/index/details/index/ids/1546}{为中文参考文献自动添加排序用的拼音信息域}，\href{https://github.com/hushidong/biblatex-map}{bibmap宏包}。
 
 
 
-其中，与文种相关的排序域lansortorder是由gblanorder选项设置的，当选项值为chineseahead时，语言顺序为cn;jp;kr;en;fr;ru，会将中文文献的lansortorder域设置为1，日语文献设置为2，韩语文献设置为3，英文文献设置为4，法语文献设置为5，俄语文献设置为6。排序过程中按升序排序，那么自然中文文献在前英文文献在后。若对gblanorder选择设置一个自定义的字符串如:cn;en;ru;fr;jp;kr，那么文种的排列顺序为中文、英文、俄语、法语、日语、韩语。
+其中，与文种相关的排序域 lansortorder 是由 gblanorder 选项设置的，当选项值为 chineseahead 时，语言顺序为cn;jp;kr;en;fr;ru，会将中文文献的 lansortorder 域设置为1，日语文献设置为2，韩语文献设置为3，英文文献设置为4，法语文献设置为5，俄语文献设置为6。排序过程中按升序排序，那么自然中文文献在前英文文献在后。若对 gblanorder 选择设置一个自定义的字符串如:cn;en;ru;fr;jp;kr，那么文种的排列顺序为中文、英文、俄语、法语、日语、韩语。
 
-根据上述的排序逻辑可知，要做排序的调整首先可以考虑合理地设置选项，来选择合适的排序模板、文种顺序和本地化字符排序调整方案。当不满足要求时，可以自定义排序模板，并设置sorting选项为该模板，来实现用户需要的排序方式。
+根据上述的排序逻辑可知，要做排序的调整首先可以考虑合理地设置选项，来选择合适的排序模板、文种顺序和本地化字符排序调整方案。当不满足要求时，可以自定义排序模板，并设置 sorting 选项为该模板，来实现用户需要的排序方式。
 
 
 \subsubsection{姓名中的多音字排序调整}
 
-前一小节在介绍排序模板时，附带介绍了姓名多音字处理的一种方法，具体来说，就是人工或者利用bibmap工具为bib文件中的各个中文条目添加key域，用于指定中文的多音字的拼音，从而使排序时使用这个在key域指定的拼音进行排序。
+前一小节在介绍排序模板时，附带介绍了姓名多音字处理的一种方法，具体来说，就是人工或者利用 bibmap 工具为 bib 文件中的各个中文条目添加 key 域，用于指定中文的多音字的拼音，从而使排序时使用这个在 key 域指定的拼音进行排序。
 
-为避免这一添加拼音到key域的操作，这里提供另一种可能更为方便的方法。biber在做排序时实际上是利用 perl 的 Unicode::Collation::locale 模块，其中的Pinyin.pm提供了汉字的拼音顺序，对该文件做临时的修改，可以调整多音字的顺序。
+为避免这一添加拼音到 key 域的操作，这里提供另一种可能更为方便的方法。biber在做排序时实际上是利用 perl 的 Unicode::Collation::locale 模块，其中的Pinyin.pm提供了汉字的拼音顺序，对该文件做临时的修改，可以调整多音字的顺序。
 
-因为在参考文献排序中通常会使用字的姓名音，所以我们对这个文件做非正式的修改，并放到github上(\href{https://github.com/hushidong/biblatex-gb7714-2015/files/11147697/Pinyin-modified-zhai.zip}{Pinyin.zip})，若用户需要正确的姓的多音字排序，那么只要用该文件替换biber临时工作目录中的文件即可。
+因为在参考文献排序中通常会使用字的姓名音，所以我们对这个文件做非正式的修改，并放到 github 上(\href{https://github.com/hushidong/biblatex-gb7714-2015/files/11147697/Pinyin-modified-zhai.zip}{Pinyin.zip})，若用户需要正确的姓的多音字排序，那么只要用该文件替换 biber 临时工作目录中的文件即可。
 %注意：目前该文件只修改了“曾”“沈”两个字，而“翟”“仇”等没有做修改，若用户有需求后面再增加。
 
-通常biber在第一次运行的时候，会构建一个依赖目录，这也是biber的临时工作路径，而所有的依赖文件就在其中。
-在windows下通常会在临时目录temp下构建类似\verb|par-<hex_encoded_username>/cache-|的目录(其它系统也是类似命名，可以搜索一下)，所有的依赖包括Pinyin.pm都会在其内部，找到并替换即可(Pinyin.pm文件通常在\verb|cache-<hex-code-string>\inc\lib\Unicode\Collate\CJK|下)。
+通常 biber 在第一次运行的时候，会构建一个依赖目录，这也是 biber 的临时工作路径，而所有的依赖文件就在其中。
+在 Windows 下通常会在临时目录 temp 下构建类似 \verb|par-<hex_encoded_username>/cache-| 的目录(其它系统也是类似命名，可以搜索一下)，所有的依赖包括Pinyin.pm都会在其内部，找到并替换即可(Pinyin.pm文件通常在 \verb|cache-<hex-code-string>\inc\lib\Unicode\Collate\CJK| 下)。
 
 
 
@@ -2757,13 +2761,13 @@ biber -l zh__stroke jobname
 
 \subsection{bib文件与文献条目数据}
 
-\subsubsection{数据库bib文件和文献条目}\label{sec:bib:bibtex}
+\subsubsection{数据库 bib 文件和文献条目}\label{sec:bib:bibtex}
 
-参考文献数据以bibtex格式保存在bib文件中。生成参考文献除tex源文档外，还需创建参考文献数据源文件即bib文件。bib文件数据源准备完成后，在加载biblatex宏包后，使用addbibresource命令将其导入。\bc{注意：数据源可以加载多个，比如多个章节的参考文献放在不同的bib文件中，那么全部加载进来即可}。
+参考文献数据以 bibtex 格式保存在 bib 文件中。生成参考文献除 tex 源文档外，还需创建参考文献数据源文件即 bib 文件。bib文件数据源准备完成后，在加载 biblatex 宏包后，使用 addbibresource 命令将其导入。\bc{注意：数据源可以加载多个，比如多个章节的参考文献放在不同的 bib 文件中，那么全部加载进来即可}。
 
 bib文件中的参考文献信息是以条目形式组织，一篇文献创建一条记录即一个参考文献条目，一个条目由若干数据域(有的文档也称为字段)构成。GB/T 7714-2015标准中的文献类型与本样式中条目类型对应关系
-如表\ref{tab:entrytypes}所示，
-各类条目具体的著录格式详见\ref{sec:numeric:data}节。
+如表~\ref{tab:entrytypes} 所示，
+各类条目具体的著录格式详见~\ref{sec:numeric:data} 节。
 
 \begin{table}[!htb]
 \centering
@@ -2800,7 +2804,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
 
 
-组成各个条目的不同数据域(字段)保存有参考文献的各部分信息，比如作者、标题、出版项、日期等，这些信息称为著录项目，录入文献信息时，各著录项目信息应录入到对应的数据域中。GB/T 7714-2015标准中的数据域与biblatex中的域的对应关系如表\ref{tab:entryfields}所示。
+组成各个条目的不同数据域(字段)保存有参考文献的各部分信息，比如作者、标题、出版项、日期等，这些信息称为著录项目，录入文献信息时，各著录项目信息应录入到对应的数据域中。GB/T 7714-2015标准中的数据域与 biblatex 中的域的对应关系如表~\ref{tab:entryfields} 所示。
 
 \begin{table}[!htb]
 \centering
@@ -2838,15 +2842,15 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
 需要注意的是，
 \begin{itemize}
-  \item note域在本样式中也做特殊用途，即在book类型的note域中输入standard表示标准，在aritcle类型的note域中输入news或newspaper表示报纸。
-      当然也可以不做特殊用，而只是表示杂项信息，因为报纸和标准也可以在entrysubtype域中输入new或newspaper和standard表示报纸和标准类型，亦或者直接用standard 和newspaper 类型表示两者，尽管这两种类型不是biblatex 原生支持的条目类型。
+  \item note域在本样式中也做特殊用途，即在 book 类型的 note 域中输入 standard 表示标准，在 aritcle 类型的 note 域中输入 news 或 newspaper 表示报纸。
+      当然也可以不做特殊用，而只是表示杂项信息，因为报纸和标准也可以在 entrysubtype 域中输入 new 或 newspaper 和 standard 表示报纸和标准类型，亦或者直接用standard 和newspaper 类型表示两者，尽管这两种类型不是biblatex 原生支持的条目类型。
 
-  \item usera域用于表示参考文献类型和载体标识符（为兼容Lee zeping 的bst样式使用的bib文件也可以用mark和medium 表示）。一般情况下usera，mark，medium这些域不用在bib文件中输入，而由样式文件自动处理得到，既为了使bib文件更纯粹，也为了兼容不同的样式。
-      %想象一下如果在bib文件中给出usera域，但另一样式需要使用usera域且用途不同，那么就会有兼容性问题。不用手动输入更重要的目的是为用户减负，因为用户可以直接使用从网络（各种学术网站）导出参考文献信息而不用再额外添加一个参考文献类型和载体标识符。
+  \item usera域用于表示参考文献类型和载体标识符（为兼容Lee zeping 的 bst 样式使用的 bib 文件也可以用 mark 和medium 表示）。一般情况下 usera，mark，medium这些域不用在 bib 文件中输入，而由样式文件自动处理得到，既为了使 bib 文件更纯粹，也为了兼容不同的样式。
+      %想象一下如果在 bib 文件中给出 usera 域，但另一样式需要使用 usera 域且用途不同，那么就会有兼容性问题。不用手动输入更重要的目的是为用户减负，因为用户可以直接使用从网络（各种学术网站）导出参考文献信息而不用再额外添加一个参考文献类型和载体标识符。
       因此，用户可以直接使用从网络（各种学术网站）导出参考文献本身的信息而不用再额外手动添加参考文献类型和载体标识符。
 
-  \item 本样式自动判断语言，用户一般不需要直接给出表示文献语言的域language，因为样式在处理过程中会对各个域的字符做语言判断，这对于一篇文献存在多种语言的情况非常有用，比如一本英文著作被翻译为中文，原作者仍用英文，而译者则使用中文。那么该文献无法用一个language 标识文献的语言，但会对不同的域如作者和译者做额外的判断，从而使输出的格式正确。
-      所以，使用language域更多的是用于多种语言混合文献表的排序，即用language 来标记英语、中文、日语、法语和俄语等用于分文种排序。
+  \item 本样式自动判断语言，用户一般不需要直接给出表示文献语言的域 language，因为样式在处理过程中会对各个域的字符做语言判断，这对于一篇文献存在多种语言的情况非常有用，比如一本英文著作被翻译为中文，原作者仍用英文，而译者则使用中文。那么该文献无法用一个language 标识文献的语言，但会对不同的域如作者和译者做额外的判断，从而使输出的格式正确。
+      所以，使用 language 域更多的是用于多种语言混合文献表的排序，即用language 来标记英语、中文、日语、法语和俄语等用于分文种排序。
       %当然这种标记也是由样式自动处理的，用户仅需在自动判断出现问题时手动干预。
 
 \end{itemize}
@@ -2854,34 +2858,34 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
 \subsubsection{文献条目的数据域及其录入方法}\label{sec:bib:field}
 
-各个数据域的录入应符合bib文件规范。需要注意:
+各个数据域的录入应符合 bib 文件规范。需要注意:
 
-\bc{1. 有时直接从网络获取的参考文献信息中可能带有一些特殊字符比如\%，\&等，这些字符在 tex 中通常需要做转义处理，本样式中对像title，journal，abstract，howpublished等常见域中出现的特殊字符已经做了转义，但也存在一些域没有考虑，所以当出现错误时，用户需要手动处理，例如把\%改为\textbackslash \%。}
+\bc{1. 有时直接从网络获取的参考文献信息中可能带有一些特殊字符比如\%，\&等，这些字符在 tex 中通常需要做转义处理，本样式中对像 title，journal，abstract，howpublished等常见域中出现的特殊字符已经做了转义，但也存在一些域没有考虑，所以当出现错误时，用户需要手动处理，例如把\%改为\textbackslash \%。}
 
-\bc{2. 由于目前biber使用\href{https://github.com/ambs/Text-BibTeX/tree/master/btparse}
+\bc{2. 由于目前 biber 使用\href{https://github.com/ambs/Text-BibTeX/tree/master/btparse}
 {btparse}
-来解析bib文件，因此各条目中的引用关键词中不能出现圆括号作为其内容一部分比如\@misc\{Euclidean\_geometry(hi), 这样的写法是不允许的，需要去掉其中()，否则biber会报错。%}
+来解析 bib 文件，因此各条目中的引用关键词中不能出现圆括号作为其内容一部分比如\@misc\{Euclidean\_geometry(hi), 这样的写法是不允许的，需要去掉其中()，否则 biber 会报错。%}
 }
 
-\bc{3. 由于url宏包的特点，在各个域中使用 \textbackslash url命令时，无法使用中文字符，如果要使用带中文字符的网址，那么可以利用 \textbackslash href命令代替 \textbackslash url命令。或者不使用这两个命令，而直接输入网址，超链接则在域格式中用 \textbackslash href 命令定义，比如：}
+\bc{3. 由于 url 宏包的特点，在各个域中使用 \textbackslash url命令时，无法使用中文字符，如果要使用带中文字符的网址，那么可以利用 \textbackslash href命令代替 \textbackslash url命令。或者不使用这两个命令，而直接输入网址，超链接则在域格式中用 \textbackslash href 命令定义，比如：}
 \verb|\DeclareFieldFormat{howpublished}{\href{#1}{#1}}|。
 
-但要注意: 使用\verb|\href|命令形成的超链接文本，可以看做是普通的正文文本，当内部没有断行符存在时，断行可能会存在问题，因此需要手动处理，比如添加空格或者-字符。
-而当使用\verb|\url|和\verb|\nolinkurl|命令时，断行的问题则由url宏包提供的逻辑进行处理，因此往往能够得到适合的断行。所以是使用\verb|\href|还是\verb|\url|需要根据实际情况选择。
+但要注意: 使用 \verb|\href| 命令形成的超链接文本，可以看做是普通的正文文本，当内部没有断行符存在时，断行可能会存在问题，因此需要手动处理，比如添加空格或者-字符。
+而当使用 \verb|\url| 和 \verb|\nolinkurl| 命令时，断行的问题则由 url 宏包提供的逻辑进行处理，因此往往能够得到适合的断行。所以是使用 \verb|\href| 还是 \verb|\url| 需要根据实际情况选择。
 
-\bc{4. 需要表示范围类型的域，比如页码域，通常用一个或多个-符号表示范围值间的间隔符，间隔符在解析后会替换为一个\textbackslash bibrangedash。而日期域在biblatex中是作为日期类型来考虑的，尽管日期也有起止范围的问题，且由于单个日期内部已经存在-符号，因此起止日期间的间隔符用/符号。而卷和期在biblatex中是整数类型的域，本身不具备起止范围解析功能，但GB 7714-2015的连续出版物类型中存在这样的需求，所以特别设计了卷和期的解析，且由于合期常用(7/8)这样的方式表示，因此卷和期范围间隔符用-表示。这些在数据录入过程中是需要注意的。}
+\bc{4. 需要表示范围类型的域，比如页码域，通常用一个或多个-符号表示范围值间的间隔符，间隔符在解析后会替换为一个\textbackslash bibrangedash。而日期域在 biblatex 中是作为日期类型来考虑的，尽管日期也有起止范围的问题，且由于单个日期内部已经存在-符号，因此起止日期间的间隔符用/符号。而卷和期在 biblatex 中是整数类型的域，本身不具备起止范围解析功能，但GB 7714-2015的连续出版物类型中存在这样的需求，所以特别设计了卷和期的解析，且由于合期常用(7/8)这样的方式表示，因此卷和期范围间隔符用-表示。这些在数据录入过程中是需要注意的。}
 
 
 下面详细介绍本样式中使用的域及其数据录入方式:
 
 \begin{description}
-  \item[author] 在biblatex中author域属于name数据类型，输入数据时，各姓名间用and 连接，当姓名过多省略时，用others代替。
+  \item[author] 在 biblatex 中 author 域属于 name 数据类型，输入数据时，各姓名间用and 连接，当姓名过多省略时，用 others 代替。
 
       单个姓名，对于中文作者直接输入中文姓名即可。比如:
 
       于潇 and 刘义 and 柴跃廷 and others
 
-      对于英文作者，单个姓名有两种biblatex可以解析的输入方式:
+      对于英文作者，单个姓名有两种 biblatex 可以解析的输入方式:
 
       \textcircled{1}prefix lastname, suffix, firstname middlename
 
@@ -2893,20 +2897,20 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
       其中第一个姓名输入为前缀，姓，后缀，名\ 中间名。第二个姓名输入为名\ 姓。第三个姓名输入为姓，名\ 中间名。
 
-      \bc{ 推荐使用第一种方式录入作者姓名，特别是存在前后缀的情况。对于第二种输入方式，姓名各个组成部分最好首字母是大写的，首字母非大写可能导致解析出错，比如姓名只有两个组成部分: firstname和lastname，如果firstname 小写的话，有可能会解析为prefix lastname。对于第一种输入方式，则至少需要lastname首字母大写，否则有可能将lastname 解析成prefix。 注意lastname也称familyname，firstname middlename 两者共称givenname}
+      \bc{ 推荐使用第一种方式录入作者姓名，特别是存在前后缀的情况。对于第二种输入方式，姓名各个组成部分最好首字母是大写的，首字母非大写可能导致解析出错，比如姓名只有两个组成部分: firstname和 lastname，如果firstname 小写的话，有可能会解析为prefix lastname。对于第一种输入方式，则至少需要 lastname 首字母大写，否则有可能将lastname 解析成 prefix， 注意 lastname 也称 familyname，firstname middlename 两者共称givenname}
 
       对于中文的机构作者，不需要解析，直接输入机构名，比如:
 
       中国企业投资协会 and 台湾并购与私募股权协会 and 汇盈国际投资集团
 
-      对于英文的机构作者，由于机构名可能存在空格或and等字符串，因此最好用\{\}包起来，避免解析出错，比如：
+      对于英文的机构作者，由于机构名可能存在空格或 and 等字符串，因此最好用\{\}包起来，避免解析出错，比如：
 
       \{International Federation of Library Association and Institutions\} and NASA
 
-  \item[title] 直接输入需要打印的内容，subtitle或titleaddon域类似
-  \item[translator] 与author域类似，只是输入的是译者
+  \item[title] 直接输入需要打印的内容，subtitle或 titleaddon 域类似
+  \item[translator] 与 author 域类似，只是输入的是译者
   \item[edition] 直接输入整数，或者需要打印的内容
-  \item[location] 直接输入需要打印的地址内容，而address域在biblatex中作为location别名，表示相同的内容。
+  \item[location] 直接输入需要打印的地址内容，而 address 域在 biblatex 中作为 location 别名，表示相同的内容。
   \item[publisher] 直接输入需要打印的出版者内容，institution，organization域类似
   \item[date] 日期可以格式化输入，格式化输入biblatex 会自动解析，如果无法解析会忽略该域。格式化的输入方式是:
 
@@ -2914,21 +2918,21 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
       比如: 2001-05-06/2001-08-01
 
-      \emph{特别要注意起止日期之间的分隔符为/而不是- ，因为年月日之间已经存在分隔符-。同时因为日期biber解析是严格按照iso标准处理，因此年、月、日数字需要写全，2001-05-06不能写为2001-5-5，否则不能解析}，解析完成后第一个年- 月- 日会解析并存储到year，month，day域中，第二个会解析并存储到endyear，endmonth，endday域中。更多细节参考biblatex 手册的Table 8: Date Interface。
+      \emph{特别要注意起止日期之间的分隔符为/而不是- ，因为年月日之间已经存在分隔符-。同时因为日期 biber 解析是严格按照 iso 标准处理，因此年、月、日数字需要写全，2001-05-06不能写为2001-5-5，否则不能解析}，解析完成后第一个年- 月- 日会解析并存储到 year，month，day域中，第二个会解析并存储到 endyear，endmonth，endday域中。更多细节参考biblatex 手册的Table 8: Date Interface。
 
-  \item[year] year域的输入与date域类似，为了兼容一些老的bib文件，把year 直接用map 转换成date，所以在本样式的使用中输入year域与date域相同。
+  \item[year] year域的输入与 date 域类似，为了兼容一些老的 bib 文件，把year 直接用map 转换成 date，所以在本样式的使用中输入 year 域与 date 域相同。
 
-      但year与date存在一定的差异，即year可以处理仅有年的信息或者需要原样打印的内容。比如:
+      但 year 与 date 存在一定的差异，即 year 可以处理仅有年的信息或者需要原样打印的内容。比如:
       1881(清光绪七年)。
 
-      这一信息如果放在date中会被自动忽略，但放到year域中，本样式会先将其拷贝到date中进行解析，无法解析的话，date域忽略，但year 信息仍然存在，并原样打印。
+      这一信息如果放在 date 中会被自动忽略，但放到 year 域中，本样式会先将其拷贝到 date 中进行解析，无法解析的话，date域忽略，但year 信息仍然存在，并原样打印。
 
 
-  \item[urldate] urldate域与date域类似，只是解析时，存储到urlday，urlmonth，urlyear，urlendday，urlendmonth，urlendyear域中。origdate和eventdate与urldate情况类似。
+  \item[urldate] urldate域与 date 域类似，只是解析时，存储到 urlday，urlmonth，urlyear，urlendday，urlendmonth，urlendyear域中。origdate和 eventdate 与 urldate 情况类似。
 
-  \item[pages] 可以格式化输入或输入需要打印的内容。格式化输入时，页码用整数，当有范围时，用单个或多个短横线-隔开。比如:59-60或\verb|59--60|。 当无法解析时，输入内容被认为是需要完整打印的内容。
+  \item[pages] 可以格式化输入或输入需要打印的内容。格式化输入时，页码用整数，当有范围时，用单个或多个短横线-隔开。比如:59-60或 \verb|59--60|。 当无法解析时，输入内容被认为是需要完整打印的内容。
 
-  \item[url] 直接输入需要打印的网址内容。注意不需要在域内加上\verb|\url|命令来表示网址链接，仅需要输入网址本身即可，且特殊字符无需转义。即输入方式为:
+  \item[url] 直接输入需要打印的网址内容。注意不需要在域内加上 \verb|\url| 命令来表示网址链接，仅需要输入网址本身即可，且特殊字符无需转义。即输入方式为:
 
       \verb|url={http://www.greenwood.com/can_b_b#abc},|
 
@@ -2936,25 +2940,25 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
       \verb|url={\url{http://www.greenwood.com/can_b_b#abc}},|
 
-      如果是在其它域比如howpublished等域中输入网址，也可以直接输入网址，但所有的特殊字符都需要转义，因为它就是一个普通文本，同时换行行为也与普通文本一致，当网址字符串中没有空格或-字符时，断行可能出现问题，因此需要手动处理。如果加入\verb|\url|命令，那么其中一些特殊字符可能不需要转义，比如\verb|_|等，
-      且处理断行可以由\verb|\url|命令的内部逻辑处理，通过\verb|\UrlBreaks|设置可以自动实现比较合适的断行。当然因为biblatex已经做了进一步的处理，所以\verb|\url|中的文本断行是由三个计数器控制: biburlnumpenalty、biburlucpenalty、biburllcpenalty，合理设置这三个计数器，即可得到满意的断行效果。
+      如果是在其它域比如 howpublished 等域中输入网址，也可以直接输入网址，但所有的特殊字符都需要转义，因为它就是一个普通文本，同时换行行为也与普通文本一致，当网址字符串中没有空格或-字符时，断行可能出现问题，因此需要手动处理。如果加入 \verb|\url| 命令，那么其中一些特殊字符可能不需要转义，比如 \verb|_| 等，
+      且处理断行可以由 \verb|\url| 命令的内部逻辑处理，通过 \verb|\UrlBreaks| 设置可以自动实现比较合适的断行。当然因为 biblatex 已经做了进一步的处理，所以 \verb|\url| 中的文本断行是由三个计数器控制: biburlnumpenalty、biburlucpenalty、biburllcpenalty，合理设置这三个计数器，即可得到满意的断行效果。
 
-  \item[doi] 直接输入需要打印的DOI内容
-  \item[note] 在本样式中note域可以有特殊功能，当其内容为standard或news|newspaper 时，判断条目类型为标准和报纸析出的文献。
-  \item[entrysubtype] 当其内容为standard或news|newspaper 时，判断条目类型为标准和报纸析出的文献。
+  \item[doi] 直接输入需要打印的 DOI 内容
+  \item[note] 在本样式中 note 域可以有特殊功能，当其内容为 standard 或news|newspaper 时，判断条目类型为标准和报纸析出的文献。
+  \item[entrysubtype] 当其内容为 standard 或news|newspaper 时，判断条目类型为标准和报纸析出的文献。
   \item[bookauthor] 用于析出文献时，作为析出文献来源文献的作者，其输入方式与author 相同。
-  \item[editor] editor有时直接作为文献的责任者，比如连续出版物(periodical)类型。有时因为author缺失，editor被当做责任者。还有的时候bookauthor缺失，editor也被当做bookauthor，即析出文献来源文献的责任者。editor的输入方式与author相同。
-  \item[editortype]  editortype作为editor的类型或角色说明域，可以用来在editor后面加上适当的表示角色的字符串，比如“主编”或“eds.”等。常见的角色包括：editor、compiler、founder、continuator, redactor、reviser 和collaborator等。当然这是西文环境中的情况，足够细分，中文情况下可以不用这么细分，而仅对editortype={editor}时的本地化字符串做设置，当然如果一篇文档中存在多种不同的角色editor文献的情况，也需要做细分。
+  \item[editor] editor有时直接作为文献的责任者，比如连续出版物(periodical)类型。有时因为 author 缺失，editor被当做责任者。还有的时候 bookauthor 缺失，editor也被当做 bookauthor，即析出文献来源文献的责任者。editor的输入方式与 author 相同。
+  \item[editortype]  editortype作为 editor 的类型或角色说明域，可以用来在 editor 后面加上适当的表示角色的字符串，比如“主编”或“eds.”等。常见的角色包括：editor、compiler、founder、continuator, redactor、reviser 和 collaborator 等。当然这是西文环境中的情况，足够细分，中文情况下可以不用这么细分，而仅对editortype={editor}时的本地化字符串做设置，当然如果一篇文档中存在多种不同的角色 editor 文献的情况，也需要做细分。
   \item[booktitle] 用于析出文献时，作为析出文献来源文献的题名，其输入方式与title 相同。booktitleaddon域输入方式也相同。
   \item[volume] 连续出版物的卷，格式化输入用整数，当有范围时中间用短横线连接，比如:1-4。当无法解析时，输入内容被认为是需要完整打印的内容。
-  \item[number] 连续出版物的期或报纸的版次，输入与volume类似。或者是专利等的号时，直接输入需要打印的内容。
+  \item[number] 连续出版物的期或报纸的版次，输入与 volume 类似。或者是专利等的号时，直接输入需要打印的内容。
   \item[journal] 用于连续出版物析出文献，表示连续出版物的题名，比如期刊、报纸的提名，直接输入需要打印的内容。journaltitle，journalsubtitle域类似处理。
-  \item[version] 用于report和manual的版本信息，直接输入需要打印的内容。
+  \item[version] 用于 report 和 manual 的版本信息，直接输入需要打印的内容。
   \item[mark/usera] 不用输入，自动处理。也可以输入文献类型标识符比如M, J, DB, CP等。
   \item[medium] 不用输入，自动处理。也可以输入文献载体标识符比如MT, DK, CD, OL 等。
-  \item[language] 不用输入，自动处理。也可以输入语言类型比如english, russian, french, japnese, korean, chinese等。主要用来标识文献的语言类型，用法详见\ref{sec:multilan:combine}节。
-  \item[langid] 不用输入，自动处理。也可以输入语言名比如english, russian, french 等，中日韩语一般用english。主要用于配合babel等宏包进行文献的本地化字符串处理，用法详见\ref{sec:multilan:combine}节。
-  \item[nameformat] 不用输入。当需要调整当前条目的作者姓名的格式时，可以输入格式名：uppercase, lowercase, givenahead, familyahead, pinyin 等。详见\ref{sec:added:opt}节。
+  \item[language] 不用输入，自动处理。也可以输入语言类型比如english, russian, french, japnese, korean, chinese等。主要用来标识文献的语言类型，用法详见~\ref{sec:multilan:combine} 节。
+  \item[langid] 不用输入，自动处理。也可以输入语言名比如english, russian, french 等，中日韩语一般用 english，主要用于配合 babel 等宏包进行文献的本地化字符串处理，用法详见~\ref{sec:multilan:combine} 节。
+  \item[nameformat] 不用输入。当需要调整当前条目的作者姓名的格式时，可以输入格式名：uppercase, lowercase, givenahead, familyahead, pinyin 等。详见~\ref{sec:added:opt} 节。
   \item[namefmtid] 不用输入。
 \end{description}
 
@@ -2981,101 +2985,101 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
     \href{https://github.com/CTeX-org/lshort-cn}{lshort-cn}、
     \href{https://github.com/latexstudio/LaTeXFAQ-cn}{LatexFAQ-CN}、
     \href{https://tex.stackexchange.com}{tex.stackexchange.com}
-    了解到更多。笔者从最初开始学习latex时利用 thebibliography 环境生成参考文献，到对格式化有更多需求后开始寻求利用参考文献宏包，再到最后选择使用biblatex宏包，在不断实践过程中越发感觉到biblatex 在生成参考文献方面的巨大潜力。以笔者的观点其优点主要包括:
+    了解到更多。笔者从最初开始学习 latex 时利用 thebibliography 环境生成参考文献，到对格式化有更多需求后开始寻求利用参考文献宏包，再到最后选择使用 biblatex 宏包，在不断实践过程中越发感觉到biblatex 在生成参考文献方面的巨大潜力。以笔者的观点其优点主要包括:
 
-    %[也由于对bibtex语言不熟悉，偷懒不想学$( \hat{} \bot \hat{} )$]
+    %[也由于对 bibtex 语言不熟悉，偷懒不想学$( \hat{} \bot \hat{} )$]
     \begin{itemize}
     \item 使用简单。代码结构很简单，格式控制很简单，功能设置很简单，编译方式很简单，编译命令无限制(xelatex、pdflatex等均可)。
     %使用够方便
 
-    \item 划分自由。在一个文档中可以生成任意数量的文献表，无需用将分档划分成不同的文件来辅助生成分章参考文献。利用refsection 和refsegment方便划分，具有嵌套、遍历等多种灵活处理方式。
+    \item 划分自由。在一个文档中可以生成任意数量的文献表，无需用将分档划分成不同的文件来辅助生成分章参考文献。利用refsection 和 refsegment 方便划分，具有嵌套、遍历等多种灵活处理方式。
     %划分很自由，划分无限制
 
-    \item 定制方便。使用是tex命令(宏)控制格式，定制和修改相比 bibtex 语言更为容易。全面提供适用于自然学科、人文学科的多种不同类型的参考文献样式，参考、引用、移植、定制均很便捷。
+    \item 定制方便。使用是 tex 命令(宏)控制格式，定制和修改相比 bibtex 语言更为容易。全面提供适用于自然学科、人文学科的多种不同类型的参考文献样式，参考、引用、移植、定制均很便捷。
     %定制很容易
 
     %处理无限制，支持更全面
-    \item 支持全面。后端处理程序biber处理大数据量毫无压力，不用担心内存不足问题，字符编码支持utf-8，完全支持中文的bibtex 键(引用关键字)。biber除了自身提供的大量功能，比如：动态数据修改、参考文献数据检查、引用文献数据的bib输出(例\ref{eg:bibercmd:outbibfile})等外，还可利用一些perl模块来实现一些特殊功能，比如：实现文件编码的转换（perl 的Encode::CN 模块），
+    \item 支持全面。后端处理程序 biber 处理大数据量毫无压力，不用担心内存不足问题，字符编码支持utf-8，完全支持中文的bibtex 键(引用关键字)。biber除了自身提供的大量功能，比如：动态数据修改、参考文献数据检查、引用文献数据的 bib 输出(例~\ref{eg:bibercmd:outbibfile})等外，还可利用一些 perl 模块来实现一些特殊功能，比如：实现文件编码的转换（perl 的Encode::CN 模块），
         排序的本地化调整（perl的Unicode::Collation::locale 模块，
-        中文字符的拼音和笔画排序见例\ref{eg:sort:opts}、例\ref{eg:sort:bibercmd}）等。
+        中文字符的拼音和笔画排序见例~\ref{eg:sort:opts}、例~\ref{eg:sort:bibercmd}）等。
     \end{itemize}
-    %上述这些优点也是笔者决定编写符合GB/T 7714-2015标准的参考文献样式文件的原因之一。
+    %上述这些优点也是笔者决定编写符合 GB/T 7714-2015 标准的参考文献样式文件的原因之一。
 
 \subsubsection{文献表后向超链接功能}
 
-文献表后向超链接功能由backref选项启用，如例\ref{eg:func:backref} 所示。
+文献表后向超链接功能由 backref 选项启用，如例~\ref{eg:func:backref} 所示。
 
 \begin{example}{文献条目的后向超链接设置}{eg:func:backref}
 \begin{texlist}
-%加上后向超链接设置，需要4步编译。
+%加上后向超链接设置，需要 4 步编译。
 \usepackage[backend=biber,style=gb7714-2015,backref=true]{biblatex}
 \end{texlist}
 \end{example}
 
-\subsubsection{biber 抽取当前引用文献到新的bib文件}
+\subsubsection{biber 抽取当前引用文献到新的 bib 文件}
 
-  利用biber可以实现引用文献数据的bib输出，常用于从一个大的bib文件中导出仅被引用的文献信息到一个小的bib 文件，比如：要提交一个小论文附带的bib文件时。
+  利用 biber 可以实现引用文献数据的 bib 输出，常用于从一个大的 bib 文件中导出仅被引用的文献信息到一个小的bib 文件，比如：要提交一个小论文附带的 bib 文件时。
 
-    \begin{example}{输出引用文献数据时的biber选项}{eg:bibercmd:outbibfile}
+    \begin{example}{输出引用文献数据时的 biber 选项}{eg:bibercmd:outbibfile}
     \begin{texlist}
     biber jobname --output-format=bibtex
     \end{texlist}
     \end{example}
 
-\subsubsection{biber 控制特殊符号的tex宏的转换}
+\subsubsection{biber 控制特殊符号的 tex 宏的转换}
 
-  默认情况下biber为了实现更好的排序，会将一些latex提供的特殊宏转换为utf-8编码字符。但有时我们可能并不需要做这样的转换，因为转换后符号的形式就变了。由于biber依赖一个字符映射表recode\_data.xml进行转换，因此我们可以利用它来构建一个自定义映射表，从而避免biber 对一些特殊宏的转换。具体做法如下：
+  默认情况下 biber 为了实现更好的排序，会将一些 latex 提供的特殊宏转换为utf-8编码字符。但有时我们可能并不需要做这样的转换，因为转换后符号的形式就变了。由于 biber 依赖一个字符映射表recode\_data.xml进行转换，因此我们可以利用它来构建一个自定义映射表，从而避免biber 对一些特殊宏的转换。具体做法如下：
     \begin{itemize}
-    \item 找到biber的临时工作路径中的，recode\_data.xml (搜索能找到)
-    \item 复制一个到其它位置，并定义为，比如\verb|c:\recodeudf.xml|
-    \item 打开该文件，并找到textquotesingle那一项删除，将所有的set修改为special，并保存
+    \item 找到 biber 的临时工作路径中的，recode\_data.xml (搜索能找到)
+    \item 复制一个到其它位置，并定义为，比如 \verb|c:\recodeudf.xml|
+    \item 打开该文件，并找到 textquotesingle 那一项删除，将所有的 set 修改为 special，并保存
     \item 编译的时候，xelatex正常编译，biber这一步则使用命令：
 
-    \begin{example}{使用自定义特殊字符宏映射表的biber选项}{eg:bibercmd:charmap}
+    \begin{example}{使用自定义特殊字符宏映射表的 biber 选项}{eg:bibercmd:charmap}
     \begin{texlist}
     biber jobname.bcf --recodedata=c:\recodeudf.xml --decodecharsset=special
     \end{texlist}
     \end{example}
     \end{itemize}
 
-\subsubsection{不同tex引擎下的编译方式}
+\subsubsection{不同 tex 引擎下的编译方式}
 
-    tex源文档既可以用xelatex编译，也可以利用pdflatex或latex进行编译。但要注意的是pdflatex编译可能因为某些样式比如authoryear，使用了xstring宏包中的一些命令而导致错误，但numeric类样式通常没有问题。该问题在biblatex更新到3.12版本后取消xstring 宏包后得以解决。
+    tex源文档既可以用 xelatex 编译，也可以利用 pdflatex 或 latex 进行编译。但要注意的是 pdflatex 编译可能因为某些样式比如 authoryear，使用了 xstring 宏包中的一些命令而导致错误，但 numeric 类样式通常没有问题。该问题在 biblatex 更新到3.12版本后取消xstring 宏包后得以解决。
 
       中文用户编译还需要注意编码问题。
-      utf-8编码的文档，采用xelatex 编译没有任何注意事项，但使用pdflatex编译时，需要给ctex 宏包加载UTF8选项，比如 \verb|\usepackage[UTF8]{ctex}| 。
+      utf-8编码的文档，采用xelatex 编译没有任何注意事项，但使用 pdflatex 编译时，需要给ctex 宏包加载UTF8选项，比如 \verb|\usepackage[UTF8]{ctex}| 。
 
       该选项在文档类加载时给出也可，比如 \verb|\documentclass[UTF8]{article}| ，
-      同时\bc{文献引用时所用关键词应采用英文}，比如 \verb|\cite{zhangml2008}| 而不能包含中文，比如 \verb|\cite{张敏莉2008}|，因为参考文献entrykey用中文时，bbl中会包含中文的entrykey，所以pdflatex编译时ctex宏包对中文的附加处理会让biblatex读入bbl进行排序时会报错，但若忽略错误也能正确输出参考文献，但正文会有额外输出。
+      同时\bc{文献引用时所用关键词应采用英文}，比如 \verb|\cite{zhangml2008}| 而不能包含中文，比如 \verb|\cite{张敏莉2008}|，因为参考文献 entrykey 用中文时，bbl中会包含中文的 entrykey，所以 pdflatex 编译时 ctex 宏包对中文的附加处理会让 biblatex 读入 bbl 进行排序时会报错，但若忽略错误也能正确输出参考文献，但正文会有额外输出。
 
       当文档使用其他编码时，可以利用notepad++ 或notepad2 等编辑器将其转换为UTF-8编码。
 
-      若不进行转换，使用xelatex编译通常需要指定一个文档编码，比如windows 环境下的GB2312 编码的文档需要指定\verb|\XeTeXinputencoding "GBK"|，否则会显示乱码。使用pdflatex 进行编译时，如果biblatex不能正确的处理编码问题，那么需要为其明确的指定texencoding 和bibencoding 选项。比如windows环境下的GB2312编码的文档，
-      需要指定\verb|\usepackge[texencoding=GBK]{biblatex}|。
+      若不进行转换，使用 xelatex 编译通常需要指定一个文档编码，比如Windows 环境下的GB2312 编码的文档需要指定 \verb|\XeTeXinputencoding "GBK"|，否则会显示乱码。使用pdflatex 进行编译时，如果 biblatex 不能正确的处理编码问题，那么需要为其明确的指定texencoding 和bibencoding 选项。比如 Windows 环境下的GB2312编码的文档，
+      需要指定 \verb|\usepackge[texencoding=GBK]{biblatex}|。
 
-      %增加了对GBK支持的说明，2018-05-11
+      %增加了对 GBK 支持的说明，2018-05-11
 
 \subsubsection{容易出现的错误和解决方式}
 
     \begin{itemize}
-    \item 当顺序编码和著者-出版年制切换，或者biblatex版本切换，或者不同样式切换时，如果编译出错，可先清理一下辅助文件，完成后再重新编译。
+    \item 当顺序编码和著者-出版年制切换，或者 biblatex 版本切换，或者不同样式切换时，如果编译出错，可先清理一下辅助文件，完成后再重新编译。
 
-  \item 当bibtex键中含有中文的时候，texlive2015中的biblatex3.0版的对参考文献条目的超链接会出现问题，而texlive2016中的biblatex3.4或以后的版本则没有问题。
+  \item 当 bibtex 键中含有中文的时候，texlive2015中的biblatex3.0版的对参考文献条目的超链接会出现问题，而texlive2016中的biblatex3.4或以后的版本则没有问题。
 
-  \item GB/T 7714-2015中的著者-出版年制要求参考文献按文种集合，且中文在前英文在后。主要通过gblanorder选项、排序模板DeclareSortingScheme\{gb7714-2015\} (biblatex3.7 以前版本) 或 DeclareSortingTemplate\{gb7714-2015\} (biblatex3.8 以后版本)、以及自动判断的language 域实现。一般情况下样式能够正确区分不同语言文献，如果出现错误，用户可以手动修改bib源文件，将language 域设置为正确的语言(比如设置成：chinese，english，russian，japanese等)，详见\ref{sec:usage:bbx} 节的说明。
+  \item GB/T 7714-2015中的著者-出版年制要求参考文献按文种集合，且中文在前英文在后。主要通过 gblanorder 选项、排序模板DeclareSortingScheme\{gb7714-2015\} (biblatex3.7 以前版本) 或 DeclareSortingTemplate\{gb7714-2015\} (biblatex3.8 以后版本)、以及自动判断的language 域实现。一般情况下样式能够正确区分不同语言文献，如果出现错误，用户可以手动修改 bib 源文件，将language 域设置为正确的语言(比如设置成：chinese，english，russian，japanese等)，详见~\ref{sec:usage:bbx} 节的说明。
 
     %上一段2016-1114更新，下面这段是旧的说法，
-    %通过定义DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现中文在前英文在后但两个文种的文献各自也是降序的。还有一种变通的方法是，在录入bib文件时，在userb域填入用于排序的信息，比如需要排前面中文文献填cn，排后面的英文文献用en。这样因为修改后的排序格式nyt会在author域前先用userb进行排序，自然会把中文文献放在前面。
+    %通过定义DeclareSortingScheme\{nyt\}，设置方向为direction=descending，可以实现中文在前英文在后但两个文种的文献各自也是降序的。还有一种变通的方法是，在录入 bib 文件时，在 userb 域填入用于排序的信息，比如需要排前面中文文献填 cn，排后面的英文文献用 en，这样因为修改后的排序格式 nyt 会在 author 域前先用 userb 进行排序，自然会把中文文献放在前面。
 
   \item 对于出版地和出版者同时缺省的替换处理，GB/T 7714-2015中没有给出明确说明，但给出了一个英文文献示例(见GB/T 7714-2015 附录A.3)，形式为: [S.l. : s.n.]，尽管中文没有示例，这里也考虑类似的格式，比如: [出版地不详 : 出版者不详]。
 
       %，这种形式本样式没有给出，而直接用两者分开的形式，[S.l.] : [s.n.]
       %事实上这里作者认为没有必要把s.l.和s.n. 合起来，不仅与缺省两者之一的情况不统一，样式处理起来也增加不必要的麻烦。
 
-  \item 由于biblatex宏包的组成比较复杂，所以当遇到具体问题时，查找具体命令的代码会比较麻烦。出现问题首先可以从biblatex-gb7714-2015，biblatex-solution-to-latex-bibliography里面查找说明。若没有则可以从github上的readme，wiki，issue里面查找问题，当找不到解决方案可以提issue。
+  \item 由于 biblatex 宏包的组成比较复杂，所以当遇到具体问题时，查找具体命令的代码会比较麻烦。出现问题首先可以从biblatex-gb7714-2015，biblatex-solution-to-latex-bibliography里面查找说明。若没有则可以从 github 上的 readme，wiki，issue里面查找问题，当找不到解决方案可以提 issue，
       若要自己去解决问题，则可以从如下查找顺序来研究。
-      biblatex自身相关的包括各种bbx，cbx文件，重点是biblatex.sty，biblatex.def，standard.bbx，还有blx-dm.def 等一些设置文件。另外不要忘记lbx文件，这里面也有一些语言相关的命令，
-      比如\verb|\bibrangedash|，\verb|\finalandcomma|等。至于其它一些tex 原始命令可以从tex、xetex的相关书籍文档查找，latex 相关代码则可以从latex2e，etoolbox等说明文档或latex.ltx，etoolbox.STY等源代码文档中查找。注意多使用meaning 命令来获取命令的定义。
+      biblatex自身相关的包括各种 bbx，cbx文件，重点是biblatex.sty，biblatex.def，standard.bbx，还有blx-dm.def 等一些设置文件。另外不要忘记 lbx 文件，这里面也有一些语言相关的命令，
+      比如 \verb|\bibrangedash|，\verb|\finalandcomma| 等。至于其它一些tex 原始命令可以从tex、xetex的相关书籍文档查找，latex 相关代码则可以从latex2e，etoolbox等说明文档或latex.ltx，etoolbox.STY等源代码文档中查找。注意多使用meaning 命令来获取命令的定义。
   \end{itemize}
 
 
@@ -3083,26 +3087,26 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
   %宏包设计方法说明
 
   关于宏包的设计说明，读者可以直接查看bbx,cbx文件，其中有详细的注释说明。
-  更一般的思路性质的设计与实现方法以及涉及到的一些biblatex功能介绍，以项目示例的形式总结在
-  \href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}{\LaTeX 文档中文参考文献的biblatex解决方案}中，本文档不再重复给出，有需要了解的用户参考。
+  更一般的思路性质的设计与实现方法以及涉及到的一些 biblatex 功能介绍，以项目示例的形式总结在
+  \href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}{\LaTeX 文档中文参考文献的 biblatex 解决方案}中，本文档不再重复给出，有需要了解的用户参考。
 
-  关于其它biblatex中文样式，
+  关于其它 biblatex 中文样式，
   目前符合 GB/T 7714-2005 或 GB/T 7714-2015 参考文献著录规则的 biblatex 样式有多个实现，除本样式外，还有李志奇(icetea)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=74474}} 和沈周(szsdk)\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152561&extra=page\%3D1}} ，其效果是类似的。此外，Casper Ti. Vector提供的biblatex 样式caspervector 也是不错的中文参考文献样式
       \footnote{\url{https://gitlab.com/CasperVector/biblatex-caspervector}}。感谢各位作者的分享!
 
 
-%  \item 本文档根据GB/T 7714-2015提供的参考文献表著录格式示例做了测试和验证，详见第\ref{sec:eg:gb77142015}节。
+%  \item 本文档根据 GB/T 7714-2015 提供的参考文献表著录格式示例做了测试和验证，详见第~\ref{sec:eg:gb77142015} 节。
 %    测试系统环境为:
 %    \begin{itemize}
-%    \item windows7x86+texlive 2014，采用xelatex编译;
+%    \item Windows7x86+texlive 2014，采用 xelatex 编译;
 %
-%    \item windows7x64+texlive 2015，采用xelatex编译;
+%    \item Windows7x64+texlive 2015，采用 xelatex 编译;
 %
-%    \item 虚拟机xp+texlive 2016，采用xelatex编译;
+%    \item 虚拟机xp+texlive 2016，采用 xelatex 编译;
 %
-%    \item Deepin linux-x64v15.3+texlive 2016，采用xelatex编译。
+%    \item Deepin linux-x64v15.3+texlive 2016，采用 xelatex 编译。
 %
-%    \item windows7x64+texlive 2017，采用xelatex编译;
+%    \item Windows7x64+texlive 2017，采用 xelatex 编译;
 %    \end{itemize}
 
 
@@ -3143,21 +3147,21 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
   \item 示例: beamer类中的参考文献示例
 
-  \item 示例: 专著book和专著中的析出文献inbook及标准standard文献
+  \item 示例: 专著 book 和专著中的析出文献 inbook 及标准 standard 文献
 
-  \item 示例: 连续出版物periodical和连续出版物中的析出文献article
+  \item 示例: 连续出版物 periodical 和连续出版物中的析出文献article
 
   \item 示例: 电子资源或在线资源online
 
   \item 示例: 学位论文thesis、专利文献patent
 
-  \item 示例: 报告report、手册manual和档案、未出版物unpublished
+  \item 示例: 报告report、手册 manual 和档案、未出版物unpublished
 
-  \item 示例: 会议文集proceedings和会议文集中析出的文献inproceedings
+  \item 示例: 会议文集 proceedings 和会议文集中析出的文献inproceedings
 
-  \item 示例: 汇编collection和汇编中的析出文献incollection
+  \item 示例: 汇编 collection 和汇编中的析出文献incollection
 
-  \item 示例: online条目仅存url信息
+  \item 示例: online条目仅存 url 信息
 
   \item 示例: 传统和新增条目类型的兼容性
 
@@ -3165,7 +3169,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
   \item 示例: 处理参考文献信息中\&等特殊字符
 
-  \item 示例: 处理著者-出版年制article中卷信息缺省的标点
+  \item 示例: 处理著者-出版年制 article 中卷信息缺省的标点
 
   \item 示例: 标题中有\textbackslash LaTeX\{\}等名称时的情况
 
@@ -3188,14 +3192,14 @@ beamer类示例，参见: \href{run:./example/egbeamer.tex}{顺序编码制}；
 
 \subsubsection{参考文献表}\label{sec:bib:serialno}
 
-GB/T 7714-2015规定采用顺序编码制组织参考文献时，各篇文献应按正文部分标注的序号依次列出。具体参考GB/T 7714-2015 第9.1节。
+GB/T 7714-2015规定采用顺序编码制组织参考文献时，各篇文献应按正文部分标注的序号依次列出。具体参考GB/T 7714-2015 第 9.1 节。
 
 \subsubsection{文献标注法}
 标注则根据在正文中引用的先后顺序连续编码，将序号置于方括号内。
 
 同一处引用多篇文献，各篇序号间用逗号隔开，遇连续序号，起讫序号用短横线连接。
 
-多次引用同一著者的同一文献时，可在序号的方括号外著录该文献引文页码，这一要求与引用(标注)样式无关，需要作者在写文档时使用相应的引用命令并在需要时输入页码信息。针对这一要求，在cite等常用命令基础上，新定义了一个引用命令pagescite，其使用方式详见第\ref{sec:cbx:usage}节。标注样式更详细要求参考GB/T 7714-2015 第10.1节。
+多次引用同一著者的同一文献时，可在序号的方括号外著录该文献引文页码，这一要求与引用(标注)样式无关，需要作者在写文档时使用相应的引用命令并在需要时输入页码信息。针对这一要求，在 cite 等常用命令基础上，新定义了一个引用命令 pagescite，其使用方式详见第~\ref{sec:cbx:usage} 节。标注样式更详细要求参考GB/T 7714-2015 第10.1节。
 
 如果顺序编码制采用脚注方式，则序号由计算机自动生成圈码。多次引用同一著者的同一文献时，若采用脚注方式应重复著录参考文献，但在参考文献表中的著录项目可以简化文献序号和页码，也就是说，每个文献引用都要对应的一个脚注，脚注的内容为文献条目，但条目的内容可以简化为文献序号和页码。
 
@@ -3203,7 +3207,7 @@ GB/T 7714-2015规定采用顺序编码制组织参考文献时，各篇文献应
 一、正文每个文献需要引用均生成脚注文献，因此一个引用命令只能带一个文献引用关键字。且正文中引用的标注标签格式不同，是带圈的上标数字而不是[]包围的数字。
 二、脚注中的文献表即便是遇到相同文献也需要重复输出，但可以简化为序号和页码。
 
-事实上如果不进行简化而只是简单重复输出，对于biblatex来说处理其实更方便，但为了与GB/T 7714-2015 标准给出的示例一致，biblatex-gb7714-2015也做了实现，注意：脚注方式文献表的引用命令为\verb|\footfullcite|，需要注意由于脚注本身表格中存在的问题，可能导致在其中使用该命令出现比较奇怪的现象，也要注意在图表标题中的使用情况。GB/T 7714-2015 标准中示例实现如图\ref{fig:numeric:footnote}所示：
+事实上如果不进行简化而只是简单重复输出，对于 biblatex 来说处理其实更方便，但为了与GB/T 7714-2015 标准给出的示例一致，biblatex-gb7714-2015也做了实现，注意：脚注方式文献表的引用命令为 \verb|\footfullcite|，需要注意由于脚注本身表格中存在的问题，可能导致在其中使用该命令出现比较奇怪的现象，也要注意在图表标题中的使用情况。GB/T 7714-2015 标准中示例实现如图~\ref{fig:numeric:footnote} 所示：
 
 \begin{figure}[!htb]
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
@@ -3221,49 +3225,49 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 \subsubsection{参考文献表}
 
-GB/T 7714-2015规定采用著者-出版年制组织时，各篇文献首先按文种组织，可分为中文，日文，西文，俄文和其他文种等部分；然后按照著者字顺和出版年排列。中文文献可以按著者汉语拼音字顺排序，也可按笔画顺序排列。具体参考GB/T 7714-2015第9.2节。
+GB/T 7714-2015规定采用著者-出版年制组织时，各篇文献首先按文种组织，可分为中文，日文，西文，俄文和其他文种等部分；然后按照著者字顺和出版年排列。中文文献可以按著者汉语拼音字顺排序，也可按笔画顺序排列。具体参考 GB/T 7714-2015 第 9.2 节。
 
-%(因为需要根据语言进行划分，所以语言(language)域对于录入文献来说可能是必要的，因为作者的测试仅涉及中英文两种语言，没有遇到需要language域的情况。)
+%(因为需要根据语言进行划分，所以语言(language)域对于录入文献来说可能是必要的，因为作者的测试仅涉及中英文两种语言，没有遇到需要 language 域的情况。)
 
 \subsubsection{文献标注法}
 各篇文献的标注内容由著者姓(lastname/family)和出版年构成，并置于()内。对于使用汉字的语言来说，整个姓名都是 lastname/family 所以标注的是全名。机构团体名也整体标注。
 
-若正文中已有著者姓名，则()内只标注出版年，这一点样式文件无法判断，只能是文档作者自身把握，当然本样式提供了标签只有年份、附加年份和页码信息的引用命令yearpagescite/yearcite，方便文档作者使用，使用方法详见第\ref{sec:cbx:usage}节。当然文档作者还可以使用textcite命令同时给出满足格式要求的作者和年份信息，本样式已做支持。
+若正文中已有著者姓名，则()内只标注出版年，这一点样式文件无法判断，只能是文档作者自身把握，当然本样式提供了标签只有年份、附加年份和页码信息的引用命令yearpagescite/yearcite，方便文档作者使用，使用方法详见第~\ref{sec:cbx:usage} 节。当然文档作者还可以使用 textcite 命令同时给出满足格式要求的作者和年份信息，本样式已做支持。
 
-引用多个著者的文献时，对西文只需标注第一著者的姓(而在参考文献列表中的作者按最大数量三个处理，这与顺序编码制一致，参考GB/T 7714-2015第8.1.2节)，其后附“et al.”，对于中文著者，标注第一著者的姓名，其后附“等”。姓名与“et al.”“等”间留适当空隙。
+引用多个著者的文献时，对西文只需标注第一著者的姓(而在参考文献列表中的作者按最大数量三个处理，这与顺序编码制一致，参考 GB/T 7714-2015 第 8.1.2 节)，其后附“et al.”，对于中文著者，标注第一著者的姓名，其后附“等”。姓名与“et al.”“等”间留适当空隙。
 
-\bc{注意到在GB/T 7714-2015第10.2.1节给出的例子中作者姓的大小写格式与参考文献表中的要求是不同的，这说明标注中的作者姓名是由写文档的作者来决定的，因此本样式文件原样输出bib源文件中作者姓的大小格式}。
+\bc{注意到在 GB/T 7714-2015 第10.2.1节给出的例子中作者姓的大小写格式与参考文献表中的要求是不同的，这说明标注中的作者姓名是由写文档的作者来决定的，因此本样式文件原样输出 bib 源文件中作者姓的大小格式}。
 
 引用同一著者同一年出版的多篇文献时，出版年后应采用小写字符a,b,c等区别。
 
-多次引用同一著者的同一文献，在正常标注外，需在()外以角标形式著录引文页码，这一问题样式文件无法判断，只能提供可以形成该格式的引用命令，供文档作者使用，因此提供pagescite命令，使用方法详见第\ref{sec:cbx:usage}节。
+多次引用同一著者的同一文献，在正常标注外，需在()外以角标形式著录引文页码，这一问题样式文件无法判断，只能提供可以形成该格式的引用命令，供文档作者使用，因此提供 pagescite 命令，使用方法详见第~\ref{sec:cbx:usage} 节。
 
-标注要求具体参考GB/T 7714-2015第10.2节。
+标注要求具体参考 GB/T 7714-2015 第10.2节。
 
-\qd{一般情况下，当文献作者缺省时，著者-出版年制就没有作者可以用，因此文献题名用来生成标签，这样会导致文献表中文献题名后的文献类型标识/文献载体标识消失(这是因为题名用于生成标签后，题名域会被清除，自然也就不输出题名相关的信息了，见后面的示例文献“\hyperlink{entrystdwithoutauthor}{Information and documentation-the Dublin core metadata element set}”)。此时可以用佚名替代缺省作者的方式避免这个问题，即可以使用样式文件提供的选项gbnoauthor=true，一旦设置该选项为true，则缺省的作者会根据文献语种填充为佚名或Anon。默认情况下，不进行这种处理，即相当于设置选项gbnoauthor=false。而顺序编码制因为标签是数字序号，所以不存在这个问题。}
+\qd{一般情况下，当文献作者缺省时，著者-出版年制就没有作者可以用，因此文献题名用来生成标签，这样会导致文献表中文献题名后的文献类型标识/文献载体标识消失(这是因为题名用于生成标签后，题名域会被清除，自然也就不输出题名相关的信息了，见后面的示例文献“\hyperlink{entrystdwithoutauthor}{Information and documentation-the Dublin core metadata element set}”)。此时可以用佚名替代缺省作者的方式避免这个问题，即可以使用样式文件提供的选项gbnoauthor=true，一旦设置该选项为 true，则缺省的作者会根据文献语种填充为佚名或 Anon，默认情况下，不进行这种处理，即相当于设置选项gbnoauthor=false。而顺序编码制因为标签是数字序号，所以不存在这个问题。}
 
 %本样式文件默认情况下采用佚名方式，如果不需要使用佚名，那么需要在样式文件中注释掉一段代码，这段代码在本文档末尾2016-11-14的更新历史中有说明，见\pageref{up:20161114}页。}
 
-\subsection{各类文献在biblatex中对应的条目和域}\label{sec:numeric:data}
-biblatex-gb7714-2015宏包设计的重要原则是要符合GB/T 7714-2015标准。因此根据GB/T 7714-2015 的要求并结合biblatex的条目类型和数据域，对各类参考文献做如下考虑:
+\subsection{各类文献在 biblatex 中对应的条目和域}\label{sec:numeric:data}
+biblatex-gb7714-2015宏包设计的重要原则是要符合 GB/T 7714-2015 标准。因此根据GB/T 7714-2015 的要求并结合 biblatex 的条目类型和数据域，对各类参考文献做如下考虑:
 \subsubsection{专著/book}
 \begin{refentry}{}{}
-专著对应的biblatex的entrytype为:book，文献类型标识用M表示。
+专著对应的 biblatex 的 entrytype 为:book，文献类型标识用 M 表示。
 
-\bibliofmt{其著录格式为}(参考GB/T 7714-2015第4.1节):\\
+\bibliofmt{其著录格式为}(参考 GB/T 7714-2015 第 4.1 节):\\
 主要责任者.题名:其他题名信息[文献类型标识/文献载体标识].其他责任者.版本项.出版地:出版者,出版年:引文页码[引用日期].获取和访问路径.数字对象唯一标识符.
 \end{refentry}
 
-其对应的biblatex数据域为:
+其对应的 biblatex 数据域为:
 \begin{example}{专著/book条目的域格式}{eg:bookfieldfmt}
 \begin{texlist}
 author.title[usera].translator.edition.location:publisher,date或year:pages[urldate].url.doi
 \end{texlist}
 \end{example}
 
-其中标题相关的附加信息除了可以直接在title域中录入外，还可以在subtitle或titleaddon域中添加，后面出现的booktitle，journaltitle，也有类似情况，可以在booktitleaddon或者journalsubtitle中附加信息。其中出版地用location域表示，也可以用传统的address表示，biblatex将address作为location的别名处理，使用两者中的任何一个都可以表示出版地信息。\bc{特别强调: usera域不用录入，该域内容由bbx样式文件根据条目类型自动处理得到。}
+其中标题相关的附加信息除了可以直接在 title 域中录入外，还可以在 subtitle 或 titleaddon 域中添加，后面出现的 booktitle，journaltitle，也有类似情况，可以在 booktitleaddon 或者 journalsubtitle 中附加信息。其中出版地用 location 域表示，也可以用传统的 address 表示，biblatex将 address 作为 location 的别名处理，使用两者中的任何一个都可以表示出版地信息。\bc{特别强调: usera域不用录入，该域内容由 bbx 样式文件根据条目类型自动处理得到。}
 
-\qd{需要注意的是，当文献没有作者(责任制)，但有编者、译者时，可以利用编者和译者替代责任者，这是需要使用选项useeditor或usetranslator。当前默认使用该上述选项，若不使用则可能出现标点问题。文献条目比如：}
+\qd{需要注意的是，当文献没有作者(责任制)，但有编者、译者时，可以利用编者和译者替代责任者，这是需要使用选项 useeditor 或 usetranslator，当前默认使用该上述选项，若不使用则可能出现标点问题。文献条目比如：}
 
 \begin{texlist}
 @Book{周鲁卫2011--,
@@ -3276,38 +3280,38 @@ author.title[usera].translator.edition.location:publisher,date或year:pages[urld
 }
 \end{texlist}
 
-\qd{由于biblatex不支持standard条目类型，所以“标准”类型可以用book或inbook替代，但使用entrysubtype或note域等于standard作为一个区分，当entrysubtype或note域数据存在且内容等于standard时，就将其作为“标准”文献进行处理，其文献类型标识用S表示。这里为什么使用entrysubtype或note域而不是type域和keywords域，是因为考虑到entrysubtype通常标准样式不使用，而note域一般情况下没有什么特殊意义，使用它不会导致冲突，而type域在biblatex标准样式中没有被book和article条目类型当作支持的域，对于支持该域的条目比如thesis，type域又有特殊的意义，是用来区分master和doctor的，而keywords域在biblatex-gb7714-2015中用来存放entrykey以实现一些特殊的判断，所以也不便于使用它。}
+\qd{由于 biblatex 不支持 standard 条目类型，所以“标准”类型可以用 book 或 inbook 替代，但使用 entrysubtype 或 note 域等于 standard 作为一个区分，当 entrysubtype 或 note 域数据存在且内容等于 standard 时，就将其作为“标准”文献进行处理，其文献类型标识用 S 表示。这里为什么使用 entrysubtype 或 note 域而不是 type 域和 keywords 域，是因为考虑到 entrysubtype 通常标准样式不使用，而 note 域一般情况下没有什么特殊意义，使用它不会导致冲突，而 type 域在 biblatex 标准样式中没有被 book 和 article 条目类型当作支持的域，对于支持该域的条目比如 thesis，type域又有特殊的意义，是用来区分 master 和 doctor 的，而 keywords 域在 biblatex-gb7714-2015 中用来存放 entrykey 以实现一些特殊的判断，所以也不便于使用它。}
 
 \subsubsection{标准/standard}\label{sec:standard}
-“标准”(standard)作为一种文献条目类型biblatex并不支持，因此直接利用book或inbook类型加entrysubtype或note域等于standard代替。当然为了兼容传统BIBTeX格式存在standard类型的情况，也可以直接使用standard类型。
-为此本样式对standard条目类型做了特别支持。著录格式的处理原理与前一节所述相同，只是利用动态数据将standard类型转换为book/inbook类型。在bib文件中直接使用standard类型时注意使用其它biblatex样式时可能存在移植障碍，因为其它样式可能不支持standard类型。
+“标准”(standard)作为一种文献条目类型 biblatex 并不支持，因此直接利用 book 或 inbook 类型加 entrysubtype 或 note 域等于 standard 代替。当然为了兼容传统 BIBTeX 格式存在 standard 类型的情况，也可以直接使用 standard 类型。
+为此本样式对 standard 条目类型做了特别支持。著录格式的处理原理与前一节所述相同，只是利用动态数据将 standard 类型转换为 book/inbook 类型。在 bib 文件中直接使用 standard 类型时注意使用其它 biblatex 样式时可能存在移植障碍，因为其它样式可能不支持 standard 类型。
 
 \begin{refentry}{}{}
-标准对应的biblatex的entrytype为: standard。文献类型标识用S表示。
+标准对应的 biblatex 的 entrytype 为: standard。文献类型标识用 S 表示。
 
-\bibliofmt{其著录格式为}(与book和inbook类型类似，其中圆括号内是与inbook类似时存在的内容，此外当出版地和出版者不存在时直接忽略，这是与book和inbook不同的地方。):\\
+\bibliofmt{其著录格式为}(与 book 和 inbook 类型类似，其中圆括号内是与 inbook 类似时存在的内容，此外当出版地和出版者不存在时直接忽略，这是与 book 和 inbook 不同的地方。):\\
 主要责任者.文献题名[文献类型标识/文献载体标识].其他责任者(//所在文献集主要责任者.文献集题名:其他题名信息).版本项.出版地:出版者,出版年:文献的页码[引用日期].获取和访问路径.数字对象唯一标识符.
 \end{refentry}
 
-其对应的biblatex数据域为:
+其对应的 biblatex 数据域为:
 \begin{example}{标准/standard条目的域格式}{eg:standardfieldfmt}
 \begin{texlist}
 author.title[usera](//bookauthor.booktitle).edition.location:publisher,date或year:pages[urldate].url.doi
 \end{texlist}
 \end{example}
 
-\emph{需要注意的是: 根据GB/T 7714-2015标准第19页的标准文献示例，当标准不存在出版项时，直接省略}。
+\emph{需要注意的是: 根据 GB/T 7714-2015 标准第 19 页的标准文献示例，当标准不存在出版项时，直接省略}。
 
 
 \subsubsection{专著中的析出文献/inbook}
 \begin{refentry}{}{}
-专著中的析出文献对应的biblatex的entrytype为: inbook。文献类型标识用M表示。
+专著中的析出文献对应的 biblatex 的 entrytype 为: inbook。文献类型标识用 M 表示。
 
-\bibliofmt{其著录格式为}(参考GB/T 7714-2015第4.2节):\\
+\bibliofmt{其著录格式为}(参考 GB/T 7714-2015 第 4.2 节):\\
 析出文献主要责任者.析出文献题名[文献类型标识/文献载体标识].析出文献其他责任者//专著主要责任者.专著题名:其他题名信息.版本项.出版地:出版者,出版年:析出文献的页码[引用日期].获取和访问路径.数字对象唯一标识符.
 \end{refentry}
 
-其对应的biblatex数据域为:
+其对应的 biblatex 数据域为:
 \begin{example}{专著析出文献/inbook条目的域格式}{eg:inbookfieldfmt}
 \begin{texlist}
 author.title[usera]//bookauthor.booktitle.edition.location:publisher,date或year:pages[urldate].url.doi
@@ -3316,71 +3320,71 @@ author.title[usera]//bookauthor.booktitle.edition.location:publisher,date或year
 
 \subsubsection{连续出版物/periodical}
 \begin{refentry}{}{}
-连续出版物对应的biblatex的entrytype为: periodical。文献类型标识用J表示。
+连续出版物对应的 biblatex 的 entrytype 为: periodical。文献类型标识用 J 表示。
 
-\bibliofmt{其著录格式为}(参考GB/T 7714-2015第4.3节):\\
+\bibliofmt{其著录格式为}(参考 GB/T 7714-2015 第 4.3 节):\\
 主要责任者.题名:其他题名信息[文献类型标识/文献载体标识].年,卷(期)-年,卷(期).出版地:出版者,出版年[引用日期].获取和访问路径.数字对象唯一标识符.
 \end{refentry}
 
-其对应的biblatex数据域为:
+其对应的 biblatex 数据域为:
 \begin{example}{连续出版物/periodical条目的域格式}{eg:periodicalfieldfmt}
 \begin{texlist}
 author/editor.title[usera].year或date,volume(number)-endyear, endvolume(endnumber).location:institution,date 或year[urldate].url.doi
 \end{texlist}
 \end{example}
 
-其中连续出版物的出版者用institution表示。
-\qd{因为连续出版物可能用到两个日期，两个卷，两个期，所以录入数据时需要特别处理。不需要录入endyear等信息，只需要在到year或date域录入两个日期，由biber自动解析，由于一个日期内部的年月日之间是用-进行分隔，因此两个日期之间用/分隔。而卷和期由于可能有合订模式，且合订卷期之间用/分隔(参考GB/T 7714-2015第8.8.3节)，因此如果需要解析有起止范围的卷和期，录入到volume和number域的信息中起止值之间应用-分隔。}
+其中连续出版物的出版者用 institution 表示。
+\qd{因为连续出版物可能用到两个日期，两个卷，两个期，所以录入数据时需要特别处理。不需要录入 endyear 等信息，只需要在到 year 或 date 域录入两个日期，由 biber 自动解析，由于一个日期内部的年月日之间是用-进行分隔，因此两个日期之间用/分隔。而卷和期由于可能有合订模式，且合订卷期之间用/分隔(参考 GB/T 7714-2015 第 8.8.3 节)，因此如果需要解析有起止范围的卷和期，录入到 volume 和 number 域的信息中起止值之间应用-分隔。}
 
-需要注意：当gbpub选项为false时，不使用起止范围的卷期，会导致只有起始范围时不输出后面的-字符，若要使其与国标完全一致，则赢使用gbpub=true选项。
+需要注意：当 gbpub 选项为 false 时，不使用起止范围的卷期，会导致只有起始范围时不输出后面的-字符，若要使其与国标完全一致，则赢使用 gbpub=true 选项。
 
 \subsubsection{连续出版物的析出文献/article}
 \begin{refentry}{}{}%[break at=0.5cm/0pt]
-连续出版物的析出文献对应的biblatex的entrytype为: article。文献类型标识用J表示。
+连续出版物的析出文献对应的 biblatex 的 entrytype 为: article。文献类型标识用 J 表示。
 
-\bibliofmt{其著录格式为}(参考GB/T 7714-2015第4.4节):\\
+\bibliofmt{其著录格式为}(参考 GB/T 7714-2015 第 4.4 节):\\
 析出文献主要责任者.析出文献题名[文献类型标识/文献载体标识].连续出版物题名:其他题名信息,年,卷(期):页码[引用日期].获取和访问路径.数字对象唯一标识符.
 
-注意：从GB/T 7714-2015第4.4.2节的示例可以看到对于带网址的article在引用日期前可以加上修改更新日期。
+注意：从 GB/T 7714-2015 第 4.4.2 节的示例可以看到对于带网址的 article 在引用日期前可以加上修改更新日期。
 \end{refentry}
 
-其对应的biblatex数据域为:
+其对应的 biblatex 数据域为:
 \begin{example}{连续出版物析出文献/article条目的域格式}{eg:articlefieldfmt}
 \begin{texlist}
 author.title[usera].journaltitle或journal,year,volume(number):pages[urldate].url.doi
 \end{texlist}
 \end{example}
 
-\qd{由于biblatex不支持newspaper 条目类型，所以条目类型报纸析出的文献用article表示，但使用entrysubtype或note域等于news|newspaper作为一个区分，当note域数据存在且内容等于news或newspaper时，就将其作为报纸的析出文献进行处理。报纸文献类型标识用N表示，报纸的版次用number域描述。}
+\qd{由于 biblatex 不支持newspaper 条目类型，所以条目类型报纸析出的文献用 article 表示，但使用 entrysubtype 或 note 域等于news|newspaper作为一个区分，当 note 域数据存在且内容等于 news 或 newspaper 时，就将其作为报纸的析出文献进行处理。报纸文献类型标识用 N 表示，报纸的版次用 number 域描述。}
 
 \subsubsection{报纸析出的文献/newspaper}\label{sec:standard}
-biblatex没有将报纸的析出文献(newspaper)作为一种文献条目类型，因此可以直接利用article类型加entrysubtype或note域等于news|newspaper代替，或者也可以直接使用newspaper类型。为方便使用考虑，本样式增加了对新条目类型newspaper的支持，这种支持通过类似于standard类型的方式实现，没有对数据模型进行改动或增加，而完全利用动态数据修改将newspaper类型转换为article类型。在bib文件中直接使用newspaper类型时需要注意可能存在移植障碍，因为其它biblatex样式可能不支持newspaper类型。
+biblatex没有将报纸的析出文献(newspaper)作为一种文献条目类型，因此可以直接利用 article 类型加 entrysubtype 或 note 域等于news|newspaper代替，或者也可以直接使用 newspaper 类型。为方便使用考虑，本样式增加了对新条目类型 newspaper 的支持，这种支持通过类似于 standard 类型的方式实现，没有对数据模型进行改动或增加，而完全利用动态数据修改将 newspaper 类型转换为 article 类型。在 bib 文件中直接使用 newspaper 类型时需要注意可能存在移植障碍，因为其它 biblatex 样式可能不支持 newspaper 类型。
 
 \begin{refentry}{}{}
-报纸析出的文献对应一个新的entrytype为: newspaper。文献类型标识用N表示。
+报纸析出的文献对应一个新的 entrytype 为: newspaper。文献类型标识用 N 表示。
 
 \bibliofmt{其著录格式为}(类似于article):\\
 析出文献主要责任者.析出文献题名[文献类型标识/文献载体标识].报纸题名:其他题名信息,日期(版号)[引用日期].获取和访问路径.数字对象唯一标识符.
 \end{refentry}
 
-其对应的biblatex数据域为:
+其对应的 biblatex 数据域为:
 \begin{example}{报纸析出的文献/newspaper条目的域格式}{eg:newspaperfieldfmt}
 \begin{texlist}
 author.title[usera].journaltitle或journal,date(number/pages)[urldate].url.doi
 \end{texlist}
 \end{example}
 
-\qd{newspaper类型与article类型的差别主要是(1)文献标识码不是J而是N；(2)报纸的日期需要表示到日。(3)报纸不需要修改和更新日期。注意：报纸名应用journal或journaltitle域录入，与article保持一致。}
+\qd{newspaper类型与 article 类型的差别主要是(1)文献标识码不是 J 而是N；(2)报纸的日期需要表示到日。(3)报纸不需要修改和更新日期。注意：报纸名应用 journal 或 journaltitle 域录入，与 article 保持一致。}
 
 \subsubsection{专利/patent}
 \begin{refentry}{}{}%[break at=3cm/0pt]
-专利文献对应的biblatex的entrytype为: patent。文献类型标识用P表示。
+专利文献对应的 biblatex 的 entrytype 为: patent。文献类型标识用 P 表示。
 
-\bibliofmt{其著录格式为}(参考GB/T 7714-2015第4.5节):\\
+\bibliofmt{其著录格式为}(参考 GB/T 7714-2015 第 4.5 节):\\
 专利申请者或所有者.专利题名:专利号[文献类型标识/文献载体标识].公告日期或公开日期[引用日期].获取和访问路径.数字对象唯一标识符.
 \end{refentry}
 
-其对应的biblatex数据域为:
+其对应的 biblatex 数据域为:
 \begin{example}{专利文献/patent条目的域格式}{eg:patentfieldfmt}
 \begin{texlist}
 author.title:number[usera].date或year[urldate].url.doi
@@ -3391,167 +3395,167 @@ author.title:number[usera].date或year[urldate].url.doi
 
 \subsubsection{电子资源/online}
 \begin{refentry}{}{}%[break at=0.4cm/0pt]
-电子资源对应的biblatex的entrytype为: online或electronic或者www。文献类型标识用EB表示。
-\bc{(注意: biblatex将electronic或www作为online条目类型的别名，对于标准样式来说这两者出现在bib文件中等同于online，但这种等同标准样式是在驱动层进行处理的，而gb7714-2015样式还需要处理文献类型标识，本样式文件做了进一步支持。因此bib文件中也可以直接使用electronic和www。)}
+电子资源对应的 biblatex 的 entrytype 为: online或 electronic 或者 www，文献类型标识用 EB 表示。
+\bc{(注意: biblatex将 electronic 或 www 作为 online 条目类型的别名，对于标准样式来说这两者出现在 bib 文件中等同于 online，但这种等同标准样式是在驱动层进行处理的，而 gb7714-2015 样式还需要处理文献类型标识，本样式文件做了进一步支持。因此 bib 文件中也可以直接使用 electronic 和 www，)}
 
-\bibliofmt{其著录格式为}(参考GB/T 7714-2015第4.6节):\\
+\bibliofmt{其著录格式为}(参考 GB/T 7714-2015 第 4.6 节):\\
 主要责任者.题名:其他题名信息[文献类型标识/文献载体标识].出版地:出版者,出版年:引文页码(更新或修改日期)[引用日期].获取和访问路径.数字对象唯一标识符.
 \end{refentry}
 
-其对应的biblatex数据域为:
+其对应的 biblatex 数据域为:
 \begin{example}{电子资源/online/electronic/www条目的域格式}{eg:onlinefieldfmt}
 \begin{texlist}
 author.title[usera].organization/instiution,date或year:pages(date/enddate/eventdate)[urldate].url.doi
 \end{texlist}
 \end{example}
 
-\qd{尽管GB/T 7714-2015中给出的著录格式包含出版地和出版者，但通常情况下具有出版地和出版者的文献会归类到其它条目类型中，至于存在的url信息，只要标识文献载体即可，即一般情况下(出版地:出版者,出版年:引文页码)这些信息很少出现在online[EB]条目中。因此默认情况下，gb7714-2015样式只处理出现organization或instiution中的出版者信息，此外用date表示更新或修改日期，urldate表示引用(访问)日期。如果出现复杂情况，更新或修改日期还可以利用enddate/eventdate表示。注意修改日期需要表示到日}
+\qd{尽管 GB/T 7714-2015 中给出的著录格式包含出版地和出版者，但通常情况下具有出版地和出版者的文献会归类到其它条目类型中，至于存在的 url 信息，只要标识文献载体即可，即一般情况下(出版地:出版者,出版年:引文页码)这些信息很少出现在online[EB]条目中。因此默认情况下，gb7714-2015样式只处理出现 organization 或 instiution 中的出版者信息，此外用 date 表示更新或修改日期，urldate表示引用(访问)日期。如果出现复杂情况，更新或修改日期还可以利用 enddate/eventdate 表示。注意修改日期需要表示到日}
 
-以上是GB/T 7714-2015直接给出著录格式的条目类型，还有一些类型并没有给出具体格式，但在例子中也有所体现，本样式文件根据这些例子，给出了著录格式。
+以上是 GB/T 7714-2015 直接给出著录格式的条目类型，还有一些类型并没有给出具体格式，但在例子中也有所体现，本样式文件根据这些例子，给出了著录格式。
 
 \subsubsection{汇编或论文集/collection}
 
 \begin{refentry}{}{}
-汇编文献对应的biblatex的entrytype为:collection。文献类型标识用G表示。
+汇编文献对应的 biblatex 的 entrytype 为:collection。文献类型标识用 G 表示。
 
-\bibliofmt{其著录格式为} 采用与book一致的格式。
+\bibliofmt{其著录格式为} 采用与 book 一致的格式。
 \end{refentry}
 
 \subsubsection{汇编或论文集析出中的文献/incollection}
 \begin{refentry}{}{}
-汇编中的析出文献对应的biblatex的entrytype为:incollection。文献类型标识用G表示。
+汇编中的析出文献对应的 biblatex 的 entrytype 为:incollection。文献类型标识用 G 表示。
 
-\bibliofmt{其著录格式为} 采用与inbook一致的格式。
+\bibliofmt{其著录格式为} 采用与 inbook 一致的格式。
 \end{refentry}
 
 \subsubsection{会议录或会议文集/proceedings}
 \begin{refentry}{}{}
-会议文集的biblatex的entrytype为:proceedings。文献类型标识用C表示。
+会议文集的 biblatex 的 entrytype 为:proceedings。文献类型标识用 C 表示。
 
-\bibliofmt{其著录格式为} 采用与book类似的格式。
+\bibliofmt{其著录格式为} 采用与 book 类似的格式。
 \end{refentry}
 
 \subsubsection{会议文集中析出的文献/inproceedings}
 \begin{refentry}{}{}
-会议文集中析出的文献对应的biblatex的entrytype为:inproceedings。文献类型标识用C表示。
-\bc{(注意: biblatex将conference作为inproceedings条目类型的别名，对于标准样式来说conference出现在bib文件中等同于inproceedings，但这种等同标准样式是在驱动层进行处理的，而gb7714-2015样式还需要处理文献类型标识，本样式文件做了进一步支持。因此bib文件中也可以直接使用conference。)}
+会议文集中析出的文献对应的 biblatex 的 entrytype 为:inproceedings。文献类型标识用 C 表示。
+\bc{(注意: biblatex将 conference 作为 inproceedings 条目类型的别名，对于标准样式来说 conference 出现在 bib 文件中等同于 inproceedings，但这种等同标准样式是在驱动层进行处理的，而 gb7714-2015 样式还需要处理文献类型标识，本样式文件做了进一步支持。因此 bib 文件中也可以直接使用 conference，)}
 
-\bibliofmt{其著录格式为} 采用与inbook类似的格式。
+\bibliofmt{其著录格式为} 采用与 inbook 类似的格式。
 \end{refentry}
 
 
 \subsubsection{报告/report}
 \begin{refentry}{}{}
-报告对应的biblatex的entrytype为: report。文献类型标识用R表示。\bc{(注意:biblatex将techreport作为report条目类型的别名，对于标准样式，techreport出现在bib文件中等同于report，但这种等同标准样式是在驱动层处理的，而gb7714-2015样式还需要处理文献类型标识，本样式文件做了进一步支持。因此bib文件中也能直接使用techreport类型。)}
+报告对应的 biblatex 的 entrytype 为: report。文献类型标识用 R 表示。\bc{(注意:biblatex将 techreport 作为 report 条目类型的别名，对于标准样式，techreport出现在 bib 文件中等同于 report，但这种等同标准样式是在驱动层处理的，而 gb7714-2015 样式还需要处理文献类型标识，本样式文件做了进一步支持。因此 bib 文件中也能直接使用 techreport 类型。)}
 
-\bibliofmt{其著录格式为} (由biblatex的标准report格式修改得到，注意当出版地和出版者不存在时忽略这两项)
+\bibliofmt{其著录格式为} (由 biblatex 的标准 report 格式修改得到，注意当出版地和出版者不存在时忽略这两项)
 
 主要责任者.题名:其他题名信息[文献类型标识/文献载体标识].其他责任者.类型.号码.版本项.出版地:出版者,出版年:引文页码[引用日期].获取和访问路径.数字对象唯一标识符.
 \end{refentry}
 
-其对应的biblatex数据域为:
+其对应的 biblatex 数据域为:
 \begin{example}{报告/report/techreport条目的域格式}{eg:reportfieldfmt}
 \begin{texlist}
 author.title[usera].translator.type number.version.location:institution,date 或year:pages[urldate].url.doi
 \end{texlist}
 \end{example}
 
-\qd{因为有的报告文献可能存在类型和报告号信息，比如AIAA 9076或AD 730029等，所以著录格式需要有所体现，而这两个数据体现在type和number两个域中，或者在version域中体现也可，而对于标题中的出现的报告号，可以直接在标题或子标题或者附加标题中体现。report的版本信息放在version域中，而不是book等条目的edition域中。report类型出版项处理基本与book一样，但当出版项缺省时且存在网址时，直接省略出版项，且加上修改和更新日期，因此将其转换为online类型处理。从report开始，后面的所有类型，当不存在出版项且存在网址时，都以online的格式进行处理。}
+\qd{因为有的报告文献可能存在类型和报告号信息，比如AIAA 9076或AD 730029等，所以著录格式需要有所体现，而这两个数据体现在 type 和 number 两个域中，或者在 version 域中体现也可，而对于标题中的出现的报告号，可以直接在标题或子标题或者附加标题中体现。report的版本信息放在 version 域中，而不是 book 等条目的 edition 域中。report类型出版项处理基本与 book 一样，但当出版项缺省时且存在网址时，直接省略出版项，且加上修改和更新日期，因此将其转换为 online 类型处理。从 report 开始，后面的所有类型，当不存在出版项且存在网址时，都以 online 的格式进行处理。}
 
 \subsubsection{手册或档案/manual/archive}
 \begin{refentry}{}{}
-手册和档案采用一种格式，对应的biblatex的entrytype为: manual或archive。文献类型标识用A表示。
+手册和档案采用一种格式，对应的 biblatex 的 entrytype 为: manual或 archive，文献类型标识用 A 表示。
 
-\bibliofmt{其著录格式为} 借用thesis格式处理，而不是标准样式中的manual格式，这种方式下，当没有出版地和出版者时，完全省略。
+\bibliofmt{其著录格式为} 借用 thesis 格式处理，而不是标准样式中的 manual 格式，这种方式下，当没有出版地和出版者时，完全省略。
 \end{refentry}
 
- \bc{manual出版者用institution域表示，体现的是机构而不是一般的出版社。注意：manual类型的出版项缺失时直接省略。}
+ \bc{manual出版者用 institution 域表示，体现的是机构而不是一般的出版社。注意：manual类型的出版项缺失时直接省略。}
 
 \subsubsection{学位论文/thesis}
 \begin{refentry}{}{}
-学位论文对应的biblatex的entrytype为: thesis。文献类型标识用D表示。\bc{(注意:biblatex将mastersthesis或phdthesis作为thesis条目类型的别名，对于标准样式来说这两者出现在bib文件中基本等同于thesis，但却会增加type信息。但这种等同，标准样式是在驱动层进行处理的，而gb7714-2015样式还需要处理文献类型标识并且不需要type信息，本样式文件做了进一步支持。因此bib文件中也可以使用mastersthesis和phdthesis)。}
+学位论文对应的 biblatex 的 entrytype 为: thesis。文献类型标识用 D 表示。\bc{(注意:biblatex将 mastersthesis 或 phdthesis 作为 thesis 条目类型的别名，对于标准样式来说这两者出现在 bib 文件中基本等同于 thesis，但却会增加 type 信息。但这种等同，标准样式是在驱动层进行处理的，而 gb7714-2015 样式还需要处理文献类型标识并且不需要 type 信息，本样式文件做了进一步支持。因此 bib 文件中也可以使用 mastersthesis 和phdthesis)。}
 
-\bibliofmt{其著录格式为} 由biblatex的标准thesis格式修改得到。
+\bibliofmt{其著录格式为} 由 biblatex 的标准 thesis 格式修改得到。
 
 主要责任者.题名:其他题名信息[文献类型标识/文献载体标识].其他责任者.出版地:出版者,出版年:引文页码[引用日期].获取和访问路径.数字对象唯一标识符.
 \end{refentry}
 
-其对应的biblatex数据域为:
+其对应的 biblatex 数据域为:
 \begin{example}{学位论文/thesis/mastersthesis/phdthesis条目的域格式}{eg:thesisfieldfmt}
 \begin{texlist}
 author.title[usera].translator.location:institution,date或year:pages[urldate].url.doi
 \end{texlist}
 \end{example}
 
- \bc{由于thesis类型出版项缺失时直接省略，格式与manual一致，借用manual类型输出。}
+ \bc{由于 thesis 类型出版项缺失时直接省略，格式与 manual 一致，借用 manual 类型输出。}
 
 
 \subsubsection{未出版物/unpublished}
 \begin{refentry}{}{}
-未出版物，对应的biblatex的entrytype为: unpublished。文献类型标识用Z表示。
+未出版物，对应的 biblatex 的 entrytype 为: unpublished。文献类型标识用 Z 表示。
 
-\bibliofmt{其著录格式为} 借用manual格式处理。
+\bibliofmt{其著录格式为} 借用 manual 格式处理。
 \end{refentry}
 
 \subsubsection{备选类型}
 \begin{refentry}{}{}
-备选/其它（misc），文献类型标识用Z表示。
+备选/其它（misc），文献类型标识用 Z 表示。
 
-\bibliofmt{其著录格式为} 当存在网址时直接转换为online类型，由于howpublished域可用于描述一些详细信息，因此不存在网址时，独立作为一种格式处理。
+\bibliofmt{其著录格式为} 当存在网址时直接转换为 online 类型，由于 howpublished 域可用于描述一些详细信息，因此不存在网址时，独立作为一种格式处理。
 \end{refentry}
 
 \subsubsection{更多类型}
 \begin{refentry}{}{}
 数据库（database）标识符(DB)、数据集（dataset）标识符(DS)、软件（software）标识符(CP)、舆图（map）标识符(CM)。
 
-\bibliofmt{其著录格式为} 借用manual格式处理。
+\bibliofmt{其著录格式为} 借用 manual 格式处理。
 \end{refentry}
 
 
 
 \subsection{标准的其它细节要求}
 
-除了第\ref{sec:numeric:data}节针对不同条目类型的著录格式要求外，GB/T 7714-2015 还有一些细节规定比如文字、符号等，biblatex-gb7714-2015宏包做如下考虑，
+除了第~\ref{sec:numeric:data} 节针对不同条目类型的著录格式要求外，GB/T 7714-2015 还有一些细节规定比如文字、符号等，biblatex-gb7714-2015宏包做如下考虑，
 示例见文档\href{run:./stdGBT7714-2015.pdf}{stdGBT7714-2015}：
 
 \subsubsection{数字}\label{sec:fmt:number}
 
 \begin{property}{}{}
-用户录入文献数据中包含数字时，gb7714-2015按照GB/T 7714-2015第6.2节要求输出阿拉伯数字。
+用户录入文献数据中包含数字时，gb7714-2015按照 GB/T 7714-2015 第 6.2 节要求输出阿拉伯数字。
 \end{property}
 
 \subsubsection{英文字母}\label{sec:fmt:lettercase}
 
 \begin{property}{}{}
-为了符合西文文献责任者的字母大小写习惯，gb7714-2015通过判断是否存在givenname/firstname来确定是否是个人作者，当存在givenname/firstname 时认为是个人作者，不存在则是机构作者，当是个人作者时familyname/lastname按GB/T 7714-2015 要求全大写，是机构作者则仅大写首字母。所以为满足GB/T 7714-2015 第6.3节要求，对于仅有英文姓(lastname)的个人作者，用户录入时字母应全大写。
+为了符合西文文献责任者的字母大小写习惯，gb7714-2015通过判断是否存在 givenname/firstname 来确定是否是个人作者，当存在givenname/firstname 时认为是个人作者，不存在则是机构作者，当是个人作者时 familyname/lastname 按GB/T 7714-2015 要求全大写，是机构作者则仅大写首字母。所以为满足GB/T 7714-2015 第 6.3 节要求，对于仅有英文姓(lastname)的个人作者，用户录入时字母应全大写。
 
-用户录入出版项、西文期刊名缩写以及西文文献的字母时，应按照GB/T 7714-2015第6.4节，第6.5节，6.6节要求，使用符合要求的习惯用法和大小写方式，gb7714-2015以原样打印的方式处理。
+用户录入出版项、西文期刊名缩写以及西文文献的字母时，应按照 GB/T 7714-2015 第 6.4 节，第 6.5 节，6.6节要求，使用符合要求的习惯用法和大小写方式，gb7714-2015以原样打印的方式处理。
 
-对于英文大小写问题，GB/T 7714-2015除了责任者的大写要求外，其它要求均比较模糊，但提到可参照ISO 4的要求。但实际上，不同的期刊可能会有各自不同的要求。从笔者的经验看，一般国内的期刊对于字母大小写通常要求: 责任者(全部大写); 题名(句首字母大写其它全部小写); 期刊名会议名(单词首字母大写); 出版项和其它(单词首字母大写)。所以用户在录入bib文件时可以按照这种常见方式来输入以减少后期修改。
+对于英文大小写问题，GB/T 7714-2015除了责任者的大写要求外，其它要求均比较模糊，但提到可参照ISO 4的要求。但实际上，不同的期刊可能会有各自不同的要求。从笔者的经验看，一般国内的期刊对于字母大小写通常要求: 责任者(全部大写); 题名(句首字母大写其它全部小写); 期刊名会议名(单词首字母大写); 出版项和其它(单词首字母大写)。所以用户在录入 bib 文件时可以按照这种常见方式来输入以减少后期修改。
 \end{property}
 
 \subsubsection{标点}
 
 \begin{property}{}{}
-用户录入引文信息时不需要考虑域之间的标点符号，只需录入各数据域时考虑习惯的标点用法。gb7714-2015实现了GB/T 7714-2015第7节所给出的著录用符号要求。
+用户录入引文信息时不需要考虑域之间的标点符号，只需录入各数据域时考虑习惯的标点用法。gb7714-2015实现了 GB/T 7714-2015 第 7 节所给出的著录用符号要求。
 \end{property}
 
 \subsubsection{责任者}
 
 \begin{property}{}{}
-用户录入引文的责任者信息时，当责任者为多级机关团体时，用户填入auther信息时，应按照GB/T 7714-2015第8.1.4节要求，用英文句点.号分隔。
+用户录入引文的责任者信息时，当责任者为多级机关团体时，用户填入 auther 信息时，应按照 GB/T 7714-2015 第 8.1.4 节要求，用英文句点.号分隔。
 
-当责任者是个人英文名，且具有名、姓、前缀和后缀，应按照第\ref{sec:bib:bibtex}节给出姓名录入方式处理才能正确解析，比如：von Peebles, Jr., P. Z.，其中von为姓前的前缀，Jr.为姓后的后缀，P. Z. 为缩写名(包括first name 和middle name)。
+当责任者是个人英文名，且具有名、姓、前缀和后缀，应按照第~\ref{sec:bib:bibtex} 节给出姓名录入方式处理才能正确解析，比如：von Peebles, Jr., P. Z.，其中 von 为姓前的前缀，Jr.为姓后的后缀，P. Z. 为缩写名(包括first name 和middle name)。
 
-gb7714-2015实现了GB/T 7714-2015第8.1节要求的责任者样式，能自动判断责任者语言并分别处理，设置了全局选项useprefix=true以使用前缀，增加了gbnamefmt选项用于设置不同的姓名输出格式。
+gb7714-2015实现了 GB/T 7714-2015 第 8.1 节要求的责任者样式，能自动判断责任者语言并分别处理，设置了全局选项 useprefix=true 以使用前缀，增加了 gbnamefmt 选项用于设置不同的姓名输出格式。
 \end{property}
 
 \subsubsection{文献类型标识和载体}
 
 \begin{property}{}{}
-用户录入引文题名信息时，无需给出文献类型标识/文献载体标识。同一责任者的合订题名，应用户根据GB/T 7714-2015 第8.2.1节的要求，在多个题名间用英文分号分隔，并整体录入到title数据域中。而分卷号，卷次，册次等信息时，除了专利号用number域录入外，其它可以直接在title数据域或者subtitle/titleaddon等数据域中给出。
+用户录入引文题名信息时，无需给出文献类型标识/文献载体标识。同一责任者的合订题名，应用户根据GB/T 7714-2015 第 8.2.1 节的要求，在多个题名间用英文分号分隔，并整体录入到 title 数据域中。而分卷号，卷次，册次等信息时，除了专利号用 number 域录入外，其它可以直接在 title 数据域或者 subtitle/titleaddon 等数据域中给出。
 
-gb7714-2015实现了符合GB/T 7714-2015第8.2节要求的格式，能根据条目信息确定文献类型标识/文献载体标识，并在各类参考文献条目驱动中直接使用，也可以利用gbtype选项设置是否输出该信息。各不同类型文献的类型标识/文献载体标识，参考GB/T 7714-2015 表B.1和B.2。
+gb7714-2015实现了符合 GB/T 7714-2015 第 8.2 节要求的格式，能根据条目信息确定文献类型标识/文献载体标识，并在各类参考文献条目驱动中直接使用，也可以利用 gbtype 选项设置是否输出该信息。各不同类型文献的类型标识/文献载体标识，参考GB/T 7714-2015 表B.1和B.2。
 \end{property}
 
 \subsubsection{版次}\label{sec:fmt:edition}
@@ -3559,48 +3563,48 @@ gb7714-2015实现了符合GB/T 7714-2015第8.2节要求的格式，能根据条�
 \begin{property}{}{}
 用户在录入版次信息时，只要录入版次的整数数字比如2，或者录入需要打印的字符串比如明刻本。
 
-gb7714-2015实现了GB/T 7714-2015第8.3节要求的格式，根据edition/version域输入信息分别处理，对于整数则解析后格式化，对于其它特殊版本说明，如新1版，明刻本等，直接在edition域录入后原样打印。
+gb7714-2015实现了 GB/T 7714-2015 第 8.3 节要求的格式，根据 edition/version 域输入信息分别处理，对于整数则解析后格式化，对于其它特殊版本说明，如新 1 版，明刻本等，直接在 edition 域录入后原样打印。
 \end{property}
 
 \subsubsection{出版项}\label{sec:fmt:pubitem}
 
 \begin{property}{}{}
-用户在录入出版项信息时，当出版日期有其它形式的纪年时，将其置于公元纪年后面的()内，并整体录入到 year 数据域(注意不是date域)中，比如: 1845(清同治四年)。而引用/访问日期应录入到 urldate 数据域。当除了出版日期外还有修改/更新日期等时，可在year或date数据域录入第二个日期，并用/符号与前一个出版日期隔开。而专利的公告日期和其它条目类型的出版年应录入到 date 域中。
+用户在录入出版项信息时，当出版日期有其它形式的纪年时，将其置于公元纪年后面的()内，并整体录入到 year 数据域(注意不是 date 域)中，比如: 1845(清同治四年)。而引用/访问日期应录入到 urldate 数据域。当除了出版日期外还有修改/更新日期等时，可在 year 或 date 数据域录入第二个日期，并用/符号与前一个出版日期隔开。而专利的公告日期和其它条目类型的出版年应录入到 date 域中。
 
-gb7714-2015实现了GB/T 7714-2015第8.4节要求的格式。当出版地和出版者缺省时，中英文自动区分处理。对于用/符号隔开的两个日期，biblatex后端biber能自动解析，后一个日期数据自动解析到endyear等域可作为修改日期等使用。
+gb7714-2015实现了 GB/T 7714-2015 第 8.4 节要求的格式。当出版地和出版者缺省时，中英文自动区分处理。对于用/符号隔开的两个日期，biblatex后端 biber 能自动解析，后一个日期数据自动解析到 endyear 等域可作为修改日期等使用。
 \end{property}
 
 \subsubsection{页码}\label{sec:fmt:pages}
 \begin{property}{}{}
-用户在录入页码信息时，可以在pages域中根据需要录入可解析的页码(即用整数表示页码，起讫页码用-分隔)，比如: 81-86。 也可以直接录入需要打印的信息，比如: 序2-3等。
+用户在录入页码信息时，可以在 pages 域中根据需要录入可解析的页码(即用整数表示页码，起讫页码用-分隔)，比如: 81-86。 也可以直接录入需要打印的信息，比如: 序2-3等。
 
-gb7714-2015实现了GB/T 7714-2015第8.5，8.8.2节的要求，对于能解析的页码自动解析后格式化，对于不能解析的页码则原样输出。
+gb7714-2015实现了 GB/T 7714-2015 第8.5，8.8.2节的要求，对于能解析的页码自动解析后格式化，对于不能解析的页码则原样输出。
 \end{property}
 
-\subsubsection{访问路径URL和DOI}
+\subsubsection{访问路径 URL 和DOI}
 \begin{property}{}{}
-用户在录入获取和访问路径、数字对象唯一标识符信息时，将访问路径录入到url域中，数字对象唯一标识符录入到doi域中即可。
+用户在录入获取和访问路径、数字对象唯一标识符信息时，将访问路径录入到 url 域中，数字对象唯一标识符录入到 doi 域中即可。
 
-gb7714-2015实现了GB/T 7714-2015第8.6,8.7节要求的格式。
+gb7714-2015实现了 GB/T 7714-2015 第8.6,8.7节要求的格式。
 \end{property}
 
 \subsubsection{卷和期}\label{sec:fmt:volnum}
 \begin{property}{}{}%[break at=0.4cm/0pt]
-用户在录入卷、期等信息时，如\ref{sec:bib:bibtex}节中所述，合期的期号用/间隔，比如9/10，填入number域，报纸的版次也填入number域。
+用户在录入卷、期等信息时，如~\ref{sec:bib:bibtex} 节中所述，合期的期号用/间隔，比如9/10，填入 number 域，报纸的版次也填入 number 域。
 
-gb7714-2015实现了GB/T 7714-2015第8.8节要求的析出文献相关格式。
+gb7714-2015实现了 GB/T 7714-2015 第 8.8 节要求的析出文献相关格式。
 \end{property}
 
 
 \section{总结与致谢}
 
-通过对 GB/T 7714-2015 标准的分析，对 biblatex 的学习和理解，在 biblatex 标准样式基础上，设计完成了符合 GB/T 7714-2015 标准的biblatex参考文献样式。从测试实践看，基本能够满足使用要求，用户可以放心使用。遇到问题时，除了可以查看
+通过对 GB/T 7714-2015 标准的分析，对 biblatex 的学习和理解，在 biblatex 标准样式基础上，设计完成了符合 GB/T 7714-2015 标准的 biblatex 参考文献样式。从测试实践看，基本能够满足使用要求，用户可以放心使用。遇到问题时，除了可以查看
 本文档说明外，也可以看样式文件代码，其中给出了详细注释，如果遇到无法解决的问题，请邮件联系作者。
 
-%读者若查看样式文件内容可以看到作者对各目标要求所做的修改及，读者也可以根据自己的需求进行修改，作者设计样式文件的思路以及在设计过程中用到的一些biblatex宏包功能说明，详见第\ref{sec:biblatex:mech}节和LaTeX文档中文参考文献的biblatex解决方案的第2.7节。
+%读者若查看样式文件内容可以看到作者对各目标要求所做的修改及，读者也可以根据自己的需求进行修改，作者设计样式文件的思路以及在设计过程中用到的一些 biblatex 宏包功能说明，详见第~\ref{sec:biblatex:mech} 节和 LaTeX 文档中文参考文献的 biblatex 解决方案的第 2.7 节。
 
-最后要感谢如下各位师长和朋友，正是在各位的帮助建议下，本样式不断升级逐渐完善。包括: moewew (biblatex 现在的维护者之一，给予不少有益的建议和指导)、 李志奇(基于biblatex的符合GBT7714-2005的中文文献生成工具的作者，工具中的一些设计如usera域的使用/卷期范围解析等带来很多启发，本人之前一直使用该工具，之所以开发biblatex-gb7714-2015其实主要是因为该工具因biblatex升级而无法使用)、caspervector(虽然未曾真正交流，但从biblatex-caspervector样式包中学到很多，包括排序/GBK编码等问题的解决思路)、LeoLiu(刘海洋，给出的CJK字符判断函数
-\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152663&extra=page\%3D3}} 对本宏包非常有帮助)、chinatex(china tex版主，给了很多建议和帮助，并且一起合作)、Sheng wenbo(biblatex用户手册合作译者，LaTeX2e 插图指南第三版译者，我们一起翻译的过程相互激励相互促进)、zepinglee(gbt7714-2015 bst样式作者，给了很多建议和讨论)、Harry Chen(ctex套件维护者之一，给了不少好的建议)、liubenyuan(关于项目组织给出了很好的建议)、刘小涛（讨论了关于zotero的使用并提出了建议）、ghiclgi(讨论了GB中著者-出版年制标注标签的一些问题)、邓东升(很多建议和讨论)、秀文工作组、leipility、qingkuan、湘厦人、秋平、任蒲军、fredericky123、qiuzhu、chaoxiaosu、Old Jack、Wu Nailong、Yibai Zhang、wayne508、 钟乙源、Xiaodong Yao、dsycircle、rpjshu、zjsdut、谢澜涛、Zutian Luo、海阔天空、zzqzyx、程晨、xmtangjun、蔡伟 等等。当然还有更多朋友提供了bug报告，提出了issue，提供了热心帮助，限于篇幅这里不再一一列举，在此一并表示感谢!
+最后要感谢如下各位师长和朋友，正是在各位的帮助建议下，本样式不断升级逐渐完善。包括: moewew (biblatex 现在的维护者之一，给予不少有益的建议和指导)、 李志奇(基于 biblatex 的符合GBT7714-2005的中文文献生成工具的作者，工具中的一些设计如 usera 域的使用/卷期范围解析等带来很多启发，本人之前一直使用该工具，之所以开发 biblatex-gb7714-2015 其实主要是因为该工具因 biblatex 升级而无法使用)、caspervector(虽然未曾真正交流，但从biblatex-caspervector样式包中学到很多，包括排序/GBK编码等问题的解决思路)、LeoLiu(刘海洋，给出的 CJK 字符判断函数
+\footnote{\url{http://bbs.ctex.org/forum.php?mod=viewthread&tid=152663&extra=page\%3D3}} 对本宏包非常有帮助)、chinatex(china tex版主，给了很多建议和帮助，并且一起合作)、Sheng wenbo(biblatex用户手册合作译者，LaTeX2e 插图指南第三版译者，我们一起翻译的过程相互激励相互促进)、zepinglee(gbt7714-2015 bst样式作者，给了很多建议和讨论)、Harry Chen(ctex套件维护者之一，给了不少好的建议)、liubenyuan(关于项目组织给出了很好的建议)、刘小涛（讨论了关于 zotero 的使用并提出了建议）、ghiclgi(讨论了 GB 中著者-出版年制标注标签的一些问题)、邓东升(很多建议和讨论)、秀文工作组、leipility、qingkuan、湘厦人、秋平、任蒲军、fredericky123、qiuzhu、chaoxiaosu、Old Jack、Wu Nailong、Yibai Zhang、wayne508、 钟乙源、Xiaodong Yao、dsycircle、rpjshu、zjsdut、谢澜涛、Zutian Luo、海阔天空、zzqzyx、程晨、xmtangjun、蔡伟 等等。当然还有更多朋友提供了 bug 报告，提出了 issue，提供了热心帮助，限于篇幅这里不再一一列举，在此一并表示感谢!
 
 
 \section{存在的问题和下一步工作}
@@ -3610,53 +3614,53 @@ gb7714-2015实现了GB/T 7714-2015第8.8节要求的析出文献相关格式。
 
 \begin{enumerate}
 
-  %\item 当作者多于3个需要添加等或et al.时，如果作者的姓名是用\{\}包起来的，可能判断会出错。
-  %这个问题已经解决了，本来在\testCJKfirst中如果单靠edef加expandafter 组合，无法处理带编组的字符流。所以考虑利用xstring 宏包的\exploregroups函数来，提取字符到命令中，这一就能真正的获得域中的第一个字符，而不会把一个编组当成一个字符进行判断。2016-1223，详见修改历史1.0e中的说明。
+  %\item 当作者多于 3 个需要添加等或et al.时，如果作者的姓名是用\{\}包起来的，可能判断会出错。
+  %这个问题已经解决了，本来在\testCJKfirst中如果单靠 edef 加expandafter 组合，无法处理带编组的字符流。所以考虑利用xstring 宏包的\exploregroups函数来，提取字符到命令中，这一就能真正的获得域中的第一个字符，而不会把一个编组当成一个字符进行判断。2016-1223，详见修改历史1.0e中的说明。
 
-  %\item 顺序年制中当不存在著者信息时，如果用佚名或者no author，本样式文件中没有实现。怎么在数据进来后，给一些域添加信息？在biber处理过程中根据一些判断添加信息？(著者年制，没有作者，用佚名，英文怎么办？没有年怎么办？)
+  %\item 顺序年制中当不存在著者信息时，如果用佚名或者no author，本样式文件中没有实现。怎么在数据进来后，给一些域添加信息？在 biber 处理过程中根据一些判断添加信息？(著者年制，没有作者，用佚名，英文怎么办？没有年怎么办？)
   %这个问题解决了，2016-1114
 
-  %\item 著者-出版年制引用标签时，文中已经存在作者名的，标签只需要写年份，这个需要定义一个新的yearcite命令，是容易实现的，但这里没有实现。
-  %这个问题解决了，2016-1114，增加了一个yearpagescite命令。
+  %\item 著者-出版年制引用标签时，文中已经存在作者名的，标签只需要写年份，这个需要定义一个新的 yearcite 命令，是容易实现的，但这里没有实现。
+  %这个问题解决了，2016-1114，增加了一个 yearpagescite 命令。
 
   %\item backref的格式也可以修改一下。
   %没有要求处理，但修改了，2016-1114，修改英文本地化字符串为引用页面。
 
   %\item shorthand的问题没有遇到，其应用可能需要进一步理解。，主要是获取参考文献的部分信息进行统计和打印。该问题已经解决，参见biblatex-solution-to-latex-bibliography(20180525)。
 
-  \item 当专著同时存在作者和编者的时候，GB/T 7714-2015没有明确的规定，所以目前样式文件中以biblatex标准样式的方式处理，这种处理因为与本地化相关，直接应用可能不好看的，也许需要修改。
+  \item 当专著同时存在作者和编者的时候，GB/T 7714-2015没有明确的规定，所以目前样式文件中以 biblatex 标准样式的方式处理，这种处理因为与本地化相关，直接应用可能不好看的，也许需要修改。
 
-  \item 在各类文献的著录格式中，GB/T 7714-2015 对于出版项给出的就是出版地和出版者，但习惯上不同的类型还是存在差异的，比如专利文献出版项还应该再明确，比如在线资源常用organization表示而无出版地。这些有待进一步明确。
+  \item 在各类文献的著录格式中，GB/T 7714-2015 对于出版项给出的就是出版地和出版者，但习惯上不同的类型还是存在差异的，比如专利文献出版项还应该再明确，比如在线资源常用 organization 表示而无出版地。这些有待进一步明确。
 
-  \item 当作者不明时，GB/T 7714-2015 给出的说法是用佚名和其它语言相应的词代替。英文给了一个例子是Anon，似乎是anonymity的缩写。这也有待进一步明确。v1.0l版后将之前用的noauthor换成Anon。
+  \item 当作者不明时，GB/T 7714-2015 给出的说法是用佚名和其它语言相应的词代替。英文给了一个例子是 Anon，似乎是 anonymity 的缩写。这也有待进一步明确。v1.0l版后将之前用的 noauthor 换成 Anon，
 
-  %\item 因为GB/T 7714-2015中给出的了一些著录格式，如果把这些著录格式作为一个严格标准，那么条目中只能出现其中规定的域，而往往在bib文件中可能存在一些另外的信息比如chapter等，而且从标准样式修改的驱动中也仍然带有这些域的处理，如果为了标准化规范化考虑，可以去掉国标中没有提到的域的信息，可能使得内容更为标准，这可以通过修改增加数据模型，数据源动态修改，驱动修改(驱动中目前存在较多的似乎用不到的域，而且意义不是非常明确，这个等到biblatex说明文档中文版完成后再结合它全面的进行梳理)三条路子做到，需要的话，可以在下一步实现(2017-0226)。添加了gbstrict选项后，该问题基本已经解决(20180525)。
+  %\item 因为 GB/T 7714-2015 中给出的了一些著录格式，如果把这些著录格式作为一个严格标准，那么条目中只能出现其中规定的域，而往往在 bib 文件中可能存在一些另外的信息比如 chapter 等，而且从标准样式修改的驱动中也仍然带有这些域的处理，如果为了标准化规范化考虑，可以去掉国标中没有提到的域的信息，可能使得内容更为标准，这可以通过修改增加数据模型，数据源动态修改，驱动修改(驱动中目前存在较多的似乎用不到的域，而且意义不是非常明确，这个等到 biblatex 说明文档中文版完成后再结合它全面的进行梳理)三条路子做到，需要的话，可以在下一步实现(2017-0226)。添加了 gbstrict 选项后，该问题基本已经解决(20180525)。
 \end{enumerate}
 
 \subsection{下一步工作}
 
 \begin{enumerate}
-  \item  到1.0p版本，已经完全实现GB/T 7714-2015样式要求格式，并增加了更多的功能，剩下的问题主要是用户一些特殊需求实现以及可能存在的兼容性问题，需要广大用户发现和建议，非常感谢！
+  \item  到1.0p版本，已经完全实现 GB/T 7714-2015 样式要求格式，并增加了更多的功能，剩下的问题主要是用户一些特殊需求实现以及可能存在的兼容性问题，需要广大用户发现和建议，非常感谢！
 
     %到目前，无论是基本功能还是附加功能，biblatex-gb7714-2015样式包已经基本够用，剩下的问题可能是一些特殊情况时带来的适应性问题，这需要经过大量的测试来发现问题。如果在使用过程中发现什么问题，请邮件联系作者，非常感谢!
 
-      % 到1.0i版为止，进一步完善了: GB7714风格的文献表标签项对齐设计，编组内信息的中英文判断，特殊或老的bibtex 条目类型支持，改善空格设计以满足断行要求，支持了宏包选项(url等)应用，增加了宏包选项用于GB7714风格实现控制(gbpub 等)，重新设计了版本兼容方式，以后的版本中将更容易兼容biblatex的升级。
+      % 到1.0i版为止，进一步完善了: GB7714风格的文献表标签项对齐设计，编组内信息的中英文判断，特殊或老的bibtex 条目类型支持，改善空格设计以满足断行要求，支持了宏包选项(url等)应用，增加了宏包选项用于GB7714风格实现控制(gbpub 等)，重新设计了版本兼容方式，以后的版本中将更容易兼容 biblatex 的升级。
 
-       %到1.0h版为止，进一步完善了样式宏包，该版本将是最后支持texlive2015的版本，以后版本的功能实现将基于最新texlive中biblatex 版本，而不再考虑texlive2015中3.0版的biblatex。
+       %到1.0h版为止，进一步完善了样式宏包，该版本将是最后支持texlive2015的版本，以后版本的功能实现将基于最新 texlive 中biblatex 版本，而不再考虑texlive2015中 3.0 版的 biblatex，
 
-       %1.0g版增加对mastersthesis，phdthesis，www，electronic，standard，techreport，conference，newspaper等条目类型的兼容，增加了对标准样式standard.bbx中url包选项的兼容性，增加了析出文献标识符//后面的短空格以支持著录表的断行机制，增加了特殊字符处理功能并实现对texlive2015 的兼容，给出了gb7714风格参考文献著录表文本转换为bib文件的perl脚本，与gb7714-2015 样式形成闭环。
+       %1.0g版增加对 mastersthesis，phdthesis，www，electronic，standard，techreport，conference，newspaper等条目类型的兼容，增加了对标准样式standard.bbx中 url 包选项的兼容性，增加了析出文献标识符//后面的短空格以支持著录表的断行机制，增加了特殊字符处理功能并实现对texlive2015 的兼容，给出了gb7714风格参考文献著录表文本转换为 bib 文件的 perl 脚本，与gb7714-2015 样式形成闭环。
 
       %1.0f版完善了gbalign 选项(用于实现GB7714 风格的著录文献表标签，texlive2016 有效)，带花括号的责任者的中英文判断等功能对texlive2015 的兼容性。
 
       %到1.0e版为止，功能需求已经完全实现，剩下的问题可能是一些文献具有特殊信息或者特殊情况时带来的适应性问题，这需要经过大量的测试来发现问题。各位朋友如果发现什么问题，请邮件联系，作者会非常感谢!
 
-  \item biblatex宏包的说明文档中文版，已经由Shen wenbo和我基本完成，下一步是完善，校对，以及增加新版的内容。如果有朋友觉得这个事情有意义，愿意一起来完成这个事情，非常欢迎，请email联系。
+  \item biblatex宏包的说明文档中文版，已经由Shen wenbo和我基本完成，下一步是完善，校对，以及增加新版的内容。如果有朋友觉得这个事情有意义，愿意一起来完成这个事情，非常欢迎，请 email 联系。
 
-  %\item 打算翻译biblatex宏包的说明文档和biber的说明文档，这个已经在进行中，完成了一部分，但因为只是业余时间做，可能最终完成的时间会比较长。如果有朋友觉得这个事情有意义，愿意一起来完成这个事情，非常欢迎，请email联系。
+  %\item 打算翻译 biblatex 宏包的说明文档和 biber 的说明文档，这个已经在进行中，完成了一部分，但因为只是业余时间做，可能最终完成的时间会比较长。如果有朋友觉得这个事情有意义，愿意一起来完成这个事情，非常欢迎，请 email 联系。
 
 %\item 进一步完善上一节提到的问题。
 
-  \item biblatex宏包完全用tex宏来定义参考文献样式的带来的一个遗憾是在一个文档内切换使用多种不同的样式不是很方便，尽管本宏包提供了gb7714-2015mx样式可以在一个文档内使用国标的顺序编码制和作者年制切换。但若在使用国标样式的同时又要使用类似APA 等样式则还不能直接切换，目前解决思路是通过局部定制样式来实现，即在局部实现一套APA 的样式，类似于前面第\ref{sec:local:biblist:set}小节提过的一种情况：在文档末尾使用国标样式，但在成果列表中使用另一种样式。显然这种实现方式目前看效果是可以的。对于APA等其它样式来说，也许我们也不用完全按标准去实现，只要利用局部定制实现一个大概就可以了，但即便如此也还需要对这些样式标准做一定的了解。
+  \item biblatex宏包完全用 tex 宏来定义参考文献样式的带来的一个遗憾是在一个文档内切换使用多种不同的样式不是很方便，尽管本宏包提供了gb7714-2015mx样式可以在一个文档内使用国标的顺序编码制和作者年制切换。但若在使用国标样式的同时又要使用类似APA 等样式则还不能直接切换，目前解决思路是通过局部定制样式来实现，即在局部实现一套APA 的样式，类似于前面第~\ref{sec:local:biblist:set} 小节提过的一种情况：在文档末尾使用国标样式，但在成果列表中使用另一种样式。显然这种实现方式目前看效果是可以的。对于 APA 等其它样式来说，也许我们也不用完全按标准去实现，只要利用局部定制实现一个大概就可以了，但即便如此也还需要对这些样式标准做一定的了解。
 \end{enumerate}
 
 \section{更新历史}

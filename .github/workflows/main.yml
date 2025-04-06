@@ -1,4 +1,7 @@
-on: [push]
+on:
+  push:
+    branches:
+      - master
 jobs:
   build_latex:
     runs-on: ubuntu-latest
