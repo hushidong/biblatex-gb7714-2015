@@ -109,12 +109,12 @@ sorting选项值(gb7714-2015支持以语言著者-出版年标题升序排列，
 标签对齐控制(gbalign选项，可设置左、右、居中、项对齐方式)、
 标签格式控制(gbbiblabel选项，可设置标签数字不同的包围符号)、
 条目格式控制(gbstyle选项，利用gb7714-2015ms样式可实现中英文献分设不同格式)、
-编制样式设置命令(利用\verb|\setaystylesection|和gb7714-2015mx样式实现不同文献节不同的编制方式)、
-文献标题控制(gbctexset选项，可设置标题内容由\verb|\bibname|或\verb|\refname|宏调整)、
-命令\verb|\bibauthorfont|可设置作者项字体等格式、
-命令\verb|\bibtitlefont|可设置标题项字体等格式、
-命令\verb|\bibpubfont|可设置出版项字体等格式、
-尺寸\verb|\bibitemindent|和\verb|\bibhang|可设置文献表的缩进等格式；
+编制样式设置命令(利用 \verb|\setaystylesection| 和gb7714-2015mx样式实现不同文献节不同的编制方式)、
+文献标题控制(gbctexset选项，可设置标题内容由 \verb|\bibname| 或 \verb|\refname| 宏调整)、
+命令 \verb|\bibauthorfont| 可设置作者项字体等格式、
+命令 \verb|\bibtitlefont| 可设置标题项字体等格式、
+命令 \verb|\bibpubfont| 可设置出版项字体等格式、
+尺寸 \verb|\bibitemindent| 和 \verb|\bibhang| 可设置文献表的缩进等格式；
 
 编码设置选项：
 GBK编码兼容(gbcodegbk选项，可设置 GBK 编码文档编译)等等。
@@ -237,7 +237,7 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 \item 参考文献数据库文件(即 bib 文件)利用 \verb|\addbibresource| 加载 （比如：
 \lstinline[breaklines=true]!\addbibresource[location=local]{example.bib}!，
 注意：bib文件需另外准备，详见~\ref{sec:bib:bibtex} 节）;
-\item 引用文献则使用\verb|\cite|等命令，即使用这些命令在正文中适当位置引用参考文献的唯一标识(即entrykey)，比如\verb|\cite{entrykey}|;
+\item 引用文献则使用 \verb|\cite| 等命令，即使用这些命令在正文中适当位置引用参考文献的唯一标识(即entrykey)，比如\verb|\cite{entrykey}|;
 \item 打印文献表则使用 \verb|\printbibliography| 命令，该命令可放在正文任意位置(即文献表可在任意位置输出)。
 \end{itemize}
 
@@ -556,7 +556,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbnoothers=false，默认输出等、et al.信息；
     \item gbnoothers=true，不输出。
   \end{itemize}
-  该选项是全局选项，设置为 true 后，全文的作者列表都将不输出。若需要再局部调整，则利用编组局部设置\verb|\settoggle{bbx:gbnoothers}{true}|即可。
+  该选项是全局选项，设置为 true 后，全文的作者列表都将不输出。若需要再局部调整，则利用编组局部设置 \verb|\settoggle{bbx:gbnoothers}{true}| 即可。
 
 
 
@@ -1020,7 +1020,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   一是实现国标要求的脚注标签和段落格式，利用对
   \verb|\@makefnmark|重定义实现正文脚注标签带圈上标，
-  利用对\verb|\@makefntext|做 patch 局部化重设\verb|\@makefnmark|使得脚注中的标签不上标，利用对 latex 核心代码和 hyperref 宏包代码的重定义实现悬挂缩进的格式。
+  利用对 \verb|\@makefntext| 做 patch 局部化重设 \verb|\@makefnmark| 使得脚注中的标签不上标，利用对 latex 核心代码和 hyperref 宏包代码的重定义实现悬挂缩进的格式。
 
   二是实现国标要求的相同文献不输出内容，而是用标签代替，比如同\textcircled{4} ，主要利用citetracker 选项实现对文献引用的追踪，然后利用ifciteseen 判断和对footfullcite 命令做修改实现。
   测试文档见：\href{run:./example/opt-gbfootbib.tex}{opt-gbfootbib.tex}。
@@ -1081,7 +1081,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbfnperpage=false，不根据页码重设脚注计数器。
   \end{itemize}
 
-  注意，若要让脚注计数器与其它计数器比如 chapter 等关联，那么采用 latex 的常规方法就能解决，比如使用 latex 内核常用的\verb|\@addtoreset|命令。
+  注意，若要让脚注计数器与其它计数器比如 chapter 等关联，那么采用 latex 的常规方法就能解决，比如使用 latex 内核常用的 \verb|\@addtoreset| 命令。
 
 
   \item[gbstrict]=\textbf{true}，false. \hfill default is true
@@ -1154,7 +1154,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \pdfbookmark[4]{gbNoAfPcSpace}{gbNoAfPcSpace}
   \item[gbNoAfPcSpace] default is false
 
-  顺序编码制的 toggle 开关，设置\verb|\toggletrue{gbNoAfPcSpace}|表示去除 parencite 后面添加的中英文之间的空格，设置\verb|\togglefalse{gbNoAfPcSpace}| 则相反，表示不处理，由ctex/xeCJK自行添加。
+  顺序编码制的 toggle 开关，设置 \verb|\toggletrue{gbNoAfPcSpace}| 表示去除 parencite 后面添加的中英文之间的空格，设置\verb|\togglefalse{gbNoAfPcSpace}| 则相反，表示不处理，由ctex/xeCJK自行添加。
 
   \item[其他]
 
@@ -1171,7 +1171,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \pdfbookmark[4]{gbrefcompress}{gbrefcompress}
   \item[gbrefcompress] default is 2
 
-  顺序编码制的控制文献压缩的计数器，默认设置 \verb|\setcounter{gbrefcompress}{2}|表示从2篇文献开始压缩。若设置\verb|\setcounter{gbrefcompress}{3}|则表示从3篇文献开始压缩。
+  顺序编码制的控制文献压缩的计数器，默认设置 \verb|\setcounter{gbrefcompress}{2}|表示从2篇文献开始压缩。若设置 \verb|\setcounter{gbrefcompress}{3}| 则表示从3篇文献开始压缩。
 
 
   \item[其他]
@@ -1353,10 +1353,10 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 \subsection{文献引用及标注格式}\label{sec:cbx:usage}
 
-要生成参考文献，第一步就是在正文中引用参考文献。正文中因引用文献所形成的标注的格式称为参考文献标注样式，也称引用样式或引用标签样式，分为两类: 顺序编码制和著者-出版年（作者年）制。引用文献的基本命令是\verb|\cite|，但为了在一篇文档中实现不同的标签效果，通常还需要使用\verb|\parencite|等其它命令，以及这些命令的复数形式以实现同一处引用多篇文献时的附加信息输出。
+要生成参考文献，第一步就是在正文中引用参考文献。正文中因引用文献所形成的标注的格式称为参考文献标注样式，也称引用样式或引用标签样式，分为两类: 顺序编码制和著者-出版年（作者年）制。引用文献的基本命令是 \verb|\cite|，但为了在一篇文档中实现不同的标签效果，通常还需要使用\verb|\parencite| 等其它命令，以及这些命令的复数形式以实现同一处引用多篇文献时的附加信息输出。
 
-%比如\verb|\parencite|, \verb|\textcite|, \verb|\pagescite|,\verb|\footfullcite|等。此外为遵循 biblatex 对于复数形式标注命令的使用习惯，也提供上述命令的复数形式，比如\verb|\cite|命令的复数形式命令\verb|\cites|，便于输出单个文献的页码等前后注信息。
-%熟悉 natbib 的用户也可以直接使用使用\verb|\citet|, \verb|\citep|命令。
+%比如 \verb|\parencite|, \verb|\textcite|, \verb|\pagescite|,\verb|\footfullcite| 等。此外为遵循 biblatex 对于复数形式标注命令的使用习惯，也提供上述命令的复数形式，比如 \verb|\cite| 命令的复数形式命令\verb|\cites|，便于输出单个文献的页码等前后注信息。
+%熟悉 natbib 的用户也可以直接使用使用 \verb|\citet|, \verb|\citep| 命令。
 %另外也可以使用一些惯用命令比如\verb|\citetns|、\verb|\citepns|、
 %\verb|\upcite|、\verb|\inlinecite|等。
 
@@ -1373,7 +1373,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \verb|\authornumcite|、\verb|\cite|、\verb|\textcite|、\verb|\parencite|、
 \verb|\cite|、\verb|\parencite|。
 
-上述命令均可指定页码等信息用于输出，即在\{entrykey\}前面的[]内或第二个[]内(当有两个[]时)给出需要附加输出的信息，比如：\verb|\cite[p. 9]{entrykey}| 或 \verb|\cite[第九页]{中文entrykey}|。若不指定页码，则仅有\verb|\pagescite|命令默认提取参考文献的页码信息进行输出。
+上述命令均可指定页码等信息用于输出，即在\{entrykey\}前面的[]内或第二个[]内(当有两个[]时)给出需要附加输出的信息，比如：\verb|\cite[p. 9]{entrykey}| 或 \verb|\cite[第九页]{中文entrykey}|。若不指定页码，则仅有 \verb|\pagescite| 命令默认提取参考文献的页码信息进行输出。
 各引用命令的使用方式及其效果如表~\ref{tab:cite:num} 所示。
 测试文档见\href{run:example/testallformat.tex}{testallformat.tex}。
 
@@ -1405,7 +1405,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
  同一处引用两篇文献： & 文献\cite{Peebles2001-100-100,Miroslav2004--} &  国标示例\\
  同一处引用多篇文献： & 文献\cite{蔡敏2006--,Miroslav2004--,赵学功2001--} &  国标示例：三篇以上\\
  同一处引用多篇文献： & 文献\citec{蔡敏2006--,Miroslav2004--,赵学功2001--} &
- 由\verb|\citec|实现的另一种压缩\\
+ 由 \verb|\citec| 实现的另一种压缩\\
  多次引用同一作者的同一文献： &
   文献\cite[20-22]{Miroslav2004--}，
  文献\cite[55-60]{Miroslav2004--} &  国标示例 \\
@@ -1545,9 +1545,9 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 gb7714-2015通过 gbcitelocalcase 计数器来选择使用中文或英文的本地化字符串，因此通过局部设置 gbcitelocalcase 可以局部的选择不同语言的本地化字符串，比如在一个编组内，局部化设置计数器为：\verb|\defcounter{gbcitelocalcase}{1}|，那么这个编组内的所有本地化字符串会使用默认的中文字符串，反之若设置为2，则本地化字符串会使用默认的英文字符串。
 
 然而因为本地化字符串的默认内容通常是全局设置的，所以当中文的或者英文的本地化字符串设置都不满足要求时，就需要局部的调整本地化字符串的内容，如例~\ref{eg:str:localset} 所示，对本地化字符串 andothersincite 的内容做了调整，从全局设置的“等.”转换为“et al.”，“和”转换为“and”，这种局部设置可通过 csdef 直接重定义保存字符串信息的命令来进行调整，
-比如\verb|\csdef{abx@sstr@andothersincite}{et al.}|就是将 andothersincite 本地化字符串的内容临时调整为“et al.”。
+比如 \verb|\csdef{abx@sstr@andothersincite}{et al.}| 就是将 andothersincite 本地化字符串的内容临时调整为“et al.”。
 但为方便用户使用，
-宏包提供了\verb|\setlocalbibstring|命令来替代上述直接定义的 csdef 命令，
+宏包提供了 \verb|\setlocalbibstring| 命令来替代上述直接定义的 csdef 命令，
 如例~\ref{eg:str:localset} 所示。
 具体的测试见\href{egthesis/thesis-ucas-m.tex}{thesis-ucas-m.tex}
 
@@ -1714,7 +1714,7 @@ gb7714-2015通过 gbcitelocalcase 计数器来选择使用中文或英文的本�
 \subsubsection{段落格式控制}
 
 \paragraph{\heiti 文献表字体、颜色} 为方便用户改变文献表段落格式、内容字体和颜色等，在 biblatex 提供的 \verb|\bibfont| 命令基础上，
-增加了\verb|\bibauthorfont|、\verb|\bibtitlefont|、\verb|\bibpubfont| 等命令用于控制文献部分著录项的格式，比如作者，标题，出版项等。增加了\verb|\SlashFont|用于控制斜杠的字体。
+增加了 \verb|\bibauthorfont|、\verb|\bibtitlefont|、\verb|\bibpubfont| 等命令用于控制文献部分著录项的格式，比如作者，标题，出版项等。增加了\verb|\SlashFont| 用于控制斜杠的字体。
 具体用法见例~\ref{eg:biblist:fontset}，结果如图\ref{fig:par:fmt} 所示，
 测试用例见\href{run:example/testfontinbiblio.tex}{testfontinbiblio.tex}。
 
@@ -2055,7 +2055,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 不同参考文献分节采用不同著录样式主要针对一个 tex 文档中存在多个参考文献表，且各参考文献表的格式需求不同。比如一些学位论文写作中，正文的参考文献表为著者-出版年制，而附录中的作者论著情况则用顺序编码制。这种情况目前由gb7714-2015mx样式解决，选项加载方式如例~\ref{eg:gb7714mx} 所示。
 
 gb7714-2015mx样式默认使用顺序编码样式，当要使用著者-出版年制样式时，则利用命令
-\verb|\setaystylesection|进行设置，该命令有一个必选参数，表示采用著者-出版年制样式的参考文献节的编号。注意该命令一次只能设置一个文献节，因此设置多个参考文献节时，需要多次使用\verb|\setaystylesection|命令，比如节2节4都采用著者-出版年制样式，
+\verb|\setaystylesection|进行设置，该命令有一个必选参数，表示采用著者-出版年制样式的参考文献节的编号。注意该命令一次只能设置一个文献节，因此设置多个参考文献节时，需要多次使用 \verb|\setaystylesection| 命令，比如节2节4都采用著者-出版年制样式，
 那么设置\verb|\setaystylesection{2}\setaystylesection{4}|。
 
 目前gb7714-2015mx样式中的两种格式：顺序编码和著者-出版年制样式默认都是符合GB/T 7714-2015 标准的，如果需要做格式的修改，则完全可以通过自定义实现。图~\ref{fig:eg:ms} 展示了3个参考文献分节的文档，其中节2使用了著者-出版年制。
@@ -2406,7 +2406,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \paragraph{\heiti 利用条目集类型满足双语文献要求}
 
 设置条目集类型(set)有静态和动态两种方法。其中动态方法使用更为方便，
-只需在写文档时利用\verb|\defbibentryset|将两条文献不同语言的文献设置成一个 set 条目，然后引用 set 的 bibtex 键。比如:
+只需在写文档时利用 \verb|\defbibentryset| 将两条文献不同语言的文献设置成一个 set 条目，然后引用 set 的 bibtex 键。比如:
 \begin{example}{设置 set 条目集用于双语文献的动态方法}{eg:setforbilangentry}
 \begin{texlist}
 \defbibentryset{bilangyi2013}{易仕和2013--,Yi2013--}
@@ -2502,7 +2502,7 @@ language={chinese}
 \end{texlist}
 \end{example}
 
-动态方法利用动态数据修改自动添加 related 域，避免对 bib 文件做直接修改。本样式中对该过程进行了封装，定义一个新的命令\verb|\defdblanentry|和一个等价命令\verb|\defdoublelangentry|来实现，例如:
+动态方法利用动态数据修改自动添加 related 域，避免对 bib 文件做直接修改。本样式中对该过程进行了封装，定义一个新的命令 \verb|\defdblanentry| 和一个等价命令 \verb|\defdoublelangentry| 来实现，例如:
 \begin{example}{设置关联条目的动态方法}{eg:related:dynamic}
 \begin{texlist}
 \defdoublelangentry{易仕和2013--}{Yi2013--}
@@ -2510,8 +2510,8 @@ language={chinese}
 \end{example}
 
 使用该命令后，可以引用主条目“易仕和2013--”生成双语文献。
-但要注意由于\verb|\DeclareStyleSourcemap|命令只能在导言区中使用，
-因此\verb|\defdblanentry|或\verb|\defdoublelangentry|命令也只能出现在导言区中，这也是相比条目集动态方法的唯一遗憾。
+但要注意由于 \verb|\DeclareStyleSourcemap| 命令只能在导言区中使用，
+因此 \verb|\defdblanentry| 或 \verb|\defdoublelangentry| 命令也只能出现在导言区中，这也是相比条目集动态方法的唯一遗憾。
 实现的具体细节见
 \href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography}%
 {biblatex-solution-to-latex-bibliography}。
@@ -2747,7 +2747,7 @@ biber -l zh__stroke jobname
 %注意：目前该文件只修改了“曾”“沈”两个字，而“翟”“仇”等没有做修改，若用户有需求后面再增加。
 
 通常 biber 在第一次运行的时候，会构建一个依赖目录，这也是 biber 的临时工作路径，而所有的依赖文件就在其中。
-在 Windows 下通常会在临时目录 temp 下构建类似\verb|par-<hex_encoded_username>/cache-|的目录(其它系统也是类似命名，可以搜索一下)，所有的依赖包括Pinyin.pm都会在其内部，找到并替换即可(Pinyin.pm文件通常在\verb|cache-<hex-code-string>\inc\lib\Unicode\Collate\CJK|下)。
+在 Windows 下通常会在临时目录 temp 下构建类似 \verb|par-<hex_encoded_username>/cache-| 的目录(其它系统也是类似命名，可以搜索一下)，所有的依赖包括Pinyin.pm都会在其内部，找到并替换即可(Pinyin.pm文件通常在 \verb|cache-<hex-code-string>\inc\lib\Unicode\Collate\CJK| 下)。
 
 
 
@@ -2866,8 +2866,8 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 \bc{3. 由于 url 宏包的特点，在各个域中使用 \textbackslash url命令时，无法使用中文字符，如果要使用带中文字符的网址，那么可以利用 \textbackslash href命令代替 \textbackslash url命令。或者不使用这两个命令，而直接输入网址，超链接则在域格式中用 \textbackslash href 命令定义，比如：}
 \verb|\DeclareFieldFormat{howpublished}{\href{#1}{#1}}|。
 
-但要注意: 使用\verb|\href|命令形成的超链接文本，可以看做是普通的正文文本，当内部没有断行符存在时，断行可能会存在问题，因此需要手动处理，比如添加空格或者-字符。
-而当使用\verb|\url|和\verb|\nolinkurl|命令时，断行的问题则由 url 宏包提供的逻辑进行处理，因此往往能够得到适合的断行。所以是使用\verb|\href|还是\verb|\url|需要根据实际情况选择。
+但要注意: 使用 \verb|\href| 命令形成的超链接文本，可以看做是普通的正文文本，当内部没有断行符存在时，断行可能会存在问题，因此需要手动处理，比如添加空格或者-字符。
+而当使用 \verb|\url| 和 \verb|\nolinkurl| 命令时，断行的问题则由 url 宏包提供的逻辑进行处理，因此往往能够得到适合的断行。所以是使用 \verb|\href| 还是 \verb|\url| 需要根据实际情况选择。
 
 \bc{4. 需要表示范围类型的域，比如页码域，通常用一个或多个-符号表示范围值间的间隔符，间隔符在解析后会替换为一个\textbackslash bibrangedash。而日期域在 biblatex 中是作为日期类型来考虑的，尽管日期也有起止范围的问题，且由于单个日期内部已经存在-符号，因此起止日期间的间隔符用/符号。而卷和期在 biblatex 中是整数类型的域，本身不具备起止范围解析功能，但GB 7714-2015的连续出版物类型中存在这样的需求，所以特别设计了卷和期的解析，且由于合期常用(7/8)这样的方式表示，因此卷和期范围间隔符用-表示。这些在数据录入过程中是需要注意的。}
 
@@ -2928,7 +2928,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
   \item[pages] 可以格式化输入或输入需要打印的内容。格式化输入时，页码用整数，当有范围时，用单个或多个短横线-隔开。比如:59-60或\verb|59--60|。 当无法解析时，输入内容被认为是需要完整打印的内容。
 
-  \item[url] 直接输入需要打印的网址内容。注意不需要在域内加上\verb|\url|命令来表示网址链接，仅需要输入网址本身即可，且特殊字符无需转义。即输入方式为:
+  \item[url] 直接输入需要打印的网址内容。注意不需要在域内加上 \verb|\url| 命令来表示网址链接，仅需要输入网址本身即可，且特殊字符无需转义。即输入方式为:
 
       \verb|url={http://www.greenwood.com/can_b_b#abc},|
 
@@ -2936,8 +2936,8 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
       \verb|url={\url{http://www.greenwood.com/can_b_b#abc}},|
 
-      如果是在其它域比如 howpublished 等域中输入网址，也可以直接输入网址，但所有的特殊字符都需要转义，因为它就是一个普通文本，同时换行行为也与普通文本一致，当网址字符串中没有空格或-字符时，断行可能出现问题，因此需要手动处理。如果加入\verb|\url|命令，那么其中一些特殊字符可能不需要转义，比如\verb|_|等，
-      且处理断行可以由\verb|\url|命令的内部逻辑处理，通过\verb|\UrlBreaks|设置可以自动实现比较合适的断行。当然因为 biblatex 已经做了进一步的处理，所以\verb|\url|中的文本断行是由三个计数器控制: biburlnumpenalty、biburlucpenalty、biburllcpenalty，合理设置这三个计数器，即可得到满意的断行效果。
+      如果是在其它域比如 howpublished 等域中输入网址，也可以直接输入网址，但所有的特殊字符都需要转义，因为它就是一个普通文本，同时换行行为也与普通文本一致，当网址字符串中没有空格或-字符时，断行可能出现问题，因此需要手动处理。如果加入 \verb|\url| 命令，那么其中一些特殊字符可能不需要转义，比如 \verb|_| 等，
+      且处理断行可以由 \verb|\url| 命令的内部逻辑处理，通过 \verb|\UrlBreaks| 设置可以自动实现比较合适的断行。当然因为 biblatex 已经做了进一步的处理，所以 \verb|\url| 中的文本断行是由三个计数器控制: biburlnumpenalty、biburlucpenalty、biburllcpenalty，合理设置这三个计数器，即可得到满意的断行效果。
 
   \item[doi] 直接输入需要打印的 DOI 内容
   \item[note] 在本样式中 note 域可以有特殊功能，当其内容为 standard 或news|newspaper 时，判断条目类型为标准和报纸析出的文献。
@@ -3075,7 +3075,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
   \item 由于 biblatex 宏包的组成比较复杂，所以当遇到具体问题时，查找具体命令的代码会比较麻烦。出现问题首先可以从biblatex-gb7714-2015，biblatex-solution-to-latex-bibliography里面查找说明。若没有则可以从 github 上的 readme，wiki，issue里面查找问题，当找不到解决方案可以提 issue，
       若要自己去解决问题，则可以从如下查找顺序来研究。
       biblatex自身相关的包括各种 bbx，cbx文件，重点是biblatex.sty，biblatex.def，standard.bbx，还有blx-dm.def 等一些设置文件。另外不要忘记 lbx 文件，这里面也有一些语言相关的命令，
-      比如\verb|\bibrangedash|，\verb|\finalandcomma|等。至于其它一些tex 原始命令可以从tex、xetex的相关书籍文档查找，latex 相关代码则可以从latex2e，etoolbox等说明文档或latex.ltx，etoolbox.STY等源代码文档中查找。注意多使用meaning 命令来获取命令的定义。
+      比如 \verb|\bibrangedash|，\verb|\finalandcomma| 等。至于其它一些tex 原始命令可以从tex、xetex的相关书籍文档查找，latex 相关代码则可以从latex2e，etoolbox等说明文档或latex.ltx，etoolbox.STY等源代码文档中查找。注意多使用meaning 命令来获取命令的定义。
   \end{itemize}
 
 
