@@ -2741,6 +2741,136 @@ biber -l zh__stroke jobname
 根据上述的排序逻辑可知，要做排序的调整首先可以考虑合理地设置选项，来选择合适的排序模板、文种顺序和本地化字符排序调整方案。当不满足要求时，可以自定义排序模板，并设置 sorting 选项为该模板，来实现用户需要的排序方式。
 
 
+\subsubsection{德语等其他语言文献的排序}
+
+除了前述的中日韩英法俄六种语言外，有时还需要排其他语言的文献，比如德语。
+由于这些额外的语言并没有在样式文件中做默认设置，所以要做一定的调整来达到排序的目的。
+
+假设bib文件中文献条目信息已经包含了language域信息(注意中日韩英法俄这6种语言的文献会自动识别语言类型，所以language域信息不用手动填入，但像德语这种语言从字符上与英语很难区分的，需要手动设置language域信息，比如：language = \{german\})，则只要在选项gblanorder中利用语言的缩写给出需要的语言顺序，比如要排序中日英德法五种语言，则需要设置：gblanorder=cn;jp;en;de;fr。
+然后再在导言区为除中日韩英法俄外的语言类型设置排序序号命令 \verb|\lanXXorder| (其中XX是对应的语言缩写)，因为在使用 gblanorder 设置时会为这一序号命令赋值并利用其排序。同时还要将文献与该序号信息对应起来以实现排序，其方法是利用动态修改来设置，示例为：
+
+
+\begin{example}{德语等其他语言文献的排序}{eg:sort:otherlan}
+\begin{texlist}
+%设置 gblanorder 与目标顺序中日英德法一致，所以是：cn;jp;en;de;fr
+\usepackage[backend=biber,style=gb7714-2015ay,
+gbnamefmt=uppercase,maxcitenames=2,gblocal=gb7714-2015,
+gblanorder=cn;jp;en;de;fr]{biblatex}
+
+%gblanorder中设置除了中日韩英法俄语之外的语言都需要进行下列设置：
+\DeclareStyleSourcemap{
+  \maps[datatype=bibtex]{
+    \map[overwrite]{
+        %根据language的信息判断是否是德语，正则目的是使德语german用任意大小写都可以
+        \step[fieldsource=language,match=\regexp{(g|G)(e|E)(r|R)(m|M)(a|A)(n|N)},final]
+        %设置langid和languageid，设置成对应的语言即可
+        \step[fieldset=langid,fieldvalue={german}]
+        \step[fieldset=languageid,fieldvalue={german}]
+        %因为德语没有默认的排序序号，所以要额外设置一下\lanXXorder命令
+        %因为德语对应的缩写是de，所以\lanXXorder命令中的XX是de
+        %其他语言也是类似的，只是中日韩英法俄已经定义过。
+        \step[fieldset=lansortorder,fieldvalue=\landeorder]
+      }
+    }
+  }
+\end{texlist}
+\end{example}
+
+
+\subsubsection{区分语言后根据条目类型排序}
+
+除了按照语言排序外，有时也需要按照条目类型进行排序。因为是在一个文献表中，所以不能采用筛选的方式进行，只能通过设置排序标识信息和排序模板来实现。
+
+比如对于下面这个问题：文献表首先按英语在前中文在后的顺序排，然后每个语种中根据“专著[M],报纸文章[N],期刊文章[J], 学位论文[D], 会议论文[C],报告[R],标准[S],专利[P],档案[A],汇编[G],电子资源[EB]”的类型顺序排序，每个类型中则按作者首字母排序。
+可以为其设置一个排序域verba(因为usera到userf域已经用过，而其他专门的域有各自的功能，所以可以用空闲的域verba到verbc)，然后定义一个排序模板，让文献可以按verba进行排序。
+
+具体代码为：
+\begin{example}{区分语言后根据条目类型排序}{eg:sort:entrytype}
+\begin{texlist}
+%除了语言类型顺序gblanorder设置外，还要设置sorting为对应的排序模板
+\usepackage[backend=biber,style=gb7714-2015,gblanorder=englishahead,
+sorting=gbtypesort,sortlocale=zh__pinyin]{biblatex}
+
+%设置verba域信息，用作排序标识，其内容根据排序要求从A开始填写
+\DeclareStyleSourcemap{
+  \maps[datatype=bibtex]{
+    \map[overwrite]{
+      \step[fieldsource=usera,match={M},final]%
+      \step[fieldset=verba,fieldvalue={A}]
+      }
+    \map[overwrite]{
+      \step[fieldsource=usera,match={N},final]%
+      \step[fieldset=verba,fieldvalue={B}]
+      }
+    \map[overwrite]{
+      \step[fieldsource=usera,match={J},final]%
+      \step[fieldset=verba,fieldvalue={C}]
+      }
+    \map[overwrite]{
+      \step[fieldsource=usera,match={D},final]%
+      \step[fieldset=verba,fieldvalue={D}]
+      }
+    \map[overwrite]{
+      \step[fieldsource=usera,match={C},final]%
+      \step[fieldset=verba,fieldvalue={E}]
+      }
+    \map[overwrite]{
+      \step[fieldsource=usera,match={R},final]%
+      \step[fieldset=verba,fieldvalue={F}]
+      }
+    \map[overwrite]{
+      \step[fieldsource=usera,match={S},final]%
+      \step[fieldset=verba,fieldvalue={G}]
+      }
+    \map[overwrite]{
+      \step[fieldsource=usera,match={P},final]%
+      \step[fieldset=verba,fieldvalue={H}]
+      }
+    \map[overwrite]{
+      \step[fieldsource=usera,match={A},final]%
+      \step[fieldset=verba,fieldvalue={I}]
+      }
+    \map[overwrite]{
+      \step[fieldsource=usera,match={G},final]%
+      \step[fieldset=verba,fieldvalue={J}]
+      }
+    \map[overwrite]{
+      \step[fieldsource=usera,match={EB},final]%
+      \step[fieldset=verba,fieldvalue={K}]
+      }
+    }
+}
+
+%设置排序模板使用verba来实现按类型排序
+\DeclareSortingTemplate{gbtypesort}{
+      \sort{
+        \field{presort}
+      }
+      \sort{
+    	\field{lansortorder}%language
+    	}
+      \sort{
+        \field{verba}
+      }
+      \sort{
+        \field{sortkey}
+      }
+      \sort{%[direction=descending]
+        \field{sortname}
+        \field{author}
+      }
+      \sort{
+        \field{sortyear}
+        \field{year}
+      }
+}
+\end{texlist}
+\end{example}
+
+
+
+
+
 \subsubsection{姓名中的多音字排序调整}
 
 前一小节在介绍排序模板时，附带介绍了姓名多音字处理的一种方法，具体来说，就是人工或者利用 bibmap 工具为 bib 文件中的各个中文条目添加 key 域，用于指定中文的多音字的拼音，从而使排序时使用这个在 key 域指定的拼音进行排序。
