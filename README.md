@@ -44,12 +44,12 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 ## Need to do:
 
 > [!Note]
-> **注意**: ms.bbx 样式引入内容时需要特别注意空格的引入
-> 注意：mx.cbx 样式没有更新一些新的设置（比如 2 篇文献就压缩等），若有需要可以参考 15.cbx 和 15ay.cbx 修改。
+> **注意**: ms.bbx 样式引入内容时需要特别注意空格的引入。
+> mx.cbx 样式没有更新一些新的设置（比如 2 篇文献就压缩等），若有需要可以参考 15.cbx 和 15ay.cbx 修改。
 > 应该说经过这些年的使用，很多 corner case 已经处理过了，但还是可能会存在一些，特别是 ms 和 mx 两个样式使用的少。
-> special characters in all fields?
+> 一些未做的事，包括：special characters in all fields?
 > entry without author: the delimiter between title and year?
-> TEST FOR texlive 2015,2016,2017
+> TEST FOR texlive 2015,2016,2017？
 > 标注中包围符号的定义[]、()、圆圈、方框等，有些命令没有去修改。
 
 
