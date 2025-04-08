@@ -231,7 +231,7 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 
 \subsection{最小示例}
 
-基于 biblatex 宏包生成参考文献非常简单，一个最小工作示例 (Minimum Work Example, MWE) 如例 \ref{code:doc:structrue}所示，其编译结果如图~\ref{fig:eg:ref} 所示。该 \TeX{} 源文档给出了使用 biblatex 时的基本结构及其详细注释，其中：
+基于 biblatex 宏包生成参考文献非常简单，一个最小工作示例 (Minimum Work Example, MWE) 如例~\ref{code:doc:structrue} 所示，其编译结果如图~\ref{fig:eg:ref} 所示。该 \TeX{} 源文档给出了使用 biblatex 时的基本结构及其详细注释，其中：
 \begin{itemize}
 \item 参考文献样式(即 cbx/bbx 文件)随 biblatex 宏包加载(比如：style=gb7714-2015，加载了gb7714-2015.cbx和gb7714-2015.bbx);
 \item 参考文献数据库文件(即 bib 文件)利用 \verb|\addbibresource| 加载 （比如：
@@ -245,19 +245,19 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 \begin{texlist}
 \documentclass{article}%文档类 %导言区开始:
 \usepackage{ctex}%加载 ctex 宏包，中文支持
-    %加载 geometry 宏包，定义版面
+%加载 geometry 宏包，定义版面
 \usepackage[left=20mm,right=20mm,top=25mm, bottom=15mm]{geometry}
-    %加载 hyperref 宏包，使用超链接
+%加载 hyperref 宏包，使用超链接
 \usepackage[colorlinks=true,pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
-    %参考文献工具，加载 biblatex 宏包，,其后端 backend 使用 biber，%标注(引用)样式 citestyle，著录样式 bibstyle 都采用 gb7714-2015 样式，两者相同时可以合并为一个选项style
+%参考文献工具，加载 biblatex 宏包，,其后端 backend 使用 biber，%标注(引用)样式 citestyle，著录样式 bibstyle 都采用 gb7714-2015 样式，两者相同时可以合并为一个选项style
 \usepackage[backend=biber,style=gb7714-2015]{biblatex}
-    %biblatex宏包的参考文献数据源即 bib 文件加载方式
+%biblatex宏包的参考文献数据源即 bib 文件加载方式
 \addbibresource[location=local]{example.bib}
 \begin{document}%正文区开始:
-    %正文内容，引用参考文献
+%正文内容，引用参考文献
 详见文献\cite{Peebles2001-100-100}\parencite{Babu2014a}
 另见文献\cite[49]{于潇2012-1518-1523}\parencite[106]{Babu2014a}
-    %打印参考文献表
+%打印参考文献表
 \printbibliography[heading=bibliography,title=参考文献]
 \end{document}
 \end{texlist}
@@ -701,7 +701,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbmedium=true，根据GB/T 7714-2015 要求输出载体标识符，例如“在线的期刊析出文献题名[J/OL]”。
     \item gbmedium=false，则不输出标识符，例如“在线的期刊析出文献题名[J]”。
   \end{itemize}
-  注意：gbtype选项是更大范围的控制，包括了 gbmedium，当 gbtype=false 时，无所谓 gbmedium 设置什么，因为整个文献类型和载体标识符整个都不显示，而 gbmedium 只是设置载体标识的。
+  注意：gbtype选项是更大范围的控制，包括了 gbmedium，当 gbtype=false 时，无所谓 gbmedium 设置什么，因为整个文献类型和载体标识符都不显示，而 gbmedium 只是设置载体标识的。
   效果示例如图~\ref{fig:eg:optgbmedium} 所示。
 
 \begin{figure}[!htb]
@@ -829,7 +829,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \item[gbbiblocal]=\textbf{gb7714-2015}，chinese，english. \hfill default is gb7714-2015
 
   为设置引用标注标签和文献表中的本地化字符串而增加的选项。其中gbcitelocal 用于控制标注中的本地化字符串，而 gbbiblocal 用于控制文献表中的本地化字符串，gblocal选项等价于同时设置gbcitelocal 和 gbbiblocal。
-  配合\lstinline[breaklines=true,basicstyle=\ttfamily]!\DefineBibliographyStrings!命令对本地化字符串进行设置可以实现一些特殊的效果。图~\ref{fig:content:fmtc} 就是该选项的一个使用示例。
+  配合 \lstinline[breaklines=true,basicstyle=\ttfamily]!\DefineBibliographyStrings!命令对本地化字符串进行设置可以实现一些特殊的效果。图~\ref{fig:content:fmtc} 就是该选项的一个使用示例。
   \begin{itemize}
     \item gblocal=gb7714-2015，即默认区分中英文，不同语言采用不同的字符串比如中文使用“等”“和”，而英文使用“et al.”“and”。
     \item gblocal=chinese，强制设置所有的本地化字符串使用中文。
@@ -1008,7 +1008,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbstyle=false，仅中文文献使用国标样式，其它语言文献使用 biblatex 默认样式。
   \end{itemize}
 
-  该选项的实现原理是把所有国标格式设置局部化到每一条文献打印时，处理时首先判断gbstyle 选项及文献的语言，当满足要求则使用这些局部化格式，否则使用默认的标准样式。这种实现为一篇文档内实现两种样式提供解决思路，尽管目前非中文语言文献的著录格式是标准样式，但只要对标准样式做进一步的修改就可以形成符合某种格式规范的样式，比如像 ieee，nature等的样式。因此存在中文使用GB/T 7714-2015 著录格式，而英文文献使用 ieee 等著录格式的可能性。测试文档见：\href{run:./example/opt-gbstyle.tex}{opt-gbstyle.tex}。
+  该选项的实现原理是把所有国标格式设置局部化到每一条文献打印时，处理时首先判断 gbstyle 选项及文献的语言，当满足要求则使用这些局部化格式，否则使用默认的标准样式。这种实现为一篇文档内实现两种样式提供解决思路，尽管目前非中文语言文献的著录格式是标准样式，但只要对标准样式做进一步的修改就可以形成符合某种格式规范的样式，比如像 ieee，nature 等的样式。因此存在中文使用 GB/T 7714-2015 著录格式，而英文文献使用 ieee 等著录格式的可能性。测试文档见：\href{run:./example/opt-gbstyle.tex}{opt-gbstyle.tex}。
 
 
   \pdfbookmark[4]{gbfootbib}{gbfootbib}
@@ -1023,15 +1023,15 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   该选项的实现主要是两个方面：
 
   一是实现国标要求的脚注标签和段落格式，利用对
-  \verb|\@makefnmark|重定义实现正文脚注标签带圈上标，
+  \verb|\@makefnmark| 重定义实现正文脚注标签带圈上标，
   利用对 \verb|\@makefntext| 做 patch 局部化重设 \verb|\@makefnmark| 使得脚注中的标签不上标，利用对 latex 核心代码和 hyperref 宏包代码的重定义实现悬挂缩进的格式。
 
   二是实现国标要求的相同文献不输出内容，而是用标签代替，比如同\textcircled{4} ，主要利用citetracker 选项实现对文献引用的追踪，然后利用ifciteseen 判断和对footfullcite 命令做修改实现。
   测试文档见：\href{run:./example/opt-gbfootbib.tex}{opt-gbfootbib.tex}。
 
-  同时为了方便脚注的对齐格式控制增加了两个尺寸：\verb|\footbibmargin|和
+  同时为了方便脚注的对齐格式控制增加了两个尺寸：\verb|\footbibmargin| 和
   \verb|\footbiblabelsep|，分别表示脚注文本的左侧缩进距离和悬挂的脚注标记标签与脚注文本的间隔距离，默认分别是 1em 和0.5em。如果要修改悬挂对齐为其它对齐方式，那么需要重定义
-  \verb|\@makefntext|宏，目前悬挂对齐的实现方式见 bbx 文件。比如示例中重定义这两个尺寸为2em 和1em：
+  \verb|\@makefntext| 宏，目前悬挂对齐的实现方式见 bbx 文件。比如示例中重定义这两个尺寸为2em 和1em：
 
   {\small
   \vspace{1ex}
@@ -1064,7 +1064,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   但要注意由于 hyperref 本身的原因，这种方式产生的脚注文献表可能没有超链接功能。
   对于表格环境中的引用无法产生脚注文献表的问题，可以将其置于小页环境中实现或者采用前述图标标题中的类似处理方式。
-  注意：latex核心代码参考latex.ltx，而 hyperref 代码参考hyperref.STY。
+  注意：latex 核心代码参考 latex.ltx，而 hyperref 代码参考 hyperref.sty。
 
   \pdfbookmark[4]{gbfootbibfmt}{gbfootbibfmt}
   \item[gbfootbibfmt]=true，\textbf{false}. \hfill default is false
