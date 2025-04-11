@@ -1114,8 +1114,11 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \pdfbookmark[4]{defdblanentry}{defdblanentry}
   \item[defdblanentry] \{entrykey1\}\{entrykey2\}
 
-  用于定义双语对照文献，将entrykey2条目和entrykey1条目关联起来，在文献表中对照输出。比如：\verb|\defdblanentry{entrykey1}{entrykey2}|或
-  \verb|\defdoublelangentry{entrykey1}{entrykey2}|，若entrykey1条目是中文的文献，entrykey2条目是对应entrykey1条目的英文形式，那么该命令会使得在文献表中，entrykey2的英文内容紧跟在entrykey1的中文内容后对照输出。该命令也只能出现在导言区中。
+  用于定义双语对照文献，将 entrykey2 条目和 entrykey1 条目关联起来，
+  在文献表中对照输出。比如：\lstinline|\defdblanentry{entrykey1}{entrykey2}| 或
+  \lstinline|\defdoublelangentry{entrykey1}{entrykey2}|，
+  若 entrykey1 条目是中文的文献，entrykey2 条目是对应 entrykey1 条目的英文形式，
+  那么该命令会使得在文献表中，entrykey2 的英文内容紧跟在 entrykey1 的中文内容后对照输出。该命令也只能出现在导言区中。
 
   \pdfbookmark[4]{addEntryField}{addEntryField}
   \item[addEntryField] \{entrykey or entrykey comma list\}\{field\}\{fieldvalue\}
@@ -1141,7 +1144,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \pdfbookmark[4]{setlocalbibstring}{setlocalbibstring}
   \item[setlocalbibstring] \{bibstringkey\}\{bibstringval\}
 
-  用于局部调整本地化字符串的内容。比如 \verb|\setlocalbibstring{andothersincite}{et al.}|，就是临时将本地化字符串 andothersincite 的内容调整为“et al.”。
+  用于局部调整本地化字符串的内容。比如 \lstinline|\setlocalbibstring{andothersincite}{et al.}|，就是临时将本地化字符串 andothersincite 的内容调整为“et al.”。
 
 注意：如果要在本地化字符串的内容设置中使用 biblatex 提供的一些标点命令，比如adddot 等，那么需要对其进行保护，避免直接展开导致命令未定义的错误，比如：
 \verb|\setlocalbibstring{andothersincite}{et al\protect\adddot}|
@@ -1175,7 +1178,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \pdfbookmark[4]{gbrefcompress}{gbrefcompress}
   \item[gbrefcompress] default is 2
 
-  顺序编码制的控制文献压缩的计数器，默认设置 \verb|\setcounter{gbrefcompress}{2}|表示从 2 篇文献开始压缩。若设置 \verb|\setcounter{gbrefcompress}{3}| 则表示从 3 篇文献开始压缩。
+  顺序编码制的控制文献压缩的计数器，默认设置 \verb|\setcounter{gbrefcompress}{2}| 表示从 2 篇文献开始压缩。若设置 \verb|\setcounter{gbrefcompress}{3}| 则表示从 3 篇文献开始压缩。
 
 
   \item[其他]
@@ -1193,7 +1196,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \pdfbookmark[4]{ biblabelextend}{ biblabelextend}
   \item[biblabelextend] default is 0pt
 
-  顺序编码制文献表编码标签盒子的扩展宽度，当设置某些字体导致默认盒子宽度不足导致对齐出现问题时，可以设置该值为一个正值，比如：\verb|\setlength{\biblabelextend}{5pt}|。
+  顺序编码制文献表编码标签盒子的扩展宽度，当设置某些字体导致默认盒子宽度不足导致对齐出现问题时，可以设置该值为一个正值，比如：\lstinline|\setlength{\biblabelextend}{5pt}|。
   著者年份制中若使用顺序编码的文献表，也可以设置该值来拓宽编码标签盒子。
 
 \end{description}
@@ -1239,7 +1242,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   \item[minnames]=整数 \hfill default: 3
 
-  影响所有名称列表（\bibfield{author}、\bibfield{editor} 等）的限制值。如果某个列表包含的姓名数量超过 \prm{integer}，那么就会自动截断至\opt{minnames}个姓名。\prm{minnames} 的值必须小于或等于 \prm{maxnames}。\opt{minnames} 是设置 \opt{minbibnames} 和 \opt{mincitenames} 两个选项的支配选项。
+  影响所有名称列表（\bibfield{author}、\bibfield{editor} 等）的限制值。如果某个列表包含的姓名数量超过 \prm{integer}，那么就会自动截断至 \opt{minnames} 个姓名。\prm{minnames} 的值必须小于或等于 \prm{maxnames}。\opt{minnames} 是设置 \opt{minbibnames} 和 \opt{mincitenames} 两个选项的支配选项。
 
   \item[maxbibnames]=整数 \hfill default: \prm{maxnames}
 
@@ -1281,11 +1284,11 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   类似于 date 选项，但控制的是由DeclareLabeldate 选择的日期域的格式。
 
-  \item[doi]=true,false. \hfill default: true
+  \item[doi]=true, false. \hfill default: true
 
   该选项控制是否打印 \bibfield{doi} 域。
 
-  \item[isbn]=true,false. \hfill default: true
+  \item[isbn]=true, false. \hfill default: true
 
   该选项控制是否打印 \bibfield{isbn}\slash \bibfield{issn}\slash \bibfield{isrn} 等域。
 
@@ -1379,7 +1382,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 上述命令均可指定页码等信息用于输出，即在\{entrykey\}前面的[]内或第二个[]内(当有两个[]时)给出需要附加输出的信息，比如：\verb|\cite[p. 9]{entrykey}| 或 \verb|\cite[第九页]{中文entrykey}|。若不指定页码，则仅有 \verb|\pagescite| 命令默认提取参考文献的页码信息进行输出。
 各引用命令的使用方式及其效果如表~\ref{tab:cite:num} 所示。
-测试文档见\href{run:example/testallformat.tex}{testallformat.tex}。
+测试文档见~\href{run:example/testallformat.tex}{testallformat.tex}。
 
 
 
@@ -1443,7 +1446,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \paragraph{\heiti 著者-出版年制的标注样式}
 为满足 GB/T 7714-2015 第10.2节的要求，
 考虑 \verb|\cite| 和 \verb|\parencite| 命令将引用标签用圆括号括起来。增加了
-\verb|\pagescite|命令，用于自动加页码。增加了 \verb|\yearpagescite|， \verb|\yearcite| 命令用于处理文中已有作者信息只需要年份和页码的情况(为兼容性考虑，顺序编码制也给出该命令，但作用与
+\verb|\pagescite| 命令，用于自动加页码。增加了 \verb|\yearpagescite|， \verb|\yearcite| 命令用于处理文中已有作者信息只需要年份和页码的情况(为兼容性考虑，顺序编码制也给出该命令，但作用与
 \verb|\pagescite| 命令相同)，也完善了 \verb|\textcite| 命令，提供作者为句子主语，并附带行内非上标的页码，增加了 \verb|\authornumcite| 命令，以输出作者作为句子主语，并附带上标的页码。
 其它命令 \verb|\citet|、\verb|\citep|、\verb|\citetns|、\verb|\citepns|、
 \verb|\upcite|、\verb|\inlinecite| 分别等价于
@@ -1453,7 +1456,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 %各命令使用方式如例~\ref{eg:citeforauthoryear} 所示。
 %各引用命令的效果如图~\ref{fig:cite:ay} 所示。
 各引用命令的使用方式如表~\ref{tab:cite:authoryear} 所示。
-测试文档见\href{run:example/testallformat.tex}{testallformat.tex}。
+测试文档见~\href{run:example/testallformat.tex}{testallformat.tex}。
 
 
 
@@ -1503,7 +1506,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 标注在同一个文档中可能存在不同格式需求，比如：有的地方需要用上标，有的地方需要用行内，有的地方需要给出作者，有的地方需要给出页码等。一般情况下，不同标注格式可以通过使用不同的标注命令来得到，比如上一小节给出的不同命令。
 %，不同命令能够产生独特的标注标签。
 
-除了利用命令来调整标注格式外，还有更多方法可进行局部格式调整。这利用了 tex 的编组特性，编组内的局部格式不影响编组外的格式，所以可利用编组内的局部设置来调整标注的格式。类似的，文献表的著录格式也可局部调整，详见下一节。
+除了利用命令来调整标注格式外，还有更多方法可进行局部格式调整。这利用了 \TeX{} 的编组特性，编组内的局部格式不影响编组外的格式，所以可利用编组内的局部设置来调整标注的格式。类似地，文献表的著录格式也可局部调整，详见下一节。
 
 引用文献所产生标注标签的格式包括很多内容，包括作者数量、标点、本地化字符串等。最常见的局部调整需求是本地化字符串和标点(下面会以双语图题中的引用标注标签的不同本地化字符串需求为例来展示局部调整的方法)。
 
