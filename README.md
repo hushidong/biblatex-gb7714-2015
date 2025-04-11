@@ -72,6 +72,7 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 * [LaTeX-SWUFE-Bachelor-Thesis（西南财经大学本科毕业论文 LaTeX 模板）](https://github.com/sukanka/LaTeX-SWUFE-Bachelor-Thesis)
 * [LZUthesis（兰州大学本科毕业论文 LaTeX 模板）](https://github.com/szsdk/LZUthesis)
 * [neuthesis (东北大学博士学位论文 LaTeX 模板)](https://github.com/mervin0502/neuthesis)
+* [NJU Thesis: 南京大学学位论文 LaTeX 模板](https://github.com/nju-lug/NJUThesis)
 * [NJU-thesis-esz（南京大学学位论文-微调整后适用于人文社科）](https://github.com/EdwardSaidZhou/NJU-thesis-esz)
 * NKThesis（南开大学硕/博模板）[Template1](https://github.com/procuteboy/NKThesis) [Template2](https://github.com/NewFuture/NKThesis)
 * [NKUBachelorThesis（南开大学本科生毕业论文(毕业设计) LaTeX 模板）](https://github.com/NKcqx/NKUBachelorThesis)
