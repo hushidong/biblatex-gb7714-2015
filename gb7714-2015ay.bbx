@@ -2123,6 +2123,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \def\setaligngbnumeric{%
 \setlength{\bibitemindent}{0pt}%
 \setlength{\biblabelextend}{0pt}%
+\setlength{\bibhang}{0em}%
 \defbibenvironment{bibliography}
   {\setlength{\labelnumberwidth}{\biblabelbox}%
     \list
@@ -2131,7 +2132,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
      \addtolength{\labelnumberwidth}{\biblabelextend}%
      \setlength{\labelwidth}{\labelnumberwidth}%
       \setlength{\labelsep}{\biblabelsep}%
-      \setlength{\bibhang}{\biblabelsep}%
+      \addtolength{\bibhang}{\biblabelsep}%
       \addtolength{\bibhang}{\labelnumberwidth}%
       \setlength{\leftmargin}{\bibhang}%
       \setlength{\itemindent}{\bibitemindent}%
