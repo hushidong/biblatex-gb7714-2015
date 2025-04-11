@@ -82,8 +82,8 @@
 %为标注和文献表中标点格式，重设and本地化字符串
 %==================================================
 \DefineBibliographyStrings{english}{
-    and           = {\addcomma\space},
-    andcn         = {\gbpunctcomma},
+    and           = { and },%\addcomma\space
+    andcn         = {\gbpunctcomma},%\gbpunctcomma
     andothers     = {et al.},
     andotherscn   = {等},
     bytranslator  = {\addcomma\ 译},
@@ -132,6 +132,7 @@
   \bibstring{andincite}%
   \fi}
 \DeclareDelimFormat[bib,biblist]{finalnamedelim}{%
+  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
   \edef\userfieldabcde{userd}%
   \ifcurrentname{translator}{\edef\userfieldabcde{usere}}{}%
   \ifcurrentname{editor}{\edef\userfieldabcde{userc}}{}%
