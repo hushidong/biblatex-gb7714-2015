@@ -1,0 +1,930 @@
+\documentclass{ctexart}
+\usepackage[showframe]{geometry}
+\usepackage[
+  backend      = biber,
+  style    = gb7714-CCNUay,
+  gbalign=right,
+  gbnamefmt    = familyahead,
+  gbpunctin    = false,
+  gbtype       = false,
+  mergedate    = true,
+  maxbibnames=6,
+  minbibnames=6,
+  CCNUpunctcn=false,
+]{biblatex}
+
+
+\setlength{\bibitemindent}{3.5em}
+\setlength{\biblabelsep}{0.1em}
+\setlength{\bibhang}{-2.1em}
+
+\renewrobustcmd*{\mkbibemph}{\iffieldequalstr{userd}{chinese}{\kaishu}{\emph}}
+\DeclareDelimFormat[bib,biblist]{nameyeardelim}{\adddot\space}
+\DeclareFieldFormat{journaltitle}{\mkbibemph{#1}}
+\DeclareFieldFormat[article,periodical]{volume}{\textbf{#1}}
+\DeclareListFormat{publisher}{%
+  \usebibmacro{list:delim}{#1}%
+  \mkbibemph{#1}\isdot
+  \usebibmacro{list:andothers}}
+\DeclareListFormat{location}{%
+  \usebibmacro{list:delim}{#1}%
+  \mkbibemph{#1}\isdot
+  \usebibmacro{list:andothers}}
+
+\delEntryField{}{number}
+
+
+
+\begin{filecontents}[force]{\jobname.bib}
+  @article{he1999application,
+  title={牛顿 拉夫森算法在相平衡计算中的应用研究},
+  author={何伟 and 孙雷},
+  journal={石油勘探与开发},
+  volume={26},
+  pages={68--71},
+  year={1999}
+}
+
+@article{xiang2024review,
+  title={基于随机森林算法的机器学习分类研究综述},
+  author={向进勇 and 王振华 and 邓芸芸},
+  journal={人工智能与机器人研究},
+  volume={3},
+  pages={143--152},
+  year={2024}
+}
+
+@article{yang2015survey,
+  title={泛化误差的各种交叉验证估计方法综述},
+  author={杨柳 and 王钰},
+  journal={计算机应用研究},
+  volume={32},
+  pages={1287--1290 + 1297},
+  year={2015}
+}
+
+@article{zhang2022bigdata,
+  title={基于 MapReduce 的大数据并行分析与处理},
+  author={张昕晨 and 王雅君 and 程胜明 and 冷峻宇 and 刘小奇},
+  journal={计算机科学与应用},
+  volume={12},
+  pages={582--589},
+  year={2022}
+}
+
+@book{kay2011statistics,
+  title={统计信号处理基础: 估计与检测理论},
+  author={Steven M. Kay},
+  publisher={电子工业出版社},
+  year={2011}
+}
+
+@article{aalen1989linear,
+  title={A linear regression model for the analysis of life times},
+  author={Aalen, O. O.},
+  journal={Statistics in Medicine},
+  volume={8},
+  pages={907--925},
+  year={1989}
+}
+
+@article{baldi2016application,
+  title={An application of the Cox - Aalen model for breast cancer survival},
+  author={Baldi, I. and Ciccone, G. and Ponti, A. and Rosso, S. and Zanetti, R. and Gregori, D.},
+  journal={Australian Journal of Mathematical Statistics},
+  volume={35},
+  pages={77--88},
+  year={2016}
+}
+
+@article{battey2018distributed,
+  title={Distributed testing and estimation under sparse high dimensional models},
+  author={Battey, H. and Fan, J. and Liu, H. and Lu, J. and Zhu, Z.},
+  journal={Annals of Statistics},
+  volume={46},
+  pages={1352--1382},
+  year={2018}
+}
+
+@article{chen2014split,
+  title={A split - and - conquer approach for analysis of extraordinarily large data},
+  author={Chen, X. and Xie, M.},
+  journal={Statistica Sinica},
+  volume={24},
+  pages={1655--1684},
+  year={2014}
+}
+
+
+@article{1996_Angrist_Identification_of_causal_effects_using_instrumental_variables,
+    author = {Angrist, Joshua D. and Imbens, Guido W. and Rubin, Donald B.},
+    title = {Identification of causal effects using instrumental variables},
+    journal = {Journal of the American Statistical Association},
+    volume = {91},
+    pages = {444--455},
+    year = {1996}
+}
+
+@article{2012_Baeten_Antiretroviral_prophylaxis_for_HIV_prevention_in_heterosexual_men_and_women_A_clinical_trial,
+    author = {Baeten, J. M. and Donnell, D. and Ndase, P. and Mugo, N. R. and Campbell, J. D. and Wangisi, J. and Tappero, J. W. and Bukusi, E. A. and Cohen, C. R. and Katabira, E. and others},
+    title = {Antiretroviral prophylaxis for HIV prevention in heterosexual men and women: A clinical trial},
+    journal = {New England Journal of Medicine},
+    volume = {367},
+    pages = {399--410},
+    year = {2012}
+}
+
+@book{1993_Bickel_Efficient_and_adaptive_estimation_of_semiparametric_models,
+    author = {Bickel, Peter J. and Klaassen, C. A. and Bickel, Peter J. and Ritov, Y. and Klaassen, J. and Wellner, J. A. and Ritov, Y.},
+    title = {Efficient and adaptive estimation of semiparametric models},
+    volume = {4},
+    publisher = {Springer},
+    address = {New York},
+    year = {1993}
+}
+
+@article{2019_Hanscom_需补充标题,
+    author = {Hanscom, B. and Hughes, J. P. and Williamson, B. D. and Donnell, D.},
+    title = {},
+    year = {2019}
+}
+
+@article{2010_Cheng_Bootstrap_consistency_of_general_semiparametric_m_estimation,
+    author = {Cheng, G. and Huang, J. Z.},
+    title = {Bootstrap consistency of general semiparametric $M$-estimation},
+    journal = {Annals of Statistics},
+    volume = {38},
+    pages = {2884--2915},
+    year = {2010}
+}
+
+@article{2017_Chernozhukov_Double_de_biased_neyman_machine_learning_treatment_effects,
+    author = {Chernozhukov, V. and Chetverikov, D. and Demirer, M. and Duflo, E. and Hansen, C. and Newey, W.},
+    title = {Double/de - biased/neyman machine learning treatment effects},
+    journal = {American Economic Review},
+    volume = {107},
+    pages = {261--265},
+    year = {2017}
+}
+
+@misc{2024_ClinicalTrials.gov_Study_of_two_DNA_MVA_Env_protein_or_DNA_Env_protein_HIV_1_vaccine_regimens_in_combination_with_PrEP_in_Africa_PrEPVacc,
+    author = {{ClinicalTrials.gov}},
+    title = {Study of two DNA - MVA - Env protein or DNA - Env protein HIV - 1 vaccine regimens in combination with PrEP in Africa (PrEPVacc)},
+    howpublished = {\url{https://clinicaltrials.gov/study/NCT04066881}},
+    note = {Accessed: June 12, 2024},
+    year = {2024}
+}
+
+@article{2012_Cohen_Pre_exposure_prophylaxis_for_HIV_Where_do_we_go_from_here,
+    author = {Cohen, M. S. and Baden, L. R.},
+    title = {Pre-exposure prophylaxis for HIV: Where do we go from here?},
+    journal = {New England Journal of Medicine},
+    volume = {367},
+    pages = {459--461},
+    year = {2012}
+}
+
+@article{2010_Cole_Generalizing_the_results_of_randomized_clinical_trials_to_target_populations_The_ACTG_320_trial,
+    author = {Cole, S. R. and Stuart, E. A.},
+    title = {Generalizing the results of randomized clinical trials to target populations: The ACTG 320 trial},
+    journal = {American Journal of Epidemiology},
+    volume = {172},
+    pages = {107--115},
+    year = {2010}
+}
+
+@article{2022_Dahabreh_Inference_on_treatment_effects_under_noncompliance_and_generalization_to_target_populations,
+    author = {Dahabreh, I. J. and Robertson, S. E. and Hernán, M. A.},
+    title = {Inference on treatment effects under noncompliance and generalization to target populations},
+    journal = {arXiv preprint arXiv:2211.04876},
+    year = {2022}
+}
+
+@article{2019_Dahabreh_Generalizing_individual_level_inferences_from_randomized_trials_to_all_eligible_individuals,
+    author = {Dahabreh, I. J. and Robertson, S. E. and Tchetgen, E. J. and Stuart, E. A. and Hernán, M. A.},
+    title = {Generalizing individual - level inferences from randomized trials to all eligible individuals},
+    journal = {Biostatistics},
+    volume = {75},
+    pages = {685--694},
+    year = {2019}
+}
+
+@article{2021_Degtiar_A_review_of_generalizability_and_transportability,
+    author = {Degtiar, I. and Rose, S.},
+    title = {A review of generalizability and transportability},
+    journal = {arXiv preprint arXiv:2102.11904},
+    year = {2021}
+}
+
+@article{2022_Delany_Moretlwe_Cabotegravir_for_HIV_prevention_in_women_Results_of_the_HPTN_084_phase_3_randomized_clinical_trial,
+    author = {Delany-Moretlwe, S. and Hughes, J. P. and Bock, P. and Ouma, S. G. and Hunidzarira, P. and Kalonji, D. and Kayange, N. and Makhema, J. and Mandima, P. and Mathew, C. and others},
+    title = {Cabotegravir for HIV prevention in women: Results of the HPTN 084 phase 3 randomized clinical trial},
+    journal = {Lancet},
+    volume = {399},
+    pages = {1779--1789},
+    year = {2022}
+}
+
+@article{2022_Donnell_Counterfactual_estimates_of_CAB_LA_efficacy_relative_to_placebo_in_external_trials,
+    author = {Donnell, D. and Gao, F. and Hughes, J. and Hanscom, B.},
+    title = {Counterfactual estimates of CAB - LA efficacy relative to placebo in external trials},
+    volume = {86},
+    note = {Virtual},
+    year = {2022}
+}
+
+@article{2000_Ellenberg_Placebo_controlled_trials_and_active_controlled_trials_in_the_evaluation_of_new_treatments_Part_2_Practical_issues_and_specific_cases,
+    author = {Ellenberg, S. S. and Temple, R.},
+    title = {Placebo - controlled trials and active - controlled trials in the evaluation of new treatments, Part 2: Practical issues and specific cases},
+    journal = {Annals of Internal Medicine},
+    volume = {133},
+    pages = {464--470},
+    year = {2000}
+}
+
+@article{2017_Fauci_HIV_vaccines_are_crucial_to_ending_the_HIV_AIDS_epidemic,
+    author = {Fauci, A. S.},
+    title = {HIV vaccines are crucial to ending the HIV/AIDS epidemic},
+    journal = {JAMA},
+    volume = {318},
+    pages = {1535--1536},
+    year = {2017}
+}
+
+@article{2011_Fleming_Key_considerations_in_noninferiority_trial_design_and_implementation,
+    author = {Fleming, T. R. and Odem - Davis, K. and Rothmann, M. D. and Li Shen, Y.},
+    title = {Key considerations in noninferiority trial design and implementation},
+    journal = {Clinical Trials},
+    volume = {8},
+    pages = {432--439},
+    year = {2011}
+}
+
+@misc{2016_Food_and_Drug_Administration_Guidance_for_industry_Establishing_the_effectiveness_of_non_inferiority_clinical_trials,
+    author = {{Food and Drug Administration}},
+    title = {Guidance for industry: Establishing the effectiveness of non - inferiority clinical trials},
+    howpublished = {\url{https://www.fda.gov/regulatory - information/search - fda - guidance - documents/noninferiority - clinical - trials}},
+    year = {2016}
+}
+
+@article{2021_Gao_Sample_size_calculation_for_active_arm_trials_with_recent_testing,
+    author = {Gao, F. and Glidden, D. V. and Hughes, J. P. and Donnell, D. J.},
+    title = {Sample size calculation for active - arm trials with recent testing},
+    journal = {Infectious Disease Statistics Communications},
+    volume = {13},
+    pages = {20200009},
+    year = {2021}
+}
+
+@article{2021_Glidden_Using_adherence_efficacy_relationships_with_emtricitabine_and_tenofovir_diphosphate_to_calculate_background_HIV_incidence_A_secondary_analysis_of_a_randomized_controlled_trial,
+    author = {Glidden, D. V. and Das, M. and Dunn, D. T. and Ebrahimi, R. and Zhao, Y. and Stirrup, O. T. and Baeten, J. M. and Anderson, P. L.},
+    title = {Using adherence - efficacy relationships with emtricitabine and tenofovir diphosphate to calculate background HIV incidence: A secondary analysis of a randomized controlled trial},
+    journal = {International Journal of AIDS Society},
+    volume = {24},
+    pages = {e25744},
+    year = {2021}
+}
+
+@article{2020_Glidden_Bayesian_avoidance_infection_framework_for_low_HIV_incidence_PrEP_trials_Application_to_the_Discover_trial_results,
+    author = {Glidden, D. V. and Stirrup, O. T. and Dunn, D. T.},
+    title = {Bayesian avoidance infection framework for low HIV incidence PrEP trials: Application to the Discover trial results},
+    journal = {Lancet HIV},
+    volume = {7},
+    pages = {e791--e796},
+    year = {2020}
+}
+
+@article{2014_Grant_Pre_exposure_prophylaxis_for_HIV_among_men_who_have_sex_with_men_and_transgender_women_A_cohort_study,
+    author = {Grant, R. M. and Anderson, P. L. and McMahan, V. and Liu, A. and Amico, K. R. and Mehrotra, M. and Hosek, S. and Mosquera, C. and Casapia, M. and Montoya, O. and others},
+    title = {Pre - exposure prophylaxis for HIV among men who have sex with men and transgender women: A cohort study},
+    journal = {Lancet Infectious Diseases},
+    volume = {14},
+    pages = {820--829},
+    year = {2014}
+}
+
+@article{1998_Hahn_The_role_of_propensity_scores_in_efficient_semiparametric_estimation_of_average_treatment_effects,
+    author = {Hahn, J.},
+    title = {The role of propensity scores in efficient semiparametric estimation of average treatment effects},
+    journal = {Econometrica},
+    volume = {66},
+    pages = {315--331},
+    year = {1998}
+}
+@inbook{2017_Hastie_Generalized_additive_models,
+    author = {Hastie, T. J.},
+    title = {Generalized additive models},
+    booktitle = {Statistical Models in S},
+    editor = {Hastie, T. J.},
+    pages = {249--307},
+    publisher = {Routledge},
+    address = {New York},
+    year = {2017}
+}
+
+@article{2003_James_Hung_Some_fundamental_issues_in_non_inferiority_testing_with_active_control_trials,
+    author = {James Hung, H. and Wang, S. J. and Tsong, Y. and Lawrence, J. and O'Neil, R. T.},
+    title = {Some fundamental issues in non - inferiority testing with active - control trials},
+    journal = {Statistics in Medicine},
+    volume = {22},
+    pages = {213--225},
+    year = {2003}
+}
+
+@article{2009_Joffe_Causal_frameworks_related_to_proxy_outcomes,
+    author = {Joffe, M. M. and Greene, T.},
+    title = {Causal frameworks related to proxy outcomes},
+    journal = {Biostatistics},
+    volume = {65},
+    pages = {530--538},
+    year = {2009}
+}
+
+@article{2015_Marrazzo_Tenofovir_based_HIV_pre_exposure_prophylaxis_in_African_women,
+    author = {Marrazzo, J. M. and Ramjee, G. and Richardson, B. A. and Gomez, K. and Mgodi, N. and Nair, G. and Palanee, T. and Nakabiito, C. and Van Der Straten, A. and Noguchi, L. and others},
+    title = {Tenofovir - based HIV pre - exposure prophylaxis in African women},
+    journal = {New England Journal of Medicine},
+    volume = {372},
+    pages = {509--518},
+    year = {2015}
+}
+
+@article{2021_Miner_Broadly_neutralizing_monoclonal_antibodies_for_HIV_prevention,
+    author = {Miner, M. D. and Corey, L. and Montefiori, D.},
+    title = {Broadly neutralizing monoclonal antibodies for HIV prevention},
+    journal = {International Journal of AIDS Society},
+    volume = {24},
+    pages = {e25829},
+    year = {2021}
+}
+
+@article{2015_Murnane_Estimating_efficacy_under_noncompliance_in_randomized_trials_Application_of_multiple_methods_to_a_pre_exposure_prophylaxis_HIV_prevention_trial,
+    author = {Murnane, P. M. and Brown, E. R. and Donnell, D. and Coley, R. Y. and Mugo, N. and Mujugira, A. and Celum, C. and Baeten, J. M. and {P. P. S. Team} and others},
+    title = {Estimating efficacy under noncompliance in randomized trials: Application of multiple methods to a pre - exposure prophylaxis HIV prevention trial},
+    journal = {American Journal of Epidemiology},
+    volume = {182},
+    pages = {848--856},
+    year = {2015}
+}
+
+@article{2022_Neilan_Cost_effectiveness_analysis_of_long_acting_injectable_HIV_pre_exposure_prophylaxis_in_the_U_S,
+    author = {Neilan, A. M. and Landovitz, R. J. and Le, M. H. and Grinsztejn, B. and Freedberg, K. A. and McCauley, M. and Wattananimitgul, N. and Cohen, M. S. and Ciaranello, A. L. and Clement, M. E. and others},
+    title = {Cost - effectiveness analysis of long - acting injectable HIV pre - exposure prophylaxis in the U.S.},
+    journal = {Annals of Internal Medicine},
+    volume = {175},
+    pages = {479--489},
+    year = {2022}
+}
+
+@misc{2011_Pearl_Transportability_across_studies_A_formal_approach,
+    author = {Pearl, J.},
+    title = {Transportability across studies: A formal approach},
+    howpublished = {\url{https://escholarship.org/uc/item/3tv1b3bg}},
+    year = {2011}
+}
+
+@article{1983_Rosenbaum_The_central_role_of_propensity_scores_in_observational_studies_for_causal_effects,
+    author = {Rosenbaum, P. R. and Rubin, D. B.},
+    title = {The central role of propensity scores in observational studies for causal effects},
+    journal = {Biostatistics},
+    volume = {70},
+    pages = {41--55},
+    year = {1983}
+}
+
+@article{2003_Rothmann_Non_inferiority_trials_with_mortality_endpoints_in_oncology_Design_and_analysis,
+    author = {Rothmann, M. and Li, N. and Chen, G. and Chi, G. Y. and Temple, R. and Tsou, H. H.},
+    title = {Non - inferiority trials with mortality endpoints in oncology: Design and analysis},
+    journal = {Statistics in Medicine},
+    volume = {22},
+    pages = {239--264},
+    year = {2003}
+}
+
+@article{1980_Rubin_Discussion_of_Randomization_Analysis_of_Experimental_Data_by_D_Basu,
+    author = {Rubin, D.},
+    title = {Discussion of 'Randomization Analysis of Experimental Data' by D. Basu},
+    journal = {Journal of the American Statistical Association},
+    volume = {75},
+    pages = {591--593},
+    year = {1980}
+}
+
+@article{1979_Rubin_Using_multivariate_matching_sampling_and_regression_adjustment_to_control_bias_in_observational_studies,
+    author = {Rubin, D. B.},
+    title = {Using multivariate matching sampling and regression adjustment to control bias in observational studies},
+    journal = {Journal of the American Statistical Association},
+    volume = {74},
+    pages = {318--328},
+    year = {1979}
+}
+
+@article{2017_Rudolph_Robust_estimation_of_transport_effects_across_sites,
+    author = {Rudolph, K. E. and van der Laan, M. J.},
+    title = {Robust estimation of transport effects across sites},
+    journal = {Journal of the Royal Statistical Society, B Series},
+    volume = {79},
+    pages = {1509--1525},
+    year = {2017}
+}
+
+@article{2002_Stefanski_Calculus_of_M_estimators,
+    author = {Stefanski, L. A. and Boos, D. D.},
+    title = {Calculus of M - estimators},
+    journal = {American Statistician},
+    volume = {56},
+    pages = {29--38},
+    year = {2002}
+}
+
+@article{2011_Stuart_Using_propensity_scores_to_assess_the_generalizability_of_randomized_trial_results,
+    author = {Stuart, E. A. and Cole, S. R. and Bradshaw, C. P. and Leaf, P. J.},
+    title = {Using propensity scores to assess the generalizability of randomized trial results},
+    journal = {Journal of the Royal Statistical Society, A Series},
+    volume = {174},
+    pages = {369--386},
+    year = {2011}
+}
+
+@article{2018_Swanson_Using_instrumental_variables_for_partial_identification_of_average_treatment_effects_A_statistical_review_of_methods_for_binary_instruments_treatment_and_outcomes,
+    author = {Swanson, S. A. and Hernán, M. A. and Miller, M. and Robins, J. M. and Richardson, T. S.},
+    title = {Using instrumental variables for partial identification of average treatment effects: A statistical review of methods for binary instruments, treatment, and outcomes},
+    journal = {Journal of the American Statistical Association},
+    volume = {113},
+    pages = {933--947},
+    year = {2018}
+}
+
+@article{2012_Van_Damme_Tenofovir_based_HIV_pre_exposure_prophylaxis_in_African_women,
+    author = {Van Damme, L. and Corneli, A. and Ahmed, K. and Agot, K. and Lombaard, J. and Kapiga, S. and Malahleha, M. and Owino, F. and Manongi, R. and Onyango, J. and others},
+    title = {Tenofovir - based HIV pre - exposure prophylaxis in African women},
+    journal = {New England Journal of Medicine},
+    volume = {367},
+    pages = {411--422},
+    year = {2012}
+}
+
+@book{2011_van_der_Laan_Targeted_learning_Causal_inference_for_observational_and_experimental_data,
+    author = {van der Laan, M. J. and Rose, S.},
+    title = {Targeted learning: Causal inference for observational and experimental data},
+    volume = {10},
+    publisher = {Springer},
+    address = {New York},
+    year = {2011}
+}
+
+@book{2000_Van_der_Vaart_Asymptotic_Statistics,
+    author = {Van der Vaart, A. W.},
+    title = {Asymptotic Statistics},
+    volume = {3},
+    publisher = {Cambridge University Press},
+    address = {Cambridge},
+    year = {2000}
+}
+
+@article{2018_Wang_Bounded_efficient_and_multiple_robust_estimation_of_average_treatment_effects_using_instrumental_variables,
+    author = {Wang, L. and Tchetgen Tchetgen, E.},
+    title = {Bounded, efficient, and multiple robust estimation of average treatment effects using instrumental variables},
+    journal = {Journal of the Royal Statistical Society, B Series},
+    volume = {80},
+    pages = {531--550},
+    year = {2018}
+}
+
+@misc{2022_World_Health_Organization_Guidelines_on_long_acting_injectable_Cabotegravir_for_HIV_prevention,
+    author = {{World Health Organization}},
+    title = {Guidelines on long - acting injectable Cabotegravir for HIV prevention},
+    publisher = {World Health Organization},
+    address = {Geneva},
+    year = {2022}
+}
+
+@article{即将出版_Zhang_An_efficient_algorithm_for_constructing_highly_generalizable_matched_pairs_with_enhanced_representativeness,
+    author = {Zhang, B.},
+    title = {An efficient algorithm for constructing highly generalizable matched pairs with enhanced representativeness},
+    journal = {Biostatistics},
+    note = {forthcoming}
+}
+
+@article{2009_Zhang_Covariate_adjustment_for_potential_placebo_analysis_in_active_controlled_clinical_trials,
+    author = {Zhang, Z.},
+    title = {Covariate adjustment for potential placebo analysis in active - controlled clinical trials},
+    journal = {Biopharmaceutical Research Statistics},
+    volume = {1},
+    pages = {279--290},
+    year = {2009}
+}
+
+@article{2014_Zhang_Sensitivity_analysis_for_non_inferiority_trials_with_covariate_adjustment,
+    author = {Zhang, Z. and Nie, L. and Soon, G. and Zhang, B.},
+    title = {Sensitivity analysis for non - inferiority trials with covariate adjustment},
+    journal = {Journal of the Royal Statistical Society, C Series},
+    volume = {63},
+    pages = {515--538},
+    year = {2014}
+}
+
+@article{2019_Zhou_Estimating_CACE_complier_average_causal_effect_of_noncompliance_in_randomized_clinical_trials_using_Bayesian_hierarchical_models,
+    author = {Zhou, J. and Hodges, J. S. and Suri, M. F. K. and Chu, H.},
+    title = {Estimating CACE (complier average causal effect) of noncompliance in randomized clinical trials using Bayesian hierarchical models},
+    journal = {Biostatistics},
+    volume = {75},
+    pages = {978--987},
+    year = {2019}
+}
+
+@article{2022_Zhou_Estimating_CACE_of_noncompliance_in_meta_analysis_of_randomized_clinical_trials_A_generalized_linear_latent_variable_and_mixed_model_approach,
+    author = {Zhou, T. and Zhou, J. and Hodges, J. S. and Lin, L. and Chen, Y. and Cole, S. R. and Chu, H.},
+    title = {Estimating CACE of noncompliance in meta - analysis of randomized clinical trials: A generalized linear latent variable and mixed model approach},
+    journal = {American Journal of Epidemiology},
+    volume = {191},
+    pages = {220--229},
+    year = {2022}
+}
+
+
+@article{2023_刘慧馨_右删失数据下多响应AFT模型的两阶段估计,
+  title={右删失数据下多响应 AFT 模型的两阶段估计},
+  author={刘慧馨},
+  journal={应用概率统计},
+  volume={39},
+  number={1},
+  pages={10--26},
+  year={2023},
+  language  = {}
+}
+
+@article{2019_康佩_AdaptiveElasticNet结合加速失效时间模型在亚组识别中的应用,
+  title={Adaptive Elastic Net 结合加速失效时间模型在亚组识别中的应用},
+  author={康佩 and 许军 and 黄福强 and others},
+  journal={南方医科大学学报},
+  volume={39},
+  number={10},
+  pages={1200--1206},
+  year={2019}
+}
+
+@article{2017_肖媛媛_不同删失比例下AFT模型与Cox模型表现比较的模拟研究,
+  title={不同删失比例下 AFT 模型与 Cox 模型表现比较的模拟研究},
+  author={肖媛媛 and 陈莹 and 何利平 and others},
+  journal={中国卫生统计},
+  volume={34},
+  number={4},
+  pages={676--680},
+  year={2017},
+  language  = {}
+}
+
+@article{2023_蔡敬衡_加速失效时间模型的贝叶斯参数估计和变量选择,
+  title={加速失效时间模型的贝叶斯参数估计和变量选择},
+  author={蔡敬衡 and 王若宁},
+  journal={应用概率统计},
+  volume={39},
+  number={6},
+  pages={849--858},
+  year={2023},
+  language  = {}
+}
+
+@article{2023_赵慧_加速失效时间模型下现状数据的Jackknife模型平均,
+  title={加速失效时间模型下现状数据的 Jackknife 模型平均},
+  author={赵慧 and 刘斌霞},
+  journal={应用数学},
+  volume={36},
+  number={3},
+  pages={313--328},
+  year={2023}
+}
+
+@book{2004_彭非_生存分析,
+  title={生存分析},
+  author={彭非 and 王伟},
+  publisher={中国人民大学出版社},
+  address={北京},
+  year={2004},
+  language  = {}
+}
+
+@book{2002_Kalbfleisch_TheStatisticalAnalysisofFailureTimeData,
+  title={The Statistical Analysis of Failure Time Data},
+  author={Kalbfleisch, J. D. and Prentice, R. L.},
+  edition={2nd},
+  publisher={John Wiley & Sons},
+  address={New York},
+  year={2002}
+}
+
+@article{1979_Buckley_Linearregressionwithcensoreddata,
+  title={Linear regression with censored data},
+  author={Buckley, J. and James, I.},
+  journal={Biometrika},
+  volume={66},
+  number={3},
+  pages={429--436},
+  year={1979}
+}
+
+@article{2021_黄丽红_新视角解读临床试验中的意向性原则,
+  title={新视角解读临床试验中的意向性原则},
+  author={黄丽红 and 王陵 and 言方荣 and others},
+  journal={中国临床药理学与治疗学},
+  volume={26},
+  number={4},
+  pages={449--453},
+  year={2021}
+}
+
+@article{2011_Gupta_Intention-to-treatconceptareview,
+  title={Intention-to-treat concept: a review},
+  author={Gupta, S. K.},
+  journal={Perspectives in Clinical Research},
+  volume={2},
+  number={3},
+  pages={109--112},
+  year={2011}
+}
+
+@article{2000_Ellenberg_Placebo-controlledtrialsandactive-controlledtrialsintheevaluationofnewtreatmentsPart1Ethicalissues,
+  title={Placebo-controlled trials and active-controlled trials in the evaluation of new treatments, Part 1: Ethical issues},
+  author={Ellenberg, S. S. and Temple, R.},
+  journal={Annals of Internal Medicine},
+  volume={133},
+  number={6},
+  pages={455--463},
+  year={2000}
+}
+
+@article{2000_Ellenberg_Placebo-controlledtrialsandactive-controlledtrialsintheevaluationofnewtreatmentsPart2Practicalissuesandspecificcases,
+  title={Placebo-controlled trials and active-controlled trials in the evaluation of new treatments, Part 2: Practical issues and specific cases},
+  author={Ellenberg, S. S. and Temple, R.},
+  journal={Annals of Internal Medicine},
+  volume={133},
+  number={6},
+  pages={464--470},
+  year={2000}
+}
+
+@techreport{2000_ICH_E10ChoiceofControlGroupandRelatedIssuesinClinicalTrials,
+  title={E10: Choice of Control Group and Related Issues in Clinical Trials},
+  author={ICH},
+  institution={International Conference on Harmonisation},
+  year={2000}
+}
+
+@techreport{2015_国家食品药品监督管理总局_药物临床试验非劣效设计技术指导原则,
+  title={药物临床试验非劣效设计技术指导原则},
+  author={国家食品药品监督管理总局},
+  year={2015},
+  language  = {}
+}
+
+
+@article{2003_Hung_Somefundamentalissuesinnon-inferioritytestingwithactivecontroltrials,
+  title={Some fundamental issues in non-inferiority testing with active control trials},
+  author={Hung, H. M. J. and Wang, S. J. and Tsong, Y. and others},
+  journal={Statistics in Medicine},
+  volume={22},
+  number={2},
+  pages={213--225},
+  year={2003}
+}
+
+@book{2012_夏结来_临床试验统计学设计与分析,
+  title={临床试验统计学设计与分析},
+  author={夏结来 and 谢良志},
+  publisher={科学出版社},
+  address={北京},
+  year={2012}
+}
+
+@article{2022_李戈_真实世界研究外对照设置的方法学进展,
+  title={真实世界研究外对照设置的方法学进展},
+  author={李戈 and 杨智荣 and 赵厚宇 and others},
+  journal={医药导报},
+  volume={41},
+  number={1},
+  pages={38--43},
+  year={2022}
+}
+
+@article{2021_Bonapersona_Increasingthestatisticalpowerofanimalexperimentswithhistoricalcontroldata,
+  title={Increasing the statistical power of animal experiments with historical control data},
+  author={Bonapersona, V. and Hoijtink, H. and Sarabdjitsingh, R. A. and others},
+  journal={Nature Neuroscience},
+  volume={24},
+  number={4},
+  pages={470--477},
+  year={2021}
+}
+
+@article{2022_黄慧瑶_贝叶斯方法在肿瘤新药早期临床研发中的发展与应用,
+  title={贝叶斯方法在肿瘤新药早期临床研发中的发展与应用},
+  author={黄慧瑶},
+  journal={中国肺癌杂志},
+  volume={25},
+  number={10},
+  pages={730--734},
+  year={2022}
+}
+
+@article{2016_刘志辉_元分析方法研究综述,
+  title={元分析方法研究综述},
+  author={刘志辉 and 李文绚},
+  journal={情报工程},
+  volume={2},
+  number={6},
+  pages={31--38},
+  year={2016}
+}
+
+@article{2014_Viele_Useofhistoricalcontroldataforassessingtreatmenteffectsinclinicaltrials,
+  title={Use of historical control data for assessing treatment effects in clinical trials},
+  author={Viele, K. and Berry, S. and Neuenschwander, B. and others},
+  journal={Pharmaceutical Statistics},
+  volume={13},
+  number={1},
+  pages={41--54},
+  year={2014}
+}
+
+@article{2014_Schmidli_Robustmeta-analytic-predictivepriorsinclinicaltrialswithhistoricalcontrolinformation,
+  title={Robust meta-analytic-predictive priors in clinical trials with historical control information},
+  author={Schmidli, H. and Gsteiger, S. and Roychoudhury, S. and others},
+  journal={Biometrics},
+  volume={70},
+  number={4},
+  pages={1023--1032},
+  year={2014}
+}
+
+@article{2012_Hobbs_Commensuratepriorsforincorporatinghistoricalinformationinclinicaltrials,
+  title={Commensurate priors for incorporating historical information in clinical trials},
+  author={Hobbs, B. P. and Carlin, B. P. and Sargent, D. J.},
+  journal={Biometrics},
+  volume={68},
+  number={2},
+  pages={767--775},
+  year={2012}
+}
+
+@article{2000_Ibrahim_Powerpriordistributionsforregressionmodels,
+  title={Power prior distributions for regression models},
+  author={Ibrahim, J. G. and Chen, M. H.},
+  journal={Statistical Science},
+  volume={15},
+  number={1},
+  pages={46--60},
+  year={2000}
+}
+
+@article{2020_Thorlund_Syntheticandexternalcontrolarmsinclinicaltrialsaprimerforresearchers,
+  title={Synthetic and external control arms in clinical trials: a primer for researchers},
+  author={Thorlund, K. and Dron, L. and Park, J. J. and others},
+  journal={Therapeutic Innovation & Regulatory Science},
+  volume={54},
+  number={4},
+  pages={612--619},
+  year={2020}
+}
+
+@techreport{2020_国家药品监督管理局药品审评中心_真实世界证据支持药物研发与审评的指导原则试行,
+  title={真实世界证据支持药物研发与审评的指导原则(试行)},
+  author={国家药品监督管理局药品审评中心},
+  year={2020}
+}
+
+@article{2009_吴凡_非劣效性检验的统计学基础,
+  title={非劣效性检验的统计学基础},
+  author={吴凡 and 梁廷波},
+  journal={中国循证医学杂志},
+  volume={9},
+  number={3},
+  pages={297--300},
+  year={2009}
+}
+
+@article{2012_张抒扬_HIV/AIDS药物临床试验研究设计及评价方法学进展,
+  title={HIV/AIDS 药物临床试验研究设计及评价方法学进展},
+  author={张抒扬 and 邓玥},
+  journal={中国新药杂志},
+  volume={21},
+  number={20},
+  pages={2372--2376},
+  year={2012}
+}
+
+@article{2019_马骏_系统评价和Meta分析统计方法学的进展,
+  title={系统评价和 Meta 分析：统计方法学的进展},
+  author={马骏 and 曾宪涛},
+  journal={中国循证医学杂志},
+  volume={19},
+  number={9},
+  pages={1017--1023},
+  year={2019}
+}
+
+@article{2004_罗会明_艾滋病预防性临床试验的设计特点与挑战,
+  title={艾滋病预防性临床试验的设计特点与挑战},
+  author={罗会明 and 唐昆},
+  journal={国际医药卫生导报},
+  volume={10},
+  number={16},
+  pages={18--20},
+  year={2004}
+}
+
+@article{2010_陈明建_临床试验中的生存分析方法及应用,
+  title={临床试验中的生存分析方法及应用},
+  author={陈明建 and 方积乾},
+  journal={医学综述},
+  volume={16},
+  number={16},
+  pages={2427--2430},
+  year={2010}
+}
+
+@article{2003_谢世平_非劣效性试验设计在新药评价中的应用,
+  title={非劣效性试验设计在新药评价中的应用},
+  author={谢世平 and 周宏灏},
+  journal={中国新药杂志},
+  volume={12},
+  number={8},
+  pages={745--749},
+  year={2003}
+}
+
+@article{2002_刘开泰_安慰剂对照临床试验的伦理学问题,
+  title={安慰剂对照临床试验的伦理学问题},
+  author={刘开泰},
+  journal={医学与哲学},
+  volume={23},
+  number={3},
+  pages={24--26},
+  year={2002}
+}
+
+@article{2020_樊代明_从循证医学到真实世界研究转变与融合,
+  title={从循证医学到真实世界研究：转变与融合},
+  author={樊代明},
+  journal={中国循证医学杂志},
+  volume={20},
+  number={1},
+  pages={1--5},
+  year={2020}
+}
+
+@article{2010_李卓_删失和截尾生存数据的统计分析方法进展,
+  title={删失和截尾生存数据的统计分析方法进展},
+  author={李卓 and 张阳},
+  journal={现代预防医学},
+  volume={37},
+  number={23},
+  pages={4521--4524},
+  year={2010}
+}
+
+@article{2021_孙凤_借助真实世界证据支持药物临床评价的方法学探索,
+  title={借助真实世界证据支持药物临床评价的方法学探索},
+  author={孙凤 and 詹思延},
+  journal={中国循证医学杂志},
+  volume={21},
+  number={4},
+  pages={337--344},
+  year={2021}
+}
+
+@article{2018_ONeill_Onsenseandsensitivityinnon-inferiorityclinicaltrials,
+  title={On sense and sensitivity in non-inferiority clinical trials},
+  author={O'Neill, R. T.},
+  journal={Statistics in Medicine},
+  volume={37},
+  number={1},
+  pages={9--18},
+  year={2018}
+}
+
+
+@article{2022_Sacchini_Ethicsofplaceboinclinicaltrialsabroaderconcept,
+  title={Ethics of placebo in clinical trials: a broader concept},
+  author={Sacchini, D. and Virdis, A. and Vitiello, A. and others},
+  journal={Trials},
+  volume={23},
+  number={1},
+  pages={968},
+  year={2022}
+}
+\end{filecontents}
+
+
+\addbibresource{\jobname.bib}
+
+
+\begin{document}
+
+\nocite{*}
+
+{\sloppy
+\printbibliography
+}
+
+\end{document} 

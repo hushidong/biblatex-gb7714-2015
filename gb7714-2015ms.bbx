@@ -1304,7 +1304,16 @@
     \edef\entrykeya{#1}%
     \edef\entrykeyb{#2}%
     \edef\entrykeyc{#3}%
-        \DeclareStyleSourcemap{
+    \ifstrempty{#1}
+    {\DeclareStyleSourcemap{
+          \maps[datatype=bibtex]{
+            \map{
+              \step[fieldset=\entrykeyb, fieldvalue=\entrykeyc]
+            }
+          }
+       }%
+    }
+    {\DeclareStyleSourcemap{
           \maps[datatype=bibtex]{
             \map[foreach={#1}]{
               \step[fieldsource=entrykey, match=\regexp{$MAPLOOP}, final]
@@ -1312,13 +1321,23 @@
             }
           }
        }%
-    }
+    }%
+}
 
 %用于人工的为条目或条目集删除域
 \newcommand{\delEntryField}[2]{%
-    \edef\entrykeya{#1}%
-    \edef\entrykeyb{#2}%
-        \DeclareStyleSourcemap{
+  \edef\entrykeya{#1}%
+  \edef\entrykeyb{#2}%
+  \ifstrempty{#1}
+    {\DeclareStyleSourcemap{
+          \maps[datatype=bibtex,overwrite]{
+            \map{
+              \step[fieldset=\entrykeyb, null]
+            }
+          }
+       }%
+    }
+    {\DeclareStyleSourcemap{
           \maps[datatype=bibtex,overwrite]{
             \map[foreach={#1}]{
               \step[fieldsource=entrykey, match=\regexp{$MAPLOOP}, final]
@@ -1326,7 +1345,8 @@
             }
           }
        }%
-    }
+    }%
+}
 
 %
 %驱动别名等价于驱动层映射
