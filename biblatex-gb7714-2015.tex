@@ -1118,9 +1118,9 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \verb|\defdoublelangentry{entrykey1}{entrykey2}|，若entrykey1条目是中文的文献，entrykey2条目是对应entrykey1条目的英文形式，那么该命令会使得在文献表中，entrykey2的英文内容紧跟在entrykey1的中文内容后对照输出。该命令也只能出现在导言区中。
 
   \pdfbookmark[4]{addEntryField}{addEntryField}
-  \item[\textbackslash addEntryField] \{entrykey or entrykey comma list\}\{field\}\{fieldvalue\}
+  \item[\textbackslash addEntryField] \{empty or entrykey or entrykey comma list\}\{field\}\{fieldvalue\}
 
-  用于给指定的文献条目(集)添加域。即将field=\{fieldvalue\}这样的域信息添加到指定的 entrykey 条目或者entrykey comma list条目集中。比如：
+  用于给指定的文献条目(集)添加域。即将field=\{fieldvalue\}这样的域信息添加到指定的 entrykey 条目或者entrykey comma list条目集中，当entrykey 条目信息给出为空时则对所有条目添加域。比如：
 
   \verb|\addEntryField{author2007en,author2014en}{nameformat}{quanpin}|
 
@@ -1130,7 +1130,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \pdfbookmark[4]{delEntryField}{delEntryField}
   \item[\textbackslash delEntryField] \{entrykey or entrykey comma list\}\{field\}
 
-  用于给指定的文献条目(集)删除域。即将指定的entrykey 条目或者entrykey comma list 中的各个条目中的 field 域删除。
+  用于给指定的文献条目(集)删除域。即将指定的entrykey 条目或者entrykey comma list 中的各个条目中的 field 域删除，当entrykey 条目信息给出为空时则对所有条目删除域。
 
   \verb|\delEntryField{author2007en,author2014en}{usera}|
 
