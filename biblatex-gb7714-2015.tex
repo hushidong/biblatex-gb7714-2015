@@ -2139,7 +2139,7 @@ annotation      = {美国发明专利申请号.},
 \end{filecontents}
 
 %导言区
-%去掉文献Zhang2007-500-503的 usera 域
+%去掉文献 Zhang2007-500-503 的 usera 域
 \delEntryField{Zhang2007-500-503}{usera}
 %在第 1 个 refsection 中去掉 article 类的文献标识符
 %利用 AtEveryBibitem 在对 refsection 和 entrytype 判断后局部做设置
@@ -2196,13 +2196,13 @@ annotation      = {美国发明专利申请号.},
 
 完全自定义的条目内容样式分两类：
 一类是对已知类型文献的做针对性的调整。
-比如上交图书馆要求 arXiv 文献使用 [EB/OL] 而 [J] 类型，要求的著录格式如下：
+比如上交图书馆要求 arXiv 文献使用 [EB/OL] 而非 [J] 类型，要求的著录格式如下：
 
 \begin{texlist}
 主要责任者.题名:其他题名信息[EB/OL].预印本平台:预印本编号(更新或修改日期)[引用日期].获取和访问路径
 \end{texlist}
 
-若直接使用 arXiv 网站导出的 bib 信息，则文献类型是 misc，通常无法生成需要的格式，此时我们可以 arXiv 文献根据上述要求做自定义调整。因为 arXiv 导出的 bib 信息中包含archivePrefix=\{arXiv\}的特殊域，该域在 biber 处理后还会转换为 eprinttype 域，所以可以作为识别的关键。由于 arXiv 网站导出的 bib 信息中不含有网址，访问日期等信息，也可以通过 sourcemap 批量添加。因此我们自定义的方式如例~\ref{eg:arXiv:localset} 所示，如此处理在不影响其它文献的情况下可以生成arXiv 文献的专门格式。
+若直接使用 arXiv 网站导出的 bib 信息，则文献类型是 misc，通常无法生成需要的格式，此时我们可以对 arXiv 文献根据上述要求做自定义调整。因为 arXiv 导出的 bib 信息中包含archivePrefix=\{arXiv\}的特殊域，该域在 biber 处理后还会转换为 eprinttype 域，所以可以作为识别的关键。由于 arXiv 网站导出的 bib 信息中不含有网址，访问日期等信息，也可以通过 sourcemap 批量添加。因此我们自定义的方式如例~\ref{eg:arXiv:localset} 所示，如此处理在不影响其它文献的情况下可以生成 arXiv 文献的专门格式。
 \begin{example}{arXiv 文献的特殊格式定制}{eg:arXiv:localset}
 \begin{texlist}
 %自动添加一些信息
@@ -2313,7 +2313,7 @@ annotation      = {美国发明专利申请号.},
 
 更多的实现方法见
 \href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography/blob/master/biblatex-solution-to-latex-bibliography.pdf}%
-{biblatex-solution-to-latex-bibliography}中的第2.10节。
+{biblatex-solution-to-latex-bibliography} 中的第~2.10 节。
 
 具体例子则可以参考~\href{run:./stdgbT7714-2015.pdf}{stdgbT7714-2015.pdf}，其中第 8 节中大量使用这种方式。
 
@@ -2342,7 +2342,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{figure}
 
 \begin{enumerate}
-\item 多语言混合文献表首先要解决的是多语言文献的字符显示问题。使用 xelatex 编译时，由于其原生支持 unicode 的特性，在 tex 文档内显示多语言字符比较容易实现，正确显示的关键在于合适的字体设置。一般情况下西文如英/法/俄可以利用 fontspec 宏包选择合适的字体来解决，而中/日/韩语可以利用 ctex 宏包可以解决，但仍需注意要正确的显示中/日/韩语也需要字体支持，Windows下常见的中文字体可能不支持日/韩字符，而思源宋体是一个不错的选择。本文的多语言示例编译均采用思源宋体常规(SourceHanSerifSC-Regular.otf)，
+\item 多语言混合文献表首先要解决的是多语言文献的字符显示问题。使用 xelatex 编译时，由于其原生支持 unicode 的特性，在 tex 文档内显示多语言字符比较容易实现，正确显示的关键在于合适的字体设置。一般情况下西文如英/法/俄可以利用 fontspec 宏包选择合适的字体来解决，而中/日/韩语可以利用 ctex 宏包解决，但仍需注意要正确地显示中/日/韩语也需要字体支持，Windows下常见的中文字体可能不支持日/韩字符，而思源宋体是一个不错的选择。本文的多语言示例编译均采用思源宋体常规(SourceHanSerifSC-Regular.otf)，
 请从其~\href{https://github.com/adobe-fonts/source-han-serif/tree/release}{官网}下载。
 
 \item  除此之外，还要解决另外一个重要问题是本地化字符串问题。因为对于不同语言的文献，通常要求使用符合自身语言规范的本地化字符串。而且不同的语言，本地化字符串并不是一一对应的，特别是东亚语言，因此要考虑一个全面的解决方案：
@@ -2395,8 +2395,8 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 国标 GB/T 7714-2015 有不同语言对照文献的要求(详见第 6.1 节)，某些期刊也有类似的需求。
 多语言对照的文献表首先是多语言混合的文献表，所以本节的方法是在前一节基础上做的。
 对于 biblatex 宏包，多语言对照文献问题可以通过条目集类型(set)/或者条目关联(related)来解决，由于多语言对照的情况与双语言对照本质是一样的，因此下面主要讨论双语对照的情况。
-图~\ref{fig:double:lana} 和~\ref{fig:double:lanb}给出中英双语对照文献示例，两个示例中英文文献的作者姓名做了不同的设置，前者为 gbnamefmt=uppercase，后者为gbnamefmt=pinyin，后者也是国内某期刊的参考文献样式。
-GB中的韩中两种语言对照文献见~\href{run:./stdGBT7714-2015.pdf}{stdGBT7714-2015文件}第 4 页。
+图~\ref{fig:double:lana} 和~\ref{fig:double:lanb} 给出中英双语对照文献示例，两个示例中英文文献的作者姓名做了不同的设置，前者为 gbnamefmt=uppercase，后者为gbnamefmt=pinyin，后者也是国内某期刊的参考文献样式。
+GB中的韩中两种语言对照文献见~\href{run:./stdGBT7714-2015.pdf}{stdGBT7714-2015文件} 第 4 页。
 
 \begin{figure}[!htb]
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
@@ -2538,7 +2538,7 @@ language={chinese}
 
 \paragraph{\heiti 双语文献表的格式调整}
 
-不同期刊对于双语文献表可能有不同的格式要求，主要是附加一些信息，修改一些标点，或者调换中英文的顺序等。例~\ref{eg:refdblan:fmt} 给出的一个简单的修改示例。
+不同期刊对于双语文献表可能有不同的格式要求，主要是附加一些信息，修改一些标点，或者调换中英文的顺序等。例~\ref{eg:refdblan:fmt} 给出了一个简单的修改示例。
 
 \begin{example}{双语文献表的格式调整示例}{eg:refdblan:fmt}
 \begin{texlist}
