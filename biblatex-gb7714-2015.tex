@@ -231,7 +231,7 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 
 \subsection{最小示例}
 
-基于 biblatex 宏包生成参考文献非常简单，一个最小工作示例 (Minimum Work Example, MWE) 如例 \ref{code:doc:structrue}所示，其编译结果如图~\ref{fig:eg:ref} 所示。该 \TeX{} 源文档给出了使用 biblatex 时的基本结构及其详细注释，其中：
+基于 biblatex 宏包生成参考文献非常简单，一个最小工作示例 (Minimum Work Example, MWE) 如例~\ref{code:doc:structrue} 所示，其编译结果如图~\ref{fig:eg:ref} 所示。该 \TeX{} 源文档给出了使用 biblatex 时的基本结构及其详细注释，其中：
 \begin{itemize}
 \item 参考文献样式(即 cbx/bbx 文件)随 biblatex 宏包加载(比如：style=gb7714-2015，加载了gb7714-2015.cbx和gb7714-2015.bbx);
 \item 参考文献数据库文件(即 bib 文件)利用 \verb|\addbibresource| 加载 （比如：
@@ -245,19 +245,19 @@ GB/T 7714标准的理解和解释（\ref{sec:gbt:std}节）、
 \begin{texlist}
 \documentclass{article}%文档类 %导言区开始:
 \usepackage{ctex}%加载 ctex 宏包，中文支持
-    %加载 geometry 宏包，定义版面
+%加载 geometry 宏包，定义版面
 \usepackage[left=20mm,right=20mm,top=25mm, bottom=15mm]{geometry}
-    %加载 hyperref 宏包，使用超链接
+%加载 hyperref 宏包，使用超链接
 \usepackage[colorlinks=true,pdfstartview=FitH,linkcolor=blue,anchorcolor=violet,citecolor=magenta]{hyperref}
-    %参考文献工具，加载 biblatex 宏包，,其后端 backend 使用 biber，%标注(引用)样式 citestyle，著录样式 bibstyle 都采用 gb7714-2015 样式，两者相同时可以合并为一个选项style
+%参考文献工具，加载 biblatex 宏包，,其后端 backend 使用 biber，%标注(引用)样式 citestyle，著录样式 bibstyle 都采用 gb7714-2015 样式，两者相同时可以合并为一个选项style
 \usepackage[backend=biber,style=gb7714-2015]{biblatex}
-    %biblatex宏包的参考文献数据源即 bib 文件加载方式
+%biblatex宏包的参考文献数据源即 bib 文件加载方式
 \addbibresource[location=local]{example.bib}
 \begin{document}%正文区开始:
-    %正文内容，引用参考文献
+%正文内容，引用参考文献
 详见文献\cite{Peebles2001-100-100}\parencite{Babu2014a}
 另见文献\cite[49]{于潇2012-1518-1523}\parencite[106]{Babu2014a}
-    %打印参考文献表
+%打印参考文献表
 \printbibliography[heading=bibliography,title=参考文献]
 \end{document}
 \end{texlist}
@@ -701,7 +701,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbmedium=true，根据GB/T 7714-2015 要求输出载体标识符，例如“在线的期刊析出文献题名[J/OL]”。
     \item gbmedium=false，则不输出标识符，例如“在线的期刊析出文献题名[J]”。
   \end{itemize}
-  注意：gbtype选项是更大范围的控制，包括了 gbmedium，当 gbtype=false 时，无所谓 gbmedium 设置什么，因为整个文献类型和载体标识符整个都不显示，而 gbmedium 只是设置载体标识的。
+  注意：gbtype选项是更大范围的控制，包括了 gbmedium，当 gbtype=false 时，无所谓 gbmedium 设置什么，因为整个文献类型和载体标识符都不显示，而 gbmedium 只是设置载体标识的。
   效果示例如图~\ref{fig:eg:optgbmedium} 所示。
 
 \begin{figure}[!htb]
@@ -829,7 +829,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \item[gbbiblocal]=\textbf{gb7714-2015}，chinese，english. \hfill default is gb7714-2015
 
   为设置引用标注标签和文献表中的本地化字符串而增加的选项。其中gbcitelocal 用于控制标注中的本地化字符串，而 gbbiblocal 用于控制文献表中的本地化字符串，gblocal选项等价于同时设置gbcitelocal 和 gbbiblocal。
-  配合\lstinline[breaklines=true,basicstyle=\ttfamily]!\DefineBibliographyStrings!命令对本地化字符串进行设置可以实现一些特殊的效果。图~\ref{fig:content:fmtc} 就是该选项的一个使用示例。
+  配合 \lstinline[breaklines=true,basicstyle=\ttfamily]!\DefineBibliographyStrings!命令对本地化字符串进行设置可以实现一些特殊的效果。图~\ref{fig:content:fmtc} 就是该选项的一个使用示例。
   \begin{itemize}
     \item gblocal=gb7714-2015，即默认区分中英文，不同语言采用不同的字符串比如中文使用“等”“和”，而英文使用“et al.”“and”。
     \item gblocal=chinese，强制设置所有的本地化字符串使用中文。
@@ -1008,7 +1008,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
     \item gbstyle=false，仅中文文献使用国标样式，其它语言文献使用 biblatex 默认样式。
   \end{itemize}
 
-  该选项的实现原理是把所有国标格式设置局部化到每一条文献打印时，处理时首先判断gbstyle 选项及文献的语言，当满足要求则使用这些局部化格式，否则使用默认的标准样式。这种实现为一篇文档内实现两种样式提供解决思路，尽管目前非中文语言文献的著录格式是标准样式，但只要对标准样式做进一步的修改就可以形成符合某种格式规范的样式，比如像 ieee，nature等的样式。因此存在中文使用GB/T 7714-2015 著录格式，而英文文献使用 ieee 等著录格式的可能性。测试文档见：\href{run:./example/opt-gbstyle.tex}{opt-gbstyle.tex}。
+  该选项的实现原理是把所有国标格式设置局部化到每一条文献打印时，处理时首先判断 gbstyle 选项及文献的语言，当满足要求则使用这些局部化格式，否则使用默认的标准样式。这种实现为一篇文档内实现两种样式提供解决思路，尽管目前非中文语言文献的著录格式是标准样式，但只要对标准样式做进一步的修改就可以形成符合某种格式规范的样式，比如像 ieee，nature 等的样式。因此存在中文使用 GB/T 7714-2015 著录格式，而英文文献使用 ieee 等著录格式的可能性。测试文档见：\href{run:./example/opt-gbstyle.tex}{opt-gbstyle.tex}。
 
 
   \pdfbookmark[4]{gbfootbib}{gbfootbib}
@@ -1023,15 +1023,15 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   该选项的实现主要是两个方面：
 
   一是实现国标要求的脚注标签和段落格式，利用对
-  \verb|\@makefnmark|重定义实现正文脚注标签带圈上标，
+  \verb|\@makefnmark| 重定义实现正文脚注标签带圈上标，
   利用对 \verb|\@makefntext| 做 patch 局部化重设 \verb|\@makefnmark| 使得脚注中的标签不上标，利用对 latex 核心代码和 hyperref 宏包代码的重定义实现悬挂缩进的格式。
 
   二是实现国标要求的相同文献不输出内容，而是用标签代替，比如同\textcircled{4} ，主要利用citetracker 选项实现对文献引用的追踪，然后利用ifciteseen 判断和对footfullcite 命令做修改实现。
   测试文档见：\href{run:./example/opt-gbfootbib.tex}{opt-gbfootbib.tex}。
 
-  同时为了方便脚注的对齐格式控制增加了两个尺寸：\verb|\footbibmargin|和
+  同时为了方便脚注的对齐格式控制增加了两个尺寸：\verb|\footbibmargin| 和
   \verb|\footbiblabelsep|，分别表示脚注文本的左侧缩进距离和悬挂的脚注标记标签与脚注文本的间隔距离，默认分别是 1em 和0.5em。如果要修改悬挂对齐为其它对齐方式，那么需要重定义
-  \verb|\@makefntext|宏，目前悬挂对齐的实现方式见 bbx 文件。比如示例中重定义这两个尺寸为2em 和1em：
+  \verb|\@makefntext| 宏，目前悬挂对齐的实现方式见 bbx 文件。比如示例中重定义这两个尺寸为2em 和1em：
 
   {\small
   \vspace{1ex}
@@ -1064,7 +1064,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   但要注意由于 hyperref 本身的原因，这种方式产生的脚注文献表可能没有超链接功能。
   对于表格环境中的引用无法产生脚注文献表的问题，可以将其置于小页环境中实现或者采用前述图标标题中的类似处理方式。
-  注意：latex核心代码参考latex.ltx，而 hyperref 代码参考hyperref.STY。
+  注意：latex 核心代码参考 latex.ltx，而 hyperref 代码参考 hyperref.sty。
 
   \pdfbookmark[4]{gbfootbibfmt}{gbfootbibfmt}
   \item[gbfootbibfmt]=true，\textbf{false}. \hfill default is false
@@ -1114,8 +1114,11 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \pdfbookmark[4]{defdblanentry}{defdblanentry}
   \item[\textbackslash defdblanentry] \{entrykey1\}\{entrykey2\}
 
-  用于定义双语对照文献，将entrykey2条目和entrykey1条目关联起来，在文献表中对照输出。比如：\verb|\defdblanentry{entrykey1}{entrykey2}|或
-  \verb|\defdoublelangentry{entrykey1}{entrykey2}|，若entrykey1条目是中文的文献，entrykey2条目是对应entrykey1条目的英文形式，那么该命令会使得在文献表中，entrykey2的英文内容紧跟在entrykey1的中文内容后对照输出。该命令也只能出现在导言区中。
+  用于定义双语对照文献，将 entrykey2 条目和 entrykey1 条目关联起来，
+  在文献表中对照输出。比如：\lstinline|\defdblanentry{entrykey1}{entrykey2}| 或
+  \lstinline|\defdoublelangentry{entrykey1}{entrykey2}|，
+  若 entrykey1 条目是中文的文献，entrykey2 条目是对应 entrykey1 条目的英文形式，
+  那么该命令会使得在文献表中，entrykey2 的英文内容紧跟在 entrykey1 的中文内容后对照输出。该命令也只能出现在导言区中。
 
   \pdfbookmark[4]{addEntryField}{addEntryField}
   \item[\textbackslash addEntryField] \{empty or entrykey or entrykey comma list\}\{field\}\{fieldvalue\}
@@ -1141,7 +1144,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \pdfbookmark[4]{setlocalbibstring}{setlocalbibstring}
   \item[\textbackslash setlocalbibstring] \{bibstringkey\}\{bibstringval\}
 
-  用于局部调整本地化字符串的内容。比如 \verb|\setlocalbibstring{andothersincite}{et al.}|，就是临时将本地化字符串 andothersincite 的内容调整为“et al.”。
+  用于局部调整本地化字符串的内容。比如 \lstinline|\setlocalbibstring{andothersincite}{et al.}|，就是临时将本地化字符串 andothersincite 的内容调整为“et al.”。
 
 注意：如果要在本地化字符串的内容设置中使用 biblatex 提供的一些标点命令，比如adddot 等，那么需要对其进行保护，避免直接展开导致命令未定义的错误，比如：
 \verb|\setlocalbibstring{andothersincite}{et al\protect\adddot}|
@@ -1175,7 +1178,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \pdfbookmark[4]{gbrefcompress}{gbrefcompress}
   \item[gbrefcompress] default is 2
 
-  顺序编码制的控制文献压缩的计数器，默认设置 \verb|\setcounter{gbrefcompress}{2}|表示从 2 篇文献开始压缩。若设置 \verb|\setcounter{gbrefcompress}{3}| 则表示从 3 篇文献开始压缩。
+  顺序编码制的控制文献压缩的计数器，默认设置 \verb|\setcounter{gbrefcompress}{2}| 表示从 2 篇文献开始压缩。若设置 \verb|\setcounter{gbrefcompress}{3}| 则表示从 3 篇文献开始压缩。
 
 
   \item[其他]
@@ -1193,7 +1196,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
   \pdfbookmark[4]{ biblabelextend}{ biblabelextend}
   \item[biblabelextend] default is 0pt
 
-  顺序编码制文献表编码标签盒子的扩展宽度，当设置某些字体导致默认盒子宽度不足导致对齐出现问题时，可以设置该值为一个正值，比如：\verb|\setlength{\biblabelextend}{5pt}|。
+  顺序编码制文献表编码标签盒子的扩展宽度，当设置某些字体导致默认盒子宽度不足导致对齐出现问题时，可以设置该值为一个正值，比如：\lstinline|\setlength{\biblabelextend}{5pt}|。
   著者年份制中若使用顺序编码的文献表，也可以设置该值来拓宽编码标签盒子。
 
 \end{description}
@@ -1239,7 +1242,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   \item[minnames]=整数 \hfill default: 3
 
-  影响所有名称列表（\bibfield{author}、\bibfield{editor} 等）的限制值。如果某个列表包含的姓名数量超过 \prm{integer}，那么就会自动截断至\opt{minnames}个姓名。\prm{minnames} 的值必须小于或等于 \prm{maxnames}。\opt{minnames} 是设置 \opt{minbibnames} 和 \opt{mincitenames} 两个选项的支配选项。
+  影响所有名称列表（\bibfield{author}、\bibfield{editor} 等）的限制值。如果某个列表包含的姓名数量超过 \prm{integer}，那么就会自动截断至 \opt{minnames} 个姓名。\prm{minnames} 的值必须小于或等于 \prm{maxnames}。\opt{minnames} 是设置 \opt{minbibnames} 和 \opt{mincitenames} 两个选项的支配选项。
 
   \item[maxbibnames]=整数 \hfill default: \prm{maxnames}
 
@@ -1281,11 +1284,11 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   类似于 date 选项，但控制的是由DeclareLabeldate 选择的日期域的格式。
 
-  \item[doi]=true,false. \hfill default: true
+  \item[doi]=true, false. \hfill default: true
 
   该选项控制是否打印 \bibfield{doi} 域。
 
-  \item[isbn]=true,false. \hfill default: true
+  \item[isbn]=true, false. \hfill default: true
 
   该选项控制是否打印 \bibfield{isbn}\slash \bibfield{issn}\slash \bibfield{isrn} 等域。
 
@@ -1379,7 +1382,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 上述命令均可指定页码等信息用于输出，即在\{entrykey\}前面的[]内或第二个[]内(当有两个[]时)给出需要附加输出的信息，比如：\verb|\cite[p. 9]{entrykey}| 或 \verb|\cite[第九页]{中文entrykey}|。若不指定页码，则仅有 \verb|\pagescite| 命令默认提取参考文献的页码信息进行输出。
 各引用命令的使用方式及其效果如表~\ref{tab:cite:num} 所示。
-测试文档见\href{run:example/testallformat.tex}{testallformat.tex}。
+测试文档见~\href{run:example/testallformat.tex}{testallformat.tex}。
 
 
 
@@ -1443,7 +1446,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \paragraph{\heiti 著者-出版年制的标注样式}
 为满足 GB/T 7714-2015 第10.2节的要求，
 考虑 \verb|\cite| 和 \verb|\parencite| 命令将引用标签用圆括号括起来。增加了
-\verb|\pagescite|命令，用于自动加页码。增加了 \verb|\yearpagescite|， \verb|\yearcite| 命令用于处理文中已有作者信息只需要年份和页码的情况(为兼容性考虑，顺序编码制也给出该命令，但作用与
+\verb|\pagescite| 命令，用于自动加页码。增加了 \verb|\yearpagescite|， \verb|\yearcite| 命令用于处理文中已有作者信息只需要年份和页码的情况(为兼容性考虑，顺序编码制也给出该命令，但作用与
 \verb|\pagescite| 命令相同)，也完善了 \verb|\textcite| 命令，提供作者为句子主语，并附带行内非上标的页码，增加了 \verb|\authornumcite| 命令，以输出作者作为句子主语，并附带上标的页码。
 其它命令 \verb|\citet|、\verb|\citep|、\verb|\citetns|、\verb|\citepns|、
 \verb|\upcite|、\verb|\inlinecite| 分别等价于
@@ -1453,7 +1456,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 %各命令使用方式如例~\ref{eg:citeforauthoryear} 所示。
 %各引用命令的效果如图~\ref{fig:cite:ay} 所示。
 各引用命令的使用方式如表~\ref{tab:cite:authoryear} 所示。
-测试文档见\href{run:example/testallformat.tex}{testallformat.tex}。
+测试文档见~\href{run:example/testallformat.tex}{testallformat.tex}。
 
 
 
@@ -1503,7 +1506,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 标注在同一个文档中可能存在不同格式需求，比如：有的地方需要用上标，有的地方需要用行内，有的地方需要给出作者，有的地方需要给出页码等。一般情况下，不同标注格式可以通过使用不同的标注命令来得到，比如上一小节给出的不同命令。
 %，不同命令能够产生独特的标注标签。
 
-除了利用命令来调整标注格式外，还有更多方法可进行局部格式调整。这利用了 tex 的编组特性，编组内的局部格式不影响编组外的格式，所以可利用编组内的局部设置来调整标注的格式。类似的，文献表的著录格式也可局部调整，详见下一节。
+除了利用命令来调整标注格式外，还有更多方法可进行局部格式调整。这利用了 \TeX{} 的编组特性，编组内的局部格式不影响编组外的格式，所以可利用编组内的局部设置来调整标注的格式。类似地，文献表的著录格式也可局部调整，详见下一节。
 
 引用文献所产生标注标签的格式包括很多内容，包括作者数量、标点、本地化字符串等。最常见的局部调整需求是本地化字符串和标点(下面会以双语图题中的引用标注标签的不同本地化字符串需求为例来展示局部调整的方法)。
 
@@ -1546,14 +1549,14 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 然而对于双语的图题，英文图题中不适合出现“等”与“和”这样的字符，所以又要求在这种全英文的环境中将“和”与“等.”更换为英文符号，这就需要对本地化字符串做局部调整。而这种局部调整其实已经是比较底层的处理，biblatex提供的接口 DefineBibliographyStrings 仅用于全局设置，因此局部调整则需采用其它方式。
 %如何进行局部调整并没有非常方便的接口，要解决这一需求，需要对 biblatex 以及 gb7714-2015 样式有比较深入的了解。
 
-gb7714-2015通过 gbcitelocalcase 计数器来选择使用中文或英文的本地化字符串，因此通过局部设置 gbcitelocalcase 可以局部的选择不同语言的本地化字符串，比如在一个编组内，局部化设置计数器为：\verb|\defcounter{gbcitelocalcase}{1}|，那么这个编组内的所有本地化字符串会使用默认的中文字符串，反之若设置为2，则本地化字符串会使用默认的英文字符串。
+gb7714-2015通过 gbcitelocalcase 计数器来选择使用中文或英文的本地化字符串，因此通过局部设置 gbcitelocalcase 可以局部地选择不同语言的本地化字符串，比如在一个编组内，局部化设置计数器为：\verb|\defcounter{gbcitelocalcase}{1}|，那么这个编组内的所有本地化字符串会使用默认的中文字符串，反之若设置为2，则本地化字符串会使用默认的英文字符串。
 
-然而因为本地化字符串的默认内容通常是全局设置的，所以当中文的或者英文的本地化字符串设置都不满足要求时，就需要局部的调整本地化字符串的内容，如例~\ref{eg:str:localset} 所示，对本地化字符串 andothersincite 的内容做了调整，从全局设置的“等.”转换为“et al.”，“和”转换为“and”，这种局部设置可通过 csdef 直接重定义保存字符串信息的命令来进行调整，
+然而因为本地化字符串的默认内容通常是全局设置的，所以当中文的或者英文的本地化字符串设置都不满足要求时，就需要局部地调整本地化字符串的内容，如例~\ref{eg:str:localset} 所示，对本地化字符串 andothersincite 的内容做了调整，从全局设置的“等.”转换为“et al.”，“和”转换为“and”，这种局部设置可通过 csdef 直接重定义保存字符串信息的命令来进行调整，
 比如 \verb|\csdef{abx@sstr@andothersincite}{et al.}| 就是将 andothersincite 本地化字符串的内容临时调整为“et al.”。
 但为方便用户使用，
 宏包提供了 \verb|\setlocalbibstring| 命令来替代上述直接定义的 csdef 命令，
 如例~\ref{eg:str:localset} 所示。
-具体的测试见\href{egthesis/thesis-ucas-m.tex}{thesis-ucas-m.tex}
+具体的测试见~\href{egthesis/thesis-ucas-m.tex}{thesis-ucas-m.tex}
 
 \begin{example}{双语图题内的标注标签的本地化字符串局部设置}{eg:str:localset}
   \begin{texlist}
@@ -1570,7 +1573,7 @@ gb7714-2015通过 gbcitelocalcase 计数器来选择使用中文或英文的本�
 
 \paragraph{标注中的全半角标点和括号调整}
 
-除了本地化字符串外，标注中的括号和标点(默认采用英文的半角符号)也常是需要调整的内容。这两者首先可以通过选项调整，gbcitelabel选项提供了不同的选择比如 bracketqj 等，用来设置标注的括号为全局或半角，同时提供了一个gbcitelabel=quanjiao，可以将标点和括号全部改为全角。
+除了本地化字符串外，标注中的括号和标点(默认采用英文的半角符号)也常是需要调整的内容。这两者首先可以通过选项调整，gbcitelabel选项提供了不同的选择比如 bracketqj 等，用来设置标注的括号为全角或半角，同时提供了一个gbcitelabel=quanjiao，可以将标点和括号全部改为全角。
 
 如果选项提供的效果还不够，那么可以通过局部调整 mkbibleftborder 和 mkbibrightborder 来更换需要的括号。例~\ref{eg:parens:localset} 中的局部调整将标注中的括号改变为『和』。
 
@@ -1591,11 +1594,11 @@ gb7714-2015通过 gbcitelocalcase 计数器来选择使用中文或英文的本�
 
 第一段代码是一种全局的设置，不考虑中英文文献以及环境的差异。
 但有时我们需要对中英文文献的标注标签使用不同的符号，比如中文的标签使用中文全角标点，而英文的标签使用英文的标点，那么可以在标点设置时做一个判断(括号若有类似需求也可采用类似处理)，如例
-\ref{eg:punct:globalset}中的第二段代码所示。
+\ref{eg:punct:globalset} 中的第二段代码所示。
 值得注意的是：当同一处引用多篇文献时，且起始和终止的两篇文献的中英文不同，则标注标签周围的括号会变得不一致。此时可以用例~\ref{eg:punct:globalset} 第三段代码所采用的方式，利用局部设置 gbcitelocalcase 来临时统一符号。
 
 此外，当文档中存在独立的中文段落和英文段落时，期望在中文段落中使用中文的标点，而在英文段落中使用英文的标点，则可以利用 gbcitelocal 选项的内部设置的计数器 gbcitelocalcase 来局部化调整。如例
-\ref{eg:punct:globalset}中的第三段代码所示。做此设置后，只要在指定的段落局部化计数器 gbcitelocalcase 的值就可以达到临时调整标点的目的。
+\ref{eg:punct:globalset} 中的第三段代码所示。做此设置后，只要在指定的段落局部化计数器 gbcitelocalcase 的值就可以达到临时调整标点的目的。
 
 \begin{example}{标注标签中的标点的全局和局部设置}{eg:punct:globalset}
 \begin{texlist}
@@ -1631,7 +1634,7 @@ gb7714-2015通过 gbcitelocalcase 计数器来选择使用中文或英文的本�
 \DeclareDelimFormat[textcite,authornumcite,citet]{andothersdelim}
 {\iffieldequalstr{userf}{chinese}{，}{\addcomma\space}}%
 
-%第二段代码：导言区重设标注标签的标点，可根据计数器 gbcitelocalcase 局部设置调整中英文标点
+%第三段代码：导言区重设标注标签的标点，可根据计数器 gbcitelocalcase 局部设置调整中英文标点
 %也包括同时设置括号
 \renewrobustcmd{\mkbibleftborder}
 {\ifcase\value{gbcitelocalcase}\iffieldequalstr{userf}{chinese}{（}{(}%
@@ -1699,13 +1702,15 @@ gb7714-2015通过 gbcitelocalcase 计数器来选择使用中文或英文的本�
 \subsubsection{标题格式控制}
 
 标题内容的设置有三种方式%，这里再重复一下
-：一是直接在 printbibliography 命令中利用选项 title 设置，二是 gbctexset=true 时，重定义 bibname 和 refname 来设置，三是 gbctexset=false 时，利用本地化字符串进行设置。具体参见 gbctexset 选项。
+：一是直接在 \verb|printbibliography| 命令中利用选项 title 设置，
+二是 gbctexset=true 时，重定义 bibname 和 refname 来设置，
+三是 gbctexset=false 时，利用本地化字符串进行设置。具体参见 gbctexset 选项。
 
 标题格式的设置主要是通过重定义参考文献环境的 heading 进行，比如：
 
 \begin{example}{文献表标题格式}{eg:biblist:title}
 \begin{texlist}
-%将参考文献标题设置为段落的层级，若是其它层级则使用对应的命令，比如chapter,section等
+%将参考文献标题设置为段落的层级，若是其它层级则使用对应的命令，比如 chapter, section 等
 \defbibheading{bibliography}[\bibname]{%
 \paragraph{#1}}%
 \end{texlist}
@@ -1720,13 +1725,13 @@ gb7714-2015通过 gbcitelocalcase 计数器来选择使用中文或英文的本�
 \paragraph{\heiti 文献表字体、颜色} 为方便用户改变文献表段落格式、内容字体和颜色等，在 biblatex 提供的 \verb|\bibfont| 命令基础上，
 增加了 \verb|\bibauthorfont|、\verb|\bibtitlefont|、\verb|\bibpubfont| 等命令用于控制文献部分著录项的格式，比如作者，标题，出版项等。增加了 \verb|\SlashFont| 用于控制斜杠的字体。
 具体用法见例~\ref{eg:biblist:fontset}，结果如图~\ref{fig:par:fmt} 所示，
-测试用例见\href{run:example/testfontinbiblio.tex}{testfontinbiblio.tex}。
+测试用例见~\href{run:example/testfontinbiblio.tex}{testfontinbiblio.tex}。
 
 \begin{example}{文献表段落格式、字体、颜色}{eg:biblist:fontset}
 \begin{texlist}
 % 文献项之间的间隔符控制（比如是否换行）
-    % 选项 block=none , space , par , nbpar , ragged
-    % 或\renewcommand*{\newblockpunct}{\par\nobreak}
+    % 选项 block=none, space, par, nbpar, ragged
+    % 或 \renewcommand*{\newblockpunct}{\par\nobreak}
 % 字体的控制：\textit，sl，emph-楷体，\textbf，sf-黑体，\texttt-仿宋，\textsc，md，up-宋体
     % 全局字体
 \renewcommand{\bibfont}{\zihao{-5}}%\fangsong
@@ -1734,9 +1739,9 @@ gb7714-2015通过 gbcitelocalcase 计数器来选择使用中文或英文的本�
 \renewcommand{\bibauthorfont}{\bfseries\color{teal}}%
 \renewcommand{\bibtitlefont}{\ttfamily\color{blue}}%
 \renewcommand{\bibpubfont}{\itshape\color{violet}}%
-    % url和 doi 字体
+    % url 和 doi 字体
 \def\UrlFont{\ttfamily}%\rmfamily %\urlstyle{sf} %\def\UrlFont{\bfseries}
-    %斜杠的字体，比如[J/OL]或析出文献符号//中的斜杠
+    % 斜杠的字体，比如[J/OL]或析出文献符号//中的斜杠
 \def\SlashFont{\ttfamily}%\rmfamily等
 \end{texlist}
 \end{example}
@@ -1793,8 +1798,12 @@ bibitemindent表示
 
 \hspace{2em}此时的文献表环境中，数字标签盒子默认宽度为 labelnumberwidth，由 biblatex 根据文献数量自动计算后设定，因此改变缩进主要通过调整 biblabelsep 和 bibitemindent 两个尺寸来实现。biblabelsep设置数字标签盒子与文献内容之间的间距。bibitemindent设置第一行相对后面其它行的缩进，默认情况下 bibitemindent 为0pt，则一条文献内所有行缩进相同，若bibitemindent>0pt则第一行相比后面各行缩进，若bibitemindent<0pt则后面各行相比第一行缩进。
 
-\hspace{2em}顺序编码样式下 bibitemindent 与 bibhang 的意义与著者-出版年制下相同，但由于数字标签盒子的存在，所以页边到各行起始位置的距离bibhang=labelnumberwidth +biblabelsep -bibitemindent。
-当采用某些字体导致默认计算的标签宽度不足时，可以设置 biblabelextend 尺寸，来增加 labelnumberwidth 的宽度避免缩进格式产生问题，使得：bibhang=labelnumberwidth +biblabelextend +biblabelsep -bibitemindent。默认情况下 biblabelextend 尺寸为0pt。
+\hspace{2em}顺序编码样式下 bibitemindent 与 bibhang 的意义与著者-出版年制下相同，
+但由于数字标签盒子的存在，所以页边到各行起始位置的距离
+bibhang $=$ labelnumberwidth $+$ biblabelsep $-$ bibitemindent。
+当采用某些字体导致默认计算的标签宽度不足时，可以设置 biblabelextend 尺寸，
+来增加 labelnumberwidth 的宽度避免缩进格式产生问题，使得：bibhang $=$ labelnumberwidth
+$+$ biblabelextend $+$ biblabelsep $-$ bibitemindent。默认情况下 biblabelextend 尺寸为 0pt。
 
 \item 二是采用正常段落环境的文献表，即设置gbalign=gb7714-2015时（即项对齐情况，每条文献严格按从左到右的顺序输出，顺序数字标签宽度等于实际宽度，文献内容与其间隔biblabelsep）。此时需要调整的尺寸包括两个：biblabelsep，bibitemindent。
 
@@ -1806,7 +1815,7 @@ bibitemindent表示
 \begin{texlist}
 %
 % 【著者-出版年制】文献表缩进控制
-\setlength{\bibitemindent}{0em} % bibitemindent表示一条文献中第一行相对后面各行的缩进
+\setlength{\bibitemindent}{0em} % bibitemindent 表示一条文献中第一行相对后面各行的缩进
 \setlength{\bibhang}{0pt} % 著者-出版年制中 bibhang 表示的各行起始位置到页边的距离
 
 %
@@ -1874,8 +1883,8 @@ bibitemindent表示
 
 \paragraph{\heiti 文献表中的标点或间隔符控制}  文献表中有时需要调整标点为中文的全角标点等其它形式，则需要通过不同机制下的标点(或间隔符)设置来调整。
 有时通过间隔符设置直接调整，比如标题与类型标识符之间间隔符 titletypedelim;
-有时则通过设置本地化字符串进行，比如 and，in等本地化字符串;
-有时则需要在域格式设置中进行调整，比如 title，doi等域的 DeclareFieldFormat 格式定义。
+有时则通过设置本地化字符串进行，比如 and，in 等本地化字符串;
+有时则需要在域格式设置中进行调整，比如 title，doi 等域的 DeclareFieldFormat 格式定义。
 此外，因为不同语言的存在，可能需要区分语言进行调整，比如 bibrangedash 等符号。
 具体情况是比较复杂的，这里不再一一列举，
 常见的调整方式如例~\ref{eg:biblist:separator} 所示。
@@ -1891,7 +1900,7 @@ bibitemindent表示
 % 标题与文献类型表示符之间的间隔符 title<titletypedelim>[J]
 \DeclareDelimFormat[bib,biblist]{titletypedelim}{\space}
 
-%将页码间隔符替换会英文的短横线
+% 将页码间隔符替换为英文的短横线
 \newcommand{\fttilde}{\fontspec{FreeSerif}\selectfont}
 \DefineBibliographyExtras{english}{\renewcommand*{\bibrangedash}{{\fttilde\textsim}}}
 %比如：～$\sim$\symbol{"FF5E}\symbol{"223C}\symbol{"2053}\symbol{"02DC}\symbol{"02F7}
@@ -1908,9 +1917,9 @@ bibitemindent表示
 \DeclareDelimFormat[bib,biblist]{andothersdelim}{，}
 
 %姓名内部的相关标点，包括如下等设置
-%注意这类设置与 gbnamefmt 选项相关，不同的选项值对应不同的gb...localset
+%注意这类设置与 gbnamefmt 选项相关，不同的选项值对应不同的 gb...localset
 %包括：gbcaselocalset，gbpinyinlocalset，gbquanpinlocalset，gbfullnamelocalset
-%如果是familyahead,givenahead选项，则直接使用内部的重设命令即可。
+%如果是 familyahead, givenahead 选项，则直接使用内部的重设命令即可。
 %除了如下命令外还有其它设置，有需要可以查 biblatex 文档
 \def\gbcaselocalset{%
 \renewcommand*{\revsdnamepunct}{，}%%
@@ -2001,7 +2010,7 @@ sentencecase 虽然只有一个标准，但也涉及专有名词的识别和保�
 \begin{enumerate}
   \item 文献表标题
 
-  局部重定义bibname、refname或者局部重设 printbibliography 命令的选项可以设置文献表标题。
+  局部重定义bibname、refname或者局部重设 \verb|printbibliography| 命令的选项可以设置文献表标题。
 	
   \item 文献表段落格式
 
@@ -2018,9 +2027,9 @@ sentencecase 虽然只有一个标准，但也涉及专有名词的识别和保�
   另外也有一些选项使用的是计数器，比如 gbnamefmt 选项，因此局部设置选项对应的计数器的值可以局部设置选项控制的格式。
   当然由于一些选项的特殊性，它无法简单的进行利用 toggle 值或计数器值进行设置，而可能需要调整选项对应的宏的内容，因此复杂度会明显提升，如果不是非常必要，建议不要去局部化重设这些选项的所对应的格式。
 
-  除了选项提供的接口外，著录项和著录项之间的格式设置，可以使用前述介绍过的命令或者域格式来具体不调整，只要相关的设置命令不限制一定要在导言区中，就可以局部化调整。比如前面设置 volume 为粗体的调整，就可以在不同的 refsection 做不同形式的调整。
+  除了选项提供的接口外，著录项和著录项之间的格式设置，可以使用前述介绍过的命令或者域格式来具体调整，只要相关的设置命令不限制一定要在导言区中，就可以局部化调整。比如前面设置 volume 为粗体的调整，就可以在不同的 refsection 做不同形式的调整。
 
-  示例见\href{run:./example/opt-gbannote.tex}{opt-gbannote.tex}。
+  示例见~\href{run:./example/opt-gbannote.tex}{opt-gbannote.tex}。
 
 \end{enumerate}
 
@@ -2050,7 +2059,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \caption{一个文献表采用多种著录样式示例}\label{fig:eg:ms}
 \end{figure}
 
-测试见文档\href{run:egfigure/egmsinabiblio.tex}{egmsinabiblio.tex}。
+测试见文档~\href{run:egfigure/egmsinabiblio.tex}{egmsinabiblio.tex}。
 
 
 
@@ -2059,10 +2068,14 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 不同参考文献分节采用不同著录样式主要针对一个 tex 文档中存在多个参考文献表，且各参考文献表的格式需求不同。比如一些学位论文写作中，正文的参考文献表为著者-出版年制，而附录中的作者论著情况则用顺序编码制。这种情况目前由gb7714-2015mx样式解决，选项加载方式如例~\ref{eg:gb7714mx} 所示。
 
 gb7714-2015mx样式默认使用顺序编码样式，当要使用著者-出版年制样式时，则利用命令
-\verb|\setaystylesection|进行设置，该命令有一个必选参数，表示采用著者-出版年制样式的参考文献节的编号。注意该命令一次只能设置一个文献节，因此设置多个参考文献节时，需要多次使用 \verb|\setaystylesection| 命令，比如节 2 节 4 都采用著者-出版年制样式，
+\verb|\setaystylesection| 进行设置，该命令有一个必选参数，表示采用著者-出版年制样式的参考文献节的编号。
+注意该命令一次只能设置一个文献节，因此设置多个参考文献节时，需要多次使用 \verb|\setaystylesection| 命令，
+比如节 2 节 4 都采用著者-出版年制样式，
 那么设置 \verb|\setaystylesection{2}\setaystylesection{4}|。
 
-目前gb7714-2015mx样式中的两种格式：顺序编码和著者-出版年制样式默认都是符合GB/T 7714-2015 标准的，如果需要做格式的修改，则完全可以通过自定义实现。图~\ref{fig:eg:ms} 展示了 3 个参考文献分节的文档，其中节 2 使用了著者-出版年制。
+目前 gb7714-2015mx 样式中的两种格式：顺序编码和著者-出版年制样式默认都是符合 GB/T 7714-2015 标准的，
+如果需要做格式的修改，则完全可以通过自定义实现。图~\ref{fig:eg:mx} 展示了 3 个参考文献分节的文档，
+其中节 2 使用了著者-出版年制。
 
 \begin{figure}[!htb]
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
@@ -2075,7 +2088,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \caption{不同参考文献分节采用不同著录样式}\label{fig:eg:mx}
 \end{figure}
 
-测试见文档\href{run:egfigure/egmsindfrefsec.tex}{egmsindfrefsec.tex}。
+测试见文档~\href{run:egfigure/egmsindfrefsec.tex}{egmsindfrefsec.tex}。
 
 \subsubsection{局部定义的不同样式的文献表}\label{sec:local:biblist:set}
 
@@ -2126,7 +2139,7 @@ annotation      = {美国发明专利申请号.},
 \end{filecontents}
 
 %导言区
-%去掉文献Zhang2007-500-503的 usera 域
+%去掉文献 Zhang2007-500-503 的 usera 域
 \delEntryField{Zhang2007-500-503}{usera}
 %在第 1 个 refsection 中去掉 article 类的文献标识符
 %利用 AtEveryBibitem 在对 refsection 和 entrytype 判断后局部做设置
@@ -2176,20 +2189,20 @@ annotation      = {美国发明专利申请号.},
 \end{example}
 
 其它示例可以参考：\href{https://blog.csdn.net/xenonhu/article/details/120853247}{修改指定作者的格式来突出显示}，nudtpaper，BIThesis等。
-测试文档见\href{run:example/test-resume.tex}{test-resume.tex}。
+测试文档见~\href{run:example/test-resume.tex}{test-resume.tex}。
 
 
 \subsubsection{完全自定义的条目内容样式}
 
 完全自定义的条目内容样式分两类：
 一类是对已知类型文献的做针对性的调整。
-比如上交图书馆要求 arXiv 文献使用 [EB/OL] 而 [J] 类型，要求的著录格式如下：
+比如上交图书馆要求 arXiv 文献使用 [EB/OL] 而非 [J] 类型，要求的著录格式如下：
 
 \begin{texlist}
 主要责任者.题名:其他题名信息[EB/OL].预印本平台:预印本编号(更新或修改日期)[引用日期].获取和访问路径
 \end{texlist}
 
-若直接使用 arXiv 网站导出的 bib 信息，则文献类型是 misc，通常无法生成需要的格式，此时我们可以 arXiv 文献根据上述要求做自定义调整。因为 arXiv 导出的 bib 信息中包含archivePrefix=\{arXiv\}的特殊域，该域在 biber 处理后还会转换为 eprinttype 域，所以可以作为识别的关键。由于 arXiv 网站导出的 bib 信息中不含有网址，访问日期等信息，也可以通过 sourcemap 批量添加。因此我们自定义的方式如例~\ref{eg:arXiv:localset} 所示，如此处理在不影响其它文献的情况下可以生成arXiv 文献的专门格式。
+若直接使用 arXiv 网站导出的 bib 信息，则文献类型是 misc，通常无法生成需要的格式，此时我们可以对 arXiv 文献根据上述要求做自定义调整。因为 arXiv 导出的 bib 信息中包含archivePrefix=\{arXiv\}的特殊域，该域在 biber 处理后还会转换为 eprinttype 域，所以可以作为识别的关键。由于 arXiv 网站导出的 bib 信息中不含有网址，访问日期等信息，也可以通过 sourcemap 批量添加。因此我们自定义的方式如例~\ref{eg:arXiv:localset} 所示，如此处理在不影响其它文献的情况下可以生成 arXiv 文献的专门格式。
 \begin{example}{arXiv 文献的特殊格式定制}{eg:arXiv:localset}
 \begin{texlist}
 %自动添加一些信息
@@ -2300,9 +2313,9 @@ annotation      = {美国发明专利申请号.},
 
 更多的实现方法见
 \href{https://github.com/hushidong/biblatex-solution-to-latex-bibliography/blob/master/biblatex-solution-to-latex-bibliography.pdf}%
-{biblatex-solution-to-latex-bibliography}中的第2.10节。
+{biblatex-solution-to-latex-bibliography} 中的第~2.10 节。
 
-具体例子则可以参考\href{run:./stdgbT7714-2015.pdf}{stdgbT7714-2015.pdf}，其中第 8 节中大量使用这种方式。
+具体例子则可以参考~\href{run:./stdgbT7714-2015.pdf}{stdgbT7714-2015.pdf}，其中第 8 节中大量使用这种方式。
 
 
 
@@ -2329,8 +2342,8 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{figure}
 
 \begin{enumerate}
-\item 多语言混合文献表首先要解决的是多语言文献的字符显示问题。使用 xelatex 编译时，由于其原生支持 unicode 的特性，在 tex 文档内显示多语言字符比较容易实现，正确显示的关键在于合适的字体设置。一般情况下西文如英/法/俄可以利用 fontspec 宏包选择合适的字体来解决，而中/日/韩语可以利用 ctex 宏包可以解决，但仍需注意要正确的显示中/日/韩语也需要字体支持，Windows下常见的中文字体可能不支持日/韩字符，而思源宋体是一个不错的选择。本文的多语言示例编译均采用思源宋体常规(SourceHanSerifSC-Regular.otf)，
-请从其\href{https://github.com/adobe-fonts/source-han-serif/tree/release}{官网}下载。
+\item 多语言混合文献表首先要解决的是多语言文献的字符显示问题。使用 xelatex 编译时，由于其原生支持 unicode 的特性，在 tex 文档内显示多语言字符比较容易实现，正确显示的关键在于合适的字体设置。一般情况下西文如英/法/俄可以利用 fontspec 宏包选择合适的字体来解决，而中/日/韩语可以利用 ctex 宏包解决，但仍需注意要正确地显示中/日/韩语也需要字体支持，Windows下常见的中文字体可能不支持日/韩字符，而思源宋体是一个不错的选择。本文的多语言示例编译均采用思源宋体常规(SourceHanSerifSC-Regular.otf)，
+请从其~\href{https://github.com/adobe-fonts/source-han-serif/tree/release}{官网}下载。
 
 \item  除此之外，还要解决另外一个重要问题是本地化字符串问题。因为对于不同语言的文献，通常要求使用符合自身语言规范的本地化字符串。而且不同的语言，本地化字符串并不是一一对应的，特别是东亚语言，因此要考虑一个全面的解决方案：
 
@@ -2382,8 +2395,8 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 国标 GB/T 7714-2015 有不同语言对照文献的要求(详见第 6.1 节)，某些期刊也有类似的需求。
 多语言对照的文献表首先是多语言混合的文献表，所以本节的方法是在前一节基础上做的。
 对于 biblatex 宏包，多语言对照文献问题可以通过条目集类型(set)/或者条目关联(related)来解决，由于多语言对照的情况与双语言对照本质是一样的，因此下面主要讨论双语对照的情况。
-图~\ref{fig:double:lana} 和~\ref{fig:double:lanb}给出中英双语对照文献示例，两个示例中英文文献的作者姓名做了不同的设置，前者为 gbnamefmt=uppercase，后者为gbnamefmt=pinyin，后者也是国内某期刊的参考文献样式。
-GB中的韩中两种语言对照文献见\href{run:./stdGBT7714-2015.pdf}{stdGBT7714-2015文件}第 4 页。
+图~\ref{fig:double:lana} 和~\ref{fig:double:lanb} 给出中英双语对照文献示例，两个示例中英文文献的作者姓名做了不同的设置，前者为 gbnamefmt=uppercase，后者为gbnamefmt=pinyin，后者也是国内某期刊的参考文献样式。
+GB中的韩中两种语言对照文献见~\href{run:./stdGBT7714-2015.pdf}{stdGBT7714-2015文件} 第 4 页。
 
 \begin{figure}[!htb]
 \begin{tcolorbox}[left skip=0pt,right skip=0pt,%
@@ -2418,7 +2431,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \end{texlist}
 \end{example}
 
-测试见文档\href{run:example/testallformat.tex}{testallformat.tex}。
+测试见文档~\href{run:example/testallformat.tex}{testallformat.tex}。
 
 \bc{需要注意：由于 biblatex 的升级，在著者-出版年制中应用动态条目集方法产生的标注标签存在版本差异。
 biblatex v3.7及之前版本，因为 set 带有第一个子条目的信息，所以会自动输出子条目信息作为标签。
@@ -2525,7 +2538,7 @@ language={chinese}
 
 \paragraph{\heiti 双语文献表的格式调整}
 
-不同期刊对于双语文献表可能有不同的格式要求，主要是附加一些信息，修改一些标点，或者调换中英文的顺序等。例~\ref{eg:refdblan:fmt} 给出的一个简单的修改示例。
+不同期刊对于双语文献表可能有不同的格式要求，主要是附加一些信息，修改一些标点，或者调换中英文的顺序等。例~\ref{eg:refdblan:fmt} 给出了一个简单的修改示例。
 
 \begin{example}{双语文献表的格式调整示例}{eg:refdblan:fmt}
 \begin{texlist}
@@ -2992,7 +3005,7 @@ bib文件中的参考文献信息是以条目形式组织，一篇文献创建�
 
 \bc{1. 有时直接从网络获取的参考文献信息中可能带有一些特殊字符比如\%，\&等，这些字符在 tex 中通常需要做转义处理，本样式中对像 title，journal，abstract，howpublished等常见域中出现的特殊字符已经做了转义，但也存在一些域没有考虑，所以当出现错误时，用户需要手动处理，例如把\%改为\textbackslash \%。}
 
-\bc{2. 由于目前 biber 使用\href{https://github.com/ambs/Text-BibTeX/tree/master/btparse}
+\bc{2. 由于目前 biber 使用~\href{https://github.com/ambs/Text-BibTeX/tree/master/btparse}
 {btparse}
 来解析 bib 文件，因此各条目中的引用关键词中不能出现圆括号作为其内容一部分比如\@misc\{Euclidean\_geometry(hi), 这样的写法是不允许的，需要去掉其中()，否则 biber 会报错。%}
 }
@@ -3646,7 +3659,8 @@ author.title[usera].translator.location:institution,date或year:pages[urldate].u
 \subsection{标准的其它细节要求}
 
 除了第~\ref{sec:numeric:data} 节针对不同条目类型的著录格式要求外，GB/T 7714-2015 还有一些细节规定比如文字、符号等，biblatex-gb7714-2015宏包做如下考虑，
-示例见文档\href{run:./tool/stdGBT7714-2015.pdf}{stdGBT7714-2015}：
+示例见文档~\href{run:./tool/stdGBT7714-2015.pdf}{stdGBT7714-2015}：
+
 
 \subsubsection{数字}\label{sec:fmt:number}
 
