@@ -84,7 +84,7 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 * [SJTUThesis(上海交通大学学位论文模板)](https://github.com/sjtug/SJTUThesis) (母校的论文模板，不得不说缘分真的很神奇，16年一出来就用上)
 * [sustechthesis（Southern University of Science and Technology Thesis Template LaTeX Template）](https://github.com/Iydon/sustechthesis)
 * [SwufeTeX（西南财经大学学位论文 LaTeX 模板）](https://github.com/OopsYao/swufethesis)
-* [SYSUThesis（中山大学研究生学位论文 LaTeX 模板（试用））](https://github.com/1FCENdoge/SYSUThesis)
+* [sysuthesis（中山大学毕业论文/设计 LaTeX 模板（本科/研究生））](https://github.com/1FCENdoge/sysuthesis)
 * [sysu-thesis（中山大学 LaTeX 论文项目模板（本科））](https://github.com/SYSU-SCC/sysu-thesis)
 * [Thesis-Template-for-XJTU (西安交大毕业设计模板)](https://github.com/DXie123/Thesis-Template-for-XJTU)
 * [ThuThesis（LaTeX Thesis Template for Tsinghua University ）](https://github.com/tuna/thuthesis)
