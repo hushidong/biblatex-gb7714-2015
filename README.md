@@ -99,6 +99,7 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 * [Zhejiang University thesis(浙江大学毕业设计/论文模板)](https://github.com/TheNetAdmin/zjuthesis)
 * [《经济研究》杂志 LaTeX 论文模板)](https://github.com/EthanDeng/Chinese-ERJ)
 * [LaTeX学习笔记（Study-LaTeX)](https://github.com/Zousiyu/Study-LaTeX)
+* [GZHU_Thesis_Latex_Template（广州大学本科毕业论文 LaTeX 模板）](https://github.com/Tangent-90C/Tangent-90C-GZHU_Thesis_Latex_Template)
 * [...]
 
 
