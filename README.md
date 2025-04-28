@@ -68,6 +68,7 @@ biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2
 * [ECNU-Undergraduate-LaTeX(华东师范大学本科毕业论文模板)](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)
 * [fduthesis (复旦大学论文模板)](https://github.com/Stone-Zeng/fduthesis)
 * [fjnu-bathesis (福建师范大学本科毕业论文 LaTeX 模板)](https://github.com/fjnuer/fjnu-bathesis)
+* [GZHU_Thesis_Latex_Template（广州大学本科毕业论文 LaTeX 模板）](https://github.com/Tangent-90C/Tangent-90C-GZHU_Thesis_Latex_Template)
 * [hustthesis (华中科技大学 LaTeX 学位论文文档类)](https://github.com/hust-latex/hustthesis)
 * [LaTeX-SWUFE-Bachelor-Thesis（西南财经大学本科毕业论文 LaTeX 模板）](https://github.com/sukanka/LaTeX-SWUFE-Bachelor-Thesis)
 * [LZUthesis（兰州大学本科毕业论文 LaTeX 模板）](https://github.com/szsdk/LZUthesis)
