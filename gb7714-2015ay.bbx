@@ -753,6 +753,7 @@
     %
     \DeclareBibliographyOption[string]{gbcitelocal}[gb7714-2015]{%
         \ifstrequal{#1}{gb7714-2015}{\setcounter{gbcitelocalcase}{0}}{}%
+        \ifstrequal{#1}{gb7714}{\setcounter{gbcitelocalcase}{0}}{}%
         \ifstrequal{#1}{chinese}{\setcounter{gbcitelocalcase}{1}}{}%
         \ifstrequal{#1}{english}{\setcounter{gbcitelocalcase}{2}}{}%
     }
@@ -760,6 +761,7 @@
 
     \DeclareBibliographyOption[string]{gbbiblocal}[gb7714-2015]{%
         \ifstrequal{#1}{gb7714-2015}{\setcounter{gbbiblocalcase}{0}}{}%
+        \ifstrequal{#1}{gb7714}{\setcounter{gbbiblocalcase}{0}}{}%
         \ifstrequal{#1}{chinese}{\setcounter{gbbiblocalcase}{1}}{}%
         \ifstrequal{#1}{english}{\setcounter{gbbiblocalcase}{2}}{}%
     }
@@ -806,7 +808,9 @@
         \ifstrequal{#1}{center}{\setcounter{gbalignlabel}{2}\setaligngbnumeric}{}
         \ifstrequal{#1}{centpos}{\setcounter{gbalignlabel}{3}\setaligngbnumeric}{}
         \ifstrequal{#1}{gb7714-2015}{\setaligngbstyle}{}
+        \ifstrequal{#1}{gb7714}{\setaligngbstyle}{}
         \ifstrequal{#1}{gb7714-2015ay}{}{}%默认就是ay样式的
+        \ifstrequal{#1}{gb7714ay}{}{}%默认就是ay样式的
     }%
 
 
@@ -854,7 +858,9 @@
         \ifstrequal{#1}{center}{\setcounter{gbalignlabel}{2}\setaligngbnumeric}{}
         \ifstrequal{#1}{centpos}{\setcounter{gbalignlabel}{3}\setaligngbnumeric}{}
         \ifstrequal{#1}{gb7714-2015}{\setaligngbstyle}{}
+        \ifstrequal{#1}{gb7714}{\setaligngbstyle}{}
         \ifstrequal{#1}{gb7714-2015ay}{}{}
+        \ifstrequal{#1}{gb7714ay}{}{}
     }%
 
   }
@@ -1970,6 +1976,39 @@
       }
     }
 
+    \DeclareSortingTemplate{gb7714}{
+      \sort{
+        \field{presort}
+      }
+      %\sort[final]{
+        %\field{sortkey}
+      %}
+      \sort{
+    	\field{lansortorder}%language
+    	}
+      \sort{
+        \field{sortkey}
+      }
+      \sort{%[direction=descending]
+        \field{sortname}
+        \field{author}
+        \field{editor}
+        \field{translator}
+      }
+      \sort{
+        \field{sortyear}
+        \field{year}
+      }
+      \sort{
+        \field{sorttitle}
+        \field{title}
+      }
+      \sort{
+        \field{volume}
+        \literal{0}
+      }
+    }
+
     %降序的nyt
     \DeclareSortingTemplate{gbnytd}{
       \sort{
@@ -2336,9 +2375,15 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
   [inbook,incollection,inproceedings]
   {title}{#1}%\nopunct\unspace
 \DeclareFieldFormat{url}{\url{#1}} %url域修改如本行%url相关输出，源来自biblatex.def
-\def\UrlFont{\rmfamily}%设置url字体为roman字体%\ttfamily
-\def\SlashFont{\ttfamily}%设置斜杠的字体，比如：[J/OL]中的斜杠;\rmfamily
-%\urlstyle{rm} %使用这句也一样
+%\def\UrlFont{\rmfamily}%设置url字体为roman字体%\ttfamily
+\urlstyle{same} %使用这句也一样
+\def\slashstyle#1{\expandafter\protect\csname slash@#1style\endcsname}
+\def\slash@ttstyle{\def\SlashFont{\ttfamily}}
+\def\slash@rmstyle{\def\SlashFont{\rmfamily}}
+\def\slash@sfstyle{\def\SlashFont{\sffamily}}
+\def\slash@samestyle{\def\SlashFont{}}
+%\def\SlashFont{}%设置斜杠的字体，比如：[J/OL]中的斜杠;\rmfamily
+\slashstyle{same}
 \setcounter{biburlnumpenalty}{100} %让url可以在数字后断行
 \setcounter{biburlucpenalty}{100} %让url可以在大写字母后断行
 \setcounter{biburllcpenalty}{100} %让url可以在小写字母后断行

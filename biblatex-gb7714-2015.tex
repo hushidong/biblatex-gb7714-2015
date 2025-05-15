@@ -92,7 +92,7 @@ biblatex-gb7714-2015 宏包是为满足《GB/T 7714-2015~~信息与文献~~参�
 除严格实现符合 GB/T 7714-2015 标准的格式外，也希望能针对不同用户的特殊需求，提供方便的定制方式，比如通过选项来达到格式的调整。为此，增加了多个方面的设置选项，使用户可以根据自身需求灵活设置。主要包括：
 
 著录表排序选项：
-sorting选项值(gb7714-2015支持以语言著者-出版年标题升序排列，gbnytd支持以语言著者-出版年标题降序排列，gbynta支持以语言年份作者标题升序排列，gbyntd支持以语言年份作者标题降序排列)、gblanorder 选项(可以设置不同的文种(语言)文献的排列顺序)、sortlocale 选项(可以设置本地语言的排序调整方案，比如：zh\_\_pinyin 以拼音排序中文，zh\_\_stroke 以笔画排序，auto/zh 以 unicode 编码排序，zh\_\_gb2312han 以gb2312编码排序)。使用拼音排序时遇到多音字也可以利用添加 key 域或使用修改后的 locale 文件(即 pinyin.pm)解决。
+sorting选项值(gb7714支持以语言著者-出版年标题升序排列，gbnytd支持以语言著者-出版年标题降序排列，gbynta支持以语言年份作者标题升序排列，gbyntd支持以语言年份作者标题降序排列)、gblanorder 选项(可以设置不同的文种(语言)文献的排列顺序)、sortlocale 选项(可以设置本地语言的排序调整方案，比如：zh\_\_pinyin 以拼音排序中文，zh\_\_stroke 以笔画排序，auto/zh 以 unicode 编码排序，zh\_\_gb2312han 以gb2312编码排序)。使用拼音排序时遇到多音字也可以利用添加 key 域或使用修改后的 locale 文件(即 pinyin.pm)解决。
 
 
 著录项格式选项：
@@ -460,7 +460,7 @@ v1.1m版本增加了chinese-jmw样式用于生成管理世界期刊的文献。
 \begin{description}
 
   \pdfbookmark[4]{gbalign}{gbalign}
-  \item[gbalign]=\textbf{right}，left，center，centpos，gb7714-2015，\textbf{gb7714-2015ay}. \hfill default: right for numeric style and gb7714-2015ay for author-year style
+  \item[gbalign]=\textbf{right}，left，center，centpos，gb7714，\textbf{gb7714ay}. \hfill default: right for numeric style and gb7714ay for author-year style
 
   为控制文献表数字序号标签增加的选项，用于选择是否生成序号标签及其对齐方式。
   \begin{itemize}
@@ -468,8 +468,8 @@ v1.1m版本增加了chinese-jmw样式用于生成管理世界期刊的文献。
     \item gbalign=left，是 list 环境中的左对齐数字序号标签；
     \item gbalign=center，是 list 环境中的等宽数字序号标签，数字在[]内居中；
     \item gbalign=centpos，是 list 环境中的局中数字序号标签，带括号标签[1]在标签盒子内居中；
-    \item gbalign=gb7714-2015，是项对齐方式数字序号标签，即段落环境中标签使用原始宽度，标签与条目内容等间距。
-    \item gbalign=gb7714-2015ay，无数字序号标签，是author-year风格的文献表，是 gb7714-2015ay 样式的默认选项。
+    \item gbalign=gb7714，是项对齐方式数字序号标签，即段落环境中标签使用原始宽度，标签与条目内容等间距。
+    \item gbalign=gb7714ay，无数字序号标签，是author-year风格的文献表，是 gb7714-2015ay 样式的默认选项。
   \end{itemize}
   该选项对\textbf{著者年份制、顺序编码制均有效}，也就是说当使用著者年份制时，加上 gbalign 选项后同样可以实现文献表的顺序序号标签(比如：
   \lstinline[breaklines=true,basicstyle=\ttfamily]!\usepackage[style=gb7714-2015ay, gbalign=left]{biblatex}!，可以实现\emph{著者年份制格式的带左对齐的顺序序号标签的文献表})。 序号标签对齐方式的测试，包括：
@@ -489,7 +489,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \subfigure[\heiti gbalign=right 即右对齐]{\parbox{0.5\linewidth}{\includegraphics*[page=4,viewport=1cm 0cm 8cm 4.5cm,clip=true]{egphoto/opt-gbalign-right.pdf}}}
 \subfigure[\heiti gbalign=left 即左对齐]{\parbox{0.5\linewidth}{\includegraphics*[page=4,viewport=1cm 0cm 8cm 4.5cm,clip=true]{egphoto/opt-gbalign-left.pdf}}}\\
 \subfigure[\heiti gbalign=center 即中对齐]{\parbox{0.5\linewidth}{\includegraphics*[page=4,viewport=1cm 0cm 8cm 4.5cm,clip=true]{egphoto/opt-gbalign-center.pdf}}}
-\subfigure[\heiti gbalign=gb7714-2015 即项对齐]{\parbox{0.5\linewidth}{\includegraphics*[page=4,viewport=1cm 0cm 8cm 4.5cm,clip=true]{egphoto/opt-gbalign-gb.pdf}}}
+\subfigure[\heiti gbalign=gb7714 即项对齐]{\parbox{0.5\linewidth}{\includegraphics*[page=4,viewport=1cm 0cm 8cm 4.5cm,clip=true]{egphoto/opt-gbalign-gb.pdf}}}
 \end{tcolorbox}
 \caption{文献表标签对齐选项 gbalign 效果}\label{fig:eg:optgbalign}
 \end{figure}
@@ -824,14 +824,14 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 
   \pdfbookmark[4]{gblocal}{gblocal}
-  \item[gblocal]=\textbf{gb7714-2015}，chinese，english. \hfill default is gb7714-2015
-  \item[gbcitelocal]=\textbf{gb7714-2015}，chinese，english. \hfill default is gb7714-2015
-  \item[gbbiblocal]=\textbf{gb7714-2015}，chinese，english. \hfill default is gb7714-2015
+  \item[gblocal]=\textbf{gb7714}，chinese，english. \hfill default is gb7714
+  \item[gbcitelocal]=\textbf{gb7714}，chinese，english. \hfill default is gb7714
+  \item[gbbiblocal]=\textbf{gb7714}，chinese，english. \hfill default is gb7714
 
   为设置引用标注标签和文献表中的本地化字符串而增加的选项。其中gbcitelocal 用于控制标注中的本地化字符串，而 gbbiblocal 用于控制文献表中的本地化字符串，gblocal选项等价于同时设置gbcitelocal 和 gbbiblocal。
-  配合 \lstinline[breaklines=true,basicstyle=\ttfamily]!\DefineBibliographyStrings!命令对本地化字符串进行设置可以实现一些特殊的效果。图~\ref{fig:content:fmtc} 就是该选项的一个使用示例。
+  配合\lstinline[breaklines=true,basicstyle=\ttfamily]!\DefineBibliographyStrings!命令对本地化字符串进行设置可以实现一些特殊的效果。图~\ref{fig:content:fmtc} 就是该选项的一个使用示例。
   \begin{itemize}
-    \item gblocal=gb7714-2015，即默认区分中英文，不同语言采用不同的字符串比如中文使用“等”“和”，而英文使用“et al.”“and”。
+    \item gblocal=gb7714，即默认区分中英文，不同语言采用不同的字符串比如中文使用“等”“和”，而英文使用“et al.”“and”。
     \item gblocal=chinese，强制设置所有的本地化字符串使用中文。
     \item gblocal=english，强制设置所有的本地化字符串使用英文。
   \end{itemize}
@@ -856,7 +856,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 width=\linewidth,colframe=white,colback=white,arc=0pt,%gblabelcolor
 leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 \centering
-\subfigure[\heiti gblocal=gb7714-2015] {\parbox{0.45\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gblocal-gb.pdf}}}\hfill
+\subfigure[\heiti gblocal=gb7714] {\parbox{0.45\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gblocal-gb.pdf}}}\hfill
 \subfigure[\heiti gblocal=chinese] {\parbox{0.45\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gblocal-chinese.pdf}}}\\
 \subfigure[\heiti gblocal=english] {\parbox{0.5\linewidth}{\includegraphics*[page=1,viewport=1cm 0.2cm 7.5cm 2.8cm,clip=true]{egphoto/opt-gblocal-english.pdf}}}
 \end{tcolorbox}
@@ -1313,7 +1313,7 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
   结合 langid/langidopts 域，结合 babel/polyglossia 宏包，可以对西文做基于条目的本地化处理。详细说明见biblatex 手册。
 
-  \item[sorting]=none 等. \hfill default: none/gb7714-2015
+  \item[sorting]=none 等. \hfill default: none/gb7714
 
   sorting可以使用 biblatex 提供的选项，也可以使用本样式包提供的选项，详见
   第~\ref{sec:sort:adj} 节。
@@ -1723,7 +1723,9 @@ gb7714-2015通过 gbcitelocalcase 计数器来选择使用中文或英文的本�
 \subsubsection{段落格式控制}
 
 \paragraph{\heiti 文献表字体、颜色} 为方便用户改变文献表段落格式、内容字体和颜色等，在 biblatex 提供的 \verb|\bibfont| 命令基础上，
-增加了 \verb|\bibauthorfont|、\verb|\bibtitlefont|、\verb|\bibpubfont| 等命令用于控制文献部分著录项的格式，比如作者，标题，出版项等。增加了 \verb|\SlashFont| 用于控制斜杠的字体。
+增加了 \verb|\bibauthorfont|、\verb|\bibtitlefont|、\verb|\bibpubfont| 等命令用于控制文献部分著录项的格式，比如作者，标题，出版项等。增加了\verb|\slashstyle|、 \verb|\SlashFont| 命令用于控制斜杠的字体。\verb|\slashstyle|命令与\verb|\urlstyle|命令类似，
+\verb|\slashstyle{tt}|，\verb|\slashstyle{rm}|，\verb|\slashstyle{sf}|，\verb|\slashstyle{same}|，分别设置斜杠字体为ttfamily，rmfamily，sffamily及与当前文本字体相同。若要设置为其他字体，则类似于设置\verb|\UrlFont|，直接设置\verb|\SlashFont|，比如：
+\lstinline[breaklines=true,basicstyle=\ttfamily]!\newfontfamily{\ftcouriernew}{Courier New}\def\SlashFont{\ftcouriernew}!。
 具体用法见例~\ref{eg:biblist:fontset}，结果如图~\ref{fig:par:fmt} 所示，
 测试用例见~\href{run:example/testfontinbiblio.tex}{testfontinbiblio.tex}。
 
@@ -1805,7 +1807,7 @@ bibhang $=$ labelnumberwidth $+$ biblabelsep $-$ bibitemindent。
 来增加 labelnumberwidth 的宽度避免缩进格式产生问题，使得：bibhang $=$ labelnumberwidth
 $+$ biblabelextend $+$ biblabelsep $-$ bibitemindent。默认情况下 biblabelextend 尺寸为 0pt。
 
-\item 二是采用正常段落环境的文献表，即设置gbalign=gb7714-2015时（即项对齐情况，每条文献严格按从左到右的顺序输出，顺序数字标签宽度等于实际宽度，文献内容与其间隔biblabelsep）。此时需要调整的尺寸包括两个：biblabelsep，bibitemindent。
+\item 二是采用正常段落环境的文献表，即设置gbalign=gb7714时（即项对齐情况，每条文献严格按从左到右的顺序输出，顺序数字标签宽度等于实际宽度，文献内容与其间隔biblabelsep）。此时需要调整的尺寸包括两个：biblabelsep，bibitemindent。
 
 \hspace{2em}此时数字标签盒子默认宽度根据标签实际宽度自动设定，因此不存在数字标签盒子宽度不足的情况，因而无需设置 biblabelextend 尺寸。数字标签盒子与文献内容之间的间距可通过调整 biblabelsep 设置。\emph{每条参考文献第二行开始的缩进距离}通过调整 bibitemindent 尺寸设置，bibitemindent默认为0pt，则一条文献内所有行缩进相同，若bibitemindent>0pt则第一行相比后面各行缩进，若bibitemindent<0pt则后面各行相比第一行缩进。
 \end{itemize}
@@ -2010,7 +2012,7 @@ sentencecase 虽然只有一个标准，但也涉及专有名词的识别和保�
 \begin{enumerate}
   \item 文献表标题
 
-  局部重定义bibname、refname或者局部重设 \verb|printbibliography| 命令的选项可以设置文献表标题。
+  局部重定义bibname、refname或者局部重设 \verb|\printbibliography| 命令的选项可以设置文献表标题。
 	
   \item 文献表段落格式
 
@@ -2139,8 +2141,10 @@ annotation      = {美国发明专利申请号.},
 \end{filecontents}
 
 %导言区
-%去掉文献 Zhang2007-500-503 的 usera 域
-\delEntryField{Zhang2007-500-503}{usera}
+%两种方式去掉文献标识符：
+%1)通过去掉usera域，比如去掉文献ref-1-1-Yang的 usera 域
+\delEntryField{ref-1-1-Yang}{usera}
+%2)通过局部设置bbx:gbtype的选项值
 %在第 1 个 refsection 中去掉 article 类的文献标识符
 %利用 AtEveryBibitem 在对 refsection 和 entrytype 判断后局部做设置
 \AtEveryBibitem{%
@@ -2587,7 +2591,7 @@ language={chinese}
 sorting=none
 
 %著者-出版年制:
-sorting=gb7714-2015,gblanorder=chineseahead,sortlocale=zh__pinyin
+sorting=gb7714,gblanorder=chineseahead,sortlocale=zh__pinyin
 \end{texlist}
 \end{example}
 
@@ -2602,7 +2606,7 @@ sorting=gb7714-2015,gblanorder=chineseahead,sortlocale=zh__pinyin
 
 著者年份制中标注标签默认按照引用先后顺序进行排序，
 当设置 sortcites=true 时，标注标签按照参考文献表中的顺序进行排序，参考文献表中的顺序按照 sorting 选项设定的顺序进行排序。
-若要使标注排序与文献表排序不关联，则可以使用 refcontext 来设置两种排序环境，即 sorting 选项设置的排序环境，以及 refcontext 及其 sorting 选项提供的排序环境，使得标注和文献表可以实现两种不同的排序。例~\ref{eg:sort:decouple} 中，sorting=gbynta表示全局按 gbynta 顺序(即年份、作者、标题)排序，使得标注会先按年份进行排序(但要注意同作者压缩可能会被打破)。而newrefcontext[sorting=gb7714-2015]中的排序表示文献表按 gb7714-2015 排序，这是国标的默认排序。
+若要使标注排序与文献表排序不关联，则可以使用 refcontext 来设置两种排序环境，即 sorting 选项设置的排序环境，以及 refcontext 及其 sorting 选项提供的排序环境，使得标注和文献表可以实现两种不同的排序。例~\ref{eg:sort:decouple} 中，sorting=gbynta表示全局按 gbynta 顺序(即年份、作者、标题)排序，使得标注会先按年份进行排序(但要注意同作者压缩可能会被打破)。而newrefcontext[sorting=gb7714]中的排序表示文献表按 gb7714 排序，这是国标的默认排序。
 
 \begin{example}{标注标签排序与文献表排序去关联}{eg:sort:decouple}
 \begin{texlist}
@@ -2621,7 +2625,7 @@ uniquelist=false,uniquename=false,sorting=gbynta]{biblatex}
 \cite{knuth:ct:e,knuth:ct:a,weinberg,westfahl:frontier,geer,chiu}
 %生成标注标签将按年份排序，注意 knuth 的文献压缩会打破，结果为：
 %(Weinberg, 1967; Chiu et al., 1978; Knuth, 1984; Geer, 1985; Knuth, 1986; Westfahl, 2000)
-\newrefcontext[sorting=gb7714-2015]
+\newrefcontext[sorting=gb7714]
 \printbibliography
 \end{document}
 \end{texlist}
@@ -2637,7 +2641,7 @@ uniquelist=false,uniquename=false,sorting=gbynta]{biblatex}
 \usepackage{hyperref}
 \usepackage{geometry}
 \usepackage[backend=biber,style=gb7714-2015ay,sortcites=false,
-uniquelist=false,uniquename=false,sorting=gb7714-2015]{biblatex}
+uniquelist=false,uniquename=false,sorting=gb7714]{biblatex}
 \addbibresource{biblatex-examples.bib}
 
 \begin{document}
@@ -2679,7 +2683,7 @@ biber jobname
 %此时需利用 biber 选项给出本地化排序调整方案：
 %按拼音排序，则设置-l zh__pinyin
 biber -l zh__pinyin jobname
-%按笔画排序，则设置-l zh__pinyin
+%按笔画排序，则设置-l zh__stroke
 biber -l zh__stroke jobname
 \end{texlist}
 \end{example}
@@ -2697,10 +2701,10 @@ biber -l zh__stroke jobname
   \item[none]  不进行排序。所有的条目按照引用顺序处理。
 \end{description}
 
-而gb7741-2015和gb7741-2015ay样式提供了 4 个排序模板:
+而gb7714-2015和gb7714-2015ay样式提供了 4 个排序模板:
 
 \begin{description}
-  \item[gb7714-2015]  以语言、作者、年份、标题、升序排列
+  \item[gb7714]  以语言、作者、年份、标题、升序排列
   \item[gbnytd]  以语言、作者、年份、标题、降序排列
   \item[gbynta]  以语言、年份、作者、标题、升序排列
   \item[gbyntd]  以语言、年份、作者、标题、降序排列
@@ -2767,7 +2771,7 @@ biber -l zh__stroke jobname
 \begin{texlist}
 %设置 gblanorder 与目标顺序中日英德法一致，所以是：cn;jp;en;de;fr
 \usepackage[backend=biber,style=gb7714-2015ay,
-gbnamefmt=uppercase,maxcitenames=2,gblocal=gb7714-2015,
+gbnamefmt=uppercase,maxcitenames=2,gblocal=gb7714,
 gblanorder=cn;jp;en;de;fr]{biblatex}
 
 %gblanorder中设置除了中日韩英法俄语之外的语言都需要进行下列设置：
