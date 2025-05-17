@@ -18,12 +18,16 @@
 \DeclareDelimFormat[textcite,cite,parencite,citet,citep]{nameyeardelim}{\addspace}
 
 
+\DeclareDelimFormat[cite,parencite,pagescite,citep]{andothersdelim}
+    {\iffieldequalstr{userf}{chinese}{}{\addspace}}%
+\DeclareDelimFormat[textcite,authornumcite,citet]{andothersdelim}
+    {\iffieldequalstr{userf}{chinese}{}{\addspace}}%
 %之所以不用\DeclareDelimFormat{andothersdelim}{}这样的设置是因为gb7714-2015中为兼容老版本的biblatex做的处理就是这样的
 %所以用相同的方式
-\AtEveryCitekey{%
-\iffieldequalstr{userf}{chinese}{\renewcommand*{\andothersdelim}{}}%\addthinspace
-  {\renewcommand*{\andothersdelim}{\addspace}}%
-}
+%\AtEveryCitekey{%
+%\iffieldequalstr{userf}{chinese}{\renewcommand*{\andothersdelim}{}}%\addthinspace
+%  {\renewcommand*{\andothersdelim}{\addspace}}%
+%}
 
 %标注压缩时，直接用date+extradate代替extradate实现2006a，2006b的效果
 \newbibmacro*{cite:extradate}{%

@@ -316,11 +316,11 @@
     \@makefnmark%
             }}%
             {\csxdef{sec\arabic{refsection}\arabic{page}et\thefield{entrykey}}{%
-            \ifcsstring{@mpfn}{mpfootnote}{\@alph\c@mpfootnote}{\thefootnote}%
+            \ifcsstring{@mpfn}{mpfootnote}{\thempfootnote}{\thefootnote}%
             }}%
         }%
         {\csxdef{sec\arabic{refsection}\arabic{page}et\thefield{entrykey}}{%
-        \ifcsstring{@mpfn}{mpfootnote}{\@alph\c@mpfootnote}{\thefootnote}%
+        \ifcsstring{@mpfn}{mpfootnote}{\thempfootnote}{\thefootnote}%
         %判断在minipage中比较麻烦，这里使用\@mpfn的定义进行判断
         }}%
     }
