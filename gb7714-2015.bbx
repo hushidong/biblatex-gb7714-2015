@@ -2473,10 +2473,15 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %
 %   注意:修改标题的字母大小写，不能用前面的title的格式而要用titlecase
 %   因为titlecase is applied to the contents of the field directly，title is not
-%\DeclareFieldFormat{titlecase}{\MakeCapital#1}%重设标题格式，将其修改为首字母大写
+%   利用\mktitlecase、\mkbooktitlecase、\mkjournaltitlecase三个接口调整不同项大小写
+\newcommand\mktitlecase[1]{#1}%用于调整titlecase
+\newcommand\mkbooktitlecase[1]{#1}%用于调整booktitlecase
+\newcommand\mkjournaltitlecase[1]{#1}%用于调整journaltitlecase
 \DeclareFieldFormat{titlecase}{\iftoggle{bbx:titlelink}{%
-\iffieldundef{url}{#1}{%
-\href{\thefield{url}}{#1}}}{#1}}%重设标题格式，将其修改为首字母大写
+\iffieldundef{url}{\mktitlecase{#1}}{%
+\href{\thefield{url}}{\mktitlecase{#1}}}}{\mktitlecase{#1}}}%重设一般标题格式，将其修改为首字母大写
+\DeclareFieldFormat{booktitlecase}{\mkbooktitlecase{#1}}%重设booktitle标题格式
+\DeclareFieldFormat{journaltitlecase}{\mkjournaltitlecase{#1}}%重设journaltitle格式
 \DeclareFieldFormat{pages}{#1}%去掉前面引导页码的pp.等字符，\mkpageprefix[bookpagination]{#1}
 \DefineBibliographyExtras{english}{\renewcommand*{\bibrangedash}{-}}%将页码间隔符替换会英文的短横线
 \DefineBibliographyExtras{russian}{\renewcommand*{\bibrangedash}{-}}%将页码间隔符替换会英文的短横线
@@ -2540,8 +2545,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \renewbibmacro*{bytranslator+others}{\bibauthorfont%
   \ifnameundef{translator}
     {}
-    {\iffieldequalstr{usere}{chinese}{}{\usebibmacro{bytranslator+othersstrg}\setunit{\addspace}}%
-     \printnames[bytranslator]{translator}%
+    {\printnames[bytranslator]{translator}%
      \clearname{translator}%
      %从macro*{bytranslator+othersstrg}%中可以看到当地化字符串格式的引用前的代码处理
      %比如生成cotranslator等用于调用cotranslator所代表的当地化字符串
@@ -3593,12 +3597,11 @@ incollection,proceedings,inproceedings]{number}{%
   }
     {}
     {\printtext[booktitle]{\bibtitlefont%
-       \printfield[titlecase]{booktitle}%
+       \printfield[booktitlecase]{booktitle}%
        \setunit{\subtitlepunct}%
-       \printfield[titlecase]{booksubtitle}}%
-     \newunit%标点换成下一句
-     \setunit{\subtitlepunct}}%
-  \printfield{booktitleaddon}}
+       \printfield[booktitlecase]{booksubtitle}}%
+     \setunit{\subtitlepunct}%
+  \printfield{booktitleaddon}}}
 
 
 %
@@ -3626,6 +3629,18 @@ incollection,proceedings,inproceedings]{number}{%
   %\newunit
   }
 
+%
+%   调整journal输出
+%
+%   原理方法:首先判断子标题，然后再设置标点。
+%   避免直接设置标点后，当volume不存在时需要使用\nopuct去标点进而引入不必要的空格
+\renewbibmacro*{journal}{%
+  \iffieldundef{journaltitle}%
+    {}%
+    {\printtext[journaltitle]{%
+       \printfield[journaltitlecase]{journaltitle}%
+       \iffieldundef{journalsubtitle}{}{\setunit{\subtitlepunct}%
+       \printfield[journaltitlecase]{journalsubtitle}}}}}
 
 
 %

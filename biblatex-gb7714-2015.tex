@@ -1949,7 +1949,7 @@ $+$ biblabelextend $+$ biblabelsep $-$ bibitemindent。默认情况下 biblabele
 %会议论文年份加粗
 \DeclareFieldFormat[inproceedings]{date}{\mkbibbold{#1}}
 \end{texlist}
- \end{example}
+\end{example}
 
 值得注意的是，由于本样式包已经根据常见需求定义了很多著录项相关的格式控制，因此用户往往不需要关注域格式的定义，而通常只要使用前面介绍的接口和选项就能大体满足要求。
 
@@ -1995,11 +1995,23 @@ leftrule=0pt,rightrule=0pt,toprule=0.4pt,bottomrule=0.4pt]
 
 要对一个标题进行转化，除了 sentencecase 稍微简单一些外，实际上是比较复杂的。
 因为 titlecase 实际上有不同的标准(参考：\url{https://titlecaseconverter.com/})，
-sentencecase 虽然只有一个标准，但也涉及专有名词的识别和保护的问题。
+sentencecase 虽然只有一个标准，但也涉及专有名词的识别和保护的问题，所以利用 tex 宏来实现 case 转化则相对复杂，而更方便的方法是直接在 bib文件中修改 case 然后在 tex 中保持不变。
 
-因此，利用 tex 宏来实现 case 转化则相对复杂，而更方便的方法是直接在 bib文件中修改 case 然后在 tex 中保持不变。所以本样式默认不修改标题类的 case，
+因此，要修改标题的 case 可以采用如下两种方式：
 
-因此，若需要修改标题的 case，则需要直接对 bib 文件进行修改，将目标文献的内容修改为需要的 case 格式。可以使用 jabref，zotero等可视化工具或者 bibmap 等命令行工具进行修改。
+一是保持本样式不修改标题类 case 的默认设置，然后直接对 bib 文件进行修改，将目标文献的内容修改为需要的 case 格式。可以使用 jabref，zotero等可视化工具或者 bibmap 等命令行工具进行修改。
+
+二是利用\verb|\mktitlecase|、\verb|\mkbooktitlecase|、\verb|\mkjournaltitlecase|三个接口调整主标题(title)、析出文献来源文献标题(boobtitle，journaltitle)的大小写。调整的方法为：
+\begin{example}{标题的大小写的简单调整示例}{eg:bib:titlecase}
+\begin{texlist}
+%可用\MakeUppercase，\MakeLowercase，\MakeSentenceCase
+\renewcommand\mktitlecase[1]{\MakeSentenceCase{#1}}%用于调整title
+\renewcommand\mkbooktitlecase[1]{\MakeUppercase{#1}}%用于调整booktitle
+\renewcommand\mkjournaltitlecase[1]{\MakeUppercase{#1}}%用于调整journaltitle
+\end{texlist}
+\end{example}
+注意：第二种方法只能使用有限几个命令来调整case，同时调整的结果与bib文件中的内容相关，若bib文件中标题中的专有名词没有用花括号保护，则调整后的结果可能不会是期待的结果。
+
 
 
 \subsubsection{参考文献表的局部调整}\label{sec:entry:fmtlocal}

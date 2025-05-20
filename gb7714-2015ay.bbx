@@ -2397,10 +2397,15 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %
 %   注意:修改标题的字母大小写，不能用前面的title的格式而要用titlecase
 %   因为titlecase is applied to the contents of the field directly，title is not
-%\DeclareFieldFormat{titlecase}{\MakeCapital#1}%重设标题格式，将其修改为首字母大写
+%   利用\mktitlecase、\mkbooktitlecase、\mkjournaltitlecase三个接口调整不同项大小写
+\newcommand\mktitlecase[1]{#1}%用于调整titlecase
+\newcommand\mkbooktitlecase[1]{#1}%用于调整booktitlecase
+\newcommand\mkjournaltitlecase[1]{#1}%用于调整journaltitlecase
 \DeclareFieldFormat{titlecase}{\iftoggle{bbx:titlelink}{%
-\iffieldundef{url}{#1}{%
-\href{\thefield{url}}{#1}}}{#1}}%重设标题格式，将其修改为首字母大写
+\iffieldundef{url}{\mktitlecase{#1}}{%
+\href{\thefield{url}}{\mktitlecase{#1}}}}{\mktitlecase{#1}}}%重设一般标题格式，将其修改为首字母大写
+\DeclareFieldFormat{booktitlecase}{\mkbooktitlecase{#1}}%重设booktitle标题格式
+\DeclareFieldFormat{journaltitlecase}{\mkjournaltitlecase{#1}}%重设journaltitle格式
 \DeclareFieldFormat{pages}{#1}%页码引用格式的修改%去掉前面引导页码的pp.等字符
 \DefineBibliographyExtras{english}{\renewcommand*{\bibrangedash}{-}}
 \DefineBibliographyExtras{russian}{\renewcommand*{\bibrangedash}{-}}
@@ -2465,8 +2470,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \renewbibmacro*{bytranslator+others}{\bibauthorfont%
   \ifnameundef{translator}
     {}
-    {\iffieldequalstr{usere}{chinese}{}{\usebibmacro{bytranslator+othersstrg}\setunit{\addspace}}%
-     \printnames[bytranslator]{translator}%
+    {\printnames[bytranslator]{translator}%
      \clearname{translator}%
      %从macro*{bytranslator+othersstrg}%中可以看到当地化字符串格式的引用前的代码处理
      %比如生成cotranslator等用于调用cotranslator所代表的当地化字符串
@@ -3308,11 +3312,10 @@ test{\iftoggle{iftlnine}}
 \renewbibmacro*{chapter+pages}{%
 \iftoggle{bbx:gbstrict}{}{%
   \printfield{chapter}}%
-  \iffieldundef{pages}{}{%这里增加一个判断，当没有页码时就不输出
+\iffieldundef{pages}{}{%这里增加一个判断，当没有页码时就不输出
   \setunit{\bibpagespunct}%
   \printfield{pages}}%
-  %\newunit %这里的标点去掉
-  }
+}
 
 %
 % 当location等出版项超过maxitem缩减后不再输出etal
@@ -3683,12 +3686,11 @@ incollection,proceedings,inproceedings]{number}{%
   }
     {}
     {\printtext[booktitle]{\bibtitlefont%
-       \printfield[titlecase]{booktitle}%
+       \printfield[booktitlecase]{booktitle}%
        \setunit{\subtitlepunct}%
-       \printfield[titlecase]{booksubtitle}}%
-     %\newunit%标点换成下一句
-     \setunit{\subtitlepunct}}%
-  \printfield{booktitleaddon}}
+       \printfield[booktitlecase]{booksubtitle}}%
+     \setunit{\subtitlepunct}%
+  \printfield{booktitleaddon}}}
 
 %
 %   调整期刊名的格式
@@ -3734,9 +3736,9 @@ incollection,proceedings,inproceedings]{number}{%
   \iffieldundef{journaltitle}%
     {}%
     {\printtext[journaltitle]{%
-       \printfield[titlecase]{journaltitle}%
+       \printfield[journaltitlecase]{journaltitle}%
        \iffieldundef{journalsubtitle}{}{\setunit{\subtitlepunct}%
-       \printfield[titlecase]{journalsubtitle}}}}}
+       \printfield[journaltitlecase]{journalsubtitle}}}}}
 
 
 
@@ -4514,23 +4516,11 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
 \iffieldundef{volume}{}{\setunit{\addcolon\addspace}\printfield{volume}}%
 \iffieldundef{number}{}{\setunit{\addcolon\addspace}\printfield{number}}%增加卷和册信息
   \newunit\newblock%
-%  \usebibmacro{byeditor+others}%
-%  \newunit\newblock
   \printfield{edition}%
-  \newunit
+  \newunit%
   \iftoggle{bbx:gbstrict}{}{%
-%  \iffieldundef{maintitle}
-%    {\printfield{volume}%
-%     \printfield{part}}
-%    {}%
-%  \newunit
-%  \printfield{volumes}%
-%  \newunit\newblock
-%  \usebibmacro{series+number}
   }%
-  \newunit\newblock
-  %\printfield{note}%
-  %\newunit\newblock
+  \newunit\newblock%
   \usebibmacro{publisher+location+date}}
 
 %
@@ -4547,19 +4537,14 @@ test{\iffieldundef{day}} and test{\iffieldundef{endday}} and test{\iffieldundef{
   }{}{\setunit{\labelnamepunct}\newblock}%这一段用于去除作者不存在时多出的标点
 \usebibmacro{title}%
 \usebibmacro{in:}%
-%\printtext{\texttt{//}\addthinspace}%
 \usebibmacro{crosscite}{inbook:parent}%
-  %\newunit\newblock
-  \usebibmacro{chapter+pages}%
-  %\newunit\newblock
+\usebibmacro{chapter+pages}%
   \usebibmacro{doi+eprint+url}%移到上面来
   \newunit\newblock
   \iftoggle{bbx:isbn}
     {\printfield{isbn}}
     {}%
   \newunit\newblock
-%  \usebibmacro{doi+eprint+url}%
-%  \newunit\newblock
   \usebibmacro{addendum+pubstate}%
   \setunit{\bibpagerefpunct}\newblock
   \usebibmacro{pageref}%
