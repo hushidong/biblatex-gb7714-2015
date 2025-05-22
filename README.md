@@ -1,4 +1,4 @@
-<b>Date of last change: 2025/03/03 v1.1t</b>
+<b>Date of last change: 2025/05/22 v1.1u</b>
 
 
 
@@ -1693,7 +1693,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * 2024/05/15 v1.1r,ctan,github
 * 2024/11/15 v1.1s,ctan,github
 * 2025/03/03 v1.1t,ctan,github
-
+* 2025/05/22 v1.1u,ctan,github
 
 
 

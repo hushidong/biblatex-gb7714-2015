@@ -80,4 +80,4 @@ if __name__ == '__main__':
     
     #compileall('all')
     #compileall('compare')
-    updateversion(versioninfo='2025/03/03 v1.1t') 
+    updateversion(versioninfo='2025/05/22 v1.1u') 
