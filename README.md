@@ -1,4 +1,4 @@
-<b>Date of last change: 2025/05/22 v1.1u</b>
+<b>Date of last change: 2025/06/10 v1.1v</b>
 
 
 
@@ -11,22 +11,20 @@
 
 Maintainer: huzhenzhen <hzzmail@163.com>
 
-Homepage: <https://github.com/hushidong/biblatex-gb7714-2015>
+Homepage: <https://github.com/hushidong/biblatex-gb7714-2015>,<https://github.com/hushidong/biblatex-gb7714-2025>
 
 ctan-pkg: <https://www.ctan.org/pkg/biblatex-gb7714-2015>
 
 License: LaTeX Project Public License 1.3c or later
 
 
-A biblatex implementation of the `GB/T 7714-2015` bibliography style for Chinese users
+A biblatex implementation of the `GB/T 7714` series bibliography styles for Chinese users
 
-The biblatex-gb7714-2015 package provides an implementation of the bibliography style of the `GB/T 7714-2015` bibliography style. This implementation follows `GB/T 7714-2015` standard, and can be used simply by loading biblatex with the appropriate option
+The biblatex-gb7714-2015 package provides an implementation of the bibliography style of the `GB/T 7714` series bibliography styles. This implementation follows `GB/T 7714` series standards, and can be used simply by loading biblatex with the appropriate option
 
 
-biblatex-gb7714-2015 宏包是中文参考文献著录/标注标准 `GB/T 7714-2015` 的 biblatex 实现。它本质上是一个样式包，在 tex 文档中配合 biblatex 宏包使用，以生成满足《GB/T 7714-2015 信息与文献 参考文献著录规则》要求的参考文献。
-宏包主要提供两种编制样式: 一、顺序编码制（gb7714-2015）；二、著者-出版年制（gb7714-2015ay），能够精确实现国标提出的著录和标注格式。
-另外提供: 两个老版国标样式 (gb7714-2005/gb7714-2005ay、gb7714-1987/gb7714-1987ay);
-两个特殊样式 (一个文献表内中英文格式不同的 gb7714-2015ms、 一个文档内顺序编码和作者年制混用的 gb7714-2015mx); 三个典型文科期刊样式 (经济学研究的 chinese-erj、社会科学的 chinese-css、管理世界的 chinese-jmw);  以及几个明显有别于国标的特殊学位论文样式 (西北农林的 gb7714-NWAFU、华中师范的 gb7714-CCNU、东南大学的 gb7714-SEU)等。
+biblatex-gb7714-2015 宏包是 `GB/T 7714` 系列中文参考文献著录/标注标准的 biblatex 实现。它本质上是一个样式包，在 tex 文档中配合 biblatex 宏包使用，以生成满足《GB/T 7714-2015/2025 信息与文献 参考文献著录规则》要求的参考文献。
+宏包主要提供两类编制样式: 一、顺序编码制；二、著者-出版年制，能够精确实现1987、2005、2015、2025 版本国标提出的著录和标注格式(gb7714-1987/gb7714-1987ay、 gb7714-2005/gb7714-2005ay、gb7714-2015/gb7714-2015ay、gb7714-2025/gb7714-2025ay)。另外提供: 两个特殊样式(一个文献表内中英文格式不同的gb7714-2015ms、 一个文档内顺序编码和作者年制混用的gb7714-2015mx); 五个典型文科期刊样式(经济学研究的chinese-erj、社会科学的chinese-css、管理世界的chinese-jmw、人文和社科综合学术期刊的chinese-cajhss/chinese-cajhssay、法学引注手册的chinese-molc);  以及几个明显有别于国标的特殊学位论文样式(西北农林的gb7714-NWAFU、华中师范的gb7714-CCNU、东南大学的gb7714-SEU)等。
 宏包除了具备 biblatex 提供的不同于传统基于 bibtex 的参考文献解决方案外，还具有如下特点：
 
 * 较强的兼容性。能够兼容 biblatex v2.8 以上版本；能够兼容国标样式的一些常用条目类型、数据域。
@@ -1694,7 +1692,7 @@ please see the file 'biblatex-gb7714-2015.pdf' for further information!
 * 2024/11/15 v1.1s,ctan,github
 * 2025/03/03 v1.1t,ctan,github
 * 2025/05/22 v1.1u,ctan,github
-
+* 2025/06/10 v1.1v,ctan,github
 
 
 

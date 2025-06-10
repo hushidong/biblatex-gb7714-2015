@@ -11,7 +11,7 @@
 %
 %   版本和时间信息
 %
-\def\versionofgbtstyle{2025/05/22 v1.1u}
+\def\versionofgbtstyle{2025/06/10 v1.1v}
 \def\versionofbiblatex{\abx@version}
 \ProvidesFile{gb7714-2015.bbx}[\versionofgbtstyle biblatex bibliography style]
 %\RequireBiber[3]%显式指定用biber后端，当用bibtex时会报错，但其实不会影响编译，只是采用bibtex后无法达成格式需求
@@ -1143,6 +1143,11 @@
             \pertype{article}
             \step[fieldset=usera, fieldvalue={J}]
             }
+        \map{%article给出eid时做pages处理
+            \pertype{article}
+            \step[fieldsource=eid,final]
+            \step[fieldset=pages, origfieldval]
+            }
         \map{%根据periodical确定文献类型标识符
             \pertype{periodical}
             \step[fieldset=usera, fieldvalue={J}]
@@ -1207,6 +1212,7 @@
         \map{
             \pertype{legislation}
             \step[typesource=legislation, typetarget=archive]
+            \step[fieldset=entrysubtype, fieldvalue=legislation]%
             }
         \map{%对应增加的一个档案类型archive确定文献类型标识符
             \pertype{archive}
@@ -2249,7 +2255,8 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \setlength{\bibitemindent}{0pt}
 \newlength{\biblabelextend}
 \setlength{\biblabelextend}{0pt}
-\setlength{\bibhang}{0em}%
+\newlength{\bibextramargin}
+\setlength{\bibextramargin}{0em}%
 \defbibenvironment{bibliography}
   {\list
      {\printtext[labelnumberwidth]{%
@@ -2258,10 +2265,11 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
      {\addtolength{\labelnumberwidth}{\biblabelextend}%
       \setlength{\labelwidth}{\labelnumberwidth}%
       \setlength{\labelsep}{\biblabelsep}%
-      \addtolength{\bibhang}{\biblabelsep}%
-      \addtolength{\bibhang}{\labelnumberwidth}%
-      \setlength{\leftmargin}{\bibhang}%
-      \setlength{\itemindent}{\bibitemindent}%
+      \setlength{\leftmargin}{\bibextramargin}%
+      \addtolength{\leftmargin}{\biblabelsep}%
+      \addtolength{\leftmargin}{\labelnumberwidth}%
+      \setlength{\itemindent}{0pt}%
+      \addtolength{\itemindent}{\bibitemindent}%
       \setlength{\itemsep}{\bibitemsep}%
       \setlength{\parsep}{\bibparsep}}%
       \renewcommand*{\makelabel}[1]{\hss##1}}
@@ -2295,6 +2303,7 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %   修改序号标签格式为以各条参文献为基础进行对齐的方式，即序号与条目内容间隔相等的方式。
 \def\setaligngbstyle{%
 \setlength{\bibitemindent}{0pt}%
+\setlength{\bibextramargin}{0pt}%
 \def\blx@bibitem##1{%
   \blx@ifdata{##1}
     {\begingroup
@@ -2329,13 +2338,13 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 \newcommand{\itemcmd}{%
 \settowidth{\lengthid}{\mkgbnumlabel{\printfield{labelnumber}}}
 \addtolength{\lengthid}{\biblabelsep}
-\addtolength{\lengthid}{-\bibitemindent}
+\addtolength{\lengthid}{\bibextramargin}
 \setlength{\lengthlw}{\textwidth}
 \addtolength{\lengthlw}{-\lengthid}
 \addvspace{\bibitemsep}%恢复\bibitemsep的作用
 %\parshape 2 0em \textwidth \lengthid \lengthlw
 \hangindent\lengthid
-\leavevmode\mkgbnumlabel{\printfield{labelnumber}}%
+\leavevmode\hspace{\bibitemindent}\mkgbnumlabel{\printfield{labelnumber}}%
 \hspace{\biblabelsep}}
 %
 %   简单的段落环境
@@ -2349,13 +2358,14 @@ test {\iftoggle{iftlseven}}%biblatex<=3.7
 %   20210411,hzz,v1.0x
 \def\setaligngbstyleay{%
 \setlength{\bibhang}{1em}
-\setlength{\bibitemindent}{-\bibhang}
+\setlength{\bibitemindent}{0pt}
 \setlength{\bibitemsep}{4.5pt}
 \defbibenvironment{bibliography}
   {\list
      {}
      {\setlength{\leftmargin}{\bibhang}%
-      \setlength{\itemindent}{\bibitemindent}%
+      \setlength{\itemindent}{-\bibhang}%
+      \addtolength{\itemindent}{\bibitemindent}%
       \setlength{\itemsep}{\bibitemsep}%
       \setlength{\parsep}{\bibparsep}}}
   {\endlist}
@@ -3651,15 +3661,17 @@ incollection,proceedings,inproceedings]{number}{%
   \printfield{volume}%
   \setunit*{\adddot}%
   \printfield{number}%
-  \setunit{\addcomma\space}%
-  \printfield{eid}}{%
+  %\setunit{\addcomma\space}%
+  %\printfield{eid}
+  }{%
   \printfield{volume}%
   %\setunit*{\adddot}%去掉点号
   %\printfield{number}%
   \iffieldundef{number}{}{\printtext{\mkbibparens{\printfield{number}}}}%增加一个圆括号
-  \iffieldundef{eid}{}{%
-  \setunit{\addcomma\space}%
-  \printfield{eid}}}}
+  %\iffieldundef{eid}{}{%
+  %\setunit{\addcomma\space}%
+  %\printfield{eid}}%
+  }}
 
 %
 %   调整期刊年份的格式
@@ -3896,8 +3908,8 @@ incollection,proceedings,inproceedings]{number}{%
   \printtext{\mkbibparens{\multinumbersecond}}}%
   }%
   \setunit{\addcomma\space}%
-  \printfield{eid}%
-  \setunit{\addspace}%
+  %\printfield{eid}%
+  %\setunit{\addspace}%
   %\usebibmacro{issue+date}%
   %\setunit{\addcolon\space}%
   \usebibmacro{issue}%

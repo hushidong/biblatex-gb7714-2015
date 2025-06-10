@@ -1,0 +1,340 @@
+\documentclass{ctexart}
+
+\usepackage[backend=biber,bibstyle=gb7714-2015,citestyle=gb7714-2015ay]{biblatex} 
+
+\makeatletter
+\DeclareDelimFormat[citet,citep,citeta,citepa,citetb,citepb]{andothersdelim}
+    {\iffieldequalstr{userf}{chinese}{}{\addspace}}%
+    
+\newcounter{cbx@tempcnta}% no. of labelnumbers skipped
+\newcounter{cbx@tempcntb}% 'predicted' labelnumber for current cite
+\newcounter{cbx@tempcntc}% no. of entrysetcounts we skipped
+\newcounter{cbx@tempcntd}% 'predicted' entrysetcount
+
+\newcommand*{\cbx@iflabelnumberequalslast}{%
+  \iffieldequals{labelnumber}{\cbx@lastnumber}}
+  
+\newcommand*{\cbx@iflabelprefixequalslast}{%
+  \ifundef\cbx@lastprefix
+    {\iffieldundef{labelprefix}}
+    {\iffieldequals{labelprefix}{\cbx@lastprefix}}}
+
+
+\newcommand*{\cbx@iflabelnumberandprefixequallast}{%
+  \cbx@iflabelnumberequalslast
+    {\cbx@iflabelprefixequalslast}
+    {\@secondoftwo}}
+
+\newbibmacro*{cite:init}{%
+  \global\boolfalse{cbx:parens}%
+  \global\undef\cbx@lasthash
+  \global\undef\cbx@lastnumber
+  \global\undef\cbx@lastprefix
+  \global\undef\cbx@lastentrysetcount
+  \setcounter{cbx@tempcnta}{0}%
+  \setcounter{cbx@tempcntb}{-2}%
+  \setcounter{cbx@tempcntc}{0}%
+  \setcounter{cbx@tempcntd}{-1}}
+  
+
+  
+\newbibmacro*{cite:comp}{%
+  \stepcounter{cbx@tempcntb}%
+  \iffieldundef{shorthand}
+    {\ifbool{bbx:subentry}
+       {\iffieldundef{entrysetcount}
+          {\usebibmacro{cite:comp:comp}}
+          {\usebibmacro{cite:comp:inset}}}
+       {\usebibmacro{cite:comp:comp}}}
+    {\usebibmacro{cite:comp:shand}}}
+
+
+
+\newbibmacro*{cite:comp:comp}{%
+  \cbx@iflabelprefixequalslast
+    {\ifnumequal{\thefield{labelnumber}}{\value{cbx@tempcntb}}
+       {\savefield{entrykey}{\cbx@lastkey}%
+        \savefield{labelnumber}{\cbx@lastnumber}%
+        \stepcounter{cbx@tempcnta}}
+       {\ifnumequal{\thefield{labelnumber}}{\value{cbx@tempcntb}-1}
+          {% current cite is *exactly* the same a previous source
+          }
+          {\usebibmacro{cite:comp:end}}}}
+    {\usebibmacro{cite:comp:end}}%
+  \setcounter{cbx@tempcntb}{\thefield{labelnumber}}%
+  \savefield{labelprefix}{\cbx@lastprefix}}
+
+\newbibmacro*{cite:comp:end}{%
+  \usebibmacro{cite:dump}%
+  \ifnumgreater{\value{cbx@tempcntb}}{-1}
+    {\setunit{\multicitedelim}}
+    {}%
+  \usebibmacro{cite:print:labelnumber}}
+
+\newbibmacro*{cite:comp:inset}{%
+  \stepcounter{cbx@tempcntd}%
+  \ifboolexpr{    togl {cbx:subentrycomp}
+              and test {\cbx@iflabelnumberandprefixequallast}}
+    {\ifnumequal{\thefield{entrysetcount}}{\value{cbx@tempcntd}}
+       {\savefield{entrykey}{\cbx@lastkey}%
+        \savefield{entrysetcount}{\cbx@lastentrysetcount}%
+        \stepcounter{cbx@tempcntc}}
+       {\ifnumequal{\thefield{entrysetcount}}{\value{cbx@tempcntd}-1}
+          {% current cite is *exactly* the same a previous source
+          }
+          {\usebibmacro{cite:dump:inset}%
+           \ifnumgreater{\value{cbx@tempcntd}}{-1}
+             {\setunit{\multicitesubentrydelim}}
+             {}%
+           \usebibmacro{cite:print:subentry:comp}}}}
+    {\usebibmacro{cite:dump}%
+     \ifnumgreater{\value{cbx@tempcntb}}{-1}
+       {\multicitedelim}
+       {}%
+     \setcounter{cbx@tempcntd}{-1}%
+     \usebibmacro{cite:print:subentry:full}%
+     \savefield{labelprefix}{\cbx@lastprefix}%
+     \savefield{labelnumber}{\cbx@lastnumber}}%
+    \setcounter{cbx@tempcntd}{\thefield{entrysetcount}}%
+    \setcounter{cbx@tempcntb}{-1}}
+
+\newbibmacro*{cite:comp:shand}{%
+  \usebibmacro{cite:dump}%
+  \ifnumgreater{\value{cbx@tempcntb}}{-1}
+    {\setunit{\multicitedelim}}
+    {}%
+  \usebibmacro{cite:print:shorthand}%
+  \setcounter{cbx@tempcntb}{-1}}
+
+\newbibmacro{cite:dump:inset}{%
+  \ifnumgreater{\value{cbx@tempcntc}}{0}
+    {\ifnumgreater{\value{cbx@tempcntc}}{1}
+       {\setunit{\multicitesubentryrangedelim}}
+       {\setunit{\multicitesubentrydelim}}%
+     \usebibmacro{cite:print:last:subentry:comp}%
+     \global\undef\cbx@lastentrysetcount}
+    {}%
+  \setcounter{cbx@tempcntc}{0}%
+}
+
+\newbibmacro*{cite:dump}{%
+  \usebibmacro{cite:dump:inset}%
+  \ifnumgreater{\value{cbx@tempcnta}}{0}
+    {\ifnumgreater{\value{cbx@tempcnta}}{0}
+       {\setunit{\multiciterangedelim}}
+       {\setunit{\multicitedelim}}%
+     \usebibmacro{cite:print:last:labelnumber}%
+     \global\undef\cbx@lastprefix}
+    {}%
+  \setcounter{cbx@tempcnta}{0}%
+}
+
+
+\newbibmacro*{cite:print:shorthand}{%
+  \printtext[bibhyperref]{\printfield{shorthand}}}
+
+\newbibmacro*{cite:print:labelnumber}{%
+  \printtext[bibhyperref]{%
+    \printfield{labelprefix}%
+    \printfield{labelnumber}}}
+
+\newbibmacro*{cite:print:subentry:comp}{%
+  \printtext[bibhyperref]{\printfield{entrysetcount}}}
+
+\newbibmacro*{cite:print:subentry:full}{%
+  \printtext[bibhyperref]{%
+    \printfield{labelprefix}%
+    \printfield{labelnumber}%
+    \printfield{entrysetcount}}}
+
+\DeclareFieldFormat{bibhyperref:lastkey}{\bibhyperref[\cbx@lastkey]{#1}}
+
+\newbibmacro*{cite:print:last:subentry:comp}{%
+  \printtext[bibhyperref:lastkey]{%
+    \printtext[entrysetcount]{\cbx@lastentrysetcount}}}
+
+\newbibmacro*{cite:print:last:labelnumber}{%
+  \printtext[bibhyperref:lastkey]{%
+    \ifdef\cbx@lastprefix
+      {\printtext[labelprefix]{\cbx@lastprefix}}
+      {}%
+    \printtext[labelnumber]{\cbx@lastnumber}}}
+
+\renewrobustcmd{\mkbibsuperscript}[1]{%
+  \unspace\allowhyphens\textsuperscript{%
+    \begingroup
+    \protected\long\def\mkbibsuperscript##1{%
+      \blx@warning{Nested superscript}%
+      \mkbibbrackets{##1}}%嵌套的这里没有动
+    #1\endgroup}\kern\z@}%
+
+\DeclareCiteCommand{\citeouter}[\mkbibsuperscript]
+  {[\usebibmacro{cite:init}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:comp}}
+  {}
+  {\usebibmacro{cite:dump}]}
+  
+
+\newcommand{\citepb}[1]{\citep{#1}\citeouter{#1}}
+
+
+\newbibmacro*{citep:b}{%
+  \iffieldundef{shorthand}
+    {\ifthenelse{\ifnameundef{labelname}\OR\iffieldundef{labelyear}}
+       {\usebibmacro{cite:label}%
+        \setunit{\printdelim{nonameyeardelim}}}
+       {\printnames{labelname}%
+        \setunit{\printdelim{nameyeardelim}}}%
+     \usebibmacro{cite:labeldate+extradate}%
+     \printtext[bibhyperref]{\mkbibsuperscript{\mkbibbrackets{\printfield{labelnumber}}}}}
+    {\usebibmacro{cite:shorthand}}}
+    
+  
+\DeclareCiteCommand{\citepa}[\mkbibparens]
+  {\usebibmacro{prenote}}%
+  {\usebibmacro{citeindex}%
+   \usebibmacro{citep:b}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+  
+
+  
+\newbibmacro*{citep:a}{%
+  \iffieldundef{shorthand}
+    {\ifthenelse{\ifnameundef{labelname}\OR\iffieldundef{labelyear}}
+       {\usebibmacro{cite:label}%
+        \setunit{\printdelim{nonameyeardelim}}}
+       {\printnames{labelname}%
+        \setunit{\printdelim{nameyeardelim}}}%
+     \usebibmacro{cite:labeldate+extradate}}
+    {\usebibmacro{cite:shorthand}}}
+    
+
+\DeclareCiteCommand{\citep}[\mkbibparens]
+  {\usebibmacro{prenote}}%
+  {\usebibmacro{citeindex}%
+   \usebibmacro{citep:a}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+  
+  
+
+\newbibmacro*{citet:b}{%
+  \iffieldundef{shorthand}
+    {\ifthenelse{\ifnameundef{labelname}\OR\iffieldundef{labelyear}}
+       {\usebibmacro{cite:label}%
+        \setunit{\printdelim{nonameyeardelim}}}
+       {\printnames{labelname}%
+        \setunit{\printdelim{nameyeardelim}}}%
+     \printtext[parens]{\usebibmacro{cite:labeldate+extradate}}%
+     \printtext[bibhyperref]{\mkbibsuperscript{\mkbibbrackets{\printfield{labelnumber}}}}}
+    {\usebibmacro{cite:shorthand}}}
+
+\DeclareCiteCommand{\citeta}
+  {\usebibmacro{prenote}}%
+  {\usebibmacro{citeindex}%
+   \usebibmacro{citet:b}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+  
+\DeclareCiteCommand{\citetb}
+  {\usebibmacro{prenote}}%
+  {\usebibmacro{citeindex}%
+   \usebibmacro{citet:b}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+  
+  
+\newbibmacro*{citet:a}{%
+  \iffieldundef{shorthand}
+    {\ifthenelse{\ifnameundef{labelname}\OR\iffieldundef{labelyear}}
+       {\usebibmacro{cite:label}%
+        \setunit{\printdelim{nonameyeardelim}}}
+       {\printnames{labelname}%
+        \setunit{\printdelim{nameyeardelim}}}%
+     \printtext[parens]{\usebibmacro{cite:labeldate+extradate}}}
+    {\usebibmacro{cite:shorthand}}}
+  
+\DeclareCiteCommand{\citet}
+  {\usebibmacro{prenote}}%
+  {\usebibmacro{citeindex}%
+   \usebibmacro{citet:a}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+  
+
+
+
+\makeatother
+
+\begin{filecontents}[force]{\jobname.bib}
+@article{hu2020foreign,
+  title={对外贸易, 技术进步与经济增长——基于空间面板联立方程的实证研究},
+  author={胡亚南 and 王金天 and 田茂再},
+  journal={数理统计与管理},
+  volume={39},
+  number={5},
+  pages={771--787},
+  year={2020}
+}
+@article{shao2020spatial,
+  title={东北地区人口问题和经济增长的空间计量分析},
+  author={邵丽 and 嵇振华 and 崔霞 and 周勇},
+  journal={数理统计与管理},
+  volume={39},
+  number={4},
+  pages={571--583},
+  year={2020}
+}
+@article{wang2019research,
+  title={基于 Spatial AIC 准则的空间自回归模型变量选择研究},
+  author={王周伟 and 陶志鹏 and 张元庆},
+  journal={数理统计与管理},
+  volume={38},
+  number={1},
+  pages={69--80},
+  year={2019}
+}
+\end{filecontents}
+
+\addbibresource{\jobname.bib}
+
+\usepackage[colorlinks]{hyperref}
+
+\begin{document}
+
+(1) citep,citet
+
+空间统计的问题、模型与方法在计量经济领域一直是一个研究热点，有空间面板数据的分析
+\citep{hu2020foreign,shao2020spatial}...
+
+\citet{wang2019research}在空间自回归模型中考虑使用 AIC 准则进行变量选择, ...
+
+
+(2) citepa,citeta
+
+空间统计的问题、模型与方法在计量经济领域一直是一个研究热点，有空间面板数据的分析
+\citepa{hu2020foreign,shao2020spatial}...
+
+\citeta{wang2019research} 在空间自回归模型中考虑使用 AIC 准则进行变量选择, ...
+
+
+(3) citepb,citetb
+
+空间统计的问题、模型与方法在计量经济领域一直是一个研究热点，有空间面板数据的分析
+\citepb{hu2020foreign,shao2020spatial}...
+
+\citetb{wang2019research} 在空间自回归模型中考虑使用 AIC 准则进行变量选择, ...
+
+
+(4)
+
+\citep{hu2020foreign,shao2020spatial}\citeouter{hu2020foreign,shao2020spatial}
+
+\citet{wang2019research,shao2020spatial}
+%\authornumcite{wang2019research}
+
+\printbibliography
+
+\end{document} 
