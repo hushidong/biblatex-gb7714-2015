@@ -83,4 +83,6 @@ if __name__ == '__main__':
     #修改所有默认文件的版本号
     #updateversion(versioninfo='2025/06/10 v1.1v') 
     #修改readme.md的版本号
-    updateversion(filename='readme.md', versioninfo='2026/04/11 v1.1w') 
+    #updateversion(filename='readme.md', versioninfo='2026/04/11 v1.1w') 
+    #修改所有默认文件的版本号
+    updateversion(versioninfo='2026/06/10 v1.1x') 
