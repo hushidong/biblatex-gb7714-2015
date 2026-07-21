@@ -1264,6 +1264,12 @@
             \pertype{patent}
             \step[fieldset=usera, fieldvalue={P}]
             }
+        \map[overwrite]{
+            \pertype{patent}
+            \step[fieldsource=holder, final]
+            \step[fieldset=author, origfieldval]
+            \step[fieldset=holder, null]
+            }
         \map{
             \pertype{inproceedings}
             \pertype{conference}%兼容老的conference类型
